@@ -9,7 +9,7 @@ import LogoIBI, { LogoFPPA } from "@/components/LogoIBI";
 import { PREVISAO_2026 } from "@/lib/dados-historicos";
 import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA } from "@/lib/fetch-dados";
 import { geraInsights } from "@/lib/gera-insights";
-import { RefreshCw, Settings, Waves } from "lucide-react";
+import { RefreshCw, Waves } from "lucide-react";
 import type { Estacao } from "@/lib/limiares";
 import type { DadosEstacao } from "@/lib/dados-historicos";
 
@@ -91,16 +91,6 @@ export default async function Home() {
               </span>
             </div>
 
-            <a
-              href="/admin/upload"
-              className="flex items-center gap-1.5 text-gray-400 hover:text-white text-xs
-                         bg-azul-marinho rounded px-2.5 py-1.5 border border-white/10
-                         transition-colors whitespace-nowrap"
-              title="Painel de upload de boletins SEMA"
-            >
-              <Settings size={12} />
-              <span className="hidden sm:inline">Upload SEMA</span>
-            </a>
           </div>
         </div>
       </header>
@@ -125,11 +115,6 @@ export default async function Home() {
           <p className="text-ouro text-xs">
             <strong>Dessincronização Norte-Sul sem precedente:</strong> Negro alto (Curicuriari) 927 cm abaixo de 2024;
             Madeira (Humaitá) 679 cm acima. IDN atual: +0,58 — padrão Driver Norte.{" "}
-            {!fonteSEMA && (
-              <a href="/admin/upload" className="underline hover:text-white transition-colors">
-                Faça upload do boletim SEMA para atualizar →
-              </a>
-            )}
           </p>
         </div>
       </div>
@@ -309,9 +294,7 @@ export default async function Home() {
           </p>
           <div className="flex flex-wrap gap-4 mt-2 text-gray-600">
             <a href="/api/ana?estacao=Manaus" target="_blank" rel="noopener" className="hover:text-gray-400">API ANA →</a>
-            <a href="/api/sema" target="_blank" rel="noopener" className="hover:text-gray-400">API SEMA →</a>
             <a href="/api/insights" target="_blank" rel="noopener" className="hover:text-gray-400">API Insights →</a>
-            <a href="/admin/upload" className="hover:text-gray-400">Upload SEMA →</a>
           </div>
         </section>
 
