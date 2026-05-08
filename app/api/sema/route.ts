@@ -3,7 +3,10 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 import { parseBoletimSEMA, type BoletimSEMA } from "@/lib/sema-parser";
 
-const CACHE_PATH = join(process.cwd(), "data", "boletins_sema_cache.json");
+// DATA_DIR aponta para o volume Railway em produção (/data)
+// ou para a pasta local data/ em desenvolvimento
+const DATA_DIR  = process.env.DATA_DIR ?? join(process.cwd(), "data");
+const CACHE_PATH = join(DATA_DIR, "boletins_sema_cache.json");
 
 function lerCache(): { boletins: BoletimSEMA[]; ultimo_upload: string | null; total: number } {
   if (!existsSync(CACHE_PATH))

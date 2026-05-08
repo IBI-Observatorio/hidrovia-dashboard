@@ -53,7 +53,8 @@ export async function fetchUltimoBoletimSEMA(): Promise<{
   try {
     const { readFileSync, existsSync } = await import("fs");
     const { join } = await import("path");
-    const caminho = join(process.cwd(), "data", "boletins_sema_cache.json");
+    const dataDir = process.env.DATA_DIR ?? join(process.cwd(), "data");
+    const caminho = join(dataDir, "boletins_sema_cache.json");
     if (!existsSync(caminho)) return null;
 
     const cache = JSON.parse(readFileSync(caminho, "utf-8"));

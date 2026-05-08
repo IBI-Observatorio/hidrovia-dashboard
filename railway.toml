@@ -7,5 +7,7 @@ startCommand = "npm start"
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
-[[services]]
-name = "hidrovia-dashboard"
+# Volume configurado no dashboard Railway:
+# Nome: sema-cache
+# Mount path: /data
+# Em Variables: DATA_DIR=/data
