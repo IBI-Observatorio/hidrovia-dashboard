@@ -3,14 +3,7 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 import { parseBoletimSEMA, type BoletimSEMA } from "@/lib/sema-parser";
 
-// Em produção Vercel o filesystem é read-only exceto /tmp (mas efêmero entre invocações).
-// Para produção real, substituir por Vercel KV ou outro storage persistente.
-function getCachePath(): string {
-  const localPath = join(process.cwd(), "data", "boletins_sema_cache.json");
-  if (existsSync(join(process.cwd(), "data"))) return localPath;
-  return "/tmp/boletins_sema_cache.json";
-}
-const CACHE_PATH = getCachePath();
+const CACHE_PATH = join(process.cwd(), "data", "boletins_sema_cache.json");
 
 function lerCache(): { boletins: BoletimSEMA[]; ultimo_upload: string | null; total: number } {
   if (!existsSync(CACHE_PATH))
