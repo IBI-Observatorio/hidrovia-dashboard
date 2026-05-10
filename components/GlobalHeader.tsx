@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import LogoIBI from "@/components/LogoIBI";
 import { navigationCopy } from "@/lib/navigation-copy";
 
 const { header } = navigationCopy;
@@ -26,7 +25,8 @@ export default function GlobalHeader() {
             href={header.brand.href}
             className="flex items-center"
           >
-            <LogoIBI className="h-10 w-auto" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="IBI" className="h-10 w-auto" />
             <span className="ml-2 text-white font-semibold text-lg">
               {header.brand.label}
             </span>
