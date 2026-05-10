@@ -22,7 +22,7 @@ function buildSoap(codEstacao: string, dataInicio: string, dataFim: string): str
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <soap:Body>
-    <DadosHidrometeorologicos xmlns="http://tempuri.org/">
+    <DadosHidrometeorologicos xmlns="http://MRCS/">
       <codEstacao>${codEstacao}</codEstacao>
       <dataInicio>${dataInicio}</dataInicio>
       <dataFim>${dataFim}</dataFim>
@@ -35,27 +35,23 @@ function buildSoap(codEstacao: string, dataInicio: string, dataFim: string): str
 function parseANAXML(xml: string): LeituraANA[] {
   const resultados: LeituraANA[] = [];
 
-  // Dois formatos possíveis de Data: com timezone e sem
-  const blocos = xml.match(/<SerieHistorica[^>]*>([\s\S]*?)<\/SerieHistorica>/g) ?? [];
+  // A API retorna blocos <DadosHidrometereologicos> com <DataHora> e <Nivel>
+  const blocos = xml.match(/<DadosHidrometere[^>]*>([\s\S]*?)<\/DadosHidrometere[^>]*>/g) ?? [];
 
   for (const bloco of blocos) {
     const nivel = bloco.match(/<Nivel>([\d.]+)<\/Nivel>/)?.[1];
     if (!nivel) continue;
 
-    const dataRaw = bloco.match(/<Data>([^<]+)<\/Data>/)?.[1] ?? "";
-    const horaRaw = bloco.match(/<Hora>([\d]+)<\/Hora>/)?.[1] ?? "0";
+    // DataHora: "2026-05-07 08:00:00 "
+    const dataHora = bloco.match(/<DataHora>([^<]+)<\/DataHora>/)?.[1]?.trim() ?? "";
+    const dataPart = dataHora.slice(0, 10); // "YYYY-MM-DD"
+    const horaPart = dataHora.slice(11, 16) || "00:00"; // "HH:MM"
 
-    // Data vem como "2026-05-07T00:00:00..." ou "2026-05-07T00:00:00+03:00"
-    const dataPart = dataRaw.split("T")[0] ?? dataRaw.substring(0, 10);
-
-    // Hora: "800" = 08:00, "1600" = 16:00
-    const horaInt = parseInt(horaRaw, 10);
-    const hh = String(Math.floor(horaInt / 100)).padStart(2, "0");
-    const mm = String(horaInt % 100).padStart(2, "0");
+    if (!dataPart || dataPart.length < 10) continue;
 
     resultados.push({
       data:    dataPart,
-      hora:    `${hh}:${mm}`,
+      hora:    horaPart,
       cota_cm: parseFloat(nivel),
     });
   }
@@ -86,7 +82,7 @@ export async function buscaCotaANA(
     method:  "POST",
     headers: {
       "Content-Type": "text/xml; charset=utf-8",
-      "SOAPAction":   "http://tempuri.org/DadosHidrometeorologicos",
+      "SOAPAction":   "http://MRCS/DadosHidrometeorologicos",
     },
     body: soap,
     // Cache 6h no servidor — não sobrecarrega a API

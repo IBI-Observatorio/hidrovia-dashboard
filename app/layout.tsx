@@ -5,11 +5,12 @@ import "./globals.css";
 const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dashboard Hidrológico — Bacia do Amazonas | IBI",
+  title: "Observatório IBI — Hidrologia da bacia do Amazonas",
   description:
-    "Monitor em tempo real das cotas fluviométricas da Bacia do Amazonas. " +
-    "Dessincronização Norte-Sul 2026, comparação histórica e alertas LWS/ANTAQ. " +
-    "Instituto Brasileiro de Infraestrutura — Observatório de Transportes.",
+    "Monitoramento e estudos sobre a hidrologia da bacia amazônica. Mantido pelo Instituto Brasileiro de Infraestrutura.",
+  openGraph: {
+    type: "website",
+  },
 };
 
 export default function RootLayout({

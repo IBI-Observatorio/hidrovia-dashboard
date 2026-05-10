@@ -17,7 +17,7 @@ const SEMAFORO_CORES = {
 };
 
 const TOOLTIP_ESTACAO: Partial<Record<Estacao, string>> = {
-  Manaus:      "Parâmetro regulatório ANTAQ: LWS ativada quando Manaus < 17,7 m. Estação-referência do regime hidrológico.",
+  Manaus:      "Estação-referência histórica do Rio Negro. A marca de 17,7 m é associada historicamente ao início do período de baixas águas.",
   Itacoatiara: "Ponto de controle real da calha navegável (Tabocal). Em 2024, caiu 22 dias depois que Manaus já subia.",
   Curicuriari: "Estação SGC — barômetro do Negro alto. Indicador do regime Driver Norte, que comanda a dessincronização 2026.",
   Humaita:     "Indicador do Rio Madeira — barômetro do Driver Sul. Em 2024 foi a bacia mais depletada; em 2026 está acima da média.",
@@ -102,21 +102,20 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
             className="h-3 rounded-full transition-all duration-700"
             style={{ width: `${Math.max(2, pct)}%`, backgroundColor: barColor }}
           />
-          {/* Gatilho LWS */}
+          {/* Referência 17,7 m */}
           {limiar.gatilho_lws && (
             <div
               className="absolute top-0 bottom-0 w-0.5 bg-ouro opacity-80"
               style={{
                 left: `${Math.round(posicaoRelativa(limiar.gatilho_lws, estacao) * 100)}%`,
               }}
-              title={`Gatilho LWS: ${limiar.gatilho_lws} m`}
+              title={`Referência: ${limiar.gatilho_lws} m — baixas águas históricas`}
             />
           )}
         </div>
-        {/* Marcador do gatilho LWS abaixo da barra */}
         {limiar.gatilho_lws && (
           <p className="text-ouro text-xs mt-0.5 text-right">
-            ▲ LWS {limiar.gatilho_lws} m
+            ▲ Ref. {limiar.gatilho_lws} m
           </p>
         )}
       </div>

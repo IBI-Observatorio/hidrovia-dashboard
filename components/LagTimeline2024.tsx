@@ -72,20 +72,20 @@ export default function LagTimeline2024() {
       {/* Cabeçalho */}
       <div className="mb-2">
         <h2 className="text-white font-bold text-lg">
-          O Lag de 22 Dias — Achado Regulatório de 2024
+          O Lag de 22 Dias — Manaus e Itacoatiara na Estiagem de 2024
         </h2>
         <p className="text-gray-400 text-sm">
-          Enquanto o parâmetro ANTAQ sinalizava normalização, Itacoatiara/Tabocal ainda impunha
-          restrições crescentes de calado.
+          Manaus atingiu a mínima em 9/out/2024. Itacoatiara continuou em recessão por mais 22 dias,
+          atingindo a mínima histórica em 31/out/2024.
         </p>
       </div>
 
       {/* Cards de destaque */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
         <div className="bg-azul-marinho rounded p-3 border-l-4 border-vermelho">
-          <p className="text-gray-400 text-xs">Manaus cruza 17,7 m ↓</p>
+          <p className="text-gray-400 text-xs">Manaus abaixo de 17,7 m</p>
           <p className="text-white font-bold">10/set/2024</p>
-          <p className="text-vermelho text-sm font-semibold">LWS ativada</p>
+          <p className="text-vermelho text-sm font-semibold">Início das baixas águas</p>
         </div>
         <div className="bg-azul-marinho rounded p-3 border-l-4 border-vermelho">
           <p className="text-gray-400 text-xs">Mínima Manaus</p>
@@ -95,7 +95,7 @@ export default function LagTimeline2024() {
         <div className="bg-azul-marinho rounded p-3 border-l-4 border-ouro">
           <p className="text-gray-400 text-xs">Lag entre mínimas</p>
           <p className="text-white font-bold text-2xl">22 dias</p>
-          <p className="text-ouro text-sm font-semibold">Parâmetro insuficiente</p>
+          <p className="text-ouro text-sm font-semibold">Defasagem entre estações</p>
         </div>
         <div className="bg-azul-marinho rounded p-3 border-l-4 border-vermelho">
           <p className="text-gray-400 text-xs">Mínima absoluta Itacoatiara</p>
@@ -131,12 +131,12 @@ export default function LagTimeline2024() {
             label={{ value: "22 dias de lag", fill: "#D4922A", fontSize: 11, position: "top" }}
           />
 
-          {/* Gatilho LWS */}
+          {/* Referência 17,7 m */}
           <ReferenceLine
             y={17.7}
             stroke="#D4922A"
             strokeDasharray="5 3"
-            label={{ value: "Gatilho LWS 17,7 m", fill: "#D4922A", fontSize: 10, position: "right" }}
+            label={{ value: "Ref. 17,7 m", fill: "#D4922A", fontSize: 10, position: "right" }}
           />
           {/* Zero (nível do mar) */}
           <ReferenceLine y={0} stroke="#A0153E" strokeDasharray="3 2" strokeOpacity={0.6} />
@@ -146,7 +146,7 @@ export default function LagTimeline2024() {
             x="2024-09-10"
             stroke="#D4922A"
             strokeDasharray="4 2"
-            label={{ value: "LWS ativada", fill: "#D4922A", fontSize: 10, position: "top" }}
+            label={{ value: "Manaus < 17,7 m", fill: "#D4922A", fontSize: 10, position: "top" }}
           />
           {/* Evento: mínima Manaus */}
           <ReferenceLine
@@ -168,7 +168,7 @@ export default function LagTimeline2024() {
             stroke="#60A5FA"
             strokeWidth={3}
             dot={{ r: 3, fill: "#60A5FA" }}
-            name="Manaus (parâmetro ANTAQ)"
+            name="Manaus"
             connectNulls
           />
           <Line
@@ -184,12 +184,12 @@ export default function LagTimeline2024() {
       </ResponsiveContainer>
 
       <div className="mt-3 bg-azul-marinho rounded p-3 text-sm">
-        <p className="text-ouro font-semibold mb-1">Implicação regulatória:</p>
+        <p className="text-ouro font-semibold mb-1">O que os dados mostram:</p>
         <p className="text-gray-300">
-          O parâmetro ANTAQ (Manaus ≥ 17,7 m) ficou <strong className="text-white">109 dias</strong> abaixo
-          do gatilho (10/set–28/dez/2024). Durante 22 desses dias, Manaus já subia enquanto Itacoatiara
-          ainda registrava seus menores níveis históricos — evidenciando que o parâmetro regulatório
-          não captura a realidade operacional do Tabocal.
+          Manaus ficou <strong className="text-white">109 dias</strong> abaixo de 17,7 m
+          (10/set–28/dez/2024). Durante 22 desses dias, Manaus já subia enquanto Itacoatiara
+          ainda registrava seus menores níveis históricos — evidenciando que as duas estações
+          operam em momentos distintos do ciclo hidrológico durante estiagens severas.
         </p>
       </div>
 

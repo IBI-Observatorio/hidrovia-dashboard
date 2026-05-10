@@ -32,12 +32,12 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
     });
   }
 
-  // Manaus abaixo do gatilho LWS
+  // Manaus abaixo de 17,7 m
   if (mao.cota_m < 17.7) {
     insights.push({
       tipo:    "critico",
-      titulo:  "Manaus abaixo do gatilho LWS — restrições de calado ativas",
-      texto:   `Manaus em ${mao.cota_m.toFixed(2)} m (gatilho: 17,7 m). Em 2024, Manaus ficou 109 dias abaixo do gatilho. Verificar impacto operacional no Tabocal/Itacoatiara.`,
+      titulo:  "Manaus abaixo de 17,7 m — referência histórica de baixas águas",
+      texto:   `Manaus em ${mao.cota_m.toFixed(2)} m. Em 2024, Manaus ficou 109 dias abaixo dessa marca. Monitorar Itacoatiara — em 2024 a mínima ali veio 22 dias depois da mínima em Manaus.`,
       estacao: "Manaus",
     });
   }
@@ -67,13 +67,13 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
     });
   }
 
-  // Manaus se aproximando do gatilho (mas ainda acima)
+  // Manaus se aproximando de 17,7 m (mas ainda acima)
   if (mao.cota_m >= 17.7 && mao.cota_m < 20) {
     const distancia = (mao.cota_m - 17.7).toFixed(2);
     insights.push({
       tipo:    "alerta",
-      titulo:  `Manaus a ${distancia} m do gatilho LWS`,
-      texto:   `Manaus em ${mao.cota_m.toFixed(2)} m. Se a queda atual (${mao.variacao_24h} cm/24h) persistir, o gatilho pode ser atingido em breve. Verificar previsão SGB.`,
+      titulo:  `Manaus a ${distancia} m da referência de baixas águas (17,7 m)`,
+      texto:   `Manaus em ${mao.cota_m.toFixed(2)} m. Se a queda atual (${mao.variacao_24h} cm/24h) persistir, o nível de referência pode ser atingido em breve. Verificar previsão SGB.`,
       estacao: "Manaus",
     });
   }

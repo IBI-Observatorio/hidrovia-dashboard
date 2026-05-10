@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { AlertTriangle, CheckCircle, XCircle, Info } from "lucide-react";
 import { DADOS_ATUAIS, type DadosEstacao } from "@/lib/dados-historicos";
@@ -42,7 +42,7 @@ function MetricRow({
   );
 }
 
-export default function AlertaLWS({
+export default function AlertaManausIta({
   dados = DADOS_ATUAIS,
 }: {
   dados?: Record<string, DadosEstacao>;
@@ -62,9 +62,9 @@ export default function AlertaLWS({
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-white font-bold text-lg">Alerta Regulatório — LWS/ANTAQ</h2>
+          <h2 className="text-white font-bold text-lg">Monitoramento Manaus Ã— Itacoatiara</h2>
           <p className="text-gray-400 text-sm">
-            Parâmetro: Manaus ≥ 17,7 m para suspender restrições de calado
+            Leitura conjunta das estaÃ§Ãµes de referÃªncia e do trecho de navegaÃ§Ã£o
           </p>
         </div>
         <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${BADGE_RISCO[risco.nivel]}`}>
@@ -77,75 +77,74 @@ export default function AlertaLWS({
       </div>
 
       <div className="grid md:grid-cols-2 gap-5">
-        {/* Coluna esquerda: métricas atuais */}
+        {/* Coluna esquerda: mÃ©tricas atuais */}
         <div className="bg-azul-marinho rounded-lg p-4">
           <p className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-3">
-            Situação atual
+            SituaÃ§Ã£o atual
           </p>
           <MetricRow
-            label="Manaus (parâmetro ANTAQ)"
+            label="Manaus"
             valor={`${mao.cota_m.toFixed(2)} m`}
             destaque={!abaixoGatilho}
             alerta={abaixoGatilho}
           />
           {abaixoGatilho && (
-            <p className="text-vermelho text-xs mb-1">⚠ Abaixo do gatilho LWS (17,7 m)</p>
+            <p className="text-vermelho text-xs mb-1">âš  Abaixo de 17,7 m â€” referÃªncia histÃ³rica de baixas Ã¡guas</p>
           )}
           <MetricRow
             label="Itacoatiara (Tabocal)"
             valor={`${ita.cota_m.toFixed(2)} m`}
           />
           <MetricRow
-            label="Δ Manaus vs 2025"
+            label="Î” Manaus vs 2025"
             valor={`${mao.delta_2025 >= 0 ? "+" : ""}${mao.delta_2025} cm`}
             alerta={mao.delta_2025 < -50}
             destaque={mao.delta_2025 >= 0}
           />
           <MetricRow
-            label="Δ Itacoatiara vs 2025"
+            label="Î” Itacoatiara vs 2025"
             valor={`${ita.delta_2025 >= 0 ? "+" : ""}${ita.delta_2025} cm`}
             alerta={ita.delta_2025 < -50}
             destaque={ita.delta_2025 >= 0}
           />
           <MetricRow
-            label="Divergência Manaus–Itacoatiara"
+            label="DivergÃªncia Manausâ€“Itacoatiara"
             valor={`${divergencia} cm`}
             alerta={divergencia > 40}
           />
           <MetricRow
-            label="Índice Dessincronização (IDN)"
+            label="Ãndice DessincronizaÃ§Ã£o (IDN)"
             valor={`${idnAtual > 0 ? "+" : ""}${idnAtual.toFixed(2)}`}
             alerta={Math.abs(idnAtual) > 0.3}
           />
         </div>
 
-        {/* Coluna direita: contexto e referência 2024 */}
+        {/* Coluna direita: contexto e referÃªncia 2024 */}
         <div className="flex flex-col gap-3">
           {/* Box de contexto */}
           <div className="bg-ouro/10 border border-ouro/30 rounded-lg p-3">
             <div className="flex items-start gap-2">
               <Info size={16} className="text-ouro mt-0.5 shrink-0" />
               <div>
-                <p className="text-ouro text-xs font-semibold mb-1">Referência 2024</p>
+                <p className="text-ouro text-xs font-semibold mb-1">ReferÃªncia 2024</p>
                 <p className="text-gray-300 text-xs leading-relaxed">
                   Quando Manaus cruzou abaixo de 17,7 m em 10/set/2024, Itacoatiara
                   ainda <strong className="text-white">caiu por mais 22 dias</strong>, atingindo
-                  mínima histórica de −0,17 m em 31/out/2024 — enquanto o parâmetro ANTAQ
-                  sinalizava início de normalização.
+                  mÃ­nima histÃ³rica de âˆ’0,17 m em 31/out/2024 â€” 22 dias apÃ³s a mÃ­nima de Manaus.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Previsão SGB */}
+          {/* PrevisÃ£o SGB */}
           <div className="bg-azul-marinho rounded-lg p-3">
             <p className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-2">
-              Previsão SGB (18° Boletim, 05/mai/2026)
+              PrevisÃ£o SGB (18Â° Boletim, 05/mai/2026)
             </p>
             <div className="space-y-1 text-xs">
               <div className="flex justify-between">
                 <span className="text-gray-400">Pico cheia Manaus</span>
-                <span className="text-verde font-bold">28,23 m (IC80: 27,69–28,76)</span>
+                <span className="text-verde font-bold">28,23 m (IC80: 27,69â€“28,76)</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Prob. acima de 27,5 m</span>
@@ -153,21 +152,21 @@ export default function AlertaLWS({
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">ENSO</span>
-                <span className="text-ouro font-bold">El Niño emergindo (61%)</span>
+                <span className="text-ouro font-bold">El NiÃ±o emergindo (61%)</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Mínima Itacoatiara 2026</span>
-                <span className="text-white font-bold">4,10–5,15 m</span>
+                <span className="text-gray-400">MÃ­nima Itacoatiara 2026</span>
+                <span className="text-white font-bold">4,10â€“5,15 m</span>
               </div>
             </div>
           </div>
 
-          {/* Explicação da lógica */}
+          {/* ExplicaÃ§Ã£o da lÃ³gica */}
           <div className="bg-azul-marinho rounded-lg p-3 text-xs text-gray-400">
-            <p className="font-semibold text-gray-300 mb-1">Lógica do semáforo:</p>
-            <p className="flex items-center gap-1"><span className="text-verde">●</span> Normal: Manaus &gt; 20 m e divergência &lt; 30 cm</p>
-            <p className="flex items-center gap-1"><span className="text-ouro">●</span> Moderado: divergência &gt; 40 cm ou Manaus &lt; 19 m</p>
-            <p className="flex items-center gap-1"><span className="text-vermelho">●</span> Elevado: Manaus &lt; 17,7 m ou divergência &gt; 80 cm</p>
+            <p className="font-semibold text-gray-300 mb-1">LÃ³gica do semÃ¡foro:</p>
+            <p className="flex items-center gap-1"><span className="text-verde">â—</span> Normal: Manaus &gt; 20 m e divergÃªncia &lt; 30 cm</p>
+            <p className="flex items-center gap-1"><span className="text-ouro">â—</span> Moderado: divergÃªncia &gt; 40 cm ou Manaus &lt; 19 m</p>
+            <p className="flex items-center gap-1"><span className="text-vermelho">â—</span> Elevado: Manaus &lt; 17,7 m ou divergÃªncia &gt; 80 cm</p>
           </div>
         </div>
       </div>
