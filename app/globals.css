@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0A1A4A;
+  --background: #111827;
   --foreground: #ffffff;
 }
 
@@ -9,15 +9,20 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Paleta IBI */
-  --color-azul-marinho: #0A1A4A;
-  --color-azul-medio:   #1B3A6B;
-  --color-verde:        #00C04B;
+  /*
+   * Paleta alinhada ao site ibi-observatorio.org.
+   * Os nomes "azul-marinho" e "azul-medio" foram preservados por compatibilidade
+   * com os componentes existentes, mas seus valores agora apontam para o esquema
+   * cinza-escuro do observatório (gray-900 / ibi-dark).
+   */
+  --color-azul-marinho: #111827;  /* gray-900 — body background */
+  --color-azul-medio:   #2c2c2c;  /* ibi-dark — cards/header/footer */
+  --color-verde:        #00a652;  /* alinhado a ibi-green */
   --color-vermelho:     #A0153E;
   --color-ouro:         #D4922A;
   --color-cinza-claro:  #F2F4F7;
 
-  /* Paleta oficial ibi-observatorio.org */
+  /* Paleta oficial ibi-observatorio.org (uso direto) */
   --color-ibi-blue:  #0099d8;
   --color-ibi-green: #00a652;
   --color-ibi-dark:  #2c2c2c;
@@ -33,5 +38,5 @@ body {
 
 /* Scrollbar discreta */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #0A1A4A; }
-::-webkit-scrollbar-thumb { background: #1B3A6B; border-radius: 3px; }
+::-webkit-scrollbar-track { background: #111827; }
+::-webkit-scrollbar-thumb { background: #2c2c2c; border-radius: 3px; }

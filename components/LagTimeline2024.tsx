@@ -107,7 +107,7 @@ export default function LagTimeline2024() {
       {/* Gráfico */}
       <ResponsiveContainer width="100%" height={280}>
         <LineChart data={dados} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1B3A6B" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
           <XAxis
             dataKey="data"
             tick={{ fill: "#9CA3AF", fontSize: 10 }}

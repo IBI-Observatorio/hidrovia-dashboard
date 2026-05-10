@@ -22,7 +22,7 @@ function Velocimetro({ idn }: { idn: number }) {
   return (
     <svg viewBox="0 0 200 100" className="w-full max-w-[220px] mx-auto">
       {/* Arco fundo */}
-      <path d="M 10 90 A 90 90 0 0 1 190 90" fill="none" stroke="#1B3A6B" strokeWidth="18" strokeLinecap="round" />
+      <path d="M 10 90 A 90 90 0 0 1 190 90" fill="none" stroke="#2c2c2c" strokeWidth="18" strokeLinecap="round" />
       {/* Zona Sul (vermelho, -1 a -0.2) */}
       <path d="M 10 90 A 90 90 0 0 1 64 23" fill="none" stroke="#A0153E" strokeWidth="18" strokeLinecap="round" opacity={0.7} />
       {/* Zona Neutro (verde, -0.2 a +0.2) */}
@@ -97,7 +97,7 @@ export default function DessincronizacaoGauge({
           <p className="text-gray-300 text-sm font-semibold mb-2">Evolução histórica do IDN (2024–2026)</p>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={IDN_HISTORICO} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1B3A6B" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
               <XAxis
                 dataKey="data"
                 tick={{ fill: "#9CA3AF", fontSize: 10 }}
@@ -110,7 +110,7 @@ export default function DessincronizacaoGauge({
                 tickFormatter={(v: number) => v.toFixed(1)}
               />
               <Tooltip
-                contentStyle={{ backgroundColor: "#0A1A4A", border: "1px solid #1B3A6B", color: "#fff", fontSize: 12 }}
+                contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff", fontSize: 12 }}
                 formatter={(v: unknown) => [String(v), "IDN"]}
                 labelFormatter={(l) => String(l)}
               />

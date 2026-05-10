@@ -97,15 +97,15 @@ function ChartCuricuriari() {
   return (
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={dados} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#1B3A6B" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
         <XAxis dataKey="md" tick={{ fill: "#9CA3AF", fontSize: 11 }} />
         <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={[4, 14]} />
         <Tooltip
-          contentStyle={{ backgroundColor: "#0A1A4A", border: "1px solid #1B3A6B", color: "#fff" }}
+          contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
           formatter={(v: unknown) => [`${v} m`, ""]}
         />
         <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
-        <ReferenceArea y1={p10} y2={p90} fill="#1B3A6B" fillOpacity={0.5} />
+        <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
         <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10 }} />
         <ReferenceLine y={mediana} stroke="#9CA3AF" strokeDasharray="4 2" label={{ value: "Mediana", fill: "#9CA3AF", fontSize: 10 }} />
         <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10 }} />
@@ -127,15 +127,15 @@ function ChartHumaita() {
   return (
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={dados} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#1B3A6B" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
         <XAxis dataKey="md" tick={{ fill: "#9CA3AF", fontSize: 11 }} />
         <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={[8, 25]} />
         <Tooltip
-          contentStyle={{ backgroundColor: "#0A1A4A", border: "1px solid #1B3A6B", color: "#fff" }}
+          contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
           formatter={(v: unknown) => [`${v} m`, ""]}
         />
         <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
-        <ReferenceArea y1={p10} y2={p90} fill="#1B3A6B" fillOpacity={0.5} />
+        <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
         <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10 }} />
         <ReferenceLine y={mediana} stroke="#9CA3AF" strokeDasharray="4 2" label={{ value: "Mediana", fill: "#9CA3AF", fontSize: 10 }} />
         <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10 }} />
@@ -188,7 +188,7 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
     <div>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={serie} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1B3A6B" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
           <XAxis
             dataKey="md"
             tick={{ fill: "#9CA3AF", fontSize: 10 }}
@@ -196,12 +196,12 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
           />
           <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={domain} />
           <Tooltip
-            contentStyle={{ backgroundColor: "#0A1A4A", border: "1px solid #1B3A6B", color: "#fff" }}
+            contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
             formatter={(v: unknown) => [`${v} m`, ""]}
             labelFormatter={(l) => `Dia ${l}`}
           />
           <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
-          <ReferenceArea y1={p10} y2={p90} fill="#1B3A6B" fillOpacity={0.5} />
+          <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
           <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10 }} />
           <ReferenceLine y={mediana} stroke="#9CA3AF" strokeDasharray="4 2" label={{ value: "Mediana", fill: "#9CA3AF", fontSize: 10 }} />
           <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10 }} />
