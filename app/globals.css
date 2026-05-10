@@ -17,6 +17,11 @@
   --color-ouro:         #D4922A;
   --color-cinza-claro:  #F2F4F7;
 
+  /* Paleta oficial ibi-observatorio.org */
+  --color-ibi-blue:  #0099d8;
+  --color-ibi-green: #00a652;
+  --color-ibi-dark:  #2c2c2c;
+
   --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
 }
 

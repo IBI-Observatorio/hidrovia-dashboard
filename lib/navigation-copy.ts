@@ -7,27 +7,22 @@ export const navigationCopy = {
   // HEADER GLOBAL — presente em todas as páginas
   // =====================================================================
   header: {
+    // Espelha o header de https://ibi-observatorio.org — todos os links
+    // apontam para o site principal (cross-domain absoluto).
     brand: {
-      label: "Observatório IBI",
-      caption: "Infraestrutura de Transporte",
-      href: "/",
+      label: "Observatório de Dados",
+      caption: "",
+      href: "https://ibi-observatorio.org/",
     },
     links: [
-      { label: "Início", href: "/" },
-      { label: "Monitor", href: "/monitor" },
-      { label: "Estudos", href: "/caso-2024" },
+      { label: "Início",        href: "https://ibi-observatorio.org/#home" },
+      { label: "Conceitos",     href: "https://ibi-observatorio.org/#concepts" },
+      { label: "Aplicações",    href: "https://ibi-observatorio.org/#applications" },
+      { label: "Implementação", href: "https://ibi-observatorio.org/#implementation" },
+      { label: "Apoiadores",    href: "https://ibi-observatorio.org/#sponsors" },
+      { label: "Contato",       href: "https://ibi-observatorio.org/#contact" },
+      { label: "Análises",      href: "https://ibi-observatorio.org/analises" },
     ],
-    // Sublinks de "Estudos" — para uso futuro quando houver mais peças.
-    studiesSubmenu: {
-      label: "Estudos",
-      items: [
-        {
-          label: "A estiagem de 2024",
-          caption: "Bacia do Amazonas",
-          href: "/caso-2024",
-        },
-      ],
-    },
   },
 
   // =====================================================================
