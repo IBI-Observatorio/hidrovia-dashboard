@@ -10,7 +10,7 @@ export const navigationCopy = {
     // Espelha o header de https://ibi-observatorio.org — todos os links
     // apontam para o site principal (cross-domain absoluto).
     brand: {
-      label: "Observatório de Dados",
+      label: "Observatório de Infraestrutura de Transportes",
       caption: "",
       href: "https://ibi-observatorio.org/",
     },
