@@ -11,11 +11,7 @@ export default function GlobalHeader() {
   return (
     <header
       className="sticky top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        backgroundColor: "rgba(44, 44, 44, 0.9)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-      }}
+      style={{ backgroundColor: "#2c2c2c" }}
     >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
@@ -76,7 +72,7 @@ export default function GlobalHeader() {
           className={`md:hidden overflow-hidden transition-all duration-300 ${
             open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
-          style={{ backgroundColor: "rgba(44, 44, 44, 0.95)" }}
+          style={{ backgroundColor: "#2c2c2c" }}
         >
           <div className="px-2 pt-2 pb-3 space-y-1">
             {header.links.map((link) => (
