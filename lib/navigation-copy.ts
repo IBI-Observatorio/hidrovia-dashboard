@@ -81,9 +81,10 @@ export const navigationCopy = {
       {
         title: "Navegar",
         links: [
-          { label: "Início", href: "/" },
-          { label: "Monitor Hidrológico", href: "/monitor" },
-          { label: "Estudos", href: "/caso-2024" },
+          { label: "Início",                href: "/" },
+          { label: "Monitor Hidrológico",   href: "/monitor" },
+          { label: "Calendário Histórico",  href: "/calendario-severidade" },
+          { label: "Estudos",               href: "/caso-2024" },
         ],
       },
       {

@@ -92,7 +92,7 @@ function ChartCuricuriari() {
     buildSerie(CURICURIARI_2026, 2026),
   ) as Record<string, unknown>[];
 
-  const { p10, p90, mediana } = LIMIARES.Curicuriari;
+  const { p10, p90, mediana } = LIMIARES.SGC;
 
   return (
     <ResponsiveContainer width="100%" height={280}>
@@ -150,7 +150,7 @@ function ChartHumaita() {
 // ---------------------------------------------------------------------------
 
 interface ChartHistoricoProps {
-  estacao: "Manaus" | "Itacoatiara" | "Curicuriari" | "Humaita" | "Borba" | "Manacapuru" | "PortoVelho";
+  estacao: "Manaus" | "Itacoatiara" | "SGC" | "Humaita" | "Borba" | "Manacapuru" | "PortoVelho";
   domain: [number, number];
   gatilho_lws?: number;
   p10: number;
@@ -224,8 +224,8 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
 // ---------------------------------------------------------------------------
 
 const OPCOES = [
-  { id: "duplo",         label: "Duplo: Curicuriari × Humaitá (IDN)" },
-  { id: "curicuriari",   label: "Curicuriari — Negro alto" },
+  { id: "duplo",         label: "Duplo: SGC × Humaitá (IDN)" },
+  { id: "curicuriari",   label: "SGC (Curicuriari) — Negro alto" },
   { id: "humaita",       label: "Humaitá — Rio Madeira" },
   { id: "duplo_mao_ita", label: "Duplo: Manaus × Itacoatiara (lag 22 dias)" },
   { id: "manaus",        label: "Manaus — Rio Negro (2016–2026)" },
@@ -263,15 +263,15 @@ export default function CotagramaChart() {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <p className="text-verde text-sm font-semibold mb-2">
-              Curicuriari — Negro alto
+              SGC (Curicuriari) — Negro alto
               <span className="ml-2 text-vermelho font-normal text-xs">⚠ Colapso 2026</span>
             </p>
             <ChartHistorico
-              estacao="Curicuriari"
+              estacao="SGC"
               domain={[4, 14]}
-              p10={LIMIARES.Curicuriari.p10}
-              p90={LIMIARES.Curicuriari.p90}
-              mediana={LIMIARES.Curicuriari.mediana}
+              p10={LIMIARES.SGC.p10}
+              p90={LIMIARES.SGC.p90}
+              mediana={LIMIARES.SGC.mediana}
               fallback={<ChartCuricuriari />}
             />
           </div>
@@ -295,15 +295,15 @@ export default function CotagramaChart() {
       {opcao === "curicuriari" && (
         <div>
           <p className="text-verde text-sm font-semibold mb-2">
-            Curicuriari — Negro alto
+            SGC (Curicuriari) — Negro alto
             <span className="ml-2 text-vermelho font-normal text-xs">⚠ Colapso 2026</span>
           </p>
           <ChartHistorico
-            estacao="Curicuriari"
+            estacao="SGC"
             domain={[4, 14]}
-            p10={LIMIARES.Curicuriari.p10}
-            p90={LIMIARES.Curicuriari.p90}
-            mediana={LIMIARES.Curicuriari.mediana}
+            p10={LIMIARES.SGC.p10}
+            p90={LIMIARES.SGC.p90}
+            mediana={LIMIARES.SGC.mediana}
             fallback={<ChartCuricuriari />}
           />
         </div>

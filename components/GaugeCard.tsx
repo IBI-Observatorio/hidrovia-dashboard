@@ -19,7 +19,7 @@ const SEMAFORO_CORES = {
 const TOOLTIP_ESTACAO: Partial<Record<Estacao, string>> = {
   Manaus:      "Estação-referência histórica do Rio Negro. A marca de 17,7 m é associada historicamente ao início do período de baixas águas.",
   Itacoatiara: "Ponto de controle real da calha navegável (Tabocal). Em 2024, caiu 22 dias depois que Manaus já subia.",
-  Curicuriari: "Estação SGC — barômetro do Negro alto. Indicador do regime Driver Norte, que comanda a dessincronização 2026.",
+  SGC:         "São Gabriel da Cachoeira — barômetro do Negro alto. Indicador do regime Driver Norte, que comanda a dessincronização 2026.",
   Humaita:     "Indicador do Rio Madeira — barômetro do Driver Sul. Em 2024 foi a bacia mais depletada; em 2026 está acima da média.",
   Manacapuru:  "Barômetro do Rio Solimões — principal artéria da calha central. Reflete o regime geral da bacia.",
   PortoVelho:  "Upstream do Madeira. Excedentes aqui chegam a Humaitá em ~7 dias.",

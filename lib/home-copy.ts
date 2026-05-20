@@ -42,6 +42,16 @@ export const homeCopy = {
         cta: "Ler o estudo →",
         href: "/caso-2024",
       },
+      {
+        kind: "calendar",
+        eyebrow: "Série histórica",
+        title: "Calendário de Severidade",
+        description:
+          "Heatmap centenário (1927–2026) de três estações da bacia: identifique instantaneamente os anos mais secos e cheios de cada rio.",
+        meta: "Itacoatiara · Lábrea · Manicoré",
+        cta: "Ver o calendário →",
+        href: "/calendario-severidade",
+      },
     ],
   },
 

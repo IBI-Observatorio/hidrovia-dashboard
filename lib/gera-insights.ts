@@ -1,6 +1,12 @@
 // Lógica pura de geração de insights — sem JSX, usada pelo componente e pela API
 import type { DadosEstacao } from "./dados-historicos";
-import { calculaIDN } from "./calcula-idn";
+import { calculaIDNSimples } from "./calcula-idn";
+import { CALIBRACAO_IDN } from "./limiares-idn";
+
+// Limiares calibrados empiricamente (GMM-3 sobre 2916 dias 2016-2023).
+// Usa as mesmas fronteiras do classificaIDN para consistência interna.
+const FRONTEIRA_SUL   = CALIBRACAO_IDN.fronteiras[0]; // ≈ -0.18
+const FRONTEIRA_NORTE = CALIBRACAO_IDN.fronteiras[1]; // ≈ +0.49
 
 export interface InsightData {
   tipo:    "critico" | "alerta" | "info" | "positivo";
@@ -10,25 +16,33 @@ export interface InsightData {
 }
 
 export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[] {
-  const cur = dados.Curicuriari;
+  const sgc = dados.SGC;
   const hum = dados.Humaita;
   const mao = dados.Manaus;
   const ita = dados.Itacoatiara;
   const pvo = dados.PortoVelho;
 
-  if (!cur || !hum || !mao || !ita) return [];
+  if (!sgc || !hum || !mao || !ita) return [];
 
-  const idn       = calculaIDN(cur.cota_m, hum.cota_m);
+  const idn = calculaIDNSimples(
+    {
+      SGC:        sgc.cota_m,
+      Humaita:    hum.cota_m,
+      PortoVelho: pvo?.cota_m,
+      Borba:      dados.Borba?.cota_m,
+    },
+    sgc.ultima_atualizacao
+  );
   const divergencia = Math.abs(mao.delta_2025 - ita.delta_2025);
   const insights: InsightData[] = [];
 
   // Colapso histórico do Negro alto
-  if (cur.cota_m < 7.96) {
+  if (sgc.cota_m < 7.96) {
     insights.push({
       tipo:    "critico",
       titulo:  "Colapso histórico do Negro alto",
-      texto:   `Curicuriari em ${(cur.cota_m * 100).toFixed(0)} cm — abaixo do P10 histórico (796 cm). Em 17/mar/2026 atingiu 620 cm, 927 cm abaixo do mesmo dia de 2024. Padrão sem precedente na série.`,
-      estacao: "Curicuriari",
+      texto:   `São Gabriel da Cachoeira em ${(sgc.cota_m * 100).toFixed(0)} cm — abaixo do P10 histórico (796 cm). Em 17/mar/2026 atingiu 620 cm, 927 cm abaixo do mesmo dia de 2024. Padrão sem precedente na série.`,
+      estacao: "SGC",
     });
   }
 
@@ -52,18 +66,19 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
     });
   }
 
-  // Dessincronização Norte-Sul alta
-  if (idn > 0.3) {
+  // Dessincronização Norte-Sul alta (limiares calibrados GMM)
+  if (idn > FRONTEIRA_NORTE) {
+    const intensidade = idn > FRONTEIRA_NORTE * 2 ? "inédita" : "expressiva";
     insights.push({
       tipo:    "alerta",
-      titulo:  `Dessincronização Norte-Sul: IDN = +${idn.toFixed(2)} (Driver Norte)`,
-      texto:   `Negro alto dramaticamente mais depleted que o Madeira. Curicuriari ${cur.delta_2025} cm abaixo de 2025; Humaitá ${hum.delta_2025 >= 0 ? "+" : ""}${hum.delta_2025} cm vs 2025. Padrão inédito em 2026.`,
+      titulo:  `Dessincronização Norte-Sul ${intensidade}: IDN = +${idn.toFixed(2)} (Driver Norte)`,
+      texto:   `IDN supera fronteira calibrada de +${FRONTEIRA_NORTE.toFixed(2)} (GMM/2016-2023). Negro+Branco dramaticamente mais depleted que o Madeira+Purus. SGC ${sgc.delta_2025} cm abaixo de 2025; Humaitá ${hum.delta_2025 >= 0 ? "+" : ""}${hum.delta_2025} cm vs 2025.`,
     });
-  } else if (idn < -0.3) {
+  } else if (idn < FRONTEIRA_SUL) {
     insights.push({
       tipo:    "alerta",
       titulo:  `Dessincronização Norte-Sul: IDN = ${idn.toFixed(2)} (Driver Sul)`,
-      texto:   `Madeira mais depleted que o Negro alto — padrão similar a 2024. Monitorar Humaitá e Porto Velho.`,
+      texto:   `IDN abaixo da fronteira calibrada de ${FRONTEIRA_SUL.toFixed(2)} (GMM/2016-2023). Madeira+Purus mais depleted que o Negro+Branco — padrão similar a 2024. Monitorar Humaitá e Porto Velho.`,
     });
   }
 

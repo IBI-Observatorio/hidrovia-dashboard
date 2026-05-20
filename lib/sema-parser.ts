@@ -19,12 +19,14 @@ export interface BoletimSEMA {
   erro?:          string;
 }
 
-// Mapa de variações de nome nos boletins SEMA
+// Mapa de variações de nome nos boletins SEMA → chaves canônicas no projeto
+// Boletins SEMA chamam a régua do Negro alto de "Curicuriari", mas a estação
+// oficial ANA correspondente é SGC (14320001).
 const ALIASES: Record<string, string> = {
   "manaus":       "Manaus",
-  "curicuriari":  "Curicuriari",
-  "curicuriarí":  "Curicuriari",
-  "sgc":          "Curicuriari",
+  "curicuriari":  "SGC",
+  "curicuriarí":  "SGC",
+  "sgc":          "SGC",
   "tabatinga":    "Tabatinga",
   "tefé":         "Tefé",
   "tefe":         "Tefé",
@@ -40,7 +42,7 @@ const ALIASES: Record<string, string> = {
 
 const RIOS: Record<string, string> = {
   "Manaus":      "Rio Negro",
-  "Curicuriari": "Negro alto",
+  "SGC":         "Rio Negro (alto)",
   "Tabatinga":   "Rio Solimões",
   "Tefé":        "Rio Solimões",
   "Manacapuru":  "Rio Solimões",
@@ -60,7 +62,7 @@ function extraiNum(s: string): number | null {
 }
 
 // Tenta extrair a data do boletim a partir do texto
-function extraiData(texto: string): string {
+export function extraiData(texto: string): string {
   // Padrões: "08/05/2026", "8 de maio de 2026"
   const m1 = texto.match(/(\d{2})\/(\d{2})\/(\d{4})/);
   if (m1) return `${m1[3]}-${m1[2]}-${m1[1]}`;
@@ -80,7 +82,7 @@ function extraiData(texto: string): string {
 }
 
 // Extrai número do boletim
-function extraiNumeroBoletim(texto: string): number | null {
+export function extraiNumeroBoletim(texto: string): number | null {
   const m = texto.match(/boletim\s+(?:n[°º.]?\s*)?(\d+)/i);
   return m ? parseInt(m[1], 10) : null;
 }
@@ -113,7 +115,7 @@ function parseEstrategia1(linhas: string[]): LeituraBoletim[] {
 }
 
 // Estratégia 2: busca linha com nome da estação e captura números nas vizinhas
-function parseEstrategia2(texto: string): LeituraBoletim[] {
+export function parseEstrategia2(texto: string): LeituraBoletim[] {
   const resultados: LeituraBoletim[] = [];
 
   for (const [alias, nome] of Object.entries(ALIASES)) {

@@ -27,7 +27,7 @@ export const dashboardCopy = {
       {
         marker: "🔵",
         label: "Norte da bacia",
-        stations: "Curicuriari, Manaus",
+        stations: "SGC, Manaus",
         description:
           "Rios alimentados por chuva equatorial. Sobem primeiro no ciclo anual.",
       },
@@ -92,7 +92,7 @@ export const dashboardCopy = {
     subtitle:
       "Mede a defasagem entre os ciclos hidrológicos do Norte e do Sul da bacia. Valores próximos de zero indicam bacia em fase; valores extremos indicam regimes desencontrados.",
     formula:
-      "IDN = posição relativa de Curicuriari − posição relativa de Humaitá. Varia entre −1 e +1.",
+      "IDN = média Sul − média Norte (percentis dia-do-ano). Pode extrapolar ±1 em regimes extremos.",
     zones: [
       {
         range: "−1,0 a −0,3",
@@ -173,7 +173,7 @@ export const dashboardCopy = {
       options: [
         {
           value: "curicuriari-humaita",
-          label: "Curicuriari × Humaitá",
+          label: "SGC × Humaitá",
           caption: "Comparação Norte–Sul: dois extremos da bacia",
           isDefault: true,
         },
@@ -250,7 +250,7 @@ export const dashboardCopy = {
     items: [
       {
         q: "O que é o Índice de Dessincronização Norte–Sul (IDN)?",
-        a: "É uma métrica desenvolvida pelo Observatório IBI que mede o quanto os ciclos hidrológicos das estações de referência do Norte (Curicuriari) e do Sul (Humaitá) da bacia estão em fase. Varia de −1 a +1. Próximo de zero, a bacia opera em fase; valores extremos indicam regimes desencontrados.",
+        a: "É uma métrica desenvolvida pelo Observatório IBI que mede o quanto os ciclos hidrológicos das sub-bacias Norte (Negro+Branco) e Sul (Madeira+Purus) da bacia estão em fase. Usa percentis dia-do-ano (referência climatológica 2016–2023) para 11 estações da rede ANA, agregadas por média ponderada. Valores próximos de zero indicam regime sincronizado; valores extremos (|IDN|>1) indicam dessincronização inédita na série.",
       },
       {
         q: "Por que monitorar Manaus e Itacoatiara em conjunto?",

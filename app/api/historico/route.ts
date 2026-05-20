@@ -186,9 +186,9 @@ export async function GET(request: NextRequest) {
       if (ano === 2026)     pts = merge(pts, todas2026);
       resultado[ano] = pts;
     }
-  } else if (estacao === "Curicuriari") {
+  } else if (estacao === "SGC") {
     // HidroWeb cobre 2016–out/2025 (consistido); sem telemetria disponível
-    const hidroweb  = mapToArray(lerCSVSimples("curicuriari_hidroweb.csv", anos));
+    const hidroweb  = mapToArray(lerCSVSimples("sgc_hidroweb.csv", anos));
     const sema2026  = anos.has(2026) ? lerSEMAConsolidado("CUR") : [];
     const todas2026 = anos.has(2026) ? lerTodasEstacoes2026("CUR") : [];
     for (const ano of anos) {

@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import GaugeCard from "@/components/GaugeCard";
 import CotagramaChart from "@/components/CotagramaChart";
 import DessincronizacaoGauge from "@/components/DessincronizacaoGauge";
+import IDNGrafico90Dias from "@/components/IDNGrafico90Dias";
+import BannerDefasagem from "@/components/BannerDefasagem";
 import AlertaManausIta from "@/components/AlertaManausIta";
 import InsightsPanel from "@/components/InsightsPanel";
 import SidebarNav from "@/components/SidebarNav";
 import Tooltip from "@/components/Tooltip";
 import { PREVISAO_2026 } from "@/lib/dados-historicos";
-import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA } from "@/lib/fetch-dados";
+import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA, fetchCotasIDN, fetchVazoesIDN, type CotaIDN, type VazaoIDN } from "@/lib/fetch-dados";
+import type { EstacaoComDOY } from "@/lib/sub-bacias";
+import type { EstacaoVazao } from "@/lib/sub-bacias-vazao";
 import { geraInsights } from "@/lib/gera-insights";
 import { dashboardCopy } from "@/lib/dashboard-copy";
 import { navigationCopy } from "@/lib/navigation-copy";
@@ -27,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 const ESTACOES_ORDEM: Estacao[] = [
-  "Manaus", "Itacoatiara", "Curicuriari", "Humaita",
+  "Manaus", "Itacoatiara", "SGC", "Humaita",
   "Manacapuru", "PortoVelho", "Borba",
 ];
 
@@ -35,13 +39,26 @@ export default async function MonitorPage() {
   let dados: Record<string, DadosEstacao>;
   let fonteANA = false;
   let fonteSEMA = false;
+  let estacoesVivas = 0;
   let boletimSEMA: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>> = null;
 
+  // Painéis, IDN cota e IDN vazão buscam em paralelo (cache 6h compartilhado)
+  let cotasIDN:  Partial<Record<EstacaoComDOY, CotaIDN>>   = {};
+  let vazoesIDN: Partial<Record<EstacaoVazao,  VazaoIDN>>  = {};
   try {
-    dados = await fetchTodasEstacoes();
-    fonteANA = Object.values(dados).some(
-      (d) => d.ultima_atualizacao >= new Date(Date.now() - 7 * 86400000).toISOString().split("T")[0]
-    );
+    const [d, idn, vaz] = await Promise.all([
+      fetchTodasEstacoes(),
+      fetchCotasIDN(),
+      fetchVazoesIDN(),
+    ]);
+    dados = d;
+    cotasIDN = idn;
+    vazoesIDN = vaz;
+    const hoje = new Date().toISOString().split("T")[0];
+    estacoesVivas = Object.values(dados).filter(
+      (d) => d.ultima_atualizacao >= hoje
+    ).length;
+    fonteANA = estacoesVivas > 0;
   } catch {
     const { DADOS_ATUAIS } = await import("@/lib/dados-historicos");
     dados = { ...DADOS_ATUAIS };
@@ -80,7 +97,7 @@ export default async function MonitorPage() {
         <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start gap-2">
           <span className="text-ouro text-xs shrink-0 font-bold">2026</span>
           <p className="text-ouro text-xs">
-            <strong>Dessincronização Norte-Sul sem precedente:</strong> Negro alto (Curicuriari) 927 cm
+            <strong>Dessincronização Norte-Sul sem precedente:</strong> Negro alto (SGC) 927 cm
             abaixo de 2024; Madeira (Humaitá) 679 cm acima. IDN atual: +0,58 — padrão Driver Norte.
           </p>
         </div>
@@ -102,18 +119,42 @@ export default async function MonitorPage() {
             </p>
 
             {/* Status ANA / SEMA / timestamp */}
-            <div className="flex items-center gap-3 mt-2 text-xs">
-              <span className={`flex items-center gap-1.5 ${fonteANA ? "text-verde" : "text-gray-500"}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${fonteANA ? "bg-verde animate-pulse" : "bg-gray-600"}`} />
-                ANA
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs">
+              {/* Badge API ANA */}
+              <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[11px] font-medium ${
+                fonteANA
+                  ? "bg-verde/10 border-verde/30 text-verde"
+                  : "bg-gray-800 border-gray-700 text-gray-500"
+              }`}>
+                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${fonteANA ? "bg-verde animate-pulse" : "bg-gray-600"}`} />
+                {fonteANA
+                  ? `API ANA · ${estacoesVivas}/7 ao vivo`
+                  : "API ANA · dados estáticos"}
               </span>
-              <span className={`flex items-center gap-1.5 ${fonteSEMA ? "text-verde" : "text-gray-500"}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${fonteSEMA ? "bg-verde" : "bg-gray-600"}`} />
-                SEMA
+
+              {/* Badge SEMA */}
+              <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[11px] font-medium ${
+                fonteSEMA
+                  ? "bg-verde/10 border-verde/30 text-verde"
+                  : "bg-gray-800 border-gray-700 text-gray-500"
+              }`}>
+                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${fonteSEMA ? "bg-verde" : "bg-gray-600"}`} />
+                {fonteSEMA ? "Boletim SEMA ativo" : "Sem boletim SEMA"}
               </span>
-              <span className="flex items-center gap-1 text-gray-500">
+
+              {/* Última atualização */}
+              <span className="inline-flex items-center gap-1 text-gray-500 text-[11px]">
                 <RefreshCw size={10} /> {ultimaAtualizacao}
               </span>
+            </div>
+
+            {/* Banner de status dos dados */}
+            <div className="mt-3">
+              <BannerDefasagem
+                ultimaAtualizacao={ultimaAtualizacao}
+                fonteANA={fonteANA}
+                fonteSEMA={fonteSEMA}
+              />
             </div>
 
             {/* Como ler */}
@@ -207,7 +248,10 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel2.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel2.subtitle}</p>
             </div>
-            <DessincronizacaoGauge dados={dados} />
+            <DessincronizacaoGauge dados={dados} cotasIDN={cotasIDN} vazoesIDN={vazoesIDN} />
+            <div className="mt-6">
+              <IDNGrafico90Dias />
+            </div>
             <p className="text-gray-500 text-xs mt-3 max-w-2xl">
               {dashboardCopy.panel2.interpretation}
             </p>

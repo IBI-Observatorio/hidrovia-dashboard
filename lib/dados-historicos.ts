@@ -1,7 +1,10 @@
 // Dados hardcoded para o MVP do Sprint 1
+// Convenção: as constantes CURICURIARI_* contêm a série da estação ANA 14320001
+// (São Gabriel da Cachoeira/SGC), conhecida localmente como "Curicuriari".
+// A estação ANA 14330000 (CURICURIARI oficial) é tratada separadamente.
 
 // ---------------------------------------------------------------------------
-// Curicuriari (Negro alto) — cotas em cm
+// SGC (São Gabriel da Cachoeira) — cotas em cm — Negro alto
 // ---------------------------------------------------------------------------
 export const CURICURIARI_2026: Record<string, number> = {
   "2026-01-06": 640, "2026-01-16": 890, "2026-01-27": 960,
@@ -112,8 +115,8 @@ export const DADOS_ATUAIS: Record<string, DadosEstacao> = {
     cota_m: 11.37, variacao_24h: -12, delta_2025: -91, delta_2024: +253,
     ultima_atualizacao: "2026-05-07",
   },
-  Curicuriari: {
-    nome: "Curicuriari (SGC)", rio: "Negro alto",
+  SGC: {
+    nome: "São Gabriel da Cachoeira", rio: "Rio Negro (alto)",
     cota_m: 5.50, variacao_24h: -5, delta_2025: -718, delta_2024: -572,
     ultima_atualizacao: "2026-04-30",
   },
@@ -143,7 +146,7 @@ export const DADOS_ATUAIS: Record<string, DadosEstacao> = {
 // Série IDN histórica para o gráfico (calculada off-line)
 // ---------------------------------------------------------------------------
 export const IDN_HISTORICO: { data: string; idn: number; ano: number }[] = [
-  // 2024 — driver Sul (Madeira mais depleted, Curicuriari normal)
+  // 2024 — driver Sul (Madeira mais depleted, Negro normal)
   { data: "2024-07-01", idn:  0.05, ano: 2024 },
   { data: "2024-08-01", idn: -0.12, ano: 2024 },
   { data: "2024-09-01", idn: -0.28, ano: 2024 },

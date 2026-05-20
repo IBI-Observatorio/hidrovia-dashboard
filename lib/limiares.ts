@@ -1,7 +1,7 @@
 export type Estacao =
   | "Manaus"
   | "Itacoatiara"
-  | "Curicuriari"
+  | "SGC"
   | "Humaita"
   | "Manacapuru"
   | "PortoVelho"
@@ -18,7 +18,7 @@ export interface LimiarEstacao {
 export const LIMIARES: Record<Estacao, LimiarEstacao> = {
   Manaus:      { p10: 17.38, mediana: 24.00, p90: 28.50, gatilho_lws: 17.70, unidade: "m" },
   Itacoatiara: { p10:  3.77, mediana:  9.00, p90: 13.00, unidade: "m" },
-  Curicuriari: { p10:  7.96, mediana:  9.29, p90: 10.53, unidade: "m" }, // cm/100
+  SGC:         { p10:  7.96, mediana:  9.29, p90: 10.53, unidade: "m" }, // São Gabriel da Cachoeira (Negro alto)
   Humaita:     { p10: 11.68, mediana: 19.00, p90: 22.00, unidade: "m" },
   Manacapuru:  { p10: 10.15, mediana: 16.50, p90: 19.60, unidade: "m" },
   PortoVelho:  { p10:  7.00, mediana: 13.00, p90: 17.00, unidade: "m" },
@@ -28,7 +28,7 @@ export const LIMIARES: Record<Estacao, LimiarEstacao> = {
 export const NOMES_DISPLAY: Record<Estacao, string> = {
   Manaus:      "Manaus",
   Itacoatiara: "Itacoatiara",
-  Curicuriari: "Curicuriari (SGC)",
+  SGC:         "São Gabriel da Cachoeira",
   Humaita:     "Humaitá",
   Manacapuru:  "Manacapuru",
   PortoVelho:  "Porto Velho",
@@ -38,7 +38,7 @@ export const NOMES_DISPLAY: Record<Estacao, string> = {
 export const RIO_DISPLAY: Record<Estacao, string> = {
   Manaus:      "Rio Negro",
   Itacoatiara: "Rio Amazonas",
-  Curicuriari: "Negro alto",
+  SGC:         "Rio Negro (alto)",
   Humaita:     "Rio Madeira",
   Manacapuru:  "Rio Solimões",
   PortoVelho:  "Rio Madeira",
@@ -48,6 +48,13 @@ export const RIO_DISPLAY: Record<Estacao, string> = {
 export function posicaoRelativa(cota_m: number, estacao: Estacao): number {
   const { p10, p90 } = LIMIARES[estacao];
   return Math.max(0, Math.min(1, (cota_m - p10) / (p90 - p10)));
+}
+
+// Versão sem clamp — preserva extremos para o IDN distinguir
+// "abaixo do P10" de "colapso histórico inédito".
+export function posicaoRelativaRaw(cota_m: number, estacao: Estacao): number {
+  const { p10, p90 } = LIMIARES[estacao];
+  return (cota_m - p10) / (p90 - p10);
 }
 
 export type Semaforo = "normal" | "atencao" | "critico";
