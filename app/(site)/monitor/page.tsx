@@ -54,7 +54,8 @@ export default async function MonitorPage() {
     dados = d;
     cotasIDN = idn;
     vazoesIDN = vaz;
-    const hoje = new Date().toISOString().split("T")[0];
+    // Usa fuso da bacia (Manaus) — evita falso "dados estáticos" no Railway (UTC)
+    const hoje = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
     estacoesVivas = Object.values(dados).filter(
       (d) => d.ultima_atualizacao >= hoje
     ).length;
