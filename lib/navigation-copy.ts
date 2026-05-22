@@ -140,6 +140,24 @@ export const navigationCopy = {
       ogDescription:
         "Estudo de caso do Observatório IBI sobre o ciclo de estiagem mais severo da história da bacia.",
     },
+    calendarioLws2026: {
+      title:
+        "Calendário LWS 2026 — Projeção da descida de Manaus · Observatório IBI",
+      description:
+        "Projeção forward da recessão do rio Negro em Manaus durante o ciclo 2026, com data esperada de cruzamento do gatilho regulatório de 17,7m (LWS/ANTAQ).",
+      ogTitle: "Calendário LWS 2026 — Quando o gatilho ANTAQ será acionado",
+      ogDescription:
+        "Modelo próprio do Observatório IBI projeta a descida de Manaus em 2026 com banda de incerteza, antecipando a janela operacional para navegação.",
+    },
+    relatorioAntaq: {
+      title:
+        "Relatório de Risco ANTAQ — Tese regulatória do Observatório IBI",
+      description:
+        "Documentação técnica da defasagem Manaus–Itacoatiara, projeção do ciclo 2026 e metodologia do IRC (Índice de Risco de Calado). Peça institucional para análise regulatória.",
+      ogTitle: "Relatório de Risco ANTAQ — Observatório IBI",
+      ogDescription:
+        "Tese regulatória sustentada pelo IRC, modelo próprio de recessão e evidência do lag 2024 — base técnica para revisão do parâmetro LWS.",
+    },
   },
 } as const;
 

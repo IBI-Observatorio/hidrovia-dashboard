@@ -19,6 +19,7 @@ interface SeverityCalendarJSON {
 
 const STATION_OPTIONS: { key: SeverityStation; label: string; sub: string; group: string }[] = [
   { key: "Itacoatiara", label: "Itacoatiara", sub: "Rio Amazonas",    group: "Calha Principal" },
+  { key: "SGC",         label: "S. G. Cachoeira", sub: "Rio Negro alto", group: "Afluentes Norte" },
   { key: "Labrea",      label: "Lábrea",      sub: "Rio Purus",       group: "Afluentes Sul"   },
   { key: "Manicore",    label: "Manicoré",    sub: "Rio Madeira",     group: "Afluentes Sul"   },
   { key: "Humaita",     label: "Humaitá",     sub: "Rio Madeira",     group: "Afluentes Sul"   },

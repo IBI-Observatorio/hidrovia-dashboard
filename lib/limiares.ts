@@ -13,16 +13,27 @@ export interface LimiarEstacao {
   p90: number;
   gatilho_lws?: number;
   unidade: "m" | "cm";
+  // Sprint Dados v1 (21/05/2026): metadata vinda de HidroInventarioEstacoes.
+  // Estes campos são opcionais e podem ser preenchidos em tempo de build
+  // (script) ou hidratados em runtime via `buscaInventarioPorChave`. Quando
+  // disponíveis, habilitam: vazão específica (q = Q/area_drenagem_km2),
+  // mapa geo-referenciado, e análise hipsométrica.
+  area_drenagem_km2?: number;
+  latitude?:          number;
+  longitude?:         number;
+  altitude_m?:        number;
 }
 
+// Sprint Dados v1 (21/05/2026): campos geo hidratados via scripts/hidrate-limiares.mjs
+// Fonte: HidroInventarioEstacoes/v1 da API ANA (consultado 21/05/2026)
 export const LIMIARES: Record<Estacao, LimiarEstacao> = {
-  Manaus:      { p10: 17.38, mediana: 24.00, p90: 28.50, gatilho_lws: 17.70, unidade: "m" },
-  Itacoatiara: { p10:  3.77, mediana:  9.00, p90: 13.00, unidade: "m" },
-  SGC:         { p10:  7.96, mediana:  9.29, p90: 10.53, unidade: "m" }, // São Gabriel da Cachoeira (Negro alto)
-  Humaita:     { p10: 11.68, mediana: 19.00, p90: 22.00, unidade: "m" },
-  Manacapuru:  { p10: 10.15, mediana: 16.50, p90: 19.60, unidade: "m" },
-  PortoVelho:  { p10:  7.00, mediana: 13.00, p90: 17.00, unidade: "m" },
-  Borba:       { p10:  5.00, mediana: 14.00, p90: 20.00, unidade: "m" },
+  Manaus:      { p10: 17.38, mediana: 24.00, p90: 28.50, gatilho_lws: 17.70, unidade: "m", area_drenagem_km2:  712_000, latitude:  -3.1383, longitude: -60.0272 },
+  Itacoatiara: { p10:  3.77, mediana:  9.00, p90: 13.00,                      unidade: "m", area_drenagem_km2: 4_350_000, latitude:  -3.1539, longitude: -58.4114 },
+  SGC:         { p10:  7.96, mediana:  9.29, p90: 10.53,                      unidade: "m", area_drenagem_km2:  193_000, latitude:  -0.1367, longitude: -67.0856 }, // São Gabriel da Cachoeira (Negro alto)
+  Humaita:     { p10: 11.68, mediana: 19.00, p90: 22.00,                      unidade: "m", area_drenagem_km2: 1_090_000, latitude:  -7.5028, longitude: -63.0183 },
+  Manacapuru:  { p10: 10.15, mediana: 16.50, p90: 19.60,                      unidade: "m", area_drenagem_km2: 2_200_000, latitude:  -3.3106, longitude: -60.6094 },
+  PortoVelho:  { p10:  7.00, mediana: 13.00, p90: 17.00,                      unidade: "m", area_drenagem_km2:  976_000, latitude:  -8.7483, longitude: -63.9169, altitude_m: 42.88 },
+  Borba:       { p10:  5.00, mediana: 14.00, p90: 20.00,                      unidade: "m", area_drenagem_km2: 1_310_000, latitude:  -4.3892, longitude: -59.5986 },
 };
 
 export const NOMES_DISPLAY: Record<Estacao, string> = {

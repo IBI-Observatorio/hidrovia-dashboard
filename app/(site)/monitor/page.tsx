@@ -8,8 +8,18 @@ import AlertaManausIta from "@/components/AlertaManausIta";
 import InsightsPanel from "@/components/InsightsPanel";
 import SidebarNav from "@/components/SidebarNav";
 import Tooltip from "@/components/Tooltip";
-import { PREVISAO_2026 } from "@/lib/dados-historicos";
-import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA, fetchCotasIDN, fetchVazoesIDN, type CotaIDN, type VazaoIDN } from "@/lib/fetch-dados";
+import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA, fetchCotasIDN, fetchVazoesIDN, fetchPrevisao2026, fetchSerieCaracarai, type CotaIDN, type VazaoIDN } from "@/lib/fetch-dados";
+import AlertaOndaBranco from "@/components/AlertaOndaBranco";
+import IRCWidget from "@/components/IRCWidget";
+import IRCDuploWidget from "@/components/IRCDuploWidget";
+import IRCInterativo from "@/components/IRCInterativo";
+import { tokenAssinanteAtual, nomeClienteDoToken } from "@/lib/auth-assinante";
+import { detectaOndaBranco } from "@/lib/onda-branco";
+import { calculaIDNSimples } from "@/lib/calcula-idn";
+import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
+import { detectaFaseCiclo, calculaIRC } from "@/lib/irc";
+import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
+import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
 import type { EstacaoComDOY } from "@/lib/sub-bacias";
 import type { EstacaoVazao } from "@/lib/sub-bacias-vazao";
 import { geraInsights } from "@/lib/gera-insights";
@@ -42,18 +52,23 @@ export default async function MonitorPage() {
   let estacoesVivas = 0;
   let boletimSEMA: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>> = null;
 
-  // Painéis, IDN cota e IDN vazão buscam em paralelo (cache 6h compartilhado)
+  // Painéis, IDN cota e IDN vazão buscam em paralelo (cache 6h compartilhado).
+  // Previsão 2026 é lida do cache SGB (fonte dinâmica) ou cai para hardcoded.
   let cotasIDN:  Partial<Record<EstacaoComDOY, CotaIDN>>   = {};
   let vazoesIDN: Partial<Record<EstacaoVazao,  VazaoIDN>>  = {};
+  let serieCaracarai: Awaited<ReturnType<typeof fetchSerieCaracarai>> = [];
+  const previsao = await fetchPrevisao2026();
   try {
-    const [d, idn, vaz] = await Promise.all([
+    const [d, idn, vaz, caracarai] = await Promise.all([
       fetchTodasEstacoes(),
       fetchCotasIDN(),
       fetchVazoesIDN(),
+      fetchSerieCaracarai(14),
     ]);
     dados = d;
     cotasIDN = idn;
     vazoesIDN = vaz;
+    serieCaracarai = caracarai;
     // Usa fuso da bacia (Manaus) — evita falso "dados estáticos" no Railway (UTC)
     const hoje = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
     estacoesVivas = Object.values(dados).filter(
@@ -77,6 +92,58 @@ export default async function MonitorPage() {
 
   const insights = geraInsights(dados);
   const criticos = insights.filter((i) => i.tipo === "critico").length;
+
+  // ─── IRC snapshot — calcula em tempo real para o widget no topo do monitor
+  const idnAtual = dados.SGC && dados.Humaita
+    ? calculaIDNSimples(
+        { SGC: dados.SGC.cota_m, Humaita: dados.Humaita.cota_m, PortoVelho: dados.PortoVelho?.cota_m, Borba: dados.Borba?.cota_m },
+        dados.SGC.ultima_atualizacao,
+      )
+    : 0;
+  const ondaBranco = serieCaracarai.length >= 8
+    ? detectaOndaBranco(serieCaracarai, 7, idnAtual)   // v2: lag por regime
+    : null;
+  const cruzamento17_7 = projetaDataCruzamento17_7(
+    previsao.manaus_pico_cheia.media,
+    `${new Date().getUTCFullYear()}-06-15`,
+  );
+  const etaDiasCruz = cruzamento17_7.central
+    ? Math.round(
+        (new Date(cruzamento17_7.central).getTime() - Date.now()) / 86400000,
+      )
+    : null;
+  const hojeISO = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
+  const ircSnapshot = {
+    cotaManaus_m:        dados.Manaus?.cota_m ?? 0,
+    idn:                 idnAtual,
+    severidade_onda:     ondaBranco?.severidade ?? "nenhuma" as const,
+    severidade_onda_continua: ondaBranco?.severidade_continua,
+    var_onda_m:          ondaBranco?.var_total_m ?? 0,
+    anomalia_pp:         previsao.anomalia_pp_negro,
+    eta_dias_cruzamento: etaDiasCruz,
+    fase_ciclo:          detectaFaseCiclo(hojeISO),
+  };
+
+  // ─── IRC-Tabocal v3 (ancorado em Itacoatiara) ─────────────────────────────
+  const cruzTabocal = previsao.itacoatiara_pico
+    ? projetaCruzamentoTabocal(previsao.itacoatiara_pico, `${new Date().getUTCFullYear()}-06-15`)
+    : { central: null, min: null, max: null };
+  const etaDiasTabocal = cruzTabocal.central
+    ? Math.round((new Date(cruzTabocal.central).getTime() - Date.now()) / 86400000)
+    : null;
+  const ircTabocalSnap = {
+    cotaItacoatiara_m:           dados.Itacoatiara?.cota_m ?? 0,
+    cotaManaus_m:                dados.Manaus?.cota_m ?? 0,
+    idn:                         idnAtual,
+    severidade_onda:             ondaBranco?.severidade ?? "nenhuma" as const,
+    severidade_onda_continua:    ondaBranco?.severidade_continua,
+    var_onda_m:                  ondaBranco?.var_total_m ?? 0,
+    anomalia_pp:                 previsao.anomalia_pp_negro,
+    eta_dias_cruzamento_tabocal: etaDiasTabocal,
+  };
+  const rTabocal = calculaIRCTabocal(ircTabocalSnap);
+  const rManaus  = calculaIRC(ircSnapshot);
+  const divergencia = divergenciaIRC(rManaus.irc, rTabocal.irc);
 
   return (
     <>
@@ -149,6 +216,11 @@ export default async function MonitorPage() {
               </span>
             </div>
 
+            {/* Alerta Onda Branco — só renderiza se detector dispara */}
+            <div className="mt-3">
+              <AlertaOndaBranco serieCaracarai={serieCaracarai} />
+            </div>
+
             {/* Banner de status dos dados */}
             <div className="mt-3">
               <BannerDefasagem
@@ -186,6 +258,24 @@ export default async function MonitorPage() {
 
         {/* Painéis */}
         <main className="flex flex-col gap-16 min-w-0">
+
+          {/* ── IRC v3.3 — Interativo (assinantes parametrizam calado-alvo) ── */}
+          <section id="irc" className="scroll-mt-20">
+            {await (async () => {
+              const tokenAss = await tokenAssinanteAtual();
+              return (
+                <IRCInterativo
+                  snapshotBase={ircTabocalSnap}
+                  irc_manaus={rManaus.irc}
+                  irc_manaus_faixa={rManaus.faixa}
+                  isAssinante={tokenAss !== null}
+                  nomeAssinante={nomeClienteDoToken(tokenAss)}
+                  picoItacoatiara_m={previsao.itacoatiara_pico}
+                  picoData={`${new Date().getUTCFullYear()}-06-15`}
+                />
+              );
+            })()}
+          </section>
 
           {/* ── PAINEL 1: RÉGUAS ATUAIS ── */}
           <section id="reguas-atuais" className="scroll-mt-20">
@@ -309,37 +399,44 @@ export default async function MonitorPage() {
             </div>
             <div className="grid md:grid-cols-2 gap-5">
               <div className="bg-azul-medio rounded-lg p-5">
-                <p className="text-gray-500 text-xs mb-4">
-                  SGB/CPRM — 18° Boletim SAH Amazonas · 05/mai/2026
-                </p>
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  <p className="text-gray-500 text-xs">{previsao.fonte}</p>
+                  <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
+                    previsao.fonte_dinamica
+                      ? "bg-verde/15 text-verde border border-verde/30"
+                      : "bg-gray-800 text-gray-500 border border-gray-700"
+                  }`}>
+                    {previsao.fonte_dinamica ? "ao vivo" : "fallback"}
+                  </span>
+                </div>
                 <div className="space-y-3">
                   <div className="bg-azul-marinho rounded-lg p-3">
                     <p className="text-gray-400 text-xs mb-0.5">
                       {dashboardCopy.panel5.forecast.items[0].label}
                     </p>
                     <p className="text-verde text-3xl font-extrabold tabular-nums">
-                      {PREVISAO_2026.manaus_pico_cheia.media} m
+                      {previsao.manaus_pico_cheia.media} m
                     </p>
                     <p className="text-gray-400 text-xs">
-                      IC80: {PREVISAO_2026.manaus_pico_cheia.ic80_min}–{PREVISAO_2026.manaus_pico_cheia.ic80_max} m
-                      &nbsp;·&nbsp; P(≥ 27,5 m) = {(PREVISAO_2026.manaus_pico_cheia.prob_27_5 * 100).toFixed(0)}%
+                      IC80: {previsao.manaus_pico_cheia.ic80_min}–{previsao.manaus_pico_cheia.ic80_max} m
+                      &nbsp;·&nbsp; P(≥ 27,5 m) = {(previsao.manaus_pico_cheia.prob_27_5 * 100).toFixed(0)}%
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-azul-marinho rounded-lg p-3">
                       <p className="text-gray-400 text-xs">Pico Manacapuru</p>
-                      <p className="text-white font-bold text-xl">{PREVISAO_2026.manacapuru_pico} m</p>
+                      <p className="text-white font-bold text-xl">{previsao.manacapuru_pico} m</p>
                     </div>
                     <div className="bg-azul-marinho rounded-lg p-3">
                       <p className="text-gray-400 text-xs">Pico Itacoatiara</p>
-                      <p className="text-white font-bold text-xl">{PREVISAO_2026.itacoatiara_pico} m</p>
+                      <p className="text-white font-bold text-xl">{previsao.itacoatiara_pico} m</p>
                     </div>
                   </div>
 
                   <div className="bg-ouro/10 border border-ouro/30 rounded-lg p-3">
                     <p className="text-ouro text-xs font-semibold">ENSO — mai/2026</p>
-                    <p className="text-white text-sm">{PREVISAO_2026.enso}</p>
+                    <p className="text-white text-sm">{previsao.enso}</p>
                   </div>
 
                   <div className="bg-azul-marinho rounded-lg p-3">

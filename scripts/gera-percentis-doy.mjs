@@ -174,3 +174,12 @@ export function diaDoAno(dataISO: string): number {
 
 writeFileSync(join(ROOT, "lib/percentis-doy.ts"), ts);
 console.log("✓ lib/percentis-doy.ts gerado");
+
+// Emite JSON canônico para uso por gera-severity-calendar.mjs
+// → evita duplicar lógica; calendário lê daqui em vez de recalcular.
+import { mkdirSync, existsSync } from "node:fs";
+const publicDataDir = join(ROOT, "public/data");
+if (!existsSync(publicDataDir)) mkdirSync(publicDataDir, { recursive: true });
+const jsonPercPath = join(ROOT, "public/data/percentis-doy.json");
+writeFileSync(jsonPercPath, JSON.stringify({ periodo: PERIODO_REF, estacoes: resultado }));
+console.log(`✓ ${jsonPercPath}`);

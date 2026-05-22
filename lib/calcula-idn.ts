@@ -5,21 +5,33 @@ import { CALIBRACAO_IDN } from "./limiares-idn";
 
 // IDN > 0 → Sub-bacia Norte (Negro) mais depleted → Driver Norte (padrão 2026).
 // IDN < 0 → Sub-bacia Sul (Madeira) mais depleted → Driver Sul (padrão 2024).
-// Pode extrapolar ±1 em regimes extremos — é o sinal de ineditismo.
+// Pode extrapolar ±1 em regimes extremos — é o sinal de ineditismo. Quando
+// |IDN| > 1 o componente `extrapolado` vira true: a interface deve sinalizar
+// que o valor está fora da banda histórica de calibração (HMM treinado em
+// IDN ∈ [-0,9; +0,9], aproximadamente).
 
 // Cálculo agregado por sub-bacia (média ponderada das posições DOY).
 // Recebe um mapa { estacao: cota_m } e a data de referência.
+export interface ResultadoIDN {
+  idn:            number;
+  pos_norte:      number;
+  pos_sul:        number;
+  estacoes_norte: string[];
+  estacoes_sul:   string[];
+  extrapolado:    boolean;   // |idn| > 1 → fora da banda de calibração
+  fora_da_banda: "norte_extremo" | "sul_extremo" | "dentro";
+}
+
 export function calculaIDN(
   cotasPorEstacao: Partial<Record<EstacaoComDOY, number>>,
   dataISO: string
-): { idn: number; pos_norte: number; pos_sul: number; estacoes_norte: string[]; estacoes_sul: string[] } {
+): ResultadoIDN {
   const norte = posicaoSubBacia("Norte", cotasPorEstacao, dataISO, PERCENTIS_DOY, diaDoAno);
   const sul   = posicaoSubBacia("Sul",   cotasPorEstacao, dataISO, PERCENTIS_DOY, diaDoAno);
 
   // IDN = (quanto o Sul está acima do normal) − (quanto o Norte está acima)
-  // Se Norte muito abaixo (pos_norte negativo) e Sul próximo do normal,
-  // IDN positivo grande → Driver Norte.
   const idn = sul.valor - norte.valor;
+  const extrapolado = Math.abs(idn) > 1;
 
   return {
     idn: +idn.toFixed(3),
@@ -27,6 +39,11 @@ export function calculaIDN(
     pos_sul:   +sul.valor.toFixed(3),
     estacoes_norte: norte.estacoesUsadas,
     estacoes_sul:   sul.estacoesUsadas,
+    extrapolado,
+    fora_da_banda:
+      idn >  1 ? "norte_extremo" :
+      idn < -1 ? "sul_extremo"   :
+      "dentro",
   };
 }
 

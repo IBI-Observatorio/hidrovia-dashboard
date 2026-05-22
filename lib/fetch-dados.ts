@@ -1,53 +1,65 @@
-// Busca dados reais da ANA e mescla com dados estáticos (deltas históricos)
-// Usado pelo server component page.tsx
+// Busca dados reais da ANA (HidroWebService REST v2) e mescla com dados
+// estáticos (deltas históricos). Usado pelo server component page.tsx.
+//
+// Mudanças Sprint Dados v1 (21/05/2026):
+// - Trocadas 14+ chamadas paralelas v1 por 2 chamadas batch v2
+// - Removido o consumo SOAP residual de vazão (descontinuado em 30/06/2026)
+// - Vazão agora vem do mesmo batch de telemetria REST (campo Vazao_Adotada)
+// - Chuva 24h também é puxada no batch (campo Chuva_Adotada) — usada nos
+//   novos painéis "Chuva × Cota" (Sprint Dados v2)
 import { DADOS_ATUAIS, type DadosEstacao } from "./dados-historicos";
-import { ultimasLeituras, resumeLeituras, type EstacaoKey } from "./ana-client";
+import {
+  ultimasLeiturasBatch,
+  resumeLeituras,
+  ESTACOES,
+  type EstacaoKey,
+  type LeituraANA,
+} from "./ana-client";
 import type { EstacaoComDOY } from "./sub-bacias";
 import type { EstacaoVazao } from "./sub-bacias-vazao";
 
-// Tenta buscar a cota atual e variação 24h da API ANA.
-// Em caso de falha, retorna os dados estáticos do Sprint 1.
-async function fetchCotaReal(estacao: EstacaoKey): Promise<Partial<DadosEstacao>> {
+// ─── Painel principal (7 estações) ───────────────────────────────────────────
+
+const ESTACOES_PAINEL: EstacaoKey[] = [
+  "Manaus", "Itacoatiara", "SGC",
+  "Humaita", "Manacapuru", "PortoVelho", "Borba",
+];
+
+// Busca cota/chuva/vazão das 7 estações em 1 chamada batch (≤10 estações).
+// Em caso de falha, mantém os dados estáticos do Sprint 1 como fallback.
+export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>> {
+  let porEstacao: Map<EstacaoKey, LeituraANA[]>;
   try {
-    const leituras = await ultimasLeituras(estacao, 2);
-    const resumo   = resumeLeituras(leituras);
-    if (!resumo) return {};
-    return {
+    porEstacao = await ultimasLeiturasBatch(ESTACOES_PAINEL, 2);
+  } catch {
+    // Toda a chamada falhou → devolve só os estáticos
+    return { ...DADOS_ATUAIS };
+  }
+
+  const merged: Record<string, DadosEstacao> = {};
+  for (const e of ESTACOES_PAINEL) {
+    const base = DADOS_ATUAIS[e];
+    const leituras = porEstacao.get(e) ?? [];
+    const resumo = resumeLeituras(leituras);
+    if (!resumo) {
+      merged[e] = base;
+      continue;
+    }
+    merged[e] = {
+      ...base,
       cota_m:             resumo.cota_m,
       variacao_24h:       resumo.variacao_24h,
       ultima_atualizacao: resumo.ultima_data,
+      // Campos novos (opcionais em DadosEstacao) — só populados se vierem
+      chuva_mm_24h:       resumo.chuva_mm_acum_24h,
+      vazao_m3s:          resumo.vazao_m3s_atual ?? undefined,
     };
-  } catch {
-    return {}; // silencia — usa fallback estático
   }
-}
-
-// Mescla dado real (ANA) com dado estático (deltas históricos do Sprint 1)
-function mescla(base: DadosEstacao, real: Partial<DadosEstacao>): DadosEstacao {
-  return { ...base, ...real };
-}
-
-// Busca dados de todas as 7 estações de painel em paralelo
-export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>> {
-  const estacoes: EstacaoKey[] = [
-    "Manaus", "Itacoatiara", "SGC",
-    "Humaita", "Manacapuru", "PortoVelho", "Borba",
-  ];
-
-  const resultados = await Promise.allSettled(
-    estacoes.map((e) => fetchCotaReal(e))
-  );
-
-  const merged: Record<string, DadosEstacao> = {};
-  estacoes.forEach((e, i) => {
-    const real = resultados[i].status === "fulfilled" ? resultados[i].value : {};
-    merged[e] = mescla(DADOS_ATUAIS[e], real);
-  });
-
   return merged;
 }
 
-// Lê o boletim SEMA mais recente do cache (server-side, lê arquivo diretamente)
+// ─── Boletim SEMA (mantido) ──────────────────────────────────────────────────
+
 export async function fetchUltimoBoletimSEMA(): Promise<{
   data: string | null;
   estacoes: Record<string, { cota_cm: number; variacao_cm: number }>;
@@ -73,30 +85,25 @@ export async function fetchUltimoBoletimSEMA(): Promise<{
   }
 }
 
-// Suavização trailing MA(N) — mesma usada no gerador de percentis.
-// Para comparações coerentes, o valor "atual" precisa estar no mesmo regime
-// de suavização que os percentis históricos.
+// ─── IDN: cotas em 11 estações ──────────────────────────────────────────────
+// Suavização trailing MA(N) — mesma do gerador de percentis. Para
+// comparações coerentes, o "atual" precisa estar no mesmo regime de
+// suavização que os percentis históricos.
 const SUAVIZACAO_DIAS = 7;
 
-// Agrega leituras telemétricas em uma cota diária (média do dia) e devolve
-// a média móvel das últimas N entradas com dia contínuo. Retorna null se
-// não houver janela completa.
-function mediaTrailing7(
+function mediaTrailing7Cota(
   leituras: { data: string; cota_cm: number }[]
 ): { cota_m: number; ultima_atualizacao: string } | null {
-  // Agrega múltiplas leituras do mesmo dia tomando a média
   const porDia = new Map<string, number[]>();
   for (const l of leituras) {
     if (!porDia.has(l.data)) porDia.set(l.data, []);
     porDia.get(l.data)!.push(l.cota_cm);
   }
   const diarios = [...porDia.entries()]
-    .map(([data, vs]) => ({ data, cota_cm: vs.reduce((s,x)=>s+x,0) / vs.length }))
+    .map(([data, vs]) => ({ data, cota_cm: vs.reduce((s, x) => s + x, 0) / vs.length }))
     .sort((a, b) => a.data.localeCompare(b.data));
   if (diarios.length < SUAVIZACAO_DIAS) return null;
 
-  // Pega últimos SUAVIZACAO_DIAS pontos. Não força contiguidade estrita —
-  // se a API teve um buraco de 1 dia mas trouxe 7 dias úteis, aceitamos.
   const ultimos = diarios.slice(-SUAVIZACAO_DIAS);
   const media_cm = ultimos.reduce((s, x) => s + x.cota_cm, 0) / ultimos.length;
   return {
@@ -105,131 +112,219 @@ function mediaTrailing7(
   };
 }
 
-// Busca cotas atuais das 11 estações que compõem o IDN (4 dos painéis + 7 IDN-only).
-// Retorna média móvel 7d para coerência com os percentis suavizados.
-// Falhas individuais não quebram o resultado — estações sem janela 7d
-// simplesmente não entram no IDN (pesos renormalizam).
+const ESTACOES_IDN_COTA: EstacaoComDOY[] = [
+  "SGC", "Curicuriari", "Serrinha", "Moura", "Caracarai",
+  "Abuna", "PortoVelho", "Humaita", "Manicore", "Borba", "Labrea",
+];
+
 export type CotaIDN = { cota_m: number; ultima_atualizacao: string };
 
 export async function fetchCotasIDN(): Promise<Partial<Record<EstacaoComDOY, CotaIDN>>> {
-  const estacoes: EstacaoComDOY[] = [
-    "SGC", "Curicuriari", "Serrinha", "Moura", "Caracarai",
-    "Abuna", "PortoVelho", "Humaita", "Manicore", "Borba", "Labrea",
-  ];
-
-  const resultados = await Promise.allSettled(
-    estacoes.map(async (e) => {
-      // Pega mais dias que SUAVIZACAO_DIAS para ter folga contra gaps na telemetria
-      const leituras = await ultimasLeituras(e as EstacaoKey, SUAVIZACAO_DIAS + 3);
-      return mediaTrailing7(leituras);
-    })
-  );
+  let porEstacao: Map<EstacaoKey, LeituraANA[]>;
+  try {
+    // 11 estações > BATCH_LIMIT (10) — o cliente quebra em 2 chamadas
+    porEstacao = await ultimasLeiturasBatch(
+      ESTACOES_IDN_COTA as unknown as EstacaoKey[],
+      SUAVIZACAO_DIAS + 3
+    );
+  } catch {
+    return {};
+  }
 
   const mapa: Partial<Record<EstacaoComDOY, CotaIDN>> = {};
-  estacoes.forEach((e, i) => {
-    const r = resultados[i];
-    if (r.status === "fulfilled" && r.value) mapa[e] = r.value;
-  });
+  for (const e of ESTACOES_IDN_COTA) {
+    const leituras = porEstacao.get(e as unknown as EstacaoKey) ?? [];
+    const m = mediaTrailing7Cota(leituras);
+    if (m) mapa[e] = m;
+  }
   return mapa;
 }
 
-// Busca vazões (m³/s) recentes das 8 estações que entram no IDN técnico (vazão).
-// Como a API SOAP retorna mensal, lemos o último mês disponível e pegamos a
-// vazão mais recente do mês. Estações sem vazão pública não retornam.
-const ENDPOINT_SOAP = "https://telemetriaws1.ana.gov.br/ServiceANA.asmx";
+// ─── IDN: vazões em 8 estações (REST nativo, não mais SOAP) ─────────────────
+//
+// A SOAP descontinuada em 30/06/2026 já não é mais necessária: a v2 da REST
+// retorna Vazao_Adotada no mesmo payload da cota. A vazão telemétrica vem
+// a cada 15min — agregamos por dia (média) e tiramos média trailing 7d para
+// coerência com os percentis suavizados.
+//
+// Nota: a SOAP retornava vazão consolidada (nível=2) com até meses de lag.
+// A telemetria é quase-real (~horas), mas pode ter ruído maior. Tradeoff:
+// frescor por consolidação. Para o IDN-vazão isso é OK — o sinal de regime
+// não depende de precisão centesimal.
+const ESTACOES_IDN_VAZAO: EstacaoVazao[] = [
+  "Curicuriari", "Serrinha", "Moura", "Caracarai",
+  "PortoVelho", "Humaita", "Manicore", "Labrea",
+];
 
-const ESTACOES_VAZAO: Record<EstacaoVazao, string> = {
-  Curicuriari: "14330000",
-  Serrinha:    "14420000",
-  Moura:       "14840000",
-  Caracarai:   "14710000",
-  PortoVelho:  "15400000",
-  Humaita:     "15630000",
-  Manicore:    "15700000",
-  Labrea:      "13870000",
-};
+function mediaTrailing7Vazao(
+  leituras: { data: string; vazao_m3s: number | null }[]
+): { vazao_m3s: number; ultima_atualizacao: string } | null {
+  const porDia = new Map<string, number[]>();
+  for (const l of leituras) {
+    if (l.vazao_m3s == null) continue;
+    if (!porDia.has(l.data)) porDia.set(l.data, []);
+    porDia.get(l.data)!.push(l.vazao_m3s);
+  }
+  const diarios = [...porDia.entries()]
+    .map(([data, vs]) => ({ data, q: vs.reduce((s, x) => s + x, 0) / vs.length }))
+    .sort((a, b) => a.data.localeCompare(b.data));
+  if (diarios.length < SUAVIZACAO_DIAS) return null;
 
-function soapVazao(cod: string, dataInicio: string, dataFim: string): string {
-  return `<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <HidroSerieHistorica xmlns="http://MRCS/">
-      <codEstacao>${cod}</codEstacao>
-      <dataInicio>${dataInicio}</dataInicio>
-      <dataFim>${dataFim}</dataFim>
-      <tipoDados>3</tipoDados>
-      <nivelConsistencia></nivelConsistencia>
-    </HidroSerieHistorica>
-  </soap:Body>
-</soap:Envelope>`;
+  const ultimos = diarios.slice(-SUAVIZACAO_DIAS);
+  const media = ultimos.reduce((s, x) => s + x.q, 0) / ultimos.length;
+  return {
+    vazao_m3s: +media.toFixed(2),
+    ultima_atualizacao: ultimos[ultimos.length - 1].data,
+  };
 }
 
 export type VazaoIDN = { vazao_m3s: number; ultima_atualizacao: string };
 
-async function fetchVazaoUma(cod: string): Promise<VazaoIDN | null> {
-  // Últimos 3 meses — folga para garantir janela 7d mesmo com lag de consolidação
-  const hoje = new Date();
-  const inicio = new Date(hoje);
-  inicio.setMonth(hoje.getMonth() - 3);
-  const fmt = (d: Date) => `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
-
-  const resp = await fetch(ENDPOINT_SOAP, {
-    method: "POST",
-    headers: { "Content-Type": "text/xml; charset=utf-8", "SOAPAction": "http://MRCS/HidroSerieHistorica" },
-    body: soapVazao(cod, fmt(inicio), fmt(hoje)),
-    next: { revalidate: 21600 },
-  });
-  if (!resp.ok) return null;
-  const xml = await resp.text();
-  const blocos = xml.match(/<SerieHistorica\b[^>]*>([\s\S]*?)<\/SerieHistorica>/g) ?? [];
-
-  // Coleta todos os pontos diários, priorizando nivel=2 (consistido) sobre 1.
-  const porDia = new Map<string, { q: number; nivel: number }>();
-  for (const bloco of blocos) {
-    const dataHora = bloco.match(/<DataHora>([^<]+)<\/DataHora>/)?.[1]?.trim();
-    const nivel = +(bloco.match(/<NivelConsistencia>([^<]+)<\/NivelConsistencia>/)?.[1] ?? 1);
-    if (!dataHora) continue;
-    const [ano, mes] = dataHora.slice(0, 7).split("-").map(Number);
-    if (!ano || !mes) continue;
-    for (let dia = 1; dia <= 31; dia++) {
-      const tag = `Vazao${String(dia).padStart(2, "0")}`;
-      const raw = bloco.match(new RegExp(`<${tag}>([^<]*)<\/${tag}>`))?.[1]?.trim();
-      if (!raw) continue;
-      const q = parseFloat(raw);
-      if (isNaN(q)) continue;
-      const dt = new Date(`${ano}-${String(mes).padStart(2,"0")}-${String(dia).padStart(2,"0")}T00:00:00Z`);
-      if (dt.getUTCMonth() + 1 !== mes) continue;
-      const iso = `${ano}-${String(mes).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
-      const ex = porDia.get(iso);
-      if (!ex || nivel > ex.nivel) porDia.set(iso, { q, nivel });
-    }
-  }
-  const diarios = [...porDia.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-  if (diarios.length < SUAVIZACAO_DIAS) return null;
-
-  // Média móvel trailing dos últimos 7 dias com dado
-  const ultimos = diarios.slice(-SUAVIZACAO_DIAS);
-  const media = ultimos.reduce((s, [, v]) => s + v.q, 0) / ultimos.length;
-  return {
-    vazao_m3s: +media.toFixed(2),
-    ultima_atualizacao: ultimos[ultimos.length - 1][0],
-  };
-}
-
 export async function fetchVazoesIDN(): Promise<Partial<Record<EstacaoVazao, VazaoIDN>>> {
-  const entries = Object.entries(ESTACOES_VAZAO) as [EstacaoVazao, string][];
-  const resultados = await Promise.allSettled(
-    entries.map(([, cod]) => fetchVazaoUma(cod))
-  );
+  let porEstacao: Map<EstacaoKey, LeituraANA[]>;
+  try {
+    // Pega 30 dias (DIAS_30 é o range máximo) — folga ampla para 7d trailing
+    porEstacao = await ultimasLeiturasBatch(
+      ESTACOES_IDN_VAZAO as unknown as EstacaoKey[],
+      30
+    );
+  } catch {
+    return {};
+  }
+
   const mapa: Partial<Record<EstacaoVazao, VazaoIDN>> = {};
-  entries.forEach(([est], i) => {
-    const r = resultados[i];
-    if (r.status === "fulfilled" && r.value) mapa[est] = r.value;
-  });
+  for (const e of ESTACOES_IDN_VAZAO) {
+    const leituras = porEstacao.get(e as unknown as EstacaoKey) ?? [];
+    const m = mediaTrailing7Vazao(leituras);
+    if (m) mapa[e] = m;
+  }
   return mapa;
 }
 
-// Aplica dados SEMA sobre os dados das estações (override de cota e variação)
+// ─── Série diária recente de Caracaraí (para detector Onda Branco) ─────────
+//
+// O detector precisa da série temporal de Caracaraí dos últimos ~10 dias para
+// calcular variação 7d. Usamos `ultimasLeiturasBatch` (já importado do topo
+// do arquivo) com DIAS_14 e agregamos por dia (média de todas leituras
+// telemétricas do dia).
+
+export async function fetchSerieCaracarai(
+  diasAtras = 14,
+): Promise<{ data: string; cota_m: number }[]> {
+  try {
+    const mapa = await ultimasLeiturasBatch(["Caracarai"], diasAtras);
+    const leituras = mapa.get("Caracarai") ?? [];
+    if (leituras.length === 0) return [];
+
+    // Agrega por dia (média)
+    const porDia = new Map<string, number[]>();
+    for (const l of leituras) {
+      if (!porDia.has(l.data)) porDia.set(l.data, []);
+      porDia.get(l.data)!.push(l.cota_cm);
+    }
+    const serie = [...porDia.entries()]
+      .map(([data, valores]) => ({
+        data,
+        cota_m: +(valores.reduce((a, b) => a + b, 0) / valores.length / 100).toFixed(2),
+      }))
+      .sort((a, b) => a.data.localeCompare(b.data));
+    return serie;
+  } catch {
+    return [];
+  }
+}
+
+// ─── Previsão 2026 dinâmica (cache SGB > fallback hardcoded) ───────────────
+//
+// Sprint Tese Regulatória v1 (21/05/2026): lê o último boletim SGB parseado
+// (cache em `data/boletins_sgb_cache.json`, alimentado por `app/api/sgb`) e
+// devolve a previsão de pico Manaus/Manacapuru/Itacoatiara + fonte. Quando
+// não houver cache, devolve `PREVISAO_2026` hardcoded (boletim 18°) com a
+// fonte marcada como "fallback".
+import { PREVISAO_2026 } from "./dados-historicos";
+
+export interface Previsao2026 {
+  fonte:               string;
+  fonte_dinamica:      boolean;            // true se veio do parser SGB
+  manaus_pico_cheia:   {
+    media:     number;
+    ic80_min:  number;
+    ic80_max:  number;
+    prob_27_5: number;                     // 0..1
+  };
+  manacapuru_pico:     number;
+  itacoatiara_pico:    number;
+  parintins_pico?:     number;             // só vem do cache, não do hardcoded
+  enso:                string;
+  // Anomalia de precipitação por bacia (categoria −3..+3) — vem do parser SGB v2
+  anomalia_pp_negro?:    number;           // bacia do Negro (driver do colapso 2026)
+  anomalia_pp_madeira?:  number;           // bacia do Madeira (driver 2024)
+}
+
+export async function fetchPrevisao2026(): Promise<Previsao2026> {
+  try {
+    const { readFileSync, existsSync } = await import("fs");
+    const { join } = await import("path");
+    const dataDir = process.env.DATA_DIR ?? join(process.cwd(), "data");
+    const caminho = join(dataDir, "boletins_sgb_cache.json");
+    if (!existsSync(caminho)) throw new Error("sem cache SGB");
+
+    const cache = JSON.parse(readFileSync(caminho, "utf-8"));
+    const ultimo = cache.boletins?.[cache.boletins.length - 1];
+    if (!ultimo || !ultimo.previsoes?.length) throw new Error("cache vazio");
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const find = (chave: string): any =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ultimo.previsoes.find((p: any) => p.estacao === chave);
+
+    const manaus      = find("Manaus");
+    const manacapuru  = find("Manacapuru");
+    const itacoatiara = find("Itacoatiara");
+    const parintins   = find("Parintins");
+
+    // Precisa pelo menos da previsão de Manaus para considerar dinâmico
+    if (!manaus) throw new Error("previsão Manaus ausente no boletim");
+
+    const fonteLabel = `SGB/CPRM — ${ultimo.numero ?? "?"}° Boletim SAH Amazonas (${ultimo.data})`;
+
+    // Extrai anomalias de PP por bacia (Sprint v2)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const findPP = (bacia: string): number | undefined => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const a = (ultimo.anomalias_pp ?? []).find((x: any) =>
+        x.bacia?.toLowerCase().includes(bacia.toLowerCase())
+      );
+      return a?.categoria;
+    };
+
+    return {
+      fonte:           fonteLabel,
+      fonte_dinamica:  true,
+      manaus_pico_cheia: {
+        media:     manaus.cota_prevista_m,
+        ic80_min:  manaus.ic80_min_m,
+        ic80_max:  manaus.ic80_max_m,
+        prob_27_5: manaus.prob_inundacao ?? PREVISAO_2026.manaus_pico_cheia.prob_27_5,
+      },
+      manacapuru_pico:  manacapuru?.cota_prevista_m  ?? PREVISAO_2026.manacapuru_pico,
+      itacoatiara_pico: itacoatiara?.cota_prevista_m ?? PREVISAO_2026.itacoatiara_pico,
+      parintins_pico:   parintins?.cota_prevista_m,
+      enso:             PREVISAO_2026.enso,
+      anomalia_pp_negro:   findPP("Negro"),
+      anomalia_pp_madeira: findPP("Madeira"),
+    };
+  } catch {
+    return {
+      ...PREVISAO_2026,
+      fonte:          PREVISAO_2026.fonte + " (fallback)",
+      fonte_dinamica: false,
+    };
+  }
+}
+
+// ─── SEMA override (mantido) ────────────────────────────────────────────────
+
 export function aplicarBoletimSEMA(
   dados: Record<string, DadosEstacao>,
   boletim: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>>
@@ -238,7 +333,6 @@ export function aplicarBoletimSEMA(
 
   const resultado = { ...dados };
   for (const [nome, sema] of Object.entries(boletim.estacoes)) {
-    // Mapeia nomes SEMA para chaves das estações
     const chave = nome === "Humaitá" ? "Humaita" : nome;
     if (resultado[chave]) {
       resultado[chave] = {

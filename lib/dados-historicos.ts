@@ -102,6 +102,10 @@ export interface DadosEstacao {
   delta_2025:    number; // cm
   delta_2024:    number; // cm
   ultima_atualizacao: string;
+  // Sprint Dados v1 (21/05/2026): campos novos vindos da REST v2.
+  // Opcionais — populados quando a API retorna QC=0 nessas variáveis.
+  chuva_mm_24h?: number;        // chuva acumulada nas últimas 24h (mm)
+  vazao_m3s?:    number;        // vazão atual (m³/s, da leitura mais recente)
 }
 
 export const DADOS_ATUAIS: Record<string, DadosEstacao> = {
