@@ -1,0 +1,241 @@
+{
+  "metodologia": "Leave-One-Year-Out: para cada ano y, calibra modelo nos outros 9 anos, projeta a partir do pico real de y, mede erro contra observação.",
+  "cota_alvo_m": 6.3,
+  "horizontes_dias": [
+    30,
+    60,
+    90,
+    120,
+    150,
+    180
+  ],
+  "resumo_horizonte": {
+    "t30": {
+      "rmse_m": 3.03,
+      "mae_m": 3,
+      "bias_m": -3,
+      "n": 10
+    },
+    "t60": {
+      "rmse_m": 4.17,
+      "mae_m": 4.09,
+      "bias_m": -4.09,
+      "n": 10
+    },
+    "t90": {
+      "rmse_m": 3.63,
+      "mae_m": 3.47,
+      "bias_m": -3.13,
+      "n": 10
+    },
+    "t120": {
+      "rmse_m": 2.34,
+      "mae_m": 1.73,
+      "bias_m": 0.32,
+      "n": 10
+    },
+    "t150": {
+      "rmse_m": 2.5,
+      "mae_m": 1.77,
+      "bias_m": 1.28,
+      "n": 10
+    },
+    "t180": {
+      "rmse_m": 2.42,
+      "mae_m": 1.94,
+      "bias_m": -0.62,
+      "n": 10
+    }
+  },
+  "resumo_eta": {
+    "rmse_dias": 18.6,
+    "mae_dias": 15.7,
+    "bias_dias": -12.1,
+    "min_dias": -39,
+    "max_dias": 15,
+    "n": 10
+  },
+  "resultados": [
+    {
+      "ano": 2016,
+      "pico_data": "2016-06-13",
+      "pico_cota_m": 12.52,
+      "k_treino": 0.012573,
+      "h_min_treino": 3.51,
+      "erros_horizonte_m": {
+        "t30": -2.53,
+        "t60": -3.49,
+        "t90": -2.38,
+        "t120": 0.54,
+        "t150": 0.1,
+        "t180": 0.19
+      },
+      "eta_modelo_dias": 94,
+      "eta_real_dias": 107,
+      "eta_erro_dias": -13
+    },
+    {
+      "ano": 2017,
+      "pico_data": "2017-05-15",
+      "pico_cota_m": 14.36,
+      "k_treino": 0.012466,
+      "h_min_treino": 3.5,
+      "erros_horizonte_m": {
+        "t30": -3.23,
+        "t60": -4.84,
+        "t90": -4.9,
+        "t120": -1.48,
+        "t150": 0.83,
+        "t180": -0.22
+      },
+      "eta_modelo_dias": 109,
+      "eta_real_dias": 127,
+      "eta_erro_dias": -18
+    },
+    {
+      "ano": 2018,
+      "pico_data": "2018-06-19",
+      "pico_cota_m": 13.72,
+      "k_treino": 0.013387,
+      "h_min_treino": 3.55,
+      "erros_horizonte_m": {
+        "t30": -2.96,
+        "t60": -3.96,
+        "t90": -3.27,
+        "t120": 0.11,
+        "t150": 0.64,
+        "t180": -3.39
+      },
+      "eta_modelo_dias": 98,
+      "eta_real_dias": 116,
+      "eta_erro_dias": -18
+    },
+    {
+      "ano": 2019,
+      "pico_data": "2019-06-18",
+      "pico_cota_m": 14.65,
+      "k_treino": 0.013298,
+      "h_min_treino": 3.42,
+      "erros_horizonte_m": {
+        "t30": -3.11,
+        "t60": -4.24,
+        "t90": -3.44,
+        "t120": 0.23,
+        "t150": -0.71,
+        "t180": -3.19
+      },
+      "eta_modelo_dias": 103,
+      "eta_real_dias": 114,
+      "eta_erro_dias": -11
+    },
+    {
+      "ano": 2020,
+      "pico_data": "2020-06-10",
+      "pico_cota_m": 13.96,
+      "k_treino": 0.012832,
+      "h_min_treino": 3.59,
+      "erros_horizonte_m": {
+        "t30": -2.87,
+        "t60": -3.92,
+        "t90": -2.6,
+        "t120": 1.58,
+        "t150": 1.63,
+        "t180": -0.17
+      },
+      "eta_modelo_dias": 105,
+      "eta_real_dias": 107,
+      "eta_erro_dias": -2
+    },
+    {
+      "ano": 2021,
+      "pico_data": "2021-05-31",
+      "pico_cota_m": 15.2,
+      "k_treino": 0.01289,
+      "h_min_treino": 3.33,
+      "erros_horizonte_m": {
+        "t30": -3.59,
+        "t60": -5.27,
+        "t90": -5.31,
+        "t120": -3.23,
+        "t150": -1.02,
+        "t180": -2.48
+      },
+      "eta_modelo_dias": 108,
+      "eta_real_dias": 147,
+      "eta_erro_dias": -39
+    },
+    {
+      "ano": 2022,
+      "pico_data": "2022-06-06",
+      "pico_cota_m": 14.79,
+      "k_treino": 0.012909,
+      "h_min_treino": 3.61,
+      "erros_horizonte_m": {
+        "t30": -3.35,
+        "t60": -4.64,
+        "t90": -4.36,
+        "t120": -1.17,
+        "t150": 1.66,
+        "t180": -0.26
+      },
+      "eta_modelo_dias": 111,
+      "eta_real_dias": 125,
+      "eta_erro_dias": -14
+    },
+    {
+      "ano": 2023,
+      "pico_data": "2023-05-29",
+      "pico_cota_m": 13.77,
+      "k_treino": 0.012511,
+      "h_min_treino": 3.94,
+      "erros_horizonte_m": {
+        "t30": -2.82,
+        "t60": -3.78,
+        "t90": -2.93,
+        "t120": 2.15,
+        "t150": 5.08,
+        "t180": 3.83
+      },
+      "eta_modelo_dias": 115,
+      "eta_real_dias": 112,
+      "eta_erro_dias": 3
+    },
+    {
+      "ano": 2024,
+      "pico_data": "2024-06-10",
+      "pico_cota_m": 12.35,
+      "k_treino": 0.013048,
+      "h_min_treino": 4,
+      "erros_horizonte_m": {
+        "t30": -2.2,
+        "t60": -2.06,
+        "t90": 1.69,
+        "t120": 5.66,
+        "t150": 5.31,
+        "t180": 2.54
+      },
+      "eta_modelo_dias": 99,
+      "eta_real_dias": 84,
+      "eta_erro_dias": 15
+    },
+    {
+      "ano": 2025,
+      "pico_data": "2025-06-19",
+      "pico_cota_m": 14.44,
+      "k_treino": 0.013035,
+      "h_min_treino": 3.37,
+      "erros_horizonte_m": {
+        "t30": -3.35,
+        "t60": -4.67,
+        "t90": -3.79,
+        "t120": -1.18,
+        "t150": -0.7,
+        "t180": -3.09
+      },
+      "eta_modelo_dias": 102,
+      "eta_real_dias": 126,
+      "eta_erro_dias": -24
+    }
+  ],
+  "gerado_em": "2026-05-22T12:49:01.962Z"
+}

@@ -19,8 +19,8 @@ import {
 } from "@/lib/irc";
 
 describe("Versionamento e metadados", () => {
-  it("expõe IRC_VERSAO = v2.1", () => {
-    expect(IRC_VERSAO).toBe("v2.1");
+  it("expõe IRC_VERSAO sincronizado com sistema (v3.5-manaus)", () => {
+    expect(IRC_VERSAO).toBe("v3.5-manaus");
   });
 
   it("pesos somam exatamente 1.0", () => {

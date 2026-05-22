@@ -21,10 +21,18 @@ describe("CMR Itacoatiara — curva oficial da Capitania", () => {
     expect(cmrDeItacoatiara(-0.17)).toBeCloseTo(5.73, 1);
   });
 
-  it("CMR em ITA = 5m → ~11m (calado bom)", () => {
+  it("CMR em ITA = 5m → ~10,4m (curva isotônica corrige outlier do bin)", () => {
+    // Versão PAV (v3.4): o bin [5,40 → 5,50] tinha inversão grande (11,37→10,13)
+    // que a regressão isotônica suavizou para ~10,4m. Mais defensível.
     const cmr = cmrDeItacoatiara(5.0);
-    expect(cmr).toBeGreaterThanOrEqual(10.5);
-    expect(cmr).toBeLessThanOrEqual(11.5);
+    expect(cmr).toBeGreaterThanOrEqual(10.0);
+    expect(cmr).toBeLessThanOrEqual(11.0);
+  });
+
+  it("CMR em ITA = 6,3m → ≈ 11m (cruzamento do alvo)", () => {
+    const cmr = cmrDeItacoatiara(6.3);
+    expect(cmr).toBeGreaterThanOrEqual(10.7);
+    expect(cmr).toBeLessThanOrEqual(11.3);
   });
 
   it("CMR em cheia (ITA ≥ 7m) → próximo de 12m", () => {

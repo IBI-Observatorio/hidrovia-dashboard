@@ -24,7 +24,9 @@
 //                    lag Caracaraí→Manaus calibrado por correlação anti-sazonal;
 //                    sazonalidade do LWS (subida vs descida); IDN clampeado
 //                    para domínio do HMM.
-export const IRC_VERSAO = "v2.1";
+// v3.5-manaus: o IRC-Manaus permanece para comparação regulatória com ANTAQ
+// (parâmetro 17,7m). Para uso operacional, ver IRC-Tabocal v3.5 em lib/irc-tabocal.ts.
+export const IRC_VERSAO = "v3.5-manaus";
 //
 // IMPORTANTE — os pesos são uma calibração inicial baseada em:
 //   - 40% para LWS porque é o gatilho regulatório direto (impacto comercial)

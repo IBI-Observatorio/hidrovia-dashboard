@@ -1,0 +1,108 @@
+{
+  "data_atual": "2026-05-08",
+  "cota_atual_m": 13.14,
+  "calado_alvo_m": 11,
+  "cota_alvo_m": 6.3,
+  "janela_dias": 60,
+  "largura_kernel_m": 0.5,
+  "prob_cruzamento": 1,
+  "data_p10": "2026-09-18",
+  "data_p50": "2026-09-26",
+  "data_p90": "2026-10-13",
+  "dias_p10": 133,
+  "dias_p50": 141,
+  "dias_p90": 158,
+  "analogos": [
+    {
+      "ano": 2020,
+      "rmse_m": 0.054,
+      "peso": 0.897174415927491,
+      "eta_iso": "2020-09-25",
+      "eta_offset_d": 141,
+      "cota_y_hoje": 13.2,
+      "pico_y": 13.96
+    },
+    {
+      "ano": 2018,
+      "rmse_m": 0.34,
+      "peso": 0.5063663205667487,
+      "eta_iso": "2018-10-13",
+      "eta_offset_d": 158,
+      "cota_y_hoje": 12.9,
+      "pico_y": 13.72
+    },
+    {
+      "ano": 2023,
+      "rmse_m": 0.416,
+      "peso": 0.4348046055697102,
+      "eta_iso": "2023-09-18",
+      "eta_offset_d": 133,
+      "cota_y_hoje": 13.47,
+      "pico_y": 13.77
+    },
+    {
+      "ano": 2025,
+      "rmse_m": 0.813,
+      "peso": 0.19674365879795722,
+      "eta_iso": "2025-10-23",
+      "eta_offset_d": 168,
+      "cota_y_hoje": 14.11,
+      "pico_y": 14.44
+    },
+    {
+      "ano": 2019,
+      "rmse_m": 0.959,
+      "peso": 0.1469345837666299,
+      "eta_iso": "2019-10-10",
+      "eta_offset_d": 155,
+      "cota_y_hoje": 13.93,
+      "pico_y": 14.65
+    },
+    {
+      "ano": 2017,
+      "rmse_m": 1.325,
+      "peso": 0.07062731274777075,
+      "eta_iso": "2017-09-19",
+      "eta_offset_d": 134,
+      "cota_y_hoje": 14.27,
+      "pico_y": 14.36
+    },
+    {
+      "ano": 2022,
+      "rmse_m": 1.447,
+      "peso": 0.05536400581235993,
+      "eta_iso": "2022-10-09",
+      "eta_offset_d": 154,
+      "cota_y_hoje": 14.7,
+      "pico_y": 14.79
+    },
+    {
+      "ano": 2024,
+      "rmse_m": 1.541,
+      "peso": 0.045860267358417466,
+      "eta_iso": "2024-09-02",
+      "eta_offset_d": 118,
+      "cota_y_hoje": 11.84,
+      "pico_y": 12.35
+    },
+    {
+      "ano": 2021,
+      "rmse_m": 1.647,
+      "peso": 0.037081275997757054,
+      "eta_iso": "2021-10-25",
+      "eta_offset_d": 170,
+      "cota_y_hoje": 14.9,
+      "pico_y": 15.2
+    },
+    {
+      "ano": 2016,
+      "rmse_m": 1.935,
+      "peso": 0.020875535710198123,
+      "eta_iso": "2016-09-28",
+      "eta_offset_d": 144,
+      "cota_y_hoje": 11.93,
+      "pico_y": 12.52
+    }
+  ],
+  "gerado_em": "2026-05-22T13:24:52.777Z"
+}

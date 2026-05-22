@@ -35,7 +35,28 @@
 // Faixas (idênticas ao IRC-Manaus para coerência visual):
 //   0–25 verde · 25–50 amarelo · 50–75 laranja · 75–100 vermelho
 
-export const IRC_TABOCAL_VERSAO = "v3.3";
+export const IRC_TABOCAL_VERSAO = "v3.6";
+
+// PISO_DOMINADOR_CALADO (v3.5, audit response):
+// Garante que calado crítico (>= 80) não pode ser mascarado por demais
+// componentes zerados via compensação linear. Implementa "regra de
+// não-compensação" via floor: irc_final = max(soma_linear, c_calado * fator).
+// Justificativa: a tese do IBI ("Tabocal é o que importa") requer que o IRC
+// nunca subestime quando o calado já está em restrição severa.
+const PISO_DOMINADOR_FATOR  = 0.75;
+const PISO_DOMINADOR_LIMIAR = 80;
+
+// LAG_ORTOGONALIZADO (v3.5):
+// O lag_operacional original = (Manaus − ITA) − climatologia, compartilha cota_ITA
+// com calado_tabocal → multicolinearidade. Auditoria mostrou VIF > 5.
+// Solução: usar o RESÍDUO da regressão linear ITA ~ a + b·MAO. Resíduo positivo
+// significa "ITA mais alta que o esperado para esta cota de Manaus" — sincronizada.
+//
+// Coeficientes calibrados em scripts/calibra-lag-ortogonal.mjs sobre série
+// diária 2016-2025: ITA = a + b·MAO, R² = 0.9911, cor(resíduo, ITA) = 0.09 ≈ 0.
+import { LAG_ORTOGONAL_CALIBRADO } from "./lag-ortogonal-calibrado";
+const LAG_REGRESSAO_A = LAG_ORTOGONAL_CALIBRADO.a;
+const LAG_REGRESSAO_B = LAG_ORTOGONAL_CALIBRADO.b;
 
 import { estadoHMM, CALIBRACAO_HMM } from "./hmm-idn";
 import { GATILHO_TABOCAL_M, projetaCruzamentoTabocal } from "./recessao-itacoatiara";
@@ -60,13 +81,29 @@ export const COR_FAIXA_TABOCAL = COR_FAIXA;
 //   Pesos calibrados (v3.1):     41/11/11/26/11 → ρ Spearman 0,90 in-sample, 0,91 LOO
 //
 // vs IRC-Manaus (v2.1): ρ=0,62. IRC-Tabocal v3.1 é dramaticamente melhor.
-export const PESOS_IRC_TABOCAL = {
-  calado_tabocal:  0.41,   // dominante — o que importa operacionalmente
-  hmm_extremo:     0.11,
-  onda_branco:     0.11,
-  anomalia_pp:     0.26,   // segundo maior — sinal climático preditivo
-  lag_operacional: 0.11,
-} as const;
+// v3.6 — pesos calibrados contra RÓTULOS OPERACIONAIS ANTAQ (gap #1 fechado).
+//
+// Mudança vs v3.5: a v3.5 calibrava contra severidade hidrológica (P_DOY de
+// Manaus + Humaita + Curicuriari). Validação ANTAQ mostrou que ρ(sev_hidro,
+// sev_operacional) = -0,06 — as duas medem coisas diferentes. v3.6 calibra
+// contra anomalia de tonelagem mensal nos 4 portos do cluster Tabocal.
+//
+// Descoberta-chave: o LAG OPERACIONAL (resíduo MAO~ITA) é o componente que
+// realmente prediz queda de tonelagem — não a cota absoluta.
+//
+// Performance honesta:
+//   ρ_train = 0,06 (p=0,28, NÃO-significativo)
+//   ρ_test  = 0,31 (n=28, modesto mas estatisticamente honesto)
+//
+// Pesos v3.6 = {calado: 0,09, hmm: 0,09, lag: 0,63, onda+pp: 0,10 fixos cada}
+// vs v3.5 = {calado: 0,58, hmm: 0,13, lag: 0,09, onda+pp: 0,10 fixos}.
+//
+// Mantemos v3.5 importado para auditoria/comparação.
+import { PESOS_IRC_TABOCAL_V36 } from "./irc-tabocal-pesos-calibrados-v36";
+import { PESOS_IRC_TABOCAL_V35 } from "./irc-tabocal-pesos-calibrados-v35";
+
+export const PESOS_IRC_TABOCAL = PESOS_IRC_TABOCAL_V36;
+export const PESOS_IRC_TABOCAL_LEGACY_V35 = PESOS_IRC_TABOCAL_V35;
 
 const HMM_DOMINIO_MIN = -0.9;
 const HMM_DOMINIO_MAX = +0.9;
@@ -173,13 +210,22 @@ export function componenteHMMExtremoTabocal(idn: number): number {
 export function componenteLagOperacional(
   cotaManaus_m: number,
   cotaItacoatiara_m: number,
-  deltaEsperado_m = 13.0,
+  _deltaEsperado_m = 13.0,  // legado, ignorado em v3.5
 ): number {
-  const deltaObservado = cotaManaus_m - cotaItacoatiara_m;
-  // anomalia > 0 → Itacoatiara MAIS BAIXO que o esperado (defasagem ativa)
-  // anomalia < 0 → Itacoatiara MAIS ALTO que o esperado (sistema sincronizado)
-  const anomalia = deltaObservado - deltaEsperado_m;
-  // Mapeamento: anomalia +3m → 100; 0 → 30; -3m → 0
+  // v3.5 — ORTOGONALIZADO: resíduo da regressão ITA = a + b·MAO (calibrada em
+  // 2016-2025: a=-8.65, b=0.798, R²=0.94). O resíduo é independente de cota_ITA
+  // absoluta (correlação ~0 por construção), eliminando multicolinearidade com
+  // componente calado_tabocal.
+  //
+  // residuo = ITA_observada − ITA_esperada(MAO)
+  //   residuo < 0 → ITA mais BAIXA que o esperado (defasagem ativa)
+  //   residuo > 0 → ITA mais ALTA que o esperado (sistema sincronizado)
+  //
+  // Anomalia operacional (score alto = ruim) = −residuo.
+  // Mapeamento: anomalia +3m → 100; 0 → 30; −3m → 0
+  const ita_esperada = LAG_REGRESSAO_A + LAG_REGRESSAO_B * cotaManaus_m;
+  const residuo = cotaItacoatiara_m - ita_esperada;
+  const anomalia = -residuo;
   const score = 30 + (anomalia / 3) * 70;
   return +Math.max(0, Math.min(100, score)).toFixed(1);
 }
@@ -244,7 +290,8 @@ export function calculaIRCTabocal(snap: SnapshotIRCTabocal): ResultadoIRCTabocal
     p_pp      = 0;
   }
 
-  const irc = +(
+  // v3.5 — fórmula composta com regra de NÃO-COMPENSAÇÃO
+  const soma_linear = +(
     p_calado * c_calado +
     p_hmm    * c_hmm    +
     p_onda   * c_onda   +
@@ -252,6 +299,14 @@ export function calculaIRCTabocal(snap: SnapshotIRCTabocal): ResultadoIRCTabocal
     p_lag    * c_lag
   ).toFixed(1);
 
+  // Piso dominador: quando c_calado >= 80 (restrição operacional severa),
+  // garante IRC >= c_calado * 0.75 (~60+ = laranja). Impede que outros
+  // componentes zerados mascarem calado crítico.
+  const piso_dominador = c_calado >= PISO_DOMINADOR_LIMIAR
+    ? +(c_calado * PISO_DOMINADOR_FATOR).toFixed(1)
+    : 0;
+
+  const irc = Math.max(soma_linear, piso_dominador);
   const irc_clamp = Math.max(0, Math.min(100, irc));
 
   const deltaObservado = snap.cotaManaus_m - snap.cotaItacoatiara_m;
@@ -290,6 +345,111 @@ export function calculaIRCTabocal(snap: SnapshotIRCTabocal): ResultadoIRCTabocal
       anomalia_pp_normalizada:  c_pp != null ? +(c_pp / 100).toFixed(2) : 0,
       lag_observado_cm:         Math.round(deltaObservado * 100),
     },
+  };
+}
+
+// ─── PROPAGAÇÃO DE INCERTEZA (v3.5) ──────────────────────────────────────────
+// Auditoria pediu: faixas com IC propagado para evitar IRC=49 vs 50 sendo
+// estatisticamente idêntico mas disparando ação diferente.
+//
+// Estratégia: Monte Carlo dos pesos amostrando de distribuições derivadas do
+// bootstrap da calibração (IC80 disponível em irc-tabocal-pesos-calibrados-v35).
+// Cada amostra produz um IRC; retorna {irc, p10, p50, p90, faixa_estavel}.
+
+import { CALIBRACAO_IRC_V35 } from "./irc-tabocal-pesos-calibrados-v35";
+import { makeRng } from "./prng";
+import { FAIXAS_IRC_CALIBRADAS } from "./irc-faixas-calibradas";
+
+export interface ResultadoIRCTabocalIC extends ResultadoIRCTabocal {
+  irc_p10:          number;
+  irc_p50:          number;
+  irc_p90:          number;
+  ic80_largura:     number;
+  /** true se o IC80 inteiro cai numa única faixa */
+  faixa_estavel:    boolean;
+  /** faixas que o IC80 cobre */
+  faixas_no_ic80:   FaixaIRC[];
+  n_amostras_mc:    number;
+}
+
+/** Faixa atualizada usando os limiares Youden calibrados. */
+function faixaCalibrada(irc: number): FaixaIRC {
+  if (irc < FAIXAS_IRC_CALIBRADAS.verde_amarelo)    return "verde";
+  if (irc < FAIXAS_IRC_CALIBRADAS.amarelo_laranja)  return "amarelo";
+  if (irc < FAIXAS_IRC_CALIBRADAS.laranja_vermelho) return "laranja";
+  return "vermelho";
+}
+
+/**
+ * Calcula IRC com IC80 propagado via Monte Carlo dos pesos.
+ *
+ * @param snap     Snapshot do estado hidrológico
+ * @param n        Número de amostras MC (default 500)
+ * @param seed     Seed PRNG (default 42)
+ */
+export function calculaIRCTabocalComIC(
+  snap: SnapshotIRCTabocal,
+  n = 500,
+  seed = 42,
+): ResultadoIRCTabocalIC {
+  const base = calculaIRCTabocal(snap);
+  const rng = makeRng(seed);
+  const ic80 = CALIBRACAO_IRC_V35.ic80_pesos;
+
+  // Amostragem uniforme entre P10 e P90 de cada peso, depois renormalização
+  const ircs: number[] = [];
+  for (let i = 0; i < n; i++) {
+    const pAmostra = {
+      calado:  ic80.calado.p10 + rng() * (ic80.calado.p90 - ic80.calado.p10),
+      hmm:     ic80.hmm.p10    + rng() * (ic80.hmm.p90    - ic80.hmm.p10),
+      onda:    ic80.onda.p10   + rng() * (ic80.onda.p90   - ic80.onda.p10),
+      pp:      ic80.pp.p10     + rng() * (ic80.pp.p90     - ic80.pp.p10),
+      lag:     ic80.lag.p10    + rng() * (ic80.lag.p90    - ic80.lag.p10),
+    };
+    const soma = pAmostra.calado + pAmostra.hmm + pAmostra.onda + pAmostra.pp + pAmostra.lag;
+    if (soma <= 0) continue;
+    // Renormaliza
+    for (const k of Object.keys(pAmostra) as Array<keyof typeof pAmostra>) {
+      pAmostra[k] /= soma;
+    }
+    // Recalcula IRC com pesos amostrados
+    const comp = base.componentes;
+    const linear =
+      pAmostra.calado  * comp.calado_tabocal +
+      pAmostra.hmm     * comp.hmm_extremo +
+      pAmostra.onda    * comp.onda_branco +
+      pAmostra.pp      * comp.anomalia_pp +
+      pAmostra.lag     * comp.lag_operacional;
+    const piso = comp.calado_tabocal >= PISO_DOMINADOR_LIMIAR
+      ? comp.calado_tabocal * PISO_DOMINADOR_FATOR
+      : 0;
+    ircs.push(Math.max(0, Math.min(100, Math.max(linear, piso))));
+  }
+
+  ircs.sort((a, b) => a - b);
+  const quantil = (q: number) => ircs[Math.floor(ircs.length * q)];
+  const p10 = +quantil(0.10).toFixed(1);
+  const p50 = +quantil(0.50).toFixed(1);
+  const p90 = +quantil(0.90).toFixed(1);
+
+  // Faixas que o IC80 cobre
+  const faixasUnicas = new Set<FaixaIRC>();
+  for (const irc of ircs) faixasUnicas.add(faixaCalibrada(irc));
+  // Mas para o IC80 usamos só p10 a p90
+  const faixasIC80 = new Set<FaixaIRC>();
+  for (const irc of ircs.slice(Math.floor(ircs.length * 0.10), Math.floor(ircs.length * 0.90))) {
+    faixasIC80.add(faixaCalibrada(irc));
+  }
+  return {
+    ...base,
+    faixa:           faixaCalibrada(base.irc),
+    irc_p10:         p10,
+    irc_p50:         p50,
+    irc_p90:         p90,
+    ic80_largura:    +(p90 - p10).toFixed(1),
+    faixa_estavel:   faixasIC80.size === 1,
+    faixas_no_ic80:  [...faixasIC80],
+    n_amostras_mc:   ircs.length,
   };
 }
 

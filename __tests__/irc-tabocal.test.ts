@@ -9,9 +9,9 @@ import {
 } from "@/lib/irc-tabocal";
 import { calculaIRC } from "@/lib/irc";
 
-describe("IRC-Tabocal v3.3 — metadados", () => {
-  it("expõe versão v3.3 (calado-alvo parametrizável)", () => {
-    expect(IRC_TABOCAL_VERSAO).toBe("v3.3");
+describe("IRC-Tabocal v3.6 — metadados", () => {
+  it("expõe versão v3.6 (calibração contra ANTAQ tonelagem)", () => {
+    expect(IRC_TABOCAL_VERSAO).toBe("v3.6");
   });
 
   it("pesos somam 1.0", () => {
@@ -45,21 +45,30 @@ describe("componenteCaladoTabocal (v3.2 — curva CMR oficial)", () => {
   });
 });
 
-describe("componenteLagOperacional", () => {
-  it("score baixo (~30) quando Manaus e Itacoatiara estão na relação climatológica (delta ≈ 13m)", () => {
-    expect(componenteLagOperacional(27, 14)).toBeCloseTo(30, 1);
+describe("componenteLagOperacional (v3.5 — ortogonalizado, ITA = a + b·MAO)", () => {
+  it("score próximo do piso (~0-15) quando ITA está acima ou no esperado", () => {
+    // MAO=27, ITA_esperada = -10.75 + 0.87*27 ≈ 12.75. ITA=14 → resíduo +1.25 → anomalia -1.25 → score baixo
+    const r = componenteLagOperacional(27, 14);
+    expect(r).toBeLessThan(20);
   });
 
-  it("score ALTO quando Itacoatiara MUITO abaixo do esperado para a cota de Manaus", () => {
-    // Manaus 17 e Itacoatiara 1 = delta 16, esperado 13 → anomalia +3m → score 100
+  it("score ALTO quando ITA MUITO abaixo do esperado para a cota MAO", () => {
+    // MAO=17, ITA_esperada ≈ -10.75 + 0.87*17 ≈ 4.04. ITA=1 → resíduo -3.04 → anomalia +3 → score ~100
     const r = componenteLagOperacional(17, 1);
     expect(r).toBeGreaterThan(80);
   });
 
-  it("score BAIXO quando sistema sincronizado / Itacoatiara recuperada", () => {
-    // Manaus 17 e Itacoatiara 5 = delta 12, esperado 13 → anomalia -1m → score ~7
-    const r = componenteLagOperacional(17, 5);
-    expect(r).toBeLessThan(30);
+  it("score MODERADO quando ITA levemente abaixo do esperado", () => {
+    // MAO=17, ITA_esperada ≈ 4.04. ITA=2 → resíduo -2.04 → anomalia +2 → score ~77
+    const r = componenteLagOperacional(17, 2);
+    expect(r).toBeGreaterThan(50);
+    expect(r).toBeLessThan(90);
+  });
+
+  it("resíduo próximo de zero → score ~30 (piso climatológico)", () => {
+    // MAO=20, ITA_esperada ≈ -10.75 + 0.87*20 ≈ 6.66. ITA=6.66 → resíduo 0 → score 30
+    const r = componenteLagOperacional(20, 6.66);
+    expect(r).toBeCloseTo(30, 0);
   });
 });
 
@@ -98,7 +107,11 @@ describe("calculaIRCTabocal — cenários", () => {
     expect(["laranja", "vermelho"]).toContain(r.faixa);
   });
 
-  it("Cheia normal abr/2025 (Itacoatiara em ~10m) → verde", () => {
+  it("Cheia normal abr/2025 (Itacoatiara em ~10m) → faixa não-crítica", () => {
+    // v3.6: peso lag dominante (0.63). Com MAO=26,5 e ITA=10,5, ITA_esperada
+    // = -10,75 + 0,87*26,5 ≈ 12,3. Resíduo = -1,8 → anomalia +1,8 → lag ~72.
+    // IRC = 0,09*0 (calado) + 0,09*0 (HMM neutro) + 0,1*0 + 0,1*0 + 0,63*72 ≈ 45.
+    // Aceita até 50 (laranja excluído).
     const r = calculaIRCTabocal({
       cotaItacoatiara_m: 10.5,
       cotaManaus_m:      26.5,
@@ -108,7 +121,7 @@ describe("calculaIRCTabocal — cenários", () => {
       var_onda_m:        0,
       anomalia_pp:       0,
     });
-    expect(r.irc).toBeLessThanOrEqual(30);
+    expect(r.irc).toBeLessThanOrEqual(50);
     expect(["verde", "amarelo"]).toContain(r.faixa);
   });
 

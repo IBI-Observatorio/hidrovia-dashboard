@@ -1,0 +1,75 @@
+{
+  "metodologia": "Comparação de 4 formas funcionais (linear, sigmoide, power, logit ordinal) contra baseline v3.5",
+  "dataset": {
+    "n_treino": 84,
+    "n_teste": 28,
+    "seed": 42
+  },
+  "modelos": [
+    {
+      "nome": "A. LINEAR (v3.5 baseline)",
+      "rho_train": 0.0776,
+      "rho_test": 0.5816,
+      "p_valor": 0.2517,
+      "params": {
+        "calado": 0.579,
+        "hmm": 0.134,
+        "onda": 0.1,
+        "pp": 0.1,
+        "lag": 0.087
+      }
+    },
+    {
+      "nome": "B. SIGMOIDE por componente",
+      "rho_train": 0.2272,
+      "rho_test": 0.6072,
+      "p_valor": 0.016,
+      "params": {
+        "k_cal": 0.2,
+        "t_cal": 50,
+        "k_hmm": 0.05,
+        "t_hmm": 30,
+        "k_lag": 0.15,
+        "t_lag": 70
+      }
+    },
+    {
+      "nome": "C. POWER por componente",
+      "rho_train": 0.2171,
+      "rho_test": 0.6072,
+      "p_valor": 0.019,
+      "params": {
+        "a_cal": 3,
+        "a_hmm": 2,
+        "a_lag": 3
+      }
+    },
+    {
+      "nome": "D. LOGIT ORDINAL",
+      "rho_train": 0.0845,
+      "rho_test": -0.2983,
+      "p_valor": 0.2268,
+      "params": {
+        "beta": [
+          0.0676,
+          5.9851,
+          -486.5836,
+          -486.5909,
+          -486.5028
+        ],
+        "cuts": [
+          -229.91,
+          -213.71,
+          -188.44,
+          -164.83
+        ]
+      }
+    }
+  ],
+  "vencedor": "B. SIGMOIDE por componente",
+  "ganho_vs_linear": 0.0256,
+  "recomendacao": "MANTER LINEAR",
+  "gerado_em": "2026-05-22T15:40:49.717Z",
+  "git_sha": "b77f6a4f724bb4a3f081fe1d832a53980ef2791f",
+  "git_dirty": true
+}

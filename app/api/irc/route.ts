@@ -21,11 +21,16 @@ import {
 } from "@/lib/fetch-dados";
 import { calculaIRC, calculaIRC_Agora, detectaFaseCiclo, IRC_VERSAO } from "@/lib/irc";
 import { calculaIRCTabocal, divergenciaIRC, IRC_TABOCAL_VERSAO } from "@/lib/irc-tabocal";
+import { CALIBRACAO_IRC_V36, PESOS_IRC_TABOCAL_V36_HASH } from "@/lib/irc-tabocal-pesos-calibrados-v36";
+import { FAIXAS_IRC_CALIBRADAS } from "@/lib/irc-faixas-calibradas";
+import { caladoEconomico, CONVERSAO_ECONOMICA_META } from "@/lib/conversao-economica";
 import { calculaIRCMonteCarlo } from "@/lib/irc-incerteza";
 import { calculaIDNSimples } from "@/lib/calcula-idn";
 import { detectaOndaBranco } from "@/lib/onda-branco";
 import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
-import { projetaCruzamentoTabocal, projetaCruzamentoCalado } from "@/lib/recessao-itacoatiara";
+import { projetaCruzamentoTabocal, projetaCruzamentoCaladoMC } from "@/lib/recessao-itacoatiara";
+import { projetaETAporAnalogos } from "@/lib/recessao-analogos";
+import { ITACOATIARA_HISTORICO_DIARIO } from "@/lib/itacoatiara-historico-diario";
 import { IRC_HISTORICO_CALCULADO } from "@/lib/irc-historico-calculado";
 
 export const revalidate = 21600;
@@ -106,8 +111,35 @@ export async function GET(request: NextRequest) {
     // Query param ?calado=10.5 permite uso direto da API por sistemas integrados
     const caladoParam = new URL(request.url).searchParams.get("calado");
     const caladoAlvo = caladoParam ? parseFloat(caladoParam) : 11.0;
+    // v3.4: Monte Carlo end-to-end com propagação completa de incerteza
+    //   • pico ~ N(13,73, 0,7²)         (IC80 SGB)
+    //   • data_pico ~ N(15-jun, 10²)    (heurística com σ histórica)
+    //   • (k, h_min) ~ MVN(μ, Σ)        (covariância dos 10 anos calibrados)
+    //   • curva CMR ~ U(P10, P90)/bin   (banda observada)
+    //   • bias correction +12d          (validação LOO 2016-2025)
     const etaCalado = previsao.itacoatiara_pico
-      ? projetaCruzamentoCalado(previsao.itacoatiara_pico, `${ano}-06-15`, caladoAlvo, 300)
+      ? projetaCruzamentoCaladoMC({
+          picoCota_m:        previsao.itacoatiara_pico,
+          picoCota_sigma_m:  0.7,
+          picoData:          `${ano}-06-15`,
+          picoData_sigma_d:  10,
+          calado_alvo:       caladoAlvo,
+          horizonte:         300,
+          n_amostras:        10000,
+          seed:              42,
+          aplicar_bias:      true,
+        })
+      : null;
+
+    // ETA via análogos históricos (v3.5) — incerteza vem da dispersão observada
+    // entre os 10 anos de 2016-2025, ponderada por similaridade da trajetória
+    // 2026 atual. Banda fecha à medida que mais dias entram. Sem assunção
+    // paramétrica.
+    const serie2026 = Object.entries(ITACOATIARA_HISTORICO_DIARIO[2026] ?? {})
+      .map(([data, cota]) => ({ data, cota: cota as number }))
+      .sort((a, b) => a.data.localeCompare(b.data));
+    const etaAnalogos = serie2026.length >= 30
+      ? projetaETAporAnalogos(serie2026, caladoAlvo, 60, 0.5, 300)
       : null;
 
     const serie30 = IRC_HISTORICO_CALCULADO.slice(-30)
@@ -141,18 +173,98 @@ export async function GET(request: NextRequest) {
       calado_alvo_m:     r_tabocal.detalhes.calado_alvo_m,
       cmr_fonte:         "Capitania dos Portos da Amazônia Ocidental",
 
-      // v3.3: ETA do calado-alvo (data prevista para CMR cair abaixo do alvo)
-      // Use ?calado=X.X para customizar o alvo (default 11m)
+      // v3.4: ETA do calado-alvo via Monte Carlo end-to-end (n=10000, seed=42).
+      // Banda IC80 (P10/P90) propaga σ_pico, σ_data, MVN(k,h_min), banda CMR,
+      // e aplica bias correction +12d da validação LOO 2016-2025.
+      // Use ?calado=X.X para customizar o alvo (default 11m).
       eta_calado: etaCalado ? {
-        calado_alvo_m:     etaCalado.calado_alvo_m,
-        data_central:      etaCalado.data_central,
-        dias_central:      etaCalado.dias_central,
-        data_pessimista:   etaCalado.data_pessimista,
-        dias_pessimista:   etaCalado.dias_pessimista,
-        data_otimista:     etaCalado.data_otimista,
-        dias_otimista:     etaCalado.dias_otimista,
-        cota_ita_no_alvo:  etaCalado.cota_ita_no_alvo_m,
+        calado_alvo_m:        etaCalado.calado_alvo_m,
+        // Banda honesta (quantis empíricos do MC)
+        data_p10:             etaCalado.data_p10,
+        data_p50:             etaCalado.data_p50,
+        data_p90:             etaCalado.data_p90,
+        dias_p10:             etaCalado.dias_p10,
+        dias_p50:             etaCalado.dias_p50,
+        dias_p90:             etaCalado.dias_p90,
+        // Estatísticas
+        prob_cruzamento:      etaCalado.prob_cruzamento,
+        media_dias:           etaCalado.media_dias,
+        desvio_dias:          etaCalado.desvio_dias,
+        ic80_largura_dias:    etaCalado.ic80_largura_dias,
+        // Metadados
+        n_amostras:           etaCalado.n_amostras,
+        n_cruzaram:           etaCalado.n_cruzaram,
+        seed:                 etaCalado.seed,
+        cota_ita_no_alvo:     etaCalado.cota_ita_no_alvo_m,
+        // Backward-compat (P50→central, P10→pessimista, P90→otimista)
+        data_central:         etaCalado.data_p50,
+        dias_central:         etaCalado.dias_p50,
+        data_pessimista:      etaCalado.data_p10,
+        dias_pessimista:      etaCalado.dias_p10,
+        data_otimista:        etaCalado.data_p90,
+        dias_otimista:        etaCalado.dias_p90,
       } : null,
+
+      // v3.5: ETA via ANÁLOGOS HISTÓRICOS — comparação direta da trajetória
+      // 2026 contra 2016-2025, sem assunção paramétrica. Banda fecha conforme
+      // mais dias entram. Reportado lado-a-lado com o MC para auditoria.
+      eta_analogos: etaAnalogos ? {
+        calado_alvo_m:    etaAnalogos.cmr_alvo_m,
+        cota_alvo_m:      etaAnalogos.cota_alvo_m,
+        data_atual:       etaAnalogos.data_atual,
+        cota_atual_m:     etaAnalogos.cota_atual_m,
+        janela_dias:      etaAnalogos.janela_dias,
+        // Banda
+        data_p10:         etaAnalogos.data_p10,
+        data_p50:         etaAnalogos.data_p50,
+        data_p90:         etaAnalogos.data_p90,
+        dias_p10:         etaAnalogos.dias_p10,
+        dias_p50:         etaAnalogos.dias_p50,
+        dias_p90:         etaAnalogos.dias_p90,
+        prob_cruzamento:  etaAnalogos.prob_cruzamento,
+        // Ranking dos análogos
+        ano_top:          etaAnalogos.ano_top,
+        rmse_top:         etaAnalogos.rmse_top,
+        analogos:         etaAnalogos.analogos.slice(0, 5).map((a) => ({
+          ano:          a.ano,
+          rmse_m:       a.rmse_m,
+          peso_relativo: +(a.peso / etaAnalogos.analogos.reduce((s, x) => s + x.peso, 0)).toFixed(3),
+          eta_iso:      a.eta_iso,
+          eta_offset_d: a.eta_offset_d,
+        })),
+      } : null,
+
+      // v3.6: METADADOS de calibração (rótulos ANTAQ) para auditoria
+      metadata: {
+        irc_tabocal_versao:   IRC_TABOCAL_VERSAO,
+        irc_manaus_versao:    IRC_VERSAO,
+        pesos_hash:           PESOS_IRC_TABOCAL_V36_HASH,
+        calibracao_git_sha:   CALIBRACAO_IRC_V36.git_sha,
+        calibracao_data:      CALIBRACAO_IRC_V36.gerado_em,
+        rho_train:            CALIBRACAO_IRC_V36.rho_train,
+        rho_test:             CALIBRACAO_IRC_V36.rho_test,
+        p_valor_perm:         CALIBRACAO_IRC_V36.p_valor_perm,
+        n_treino:             CALIBRACAO_IRC_V36.n_treino,
+        n_teste:              CALIBRACAO_IRC_V36.n_teste,
+        faixas_calibradas:    FAIXAS_IRC_CALIBRADAS,
+        seed:                 CALIBRACAO_IRC_V36.seed,
+        metodologia:          CALIBRACAO_IRC_V36.metodologia,
+        ganho_vs_v35:         CALIBRACAO_IRC_V36.ganho_v36_vs_v35,
+      },
+
+      // v3.6: CAMADA DE CONVERSÃO ECONÔMICA
+      // Cliente passa ?volume=250000&frete=180 (opcional, default Cargill-like)
+      impacto_economico: (() => {
+        const url = new URL(request.url);
+        const volume = parseFloat(url.searchParams.get("volume") ?? "250000");
+        const frete  = parseFloat(url.searchParams.get("frete")  ?? "180");
+        return {
+          volume_mensal_ton:   volume,
+          frete_R$_ton:        frete,
+          metodologia_r2:      CONVERSAO_ECONOMICA_META.r2,
+          conversao:           caladoEconomico(r_tabocal.irc, volume, frete),
+        };
+      })(),
 
       // v2 legados (compatibilidade — preferir irc_tabocal/irc_manaus)
       irc_agora:        r_agora.irc,
