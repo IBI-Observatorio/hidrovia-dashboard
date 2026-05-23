@@ -59,7 +59,7 @@ const tooltipStyle = { backgroundColor: '#111827', border: '1px solid #4b5563', 
 // ── Componente ───────────────────────────────────────────────────────────────
 
 export default function GraficoMediasMoveis31() {
-  const { data: seriesData, loading: loadingSeries, erro: erroSeries } = useAntaqSeries(QUERIES_SERIES);
+  const { data: seriesData, loading: loadingSeries, erro: erroSeries, retry } = useAntaqSeries(QUERIES_SERIES);
   const { data: staticData, loading: loadingFc,    erro: erroFc     } = useDashboardData(['forecast.json']);
   const [metrica, setMetrica] = useState('ma12_mt');
 
@@ -136,7 +136,15 @@ export default function GraficoMediasMoveis31() {
   const erro    = erroSeries   || erroFc;
 
   if (loading) return <div className="h-80 flex items-center justify-center text-gray-400 text-sm">Carregando…</div>;
-  if (erro)    return <div className="h-80 flex items-center justify-center text-red-400 text-sm">Erro: {erro}</div>;
+  if (erro)    return (
+    <div className="h-80 flex flex-col items-center justify-center gap-3">
+      <p className="text-red-400 text-sm">Erro ao carregar dados da API: {erro}</p>
+      <button onClick={retry}
+              className="px-4 py-1.5 text-xs rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 border border-gray-600">
+        Tentar novamente
+      </button>
+    </div>
+  );
   if (!historico) return null;
 
   const fmtMom = (v) => v == null ? '—' : (v >= 0 ? '+' : '') + Math.abs(v).toFixed(1) + '%';

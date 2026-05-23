@@ -43,7 +43,7 @@ const tooltipStyle = { backgroundColor: '#111827', border: '1px solid #4b5563', 
 // ── Componente ───────────────────────────────────────────────────────────────
 
 export default function GraficoMediasMoveis32() {
-  const { data: apiData,    loading: loadingApi, erro: erroApi } = useAntaqSeries(QUERIES);
+  const { data: apiData,    loading: loadingApi, erro: erroApi, retry } = useAntaqSeries(QUERIES);
   const { data: staticData, loading: loadingRt,  erro: erroRt  } = useDashboardData(['rotas.json']);
   const [topN, setTopN] = useState(10);
 
@@ -80,7 +80,15 @@ export default function GraficoMediasMoveis32() {
   const erro    = erroApi    || erroRt;
 
   if (loading) return <div className="h-80 flex items-center justify-center text-gray-400 text-sm">Carregando…</div>;
-  if (erro)    return <div className="h-80 flex items-center justify-center text-red-400 text-sm">Erro: {erro}</div>;
+  if (erro)    return (
+    <div className="h-80 flex flex-col items-center justify-center gap-3">
+      <p className="text-red-400 text-sm">Erro ao carregar dados da API: {erro}</p>
+      <button onClick={retry}
+              className="px-4 py-1.5 text-xs rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 border border-gray-600">
+        Tentar novamente
+      </button>
+    </div>
+  );
   if (!stackData) return null;
 
   const rotasData  = staticData?.['rotas'] || [];
