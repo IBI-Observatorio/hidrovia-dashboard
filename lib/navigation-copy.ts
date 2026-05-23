@@ -12,16 +12,14 @@ export const navigationCopy = {
     brand: {
       label: "Observatório de Infraestrutura de Transportes",
       caption: "",
-      href: "https://ibi-observatorio.org/",
+      href: "/",
     },
     links: [
-      { label: "Início",        href: "https://ibi-observatorio.org/#home" },
-      { label: "Conceitos",     href: "https://ibi-observatorio.org/#concepts" },
-      { label: "Aplicações",    href: "https://ibi-observatorio.org/#applications" },
-      { label: "Implementação", href: "https://ibi-observatorio.org/#implementation" },
-      { label: "Apoiadores",    href: "https://ibi-observatorio.org/#sponsors" },
-      { label: "Contato",       href: "https://ibi-observatorio.org/#contact" },
-      { label: "Análises",      href: "https://ibi-observatorio.org/analises" },
+      { label: "Início",   href: "/" },
+      { label: "Portos",   href: "/portos" },
+      { label: "Hidrovia", href: "/hidrovia" },
+      { label: "Análises", href: "/analises" },
+      { label: "Receber dados", href: "/#receber" },
     ],
   },
 
@@ -82,9 +80,9 @@ export const navigationCopy = {
         title: "Navegar",
         links: [
           { label: "Início",                href: "/" },
-          { label: "Monitor Hidrológico",   href: "/monitor" },
-          { label: "Calendário Histórico",  href: "/calendario-severidade" },
-          { label: "Estudos",               href: "/caso-2024" },
+          { label: "Portos",                href: "/portos" },
+          { label: "Hidrovia Amazônica",    href: "/hidrovia" },
+          { label: "Análises",              href: "/analises" },
         ],
       },
       {
