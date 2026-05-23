@@ -1,0 +1,20 @@
+{
+  "id": "31",
+  "slug": "tendencia-cargas",
+  "titulo": "Para onde vai a movimentação dos portos brasileiros?",
+  "subtitulo": "Médias móveis de 12 meses por tipo de carga + projeção do contêiner para os próximos 5 meses",
+  "cluster": "ineditas",
+  "granularidade": "mensal",
+  "cobertura": { "inicio": "2010", "fim": "2026" },
+  "destaque": false,
+  "fonte": "ANTAQ — Estatística Aquaviária (2010–2026) + BCB SGS (IBC-Br)",
+  "ultima_atualizacao": "mai/2026",
+  "metodologia": "Média móvel trailing de 12 meses (MA12) aplicada à tonelagem mensal por natureza de carga. Filtro FlagMCOperacaoCarga=1 evita dupla contagem em cabotagem. Projeção OLS: momentum_conteiner(t) = a + b·IBC-Br_yoy(t-5) + c·momentum_cargageral(t-12). Intervalo de confiança estimado pelo erro padrão da regressão.",
+  "achados": [
+    "Granel sólido (soja, milho, minério) cresce +7% a/a — puxado pela safra recorde e pelo Arco Norte",
+    "Granel líquido (petróleo, combustíveis) acelerou 11% a/a com o pré-sal exportando a todo vapor",
+    "Carga geral (pallets, fardos, máquinas) cai ~3% — substituída gradualmente pelo contêiner",
+    "Contêiner (+5%) mantém trajetória positiva confirmada pelo modelo OLS com IBC-Br como antecedente"
+  ],
+  "grafico": { "tipo": "medias_moveis_31" }
+}
