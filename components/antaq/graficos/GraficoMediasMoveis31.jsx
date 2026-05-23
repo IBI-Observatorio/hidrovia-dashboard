@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo } from 'react';
 import {
-  LineChart, Line, AreaChart, Area,
+  ComposedChart, LineChart, Line, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ReferenceLine, ResponsiveContainer,
 } from 'recharts';
@@ -119,14 +119,28 @@ export default function GraficoMediasMoveis31() {
 
     // ── Forecast (OLS, arquivo estático) ─────────────────────────────────
     const fc = staticData?.['forecast'] || {};
-    const obsMap = {};
-    for (const r of (fc.serie || [])) obsMap[r.data] = { observado: r.observado, predito: r.predito };
-    const obs = Object.entries(obsMap).sort(([a],[b]) => a.localeCompare(b))
-      .map(([data, v]) => ({ data, ...v }));
+    const fcMap  = Object.fromEntries((fc.forecast || []).map(r => [r.data, r]));
+    const obsLookup = Object.fromEntries((fc.serie  || []).map(r => [r.data, r]));
+
+    // Array único ordenado por data — recharts precisa de um só dataset no topo
+    const allFcDates = [...new Set([...Object.keys(obsLookup), ...Object.keys(fcMap)])].sort();
+    const fcMerged = allFcDates.map(date => {
+      const o = obsLookup[date];
+      const f = fcMap[date];
+      return {
+        data:      date,
+        observado: o?.observado     ?? null,
+        predito:   o?.predito       ?? null,
+        central:   f?.central_pct   ?? null,
+        fc_low:    f?.low_pct       ?? null,
+        // fc_span = altura da faixa (para área empilhada: base=fc_low, span=high-low)
+        fc_span:   f ? (f.high_pct - f.low_pct) : null,
+      };
+    });
+
     const forecastData = {
-      obs,
-      fc:     fc.forecast || [],
-      modelo: fc.modelo   || {},
+      merged: fcMerged,
+      modelo: fc.modelo || {},
     };
 
     return { historico, forecastData, momentumAtual };
@@ -147,7 +161,7 @@ export default function GraficoMediasMoveis31() {
   );
   if (!historico) return null;
 
-  const fmtMom = (v) => v == null ? '—' : (v >= 0 ? '+' : '') + Math.abs(v).toFixed(1) + '%';
+  const fmtMom  = (v) => v == null ? '—' : (v >= 0 ? '+' : '') + Math.abs(v).toFixed(1) + '%';
 
   const yKey = (nat) =>
     metrica === 'indice100'  ? `indice100_${nat}`  :
@@ -158,14 +172,6 @@ export default function GraficoMediasMoveis31() {
     metrica === 'indice100'  ? 'Índice (base 100)' :
     metrica === 'yoy_ma_pct' ? 'Crescimento a/a (%)' :
     'Mt/mês (média 12m)';
-
-  const fcRows = (forecastData.fc || []).map(r => ({
-    data:    r.data,
-    central: r.central_pct,
-    high:    r.high_pct,
-    low:     r.low_pct,
-    band:    [r.low_pct, r.high_pct],
-  }));
 
   return (
     <div className="space-y-8">
@@ -183,10 +189,11 @@ export default function GraficoMediasMoveis31() {
             </span>
           )}
         </p>
+        {/* ComposedChart com dataset único — evita concatenação indevida do eixo X */}
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
+          <ComposedChart data={forecastData.merged} margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
             <CartesianGrid {...gridProps} />
-            <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} padding={{ right: 20 }} />
+            <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} interval={11} />
             <YAxis tick={tickStyle} tickFormatter={v => fmtNum(v, 1)}
                    label={{ value: 'Crescimento a/a (%)', angle: -90, position: 'insideLeft',
                             fill: '#9ca3af', fontSize: 11, dy: 70 }} />
@@ -194,16 +201,20 @@ export default function GraficoMediasMoveis31() {
                      formatter={(v, n) => [fmtNum(v, 2) + '%', n]} />
             <Legend iconSize={10} wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
             <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="4 2" />
-            <Line data={forecastData.obs} dataKey="observado" name="Observado (contêiner)"
+            {/* Faixa de incerteza: base invisível + span colorido empilhado */}
+            <Area type="monotone" dataKey="fc_low"  stackId="fc"
+                  fill="transparent" stroke="none" legendType="none" />
+            <Area type="monotone" dataKey="fc_span" stackId="fc"
+                  fill="rgba(212,146,42,0.22)" stroke="none" name="Margem de erro" />
+            {/* Séries históricas */}
+            <Line type="monotone" dataKey="observado" name="Observado (contêiner)"
                   stroke="#0099D8" strokeWidth={2} dot={false} connectNulls />
-            <Line data={forecastData.obs} dataKey="predito" name="Calculado pelo modelo"
+            <Line type="monotone" dataKey="predito" name="Calculado pelo modelo"
                   stroke="#9ca3af" strokeWidth={1.4} strokeDasharray="4 2" dot={false} connectNulls />
-            <Area data={fcRows} dataKey="band" type="monotone"
-                  fill="rgba(212,146,42,0.18)" stroke="none"
-                  name="Margem de erro" legendType="none" />
-            <Line data={fcRows} dataKey="central" name="Projeção (5m à frente)"
+            {/* Projeção central */}
+            <Line type="monotone" dataKey="central" name="Projeção (5m à frente)"
                   stroke="#D4922A" strokeWidth={2.4} dot={{ r: 4, fill: '#D4922A' }} connectNulls />
-          </LineChart>
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
 
