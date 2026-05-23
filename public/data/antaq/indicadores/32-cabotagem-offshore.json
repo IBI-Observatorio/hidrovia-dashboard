@@ -1,0 +1,20 @@
+{
+  "id": "32",
+  "slug": "cabotagem-offshore",
+  "titulo": "Quase metade da \"cabotagem\" brasileira é petróleo do pré-sal",
+  "subtitulo": "Cabotagem doméstica vs. petróleo offshore (FPSO/ZEE) + maiores rotas de contêiner",
+  "cluster": "cabotagem-hidrovias",
+  "granularidade": "mensal",
+  "cobertura": { "inicio": "2010", "fim": "2026" },
+  "destaque": false,
+  "fonte": "ANTAQ — Estatística Aquaviária (2010–2026)",
+  "ultima_atualizacao": "mai/2026",
+  "metodologia": "Separação via FlagOffshore=1 (petróleo de FPSO na ZEE) vs. cabotagem doméstica pura. Volume em soma móvel de 12 meses (Mt). Rotas de contêiner por par origem-destino; CAGR calculado sobre o período 2010–último ano fechado. Filtro FlagMCOperacaoCarga=1 em todo o pipeline.",
+  "achados": [
+    "~47% do total nominalmente classificado como cabotagem é petróleo offshore (FPSO/ZEE)",
+    "Cabotagem doméstica pura cresce em ritmo moderado (~163 Mt/ano)",
+    "Petróleo offshore cresce ~14% a/a — vetor principal da expansão do pré-sal",
+    "Maior rota de contêiner: Manaus → Santos, abastecendo a Zona Franca de Manaus"
+  ],
+  "grafico": { "tipo": "medias_moveis_32" }
+}

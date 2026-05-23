@@ -5,6 +5,9 @@ import GraficoBarHorizontal from './graficos/GraficoBarHorizontal';
 import GraficoLine from './graficos/GraficoLine';
 import GraficoLineDual from './graficos/GraficoLineDual';
 import GraficoHeatmap from './graficos/GraficoHeatmap';
+import GraficoMediasMoveis31 from './graficos/GraficoMediasMoveis31';
+import GraficoMediasMoveis32 from './graficos/GraficoMediasMoveis32';
+import GraficoMediasMoveis33 from './graficos/GraficoMediasMoveis33';
 import { DATA_BASE } from './cores';
 
 /**
@@ -16,7 +19,9 @@ export default function IndicadorInterativo({ indicador }) {
   const spec = indicador.grafico;
   const dados = indicador.dados || [];
 
-  if (!spec || dados.length === 0) {
+  // Tipos autossuficientes não precisam de dados embutidos no JSON do indicador
+  const autossuficiente = ['medias_moveis_31','medias_moveis_32','medias_moveis_33'];
+  if (!spec || (dados.length === 0 && !autossuficiente.includes(spec.tipo))) {
     return indicador.imagem ? (
       <img
         src={`${DATA_BASE}/${indicador.imagem}`}
@@ -27,11 +32,15 @@ export default function IndicadorInterativo({ indicador }) {
   }
 
   switch (spec.tipo) {
-    case 'bar':            return <GraficoBar dados={dados} spec={spec} />;
-    case 'bar_horizontal': return <GraficoBarHorizontal dados={dados} spec={spec} />;
-    case 'line':           return <GraficoLine dados={dados} spec={spec} />;
-    case 'line_dual':      return <GraficoLineDual dados={dados} spec={spec} />;
-    case 'heatmap':        return <GraficoHeatmap dados={dados} spec={spec} />;
+    case 'bar':              return <GraficoBar dados={dados} spec={spec} />;
+    case 'bar_horizontal':   return <GraficoBarHorizontal dados={dados} spec={spec} />;
+    case 'line':             return <GraficoLine dados={dados} spec={spec} />;
+    case 'line_dual':        return <GraficoLineDual dados={dados} spec={spec} />;
+    case 'heatmap':          return <GraficoHeatmap dados={dados} spec={spec} />;
+    // Médias móveis ANTAQ — dashboards autossuficientes (buscam /data/antaq/dashboard/)
+    case 'medias_moveis_31': return <GraficoMediasMoveis31 />;
+    case 'medias_moveis_32': return <GraficoMediasMoveis32 />;
+    case 'medias_moveis_33': return <GraficoMediasMoveis33 />;
     default:
       return indicador.imagem ? (
         <img

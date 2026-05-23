@@ -54,8 +54,12 @@ export default function IndicadorPage() {
 
   const cluster = manifest.clusters.find((c) => c.slug === slugCluster);
   const cor = CORES_CLUSTER[slugCluster] || '#0099D8';
+  const tiposAutossuficientes = ['medias_moveis_31','medias_moveis_32','medias_moveis_33'];
   const usaInterativo =
-    indicador.destaque && indicador.dados?.length > 0 && indicador.grafico;
+    indicador.grafico && (
+      (indicador.dados?.length > 0) ||
+      tiposAutossuficientes.includes(indicador.grafico?.tipo)
+    );
   const temBlocos = !!indicador.o_que_e;
 
   return (

@@ -1,0 +1,20 @@
+{
+  "id": "33",
+  "slug": "diagnostico-portos",
+  "titulo": "Quais portos estão ganhando — ou perdendo — espaço no mercado?",
+  "subtitulo": "CAGR de cada porto vs. crescimento médio nacional por tipo de carga (2018–2025)",
+  "cluster": "infraestrutura",
+  "granularidade": "anual",
+  "cobertura": { "inicio": "2018", "fim": "2025" },
+  "destaque": false,
+  "fonte": "ANTAQ — Estatística Aquaviária (2010–2026)",
+  "ultima_atualizacao": "mai/2026",
+  "metodologia": "CAGR calculado sobre período 2018–último ano fechado para portos com volume ≥ 0,5 Mt/ano. Linha de referência = crescimento médio nacional da natureza selecionada. Portos acima da linha ganharam participação de mercado; abaixo, perderam. Filtro: FlagMCOperacaoCarga=1.",
+  "achados": [
+    "Porto do Açu (RJ) cresce 29% a/a no granel líquido — quase dobrou com o pré-sal",
+    "Ponta Ubu (ES) lidera no granel sólido após retomada do minério pós-Brumadinho",
+    "Itajaí (SC) perde contêiner para Itapoá, porto novo a 30 km de distância",
+    "Portocel (ES) cai 4% — celulose migrou para exportação direta ao exterior"
+  ],
+  "grafico": { "tipo": "medias_moveis_33" }
+}

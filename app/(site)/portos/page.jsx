@@ -12,25 +12,25 @@ import { CORES_CLUSTER, DATA_BASE } from '@/components/antaq/cores';
 // A ordem aqui é a ordem em que aparecem na landing.
 const ACHADOS_DESTAQUE = [
   {
-    id: '30',
-    numero: '+0,77',
-    numeroLabel: 'correlação com o PIM-PF do IBGE, 2 meses adiantada',
+    id: '31',
+    numero: '+11%',
+    numeroLabel: 'ao ano — granel líquido lidera com o pré-sal',
     punchline:
-      'As toneladas que chegam aos portos hoje preveem a produção industrial do IBGE de daqui a dois meses. Um indicador antecedente do PIB construído a partir da Estatística Aquaviária da ANTAQ.',
+      'Cada carga tem um ritmo diferente. Granel líquido (+11% a/a) acelera com o pré-sal, granel sólido cresce +7% com a safra recorde, e carga geral cai 3% enquanto o contêiner avança. Um modelo OLS projeta o ritmo do contêiner para os próximos 5 meses.',
   },
   {
-    id: '03',
-    numero: 'R$ 14 bi',
-    numeroLabel: 'por ano em navio parado nos portos brasileiros',
+    id: '32',
+    numero: '~47%',
+    numeroLabel: 'da "cabotagem" brasileira é petróleo offshore, não carga entre portos',
     punchline:
-      '53% do tempo total de estadia portuária é espera, não operação. Monetizando essas horas perdidas pelo custo de afretamento, o Brasil queima cerca de R$ 14 bilhões por ano em ineficiência logística.',
+      'Quando a ANTAQ fala em cabotagem, junta duas coisas muito diferentes: cargas indo de um porto a outro e petróleo bombeado de plataformas do pré-sal (FPSO/ZEE). Separamos as duas — e a história muda completamente.',
   },
   {
-    id: '13',
-    numero: '35% → 44%',
-    numeroLabel: 'do granel sólido brasileiro saiu pelo Arco Norte em 13 anos',
+    id: '33',
+    numero: '+29%',
+    numeroLabel: 'ao ano — Porto do Açu cresceu quase o dobro com o pré-sal',
     punchline:
-      'A migração silenciosa Sul-Sudeste → Norte-Nordeste já redesenhou o escoamento agrícola do país. Itaqui multiplicou seu volume por 6× desde 2010 e Terminal Novo Remanso surgiu em 2023 já em 2,2 Mt.',
+      'Nem todos os portos crescem igual. Comparamos o CAGR de cada porto com a média nacional de cada carga: quem cresceu acima ganhou mercado, quem ficou abaixo perdeu espaço. A geografia portuária está se redesenhando.',
   },
 ];
 

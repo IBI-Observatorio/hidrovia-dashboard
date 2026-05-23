@@ -1,6 +1,7 @@
 {
-  "gerado_em": "2026-05-11T22:13:54+00:00",
-  "total_indicadores": 1,
+  "gerado_em": "2026-05-23T00:00:00+00:00",
+  "cobertura": { "inicio": "2010", "fim": "2026" },
+  "total_indicadores": 4,
   "clusters": [
     {
       "slug": "ineditas",
@@ -8,14 +9,26 @@
       "ordem": 7,
       "descricao": "Indicadores originais do IBI: fingerprint operacional dos portos, custo de ineficiência por tonelada, sazonalidade latente e o PIM-PF Combinado IBI (componente DFM em horizonte bimestral).",
       "cor": "#0099D8",
-      "indicadores": [
-        "30"
-      ]
+      "indicadores": ["30", "31"]
+    },
+    {
+      "slug": "cabotagem-hidrovias",
+      "nome": "Cabotagem & Hidrovias",
+      "ordem": 3,
+      "descricao": "Análise da cabotagem doméstica separada do petróleo offshore (FPSO/ZEE), rotas de contêiner entre portos brasileiros e evolução do modal hidroviário.",
+      "cor": "#00A652",
+      "indicadores": ["32"]
+    },
+    {
+      "slug": "infraestrutura",
+      "nome": "Infraestrutura",
+      "ordem": 5,
+      "descricao": "Diagnóstico de competitividade portuária: quais portos estão ganhando ou perdendo espaço no mercado em cada tipo de carga.",
+      "cor": "#D4922A",
+      "indicadores": ["33"]
     }
   ],
-  "destaques": [
-    "30"
-  ],
+  "destaques": ["31", "32", "33"],
   "indicadores": [
     {
       "id": "30",
@@ -25,6 +38,30 @@
       "destaque": true,
       "granularidade": "bimestral",
       "imagem": "figs/30_portgdp.png"
+    },
+    {
+      "id": "31",
+      "slug": "tendencia-cargas",
+      "titulo": "Para onde vai a movimentação dos portos brasileiros?",
+      "cluster": "ineditas",
+      "destaque": false,
+      "granularidade": "mensal"
+    },
+    {
+      "id": "32",
+      "slug": "cabotagem-offshore",
+      "titulo": "Quase metade da "cabotagem" brasileira é petróleo do pré-sal",
+      "cluster": "cabotagem-hidrovias",
+      "destaque": false,
+      "granularidade": "mensal"
+    },
+    {
+      "id": "33",
+      "slug": "diagnostico-portos",
+      "titulo": "Quais portos estão ganhando — ou perdendo — espaço no mercado?",
+      "cluster": "infraestrutura",
+      "destaque": false,
+      "granularidade": "mensal"
     }
   ]
 }
