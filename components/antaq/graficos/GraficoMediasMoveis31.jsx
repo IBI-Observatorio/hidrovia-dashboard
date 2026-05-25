@@ -5,18 +5,11 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ReferenceLine, ResponsiveContainer,
 } from 'recharts';
-import { useAntaqSeries } from '../useAntaqApi';
 import { useDashboardData } from '../useDashboardData';
 
 // ── Constantes ───────────────────────────────────────────────────────────────
 
-const NATUREZA_API = {
-  granel_solido:  'Granel Sólido',
-  granel_liquido: 'Granel Líquido e Gasoso',
-  carga_geral:    'Carga Geral',
-  conteinerizada: 'Carga Conteinerizada',
-};
-const NATUREZAS = Object.keys(NATUREZA_API);
+const NATUREZAS = ['granel_solido', 'granel_liquido', 'carga_geral', 'conteinerizada'];
 
 const CORES = {
   granel_solido:  '#00A652',
@@ -30,15 +23,6 @@ const LABELS = {
   carga_geral:    'Carga Geral',
   conteinerizada: 'Contêiner',
 };
-
-// Uma query por natureza — MA12 dos últimos 15 anos
-const QUERIES_SERIES = NATUREZAS.map(nat => ({
-  natureza:             NATUREZA_API[nat],
-  metrica:              'toneladas',
-  freq:                 'mensal',
-  suavizacao:           'ma12',
-  apenas_movimentacao:  true,
-}));
 
 const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 
@@ -59,22 +43,22 @@ const tooltipStyle = { backgroundColor: '#111827', border: '1px solid #4b5563', 
 // ── Componente ───────────────────────────────────────────────────────────────
 
 export default function GraficoMediasMoveis31() {
-  const { data: seriesData, loading: loadingSeries, erro: erroSeries, retry } = useAntaqSeries(QUERIES_SERIES);
-  const { data: staticData, loading: loadingFc,    erro: erroFc     } = useDashboardData(['forecast.json']);
+  const { data, loading, erro } = useDashboardData(['series-tendencia.json', 'forecast.json']);
   const [metrica, setMetrica] = useState('ma12_mt');
 
   const { historico, forecastData, momentumAtual } = useMemo(() => {
-    if (!seriesData) return {};
+    if (!data) return {};
+    const rawSeries = data['series-tendencia'];
+    if (!rawSeries) return {};
 
     // ── Pivot: [{ data, ma12_mt_X, yoy_ma_pct_X, indice100_X }] ─────────
     const byDate = {};
 
-    NATUREZAS.forEach((nat, i) => {
-      const serie = seriesData[i]?.serie || [];
+    NATUREZAS.forEach(nat => {
+      const serie = rawSeries.series?.[nat] || [];
       for (const pt of serie) {
         if (!byDate[pt.data]) byDate[pt.data] = { data: pt.data };
-        // ma12 da API está em toneladas → converter para Mt
-        byDate[pt.data][`ma12_mt_${nat}`] = pt.ma12 != null ? pt.ma12 / 1e6 : null;
+        byDate[pt.data][`ma12_mt_${nat}`] = pt.ma12_mt ?? null;
       }
     });
 
@@ -118,7 +102,7 @@ export default function GraficoMediasMoveis31() {
     }
 
     // ── Forecast (OLS, arquivo estático) ─────────────────────────────────
-    const fc = staticData?.['forecast'] || {};
+    const fc = data['forecast'] || {};
     const fcMap  = Object.fromEntries((fc.forecast || []).map(r => [r.data, r]));
     const obsLookup = Object.fromEntries((fc.serie  || []).map(r => [r.data, r]));
 
@@ -144,16 +128,13 @@ export default function GraficoMediasMoveis31() {
     };
 
     return { historico, forecastData, momentumAtual };
-  }, [seriesData, staticData]);
-
-  const loading = loadingSeries || loadingFc;
-  const erro    = erroSeries   || erroFc;
+  }, [data]);
 
   if (loading) return <div className="h-80 flex items-center justify-center text-gray-400 text-sm">Carregando…</div>;
   if (erro)    return (
     <div className="h-80 flex flex-col items-center justify-center gap-3">
-      <p className="text-red-400 text-sm">Erro ao carregar dados da API: {erro}</p>
-      <button onClick={retry}
+      <p className="text-red-400 text-sm">Erro ao carregar dados: {erro}</p>
+      <button onClick={() => window.location.reload()}
               className="px-4 py-1.5 text-xs rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 border border-gray-600">
         Tentar novamente
       </button>

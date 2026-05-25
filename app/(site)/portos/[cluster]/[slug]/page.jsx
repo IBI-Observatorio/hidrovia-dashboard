@@ -65,8 +65,17 @@ export default function IndicadorPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       <section className="border-b border-gray-800 bg-gradient-to-br
-                          from-gray-900 via-ibi-dark to-gray-900 pt-32 pb-10">
+                          from-gray-900 via-ibi-dark to-gray-900 pt-12 pb-10">
         <div className="container mx-auto px-6">
+          <a
+            href="/"
+            className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-white transition-colors mb-4"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            Voltar
+          </a>
           <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-gray-400">
             <Link href="/portos" className="hover:text-ibi-blue transition-colors">Indicadores</Link>
             <span>/</span>
