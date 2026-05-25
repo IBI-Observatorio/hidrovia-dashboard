@@ -1,0 +1,949 @@
+{
+  "gerado_em": "2026-05-23T18:42:38+00:00",
+  "referencia": "2026-02",
+  "periodo_base": "2018-2025",
+  "fonte": "ANTAQ — Estatística Aquaviária",
+  "kpis": {
+    "referencia": "2026-02",
+    "total_12m_mt": 1409.0,
+    "total_yoy_pct": 7.43,
+    "cabotagem_total_mt": 308.0,
+    "cabotagem_offshore_pct": 46.9,
+    "teu_12m": 15354393.0,
+    "composicao_12m": {
+      "granel_solido": 839.0,
+      "granel_liquido": 341.0,
+      "carga_geral": 64.0,
+      "conteinerizada": 164.0
+    },
+    "momentum_atual": {
+      "granel_solido": 7.33,
+      "granel_liquido": 10.96,
+      "carga_geral": -2.6,
+      "conteinerizada": 5.23
+    }
+  },
+  "portos": {
+    "periodo_base": "2018-2025",
+    "naturezas": {
+      "granel_solido": {
+        "natureza_label": "Granel Sólido",
+        "cagr_natureza_pct": 2.3,
+        "periodo": "2018-2025",
+        "ganhadores": [
+          {
+            "porto": "Terminal Marítimo Ponta Ubu",
+            "uf": "ES",
+            "cagr_pct": 46.09,
+            "volume_mt": 16.7,
+            "divergencia_pp": 43.79
+          },
+          {
+            "porto": "Porto do Açu - Terminal de Minério",
+            "uf": "RJ",
+            "cagr_pct": 33.59,
+            "volume_mt": 24.4,
+            "divergencia_pp": 31.29
+          },
+          {
+            "porto": "Estação Cianport Miritituba",
+            "uf": "PA",
+            "cagr_pct": 21.79,
+            "volume_mt": 2.7,
+            "divergencia_pp": 19.49
+          },
+          {
+            "porto": "Santana",
+            "uf": "AP",
+            "cagr_pct": 19.23,
+            "volume_mt": 3.6,
+            "divergencia_pp": 16.93
+          },
+          {
+            "porto": "Porto do Açu - Terminal TMULT e TCAR",
+            "uf": "RJ",
+            "cagr_pct": 19.11,
+            "volume_mt": 2.1,
+            "divergencia_pp": 16.81
+          },
+          {
+            "porto": "Porto Sudeste do Brasil S/A",
+            "uf": "RJ",
+            "cagr_pct": 14.73,
+            "volume_mt": 28.0,
+            "divergencia_pp": 12.43
+          },
+          {
+            "porto": "Suape",
+            "uf": "PE",
+            "cagr_pct": 14.25,
+            "volume_mt": 1.3,
+            "divergencia_pp": 11.96
+          },
+          {
+            "porto": "Salvador",
+            "uf": "BA",
+            "cagr_pct": 12.97,
+            "volume_mt": 1.1,
+            "divergencia_pp": 10.67
+          },
+          {
+            "porto": "Terminal Marítimo Inácio Barbosa - TMIB",
+            "uf": "SE",
+            "cagr_pct": 12.8,
+            "volume_mt": 0.9,
+            "divergencia_pp": 10.5
+          },
+          {
+            "porto": "Porto Gregório Curvo",
+            "uf": "MS",
+            "cagr_pct": 12.4,
+            "volume_mt": 5.6,
+            "divergencia_pp": 10.1
+          }
+        ],
+        "perdedores": [
+          {
+            "porto": "Terminal Ponta da Montanha",
+            "uf": "PA",
+            "cagr_pct": -10.05,
+            "volume_mt": 2.4,
+            "divergencia_pp": -12.35
+          },
+          {
+            "porto": "Areia Branca",
+            "uf": "RN",
+            "cagr_pct": -5.04,
+            "volume_mt": 3.4,
+            "divergencia_pp": -7.34
+          },
+          {
+            "porto": "Terminal da Ilha Guaíba - TIG",
+            "uf": "RJ",
+            "cagr_pct": -3.9,
+            "volume_mt": 31.1,
+            "divergencia_pp": -6.2
+          },
+          {
+            "porto": "Terminal de Praia Mole",
+            "uf": "ES",
+            "cagr_pct": -3.17,
+            "volume_mt": 10.1,
+            "divergencia_pp": -5.47
+          },
+          {
+            "porto": "Terminal Portuário Bunge Alimentos",
+            "uf": "RS",
+            "cagr_pct": -2.76,
+            "volume_mt": 2.3,
+            "divergencia_pp": -5.06
+          },
+          {
+            "porto": "Terminal de Tubarão",
+            "uf": "ES",
+            "cagr_pct": -2.5,
+            "volume_mt": 86.4,
+            "divergencia_pp": -4.8
+          },
+          {
+            "porto": "Terminal Marítimo de Ponta da Madeira",
+            "uf": "MA",
+            "cagr_pct": -1.99,
+            "volume_mt": 172.4,
+            "divergencia_pp": -4.29
+          },
+          {
+            "porto": "Terminal Portuário do Pecém",
+            "uf": "CE",
+            "cagr_pct": -1.97,
+            "volume_mt": 8.6,
+            "divergencia_pp": -4.27
+          },
+          {
+            "porto": "Terminal Trombetas",
+            "uf": "PA",
+            "cagr_pct": -1.85,
+            "volume_mt": 12.7,
+            "divergencia_pp": -4.15
+          },
+          {
+            "porto": "Cabedelo",
+            "uf": "PB",
+            "cagr_pct": -1.68,
+            "volume_mt": 0.6,
+            "divergencia_pp": -3.97
+          }
+        ]
+      },
+      "granel_liquido": {
+        "natureza_label": "Granel Líquido e Gasoso",
+        "cagr_natureza_pct": 5.11,
+        "periodo": "2018-2025",
+        "ganhadores": [
+          {
+            "porto": "Rio de Janeiro",
+            "uf": "RJ",
+            "cagr_pct": 52.52,
+            "volume_mt": 1.5,
+            "divergencia_pp": 47.41
+          },
+          {
+            "porto": "Terminal de Petróleo TPET/TOIL - Açu",
+            "uf": "RJ",
+            "cagr_pct": 29.19,
+            "volume_mt": 61.5,
+            "divergencia_pp": 24.08
+          },
+          {
+            "porto": "Vila do Conde",
+            "uf": "PA",
+            "cagr_pct": 15.4,
+            "volume_mt": 3.0,
+            "divergencia_pp": 10.29
+          },
+          {
+            "porto": "ATEM Manaus",
+            "uf": "AM",
+            "cagr_pct": 11.95,
+            "volume_mt": 1.6,
+            "divergencia_pp": 6.84
+          },
+          {
+            "porto": "Terminal Aquaviário de Angra dos Reis",
+            "uf": "RJ",
+            "cagr_pct": 7.16,
+            "volume_mt": 69.9,
+            "divergencia_pp": 2.05
+          },
+          {
+            "porto": "Paranaguá",
+            "uf": "PR",
+            "cagr_pct": 6.03,
+            "volume_mt": 4.7,
+            "divergencia_pp": 0.92
+          },
+          {
+            "porto": "Itaqui",
+            "uf": "MA",
+            "cagr_pct": 4.72,
+            "volume_mt": 9.1,
+            "divergencia_pp": -0.39
+          },
+          {
+            "porto": "Terminal Portuário Privativo da Alumar",
+            "uf": "MA",
+            "cagr_pct": 3.9,
+            "volume_mt": 1.2,
+            "divergencia_pp": -1.21
+          },
+          {
+            "porto": "Terminal de Tubarão",
+            "uf": "ES",
+            "cagr_pct": 3.85,
+            "volume_mt": 0.8,
+            "divergencia_pp": -1.26
+          },
+          {
+            "porto": "Cabedelo",
+            "uf": "PB",
+            "cagr_pct": 3.19,
+            "volume_mt": 0.6,
+            "divergencia_pp": -1.92
+          }
+        ],
+        "perdedores": [
+          {
+            "porto": "Terminal Aquaviário de Manaus",
+            "uf": "AM",
+            "cagr_pct": -11.76,
+            "volume_mt": 1.8,
+            "divergencia_pp": -16.87
+          },
+          {
+            "porto": "Terminal Aquaviário de Guamaré",
+            "uf": "RN",
+            "cagr_pct": -7.36,
+            "volume_mt": 1.6,
+            "divergencia_pp": -12.47
+          },
+          {
+            "porto": "Terminal Aquaviário Solimões - Coari",
+            "uf": "AM",
+            "cagr_pct": -6.97,
+            "volume_mt": 0.9,
+            "divergencia_pp": -12.08
+          },
+          {
+            "porto": "Rio Grande",
+            "uf": "RS",
+            "cagr_pct": -4.52,
+            "volume_mt": 2.5,
+            "divergencia_pp": -9.62
+          },
+          {
+            "porto": "Terminal Aquaviário de Aracaju",
+            "uf": "SE",
+            "cagr_pct": -4.05,
+            "volume_mt": 0.6,
+            "divergencia_pp": -9.16
+          },
+          {
+            "porto": "Suape",
+            "uf": "PE",
+            "cagr_pct": -2.55,
+            "volume_mt": 14.7,
+            "divergencia_pp": -7.65
+          },
+          {
+            "porto": "Aratu",
+            "uf": "BA",
+            "cagr_pct": -1.69,
+            "volume_mt": 4.1,
+            "divergencia_pp": -6.79
+          },
+          {
+            "porto": "Belém",
+            "uf": "PA",
+            "cagr_pct": -0.8,
+            "volume_mt": 2.1,
+            "divergencia_pp": -5.91
+          },
+          {
+            "porto": "Terminal Aquaviário de Osório",
+            "uf": "RS",
+            "cagr_pct": -0.24,
+            "volume_mt": 10.7,
+            "divergencia_pp": -5.35
+          },
+          {
+            "porto": "Maceió",
+            "uf": "AL",
+            "cagr_pct": 0.06,
+            "volume_mt": 0.5,
+            "divergencia_pp": -5.04
+          }
+        ]
+      },
+      "carga_geral": {
+        "natureza_label": "Carga Geral",
+        "cagr_natureza_pct": 1.92,
+        "periodo": "2018-2025",
+        "ganhadores": [
+          {
+            "porto": "Brasil Logística Offshore e Estaleiro Naval",
+            "uf": "RJ",
+            "cagr_pct": 110.11,
+            "volume_mt": 0.7,
+            "divergencia_pp": 108.19
+          },
+          {
+            "porto": "DP World Santos",
+            "uf": "SP",
+            "cagr_pct": 34.26,
+            "volume_mt": 5.0,
+            "divergencia_pp": 32.34
+          },
+          {
+            "porto": "Vila do Conde",
+            "uf": "PA",
+            "cagr_pct": 18.37,
+            "volume_mt": 0.9,
+            "divergencia_pp": 16.45
+          },
+          {
+            "porto": "Suape",
+            "uf": "PE",
+            "cagr_pct": 15.42,
+            "volume_mt": 0.7,
+            "divergencia_pp": 13.5
+          },
+          {
+            "porto": "TUP Moss",
+            "uf": "AM",
+            "cagr_pct": 13.65,
+            "volume_mt": 0.6,
+            "divergencia_pp": 11.73
+          },
+          {
+            "porto": "São Francisco do Sul",
+            "uf": "SC",
+            "cagr_pct": 8.54,
+            "volume_mt": 5.0,
+            "divergencia_pp": 6.62
+          },
+          {
+            "porto": "Itaqui",
+            "uf": "MA",
+            "cagr_pct": 7.71,
+            "volume_mt": 1.7,
+            "divergencia_pp": 5.79
+          },
+          {
+            "porto": "J. F. de Oliveira - Manaus",
+            "uf": "AM",
+            "cagr_pct": 7.58,
+            "volume_mt": 0.5,
+            "divergencia_pp": 5.67
+          },
+          {
+            "porto": "TUP J F de Oliveira de Belém",
+            "uf": "PA",
+            "cagr_pct": 6.71,
+            "volume_mt": 1.0,
+            "divergencia_pp": 4.79
+          },
+          {
+            "porto": "Rio de Janeiro",
+            "uf": "RJ",
+            "cagr_pct": 5.06,
+            "volume_mt": 1.2,
+            "divergencia_pp": 3.14
+          }
+        ],
+        "perdedores": [
+          {
+            "porto": "Portocel - Terminal Especializado de Barra do Riacho",
+            "uf": "ES",
+            "cagr_pct": -3.97,
+            "volume_mt": 7.7,
+            "divergencia_pp": -5.89
+          },
+          {
+            "porto": "Terminal de Barcaças Oceânicas",
+            "uf": "ES",
+            "cagr_pct": -1.18,
+            "volume_mt": 0.5,
+            "divergencia_pp": -3.1
+          },
+          {
+            "porto": "Terminal TKCSA",
+            "uf": "RJ",
+            "cagr_pct": -0.8,
+            "volume_mt": 3.1,
+            "divergencia_pp": -2.72
+          },
+          {
+            "porto": "TUP TMB - Terminal Marítimo de Belmonte",
+            "uf": "BA",
+            "cagr_pct": -0.76,
+            "volume_mt": 1.1,
+            "divergencia_pp": -2.68
+          },
+          {
+            "porto": "Terminal Marítimo Privativo de Cubatão - TMPC",
+            "uf": "SP",
+            "cagr_pct": -0.44,
+            "volume_mt": 0.8,
+            "divergencia_pp": -2.36
+          },
+          {
+            "porto": "Terminal Marítimo Alfandegado Privativo de Uso Misto de Praia Mole",
+            "uf": "ES",
+            "cagr_pct": -0.3,
+            "volume_mt": 6.8,
+            "divergencia_pp": -2.21
+          },
+          {
+            "porto": "Terminal Portuário do Pecém",
+            "uf": "CE",
+            "cagr_pct": 0.41,
+            "volume_mt": 3.7,
+            "divergencia_pp": -1.5
+          },
+          {
+            "porto": "CMPC Guaíba",
+            "uf": "RS",
+            "cagr_pct": 0.98,
+            "volume_mt": 2.8,
+            "divergencia_pp": -0.94
+          },
+          {
+            "porto": "Itaguaí",
+            "uf": "RJ",
+            "cagr_pct": 2.05,
+            "volume_mt": 0.8,
+            "divergencia_pp": 0.13
+          },
+          {
+            "porto": "Rio Grande",
+            "uf": "RS",
+            "cagr_pct": 2.28,
+            "volume_mt": 4.3,
+            "divergencia_pp": 0.37
+          }
+        ]
+      },
+      "conteinerizada": {
+        "natureza_label": "Carga Conteinerizada",
+        "cagr_natureza_pct": 5.42,
+        "periodo": "2018-2025",
+        "ganhadores": [
+          {
+            "porto": "Rio de Janeiro",
+            "uf": "RJ",
+            "cagr_pct": 16.15,
+            "volume_mt": 11.5,
+            "divergencia_pp": 10.73
+          },
+          {
+            "porto": "Terminal Portuário do Pecém",
+            "uf": "CE",
+            "cagr_pct": 14.11,
+            "volume_mt": 8.1,
+            "divergencia_pp": 8.69
+          },
+          {
+            "porto": "Porto Itapoá Terminais Portuários",
+            "uf": "SC",
+            "cagr_pct": 12.42,
+            "volume_mt": 16.1,
+            "divergencia_pp": 6.99
+          },
+          {
+            "porto": "Porto Chibatão",
+            "uf": "AM",
+            "cagr_pct": 11.13,
+            "volume_mt": 7.9,
+            "divergencia_pp": 5.71
+          },
+          {
+            "porto": "Paranaguá",
+            "uf": "PR",
+            "cagr_pct": 8.35,
+            "volume_mt": 15.3,
+            "divergencia_pp": 2.93
+          },
+          {
+            "porto": "DP World Santos",
+            "uf": "SP",
+            "cagr_pct": 7.55,
+            "volume_mt": 11.5,
+            "divergencia_pp": 2.13
+          },
+          {
+            "porto": "Suape",
+            "uf": "PE",
+            "cagr_pct": 5.77,
+            "volume_mt": 7.5,
+            "divergencia_pp": 0.34
+          },
+          {
+            "porto": "Vila do Conde",
+            "uf": "PA",
+            "cagr_pct": 4.42,
+            "volume_mt": 1.9,
+            "divergencia_pp": -1.0
+          },
+          {
+            "porto": "Portonave - Terminais Portuários de Navegantes",
+            "uf": "SC",
+            "cagr_pct": 3.91,
+            "volume_mt": 10.5,
+            "divergencia_pp": -1.51
+          },
+          {
+            "porto": "Santos",
+            "uf": "SP",
+            "cagr_pct": 3.04,
+            "volume_mt": 44.9,
+            "divergencia_pp": -2.38
+          }
+        ],
+        "perdedores": [
+          {
+            "porto": "Itaguaí",
+            "uf": "RJ",
+            "cagr_pct": -9.69,
+            "volume_mt": 1.8,
+            "divergencia_pp": -15.12
+          },
+          {
+            "porto": "Fortaleza",
+            "uf": "CE",
+            "cagr_pct": -7.52,
+            "volume_mt": 0.6,
+            "divergencia_pp": -12.94
+          },
+          {
+            "porto": "Itajaí",
+            "uf": "SC",
+            "cagr_pct": -0.36,
+            "volume_mt": 3.9,
+            "divergencia_pp": -5.79
+          },
+          {
+            "porto": "Vitória",
+            "uf": "ES",
+            "cagr_pct": 0.55,
+            "volume_mt": 2.7,
+            "divergencia_pp": -4.87
+          },
+          {
+            "porto": "Super Terminais Comércio e Indústria",
+            "uf": "AM",
+            "cagr_pct": 0.61,
+            "volume_mt": 2.3,
+            "divergencia_pp": -4.81
+          },
+          {
+            "porto": "Rio Grande",
+            "uf": "RS",
+            "cagr_pct": 2.36,
+            "volume_mt": 10.1,
+            "divergencia_pp": -3.06
+          },
+          {
+            "porto": "Salvador",
+            "uf": "BA",
+            "cagr_pct": 2.59,
+            "volume_mt": 5.1,
+            "divergencia_pp": -2.83
+          },
+          {
+            "porto": "Imbituba",
+            "uf": "SC",
+            "cagr_pct": 3.02,
+            "volume_mt": 1.3,
+            "divergencia_pp": -2.4
+          },
+          {
+            "porto": "Santos",
+            "uf": "SP",
+            "cagr_pct": 3.04,
+            "volume_mt": 44.9,
+            "divergencia_pp": -2.38
+          },
+          {
+            "porto": "Portonave - Terminais Portuários de Navegantes",
+            "uf": "SC",
+            "cagr_pct": 3.91,
+            "volume_mt": 10.5,
+            "divergencia_pp": -1.51
+          }
+        ]
+      }
+    }
+  },
+  "ncm_sh4": {
+    "granel_solido": [
+      {
+        "ncm": "2601",
+        "descricao": "Minérios de ferro e seus concentrados",
+        "portos": [
+          "Terminal Marítimo de Ponta da Madeira",
+          "Terminal de Tubarão",
+          "Terminal da Ilha Guaíba - TIG",
+          "Porto Sudeste do Brasil S/A",
+          "Porto do Açu - Terminal de Minério",
+          "Terminal Marítimo Ponta Ubu",
+          "Terminal de Praia Mole",
+          "Porto do Açu - Terminal TMULT e TCAR"
+        ]
+      },
+      {
+        "ncm": "1201",
+        "descricao": "Soja e seus grãos",
+        "portos": [
+          "Estação Cianport Miritituba",
+          "Porto Gregório Curvo",
+          "Salvador",
+          "Suape",
+          "Terminal Portuário Bunge Alimentos",
+          "Cabedelo",
+          "Porto do Açu - Terminal TMULT e TCAR"
+        ]
+      },
+      {
+        "ncm": "2606",
+        "descricao": "Minérios de alumínio (bauxita)",
+        "portos": [
+          "Terminal Trombetas",
+          "Santana",
+          "Terminal Ponta da Montanha"
+        ]
+      },
+      {
+        "ncm": "2701",
+        "descricao": "Hulha e carvão mineral",
+        "portos": [
+          "Terminal de Praia Mole",
+          "Terminal de Tubarão",
+          "Terminal Portuário do Pecém"
+        ]
+      },
+      {
+        "ncm": "1005",
+        "descricao": "Milho",
+        "portos": [
+          "Estação Cianport Miritituba",
+          "Porto Gregório Curvo",
+          "Terminal Portuário do Pecém",
+          "Cabedelo"
+        ]
+      },
+      {
+        "ncm": "2310",
+        "descricao": "Farelo e resíduos de soja",
+        "portos": [
+          "Terminal Portuário Bunge Alimentos",
+          "Salvador",
+          "Cabedelo"
+        ]
+      },
+      {
+        "ncm": "3102",
+        "descricao": "Adubos e fertilizantes nitrogenados",
+        "portos": [
+          "Terminal Marítimo Inácio Barbosa - TMIB",
+          "Suape",
+          "Salvador",
+          "Cabedelo",
+          "Terminal Portuário do Pecém"
+        ]
+      },
+      {
+        "ncm": "2501",
+        "descricao": "Sal (cloreto de sódio)",
+        "portos": [
+          "Areia Branca"
+        ]
+      },
+      {
+        "ncm": "2602",
+        "descricao": "Minérios de manganês",
+        "portos": [
+          "Santana"
+        ]
+      },
+      {
+        "ncm": "1701",
+        "descricao": "Açúcar de cana bruto ou refinado",
+        "portos": [
+          "Suape",
+          "Salvador",
+          "Cabedelo"
+        ]
+      },
+      {
+        "ncm": "3104",
+        "descricao": "Adubos e fertilizantes potássicos",
+        "portos": [
+          "Terminal Marítimo Inácio Barbosa - TMIB",
+          "Suape"
+        ]
+      }
+    ],
+    "granel_liquido": [
+      {
+        "ncm": "2709",
+        "descricao": "Petróleo bruto",
+        "portos": [
+          "Terminal de Petróleo TPET/TOIL - Açu",
+          "Terminal Aquaviário de Angra dos Reis",
+          "Vila do Conde",
+          "Rio de Janeiro",
+          "Suape",
+          "Terminal Aquaviário de Guamaré"
+        ]
+      },
+      {
+        "ncm": "2710",
+        "descricao": "Óleos de petróleo e combustíveis",
+        "portos": [
+          "Suape",
+          "Itaqui",
+          "Terminal Aquaviário de Osório",
+          "Aratu",
+          "Rio Grande",
+          "ATEM Manaus",
+          "Paranaguá",
+          "Belém",
+          "Terminal de Tubarão",
+          "Cabedelo",
+          "Terminal Aquaviário de Manaus",
+          "Terminal Aquaviário de Aracaju",
+          "Maceió",
+          "Rio de Janeiro"
+        ]
+      },
+      {
+        "ncm": "2711",
+        "descricao": "Gás natural e GLP",
+        "portos": [
+          "Terminal Aquaviário Solimões - Coari",
+          "Terminal Aquaviário de Osório",
+          "Aratu"
+        ]
+      },
+      {
+        "ncm": "2905",
+        "descricao": "Álcool etílico — etanol",
+        "portos": [
+          "Paranaguá",
+          "Itaqui"
+        ]
+      },
+      {
+        "ncm": "3102",
+        "descricao": "Ureia e amônia anidra",
+        "portos": [
+          "Itaqui",
+          "Cabedelo"
+        ]
+      }
+    ],
+    "carga_geral": [
+      {
+        "ncm": "4702",
+        "descricao": "Pasta química de madeira (celulose)",
+        "portos": [
+          "Portocel - Terminal Especializado de Barra do Riacho",
+          "CMPC Guaíba",
+          "DP World Santos",
+          "São Francisco do Sul",
+          "TUP J F de Oliveira de Belém"
+        ]
+      },
+      {
+        "ncm": "7208",
+        "descricao": "Produtos planos de ferro/aço",
+        "portos": [
+          "Terminal TKCSA",
+          "Terminal Marítimo Privativo de Cubatão - TMPC",
+          "Terminal Marítimo Alfandegado Privativo de Uso Misto de Praia Mole",
+          "Terminal Portuário do Pecém",
+          "Itaguaí",
+          "Itaqui",
+          "Terminal de Barcaças Oceânicas"
+        ]
+      },
+      {
+        "ncm": "4804",
+        "descricao": "Papel e cartão kraft",
+        "portos": [
+          "São Francisco do Sul",
+          "DP World Santos",
+          "Rio Grande",
+          "TUP J F de Oliveira de Belém"
+        ]
+      },
+      {
+        "ncm": "7216",
+        "descricao": "Perfis de ferro e aço",
+        "portos": [
+          "Itaqui",
+          "Terminal Marítimo Alfandegado Privativo de Uso Misto de Praia Mole",
+          "TUP J F de Oliveira de Belém"
+        ]
+      },
+      {
+        "ncm": "8421",
+        "descricao": "Equipamentos e módulos offshore",
+        "portos": [
+          "Brasil Logística Offshore e Estaleiro Naval",
+          "Rio de Janeiro"
+        ]
+      },
+      {
+        "ncm": "2523",
+        "descricao": "Cimento Portland",
+        "portos": [
+          "Suape",
+          "Terminal Portuário do Pecém",
+          "Vila do Conde"
+        ]
+      },
+      {
+        "ncm": "4407",
+        "descricao": "Madeira serrada ou fendida",
+        "portos": [
+          "TUP TMB - Terminal Marítimo de Belmonte"
+        ]
+      },
+      {
+        "ncm": "2606",
+        "descricao": "Alumina calcinada",
+        "portos": [
+          "Vila do Conde",
+          "TUP J F de Oliveira de Belém"
+        ]
+      }
+    ],
+    "conteinerizada": [
+      {
+        "ncm": "0201",
+        "descricao": "Carnes bovinas frescas e refrigeradas",
+        "portos": [
+          "Rio Grande",
+          "Santos",
+          "Itajaí",
+          "Salvador",
+          "Paranaguá"
+        ]
+      },
+      {
+        "ncm": "0805",
+        "descricao": "Frutas cítricas frescas",
+        "portos": [
+          "Santos",
+          "Paranaguá",
+          "Suape",
+          "Rio de Janeiro",
+          "Salvador"
+        ]
+      },
+      {
+        "ncm": "3901",
+        "descricao": "Polietileno e plásticos",
+        "portos": [
+          "Santos",
+          "Suape",
+          "DP World Santos",
+          "Rio de Janeiro",
+          "Terminal Portuário do Pecém"
+        ]
+      },
+      {
+        "ncm": "8471",
+        "descricao": "Computadores e eletroeletrônicos",
+        "portos": [
+          "Porto Chibatão",
+          "Santos",
+          "DP World Santos",
+          "Rio de Janeiro",
+          "Super Terminais Comércio e Indústria"
+        ]
+      },
+      {
+        "ncm": "8418",
+        "descricao": "Refrigeradores e eletrodomésticos",
+        "portos": [
+          "Porto Chibatão",
+          "Super Terminais Comércio e Indústria",
+          "Santos",
+          "Fortaleza"
+        ]
+      },
+      {
+        "ncm": "2204",
+        "descricao": "Vinhos de uvas frescas",
+        "portos": [
+          "Rio Grande",
+          "Itajaí",
+          "Imbituba",
+          "Santos"
+        ]
+      },
+      {
+        "ncm": "4802",
+        "descricao": "Papéis e cartões não revestidos",
+        "portos": [
+          "Santos",
+          "Rio Grande",
+          "Paranaguá",
+          "Portonave - Terminais Portuários de Navegantes"
+        ]
+      }
+    ]
+  }
+}

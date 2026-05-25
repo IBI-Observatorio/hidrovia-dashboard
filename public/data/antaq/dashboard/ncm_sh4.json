@@ -1,0 +1,278 @@
+{
+  "granel_solido": [
+    {
+      "ncm": "2601",
+      "descricao": "Minérios de ferro e seus concentrados",
+      "portos": [
+        "Terminal Marítimo de Ponta da Madeira",
+        "Terminal de Tubarão",
+        "Terminal da Ilha Guaíba - TIG",
+        "Porto Sudeste do Brasil S/A",
+        "Porto do Açu - Terminal de Minério",
+        "Terminal Marítimo Ponta Ubu",
+        "Terminal de Praia Mole",
+        "Porto do Açu - Terminal TMULT e TCAR"
+      ]
+    },
+    {
+      "ncm": "1201",
+      "descricao": "Soja e seus grãos",
+      "portos": [
+        "Estação Cianport Miritituba",
+        "Porto Gregório Curvo",
+        "Salvador",
+        "Suape",
+        "Terminal Portuário Bunge Alimentos",
+        "Cabedelo",
+        "Porto do Açu - Terminal TMULT e TCAR"
+      ]
+    },
+    {
+      "ncm": "2606",
+      "descricao": "Minérios de alumínio (bauxita)",
+      "portos": [
+        "Terminal Trombetas",
+        "Santana",
+        "Terminal Ponta da Montanha"
+      ]
+    },
+    {
+      "ncm": "2701",
+      "descricao": "Hulha e carvão mineral",
+      "portos": [
+        "Terminal de Praia Mole",
+        "Terminal de Tubarão",
+        "Terminal Portuário do Pecém"
+      ]
+    },
+    {
+      "ncm": "1005",
+      "descricao": "Milho",
+      "portos": [
+        "Estação Cianport Miritituba",
+        "Porto Gregório Curvo",
+        "Terminal Portuário do Pecém",
+        "Cabedelo"
+      ]
+    },
+    {
+      "ncm": "2310",
+      "descricao": "Farelo e resíduos de soja",
+      "portos": [
+        "Terminal Portuário Bunge Alimentos",
+        "Salvador",
+        "Cabedelo"
+      ]
+    },
+    {
+      "ncm": "3102",
+      "descricao": "Adubos e fertilizantes nitrogenados",
+      "portos": [
+        "Terminal Marítimo Inácio Barbosa - TMIB",
+        "Suape",
+        "Salvador",
+        "Cabedelo",
+        "Terminal Portuário do Pecém"
+      ]
+    },
+    {
+      "ncm": "2501",
+      "descricao": "Sal (cloreto de sódio)",
+      "portos": ["Areia Branca"]
+    },
+    {
+      "ncm": "2602",
+      "descricao": "Minérios de manganês",
+      "portos": ["Santana"]
+    },
+    {
+      "ncm": "1701",
+      "descricao": "Açúcar de cana bruto ou refinado",
+      "portos": ["Suape", "Salvador", "Cabedelo"]
+    },
+    {
+      "ncm": "3104",
+      "descricao": "Adubos e fertilizantes potássicos",
+      "portos": ["Terminal Marítimo Inácio Barbosa - TMIB", "Suape"]
+    }
+  ],
+  "granel_liquido": [
+    {
+      "ncm": "2709",
+      "descricao": "Petróleo bruto",
+      "portos": [
+        "Terminal de Petróleo TPET/TOIL - Açu",
+        "Terminal Aquaviário de Angra dos Reis",
+        "Vila do Conde",
+        "Rio de Janeiro",
+        "Suape",
+        "Terminal Aquaviário de Guamaré"
+      ]
+    },
+    {
+      "ncm": "2710",
+      "descricao": "Óleos de petróleo e combustíveis",
+      "portos": [
+        "Suape",
+        "Itaqui",
+        "Terminal Aquaviário de Osório",
+        "Aratu",
+        "Rio Grande",
+        "ATEM Manaus",
+        "Paranaguá",
+        "Belém",
+        "Terminal de Tubarão",
+        "Cabedelo",
+        "Terminal Aquaviário de Manaus",
+        "Terminal Aquaviário de Aracaju",
+        "Maceió",
+        "Rio de Janeiro"
+      ]
+    },
+    {
+      "ncm": "2711",
+      "descricao": "Gás natural e GLP",
+      "portos": [
+        "Terminal Aquaviário Solimões - Coari",
+        "Terminal Aquaviário de Osório",
+        "Aratu"
+      ]
+    },
+    {
+      "ncm": "2905",
+      "descricao": "Álcool etílico — etanol",
+      "portos": ["Paranaguá", "Itaqui"]
+    },
+    {
+      "ncm": "3102",
+      "descricao": "Ureia e amônia anidra",
+      "portos": ["Itaqui", "Cabedelo"]
+    }
+  ],
+  "carga_geral": [
+    {
+      "ncm": "4702",
+      "descricao": "Pasta química de madeira (celulose)",
+      "portos": [
+        "Portocel - Terminal Especializado de Barra do Riacho",
+        "CMPC Guaíba",
+        "DP World Santos",
+        "São Francisco do Sul",
+        "TUP J F de Oliveira de Belém"
+      ]
+    },
+    {
+      "ncm": "7208",
+      "descricao": "Produtos planos de ferro/aço",
+      "portos": [
+        "Terminal TKCSA",
+        "Terminal Marítimo Privativo de Cubatão - TMPC",
+        "Terminal Marítimo Alfandegado Privativo de Uso Misto de Praia Mole",
+        "Terminal Portuário do Pecém",
+        "Itaguaí",
+        "Itaqui",
+        "Terminal de Barcaças Oceânicas"
+      ]
+    },
+    {
+      "ncm": "4804",
+      "descricao": "Papel e cartão kraft",
+      "portos": [
+        "São Francisco do Sul",
+        "DP World Santos",
+        "Rio Grande",
+        "TUP J F de Oliveira de Belém"
+      ]
+    },
+    {
+      "ncm": "7216",
+      "descricao": "Perfis de ferro e aço",
+      "portos": [
+        "Itaqui",
+        "Terminal Marítimo Alfandegado Privativo de Uso Misto de Praia Mole",
+        "TUP J F de Oliveira de Belém"
+      ]
+    },
+    {
+      "ncm": "8421",
+      "descricao": "Equipamentos e módulos offshore",
+      "portos": [
+        "Brasil Logística Offshore e Estaleiro Naval",
+        "Rio de Janeiro"
+      ]
+    },
+    {
+      "ncm": "2523",
+      "descricao": "Cimento Portland",
+      "portos": [
+        "Suape",
+        "Terminal Portuário do Pecém",
+        "Vila do Conde"
+      ]
+    },
+    {
+      "ncm": "4407",
+      "descricao": "Madeira serrada ou fendida",
+      "portos": ["TUP TMB - Terminal Marítimo de Belmonte"]
+    },
+    {
+      "ncm": "2606",
+      "descricao": "Alumina calcinada",
+      "portos": ["Vila do Conde", "TUP J F de Oliveira de Belém"]
+    }
+  ],
+  "conteinerizada": [
+    {
+      "ncm": "0201",
+      "descricao": "Carnes bovinas frescas e refrigeradas",
+      "portos": ["Rio Grande", "Santos", "Itajaí", "Salvador", "Paranaguá"]
+    },
+    {
+      "ncm": "0805",
+      "descricao": "Frutas cítricas frescas",
+      "portos": ["Santos", "Paranaguá", "Suape", "Rio de Janeiro", "Salvador"]
+    },
+    {
+      "ncm": "3901",
+      "descricao": "Polietileno e plásticos",
+      "portos": [
+        "Santos",
+        "Suape",
+        "DP World Santos",
+        "Rio de Janeiro",
+        "Terminal Portuário do Pecém"
+      ]
+    },
+    {
+      "ncm": "8471",
+      "descricao": "Computadores e eletroeletrônicos",
+      "portos": [
+        "Porto Chibatão",
+        "Santos",
+        "DP World Santos",
+        "Rio de Janeiro",
+        "Super Terminais Comércio e Indústria"
+      ]
+    },
+    {
+      "ncm": "8418",
+      "descricao": "Refrigeradores e eletrodomésticos",
+      "portos": [
+        "Porto Chibatão",
+        "Super Terminais Comércio e Indústria",
+        "Santos",
+        "Fortaleza"
+      ]
+    },
+    {
+      "ncm": "2204",
+      "descricao": "Vinhos de uvas frescas",
+      "portos": ["Rio Grande", "Itajaí", "Imbituba", "Santos"]
+    },
+    {
+      "ncm": "4802",
+      "descricao": "Papéis e cartões não revestidos",
+      "portos": ["Santos", "Rio Grande", "Paranaguá", "Portonave - Terminais Portuários de Navegantes"]
+    }
+  ]
+}

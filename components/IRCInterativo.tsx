@@ -15,10 +15,10 @@ import {
 } from "@/lib/irc-tabocal";
 import {
   cmrDeItacoatiara,
+  cotaItaParaCMR,
   deficitCalado,
   reducaoCargaToneladas,
 } from "@/lib/cmr-itacoatiara";
-import { projetaCruzamentoCaladoMC } from "@/lib/recessao-itacoatiara";
 import { projetaETAporAnalogos } from "@/lib/recessao-analogos";
 import { ITACOATIARA_HISTORICO_DIARIO } from "@/lib/itacoatiara-historico-diario";
 import type { ResultadoIRC_Estendido } from "@/lib/irc";
@@ -31,9 +31,6 @@ interface Props {
   // Tier (freemium):
   isAssinante: boolean;           // true → slider liberado; false → calado fixo 11m + CTA
   nomeAssinante?: string | null;  // ex: "Cargill" — para mostrar "Olá, Cargill"
-  // Forecast SGB para projeção da ETA do calado-alvo:
-  picoItacoatiara_m: number;      // do PREVISAO_2026.itacoatiara_pico
-  picoData: string;               // ISO ex: "2026-06-15"
   // Defaults parametrizáveis
   calado_min?: number;            // default 7
   calado_max?: number;            // default 13
@@ -43,7 +40,6 @@ interface Props {
 const STORAGE_KEY = "irc:caladoAlvo";
 const DEFAULT_CALADO = 11.0;
 
-// Re-uso do mapa de cores (importado de lib/irc.ts via lib/irc-tabocal)
 const CORES_DIV = {
   alinhado:               { bg: "bg-verde/10 border-verde/40",     texto: "text-verde",     icone: CheckCircle2 },
   subestimacao_leve:      { bg: "bg-ouro/10 border-ouro/40",       texto: "text-ouro",      icone: AlertTriangle },
@@ -71,22 +67,16 @@ export default function IRCInterativo({
   irc_manaus_faixa,
   isAssinante,
   nomeAssinante,
-  picoItacoatiara_m,
-  picoData,
   calado_min = 7.0,
   calado_max = 13.0,
   calado_passo = 0.5,
 }: Props) {
-  // Inicialização do calado:
-  //   - Assinante: URL param > localStorage > default 11
-  //   - Não-assinante: SEMPRE 11m (gratuito é fixo, sem interação)
   const [calado, setCalado] = useState<number>(DEFAULT_CALADO);
   const [carregouInicial, setCarregouInicial] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (!isAssinante) {
-      // Não-assinante: força 11m e não persiste preferência
       setCalado(DEFAULT_CALADO);
       setCarregouInicial(true);
       return;
@@ -105,45 +95,30 @@ export default function IRCInterativo({
     setCarregouInicial(true);
   }, [calado_min, calado_max, isAssinante]);
 
-  // Persistir no localStorage (só assinante)
   useEffect(() => {
     if (!carregouInicial || typeof window === "undefined" || !isAssinante) return;
     localStorage.setItem(STORAGE_KEY, calado.toString());
   }, [calado, carregouInicial, isAssinante]);
 
-  // Recálculo do IRC + ETA do calado-alvo
-  const { r, divergencia, cmr, deficit, ton_perdidas, eta, eta_an } = useMemo(() => {
+  // Recálculo do IRC + ETA via análogos
+  const { r, divergencia, cmr, deficit, ton_perdidas, cotaItaAlvo_m, eta_an } = useMemo(() => {
     const snap: SnapshotIRCTabocal = { ...snapshotBase, calado_alvo_m: calado };
     const r = calculaIRCTabocal(snap);
     const divergencia = divergenciaIRC(irc_manaus, r.irc);
     const cmr = cmrDeItacoatiara(snapshotBase.cotaItacoatiara_m);
     const deficit = deficitCalado(snapshotBase.cotaItacoatiara_m, calado);
     const ton_perdidas = reducaoCargaToneladas(snapshotBase.cotaItacoatiara_m, calado);
-    // ETA via Monte Carlo end-to-end (n=2000 no client p/ responsividade do slider)
-    // — banda IC80 honesta (P10/P50/P90) propagando σ_pico, σ_data, MVN(k,h_min),
-    // banda CMR e bias correction LOO. Seed fixa = reprodutibilidade.
-    const eta = projetaCruzamentoCaladoMC({
-      picoCota_m:       picoItacoatiara_m,
-      picoCota_sigma_m: 0.7,
-      picoData,
-      picoData_sigma_d: 10,
-      calado_alvo:      calado,
-      horizonte:        300,
-      n_amostras:       2000,
-      seed:             42,
-      aplicar_bias:     true,
-    });
+    // Cota ITA que produz CMR = calado (referência operacional)
+    const cotaItaAlvo_m = cotaItaParaCMR(calado);
     // ETA via ANÁLOGOS HISTÓRICOS — empirical forecasting baseado em 2016-2025.
-    // Não assume distribuição; mede similaridade trajetorial direta. A banda
-    // fecha conforme mais dias de 2026 entram.
     const serie2026 = Object.entries(ITACOATIARA_HISTORICO_DIARIO[2026] ?? {})
       .map(([data, cota]) => ({ data, cota: cota as number }))
       .sort((a, b) => a.data.localeCompare(b.data));
     const eta_an = serie2026.length >= 30
       ? projetaETAporAnalogos(serie2026, calado, 60, 0.5, 300)
       : null;
-    return { r, divergencia, cmr, deficit, ton_perdidas, eta, eta_an };
-  }, [snapshotBase, irc_manaus, calado, picoItacoatiara_m, picoData]);
+    return { r, divergencia, cmr, deficit, ton_perdidas, cotaItaAlvo_m, eta_an };
+  }, [snapshotBase, irc_manaus, calado]);
 
   const corT = COR_FAIXA_TABOCAL[r.faixa];
   const corM = COR_FAIXA_TABOCAL[irc_manaus_faixa];
@@ -243,7 +218,6 @@ export default function IRCInterativo({
           </div>
         </div>
       ) : (
-        // ── Aviso de calado-alvo fixo (não-assinante) ─────────────────────
         <div className="bg-azul-marinho rounded-lg p-4 border border-ouro/30 mb-5">
           <p className="text-ouro text-[11px] font-bold uppercase tracking-wider mb-1">
             🔒 Calado-alvo fixo em 11,0 m (padrão de comboio carregado)
@@ -256,8 +230,8 @@ export default function IRCInterativo({
         </div>
       )}
 
-      {/* ── PAINEL ETA — Quando o CMR vai cair abaixo do seu calado-alvo ── */}
-      <DataETAPainel eta={eta} eta_an={eta_an} calado={calado} isAssinante={isAssinante} />
+      {/* ── PAINEL ETA ── */}
+      <DataETAPainel eta_an={eta_an} cotaItaAlvo_m={cotaItaAlvo_m} calado={calado} isAssinante={isAssinante} />
 
       {/* ── 3 PAINÉIS ── */}
       <div className="grid md:grid-cols-3 gap-4">
@@ -374,8 +348,8 @@ export default function IRCInterativo({
 
 // ─── Painel de ETA do calado-alvo ───────────────────────────────────────────
 interface DataETAPainelProps {
-  eta: ReturnType<typeof projetaCruzamentoCaladoMC>;
   eta_an: ReturnType<typeof projetaETAporAnalogos> | null;
+  cotaItaAlvo_m: number;
   calado: number;
   isAssinante: boolean;
 }
@@ -387,9 +361,8 @@ function formataDataLonga(iso: string | null): string {
   return `${d}/${meses[parseInt(m, 10) - 1] ?? "?"}/${a}`;
 }
 
-function DataETAPainel({ eta, eta_an, calado, isAssinante }: DataETAPainelProps) {
-  // Sem cruzamento no horizonte (calado-alvo nunca atingido na descida prevista)
-  if (eta.dias_central == null) {
+function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPainelProps) {
+  if (eta_an == null || eta_an.dias_p50 == null) {
     return (
       <div className="bg-azul-marinho rounded-lg p-4 border border-verde/20 mb-5">
         <div className="flex items-start gap-3">
@@ -403,7 +376,7 @@ function DataETAPainel({ eta, eta_an, calado, isAssinante }: DataETAPainelProps)
               em todo o ciclo projetado.
             </p>
             <p className="text-gray-500 text-[11px] mt-1">
-              Cota Itacoatiara permaneceria acima de {eta.cota_ita_no_alvo_m.toFixed(2)} m durante todo o período.
+              Cota Itacoatiara permaneceria acima de {cotaItaAlvo_m.toFixed(2)} m durante todo o período.
             </p>
           </div>
         </div>
@@ -411,11 +384,9 @@ function DataETAPainel({ eta, eta_an, calado, isAssinante }: DataETAPainelProps)
     );
   }
 
-  // ETA "primária" para urgência: prefere análogos (banda fechada) sobre MC
-  const dias_headline = eta_an?.dias_p50 ?? eta.dias_central!;
-  const data_headline = eta_an?.data_p50 ?? eta.data_central;
+  const dias_headline = eta_an.dias_p50;
+  const data_headline = eta_an.data_p50;
 
-  // Cor por urgência
   const urgencia = dias_headline <= 30 ? "vermelho"
                  : dias_headline <= 90 ? "ouro"
                  : dias_headline <= 180 ? "verde"
@@ -442,122 +413,76 @@ function DataETAPainel({ eta, eta_an, calado, isAssinante }: DataETAPainelProps)
             <span className="text-gray-300 text-sm">
               em <strong>{dias_headline} dias</strong>
             </span>
-            {eta_an && (
-              <span className="text-[10px] uppercase tracking-wider bg-verde/15 text-verde border border-verde/30 px-2 py-0.5 rounded-full font-bold">
-                via análogos · ano gêmeo {eta_an.ano_top}
-              </span>
-            )}
+            <span className="text-[10px] uppercase tracking-wider bg-verde/15 text-verde border border-verde/30 px-2 py-0.5 rounded-full font-bold">
+              via análogos · ano gêmeo {eta_an.ano_top}
+            </span>
           </div>
           <p className="text-gray-400 text-[11px] mt-1">
-            Itacoatiara projetada em <strong className="text-gray-300">{eta.cota_ita_no_alvo_m.toFixed(2)} m</strong> nessa data.
+            Itacoatiara projetada em <strong className="text-gray-300">{cotaItaAlvo_m.toFixed(2)} m</strong> nessa data.
             CMR oficial cairá abaixo do seu calado-alvo → comboios com calado &gt; {calado.toFixed(1)} m sofrerão restrição.
           </p>
         </div>
       </div>
 
-      {/* ── BLOCO PRIMÁRIO: Análogos históricos (banda empírica) ── */}
-      {eta_an && eta_an.dias_p50 != null && (
-        <div className="bg-verde/5 border border-verde/20 rounded p-3 mb-3">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-verde text-[10px] font-bold uppercase tracking-wider">
-              Análogos históricos · banda empírica (não-paramétrica)
-            </p>
-            <p className="text-gray-400 text-[10px]">
-              Janela {eta_an.janela_dias}d · {eta_an.n_analogos} anos
-            </p>
-          </div>
-          <div className="grid grid-cols-3 gap-3 text-[11px] mb-2">
-            <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
-              <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P10 precoce</p>
-              <p className="text-white font-semibold">
-                {formataDataLonga(eta_an.data_p10)}
-                {eta_an.dias_p10 != null && <span className="text-gray-400 ml-1">· {eta_an.dias_p10}d</span>}
-              </p>
-            </div>
-            <div className="bg-verde/15 rounded p-2 border border-verde/30">
-              <p className="text-verde uppercase tracking-wider text-[10px] mb-0.5">P50 mediana</p>
-              <p className="text-white font-bold">
-                {formataDataLonga(eta_an.data_p50)}
-                {eta_an.dias_p50 != null && <span className="text-gray-300 ml-1">· {eta_an.dias_p50}d</span>}
-              </p>
-            </div>
-            <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
-              <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P90 tardia</p>
-              <p className="text-white font-semibold">
-                {formataDataLonga(eta_an.data_p90)}
-                {eta_an.dias_p90 != null && <span className="text-gray-400 ml-1">· {eta_an.dias_p90}d</span>}
-              </p>
-            </div>
-          </div>
-          {/* Top análogos */}
-          <div className="space-y-0.5">
-            <p className="text-gray-500 text-[10px] uppercase tracking-wider mb-1">
-              Anos mais similares à trajetória 2026:
-            </p>
-            {eta_an.analogos.slice(0, 3).map((a) => {
-              const pesoNorm = a.peso / eta_an.analogos.reduce((s, x) => s + x.peso, 0);
-              return (
-                <div key={a.ano} className="flex items-center gap-2 text-[10px]">
-                  <span className="text-gray-400 w-12">{a.ano}:</span>
-                  <span className="text-gray-300 w-20">RMSE {a.rmse_m.toFixed(2)}m</span>
-                  <div className="flex-1 h-1.5 bg-azul-marinho/40 rounded overflow-hidden">
-                    <div className="h-full bg-verde/60" style={{ width: `${pesoNorm * 100}%` }} />
-                  </div>
-                  <span className="text-gray-400 w-12 text-right">{(pesoNorm * 100).toFixed(0)}%</span>
-                  <span className="text-gray-300 w-24 text-right">→ {a.eta_iso ?? "—"}</span>
-                </div>
-              );
-            })}
-          </div>
-          <p className="text-gray-500 text-[10px] mt-2 leading-relaxed">
-            Banda derivada da DISPERSÃO REAL dos {eta_an.n_analogos} anos análogos, ponderada por
-            similaridade da trajetória. <strong className="text-gray-400">Sem assunção paramétrica</strong> —
-            a banda fecha à medida que mais dias de 2026 entram. Cota ITA hoje: <strong className="text-gray-300">{eta_an.cota_atual_m.toFixed(2)}m</strong> em {eta_an.data_atual}.
+      {/* ── Banda empírica análogos ── */}
+      <div className="bg-verde/5 border border-verde/20 rounded p-3 mb-3">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-verde text-[10px] font-bold uppercase tracking-wider">
+            Análogos históricos · banda empírica (não-paramétrica)
+          </p>
+          <p className="text-gray-400 text-[10px]">
+            Janela {eta_an.janela_dias}d · {eta_an.n_analogos} anos
           </p>
         </div>
-      )}
-
-      {/* ── BLOCO SECUNDÁRIO: Monte Carlo paramétrico (sanity check) ── */}
-      <details className="bg-azul-marinho/40 border border-white/5 rounded p-3 group">
-        <summary className="cursor-pointer text-[10px] uppercase tracking-wider text-gray-500 font-semibold flex items-center justify-between">
-          <span>
-            Monte Carlo paramétrico (modelo de recessão) ·
-            <span className="text-gray-400 ml-1 normal-case tracking-normal">
-              banda mais larga, contraste com análogos
-            </span>
-          </span>
-          <span className="text-gray-600 group-open:rotate-180 transition-transform">▾</span>
-        </summary>
-        <div className="mt-3 grid grid-cols-3 gap-2 text-[10px]">
-          <div className="text-center">
-            <p className="text-gray-600 uppercase">P10</p>
-            <p className="text-gray-300">{formataDataLonga(eta.data_p10)}</p>
-            <p className="text-gray-500">{eta.dias_p10}d</p>
+        <div className="grid grid-cols-3 gap-3 text-[11px] mb-2">
+          <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
+            <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P10 precoce</p>
+            <p className="text-white font-semibold">
+              {formataDataLonga(eta_an.data_p10)}
+              {eta_an.dias_p10 != null && <span className="text-gray-400 ml-1">· {eta_an.dias_p10}d</span>}
+            </p>
           </div>
-          <div className="text-center">
-            <p className="text-gray-500 uppercase">P50</p>
-            <p className="text-gray-200 font-semibold">{formataDataLonga(eta.data_p50)}</p>
-            <p className="text-gray-400">{eta.dias_p50}d</p>
+          <div className="bg-verde/15 rounded p-2 border border-verde/30">
+            <p className="text-verde uppercase tracking-wider text-[10px] mb-0.5">P50 mediana</p>
+            <p className="text-white font-bold">
+              {formataDataLonga(eta_an.data_p50)}
+              {eta_an.dias_p50 != null && <span className="text-gray-300 ml-1">· {eta_an.dias_p50}d</span>}
+            </p>
           </div>
-          <div className="text-center">
-            <p className="text-gray-600 uppercase">P90</p>
-            <p className="text-gray-300">{formataDataLonga(eta.data_p90)}</p>
-            <p className="text-gray-500">{eta.dias_p90}d</p>
+          <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
+            <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P90 tardia</p>
+            <p className="text-white font-semibold">
+              {formataDataLonga(eta_an.data_p90)}
+              {eta_an.dias_p90 != null && <span className="text-gray-400 ml-1">· {eta_an.dias_p90}d</span>}
+            </p>
           </div>
         </div>
-        <p className="text-gray-500 text-[10px] mt-3 leading-relaxed">
-          MC n={eta.n_amostras} · IC80 {eta.ic80_largura_dias}d · prob cruz {(eta.prob_cruzamento * 100).toFixed(0)}%.
-          Propaga σ_pico (SGB ±0,7m), σ_data (±10d), MVN(k, h_min), banda CMR, e bias +12d
-          da validação LOO 2016-2025. Seed {eta.seed} · reprodutível.
-          {eta_an && eta_an.dias_p50 != null && (
-            <span className="block mt-1 text-gray-400">
-              Discrepância MC vs análogos: <strong>{Math.abs((eta.dias_p50 ?? 0) - eta_an.dias_p50)}d na mediana</strong>;
-              banda MC <strong>{Math.round(((eta.ic80_largura_dias ?? 0) / Math.max(1, (eta_an.dias_p90 ?? 0) - (eta_an.dias_p10 ?? 0))) * 10) / 10}×</strong> mais larga.
-              Análogos é mais confiável (banda empírica); MC é fallback para anos sem precedente similar.
-            </span>
-          )}
+        <div className="space-y-0.5">
+          <p className="text-gray-500 text-[10px] uppercase tracking-wider mb-1">
+            Anos mais similares à trajetória 2026:
+          </p>
+          {eta_an.analogos.slice(0, 3).map((a) => {
+            const pesoNorm = a.peso / eta_an.analogos.reduce((s, x) => s + x.peso, 0);
+            return (
+              <div key={a.ano} className="flex items-center gap-2 text-[10px]">
+                <span className="text-gray-400 w-12">{a.ano}:</span>
+                <span className="text-gray-300 w-20">RMSE {a.rmse_m.toFixed(2)}m</span>
+                <div className="flex-1 h-1.5 bg-azul-marinho/40 rounded overflow-hidden">
+                  <div className="h-full bg-verde/60" style={{ width: `${pesoNorm * 100}%` }} />
+                </div>
+                <span className="text-gray-400 w-12 text-right">{(pesoNorm * 100).toFixed(0)}%</span>
+                <span className="text-gray-300 w-24 text-right">→ {a.eta_iso ?? "—"}</span>
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-gray-500 text-[10px] mt-2 leading-relaxed">
+          Banda derivada da DISPERSÃO REAL dos {eta_an.n_analogos} anos análogos, ponderada por
+          similaridade da trajetória. <strong className="text-gray-400">Sem assunção paramétrica</strong> —
+          a banda fecha à medida que mais dias de 2026 entram. Cota ITA hoje:{" "}
+          <strong className="text-gray-300">{eta_an.cota_atual_m.toFixed(2)}m</strong> em {eta_an.data_atual}.
         </p>
-      </details>
+      </div>
 
       {!isAssinante && (
         <p className="text-gray-500 text-[10px] mt-2 leading-relaxed">

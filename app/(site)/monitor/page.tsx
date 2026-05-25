@@ -176,6 +176,15 @@ export default async function MonitorPage() {
         <div className="max-w-screen-xl mx-auto px-4 py-5 lg:grid lg:grid-cols-[220px_1fr] lg:gap-x-10">
           <div className="hidden lg:block" />
           <div>
+            <a
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-white transition-colors mb-3"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Voltar
+            </a>
             <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-1">
               {dashboardCopy.pageHeader.eyebrow}
             </p>
@@ -270,8 +279,7 @@ export default async function MonitorPage() {
                   irc_manaus_faixa={rManaus.faixa}
                   isAssinante={tokenAss !== null}
                   nomeAssinante={nomeClienteDoToken(tokenAss)}
-                  picoItacoatiara_m={previsao.itacoatiara_pico}
-                  picoData={`${new Date().getUTCFullYear()}-06-15`}
+
                 />
               );
             })()}
