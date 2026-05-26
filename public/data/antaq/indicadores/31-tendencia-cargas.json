@@ -9,7 +9,7 @@
   "destaque": false,
   "fonte": "ANTAQ — Estatística Aquaviária (2010–2026) + BCB SGS (IBC-Br)",
   "ultima_atualizacao": "mai/2026",
-  "metodologia": "Média móvel trailing de 12 meses (MA12) aplicada à tonelagem mensal por natureza de carga. Filtro FlagMCOperacaoCarga=1 evita dupla contagem em cabotagem. Projeção OLS: momentum_conteiner(t) = a + b·IBC-Br_yoy(t-5) + c·momentum_cargageral(t-12). Intervalo de confiança estimado pelo erro padrão da regressão.",
+  "metodologia": "Cada ponto da linha é o volume médio dos 12 meses anteriores — um filtro que tira o ruído da sazonalidade (safra, feriados, paradas) e deixa só a tendência real. A projeção do contêiner combina dois sinais antecedentes: a atividade econômica geral (IBC-Br do Banco Central, com 5 meses de defasagem) e o ritmo da carga geral um ano antes. A faixa dourada em torno da previsão é a margem de erro típica do modelo.",
   "achados": [
     "Granel sólido (soja, milho, minério) cresce +7% a/a — puxado pela safra recorde e pelo Arco Norte",
     "Granel líquido (petróleo, combustíveis) acelerou 11% a/a com o pré-sal exportando a todo vapor",

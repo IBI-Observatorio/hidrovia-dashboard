@@ -1,1 +1,2188 @@
-{"modelo":{"spec":"momentum_conteiner(t) = a + b·IBC-Br_yoy(t-5) + c·momentum_cargageral(t-12)","corte_treino":"2022-12","coef_ibc":0.676,"coef_carga_geral":-0.348,"intercept":5.174,"r2_in_sample":0.569,"r2_oos":0.283,"rmse_in_pp":2.88,"rmse_oos_pp":7.2,"corr_oos":0.71},"serie":[{"data":"2012-12","predito":5.76,"observado":3.78,"fase":"treino"},{"data":"2013-01","predito":5.96,"observado":3.41,"fase":"treino"},{"data":"2013-02","predito":5.2,"observado":2.75,"fase":"treino"},{"data":"2013-03","predito":6.36,"observado":2.72,"fase":"treino"},{"data":"2013-04","predito":6.01,"observado":3.39,"fase":"treino"},{"data":"2013-05","predito":5.96,"observado":4.12,"fase":"treino"},{"data":"2013-06","predito":7.94,"observado":5.11,"fase":"treino"},{"data":"2013-07","predito":7.79,"observado":6.6,"fase":"treino"},{"data":"2013-08","predito":8.9,"observado":7.6,"fase":"treino"},{"data":"2013-09","predito":9.59,"observado":8.44,"fase":"treino"},{"data":"2013-10","predito":8.68,"observado":9.67,"fase":"treino"},{"data":"2013-11","predito":7.52,"observado":11.38,"fase":"treino"},{"data":"2013-12","predito":7.21,"observado":11.5,"fase":"treino"},{"data":"2014-01","predito":7.33,"observado":12.42,"fase":"treino"},{"data":"2014-02","predito":8.3,"observado":13.64,"fase":"treino"},{"data":"2014-03","predito":7.93,"observado":13.13,"fase":"treino"},{"data":"2014-04","predito":8.64,"observado":12.97,"fase":"treino"},{"data":"2014-05","predito":9.96,"observado":11.68,"fase":"treino"},{"data":"2014-06","predito":9.47,"observado":10.16,"fase":"treino"},{"data":"2014-07","predito":9.11,"observado":9.4,"fase":"treino"},{"data":"2014-08","predito":8.22,"observado":8.16,"fase":"treino"},{"data":"2014-09","predito":6.79,"observado":7.99,"fase":"treino"},{"data":"2014-10","predito":6.06,"observado":6.42,"fase":"treino"},{"data":"2014-11","predito":4.88,"observado":4.6,"fase":"treino"},{"data":"2014-12","predito":5.52,"observado":3.77,"fase":"treino"},{"data":"2015-01","predito":5.56,"observado":2.78,"fase":"treino"},{"data":"2015-02","predito":5.93,"observado":2.06,"fase":"treino"},{"data":"2015-03","predito":4.66,"observado":2.29,"fase":"treino"},{"data":"2015-04","predito":4.27,"observado":1.17,"fase":"treino"},{"data":"2015-05","predito":3.46,"observado":1.02,"fase":"treino"},{"data":"2015-06","predito":2.13,"observado":1.7,"fase":"treino"},{"data":"2015-07","predito":1.46,"observado":1.0,"fase":"treino"},{"data":"2015-08","predito":1.53,"observado":0.63,"fase":"treino"},{"data":"2015-09","predito":1.17,"observado":-0.89,"fase":"treino"},{"data":"2015-10","predito":1.05,"observado":-1.14,"fase":"treino"},{"data":"2015-11","predito":1.7,"observado":-0.77,"fase":"treino"},{"data":"2015-12","predito":-0.31,"observado":-0.71,"fase":"treino"},{"data":"2016-01","predito":-0.28,"observado":-1.02,"fase":"treino"},{"data":"2016-02","predito":-1.85,"observado":-1.64,"fase":"treino"},{"data":"2016-03","predito":-0.72,"observado":-2.58,"fase":"treino"},{"data":"2016-04","predito":-1.34,"observado":-2.23,"fase":"treino"},{"data":"2016-05","predito":-1.37,"observado":-1.69,"fase":"treino"},{"data":"2016-06","predito":-0.79,"observado":-2.04,"fase":"treino"},{"data":"2016-07","predito":-0.12,"observado":-2.26,"fase":"treino"},{"data":"2016-08","predito":-0.72,"observado":-1.77,"fase":"treino"},{"data":"2016-09","predito":-0.25,"observado":-0.5,"fase":"treino"},{"data":"2016-10","predito":0.48,"observado":-0.4,"fase":"treino"},{"data":"2016-11","predito":1.36,"observado":-0.54,"fase":"treino"},{"data":"2016-12","predito":1.98,"observado":-0.38,"fase":"treino"},{"data":"2017-01","predito":1.31,"observado":0.41,"fase":"treino"},{"data":"2017-02","predito":2.0,"observado":1.05,"fase":"treino"},{"data":"2017-03","predito":1.2,"observado":1.36,"fase":"treino"},{"data":"2017-04","predito":1.4,"observado":1.9,"fase":"treino"},{"data":"2017-05","predito":1.36,"observado":0.63,"fase":"treino"},{"data":"2017-06","predito":2.44,"observado":1.43,"fase":"treino"},{"data":"2017-07","predito":3.48,"observado":2.76,"fase":"treino"},{"data":"2017-08","predito":4.18,"observado":2.98,"fase":"treino"},{"data":"2017-09","predito":4.55,"observado":3.67,"fase":"treino"},{"data":"2017-10","predito":3.8,"observado":5.95,"fase":"treino"},{"data":"2017-11","predito":3.83,"observado":7.05,"fase":"treino"},{"data":"2017-12","predito":4.24,"observado":7.72,"fase":"treino"},{"data":"2018-01","predito":3.93,"observado":8.23,"fase":"treino"},{"data":"2018-02","predito":3.55,"observado":8.57,"fase":"treino"},{"data":"2018-03","predito":3.88,"observado":9.91,"fase":"treino"},{"data":"2018-04","predito":3.89,"observado":9.67,"fase":"treino"},{"data":"2018-05","predito":5.01,"observado":11.0,"fase":"treino"},{"data":"2018-06","predito":3.71,"observado":9.78,"fase":"treino"},{"data":"2018-07","predito":2.77,"observado":9.07,"fase":"treino"},{"data":"2018-08","predito":3.04,"observado":9.57,"fase":"treino"},{"data":"2018-09","predito":3.46,"observado":8.42,"fase":"treino"},{"data":"2018-10","predito":1.82,"observado":6.26,"fase":"treino"},{"data":"2018-11","predito":3.43,"observado":5.47,"fase":"treino"},{"data":"2018-12","predito":3.8,"observado":4.95,"fase":"treino"},{"data":"2019-01","predito":4.97,"observado":3.71,"fase":"treino"},{"data":"2019-02","predito":5.2,"observado":3.64,"fase":"treino"},{"data":"2019-03","predito":5.63,"observado":2.34,"fase":"treino"},{"data":"2019-04","predito":6.25,"observado":2.13,"fase":"treino"},{"data":"2019-05","predito":5.68,"observado":2.54,"fase":"treino"},{"data":"2019-06","predito":6.08,"observado":3.77,"fase":"treino"},{"data":"2019-07","predito":5.15,"observado":3.57,"fase":"treino"},{"data":"2019-08","predito":3.68,"observado":2.56,"fase":"treino"},{"data":"2019-09","predito":2.71,"observado":3.04,"fase":"treino"},{"data":"2019-10","predito":6.1,"observado":3.74,"fase":"treino"},{"data":"2019-11","predito":3.17,"observado":3.47,"fase":"treino"},{"data":"2019-12","predito":2.69,"observado":3.52,"fase":"treino"},{"data":"2020-01","predito":2.25,"observado":4.07,"fase":"treino"},{"data":"2020-02","predito":2.92,"observado":4.06,"fase":"treino"},{"data":"2020-03","predito":3.57,"observado":4.73,"fase":"treino"},{"data":"2020-04","predito":2.78,"observado":4.74,"fase":"treino"},{"data":"2020-05","predito":2.08,"observado":3.31,"fase":"treino"},{"data":"2020-06","predito":2.62,"observado":1.9,"fase":"treino"},{"data":"2020-07","predito":4.12,"observado":1.64,"fase":"treino"},{"data":"2020-08","predito":1.22,"observado":1.69,"fase":"treino"},{"data":"2020-09","predito":-3.43,"observado":0.84,"fase":"treino"},{"data":"2020-10","predito":-2.54,"observado":0.5,"fase":"treino"},{"data":"2020-11","predito":1.61,"observado":1.71,"fase":"treino"},{"data":"2020-12","predito":3.52,"observado":2.34,"fase":"treino"},{"data":"2021-01","predito":4.94,"observado":2.81,"fase":"treino"},{"data":"2021-02","predito":5.84,"observado":3.12,"fase":"treino"},{"data":"2021-03","predito":6.26,"observado":4.29,"fase":"treino"},{"data":"2021-04","predito":7.51,"observado":5.21,"fase":"treino"},{"data":"2021-05","predito":8.27,"observado":7.85,"fase":"treino"},{"data":"2021-06","predito":8.06,"observado":9.88,"fase":"treino"},{"data":"2021-07","predito":8.17,"observado":11.36,"fase":"treino"},{"data":"2021-08","predito":10.07,"observado":12.34,"fase":"treino"},{"data":"2021-09","predito":16.98,"observado":13.55,"fase":"treino"},{"data":"2021-10","predito":15.19,"observado":13.66,"fase":"treino"},{"data":"2021-11","predito":10.87,"observado":11.7,"fase":"treino"},{"data":"2021-12","predito":8.59,"observado":10.96,"fase":"treino"},{"data":"2022-01","predito":7.01,"observado":10.01,"fase":"treino"},{"data":"2022-02","predito":5.33,"observado":8.52,"fase":"treino"},{"data":"2022-03","predito":4.19,"observado":6.4,"fase":"treino"},{"data":"2022-04","predito":3.83,"observado":5.06,"fase":"treino"},{"data":"2022-05","predito":2.72,"observado":2.63,"fase":"treino"},{"data":"2022-06","predito":1.18,"observado":0.63,"fase":"treino"},{"data":"2022-07","predito":1.13,"observado":-0.19,"fase":"treino"},{"data":"2022-08","predito":4.01,"observado":-1.23,"fase":"treino"},{"data":"2022-09","predito":3.81,"observado":-1.6,"fase":"treino"},{"data":"2022-10","predito":3.28,"observado":-2.01,"fase":"treino"},{"data":"2022-11","predito":3.44,"observado":-1.91,"fase":"treino"},{"data":"2022-12","predito":5.09,"observado":-3.33,"fase":"treino"},{"data":"2023-01","predito":4.58,"observado":-3.81,"fase":"oos"},{"data":"2023-02","predito":4.78,"observado":-4.05,"fase":"oos"},{"data":"2023-03","predito":4.59,"observado":-4.47,"fase":"oos"},{"data":"2023-04","predito":3.12,"observado":-4.51,"fase":"oos"},{"data":"2023-05","predito":3.79,"observado":-4.47,"fase":"oos"},{"data":"2023-06","predito":5.09,"observado":-3.59,"fase":"oos"},{"data":"2023-07","predito":6.7,"observado":-4.11,"fase":"oos"},{"data":"2023-08","predito":6.05,"observado":-3.38,"fase":"oos"},{"data":"2023-09","predito":6.75,"observado":-4.25,"fase":"oos"},{"data":"2023-10","predito":5.33,"observado":-4.27,"fase":"oos"},{"data":"2023-11","predito":5.87,"observado":-3.08,"fase":"oos"},{"data":"2023-12","predito":4.85,"observado":-0.52,"fase":"oos"},{"data":"2024-01","predito":4.86,"observado":1.6,"fase":"oos"},{"data":"2024-02","predito":5.15,"observado":4.69,"fase":"oos"},{"data":"2024-03","predito":5.5,"observado":7.37,"fase":"oos"},{"data":"2024-04","predito":6.84,"observado":9.72,"fase":"oos"},{"data":"2024-05","predito":7.89,"observado":11.4,"fase":"oos"},{"data":"2024-06","predito":8.28,"observado":13.03,"fase":"oos"},{"data":"2024-07","predito":6.57,"observado":14.96,"fase":"oos"},{"data":"2024-08","predito":6.71,"observado":15.45,"fase":"oos"},{"data":"2024-09","predito":6.51,"observado":17.89,"fase":"oos"},{"data":"2024-10","predito":8.15,"observado":20.22,"fase":"oos"},{"data":"2024-11","predito":8.76,"observado":20.71,"fase":"oos"},{"data":"2024-12","predito":8.82,"observado":20.23,"fase":"oos"},{"data":"2025-01","predito":9.69,"observado":20.14,"fase":"oos"},{"data":"2025-02","predito":10.22,"observado":17.3,"fase":"oos"},{"data":"2025-03","predito":10.05,"observado":15.64,"fase":"oos"},{"data":"2025-04","predito":9.96,"observado":13.41,"fase":"oos"},{"data":"2025-05","predito":8.25,"observado":12.69,"fase":"oos"},{"data":"2025-06","predito":8.81,"observado":10.87,"fase":"oos"},{"data":"2025-07","predito":8.58,"observado":9.77,"fase":"oos"},{"data":"2025-08","predito":8.3,"observado":9.41,"fase":"oos"},{"data":"2025-09","predito":7.46,"observado":8.27,"fase":"oos"},{"data":"2025-10","predito":5.92,"observado":7.45,"fase":"oos"},{"data":"2025-11","predito":4.66,"observado":7.36,"fase":"oos"},{"data":"2025-12","predito":3.99,"observado":6.49,"fase":"oos"},{"data":"2026-01","predito":3.39,"observado":4.66,"fase":"oos"},{"data":"2026-02","predito":2.53,"observado":5.23,"fase":"oos"}],"forecast":[{"data":"2026-03","central_pct":2.16,"low_pct":-5.03,"high_pct":9.36},{"data":"2026-04","central_pct":1.69,"low_pct":-5.5,"high_pct":8.89},{"data":"2026-05","central_pct":1.95,"low_pct":-5.24,"high_pct":9.15},{"data":"2026-06","central_pct":1.43,"low_pct":-5.77,"high_pct":8.62},{"data":"2026-07","central_pct":1.93,"low_pct":-5.27,"high_pct":9.12}]}
+{
+  "gerado_em": "2026-05-26T01:30:21.106194+00:00",
+  "cabotagem": {
+    "spec_humana": "Crescimento a/a do contêiner cabotagem ~ atividade doméstica (IBC-Br, PIM-PF defasados) + custo do substituto rodoviário (IPCA diesel) + dinâmica da carga geral.",
+    "modelo": {
+      "tipo": "LassoCV (5-fold) sobre features YoY com lags",
+      "coeficientes": {
+        "ibc_br_lag3": 0.0,
+        "ibc_br_lag5": 0.0,
+        "pim_pf_lag3": 0.0,
+        "pim_pf_lag6": 0.0,
+        "ipca_diesel_lag2": -0.0,
+        "ipca_diesel_lag4": -0.46727770380178285,
+        "carga_geral_lag12": -3.3008970247518454,
+        "intercept": 8.677920673271815,
+        "alpha_lasso": 2.0584725911423267
+      },
+      "features": [
+        "ibc_br_lag3",
+        "ibc_br_lag5",
+        "pim_pf_lag3",
+        "pim_pf_lag6",
+        "ipca_diesel_lag2",
+        "ipca_diesel_lag4",
+        "carga_geral_lag12"
+      ],
+      "janela_treino_final_meses": 60,
+      "horizonte_meses": 5
+    },
+    "metricas": {
+      "walk_forward": {
+        "n": 98,
+        "rmse_pp": 8.76,
+        "mae_pp": 7.13,
+        "bias_pp": -2.88,
+        "r2": -0.34,
+        "corr": 0.234
+      },
+      "treino_final_60m": {
+        "rmse_pp": 7.25,
+        "r2": 0.345
+      }
+    },
+    "diagnostico_residuos": {
+      "n": 98,
+      "media": -2.8847,
+      "std": 8.3108,
+      "min": -17.117,
+      "max": 17.7013,
+      "ljung_box_lag6_pvalor": 0.0,
+      "ljung_box_lag12_pvalor": 0.0,
+      "jarque_bera_pvalor": 0.0315,
+      "skewness": 0.6505,
+      "kurtose": 2.9676
+    },
+    "estabilidade_coef": {
+      "ibc_br_lag3": {
+        "media": 1.6266872430389498,
+        "desvio": 3.0135687627854346,
+        "cv": 1.852580313567552
+      },
+      "ibc_br_lag5": {
+        "media": 0.7567106338579598,
+        "desvio": 1.4154013458037569,
+        "cv": 1.8704657797493542
+      },
+      "pim_pf_lag3": {
+        "media": -1.0140294567124812,
+        "desvio": 1.8875756724003372,
+        "cv": 1.8614603943754486
+      },
+      "pim_pf_lag6": {
+        "media": 0.025166975168648964,
+        "desvio": 0.1991271557555227,
+        "cv": 7.912240323723116
+      },
+      "ipca_diesel_lag2": {
+        "media": -0.5830284672440265,
+        "desvio": 1.0843416017872505,
+        "cv": 1.8598433227676334
+      },
+      "ipca_diesel_lag4": {
+        "media": -0.9602243614835111,
+        "desvio": 1.6421831300757115,
+        "cv": 1.710207734720039
+      },
+      "carga_geral_lag12": {
+        "media": -1.5404839735214515,
+        "desvio": 1.8719700845419924,
+        "cv": 1.2151830961686567
+      }
+    },
+    "serie": [
+      {
+        "data": "2013-01",
+        "predito": null,
+        "observado": 31.88,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-02",
+        "predito": null,
+        "observado": 30.35,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-03",
+        "predito": null,
+        "observado": 28.91,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-04",
+        "predito": null,
+        "observado": 29.55,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-05",
+        "predito": null,
+        "observado": 29.21,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-06",
+        "predito": null,
+        "observado": 28.82,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-07",
+        "predito": null,
+        "observado": 29.83,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-08",
+        "predito": null,
+        "observado": 28.15,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-09",
+        "predito": null,
+        "observado": 26.38,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-10",
+        "predito": null,
+        "observado": 23.96,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-11",
+        "predito": null,
+        "observado": 24.93,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-12",
+        "predito": null,
+        "observado": 22.69,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-01",
+        "predito": null,
+        "observado": 23.95,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-02",
+        "predito": null,
+        "observado": 24.01,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-03",
+        "predito": null,
+        "observado": 22.24,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-04",
+        "predito": null,
+        "observado": 21.06,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-05",
+        "predito": null,
+        "observado": 18.78,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-06",
+        "predito": null,
+        "observado": 17.48,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-07",
+        "predito": null,
+        "observado": 14.21,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-08",
+        "predito": null,
+        "observado": 11.29,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-09",
+        "predito": null,
+        "observado": 10.54,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-10",
+        "predito": null,
+        "observado": 8.34,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-11",
+        "predito": null,
+        "observado": 5.71,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-12",
+        "predito": null,
+        "observado": 5.92,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-01",
+        "predito": null,
+        "observado": 5.15,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-02",
+        "predito": null,
+        "observado": 5.12,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-03",
+        "predito": null,
+        "observado": 6.26,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-04",
+        "predito": null,
+        "observado": 4.08,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-05",
+        "predito": null,
+        "observado": 3.8,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-06",
+        "predito": null,
+        "observado": 3.26,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-07",
+        "predito": null,
+        "observado": 3.09,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-08",
+        "predito": null,
+        "observado": 4.22,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-09",
+        "predito": null,
+        "observado": 2.76,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-10",
+        "predito": null,
+        "observado": 3.7,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-11",
+        "predito": null,
+        "observado": 4.4,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-12",
+        "predito": null,
+        "observado": 3.58,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-01",
+        "predito": null,
+        "observado": 2.31,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-02",
+        "predito": null,
+        "observado": 0.88,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-03",
+        "predito": null,
+        "observado": -0.73,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-04",
+        "predito": null,
+        "observado": -0.16,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-05",
+        "predito": null,
+        "observado": 0.92,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-06",
+        "predito": null,
+        "observado": 1.64,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-07",
+        "predito": null,
+        "observado": 2.28,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-08",
+        "predito": null,
+        "observado": 2.79,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-09",
+        "predito": null,
+        "observado": 4.06,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-10",
+        "predito": null,
+        "observado": 3.47,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-11",
+        "predito": null,
+        "observado": 3.03,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-12",
+        "predito": null,
+        "observado": 3.29,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-01",
+        "predito": null,
+        "observado": 4.87,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-02",
+        "predito": null,
+        "observado": 6.92,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-03",
+        "predito": null,
+        "observado": 7.45,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-04",
+        "predito": null,
+        "observado": 8.79,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-05",
+        "predito": null,
+        "observado": 7.37,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-06",
+        "predito": null,
+        "observado": 7.28,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-07",
+        "predito": null,
+        "observado": 8.33,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-08",
+        "predito": null,
+        "observado": 7.28,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-09",
+        "predito": null,
+        "observado": 8.21,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-10",
+        "predito": null,
+        "observado": 9.98,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-11",
+        "predito": null,
+        "observado": 11.84,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-12",
+        "predito": null,
+        "observado": 12.17,
+        "fase": "warmup"
+      },
+      {
+        "data": "2018-01",
+        "predito": 19.98,
+        "observado": 13.2,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-02",
+        "predito": 19.34,
+        "observado": 11.53,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-03",
+        "predito": 24.63,
+        "observado": 12.63,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-04",
+        "predito": 18.22,
+        "observado": 11.65,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-05",
+        "predito": 15.13,
+        "observado": 12.4,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-06",
+        "predito": 13.59,
+        "observado": 12.14,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-07",
+        "predito": 12.34,
+        "observado": 11.49,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-08",
+        "predito": 10.28,
+        "observado": 13.72,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-09",
+        "predito": 14.34,
+        "observado": 13.24,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-10",
+        "predito": 10.34,
+        "observado": 12.97,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-11",
+        "predito": 20.78,
+        "observado": 11.16,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-12",
+        "predito": 17.26,
+        "observado": 11.0,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-01",
+        "predito": 16.53,
+        "observado": 8.51,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-02",
+        "predito": 16.06,
+        "observado": 10.23,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-03",
+        "predito": 14.74,
+        "observado": 9.65,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-04",
+        "predito": 15.13,
+        "observado": 10.77,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-05",
+        "predito": 14.34,
+        "observado": 13.11,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-06",
+        "predito": 13.74,
+        "observado": 14.74,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-07",
+        "predito": 12.59,
+        "observado": 14.66,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-08",
+        "predito": 18.32,
+        "observado": 13.58,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-09",
+        "predito": 12.68,
+        "observado": 13.26,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-10",
+        "predito": 15.04,
+        "observado": 13.34,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-11",
+        "predito": 11.73,
+        "observado": 14.13,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-12",
+        "predito": 12.62,
+        "observado": 15.16,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-01",
+        "predito": 13.5,
+        "observado": 16.3,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-02",
+        "predito": 13.6,
+        "observado": 15.51,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-03",
+        "predito": 13.56,
+        "observado": 16.32,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-04",
+        "predito": 13.49,
+        "observado": 14.26,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-05",
+        "predito": 13.89,
+        "observado": 9.47,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-06",
+        "predito": 5.71,
+        "observado": 7.09,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-07",
+        "predito": -4.96,
+        "observado": 6.08,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-08",
+        "predito": -5.28,
+        "observado": 5.01,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-09",
+        "predito": -8.71,
+        "observado": 4.27,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-10",
+        "predito": -2.55,
+        "observado": 3.16,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-11",
+        "predito": 5.56,
+        "observado": 2.39,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-12",
+        "predito": 9.09,
+        "observado": 1.38,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-01",
+        "predito": 11.34,
+        "observado": 2.16,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-02",
+        "predito": 12.19,
+        "observado": 2.24,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-03",
+        "predito": 12.69,
+        "observado": 1.5,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-04",
+        "predito": 12.35,
+        "observado": 3.55,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-05",
+        "predito": 12.96,
+        "observado": 7.86,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-06",
+        "predito": 15.46,
+        "observado": 10.21,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-07",
+        "predito": 23.77,
+        "observado": 12.31,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-08",
+        "predito": 21.82,
+        "observado": 13.63,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-09",
+        "predito": 31.78,
+        "observado": 14.66,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-10",
+        "predito": 23.05,
+        "observado": 15.31,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-11",
+        "predito": 17.37,
+        "observado": 15.66,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-12",
+        "predito": 14.72,
+        "observado": 15.47,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-01",
+        "predito": 13.45,
+        "observado": 13.16,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-02",
+        "predito": 12.78,
+        "observado": 11.65,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-03",
+        "predito": 12.07,
+        "observado": 11.85,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-04",
+        "predito": 12.02,
+        "observado": 10.64,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-05",
+        "predito": 12.19,
+        "observado": 9.17,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-06",
+        "predito": 12.91,
+        "observado": 7.07,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-07",
+        "predito": 12.48,
+        "observado": 5.81,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-08",
+        "predito": 15.22,
+        "observado": 4.12,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-09",
+        "predito": 14.51,
+        "observado": 3.07,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-10",
+        "predito": 14.53,
+        "observado": 1.19,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-11",
+        "predito": 13.56,
+        "observado": 0.13,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-12",
+        "predito": 14.62,
+        "observado": -0.94,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-01",
+        "predito": 13.28,
+        "observado": -0.3,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-02",
+        "predito": 12.24,
+        "observado": -0.17,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-03",
+        "predito": 10.51,
+        "observado": -2.01,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-04",
+        "predito": 10.41,
+        "observado": -2.96,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-05",
+        "predito": 10.3,
+        "observado": -4.1,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-06",
+        "predito": 10.19,
+        "observado": -3.93,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-07",
+        "predito": 10.07,
+        "observado": -5.07,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-08",
+        "predito": 9.96,
+        "observado": -4.12,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-09",
+        "predito": 9.85,
+        "observado": -3.9,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-10",
+        "predito": 9.74,
+        "observado": -3.43,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-11",
+        "predito": 9.64,
+        "observado": -2.61,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-12",
+        "predito": 9.54,
+        "observado": -0.65,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-01",
+        "predito": 9.47,
+        "observado": 1.09,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-02",
+        "predito": 9.4,
+        "observado": 3.84,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-03",
+        "predito": 9.36,
+        "observado": 7.8,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-04",
+        "predito": 9.35,
+        "observado": 11.1,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-05",
+        "predito": 9.36,
+        "observado": 13.62,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-06",
+        "predito": 9.39,
+        "observado": 16.45,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-07",
+        "predito": 9.45,
+        "observado": 20.03,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-08",
+        "predito": 9.52,
+        "observado": 21.89,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-09",
+        "predito": 9.61,
+        "observado": 22.8,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-10",
+        "predito": 9.7,
+        "observado": 26.31,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-11",
+        "predito": 9.82,
+        "observado": 27.52,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-12",
+        "predito": 9.94,
+        "observado": 27.28,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-01",
+        "predito": 10.07,
+        "observado": 27.19,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-02",
+        "predito": 10.18,
+        "observado": 24.26,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-03",
+        "predito": 10.28,
+        "observado": 20.83,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-04",
+        "predito": 16.8,
+        "observado": 17.0,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-05",
+        "predito": 16.33,
+        "observado": 14.37,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-06",
+        "predito": 16.16,
+        "observado": 11.29,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-07",
+        "predito": 15.8,
+        "observado": 9.5,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-08",
+        "predito": 13.81,
+        "observado": 7.61,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-09",
+        "predito": 12.45,
+        "observado": 7.35,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-10",
+        "predito": 10.54,
+        "observado": 6.84,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-11",
+        "predito": 8.79,
+        "observado": 7.19,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-12",
+        "predito": 7.86,
+        "observado": 6.15,
+        "fase": "oos"
+      },
+      {
+        "data": "2026-01",
+        "predito": 6.77,
+        "observado": 3.77,
+        "fase": "oos"
+      },
+      {
+        "data": "2026-02",
+        "predito": 4.85,
+        "observado": 3.75,
+        "fase": "oos"
+      }
+    ],
+    "forecast": [
+      {
+        "data": "2026-03",
+        "central_pct": 4.59,
+        "low_pct": -8.96,
+        "high_pct": 18.13,
+        "low_boot_pct": -0.52,
+        "high_boot_pct": 21.71
+      },
+      {
+        "data": "2026-04",
+        "central_pct": 2.54,
+        "low_pct": -11.01,
+        "high_pct": 16.08,
+        "low_boot_pct": -2.57,
+        "high_boot_pct": 19.66
+      },
+      {
+        "data": "2026-05",
+        "central_pct": 2.57,
+        "low_pct": -10.98,
+        "high_pct": 16.11,
+        "low_boot_pct": -2.54,
+        "high_boot_pct": 19.69
+      },
+      {
+        "data": "2026-06",
+        "central_pct": 1.6,
+        "low_pct": -11.94,
+        "high_pct": 15.15,
+        "low_boot_pct": -3.5,
+        "high_boot_pct": 18.73
+      },
+      {
+        "data": "2026-07",
+        "central_pct": 2.24,
+        "low_pct": -11.31,
+        "high_pct": 15.78,
+        "low_boot_pct": -2.87,
+        "high_boot_pct": 19.36
+      }
+    ]
+  },
+  "longo_curso": {
+    "spec_humana": "Crescimento a/a do contêiner longo curso ~ atividade BR (IBC-Br lag 5) + câmbio real BRL/USD (lag 3-6) + Brent (proxy de freight e commodities) + CNY/USD (proxy de ciclo China) + dinâmica da carga geral.",
+    "modelo": {
+      "tipo": "LassoCV (5-fold) sobre features YoY com lags",
+      "coeficientes": {
+        "ibc_br_lag5": 0.0,
+        "cambio_lag3": 0.0,
+        "cambio_lag6": 0.0,
+        "brent_lag2": -0.0,
+        "brent_lag4": 0.0,
+        "cny_usd_lag3": -0.4724487769561501,
+        "cny_usd_lag6": -0.0,
+        "carga_geral_lag12": -3.819210923297775,
+        "intercept": 5.617616637983227,
+        "alpha_lasso": 1.601044204471862
+      },
+      "features": [
+        "ibc_br_lag5",
+        "cambio_lag3",
+        "cambio_lag6",
+        "brent_lag2",
+        "brent_lag4",
+        "cny_usd_lag3",
+        "cny_usd_lag6",
+        "carga_geral_lag12"
+      ],
+      "janela_treino_final_meses": 60,
+      "horizonte_meses": 5
+    },
+    "metricas": {
+      "walk_forward": {
+        "n": 98,
+        "rmse_pp": 4.37,
+        "mae_pp": 3.11,
+        "bias_pp": 1.14,
+        "r2": 0.514,
+        "corr": 0.746
+      },
+      "treino_final_60m": {
+        "rmse_pp": 4.75,
+        "r2": 0.576
+      }
+    },
+    "diagnostico_residuos": {
+      "n": 98,
+      "media": 1.1402,
+      "std": 4.2371,
+      "min": -5.3007,
+      "max": 13.4094,
+      "ljung_box_lag6_pvalor": 0.0,
+      "ljung_box_lag12_pvalor": 0.0,
+      "jarque_bera_pvalor": 0.0001,
+      "skewness": 1.0535,
+      "kurtose": 3.5058
+    },
+    "estabilidade_coef": {
+      "ibc_br_lag5": {
+        "media": 0.5157825175724003,
+        "desvio": 0.5262097439490817,
+        "cv": 1.0202163237826642
+      },
+      "cambio_lag3": {
+        "media": -0.005995964231534989,
+        "desvio": 0.01695914787148151,
+        "cv": 2.8284271247461903
+      },
+      "cambio_lag6": {
+        "media": -0.8084671965321931,
+        "desvio": 0.8078444089975402,
+        "cv": 0.9992296687641449
+      },
+      "brent_lag2": {
+        "media": -0.009044351350220171,
+        "desvio": 0.025581288684697563,
+        "cv": 2.8284271247461903
+      },
+      "brent_lag4": {
+        "media": 0.1644025324316465,
+        "desvio": 0.21341006189247788,
+        "cv": 1.2980947357438501
+      },
+      "cny_usd_lag3": {
+        "media": -0.44451439582317887,
+        "desvio": 0.5048083496283375,
+        "cv": 1.1356400475928403
+      },
+      "cny_usd_lag6": {
+        "media": -0.44833605631839607,
+        "desvio": 0.46667825356780657,
+        "cv": 1.0409117156448027
+      },
+      "carga_geral_lag12": {
+        "media": -3.970584199607533,
+        "desvio": 1.3044688736607155,
+        "cv": 0.3285332354341344
+      }
+    },
+    "serie": [
+      {
+        "data": "2013-01",
+        "predito": null,
+        "observado": -0.33,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-02",
+        "predito": null,
+        "observado": -0.97,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-03",
+        "predito": null,
+        "observado": -0.96,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-04",
+        "predito": null,
+        "observado": -0.47,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-05",
+        "predito": null,
+        "observado": 0.31,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-06",
+        "predito": null,
+        "observado": 1.35,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-07",
+        "predito": null,
+        "observado": 2.73,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-08",
+        "predito": null,
+        "observado": 3.96,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-09",
+        "predito": null,
+        "observado": 5.05,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-10",
+        "predito": null,
+        "observado": 6.78,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-11",
+        "predito": null,
+        "observado": 8.51,
+        "fase": "warmup"
+      },
+      {
+        "data": "2013-12",
+        "predito": null,
+        "observado": 8.93,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-01",
+        "predito": null,
+        "observado": 9.77,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-02",
+        "predito": null,
+        "observado": 11.23,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-03",
+        "predito": null,
+        "observado": 10.97,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-04",
+        "predito": null,
+        "observado": 11.0,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-05",
+        "predito": null,
+        "observado": 9.9,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-06",
+        "predito": null,
+        "observado": 8.32,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-07",
+        "predito": null,
+        "observado": 8.15,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-08",
+        "predito": null,
+        "observado": 7.32,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-09",
+        "predito": null,
+        "observado": 7.3,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-10",
+        "predito": null,
+        "observado": 5.89,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-11",
+        "predito": null,
+        "observado": 4.24,
+        "fase": "warmup"
+      },
+      {
+        "data": "2014-12",
+        "predito": null,
+        "observado": 3.16,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-01",
+        "predito": null,
+        "observado": 2.09,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-02",
+        "predito": null,
+        "observado": 1.17,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-03",
+        "predito": null,
+        "observado": 1.2,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-04",
+        "predito": null,
+        "observado": 0.37,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-05",
+        "predito": null,
+        "observado": 0.26,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-06",
+        "predito": null,
+        "observado": 1.26,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-07",
+        "predito": null,
+        "observado": 0.44,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-08",
+        "predito": null,
+        "observado": -0.31,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-09",
+        "predito": null,
+        "observado": -1.84,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-10",
+        "predito": null,
+        "observado": -2.37,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-11",
+        "predito": null,
+        "observado": -2.07,
+        "fase": "warmup"
+      },
+      {
+        "data": "2015-12",
+        "predito": null,
+        "observado": -1.8,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-01",
+        "predito": null,
+        "observado": -1.85,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-02",
+        "predito": null,
+        "observado": -2.26,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-03",
+        "predito": null,
+        "observado": -3.06,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-04",
+        "predito": null,
+        "observado": -2.82,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-05",
+        "predito": null,
+        "observado": -2.45,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-06",
+        "predito": null,
+        "observado": -3.07,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-07",
+        "predito": null,
+        "observado": -3.53,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-08",
+        "predito": null,
+        "observado": -3.06,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-09",
+        "predito": null,
+        "observado": -1.81,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-10",
+        "predito": null,
+        "observado": -1.9,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-11",
+        "predito": null,
+        "observado": -2.0,
+        "fase": "warmup"
+      },
+      {
+        "data": "2016-12",
+        "predito": null,
+        "observado": -1.87,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-01",
+        "predito": null,
+        "observado": -1.32,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-02",
+        "predito": null,
+        "observado": -1.06,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-03",
+        "predito": null,
+        "observado": -0.76,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-04",
+        "predito": null,
+        "observado": -0.38,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-05",
+        "predito": null,
+        "observado": -1.61,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-06",
+        "predito": null,
+        "observado": -0.66,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-07",
+        "predito": null,
+        "observado": 0.62,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-08",
+        "predito": null,
+        "observado": 1.09,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-09",
+        "predito": null,
+        "observado": 1.66,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-10",
+        "predito": null,
+        "observado": 4.73,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-11",
+        "predito": null,
+        "observado": 5.56,
+        "fase": "warmup"
+      },
+      {
+        "data": "2017-12",
+        "predito": null,
+        "observado": 6.3,
+        "fase": "warmup"
+      },
+      {
+        "data": "2018-01",
+        "predito": 2.64,
+        "observado": 6.62,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-02",
+        "predito": 2.42,
+        "observado": 7.45,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-03",
+        "predito": 5.1,
+        "observado": 8.73,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-04",
+        "predito": 6.5,
+        "observado": 8.62,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-05",
+        "predito": 8.7,
+        "observado": 10.07,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-06",
+        "predito": 9.74,
+        "observado": 8.58,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-07",
+        "predito": 11.12,
+        "observado": 7.91,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-08",
+        "predito": 10.22,
+        "observado": 7.93,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-09",
+        "predito": 8.21,
+        "observado": 6.6,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-10",
+        "predito": 5.18,
+        "observado": 3.54,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-11",
+        "predito": 2.85,
+        "observado": 3.04,
+        "fase": "oos"
+      },
+      {
+        "data": "2018-12",
+        "predito": 2.22,
+        "observado": 2.42,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-01",
+        "predito": 1.21,
+        "observado": 1.58,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-02",
+        "predito": 0.57,
+        "observado": 1.07,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-03",
+        "predito": 0.58,
+        "observado": -0.32,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-04",
+        "predito": 0.79,
+        "observado": -0.83,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-05",
+        "predito": 0.02,
+        "observado": -0.91,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-06",
+        "predito": 0.31,
+        "observado": 0.26,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-07",
+        "predito": -0.45,
+        "observado": 0.04,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-08",
+        "predito": -1.7,
+        "observado": -0.97,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-09",
+        "predito": -1.72,
+        "observado": -0.25,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-10",
+        "predito": 1.82,
+        "observado": 0.62,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-11",
+        "predito": 0.17,
+        "observado": 0.05,
+        "fase": "oos"
+      },
+      {
+        "data": "2019-12",
+        "predito": -0.2,
+        "observado": -0.24,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-01",
+        "predito": 1.07,
+        "observado": 0.16,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-02",
+        "predito": 2.05,
+        "observado": 0.32,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-03",
+        "predito": 1.67,
+        "observado": 0.87,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-04",
+        "predito": 0.88,
+        "observado": 1.45,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-05",
+        "predito": -0.8,
+        "observado": 1.03,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-06",
+        "predito": -0.97,
+        "observado": -0.17,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-07",
+        "predito": -0.73,
+        "observado": -0.21,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-08",
+        "predito": -1.14,
+        "observado": 0.23,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-09",
+        "predito": -2.28,
+        "observado": -0.64,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-10",
+        "predito": -1.38,
+        "observado": -0.65,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-11",
+        "predito": 2.0,
+        "observado": 1.35,
+        "fase": "oos"
+      },
+      {
+        "data": "2020-12",
+        "predito": 3.97,
+        "observado": 2.68,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-01",
+        "predito": 4.61,
+        "observado": 2.95,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-02",
+        "predito": 5.8,
+        "observado": 3.3,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-03",
+        "predito": 6.79,
+        "observado": 5.16,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-04",
+        "predito": 7.37,
+        "observado": 5.61,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-05",
+        "predito": 9.46,
+        "observado": 7.67,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-06",
+        "predito": 10.14,
+        "observado": 9.7,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-07",
+        "predito": 10.21,
+        "observado": 11.01,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-08",
+        "predito": 13.01,
+        "observado": 11.9,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-09",
+        "predito": 13.33,
+        "observado": 13.19,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-10",
+        "predito": 12.01,
+        "observado": 13.07,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-11",
+        "predito": 10.94,
+        "observado": 10.18,
+        "fase": "oos"
+      },
+      {
+        "data": "2021-12",
+        "predito": 9.55,
+        "observado": 9.19,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-01",
+        "predito": 8.46,
+        "observado": 8.84,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-02",
+        "predito": 7.26,
+        "observado": 7.46,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-03",
+        "predito": 6.38,
+        "observado": 4.56,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-04",
+        "predito": 5.25,
+        "observado": 3.21,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-05",
+        "predito": 4.59,
+        "observado": 0.4,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-06",
+        "predito": 3.58,
+        "observado": -1.64,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-07",
+        "predito": 3.02,
+        "observado": -2.28,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-08",
+        "predito": 1.73,
+        "observado": -3.12,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-09",
+        "predito": 1.74,
+        "observado": -3.26,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-10",
+        "predito": 1.29,
+        "observado": -3.11,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-11",
+        "predito": -0.2,
+        "observado": -2.56,
+        "fase": "oos"
+      },
+      {
+        "data": "2022-12",
+        "predito": -1.75,
+        "observado": -4.14,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-01",
+        "predito": -3.75,
+        "observado": -5.12,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-02",
+        "predito": -3.84,
+        "observado": -5.58,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-03",
+        "predito": -3.09,
+        "observado": -5.54,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-04",
+        "predito": -2.35,
+        "observado": -5.23,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-05",
+        "predito": -2.56,
+        "observado": -4.73,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-06",
+        "predito": -2.27,
+        "observado": -3.51,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-07",
+        "predito": -0.86,
+        "observado": -3.83,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-08",
+        "predito": 0.02,
+        "observado": -3.15,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-09",
+        "predito": -1.75,
+        "observado": -4.45,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-10",
+        "predito": -1.92,
+        "observado": -4.72,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-11",
+        "predito": -0.9,
+        "observado": -3.4,
+        "fase": "oos"
+      },
+      {
+        "data": "2023-12",
+        "predito": -0.03,
+        "observado": -0.56,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-01",
+        "predito": 1.56,
+        "observado": 1.74,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-02",
+        "predito": 2.01,
+        "observado": 5.03,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-03",
+        "predito": 1.91,
+        "observado": 7.24,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-04",
+        "predito": 0.98,
+        "observado": 9.19,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-05",
+        "predito": 2.06,
+        "observado": 10.62,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-06",
+        "predito": 2.69,
+        "observado": 11.77,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-07",
+        "predito": 1.82,
+        "observado": 13.03,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-08",
+        "predito": 2.86,
+        "observado": 12.95,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-09",
+        "predito": 4.1,
+        "observado": 15.99,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-10",
+        "predito": 4.54,
+        "observado": 17.95,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-11",
+        "predito": 6.1,
+        "observado": 18.15,
+        "fase": "oos"
+      },
+      {
+        "data": "2024-12",
+        "predito": 6.98,
+        "observado": 17.57,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-01",
+        "predito": 7.6,
+        "observado": 17.53,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-02",
+        "predito": 6.89,
+        "observado": 14.72,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-03",
+        "predito": 5.98,
+        "observado": 13.78,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-04",
+        "predito": 6.75,
+        "observado": 12.23,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-05",
+        "predito": 5.99,
+        "observado": 12.15,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-06",
+        "predito": 6.07,
+        "observado": 10.8,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-07",
+        "predito": 5.88,
+        "observado": 10.06,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-08",
+        "predito": 5.68,
+        "observado": 10.38,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-09",
+        "predito": 5.26,
+        "observado": 8.86,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-10",
+        "predito": 4.45,
+        "observado": 7.89,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-11",
+        "predito": 2.8,
+        "observado": 7.72,
+        "fase": "oos"
+      },
+      {
+        "data": "2025-12",
+        "predito": 2.5,
+        "observado": 6.93,
+        "fase": "oos"
+      },
+      {
+        "data": "2026-01",
+        "predito": 1.94,
+        "observado": 5.34,
+        "fase": "oos"
+      },
+      {
+        "data": "2026-02",
+        "predito": 2.29,
+        "observado": 6.22,
+        "fase": "oos"
+      }
+    ],
+    "forecast": [
+      {
+        "data": "2026-03",
+        "central_pct": 1.09,
+        "low_pct": -9.2,
+        "high_pct": 11.38,
+        "low_boot_pct": 4.69,
+        "high_boot_pct": 12.97
+      },
+      {
+        "data": "2026-04",
+        "central_pct": -0.58,
+        "low_pct": -10.87,
+        "high_pct": 9.71,
+        "low_boot_pct": 3.02,
+        "high_boot_pct": 11.31
+      },
+      {
+        "data": "2026-05",
+        "central_pct": -1.16,
+        "low_pct": -11.44,
+        "high_pct": 9.13,
+        "low_boot_pct": 2.44,
+        "high_boot_pct": 10.73
+      },
+      {
+        "data": "2026-06",
+        "central_pct": -1.78,
+        "low_pct": -12.07,
+        "high_pct": 8.51,
+        "low_boot_pct": 1.82,
+        "high_boot_pct": 10.11
+      },
+      {
+        "data": "2026-07",
+        "central_pct": -0.77,
+        "low_pct": -11.05,
+        "high_pct": 9.52,
+        "low_boot_pct": 2.83,
+        "high_boot_pct": 11.12
+      }
+    ]
+  },
+  "metadata": {
+    "horizonte_meses": 5,
+    "banda_padrao": "conformal_split_80pct",
+    "fontes_dados": {
+      "IBC-Br": "BCB-SGS 24364",
+      "Câmbio BRL/USD": "BCB-SGS 3697",
+      "PIM-PF": "BCB-SGS 21859",
+      "IPCA Diesel": "BCB-SGS 1393",
+      "Brent": "FRED DCOILBRENTEU",
+      "CNY/USD": "FRED DEXCHUS"
+    }
+  }
+}

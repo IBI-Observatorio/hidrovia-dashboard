@@ -12,19 +12,22 @@ import path from 'path';
 const BASE = process.env.ANTAQ_API_URL ?? 'https://antaq-api-production.up.railway.app';
 
 const NATUREZAS = {
-  granel_solido:  'Granel Sólido',
-  granel_liquido: 'Granel Líquido e Gasoso',
-  carga_geral:    'Carga Geral',
-  conteinerizada: 'Carga Conteinerizada',
+  granel_solido:  { natureza: 'Granel Sólido' },
+  granel_liquido: { natureza: 'Granel Líquido e Gasoso' },
+  carga_geral:    { natureza: 'Carga Geral' },
+  conteinerizada: { natureza: 'Carga Conteinerizada' },
+  // Contêiner segmentado por tipo de navegação (mercados com drivers distintos)
+  conteinerizada_cabotagem:   { natureza: 'Carga Conteinerizada', navegacao: 'Cabotagem' },
+  conteinerizada_longo_curso: { natureza: 'Carga Conteinerizada', navegacao: 'Longo Curso' },
 };
 
-async function fetchSerie(naturezaLabel) {
+async function fetchSerie(filtros) {
   const qs = new URLSearchParams({
-    natureza:             naturezaLabel,
     metrica:              'toneladas',
     freq:                 'mensal',
     suavizacao:           'ma12',
     apenas_movimentacao:  'true',
+    ...filtros,
   });
   const url = `${BASE}/api/v1/series?${qs}`;
   const r = await fetch(url);
@@ -35,9 +38,10 @@ async function fetchSerie(naturezaLabel) {
 
 const out = { gerado_em: new Date().toISOString(), series: {} };
 
-for (const [key, label] of Object.entries(NATUREZAS)) {
+for (const [key, filtros] of Object.entries(NATUREZAS)) {
+  const label = filtros.navegacao ? `${filtros.natureza} (${filtros.navegacao})` : filtros.natureza;
   process.stdout.write(`Baixando ${label}… `);
-  const serie = await fetchSerie(label);
+  const serie = await fetchSerie(filtros);
   // Descarta pontos anteriores a jan/2011 (warm-up incompleto da MA12 — valores espúrios)
   out.series[key] = serie
     .filter(pt => pt.ma12 != null && pt.data >= '2011-01')
