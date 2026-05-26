@@ -102,13 +102,24 @@ function mediaTrailing7Cota(
   const diarios = [...porDia.entries()]
     .map(([data, vs]) => ({ data, cota_cm: vs.reduce((s, x) => s + x, 0) / vs.length }))
     .sort((a, b) => a.data.localeCompare(b.data));
-  if (diarios.length < SUAVIZACAO_DIAS) return null;
+  if (diarios.length === 0) return null;
 
-  const ultimos = diarios.slice(-SUAVIZACAO_DIAS);
-  const media_cm = ultimos.reduce((s, x) => s + x.cota_cm, 0) / ultimos.length;
+  // Tolera gaps de até 2 dias: filtra os dias dentro dos últimos 7 dias calendário.
+  // Requer mínimo de 5 dias com dados (era 7/7, causava exclusão total da estação
+  // com 1 dia de falha de telemetria — exatamente quando o sinal seria mais crítico).
+  const ultimaData = diarios[diarios.length - 1].data;
+  const ultDt = new Date(ultimaData + "T00:00:00Z");
+  const naJanela = diarios.filter((d) => {
+    const dt = new Date(d.data + "T00:00:00Z");
+    return (ultDt.getTime() - dt.getTime()) / 86400000 < SUAVIZACAO_DIAS;
+  });
+  const MIN_DIAS = 5;
+  if (naJanela.length < MIN_DIAS) return null;
+
+  const media_cm = naJanela.reduce((s, x) => s + x.cota_cm, 0) / naJanela.length;
   return {
     cota_m: +(media_cm / 100).toFixed(2),
-    ultima_atualizacao: ultimos[ultimos.length - 1].data,
+    ultima_atualizacao: ultimaData,
   };
 }
 

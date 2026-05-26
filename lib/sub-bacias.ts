@@ -75,8 +75,12 @@ export function posicaoSubBacia(
     if (cota == null || !p) continue;
     const p10 = p.p10[doy];
     const p90 = p.p90[doy];
-    if (p10 == null || p90 == null) continue;
-    const pos = (cota - p10) / (p90 - p10);
+    const med = p.mediana[doy];
+    // Normalização centrada na mediana: IDN = 0 quando ambas as sub-bacias estão
+    // nos seus valores medianos históricos. Elimina o viés estrutural de +0.12
+    // que existia com a fórmula (cota − p10)/(p90 − p10).
+    if (p10 == null || p90 == null || med == null) continue;
+    const pos = (cota - med) / (p90 - p10);
     somaValores += pos * peso;
     somaPesos += peso;
     usadas.push(estacao);

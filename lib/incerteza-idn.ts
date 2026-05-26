@@ -13,15 +13,15 @@ export interface IncertezaIDN {
 export const INCERTEZA_IDN: IncertezaIDN = {
   "n_bootstrap": 200,
   "fronteira_sul": {
-    "mediana": -0.209,
-    "ic_lo": -0.448,
-    "ic_hi": -0.013
+    "mediana": -0.135,
+    "ic_lo": -0.788,
+    "ic_hi": 0.041
   },
   "fronteira_norte": {
-    "mediana": 0.366,
-    "ic_lo": 0.063,
-    "ic_hi": 0.593
+    "mediana": 0.31,
+    "ic_lo": -0.12,
+    "ic_hi": 0.597
   },
-  "std_fronteiras": 0.1259,
-  "banda_idn_2sigma": 0.252
+  "std_fronteiras": 0.168,
+  "banda_idn_2sigma": 0.336
 };
