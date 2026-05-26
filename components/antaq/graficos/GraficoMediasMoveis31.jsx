@@ -202,7 +202,7 @@ export default function GraficoMediasMoveis31() {
       {/* ── Contexto histórico ───────────────────────────────────────────── */}
       <div className="border-t border-gray-700 pt-6">
         <div className="text-base font-semibold text-white mb-3">
-          Contexto histórico: 15 anos de médias móveis por carga
+          Contexto histórico: médias móveis por carga (2011–2026)
         </div>
 
         {/* KPI cards de momentum */}
@@ -258,7 +258,7 @@ export default function GraficoMediasMoveis31() {
         </ResponsiveContainer>
         <p className="text-xs text-gray-500 mt-1">
           Cada ponto = média dos 12 meses anteriores — remove sazonalidade e revela tendência real.
-          Dados: ANTAQ Estatística Aquaviária · API ao vivo.
+          Dados: ANTAQ Estatística Aquaviária · Atualizado mensalmente.
         </p>
       </div>
     </div>

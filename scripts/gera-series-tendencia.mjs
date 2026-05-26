@@ -38,8 +38,9 @@ const out = { gerado_em: new Date().toISOString(), series: {} };
 for (const [key, label] of Object.entries(NATUREZAS)) {
   process.stdout.write(`Baixando ${label}… `);
   const serie = await fetchSerie(label);
+  // Descarta pontos anteriores a jan/2011 (warm-up incompleto da MA12 — valores espúrios)
   out.series[key] = serie
-    .filter(pt => pt.ma12 != null)
+    .filter(pt => pt.ma12 != null && pt.data >= '2011-01')
     .map(pt => ({ data: pt.data, ma12_mt: +(pt.ma12 / 1e6).toFixed(4) }));
   console.log(`${out.series[key].length} pontos (${out.series[key].at(0)?.data} → ${out.series[key].at(-1)?.data})`);
 }
