@@ -15,7 +15,7 @@ import IRCDuploWidget from "@/components/IRCDuploWidget";
 import IRCInterativo from "@/components/IRCInterativo";
 import { tokenAssinanteAtual, nomeClienteDoToken } from "@/lib/auth-assinante";
 import { detectaOndaBranco } from "@/lib/onda-branco";
-import { calculaIDNSimples } from "@/lib/calcula-idn";
+import { calculaIDNSimples, classificaIDN } from "@/lib/calcula-idn";
 import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
 import { detectaFaseCiclo, calculaIRC } from "@/lib/irc";
 import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
@@ -93,12 +93,17 @@ export default async function MonitorPage() {
   const insights = geraInsights(dados);
   const criticos = insights.filter((i) => i.tipo === "critico").length;
 
-  // ─── IRC snapshot — calcula em tempo real para o widget no topo do monitor
-  const idnAtual = dados.SGC && dados.Humaita
-    ? calculaIDNSimples(
-        { SGC: dados.SGC.cota_m, Humaita: dados.Humaita.cota_m, PortoVelho: dados.PortoVelho?.cota_m, Borba: dados.Borba?.cota_m },
-        dados.SGC.ultima_atualizacao,
-      )
+  // ─── IRC snapshot — IDN com todas as estações Norte+Sul (renormaliza se SGC faltar)
+  const cotasIDNCompletas: Record<string, number> = {};
+  for (const [k, v] of Object.entries(cotasIDN)) cotasIDNCompletas[k] = v.cota_m;
+  if (dados.SGC)        cotasIDNCompletas.SGC        = dados.SGC.cota_m;
+  if (dados.Humaita)    cotasIDNCompletas.Humaita    = dados.Humaita.cota_m;
+  if (dados.PortoVelho) cotasIDNCompletas.PortoVelho = dados.PortoVelho.cota_m;
+  if (dados.Borba)      cotasIDNCompletas.Borba      = dados.Borba.cota_m;
+  const dataIDN = Object.values(cotasIDN).map(v => v.ultima_atualizacao).sort().reverse()[0]
+    ?? dados.Humaita?.ultima_atualizacao ?? new Date().toISOString().slice(0, 10);
+  const idnAtual = Object.keys(cotasIDNCompletas).length > 0
+    ? calculaIDNSimples(cotasIDNCompletas, dataIDN)
     : 0;
   const ondaBranco = serieCaracarai.length >= 8
     ? detectaOndaBranco(serieCaracarai, 7, idnAtual)   // v2: lag por regime
@@ -160,16 +165,18 @@ export default async function MonitorPage() {
         </div>
       )}
 
-      {/* ── BANNER DESSINCRONIZAÇÃO ── */}
-      <div className="bg-ouro/10 border-b border-ouro/20">
-        <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start gap-2">
-          <span className="text-ouro text-xs shrink-0 font-bold">2026</span>
-          <p className="text-ouro text-xs">
-            <strong>Dessincronização Norte-Sul sem precedente:</strong> Negro alto (SGC) 927 cm
-            abaixo de 2024; Madeira (Humaitá) 679 cm acima. IDN atual: +0,58 — padrão Driver Norte.
-          </p>
+      {/* ── BANNER DESSINCRONIZAÇÃO — condicional e dinâmico ── */}
+      {classificaIDN(idnAtual).regime === "Driver Norte" && (
+        <div className="bg-ouro/10 border-b border-ouro/20">
+          <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start gap-2">
+            <span className="text-ouro text-xs shrink-0 font-bold">2026</span>
+            <p className="text-ouro text-xs">
+              <strong>Dessincronização Norte-Sul:</strong>{" "}
+              IDN atual: {idnAtual >= 0 ? "+" : ""}{idnAtual.toFixed(2)} — Negro+Branco dramaticamente mais depleted que Madeira+Purus. Padrão Driver Norte.
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── LEAD ── */}
       <div className="bg-azul-medio/50 border-b border-white/5">

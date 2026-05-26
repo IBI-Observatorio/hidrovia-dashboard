@@ -36,8 +36,11 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
   const divergencia = Math.abs(mao.delta_2025 - ita.delta_2025);
   const insights: InsightData[] = [];
 
-  // Colapso histórico do Negro alto
-  if (sgc.cota_m < 7.96) {
+  // Colapso histórico do Negro alto — só dispara com dado fresco (< 14 dias)
+  const diasSGC = Math.round(
+    (Date.now() - new Date(sgc.ultima_atualizacao).getTime()) / 86400000
+  );
+  if (sgc.cota_m < 7.96 && diasSGC < 14) {
     insights.push({
       tipo:    "critico",
       titulo:  "Colapso histórico do Negro alto",
