@@ -6,7 +6,6 @@
     "n_modelos": 30,
     "campeao_pos": 1,
     "benchmark_pos": 16,
-    "publicado_pos": 20,
     "reproduz_com": "python scripts/panel_horserace.py"
   },
   "ranking": [
@@ -53,14 +52,14 @@
       ""
     ],
     [
-      "combo inv-MSE (NC+publicado)",
+      "combo inv-MSE (NC + OLS leadings)",
       5.51,
       0.86,
       "combinacao",
       ""
     ],
     [
-      "combo igual (NC+publicado)",
+      "combo igual (NC + OLS leadings)",
       5.55,
       0.87,
       "combinacao",
@@ -102,7 +101,7 @@
       ""
     ],
     [
-      "combo mediana {NC,AR5,pub}",
+      "combo mediana {NC, AR5, OLS leadings}",
       6.32,
       0.99,
       "combinacao",
@@ -144,11 +143,11 @@
       ""
     ],
     [
-      "publicado (leadings IBC-Br)",
+      "OLS leadings (IBC-Br + carga geral)",
       7.19,
       1.12,
       "estrutural",
-      "publicado"
+      ""
     ],
     [
       "k-NN análogos",
@@ -165,7 +164,7 @@
       ""
     ],
     [
-      "publicado + interc.-correção",
+      "OLS leadings + interc.-correção",
       7.76,
       1.21,
       "robusta",

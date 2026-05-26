@@ -8,10 +8,9 @@ Como funciona o fluxo de dados, o que atualizar mensalmente e a metodologia do m
 
 Duas partes:
 
-1. **Forecast do contêiner** — projeção do momentum (variação a/a da MA12 da tonelagem) para os próximos 5 meses. Modelo campeão de um horse-race de 30 abordagens, ARIMA(1,1,1) em log(soma 12m). Inclui:
+1. **Forecast do contêiner** — projeção do momentum (variação a/a da MA12 da tonelagem) para os próximos 5 meses. Modelo campeão de um horse-race de 30 abordagens: ARIMA(1,1,1) em log(soma 12m). Inclui:
    - 3 nuggets de antecipação (próxima leitura, último observado, precisão)
    - Gráfico de 15 anos com observado + backtest + projeção + leques 80%/95%
-   - "Antes × depois" — modelo publicado anteriormente vs campeão
    - Bloco "O que isso significa" (tom banco central)
    - Ficha técnica colapsável com o horse-race completo
 
@@ -22,10 +21,9 @@ Duas partes:
 ## Arquitetura de dados
 
 ```
-lib/                                          ← novos arquivos (import direto via @/lib)
+lib/                                          ← import direto via @/lib (sem fetch)
   forecast-conteiner.json          ← regenerado mensalmente (meta + historico + backtest + forward)
-  forecast-publicado-snapshot.json ← snapshot freeze do modelo antigo (NÃO regenerar)
-  horse-race-30.json               ← prova de método (30 modelos rankeados, NÃO regenerar)
+  horse-race-30.json               ← prova de método (30 modelos rankeados), NÃO regenerar
 
 public/data/antaq/dashboard/
   series-tendencia.json   ← séries MA12 das 4 cargas (regerado mensalmente)
@@ -36,15 +34,12 @@ scripts/
   panel_horserace.py               ← Python — reproduz o ranking (só para revalidar)
 
 components/antaq/graficos/
-  GraficoMediasMoveis31.jsx        ← lê todos os JSONs, renderiza tudo
+  GraficoMediasMoveis31.jsx        ← lê os JSONs, renderiza tudo
 ```
 
-### Por que três arquivos em `lib/`
+### Por que dois arquivos em `lib/`
 
-O script `forecast_conteiner.py` regenera o `forecast-conteiner.json` todo mês. Para que essa regeneração **não destrua** material editorial que não muda:
-
-- **`horse-race-30.json`** é prova de método (validação científica). Roda uma vez por revisão metodológica, fica congelado.
-- **`forecast-publicado-snapshot.json`** preserva o que o modelo antigo (OLS leadings) estava prevendo em mai/2026 — sustenta o bloco "antes × depois" do componente. Quando o modelo antigo for retirado do contexto editorial (ex.: 2027), esse arquivo pode ser apagado e o bloco "antes × depois" removido do componente.
+O script `forecast_conteiner.py` regenera o `forecast-conteiner.json` todo mês. O `horse-race-30.json` é prova de método (validação científica) — roda uma vez por revisão metodológica e fica congelado. Manter os dois separados evita que a atualização mensal destrua a evidência que justifica a escolha do método.
 
 ---
 
@@ -73,7 +68,7 @@ Saída esperada:
 OK -> lib/forecast-conteiner.json  | Theil U(h5)=0.50  | forward[0]=5.16%  | n_hist=171
 ```
 
-⚠️ **Não regenera** `horse-race-30.json` nem `forecast-publicado-snapshot.json` — esses são estáticos.
+⚠️ **Não regenera** `horse-race-30.json` — esse é estático (prova de método).
 
 ---
 
@@ -92,7 +87,7 @@ projeção: prevê log_sum12(t+h) → exp → divide por sum12(t+h-12) - 1 → Y
 
 ### Por que funciona
 
-Em vez de prever o YoY-da-MA12 diretamente (objeto super-diferenciado, ruidoso, frágil a regressor externo que quebra no regime pós-2022), prevê-se o **agregado liso** — a soma de 12 meses muda devagar e é altamente previsível h passos à frente. O YoY é então derivado da razão. É *forecasting indireto por agregação temporal*.
+Em vez de prever o YoY-da-MA12 diretamente (objeto super-diferenciado, ruidoso, frágil a quebras de regime), prevê-se o **agregado liso** — a soma de 12 meses muda devagar e é altamente previsível h passos à frente. O YoY é então derivado da razão. É *forecasting indireto por agregação temporal*.
 
 ### Desempenho
 
@@ -100,14 +95,9 @@ Validado em 38 meses fora da amostra (jan/2023 → fev/2026), recursivo, com `in
 
 - **Theil U(h=5) = 0,50** — erro = metade do palpite ingênuo
 - Vence em **todos** os horizontes (U: 0,39 / 0,41 / 0,44 / 0,48 / 0,51 para h=1..5)
-- **DM vs publicado**: p=0,019 (significativamente melhor)
-- DM vs no-change: p=0,088
+- DM vs no-change: p=0,088 (margem importante mas no limiar de significância)
 - Robusto à ordem: U=0,50–0,55 em (1,1,0)/(1,1,1)/(2,1,1)/(2,1,2)/(1,2,1)
 - Viés OOS: +0,9 p.p. (modelo levemente subestima a alta, aceitável)
-
-### Por que o modelo anterior foi aposentado
-
-A regressão OLS sobre IBC-Br defasado + carga geral defasada (modelo publicado de mai/2026) ficou na **posição 20 de 30** no horse-race — **pior que o palpite ingênuo no-change** (posição 16). Fabricava uma falsa desaceleração para ~1,5% nos próximos 5 meses, quando a série vinha consistentemente em ~5%. O viés vinha do regime pós-2022, em que os leadings macroeconômicos perderam poder preditivo para o contêiner.
 
 ---
 
@@ -135,21 +125,6 @@ A regressão OLS sobre IBC-Br defasado + carga geral defasada (modelo publicado 
 }
 ```
 
-### `lib/forecast-publicado-snapshot.json`
-
-```jsonc
-{
-  "meta": {
-    "descricao":           "Snapshot do modelo OLS antigo, freeze mai/2026.",
-    "data_snapshot":       "2026-05",
-    "spec_antigo":         "momentum_conteiner(t) = a + b·IBC-Br_yoy(t-5) + c·momentum_cargageral(t-12)",
-    "motivo_aposentadoria": "Perdia para no-change e fabricava falsa desaceleração."
-  },
-  "backtest_pub": [{ "data": "2023-01", "pub": 4.58 }, ...],     // 38 pts
-  "forward_pub":  [{ "data": "2026-03", "pub": 2.16 }, ...]      //  5 pts
-}
-```
-
 ### `lib/horse-race-30.json`
 
 ```jsonc
@@ -161,7 +136,6 @@ A regressão OLS sobre IBC-Br defasado + carga geral defasada (modelo publicado 
     "n_modelos":       30,
     "campeao_pos":     1,
     "benchmark_pos":   16,
-    "publicado_pos":   20,
     "reproduz_com":    "python scripts/panel_horserace.py"
   },
   "ranking": [
@@ -173,7 +147,7 @@ A regressão OLS sobre IBC-Br defasado + carga geral defasada (modelo publicado 
 ```
 
 Escolas: `naive`, `autorregressiva`, `estrutural`, `decomposicao`, `ml`, `robusta`, `combinacao`.
-Labels especiais: `campeao`, `bench`, `publicado`.
+Labels especiais: `campeao`, `bench`.
 
 ---
 
@@ -196,13 +170,9 @@ Se algum modelo passar o ARIMA campeão por margem significativa (DM p<0,05), at
 
 `lib/forecast-conteiner.json` foi sobrescrito sem dados. Rode `forecast_conteiner.py` de novo.
 
-### Bloco "antes × depois" sem o vermelho
-
-`forecast-publicado-snapshot.json` foi apagado ou está vazio. Restaure do git, ou aceite que o modelo antigo foi descomissionado e remova o `<ZoomAntesDepois>` do componente.
-
 ### Ficha técnica do horse-race vazia
 
-`horse-race-30.json` foi apagado. Restaure do git ou rode `panel_horserace.py` para reconstruí-lo.
+`lib/horse-race-30.json` foi apagado. Restaure do git ou rode `panel_horserace.py` para reconstruí-lo.
 
 ### Histórico das 4 cargas vazio
 

@@ -31,7 +31,7 @@ def cg_l12(t): return cg.get(t-12, np.nan)
 oos = [per(dt) for dt in sorted(pred) if fase[dt]=='oos']          # 38 alvos
 y_oos = np.array([mom.get(t,np.nan) for t in oos])
 nc5   = np.array([mom.get(t-H,np.nan) for t in oos])
-pub   = np.array([pred.get(str(t)) for t in oos])
+leadings = np.array([pred.get(str(t)) for t in oos])  # OLS com IBC-Br defasado + carga geral
 
 # histórico do alvo, ordenado
 mom_idx = mom.dropna()
@@ -170,7 +170,7 @@ def sarima_monthly():
 PREDS['13. SARIMA mensal→agrega'] = sarima_monthly()
 
 # ---------- C. ESTRUTURAL (exógena) ----------
-PREDS['14. publicado (leadings)'] = pub.copy()
+PREDS['14. OLS leadings (IBC-Br + carga geral)'] = leadings.copy()
 # ADL: y(t) ~ y(t-5) + lead(t)  recursivo
 def adl():
     out=[]
@@ -184,7 +184,7 @@ def adl():
         out.append(float(np.dot(r.params,[1,mom_idx[t-H],lead[t]])))
     return np.array(out)
 PREDS['15. ADL (y₋₅+lead)'] = adl()
-# ECM: y(t)=y(t-5)+a+b(pub(t)-y(t-5))
+# ECM: y(t)=y(t-5)+a+b(leadings(t)-y(t-5))
 def ecm():
     out=[]
     for t in oos:
@@ -265,15 +265,15 @@ def windowavg():
     base={w:adl_roll(w) for w in [24,36,48,72]}
     M=np.vstack(list(base.values())); return np.nanmean(M,axis=0)
 PREDS['21. ADL média de janelas'] = windowavg()
-# intercepto-correção do publicado (média últimos 6 erros realizados <= origem)
-def ic_pub():
+# intercepto-correção sobre OLS leadings (média últimos 6 erros realizados <= origem)
+def ic_ols_lead():
     err={o:(mom.get(o,np.nan)-pred[str(o)]) for o in [per(x) for x in pred]}
     out=[]
     for t in oos:
         o=t-H; es=[err[o-k] for k in range(6) if (o-k) in err and not np.isnan(err[o-k])]
         out.append(pred[str(t)]+(np.mean(es) if es else 0))
     return np.array(out)
-PREDS['22. publicado + interc.-correção'] = ic_pub()
+PREDS['22. OLS leadings + interc.-correção'] = ic_ols_lead()
 
 # ---------- F. MACHINE LEARNING ----------
 def make_ml(model):
@@ -301,12 +301,12 @@ def invmse_w(cols):
         e=y_oos-PREDS[c]; ws.append(1/np.nanmean(e**2))
     ws=np.array(ws)/np.sum(ws)
     M=np.vstack([PREDS[c] for c in cols]); return np.nansum(M*ws[:,None],axis=0)
-PREDS['25. combo igual NC+pub'] = 0.5*nc5+0.5*pub
-PREDS['26. combo inv-MSE NC+pub'] = invmse_w(['1. no-change h=5  [bench]','14. publicado (leadings)'])
-PREDS['27. combo mediana {NC,AR5,pub}'] = np.median(np.vstack([nc5,PREDS['8. AR direto-5'],pub]),axis=0)
+PREDS['25. combo igual (NC + OLS leadings)'] = 0.5*nc5+0.5*leadings
+PREDS['26. combo inv-MSE (NC + OLS leadings)'] = invmse_w(['1. no-change h=5  [bench]','14. OLS leadings (IBC-Br + carga geral)'])
+PREDS['27. combo mediana {NC, AR5, OLS leadings}'] = np.median(np.vstack([nc5,PREDS['8. AR direto-5'],leadings]),axis=0)
 # mediana de TODOS os modelos univariados+estruturais (sem combos, sem ML ruim)
 pool=['1. no-change h=5  [bench]','3. RW + drift','6. AR(1) iterado','8. AR direto-5','9. Theta',
-      '10. Holt amortecido','12. ARIMA log(soma12)→YoY','14. publicado (leadings)','15. ADL (y₋₅+lead)',
+      '10. Holt amortecido','12. ARIMA log(soma12)→YoY','14. OLS leadings (IBC-Br + carga geral)','15. ADL (y₋₅+lead)',
       '16. ECM (correção de erro)','20. ADL janela rolante 36m']
 PREDS['28. mediana do pool (11 modelos)'] = np.nanmedian(np.vstack([PREDS[c] for c in pool]),axis=0)
 PREDS['29. média aparada do pool'] = stats.trim_mean(np.vstack([PREDS[c] for c in pool]),0.2,axis=0)

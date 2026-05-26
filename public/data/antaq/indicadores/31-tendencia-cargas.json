@@ -2,19 +2,19 @@
   "id": "31",
   "slug": "tendencia-cargas",
   "titulo": "Para onde vai a movimentação dos portos brasileiros?",
-  "subtitulo": "Médias móveis de 12 meses por tipo de carga + projeção do contêiner (cabotagem e longo curso) para os próximos 5 meses",
+  "subtitulo": "Médias móveis de 12 meses por tipo de carga + projeção do contêiner para os próximos 5 meses",
   "cluster": "ineditas",
   "granularidade": "mensal",
   "cobertura": { "inicio": "2010", "fim": "2026" },
   "destaque": false,
-  "fonte": "ANTAQ — Estatística Aquaviária (2010–2026) + BCB SGS (IBC-Br)",
+  "fonte": "ANTAQ — Estatística Aquaviária (2010–2026)",
   "ultima_atualizacao": "mai/2026",
-  "metodologia": "Cada ponto da linha é o volume médio dos 12 meses anteriores — um filtro que tira o ruído da sazonalidade (safra, feriados, paradas) e deixa só a tendência real. O contêiner brasileiro é separado em dois mercados distintos: longo curso (rotas internacionais, ~70% do volume) e cabotagem (entre portos brasileiros, ~30%). Cada um tem um modelo próprio: longo curso responde a atividade global (câmbio BRL/USD, Brent, CNY/USD), cabotagem responde a atividade doméstica (IBC-Br, PIM-PF, diesel). A faixa em torno de cada projeção é a margem de erro típica calibrada com resíduos dos últimos 24 meses.",
+  "metodologia": "Cada ponto da linha é o volume médio dos 12 meses anteriores — um filtro que tira o ruído da sazonalidade (safra, feriados, paradas) e deixa só a tendência real. A projeção do contêiner usa o método campeão de um horse-race de 30 abordagens: ARIMA(1,1,1) sobre o log da soma de 12 meses da tonelagem, derivando a variação a/a. Em vez de prever diretamente o ritmo (objeto super-diferenciado e ruidoso), prevê-se o agregado liso e calcula-se a razão — forecasting indireto por agregação temporal. Validado em 38 meses fora da amostra (Theil U=0,50, corta o erro do palpite ingênuo pela metade). A faixa em torno da projeção é a margem de erro empírica em 80% e 95%.",
   "achados": [
     "Granel sólido (soja, milho, minério) cresce +7% a/a — puxado pela safra recorde e pelo Arco Norte",
     "Granel líquido (petróleo, combustíveis) acelerou 11% a/a com o pré-sal exportando a todo vapor",
     "Carga geral (pallets, fardos, máquinas) cai ~3% — substituída gradualmente pelo contêiner",
-    "Contêiner (+5%) mantém trajetória positiva confirmada pelo modelo OLS com IBC-Br como antecedente"
+    "Contêiner (+5%) mantém trajetória positiva; ARIMA log-soma projeta ritmo estável em ~5% nos próximos 5 meses"
   ],
   "grafico": { "tipo": "medias_moveis_31" }
 }

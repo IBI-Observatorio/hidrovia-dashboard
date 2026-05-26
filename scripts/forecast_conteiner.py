@@ -13,7 +13,7 @@ MÉTODO CAMPEÃO (vencedor de um horse-race de 30 abordagens, validado em 38 mes
 DESEMPENHO (OOS jan/2023..fev/2026, recursivo, info <= t-h):
     Theil U (RMSE/RMSE_no-change) = 0,50 em h=5 ; vence em TODOS os horizontes
     (U: 0,39 / 0,41 / 0,44 / 0,48 / 0,51 para h=1..5).
-    DM vs publicado p=0,019 (significativamente melhor) ; vs no-change p=0,088.
+    DM vs no-change p=0,088 (margem importante mas no limiar de significância).
     Robusto à ordem (U 0,50–0,55 em (1,1,0)/(1,1,1)/(2,1,1)/(2,1,2)/(1,2,1)).
     Sem vazamento: cada alvo só treina com dados <= t-h. Viés +0,9 p.p.
 

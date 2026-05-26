@@ -9,14 +9,12 @@ import {
 import { useDashboardData } from '../useDashboardData';
 import { useCountUp } from '../../home/metric-utils';
 import forecastConteiner from '@/lib/forecast-conteiner.json';
-import publicadoSnap   from '@/lib/forecast-publicado-snapshot.json';
 import horseRace       from '@/lib/horse-race-30.json';
 
 // ── Paleta ──────────────────────────────────────────────────────────────────
 
 const COR_OBS    = '#0099D8';  // ibi-blue (observado)
 const COR_CHAMP  = '#D4922A';  // ouro (campeão / projeção / banda)
-const COR_PUB    = '#A0153E';  // vermelho IBI (modelo publicado antigo)
 const COR_GREEN  = '#00A652';
 const COR_GRID   = '#374151';
 
@@ -123,60 +121,6 @@ function GraficoForecast({ allData, ultObs }) {
   );
 }
 
-// ─── Subcomponente: Zoom Antes × Depois ─────────────────────────────────────
-
-function ZoomAntesDepois({ forward, forwardPub, ultObs }) {
-  const dadosZoom = [
-    { data: ultObs.data, champ: ultObs.obs, pub: ultObs.obs },
-    ...forward.map((f, i) => ({
-      data:  f.data,
-      champ: f.central,
-      pub:   forwardPub[i]?.pub ?? null,
-    })),
-  ];
-  const champFinal = forward[forward.length - 1].central;
-  const pubFinal   = forwardPub[forwardPub.length - 1]?.pub ?? null;
-  const gap        = pubFinal != null ? champFinal - pubFinal : null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="rounded-xl border border-gray-700 bg-gray-900/40 p-5"
-    >
-      <h3 className="text-base font-semibold text-white mb-1">
-        Antes × depois: por que trocamos o modelo
-      </h3>
-      <p className="text-xs text-gray-400 mb-3 max-w-3xl leading-relaxed">
-        O <span style={{ color: COR_PUB }}>modelo anterior</span> projetava o contêiner despencando
-        para <strong>{fmtPct(pubFinal, 1)}</strong> em 5 meses — artefato do próprio modelo, não da economia.
-        O <span style={{ color: COR_CHAMP }}>campeão</span> segura o ritmo em <strong>{fmtPct(champFinal, 1)}</strong>,
-        coerente com o que a série vem sinalizando há um ano.
-        {gap != null && (
-          <> Diferença de <strong>{Math.abs(gap).toFixed(1)} p.p.</strong> entre as projeções
-          — daí a importância da troca.</>
-        )}
-      </p>
-      <ResponsiveContainer width="100%" height={220}>
-        <LineChart data={dadosZoom} margin={{ top: 8, right: 16, bottom: 12, left: 4 }}>
-          <CartesianGrid {...gridProps} />
-          <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} />
-          <YAxis tick={tickStyle} tickFormatter={(v) => v.toFixed(1) + '%'} />
-          <Tooltip contentStyle={tooltipStyle} labelFormatter={fmtMes}
-                   formatter={(v, n) => [fmtPct(v, 2), n]} />
-          <Legend iconSize={10} wrapperStyle={{ fontSize: 11, paddingTop: 4 }} />
-          <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="4 2" />
-          <Line type="monotone" dataKey="champ" stroke={COR_CHAMP} strokeWidth={2.5}
-                dot={{ r: 4, fill: COR_CHAMP }} name="Campeão (ARIMA log-soma)" />
-          <Line type="monotone" dataKey="pub" stroke={COR_PUB} strokeWidth={2}
-                strokeDasharray="4 3" dot={{ r: 3, fill: COR_PUB }}
-                name="Publicado anterior (OLS leadings)" />
-        </LineChart>
-      </ResponsiveContainer>
-    </motion.div>
-  );
-}
-
 // ─── Subcomponente: "O que isso significa" ──────────────────────────────────
 
 function SignificadoBox({ forward, meta }) {
@@ -198,10 +142,9 @@ function SignificadoBox({ forward, meta }) {
           Não há sinal estatístico de desaceleração brusca.
         </p>
         <p className="text-gray-400">
-          O modelo anterior estava com viés sistemático no regime pós-2022 — projetava queda para ~1,5%
-          que não vinha se materializando. A troca corrige o erro: o novo método prevê o agregado liso
-          (soma de 12 meses da tonelagem, que muda devagar) e deriva o ritmo a/a, em vez de tentar
-          prever diretamente a variação — objeto super-diferenciado e ruidoso, frágil a quebras de regime.
+          O método prevê o agregado liso (soma de 12 meses da tonelagem, que muda devagar e é
+          altamente previsível h passos à frente) e deriva o ritmo a/a — em vez de tentar prever
+          diretamente a variação, objeto super-diferenciado, ruidoso e frágil a quebras de regime.
         </p>
         <p className="text-xs text-gray-500 mt-3">
           Método: <span className="font-mono text-gray-400">{meta.metodo}</span> ·
@@ -224,15 +167,12 @@ function FichaTecnicaHorseRace() {
       U,
       escola,
       label,
-      cor: label === 'campeao'   ? COR_CHAMP
-         : label === 'publicado' ? COR_PUB
-         : COR_ESCOLA[escola] || '#6b7280',
+      cor: label === 'campeao' ? COR_CHAMP : COR_ESCOLA[escola] || '#6b7280',
     }));
     return rows.sort((a, b) => a.U - b.U);
   }, []);
 
   const escolasUsadas = [...new Set(dados.map(d => d.escola))];
-  const posPub = dados.findIndex(d => d.label === 'publicado') + 1;
   const posBench = dados.findIndex(d => d.label === 'bench') + 1;
 
   return (
@@ -248,7 +188,7 @@ function FichaTecnicaHorseRace() {
         <p className="text-xs text-gray-400 mb-3 max-w-3xl leading-relaxed">
           Cada barra é um modelo testado em walk-forward sobre {horseRace.meta.janela_oos.replace(' a ', ' → ')} ({horseRace.meta.horizonte_meses} meses à frente, recursivo, sem vazamento).
           Quanto menor o <strong>Theil U</strong>, melhor: <strong>1,0 = empate</strong> com o palpite ingênuo de "amanhã = hoje".
-          O <span style={{ color: COR_CHAMP }}>campeão</span> corta o erro pela metade. O <span style={{ color: COR_PUB }}>modelo publicado anteriormente</span> fica na posição <strong>{posPub}/30</strong> (pior que o palpite ingênuo, na posição {posBench}).
+          O <span style={{ color: COR_CHAMP }}>campeão</span> corta o erro pela metade. Benchmark naïve (no-change) está na posição {posBench}.
         </p>
         {/* Legenda de escolas */}
         <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-4 text-xs">
@@ -261,10 +201,6 @@ function FichaTecnicaHorseRace() {
           <div className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded-sm inline-block" style={{ background: COR_CHAMP }} />
             <span className="text-gray-300 font-medium">campeão</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-sm inline-block" style={{ background: COR_PUB }} />
-            <span className="text-gray-300 font-medium">publicado anterior</span>
           </div>
         </div>
         <ResponsiveContainer width="100%" height={dados.length * 20 + 60}>
@@ -306,7 +242,6 @@ function FichaTecnicaHorseRace() {
 
 function ForecastConteinerBloco() {
   const { meta, historico, backtest, forward } = forecastConteiner;
-  const { backtest_pub, forward_pub } = publicadoSnap;
 
   // Pivot único pro gráfico principal
   const allData = useMemo(() => {
@@ -378,9 +313,6 @@ function ForecastConteinerBloco() {
         </p>
         <GraficoForecast allData={allData} ultObs={meta.ult_obs} />
       </motion.div>
-
-      {/* (c) Antes × depois */}
-      <ZoomAntesDepois forward={forward} forwardPub={forward_pub} ultObs={meta.ult_obs} />
 
       {/* (d) O que isso significa */}
       <SignificadoBox forward={forward} meta={meta} />
