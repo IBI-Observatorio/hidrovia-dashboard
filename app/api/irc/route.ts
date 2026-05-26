@@ -45,25 +45,21 @@ export async function GET(request: NextRequest) {
       fetchCotasIDN(),
     ]);
 
-    const sgc = dados.SGC;
     const hum = dados.Humaita;
     const mao = dados.Manaus;
     if (!hum || !mao) {
       return NextResponse.json({ erro: "Dados insuficientes" }, { status: 503 });
     }
 
-    // IDN com todas as estações Norte (Curicuriari, Serrinha, Moura, Caracarai, SGC).
-    // Se SGC estiver defasada (parou de transmitir), as demais são renormalizadas
-    // automaticamente pela posicaoSubBacia — sem travar o cálculo.
+    // IDN com todas as estações Norte+Sul via fetchCotasIDN (MA-7d, ESTACOES_IDN_COTA).
+    // NÃO injetar dados.SGC: SGC não tem telemetria ANA; a última leitura estática
+    // pode ter semanas de defasagem e produz pos_SGC absurda (ex: −3.10 em mai/26).
+    // posicaoSubBacia() renormaliza os pesos Norte automaticamente quando SGC falta.
+    // Humaita, PortoVelho e Borba já estão em ESTACOES_IDN_COTA — chegam via cotasIDN.
     const cotasIDNCompletas: Record<string, number> = {};
     for (const [k, v] of Object.entries(cotasIDN)) {
       cotasIDNCompletas[k] = v.cota_m;
     }
-    // Garante que as estações do painel também entram (Humaita, PortoVelho, Borba)
-    if (sgc)                         cotasIDNCompletas.SGC        = sgc.cota_m;
-    if (hum)                         cotasIDNCompletas.Humaita    = hum.cota_m;
-    if (dados.PortoVelho)            cotasIDNCompletas.PortoVelho = dados.PortoVelho.cota_m;
-    if (dados.Borba)                 cotasIDNCompletas.Borba      = dados.Borba.cota_m;
 
     const dataIDN = Object.values(cotasIDN).map(v => v.ultima_atualizacao).sort().reverse()[0]
       ?? hum.ultima_atualizacao;

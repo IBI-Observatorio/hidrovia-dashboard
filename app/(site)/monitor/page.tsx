@@ -94,12 +94,13 @@ export default async function MonitorPage() {
   const criticos = insights.filter((i) => i.tipo === "critico").length;
 
   // ─── IRC snapshot — IDN com todas as estações Norte+Sul (renormaliza se SGC faltar)
+  // IMPORTANTE: usar APENAS cotasIDN (fetchCotasIDN, MA-7d) para o IDN.
+  // NÃO injetar dados.SGC aqui — SGC não tem telemetria ANA; a última leitura
+  // estática tem semanas de defasagem e produz pos_SGC absurda (ex: −3.10 em mai/26).
+  // posicaoSubBacia() renormaliza automaticamente os pesos quando SGC está ausente.
+  // Humaita, PortoVelho e Borba já estão em ESTACOES_IDN_COTA e chegam via cotasIDN.
   const cotasIDNCompletas: Record<string, number> = {};
   for (const [k, v] of Object.entries(cotasIDN)) cotasIDNCompletas[k] = v.cota_m;
-  if (dados.SGC)        cotasIDNCompletas.SGC        = dados.SGC.cota_m;
-  if (dados.Humaita)    cotasIDNCompletas.Humaita    = dados.Humaita.cota_m;
-  if (dados.PortoVelho) cotasIDNCompletas.PortoVelho = dados.PortoVelho.cota_m;
-  if (dados.Borba)      cotasIDNCompletas.Borba      = dados.Borba.cota_m;
   const dataIDN = Object.values(cotasIDN).map(v => v.ultima_atualizacao).sort().reverse()[0]
     ?? dados.Humaita?.ultima_atualizacao ?? new Date().toISOString().slice(0, 10);
   const idnAtual = Object.keys(cotasIDNCompletas).length > 0
