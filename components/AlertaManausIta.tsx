@@ -49,16 +49,14 @@ export default function AlertaManausIta({
 }) {
   const mao = dados.Manaus;
   const ita = dados.Itacoatiara;
-  const sgc = dados.SGC;
-  const hum = dados.Humaita;
+  // SGC removido em mai/2026 — calculaIDN renormaliza os pesos automaticamente.
   const idnAtual = calculaIDNSimples(
     {
-      SGC:        sgc.cota_m,
-      Humaita:    hum.cota_m,
+      Humaita:    dados.Humaita?.cota_m,
       PortoVelho: dados.PortoVelho?.cota_m,
       Borba:      dados.Borba?.cota_m,
     },
-    sgc.ultima_atualizacao
+    mao.ultima_atualizacao
   );
   const risco    = riscoDescasamento(mao.cota_m, ita.cota_m, mao.delta_2025, ita.delta_2025);
 

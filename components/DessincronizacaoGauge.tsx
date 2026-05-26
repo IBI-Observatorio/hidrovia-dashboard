@@ -64,9 +64,10 @@ export default function DessincronizacaoGauge({
   cotasIDN?: Partial<Record<EstacaoComDOY, CotaIDN>>;
   vazoesIDN?: Partial<Record<EstacaoVazao, VazaoIDN>>;
 }) {
-  // Monta o mapa de cotas: prioriza cotasIDN (API ANA), cai para dados do painel
+  // Monta o mapa de cotas: prioriza cotasIDN (API ANA), cai para dados do painel.
+  // SGC removido em mai/2026 — sem telemetria ANA viva; posicaoSubBacia()
+  // renormaliza automaticamente os pesos quando a estação está ausente.
   const cotasParaIDN: Partial<Record<EstacaoComDOY, number>> = {
-    SGC:         cotasIDN?.SGC?.cota_m         ?? dados.SGC?.cota_m,
     Humaita:     cotasIDN?.Humaita?.cota_m     ?? dados.Humaita?.cota_m,
     PortoVelho:  cotasIDN?.PortoVelho?.cota_m  ?? dados.PortoVelho?.cota_m,
     Borba:       cotasIDN?.Borba?.cota_m       ?? dados.Borba?.cota_m,
@@ -79,8 +80,14 @@ export default function DessincronizacaoGauge({
     Abuna:       cotasIDN?.Abuna?.cota_m,
   };
 
+  // dataRef: data mais recente disponível entre as estações IDN.
   const dataRef =
-    cotasIDN?.SGC?.ultima_atualizacao ?? dados.SGC.ultima_atualizacao;
+    Object.values(cotasIDN ?? {})
+      .map((v) => v?.ultima_atualizacao ?? "")
+      .filter(Boolean)
+      .sort()
+      .reverse()[0] ??
+    new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
 
   const resultadoIDN = calculaIDN(cotasParaIDN, dataRef);
   const idnAtual = resultadoIDN.idn;

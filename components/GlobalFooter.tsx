@@ -1,5 +1,4 @@
 import Link from "next/link";
-import LogoIBI from "@/components/LogoIBI";
 import { navigationCopy } from "@/lib/navigation-copy";
 
 const { footer } = navigationCopy;
@@ -13,7 +12,7 @@ export default function GlobalFooter() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand column */}
           <div>
-            <LogoIBI className="h-8 w-auto mb-3 opacity-80" />
+            {/* Logo IBI desativado temporariamente — ver docs/logo-ibi-pendente.md */}
             <p className="text-gray-500 text-xs leading-relaxed">
               {footer.institutional.description}
             </p>

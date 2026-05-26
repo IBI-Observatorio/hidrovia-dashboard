@@ -20,8 +20,12 @@ import type { EstacaoVazao } from "./sub-bacias-vazao";
 
 // ─── Painel principal (7 estações) ───────────────────────────────────────────
 
+// SGC removido do painel em mai/2026: a estação 14320001 não tem telemetria
+// ANA ao vivo (a "última leitura" da API costuma ter semanas de defasagem).
+// Snapshot histórico ainda aparece via DADOS_ATUAIS.SGC + card analítico no
+// painel 1 (referência ao 11° Boletim SAH). Ver docs/monitor-cache-ana.md.
 const ESTACOES_PAINEL: EstacaoKey[] = [
-  "Manaus", "Itacoatiara", "SGC",
+  "Manaus", "Itacoatiara",
   "Humaita", "Manacapuru", "PortoVelho", "Borba",
 ];
 
@@ -123,8 +127,11 @@ function mediaTrailing7Cota(
   };
 }
 
+// SGC removido em mai/2026 — sem telemetria ANA viva.
+// `posicaoSubBacia()` em sub-bacias.ts já renormaliza os pesos quando a estação
+// está ausente, então o IDN segue válido com 10 estações.
 const ESTACOES_IDN_COTA: EstacaoComDOY[] = [
-  "SGC", "Curicuriari", "Serrinha", "Moura", "Caracarai",
+  "Curicuriari", "Serrinha", "Moura", "Caracarai",
   "Abuna", "PortoVelho", "Humaita", "Manicore", "Borba", "Labrea",
 ];
 

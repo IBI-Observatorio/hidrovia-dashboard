@@ -8,7 +8,8 @@ import AlertaManausIta from "@/components/AlertaManausIta";
 import InsightsPanel from "@/components/InsightsPanel";
 import SidebarNav from "@/components/SidebarNav";
 import Tooltip from "@/components/Tooltip";
-import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA, fetchCotasIDN, fetchVazoesIDN, fetchPrevisao2026, fetchSerieCaracarai, type CotaIDN, type VazaoIDN } from "@/lib/fetch-dados";
+import { fetchUltimoBoletimSEMA, aplicarBoletimSEMA, fetchPrevisao2026 } from "@/lib/fetch-dados";
+import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import AlertaOndaBranco from "@/components/AlertaOndaBranco";
 import IRCWidget from "@/components/IRCWidget";
 import IRCDuploWidget from "@/components/IRCDuploWidget";
@@ -20,14 +21,11 @@ import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
 import { detectaFaseCiclo, calculaIRC } from "@/lib/irc";
 import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
 import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
-import type { EstacaoComDOY } from "@/lib/sub-bacias";
-import type { EstacaoVazao } from "@/lib/sub-bacias-vazao";
 import { geraInsights } from "@/lib/gera-insights";
 import { dashboardCopy } from "@/lib/dashboard-copy";
 import { navigationCopy } from "@/lib/navigation-copy";
 import { RefreshCw, Waves } from "lucide-react";
 import type { Estacao } from "@/lib/limiares";
-import type { DadosEstacao } from "@/lib/dados-historicos";
 
 export const revalidate = 21600;
 
@@ -40,45 +38,36 @@ export const metadata: Metadata = {
   },
 };
 
+// SGC removido em mai/2026 — sem telemetria ANA viva. O snapshot histórico
+// ainda aparece via card analítico do 11° Boletim SAH neste mesmo painel.
 const ESTACOES_ORDEM: Estacao[] = [
-  "Manaus", "Itacoatiara", "SGC", "Humaita",
+  "Manaus", "Itacoatiara", "Humaita",
   "Manacapuru", "PortoVelho", "Borba",
 ];
 
 export default async function MonitorPage() {
-  let dados: Record<string, DadosEstacao>;
-  let fonteANA = false;
   let fonteSEMA = false;
-  let estacoesVivas = 0;
   let boletimSEMA: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>> = null;
 
-  // Painéis, IDN cota e IDN vazão buscam em paralelo (cache 6h compartilhado).
+  // ANA: chamada 1x por dia, cache em disco (data/ana-diario-cache.json).
+  // O cache "vira" à meia-noite de Manaus, não UTC. Detalhe e fallbacks em
+  // lib/cache-ana-diario.ts.
   // Previsão 2026 é lida do cache SGB (fonte dinâmica) ou cai para hardcoded.
-  let cotasIDN:  Partial<Record<EstacaoComDOY, CotaIDN>>   = {};
-  let vazoesIDN: Partial<Record<EstacaoVazao,  VazaoIDN>>  = {};
-  let serieCaracarai: Awaited<ReturnType<typeof fetchSerieCaracarai>> = [];
   const previsao = await fetchPrevisao2026();
-  try {
-    const [d, idn, vaz, caracarai] = await Promise.all([
-      fetchTodasEstacoes(),
-      fetchCotasIDN(),
-      fetchVazoesIDN(),
-      fetchSerieCaracarai(14),
-    ]);
-    dados = d;
-    cotasIDN = idn;
-    vazoesIDN = vaz;
-    serieCaracarai = caracarai;
-    // Usa fuso da bacia (Manaus) — evita falso "dados estáticos" no Railway (UTC)
-    const hoje = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
-    estacoesVivas = Object.values(dados).filter(
-      (d) => d.ultima_atualizacao >= hoje
-    ).length;
-    fonteANA = estacoesVivas > 0;
-  } catch {
+  const diario = await obterDadosDiariosANA();
+  let { dados } = diario;
+  const { cotasIDN, vazoesIDN, serieCaracarai } = diario;
+  if (Object.keys(dados).length === 0) {
     const { DADOS_ATUAIS } = await import("@/lib/dados-historicos");
     dados = { ...DADOS_ATUAIS };
   }
+  // "Vivas" = estações cuja última leitura é de hoje (fuso da bacia).
+  // Usa fuso da bacia (Manaus) — evita falso "dados estáticos" no Railway (UTC).
+  const hojeBacia = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
+  const estacoesVivas = Object.values(dados).filter(
+    (d) => d.ultima_atualizacao >= hojeBacia
+  ).length;
+  const fonteANA = estacoesVivas > 0;
 
   boletimSEMA = await fetchUltimoBoletimSEMA();
   if (boletimSEMA) {
@@ -221,7 +210,7 @@ export default async function MonitorPage() {
               }`}>
                 <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${fonteANA ? "bg-verde animate-pulse" : "bg-gray-600"}`} />
                 {fonteANA
-                  ? `API ANA · ${estacoesVivas}/7 ao vivo`
+                  ? `API ANA · ${estacoesVivas}/6 ao vivo`
                   : "API ANA · dados estáticos"}
               </span>
 
@@ -350,7 +339,7 @@ export default async function MonitorPage() {
               {fonteSEMA
                 ? `Cotas do Boletim SEMA-AM (${boletimSEMA?.data}).`
                 : fonteANA
-                ? "Cotas via API ANA (cache 6h). Deltas: dados IBI/mai·2026."
+                ? "Cotas via API ANA (cache 1×/dia, fuso Manaus). Deltas: dados IBI/mai·2026."
                 : "Dados estáticos IBI/mai·2026."
               }{" "}
               {dashboardCopy.panel1.sources}
