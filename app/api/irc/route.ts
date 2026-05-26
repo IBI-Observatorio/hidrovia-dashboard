@@ -26,6 +26,7 @@ import { FAIXAS_IRC_CALIBRADAS } from "@/lib/irc-faixas-calibradas";
 import { caladoEconomico, CONVERSAO_ECONOMICA_META } from "@/lib/conversao-economica";
 import { calculaIRCMonteCarlo } from "@/lib/irc-incerteza";
 import { calculaIDNSimples } from "@/lib/calcula-idn";
+import { fetchCotasIDN } from "@/lib/fetch-dados";
 import { detectaOndaBranco } from "@/lib/onda-branco";
 import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
 import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
@@ -37,23 +38,36 @@ export const revalidate = 21600;
 
 export async function GET(request: NextRequest) {
   try {
-    const [dados, previsao, serieCaracarai] = await Promise.all([
+    const [dados, previsao, serieCaracarai, cotasIDN] = await Promise.all([
       fetchTodasEstacoes(),
       fetchPrevisao2026(),
       fetchSerieCaracarai(14),
+      fetchCotasIDN(),
     ]);
 
     const sgc = dados.SGC;
     const hum = dados.Humaita;
     const mao = dados.Manaus;
-    if (!sgc || !hum || !mao) {
+    if (!hum || !mao) {
       return NextResponse.json({ erro: "Dados insuficientes" }, { status: 503 });
     }
 
-    const idnAtual = calculaIDNSimples(
-      { SGC: sgc.cota_m, Humaita: hum.cota_m, PortoVelho: dados.PortoVelho?.cota_m, Borba: dados.Borba?.cota_m },
-      sgc.ultima_atualizacao,
-    );
+    // IDN com todas as estações Norte (Curicuriari, Serrinha, Moura, Caracarai, SGC).
+    // Se SGC estiver defasada (parou de transmitir), as demais são renormalizadas
+    // automaticamente pela posicaoSubBacia — sem travar o cálculo.
+    const cotasIDNCompletas: Record<string, number> = {};
+    for (const [k, v] of Object.entries(cotasIDN)) {
+      cotasIDNCompletas[k] = v.cota_m;
+    }
+    // Garante que as estações do painel também entram (Humaita, PortoVelho, Borba)
+    if (sgc)                         cotasIDNCompletas.SGC        = sgc.cota_m;
+    if (hum)                         cotasIDNCompletas.Humaita    = hum.cota_m;
+    if (dados.PortoVelho)            cotasIDNCompletas.PortoVelho = dados.PortoVelho.cota_m;
+    if (dados.Borba)                 cotasIDNCompletas.Borba      = dados.Borba.cota_m;
+
+    const dataIDN = Object.values(cotasIDN).map(v => v.ultima_atualizacao).sort().reverse()[0]
+      ?? hum.ultima_atualizacao;
+    const idnAtual = calculaIDNSimples(cotasIDNCompletas, dataIDN);
     // Onda Branco com lag por regime (v2)
     const ondaBranco = serieCaracarai.length >= 8
       ? detectaOndaBranco(serieCaracarai, 7, idnAtual)
