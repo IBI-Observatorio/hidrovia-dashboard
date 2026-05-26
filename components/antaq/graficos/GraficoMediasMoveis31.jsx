@@ -24,6 +24,38 @@ const LABELS = {
   conteinerizada: 'Contêiner',
 };
 
+// Configuração dos dois segmentos de contêiner
+const SEGMENTOS = [
+  {
+    key:       'longo_curso',
+    label:     'Longo Curso',
+    sublabel:  'Contêiner internacional (~70% do total)',
+    cor:       '#0099D8',
+    corBanda:  'rgba(0, 153, 216, 0.20)',
+    corObs:    '#0099D8',
+    corPred:   '#9ca3af',
+    corCentral:'#D4922A',
+    descricao:
+      'Movimentação internacional de contêineres (exportação + importação). ' +
+      'Modelo combina atividade brasileira, câmbio BRL/USD, Brent (proxy de freight global) ' +
+      'e CNY/USD (proxy do ciclo China), com termo autorregressivo.',
+  },
+  {
+    key:       'cabotagem',
+    label:     'Cabotagem',
+    sublabel:  'Contêiner doméstico costeiro (~30% do total)',
+    cor:       '#00A652',
+    corBanda:  'rgba(0, 166, 82, 0.18)',
+    corObs:    '#00A652',
+    corPred:   '#9ca3af',
+    corCentral:'#D4922A',
+    descricao:
+      'Movimentação doméstica entre portos brasileiros (Santos↔Manaus, etc.). ' +
+      'Modelo combina atividade industrial (IBC-Br, PIM-PF), custo do substituto rodoviário ' +
+      '(IPCA diesel) e termos autorregressivos para capturar a inércia de contratos longos.',
+  },
+];
+
 const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 
 function fmtMes(ym) {
@@ -40,20 +72,103 @@ const tickStyle    = { fill: '#9ca3af', fontSize: 11 };
 const gridProps    = { stroke: '#374151', strokeDasharray: '3 3' };
 const tooltipStyle = { backgroundColor: '#111827', border: '1px solid #4b5563', borderRadius: 8, fontSize: 12 };
 
-// ── Componente ───────────────────────────────────────────────────────────────
+// ── Subcomponente: projeção de um segmento ──────────────────────────────────
+
+function ProjecaoSegmento({ cfg, segmento }) {
+  if (!segmento) return null;
+
+  // Constrói dataset unificado: observado, predito, central, faixa
+  const fcMap     = Object.fromEntries((segmento.forecast || []).map(r => [r.data, r]));
+  const obsLookup = Object.fromEntries((segmento.serie    || []).map(r => [r.data, r]));
+  const allDates  = [...new Set([...Object.keys(obsLookup), ...Object.keys(fcMap)])].sort();
+  const merged    = allDates.map(date => {
+    const o = obsLookup[date];
+    const f = fcMap[date];
+    return {
+      data:      date,
+      observado: o?.observado    ?? null,
+      predito:   o?.predito      ?? null,
+      central:   f?.central_pct  ?? null,
+      fc_low:    f?.low_pct      ?? null,
+      fc_span:   f ? (f.high_pct - f.low_pct) : null,
+    };
+  });
+
+  const m = segmento.metricas?.walk_forward_modelo || {};
+  const ganho = segmento.metricas?.ganho_rmse_vs_naive_pct ?? 0;
+  const banda = segmento.banda || {};
+  const sigma = banda.sigma_recente;
+  const bias  = banda.bias_correction_pp;
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-baseline justify-between gap-3 flex-wrap">
+        <div>
+          <h4 className="text-base font-semibold" style={{ color: cfg.cor }}>
+            {cfg.label}
+            <span className="ml-2 text-xs font-normal text-gray-500">{cfg.sublabel}</span>
+          </h4>
+        </div>
+        <div className="text-[11px] text-gray-500 tabular-nums">
+          RMSE OOS: {m.rmse_pp}pp · R²: {m.r2} · ρ: {m.corr} ·{' '}
+          <span className={ganho > 0 ? 'text-green-400' : 'text-red-400'}>
+            {ganho > 0 ? '+' : ''}{ganho}% vs naïve
+          </span>
+        </div>
+      </div>
+      <p className="text-xs text-gray-400 leading-relaxed">{cfg.descricao}</p>
+      <ResponsiveContainer width="100%" height={260}>
+        <ComposedChart data={merged} margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
+          <CartesianGrid {...gridProps} />
+          <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} interval={11} />
+          <YAxis tick={tickStyle} tickFormatter={v => fmtNum(v, 1)}
+                 label={{ value: 'a/a (%)', angle: -90, position: 'insideLeft',
+                          fill: '#9ca3af', fontSize: 11, dy: 30 }} />
+          <Tooltip contentStyle={tooltipStyle} labelFormatter={fmtMes}
+                   formatter={(v, n) => [fmtNum(v, 2) + '%', n]} />
+          <Legend iconSize={10} wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
+          <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="4 2" />
+          {/* Faixa de incerteza */}
+          <Area type="monotone" dataKey="fc_low"  stackId="fc"
+                fill="transparent" stroke="none" legendType="none" />
+          <Area type="monotone" dataKey="fc_span" stackId="fc"
+                fill={cfg.corBanda} stroke="none" name="Margem de erro (80%)" />
+          {/* Séries históricas */}
+          <Line type="monotone" dataKey="observado" name={`Observado`}
+                stroke={cfg.corObs} strokeWidth={2} dot={false} connectNulls />
+          <Line type="monotone" dataKey="predito" name="Modelo (in-sample)"
+                stroke={cfg.corPred} strokeWidth={1.4} strokeDasharray="4 2"
+                dot={false} connectNulls />
+          {/* Projeção central */}
+          <Line type="monotone" dataKey="central" name="Projeção 5m à frente"
+                stroke={cfg.corCentral} strokeWidth={2.4}
+                dot={{ r: 4, fill: cfg.corCentral }} connectNulls />
+        </ComposedChart>
+      </ResponsiveContainer>
+      <p className="text-[11px] text-gray-500 leading-relaxed">
+        Banda 80% conformal sobre resíduos dos últimos 24m (σ={sigma}pp).
+        {bias != null && Math.abs(bias) > 0.5 && (
+          <> Correção de bias estrutural: <span className="text-gray-400">{bias > 0 ? '+' : ''}{bias}pp</span>{' '}
+          (modelo estava sub-prevendo o regime atual; central foi ajustada).</>
+        )}
+      </p>
+    </div>
+  );
+}
+
+// ── Componente principal ─────────────────────────────────────────────────────
 
 export default function GraficoMediasMoveis31() {
   const { data, loading, erro } = useDashboardData(['series-tendencia.json', 'forecast.json']);
   const [metrica, setMetrica] = useState('ma12_mt');
 
-  const { historico, forecastData, momentumAtual } = useMemo(() => {
+  const { historico, forecast, momentumAtual } = useMemo(() => {
     if (!data) return {};
     const rawSeries = data['series-tendencia'];
     if (!rawSeries) return {};
 
-    // ── Pivot: [{ data, ma12_mt_X, yoy_ma_pct_X, indice100_X }] ─────────
+    // ── Pivot histórico ─────────────────────────────────────────────────────
     const byDate = {};
-
     NATUREZAS.forEach(nat => {
       const serie = rawSeries.series?.[nat] || [];
       for (const pt of serie) {
@@ -61,10 +176,9 @@ export default function GraficoMediasMoveis31() {
         byDate[pt.data][`ma12_mt_${nat}`] = pt.ma12_mt ?? null;
       }
     });
-
     const historico = Object.values(byDate).sort((a, b) => a.data.localeCompare(b.data));
 
-    // ── YoY da MA12 calculado client-side ─────────────────────────────────
+    // YoY MA12 client-side
     for (let i = 12; i < historico.length; i++) {
       for (const nat of NATUREZAS) {
         const curr = historico[i][`ma12_mt_${nat}`];
@@ -76,7 +190,7 @@ export default function GraficoMediasMoveis31() {
       }
     }
 
-    // ── Índice base 100 (primeiro mês com todas as séries disponíveis) ────
+    // Índice base 100
     let baseValues = {};
     for (const row of historico) {
       if (NATUREZAS.every(n => (row[`ma12_mt_${n}`] ?? 0) > 0)) {
@@ -92,7 +206,7 @@ export default function GraficoMediasMoveis31() {
       }
     }
 
-    // ── Momentum atual: último YoY disponível de cada natureza ───────────
+    // Momentum atual
     const momentumAtual = {};
     for (const nat of NATUREZAS) {
       for (let i = historico.length - 1; i >= 0; i--) {
@@ -101,33 +215,8 @@ export default function GraficoMediasMoveis31() {
       }
     }
 
-    // ── Forecast (OLS, arquivo estático) ─────────────────────────────────
-    const fc = data['forecast'] || {};
-    const fcMap  = Object.fromEntries((fc.forecast || []).map(r => [r.data, r]));
-    const obsLookup = Object.fromEntries((fc.serie  || []).map(r => [r.data, r]));
-
-    // Array único ordenado por data — recharts precisa de um só dataset no topo
-    const allFcDates = [...new Set([...Object.keys(obsLookup), ...Object.keys(fcMap)])].sort();
-    const fcMerged = allFcDates.map(date => {
-      const o = obsLookup[date];
-      const f = fcMap[date];
-      return {
-        data:      date,
-        observado: o?.observado     ?? null,
-        predito:   o?.predito       ?? null,
-        central:   f?.central_pct   ?? null,
-        fc_low:    f?.low_pct       ?? null,
-        // fc_span = altura da faixa (para área empilhada: base=fc_low, span=high-low)
-        fc_span:   f ? (f.high_pct - f.low_pct) : null,
-      };
-    });
-
-    const forecastData = {
-      merged: fcMerged,
-      modelo: fc.modelo || {},
-    };
-
-    return { historico, forecastData, momentumAtual };
+    const forecast = data['forecast'] || {};
+    return { historico, forecast, momentumAtual };
   }, [data]);
 
   if (loading) return <div className="h-80 flex items-center justify-center text-gray-400 text-sm">Carregando…</div>;
@@ -155,51 +244,25 @@ export default function GraficoMediasMoveis31() {
     'Mt/mês (média 12m)';
 
   return (
-    <div className="space-y-8">
-      {/* ── Projeção primeiro ────────────────────────────────────────────── */}
-      <div>
-        <div className="text-base font-semibold text-white mb-1">E o que vem pelos próximos meses?</div>
-        <p className="text-xs text-gray-400 mb-3 leading-relaxed max-w-3xl">
-          Projeção do ritmo do contêiner usando dois sinais antecedentes:
-          atividade econômica geral (IBC-Br do Banco Central, defasagem de 5 meses) e
-          ritmo da carga geral 12 meses antes. A faixa dourada é a margem de erro típica.{' '}
-          {forecastData.modelo.r2_oos != null && (
-            <span>
-              O modelo explica ~{Math.round(forecastData.modelo.r2_oos * 100)}% da variação
-              fora da amostra (correlação: {(forecastData.modelo.corr_oos || 0).toFixed(2)}).
-            </span>
-          )}
-        </p>
-        {/* ComposedChart com dataset único — evita concatenação indevida do eixo X */}
-        <ResponsiveContainer width="100%" height={300}>
-          <ComposedChart data={forecastData.merged} margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} interval={11} />
-            <YAxis tick={tickStyle} tickFormatter={v => fmtNum(v, 1)}
-                   label={{ value: 'Crescimento a/a (%)', angle: -90, position: 'insideLeft',
-                            fill: '#9ca3af', fontSize: 11, dy: 70 }} />
-            <Tooltip contentStyle={tooltipStyle} labelFormatter={fmtMes}
-                     formatter={(v, n) => [fmtNum(v, 2) + '%', n]} />
-            <Legend iconSize={10} wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
-            <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="4 2" />
-            {/* Faixa de incerteza: base invisível + span colorido empilhado */}
-            <Area type="monotone" dataKey="fc_low"  stackId="fc"
-                  fill="transparent" stroke="none" legendType="none" />
-            <Area type="monotone" dataKey="fc_span" stackId="fc"
-                  fill="rgba(212,146,42,0.22)" stroke="none" name="Margem de erro" />
-            {/* Séries históricas */}
-            <Line type="monotone" dataKey="observado" name="Observado (contêiner)"
-                  stroke="#0099D8" strokeWidth={2} dot={false} connectNulls />
-            <Line type="monotone" dataKey="predito" name="Calculado pelo modelo"
-                  stroke="#9ca3af" strokeWidth={1.4} strokeDasharray="4 2" dot={false} connectNulls />
-            {/* Projeção central */}
-            <Line type="monotone" dataKey="central" name="Projeção (5m à frente)"
-                  stroke="#D4922A" strokeWidth={2.4} dot={{ r: 4, fill: '#D4922A' }} connectNulls />
-          </ComposedChart>
-        </ResponsiveContainer>
+    <div className="space-y-10">
+      {/* ── Projeção: 2 segmentos empilhados ───────────────────────────────── */}
+      <div className="space-y-6">
+        <div>
+          <div className="text-base font-semibold text-white mb-1">E o que vem pelos próximos meses?</div>
+          <p className="text-xs text-gray-400 leading-relaxed max-w-3xl">
+            O contêiner brasileiro é dois mercados diferentes:{' '}
+            <span className="text-blue-300">longo curso</span> (rotas internacionais, ~70% do volume)
+            responde ao ciclo global; <span className="text-green-400">cabotagem</span> (entre portos
+            brasileiros, ~30%) responde à atividade doméstica. Por isso treinamos um modelo para cada,
+            com preditores específicos.
+          </p>
+        </div>
+        {SEGMENTOS.map(cfg => (
+          <ProjecaoSegmento key={cfg.key} cfg={cfg} segmento={forecast[cfg.key]} />
+        ))}
       </div>
 
-      {/* ── Contexto histórico ───────────────────────────────────────────── */}
+      {/* ── Contexto histórico (sem alteração) ─────────────────────────────── */}
       <div className="border-t border-gray-700 pt-6">
         <div className="text-base font-semibold text-white mb-3">
           Contexto histórico: médias móveis por carga (2011–2026)

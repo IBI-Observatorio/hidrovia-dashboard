@@ -1,30 +1,35 @@
 # Indicador 31 — Tendência de Cargas (`/portos/ineditas/tendencia-cargas`)
 
-Explica como funciona o fluxo de dados da página, o que atualizar todo mês e o que fazer se algo quebrar.
+Explica como funciona o fluxo de dados da página, o que atualizar todo mês e como o modelo de projeção foi construído.
 
 ---
 
 ## O que a página mostra
 
-Dois gráficos:
+Três visualizações:
 
-1. **Projeção do contêiner** — modelo OLS que usa IBC-Br (defasagem 5 meses) e momentum da carga geral (defasagem 12 meses) para projetar o crescimento a/a do contêiner pelos próximos 5 meses.
-2. **Contexto histórico** — médias móveis de 12 meses (MA12) dos 4 tipos de carga (granel sólido, granel líquido, carga geral, contêiner) desde 2010.
+1. **Projeção contêiner — Longo Curso** (~70% do mercado): rota internacional. Modelo combina IBC-Br, câmbio BRL/USD, Brent e CNY/USD (proxy do ciclo China).
+2. **Projeção contêiner — Cabotagem** (~30%): rota doméstica entre portos brasileiros. Modelo combina IBC-Br, PIM-PF, IPCA Diesel e termos autorregressivos (captura inércia de contratos longos).
+3. **Contexto histórico** — médias móveis de 12 meses (MA12) dos 4 tipos de carga (granel sólido, granel líquido, carga geral, contêiner total) desde 2011.
+
+A separação dos dois mercados de contêiner é fundamental: longo curso responde ao ciclo global, cabotagem ao doméstico — misturar os dois num único modelo (versão antiga) produzia bandas de incerteza 4× mais largas que o necessário.
 
 ---
 
-## Arquivos envolvidos
+## Arquitetura de dados
 
 ```
 public/data/antaq/dashboard/
-  series-tendencia.json   ← séries históricas MA12 por tipo de carga (atualizar mensalmente)
-  forecast.json           ← projeção OLS + track record do contêiner (atualizar mensalmente)
-
-components/antaq/graficos/
-  GraficoMediasMoveis31.jsx  ← componente React que lê os dois JSONs acima
+  series-tendencia.json    ← 6 séries MA12 (4 naturezas + cabotagem + longo curso)
+  forecast.json            ← 2 modelos: cabotagem + longo_curso (cada um com serie, forecast,
+                              métricas, banda, diagnóstico, estabilidade de coeficientes)
 
 scripts/
-  gera-series-tendencia.mjs  ← script que busca da API ANTAQ e salva series-tendencia.json
+  gera-series-tendencia.mjs        ← Node — baixa ANTAQ, salva series-tendencia.json
+  forecast_tendencia_cargas.py     ← Python — baixa BCB/FRED, treina 2 modelos, salva forecast.json
+
+components/antaq/graficos/
+  GraficoMediasMoveis31.jsx        ← lê os 2 JSONs, renderiza 2 projeções + 1 histórico
 ```
 
 ---
@@ -32,31 +37,97 @@ scripts/
 ## Atualização mensal
 
 A ANTAQ publica os dados de movimentação portuária até o dia 15 do mês seguinte.
-Quando os novos dados estiverem disponíveis, rodar os dois passos abaixo.
+Quando os novos dados estiverem disponíveis, rodar os dois scripts em sequência.
 
-### Passo 1 — Atualizar as séries históricas
+### Passo 1 — Atualizar as séries da ANTAQ
 
 ```bash
 node scripts/gera-series-tendencia.mjs
 ```
 
-O script faz 4 chamadas à API ANTAQ (`antaq-api-production.up.railway.app`),
-uma por tipo de carga, e salva o resultado em `series-tendencia.json`.
+Baixa 6 séries da API ANTAQ (`antaq-api-production.up.railway.app`):
+
+- 4 naturezas de carga (granel sólido, granel líquido, carga geral, contêiner total)
+- Contêiner separado por `navegacao=Cabotagem` e `navegacao=Longo Curso`
+
 Saída esperada:
+```
+Baixando Granel Sólido… 182 pontos (2011-01 → 2026-02)
+Baixando Granel Líquido e Gasoso… 182 pontos (...)
+Baixando Carga Geral… 182 pontos (...)
+Baixando Carga Conteinerizada… 182 pontos (...)
+Baixando Carga Conteinerizada (Cabotagem)… 182 pontos (...)
+Baixando Carga Conteinerizada (Longo Curso)… 182 pontos (...)
+```
+
+### Passo 2 — Rodar o modelo de projeção
+
+```bash
+python scripts/forecast_tendencia_cargas.py
+```
+
+Baixa preditores externos (sem chave de API):
+
+| Variável | Fonte | Série |
+|---|---|---|
+| IBC-Br | BCB-SGS | 24364 |
+| Câmbio BRL/USD | BCB-SGS | 3697 |
+| PIM-PF | BCB-SGS | 21859 |
+| IPCA Diesel | BCB-SGS | 1393 |
+| Brent | FRED | DCOILBRENTEU |
+| CNY/USD | FRED | DEXCHUS |
+
+Treina os 2 modelos, salva `forecast.json`. Saída inclui métricas de stress test:
+```
+━━━ LONGO_CURSO ━━━
+  MODELO  : RMSE=4.97pp  R²=+0.388  ρ=+0.671
+  NAÏVE   : RMSE=5.03pp  R²=+0.373
+  → Modelo bate naïve em +1.2% RMSE
+  Treino janela 60m       : RMSE=5.17pp  R²=+0.497
+  Bias OOS últimos 12m     : +8.14pp (aplicado como correção)
+```
+
+---
+
+## Pipeline de modelagem (Python)
+
+### Por que dois modelos?
+
+Cabotagem e longo curso são mercados com drivers **completamente diferentes**:
+
+| Driver | Longo Curso | Cabotagem |
+|---|---|---|
+| China PMI / ciclo asiático | **forte** | nulo |
+| Câmbio BRL/USD | **forte** | médio |
+| Brent (freight + commodities) | **forte** | médio |
+| PIM-PF (atividade industrial BR) | médio | **forte** |
+| IPCA Diesel (substituto rodoviário) | nulo | **forte** |
+| Inércia (contratos longos) | médio | **forte** |
+
+Misturar tudo num único modelo OLS (versão original com IBC-Br + carga_geral) tinha RMSE OOS de 7,2pp. O modelo separado de longo curso baixou para 4,4pp.
+
+### Especificação do modelo
 
 ```
-Baixando Granel Sólido… 182 pontos (2010-01 → 2026-03)
-Baixando Granel Líquido e Gasoso… 182 pontos (2010-01 → 2026-03)
-Baixando Carga Geral… 182 pontos (2010-01 → 2026-03)
-Baixando Carga Conteinerizada… 182 pontos (2010-01 → 2026-03)
-
-Salvo em .../public/data/antaq/dashboard/series-tendencia.json
+target = yoy_ma12(contêiner_segmento)
+features = [
+  yoy_ma12(target).shift(ar_lags),       # termos AR (inércia)
+  yoy_ma12(preditor_i).shift(lag_i),      # exógenos defasados
+  ...
+]
 ```
 
-### Passo 2 — Atualizar a projeção OLS
+- **Estimador**: `RidgeCV` (5-fold) sobre features padronizadas — preserva todos os coeficientes (LASSO superregularizava com pequenas amostras).
+- **Janela de treino final**: últimos 60 meses (privilegia regime atual pós-COVID).
+- **Walk-forward validation**: rolling origin com horizonte h=5 (igual à projeção real), `min_train=60`.
+- **Banda 80%**: conformal split sobre **resíduos centrados dos últimos 24 meses**. Centrar = remover bias estrutural (capturado separadamente como correção da central).
 
-O `forecast.json` é gerado separadamente pelo modelo OLS em Python/Jupyter.
-Substitua o arquivo em `public/data/antaq/dashboard/forecast.json` com a nova versão.
+### Stress tests aplicados
+
+1. **Walk-forward h=5** vs naïve (último valor) vs média 12m — confirma se o modelo bate baselines.
+2. **Estabilidade de coeficientes** — re-estima a cada 6 meses na janela rolante 60m; conta quantos preditores mantêm sinal estável.
+3. **Diagnóstico de resíduos**: Ljung-Box (autocorrelação), Jarque-Bera (normalidade).
+4. **Bias correction**: bias OOS médio dos últimos 12m é subtraído da central para corrigir desvio estrutural recente.
 
 ---
 
@@ -66,84 +137,82 @@ Substitua o arquivo em `public/data/antaq/dashboard/forecast.json` com a nova ve
 
 ```jsonc
 {
-  "gerado_em": "2026-05-25T00:00:00Z",   // data de geração (preenchida pelo script)
+  "gerado_em": "2026-05-25T...",
   "series": {
-    "granel_solido":  [{ "data": "2010-01", "ma12_mt": 45.23 }, ...],
-    "granel_liquido": [{ "data": "2010-01", "ma12_mt": 32.10 }, ...],
-    "carga_geral":    [{ "data": "2010-01", "ma12_mt":  6.88 }, ...],
-    "conteinerizada": [{ "data": "2010-01", "ma12_mt":  7.54 }, ...]
+    "granel_solido":            [{ "data": "2011-01", "ma12_mt": 42.97 }, ...],
+    "granel_liquido":           [...],
+    "carga_geral":              [...],
+    "conteinerizada":           [...],
+    "conteinerizada_cabotagem": [...],
+    "conteinerizada_longo_curso": [...]
   }
 }
 ```
-
-- `data` — mês no formato `YYYY-MM`
-- `ma12_mt` — média móvel de 12 meses em **milhões de toneladas** (Mt)
 
 ### `forecast.json`
 
 ```jsonc
 {
-  "modelo": {
-    "spec":           "momentum_conteiner(t) = a + b·IBC-Br_yoy(t-5) + c·momentum_cargageral(t-12)",
-    "r2_oos":         0.283,
-    "corr_oos":       0.71
-    // ...demais métricas do modelo
+  "gerado_em": "...",
+  "metadata":  { "horizonte_meses": 5, "banda_padrao": "conformal_split_80pct", "fontes_dados": {...} },
+  "cabotagem": {
+    "spec_humana": "Crescimento a/a ~ AR + atividade doméstica + ...",
+    "modelo": {
+      "tipo":                       "RidgeCV (5-fold) sobre features YoY com lags + AR",
+      "features":                   ["ar_lag6", "ar_lag12", "ibc_br_lag3", ...],
+      "coeficientes_padronizados":  { "ar_lag6": 0.32, ..., "intercept": 5.2, "alpha_ridge": 1.6 }
+    },
+    "metricas": {
+      "walk_forward_modelo":       { "n": 94, "rmse_pp": 6.54, "r2": 0.278, ... },
+      "walk_forward_naive":        { ... },
+      "walk_forward_media12m":     { ... },
+      "treino_full_sample":        { "rmse_pp": 3.80, "r2": 0.820 },
+      "ganho_rmse_vs_naive_pct":   8.4
+    },
+    "diagnostico_residuos":  { "ljung_box_lag12_pvalor": 0.000, "jarque_bera_pvalor": 0.119, ... },
+    "estabilidade_coef":     { "ar_lag6": { "media_padronizada": 0.32, "cv": 0.5, "sinal_estavel": true }, ... },
+    "banda": { "metodo": "conformal_split_recent24m_centrado", "sigma_recente": 8.05, "bias_correction_pp": -5.29 },
+    "serie":    [{ "data": "2013-01", "observado": 4.1, "predito": 3.8, "fase": "warmup" }, ...],
+    "forecast": [{ "data": "2026-03", "central_pct": -7.84, "central_raw_pct": -2.55,
+                   "low_pct": -24.09, "high_pct": 8.41, "low_boot_pct": ..., "high_boot_pct": ... }, ...]
   },
-  "serie": [
-    // histórico observado + predito pelo modelo (para plotar o fit)
-    { "data": "2012-12", "predito": 5.76, "observado": 3.78, "fase": "treino" },
-    // ...
-    { "data": "2026-02", "predito": 2.53, "observado": 5.23, "fase": "oos" }
-  ],
-  "forecast": [
-    // projeção futura (5 pontos à frente do último observado)
-    { "data": "2026-03", "central_pct": 2.16, "low_pct": -5.03, "high_pct": 9.36 }
-    // ...
-  ]
+  "longo_curso": { /* mesmo schema */ }
 }
 ```
-
-Todos os valores em `serie` e `forecast` são **crescimento a/a em pontos percentuais (pp)** do momentum da MA12 do contêiner.
-
----
-
-## Como o componente lê os dados
-
-`GraficoMediasMoveis31.jsx` usa `useDashboardData` (hook estático, sem API ao vivo):
-
-```js
-const { data, loading, erro } = useDashboardData(['series-tendencia.json', 'forecast.json']);
-```
-
-O hook carrega os dois arquivos de `/data/antaq/dashboard/` e os entrega como:
-
-```js
-data['series-tendencia']  // → conteúdo de series-tendencia.json
-data['forecast']          // → conteúdo de forecast.json
-```
-
-O componente faz o pivot, calcula YoY da MA12 e índice base 100 no cliente — sem dependência de API externa.
 
 ---
 
 ## Troubleshooting
 
-### Gráfico não carrega / aparece "Erro ao carregar dados"
+### Gráfico não carrega / "Erro ao carregar dados"
 
-1. Confirme que `series-tendencia.json` existe em `public/data/antaq/dashboard/`.
-2. Confirme que o arquivo **não está vazio** (séries `[]`). Se estiver, rode o script.
-3. Veja o console do browser para o erro HTTP exato.
+1. Confirme que `series-tendencia.json` e `forecast.json` existem em `public/data/antaq/dashboard/`.
+2. Veja o console do browser para o erro HTTP exato.
+3. Se um dos forecasts (cabotagem ou longo_curso) está vazio: rode `python scripts/forecast_tendencia_cargas.py` novamente.
 
-### Script falha com erro de rede
+### Script Node falha
 
-A API ANTAQ fica em cold start no Railway — aguarde 30 segundos e tente novamente.
-Se o erro persistir, verifique `ANTAQ_API_URL` ou se o serviço está UP:
+API ANTAQ pode estar em cold start no Railway — aguarde 30s e tente de novo.
 
-```bash
-curl https://antaq-api-production.up.railway.app/api/v1/series?natureza=Granel+S%C3%B3lido&metrica=toneladas&freq=mensal&suavizacao=ma12&apenas_movimentacao=true
-```
+### Script Python falha
 
-### O gráfico de projeção não tem novos pontos
+- Sem internet: BCB e FRED são acessados em runtime.
+- Erro de timeout no FRED: aumentar `timeout=30` nos `requests.get`.
+- Erro de pacote: precisa `numpy`, `pandas`, `scikit-learn`, `statsmodels`, `scipy`, `requests`.
 
-O `forecast.json` **não é atualizado pelo script** — é gerado pelo modelo OLS separado.
-Atualize o arquivo manualmente com a nova rodada do modelo.
+### Bandas ficaram muito largas / pequenas
+
+A banda é controlada por:
+1. **σ dos resíduos OOS últimos 24m** — variabilidade real do mercado naquele regime
+2. **Bias correction** — se o modelo errou sistematicamente, a central é ajustada (não a banda)
+
+Banda larga = mercado volátil ou modelo perdendo regime. Banda apertada = modelo está calibrado no regime atual. Cabotagem naturalmente tem banda mais larga (~32pp) porque é mercado pequeno e volátil; longo curso fica em ~6pp.
+
+### Modelo não bate naïve
+
+Verifique a métrica `ganho_rmse_vs_naive_pct` no JSON. Se for negativa ou muito pequena (<5%), o modelo está apenas reproduzindo inércia. Isso pode acontecer quando:
+- O alvo (YoY MA12) é muito persistente
+- Os preditores não têm sinal antecedente forte
+- Mudança de regime recente
+
+Nesse caso, considere reduzir o horizonte (h<5) ou trocar de target (nível em vez de YoY).

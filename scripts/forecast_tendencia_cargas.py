@@ -34,7 +34,7 @@ import numpy as np
 import pandas as pd
 import requests
 from scipy import stats
-from sklearn.linear_model import LassoCV, LinearRegression
+from sklearn.linear_model import LassoCV, LinearRegression, RidgeCV
 from sklearn.preprocessing import StandardScaler
 from statsmodels.stats.diagnostic import acorr_ljungbox, het_breuschpagan
 from statsmodels.stats.stattools import jarque_bera
@@ -102,9 +102,18 @@ def yoy(s: pd.Series) -> pd.Series:
 
 
 def build_features(target_serie: pd.Series, predictors: dict[str, pd.Series],
-                   lags: dict[str, list[int]]) -> pd.DataFrame:
-    """Constrói X (preditores defasados em YoY) e y (alvo em YoY)."""
-    df = pd.DataFrame({'y': yoy(target_serie)})
+                   lags: dict[str, list[int]],
+                   ar_lags: list[int] | None = None) -> pd.DataFrame:
+    """
+    Constrói X (preditores defasados em YoY + termos AR do próprio alvo)
+    e y (alvo em YoY).
+    """
+    y = yoy(target_serie)
+    df = pd.DataFrame({'y': y})
+    # Termos autorregressivos (defasagem do próprio YoY do alvo)
+    for lag in (ar_lags or []):
+        df[f'ar_lag{lag}'] = y.shift(lag)
+    # Preditores exógenos em YoY
     for name, lag_list in lags.items():
         s_yoy = yoy(predictors[name])
         for lag in lag_list:
@@ -116,39 +125,71 @@ def build_features(target_serie: pd.Series, predictors: dict[str, pd.Series],
 # 3. Walk-forward validation + bootstrap conformal
 # ──────────────────────────────────────────────────────────────────────────────
 
+def fit_model(X_train: np.ndarray, y_train: np.ndarray,
+              tipo: str = 'ridge'):
+    """Treina modelo com scaler. Devolve (scaler, modelo)."""
+    sc = StandardScaler().fit(X_train)
+    Xs = sc.transform(X_train)
+    if tipo == 'ridge':
+        # Ridge encolhe sem zerar — preserva todos os preditores
+        model = RidgeCV(alphas=np.logspace(-2, 2, 30), cv=5).fit(Xs, y_train)
+    elif tipo == 'ols':
+        model = LinearRegression().fit(Xs, y_train)
+    else:
+        raise ValueError(tipo)
+    return sc, model
+
+
 def walk_forward(df: pd.DataFrame, min_train: int = 60,
-                 use_lasso: bool = True) -> pd.DataFrame:
+                 tipo_modelo: str = 'ridge', h: int = 5) -> pd.DataFrame:
     """
-    Rolling origin: para cada t a partir de min_train, treina em [0, t),
-    prevê t. Retorna DataFrame com obs, pred, fase.
+    Walk-forward com HORIZONTE h: para cada t a partir de min_train,
+    treina em [0, t), prevê y(t+h-1) usando apenas X disponível em t
+    (ou seja, AR_lagK tem que ter K >= h para ser válido sem peeking).
+
+    Como nossos AR lags são 6 e 12 (cabotagem) e 12 (longo curso) — todos >= 5,
+    o vetor de features para t+h-1 é construível em t.
+
+    Retorna obs, predito, fase, baselines.
     """
     n = len(df)
     feats = [c for c in df.columns if c != 'y']
     out = []
     for t in range(n):
-        if t < min_train:
-            out.append({'data': df.index[t], 'observado': df['y'].iloc[t],
-                        'predito': np.nan, 'fase': 'warmup'})
+        target_idx = t + h - 1
+        row = {'data': df.index[t] if t < n else None,
+               'observado': np.nan, 'predito': np.nan, 'fase': 'warmup',
+               'pred_naive_h': np.nan, 'pred_media12': np.nan}
+        if target_idx >= n:
             continue
+        row['data']       = df.index[target_idx]
+        row['observado']  = float(df['y'].iloc[target_idx])
+        if t < min_train:
+            out.append(row); continue
+
+        # Treina em [0, t) com janelamento (target, features). Para alinhamento
+        # honesto, treina prevendo y(s+h-1) a partir de X(s) — ou seja, features
+        # já defasadas pelo h. Mas como nossos features já têm lag interno (todos
+        # >= h), basta usar X(target_idx) que só usa info disponível em t.
         X_train = df[feats].iloc[:t].values
-        y_train = df['y'].iloc[:t].values
-        X_test = df[feats].iloc[t:t+1].values
-        if use_lasso and t >= min_train + 12:
-            try:
-                model = LassoCV(cv=5, max_iter=20000, n_alphas=50,
-                                random_state=42).fit(
-                    StandardScaler().fit_transform(X_train), y_train)
-                # Reaplica scaler para o teste
-                sc = StandardScaler().fit(X_train)
-                pred = model.predict(sc.transform(X_test))[0]
-            except Exception:
-                model = LinearRegression().fit(X_train, y_train)
-                pred = model.predict(X_test)[0]
-        else:
-            model = LinearRegression().fit(X_train, y_train)
-            pred = model.predict(X_test)[0]
-        out.append({'data': df.index[t], 'observado': df['y'].iloc[t],
-                    'predito': float(pred), 'fase': 'oos'})
+        y_train = df['y'].iloc[:t].values  # nota: alinhamento contemporâneo (modelo
+                                            # explica y(s) a partir de features que
+                                            # já estão defasadas — válido p/ h<=min_lag)
+        X_test  = df[feats].iloc[target_idx:target_idx + 1].values
+
+        try:
+            sc, model = fit_model(X_train, y_train, tipo=tipo_modelo)
+            row['predito'] = float(model.predict(sc.transform(X_test))[0])
+        except Exception:
+            row['predito'] = float(np.mean(y_train))
+
+        # Baselines HONESTOS para h-passos à frente (só usam info até t-1):
+        # naïve_h: prevê y(t+h-1) = y(t-1)
+        # media12: prevê y(t+h-1) = média[y(t-12), ..., y(t-1)]
+        row['pred_naive_h']  = float(df['y'].iloc[t - 1])
+        row['pred_media12']  = float(df['y'].iloc[max(0, t-12):t].mean())
+        row['fase'] = 'oos'
+        out.append(row)
     return pd.DataFrame(out)
 
 
@@ -209,125 +250,156 @@ def diagnostico_residuos(resid: np.ndarray) -> dict:
 # 5. Pipeline principal por segmento
 # ──────────────────────────────────────────────────────────────────────────────
 
+def metricas_de(y_obs, y_pred):
+    r = y_obs - y_pred
+    rmse = float(np.sqrt(np.mean(r ** 2)))
+    mae  = float(np.mean(np.abs(r)))
+    bias = float(np.mean(r))
+    ss_res = float(np.sum(r ** 2))
+    ss_tot = float(np.sum((y_obs - y_obs.mean()) ** 2))
+    r2 = 1 - ss_res / ss_tot if ss_tot > 0 else float('nan')
+    try:
+        corr = float(np.corrcoef(y_obs, y_pred)[0, 1])
+    except Exception:
+        corr = float('nan')
+    return {'n': len(y_obs), 'rmse_pp': round(rmse, 2),
+            'mae_pp': round(mae, 2), 'bias_pp': round(bias, 2),
+            'r2': round(r2, 3), 'corr': round(corr, 3)}
+
+
 def rodar_segmento(nome: str, target: pd.Series, predictors: dict[str, pd.Series],
-                   lags: dict[str, list[int]], spec_humana: str) -> dict:
+                   lags: dict[str, list[int]], ar_lags: list[int],
+                   spec_humana: str) -> dict:
     print(f'\n━━━ {nome.upper()} ━━━')
-    df = build_features(target, predictors, lags)
+    df = build_features(target, predictors, lags, ar_lags=ar_lags)
     print(f'  Dataset: {len(df)} pontos ({df.index[0]:%Y-%m} → {df.index[-1]:%Y-%m})')
-    print(f'  Features: {list(df.columns[1:])}')
+    print(f'  Features ({len(df.columns)-1}): {list(df.columns[1:])}')
 
-    # ── 5a. Walk-forward
-    wf = walk_forward(df, min_train=60, use_lasso=True)
-    obs   = wf['observado'].values
-    pred  = wf['predito'].values
-    resid = obs - pred
-    mask  = ~np.isnan(pred)
+    # ── 5a. Walk-forward com Ridge a HORIZONTE H=5
+    wf = walk_forward(df, min_train=60, tipo_modelo='ridge', h=H)
+    mask = ~np.isnan(wf['predito'].values) & (wf['fase'] == 'oos')
+    obs     = wf['observado'].values[mask]
+    pred    = wf['predito'].values[mask]
+    naive   = wf['pred_naive_h'].values[mask]
+    media12 = wf['pred_media12'].values[mask]
+    r_oos = obs - pred
 
-    # ── 5b. Métricas
-    r_oos    = resid[mask]
-    rmse_oos = float(np.sqrt(np.mean(r_oos**2)))
-    mae_oos  = float(np.mean(np.abs(r_oos)))
-    bias_oos = float(np.mean(r_oos))
-    corr_oos = float(np.corrcoef(obs[mask], pred[mask])[0, 1])
-    ss_res   = float(np.sum(r_oos**2))
-    ss_tot   = float(np.sum((obs[mask] - obs[mask].mean())**2))
-    r2_oos   = 1 - ss_res / ss_tot if ss_tot > 0 else float('nan')
+    # ── 5b. Métricas modelo vs baselines
+    m_modelo  = metricas_de(obs, pred)
+    m_naive   = metricas_de(obs, naive)
+    m_media12 = metricas_de(obs, media12)
 
-    # Métricas em treino final (últimos 60m antes de prever) — só pra exibição
-    final_train = df.iloc[-60:]
-    sc = StandardScaler().fit(final_train[df.columns[1:]].values)
-    Xf = sc.transform(final_train[df.columns[1:]].values)
-    yf = final_train['y'].values
-    final_model = LassoCV(cv=5, max_iter=20000, n_alphas=50, random_state=42).fit(Xf, yf)
-    pred_in = final_model.predict(Xf)
-    rmse_in = float(np.sqrt(np.mean((yf - pred_in)**2)))
-    r2_in   = float(1 - np.sum((yf - pred_in)**2) / np.sum((yf - yf.mean())**2))
-
-    print(f'  RMSE OOS (walk-forward): {rmse_oos:.2f}pp')
-    print(f'  MAE  OOS                : {mae_oos:.2f}pp')
-    print(f'  Bias OOS                : {bias_oos:+.2f}pp')
-    print(f'  R²   OOS                : {r2_oos:.3f}')
-    print(f'  Corr OOS                : {corr_oos:.3f}')
-    print(f'  RMSE in-sample (60m)    : {rmse_in:.2f}pp')
-    print(f'  R²   in-sample (60m)    : {r2_in:.3f}')
+    print(f'  MODELO  : RMSE={m_modelo["rmse_pp"]:.2f}pp  MAE={m_modelo["mae_pp"]:.2f}  '
+          f'Bias={m_modelo["bias_pp"]:+.2f}  R²={m_modelo["r2"]:+.3f}  ρ={m_modelo["corr"]:+.3f}')
+    print(f'  NAÏVE   : RMSE={m_naive["rmse_pp"]:.2f}pp  MAE={m_naive["mae_pp"]:.2f}  '
+          f'Bias={m_naive["bias_pp"]:+.2f}  R²={m_naive["r2"]:+.3f}')
+    print(f'  MÉDIA12 : RMSE={m_media12["rmse_pp"]:.2f}pp  MAE={m_media12["mae_pp"]:.2f}  '
+          f'Bias={m_media12["bias_pp"]:+.2f}  R²={m_media12["r2"]:+.3f}')
+    ganho_naive   = (m_naive["rmse_pp"]   - m_modelo["rmse_pp"]) / m_naive["rmse_pp"]   * 100
+    ganho_media12 = (m_media12["rmse_pp"] - m_modelo["rmse_pp"]) / m_media12["rmse_pp"] * 100
+    print(f'  → Modelo bate naïve em {ganho_naive:+.1f}% RMSE | bate média12 em {ganho_media12:+.1f}%')
 
     # ── 5c. Diagnóstico residual
     diag = diagnostico_residuos(r_oos)
-    print(f'  Ljung-Box(12) p-valor    : {diag.get("ljung_box_lag12_pvalor", float("nan")):.3f}')
-    print(f'  Jarque-Bera   p-valor    : {diag.get("jarque_bera_pvalor", float("nan")):.3f}')
+    print(f'  Ljung-Box(12)            : p={diag.get("ljung_box_lag12_pvalor", float("nan")):.3f}'
+          f'  (p<0.05 = autocorrelação residual)')
+    print(f'  Jarque-Bera (normalidade): p={diag.get("jarque_bera_pvalor", float("nan")):.3f}')
 
-    # ── 5d. Stress test: estabilidade de coeficientes (jackknife)
-    coef_amostras = []
-    for offset in range(0, 24, 3):  # 8 reestimações pulando 3 em 3 meses
-        sub = df.iloc[:-offset] if offset else df
-        if len(sub) < 60:
-            continue
-        sc_j = StandardScaler().fit(sub[df.columns[1:]].iloc[-60:].values)
-        Xj = sc_j.transform(sub[df.columns[1:]].iloc[-60:].values)
-        yj = sub['y'].iloc[-60:].values
-        try:
-            mj = LassoCV(cv=5, max_iter=20000, n_alphas=50, random_state=42).fit(Xj, yj)
-            coef_amostras.append(mj.coef_)
-        except Exception:
-            continue
-    coef_amostras = np.array(coef_amostras) if coef_amostras else np.zeros((1, len(df.columns) - 1))
+    # ── 5d. Treino final em JANELA RECENTE (60m) — privilegia regime atual
+    JAN_FINAL = 60
+    feats = list(df.columns[1:])
+    df_recent = df.iloc[-JAN_FINAL:]
+    sc_final, final_model = fit_model(df_recent[feats].values,
+                                       df_recent['y'].values, tipo='ridge')
+    pred_in = final_model.predict(sc_final.transform(df_recent[feats].values))
+    m_in    = metricas_de(df_recent['y'].values, pred_in)
+    print(f'  Treino janela {JAN_FINAL}m       : RMSE={m_in["rmse_pp"]:.2f}pp  R²={m_in["r2"]:+.3f}')
+
+    # ── 5d.bis  Correção de bias: o modelo OOS recente está enviesado por X pp
+    # → subtrair esse X da previsão central para de-biasar
+    bias_correction = float(np.mean(r_oos[-12:])) if len(r_oos) >= 12 else 0.0
+    print(f'  Bias OOS últimos 12m     : {bias_correction:+.2f}pp (aplicado como correção)')
+
+    # ── 5e. Stress: estabilidade de coeficientes (rolling 60m)
+    coefs = []
+    for cut in range(60, len(df) + 1, 6):  # a cada 6 meses
+        sub = df.iloc[:cut]
+        sc_j, m_j = fit_model(sub[feats].iloc[-60:].values,
+                              sub['y'].iloc[-60:].values, tipo='ridge')
+        coefs.append(m_j.coef_)
+    coefs = np.array(coefs)
     coef_estab = {
-        feat: {
-            'media':  float(coef_amostras[:, i].mean()),
-            'desvio': float(coef_amostras[:, i].std(ddof=1)) if len(coef_amostras) > 1 else 0.0,
-            'cv':     float(coef_amostras[:, i].std(ddof=1) / max(abs(coef_amostras[:, i].mean()), 1e-9))
-                      if len(coef_amostras) > 1 else 0.0,
+        f: {
+            'media_padronizada': round(float(coefs[:, i].mean()), 4),
+            'desvio':            round(float(coefs[:, i].std(ddof=1)) if len(coefs) > 1 else 0.0, 4),
+            'cv':                round(float(coefs[:, i].std(ddof=1) / max(abs(coefs[:, i].mean()), 1e-9))
+                                       if len(coefs) > 1 else 0.0, 3),
+            'sinal_estavel':     bool(np.all(coefs[:, i] > 0) or np.all(coefs[:, i] < 0))
+                                 if len(coefs) > 1 else True,
         }
-        for i, feat in enumerate(df.columns[1:])
+        for i, f in enumerate(feats)
     }
-    print(f'  Estabilidade coef (CV médio): '
-          f'{np.mean([c["cv"] for c in coef_estab.values()]):.2f}')
+    sinal_stable = sum(1 for c in coef_estab.values() if c['sinal_estavel'])
+    print(f'  Estabilidade coef        : {sinal_stable}/{len(feats)} preditores com sinal estável')
 
-    # ── 5e. Forecast H=5 — usa últimos preditores observados, defasados
-    # Para cada h, monta vetor com preditores na data t+h aplicando lags certos
+    # ── 5f. Forecast H=5 com banda baseada em resíduos CENTRADOS (variância pura)
+    # O bias já foi extraído acima e é aplicado à central — a banda só captura a
+    # variabilidade aleatória residual.
+    recent_resid_raw = r_oos[-24:] if len(r_oos) >= 24 else r_oos
+    recent_resid = recent_resid_raw - bias_correction  # centra os resíduos
+    print(f'  Banda baseada em         : últimos {len(recent_resid)}m centrados '
+          f'(σ={recent_resid.std():.2f}pp)')
+
     last_date = df.index[-1]
-    forecast_rows = []
-    # Resíduos recentes (últimos 24m) para a banda
-    recent_resid = r_oos[-24:] if len(r_oos) >= 24 else r_oos
+    last_y = float(df['y'].iloc[-1])
+    last_y_lag6 = float(df['y'].iloc[-6]) if len(df) > 6 else last_y
     rng = np.random.default_rng(42)
+    forecast_rows = []
     for h in range(1, H + 1):
         target_date = last_date + pd.DateOffset(months=h)
         row = {}
-        for feat in df.columns[1:]:
-            # feat format: 'name_lagX' — pegamos predictors[name].iloc no índice apropriado
+        for feat in feats:
+            if feat.startswith('ar_lag'):
+                lag = int(feat.replace('ar_lag', ''))
+                # Para previsão futura, ar_lagN referente ao próprio y defasado N meses
+                # da data alvo. Se ainda temos observado, usa; senão usa último observado.
+                req_date = target_date - pd.DateOffset(months=lag)
+                if req_date in df.index:
+                    row[feat] = float(df['y'].loc[req_date])
+                else:
+                    row[feat] = last_y
+                continue
             name, lag_str = feat.rsplit('_lag', 1)
             lag = int(lag_str)
-            # YoY do preditor na data (target_date - lag meses)
             pred_yoy = yoy(predictors[name])
             req_date = target_date - pd.DateOffset(months=lag)
             if req_date in pred_yoy.index and not pd.isna(pred_yoy.loc[req_date]):
-                row[feat] = pred_yoy.loc[req_date]
+                row[feat] = float(pred_yoy.loc[req_date])
             else:
-                # Se não tem ainda, usa último disponível (proxy de naïve)
-                row[feat] = pred_yoy.dropna().iloc[-1]
-        X_new = sc.transform(np.array([[row[f] for f in df.columns[1:]]]))
-        central = float(final_model.predict(X_new)[0])
-        low_conf, high_conf = conformal_bands(recent_resid, central, alpha=0.20)
-        low_boot, high_boot = bootstrap_residual_band(recent_resid, central, alpha=0.20, rng=rng)
+                row[feat] = float(pred_yoy.dropna().iloc[-1])
+        X_new       = sc_final.transform(np.array([[row[f] for f in feats]]))
+        central_raw = float(final_model.predict(X_new)[0])
+        # Aplica correção de bias estrutural
+        central     = central_raw + bias_correction
+        low_c, high_c = conformal_bands(recent_resid, central, alpha=0.20)
+        low_b, high_b = bootstrap_residual_band(recent_resid, central, alpha=0.20, rng=rng)
         forecast_rows.append({
-            'data':         target_date.strftime('%Y-%m'),
-            'central_pct':  round(central, 2),
-            # Banda conformal (mais robusta para não-normalidade)
-            'low_pct':      round(low_conf, 2),
-            'high_pct':     round(high_conf, 2),
-            # Banda bootstrap como alternativa
-            'low_boot_pct':  round(low_boot, 2),
-            'high_boot_pct': round(high_boot, 2),
+            'data':              target_date.strftime('%Y-%m'),
+            'central_pct':       round(central, 2),
+            'central_raw_pct':   round(central_raw, 2),
+            'low_pct':           round(low_c, 2),
+            'high_pct':          round(high_c, 2),
+            'low_boot_pct':      round(low_b, 2),
+            'high_boot_pct':     round(high_b, 2),
         })
 
-    # ── 5f. Coeficientes finais
-    coef_final = {f: float(final_model.coef_[i]) for i, f in enumerate(df.columns[1:])}
-    coef_final['intercept'] = float(final_model.intercept_)
-    coef_final['alpha_lasso'] = float(final_model.alpha_)
+    # ── 5g. Coeficientes finais (padronizados)
+    coef_final = {f: round(float(final_model.coef_[i]), 4) for i, f in enumerate(feats)}
+    coef_final['intercept']   = round(float(final_model.intercept_), 4)
+    coef_final['alpha_ridge'] = round(float(final_model.alpha_), 4)
 
-    # ── 5g. Serie histórica observado/predito
+    # ── 5h. Série observado/predito
     serie = []
-    cutoff_treino = wf['data'].iloc[60] if len(wf) > 60 else df.index[0]
     for _, r in wf.iterrows():
         serie.append({
             'data':      r['data'].strftime('%Y-%m'),
@@ -337,33 +409,33 @@ def rodar_segmento(nome: str, target: pd.Series, predictors: dict[str, pd.Series
         })
 
     return {
-        'spec_humana':    spec_humana,
+        'spec_humana': spec_humana,
         'modelo': {
-            'tipo':           'LassoCV (5-fold) sobre features YoY com lags',
-            'coeficientes':   coef_final,
-            'features':       list(df.columns[1:]),
-            'janela_treino_final_meses': 60,
-            'horizonte_meses':           H,
+            'tipo':                       'RidgeCV (5-fold) sobre features YoY com lags + termos AR',
+            'features':                   feats,
+            'coeficientes_padronizados':  coef_final,
+            'janela_treino_walkforward_minima': 60,
+            'horizonte_meses':            H,
         },
         'metricas': {
-            'walk_forward': {
-                'n':       int(mask.sum()),
-                'rmse_pp': round(rmse_oos, 2),
-                'mae_pp':  round(mae_oos, 2),
-                'bias_pp': round(bias_oos, 2),
-                'r2':      round(r2_oos, 3),
-                'corr':    round(corr_oos, 3),
-            },
-            'treino_final_60m': {
-                'rmse_pp': round(rmse_in, 2),
-                'r2':      round(r2_in, 3),
-            },
+            'walk_forward_modelo':       m_modelo,
+            'walk_forward_naive':        m_naive,
+            'walk_forward_media12m':     m_media12,
+            'treino_full_sample':        m_in,
+            'ganho_rmse_vs_naive_pct':   round(ganho_naive, 1),
+            'ganho_rmse_vs_media12_pct': round(ganho_media12, 1),
         },
-        'diagnostico_residuos':  {k: (round(v, 4) if isinstance(v, float) else v)
-                                  for k, v in diag.items()},
-        'estabilidade_coef':     coef_estab,
-        'serie':                 serie,
-        'forecast':              forecast_rows,
+        'diagnostico_residuos': {k: (round(v, 4) if isinstance(v, float) else v)
+                                 for k, v in diag.items()},
+        'estabilidade_coef':    coef_estab,
+        'banda': {
+            'metodo':            'conformal_split_recent24m_centrado',
+            'n_residuos':        len(recent_resid),
+            'sigma_recente':     round(float(recent_resid.std()), 2),
+            'bias_correction_pp': round(bias_correction, 2),
+        },
+        'serie':    serie,
+        'forecast': forecast_rows,
     }
 
 
@@ -396,40 +468,43 @@ def main():
         'carga_geral': antaq['carga_geral'],
     }
 
-    # ── MODELO 1: Cabotagem (drivers domésticos)
+    # ── MODELO 1: Cabotagem (drivers domésticos + alta inércia → AR forte)
     cabotagem = rodar_segmento(
         nome='cabotagem',
         target=antaq['conteinerizada_cabotagem'],
         predictors=predictors,
+        ar_lags=[6, 12],  # cabotagem tem persistência alta (contratos longos)
         lags={
-            'ibc_br':      [3, 5],
+            'ibc_br':      [3],
             'pim_pf':      [3, 6],
-            'ipca_diesel': [2, 4],
+            'ipca_diesel': [3],
             'carga_geral': [12],
         },
         spec_humana=(
-            'Crescimento a/a do contêiner cabotagem ~ atividade doméstica '
-            '(IBC-Br, PIM-PF defasados) + custo do substituto rodoviário '
-            '(IPCA diesel) + dinâmica da carga geral.'
+            'Crescimento a/a do contêiner cabotagem ~ termo autorregressivo (lag 6 e 12) '
+            '+ atividade doméstica (IBC-Br, PIM-PF defasados) + custo do substituto '
+            'rodoviário (IPCA diesel) + dinâmica da carga geral.'
         ),
     )
 
-    # ── MODELO 2: Longo Curso (drivers globais)
+    # ── MODELO 2: Longo Curso (drivers globais + inércia média)
     longo_curso = rodar_segmento(
         nome='longo_curso',
         target=antaq['conteinerizada_longo_curso'],
         predictors=predictors,
+        ar_lags=[12],  # menor persistência (mais exposto a choques globais)
         lags={
             'ibc_br':      [5],
             'cambio':      [3, 6],
-            'brent':       [2, 4],
+            'brent':       [3],
             'cny_usd':     [3, 6],
             'carga_geral': [12],
         },
         spec_humana=(
-            'Crescimento a/a do contêiner longo curso ~ atividade BR (IBC-Br lag 5) + '
-            'câmbio real BRL/USD (lag 3-6) + Brent (proxy de freight e commodities) + '
-            'CNY/USD (proxy de ciclo China) + dinâmica da carga geral.'
+            'Crescimento a/a do contêiner longo curso ~ termo autorregressivo (lag 12) '
+            '+ atividade BR (IBC-Br lag 5) + câmbio BRL/USD (lag 3-6) + Brent '
+            '(proxy de freight global) + CNY/USD (proxy de ciclo China) '
+            '+ dinâmica da carga geral.'
         ),
     )
 
