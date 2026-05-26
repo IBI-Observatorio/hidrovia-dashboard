@@ -68,6 +68,42 @@ export function calculaIDNFallback(sgc_m: number, humaita_m: number): number {
 const FRONTEIRA_SUL   = CALIBRACAO_IDN.fronteiras[0];
 const FRONTEIRA_NORTE = CALIBRACAO_IDN.fronteiras[1];
 
+// Limiares históricos derivados da série 2016-2025 (gera-idn-historico.mjs).
+// Usados para contextualizar a intensidade do IDN na UI — sem hardcode de adjetivos.
+const IDN_NORTE_MU       = CALIBRACAO_IDN.componentes[2].mu;  // centro do regime Norte ≈ 0.657
+const IDN_SUL_MU         = CALIBRACAO_IDN.componentes[0].mu;  // centro do regime Sul ≈ -0.401
+const IDN_NORTE_MAX_HIST = 0.833;  // máximo registrado na série 2016–2025
+const IDN_SUL_MIN_HIST   = -0.930; // mínimo registrado na série 2016–2025
+
+// Descreve a intensidade do IDN em linguagem calibrada pela posição histórica real.
+// Substitui adjetivos estáticos ("dramaticamente") por contexto quantitativo preciso.
+export function descreveIntensidadeIDN(idn: number): string {
+  const s = idn >= 0 ? "+" : "";
+  if (idn >= IDN_NORTE_MAX_HIST)
+    return `IDN ${s}${idn.toFixed(2)} — valor sem precedente na série 2016–2025 `
+      + `(máximo histórico: +${IDN_NORTE_MAX_HIST}). `
+      + `Negro+Branco muito abaixo do normal sazonal.`;
+  if (idn > FRONTEIRA_NORTE && idn >= IDN_NORTE_MU)
+    return `IDN ${s}${idn.toFixed(2)} — acima do centro histórico do regime `
+      + `Driver Norte (μ = +${IDN_NORTE_MU.toFixed(2)}). `
+      + `Negro+Branco abaixo do normal sazonal.`;
+  if (idn > FRONTEIRA_NORTE)
+    return `IDN ${s}${idn.toFixed(2)} — acima da fronteira calibrada `
+      + `(+${FRONTEIRA_NORTE.toFixed(2)}), sinal Driver Norte confirmado. Monitorar evolução.`;
+  if (idn <= IDN_SUL_MIN_HIST)
+    return `IDN ${idn.toFixed(2)} — valor sem precedente na série 2016–2025 `
+      + `(mínimo histórico: ${IDN_SUL_MIN_HIST}). `
+      + `Madeira+Purus muito abaixo do normal sazonal.`;
+  if (idn < FRONTEIRA_SUL && idn <= IDN_SUL_MU)
+    return `IDN ${idn.toFixed(2)} — abaixo do centro histórico do regime `
+      + `Driver Sul (μ = ${IDN_SUL_MU.toFixed(2)}). `
+      + `Madeira+Purus abaixo do normal sazonal.`;
+  if (idn < FRONTEIRA_SUL)
+    return `IDN ${idn.toFixed(2)} — abaixo da fronteira calibrada `
+      + `(${FRONTEIRA_SUL.toFixed(2)}), sinal Driver Sul confirmado. Monitorar evolução.`;
+  return `IDN ${s}${idn.toFixed(2)}.`;
+}
+
 export function classificaIDN(idn: number): {
   regime: string;
   descricao: string;

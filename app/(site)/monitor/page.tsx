@@ -15,7 +15,7 @@ import IRCDuploWidget from "@/components/IRCDuploWidget";
 import IRCInterativo from "@/components/IRCInterativo";
 import { tokenAssinanteAtual, nomeClienteDoToken } from "@/lib/auth-assinante";
 import { detectaOndaBranco } from "@/lib/onda-branco";
-import { calculaIDNSimples, classificaIDN } from "@/lib/calcula-idn";
+import { calculaIDNSimples, classificaIDN, descreveIntensidadeIDN } from "@/lib/calcula-idn";
 import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
 import { detectaFaseCiclo, calculaIRC } from "@/lib/irc";
 import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
@@ -165,14 +165,22 @@ export default async function MonitorPage() {
         </div>
       )}
 
-      {/* ── BANNER DESSINCRONIZAÇÃO — condicional e dinâmico ── */}
-      {classificaIDN(idnAtual).regime === "Driver Norte" && (
-        <div className="bg-ouro/10 border-b border-ouro/20">
+      {/* ── BANNER DESSINCRONIZAÇÃO — condicional e calibrado pela posição histórica ── */}
+      {classificaIDN(idnAtual).regime !== "Sincronizado" && (
+        <div className={`border-b ${
+          classificaIDN(idnAtual).regime === "Driver Norte"
+            ? "bg-ouro/10 border-ouro/20"
+            : "bg-vermelho/10 border-vermelho/20"
+        }`}>
           <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start gap-2">
-            <span className="text-ouro text-xs shrink-0 font-bold">2026</span>
-            <p className="text-ouro text-xs">
+            <span className={`text-xs shrink-0 font-bold ${
+              classificaIDN(idnAtual).regime === "Driver Norte" ? "text-ouro" : "text-vermelho"
+            }`}>IDN</span>
+            <p className={`text-xs ${
+              classificaIDN(idnAtual).regime === "Driver Norte" ? "text-ouro" : "text-vermelho"
+            }`}>
               <strong>Dessincronização Norte-Sul:</strong>{" "}
-              IDN atual: {idnAtual >= 0 ? "+" : ""}{idnAtual.toFixed(2)} — Negro+Branco dramaticamente mais depleted que Madeira+Purus. Padrão Driver Norte.
+              {descreveIntensidadeIDN(idnAtual)}
             </p>
           </div>
         </div>
