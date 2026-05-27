@@ -121,7 +121,7 @@ function processaResposta(json, mapa_codigo_nome) {
 
   const itens = Array.isArray(json) ? json : (json?.items ?? json?.data ?? []);
   for (const item of itens) {
-    const codigo = String(item?.Codigo_Estacao ?? item?.codigo_estacao ?? "").trim();
+    const codigo = String(item?.codigoestacao ?? item?.Codigo_Estacao ?? item?.codigo_estacao ?? "").trim();
     const nome   = mapa_codigo_nome[codigo];
     if (!nome) continue;
 
