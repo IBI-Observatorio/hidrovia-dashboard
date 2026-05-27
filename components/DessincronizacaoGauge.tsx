@@ -14,7 +14,7 @@ import { PCA_VALIDACAO } from "@/lib/pca-validacao";
 import HMMTransicaoRegime from "./HMMTransicaoRegime";
 import type { CotaIDN, VazaoIDN } from "@/lib/fetch-dados";
 import { DADOS_ATUAIS, type DadosEstacao } from "@/lib/dados-historicos";
-import { IDN_HISTORICO_CALCULADO } from "@/lib/idn-historico-calculado";
+import type { PontoIDN } from "@/lib/ana-idn-series";
 
 // Velocímetro SVG simples
 function Velocimetro({ idn }: { idn: number }) {
@@ -59,10 +59,12 @@ export default function DessincronizacaoGauge({
   dados = DADOS_ATUAIS,
   cotasIDN,
   vazoesIDN,
+  serieIDN = [],
 }: {
   dados?: Record<string, DadosEstacao>;
   cotasIDN?: Partial<Record<EstacaoComDOY, CotaIDN>>;
   vazoesIDN?: Partial<Record<EstacaoVazao, VazaoIDN>>;
+  serieIDN?: PontoIDN[];
 }) {
   // Monta o mapa de cotas: prioriza cotasIDN (API ANA), cai para dados do painel.
   // SGC removido em mai/2026 — sem telemetria ANA viva; posicaoSubBacia()
@@ -75,7 +77,6 @@ export default function DessincronizacaoGauge({
     Caracarai:   cotasIDN?.Caracarai?.cota_m,
     Serrinha:    cotasIDN?.Serrinha?.cota_m,
     Moura:       cotasIDN?.Moura?.cota_m,
-    Manicore:    cotasIDN?.Manicore?.cota_m,
     Labrea:      cotasIDN?.Labrea?.cota_m,
     Abuna:       cotasIDN?.Abuna?.cota_m,
   };
@@ -140,7 +141,7 @@ export default function DessincronizacaoGauge({
         <div>
           <p className="text-gray-300 text-sm font-semibold mb-2">Evolução histórica do IDN (2016–2025)</p>
           <ResponsiveContainer width="100%" height={220}>
-            <LineChart data={IDN_HISTORICO_CALCULADO} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+            <LineChart data={serieIDN} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
               <XAxis
                 dataKey="data"

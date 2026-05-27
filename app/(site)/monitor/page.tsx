@@ -24,6 +24,7 @@ import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
 import { geraInsights } from "@/lib/gera-insights";
 import { dashboardCopy } from "@/lib/dashboard-copy";
 import { navigationCopy } from "@/lib/navigation-copy";
+import { lerSerieIDN } from "@/lib/ana-idn-series";
 import { RefreshCw, Waves } from "lucide-react";
 import type { Estacao } from "@/lib/limiares";
 
@@ -56,6 +57,7 @@ export default async function MonitorPage() {
   // lib/cache-ana-diario.ts.
   // Previsão 2026 é lida do cache SGB (fonte dinâmica) ou cai para hardcoded.
   const previsao = await fetchPrevisao2026();
+  const serieIDN = lerSerieIDN();
   const diario = await obterDadosDiariosANA();
   let { dados } = diario;
   const { cotasIDN, vazoesIDN, serieCaracarai } = diario;
@@ -303,9 +305,9 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel2.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel2.subtitle}</p>
             </div>
-            <DessincronizacaoGauge dados={dados} cotasIDN={cotasIDN} vazoesIDN={vazoesIDN} />
+            <DessincronizacaoGauge dados={dados} cotasIDN={cotasIDN} vazoesIDN={vazoesIDN} serieIDN={serieIDN.serie} />
             <div className="mt-6">
-              <IDNGrafico90Dias />
+              <IDNGrafico90Dias serieIDN={serieIDN.serie} />
             </div>
             <p className="text-gray-500 text-xs mt-3 max-w-2xl">
               {dashboardCopy.panel2.interpretation}

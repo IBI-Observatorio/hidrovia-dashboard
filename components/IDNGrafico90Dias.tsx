@@ -1,24 +1,22 @@
 "use client";
 
 import {
-  LineChart, Line, Area, XAxis, YAxis, CartesianGrid,
+  Line, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, ReferenceLine, ReferenceArea,
   ComposedChart,
 } from "recharts";
-import { IDN_RECENTE_DIARIO } from "@/lib/idn-historico-calculado";
 import { CALIBRACAO_IDN } from "@/lib/limiares-idn";
 import { INCERTEZA_IDN } from "@/lib/incerteza-idn";
+import type { PontoIDN } from "@/lib/ana-idn-series";
 
-// Mostra os últimos ~90 dias de IDN diário com banda ±2σ de incerteza.
-// Dados vêm da série calculada offline (até o último ponto consolidado dos CSVs).
-// O valor "atual" no DessincronizacaoGauge pode ser mais recente — este é o
-// histórico recente consolidado.
+// Mostra os últimos 90 pontos do IDN com banda ±2σ de incerteza.
+// Dados vêm via prop serieIDN (série gerada pelo pipeline ANA).
 
-export default function IDNGrafico90Dias() {
+export default function IDNGrafico90Dias({ serieIDN }: { serieIDN: PontoIDN[] }) {
   const banda = INCERTEZA_IDN.banda_idn_2sigma;
 
-  // Últimos 90 dias da série + banda como tupla [lo, hi] (range area)
-  const dados = IDN_RECENTE_DIARIO.slice(-90).map((p) => ({
+  // Últimos 90 pontos + banda como tupla [lo, hi] (range area)
+  const dados = serieIDN.slice(-90).map((p) => ({
     data: p.data,
     idn:  p.idn,
     banda: [p.idn - banda, p.idn + banda] as [number, number],
@@ -32,7 +30,7 @@ export default function IDNGrafico90Dias() {
       <div className="mb-4">
         <h2 className="text-white font-bold text-lg">Trajetória recente do IDN (90 dias)</h2>
         <p className="text-gray-400 text-sm">
-          Evolução diária consolidada · {primeira} → {ultima} · banda sombreada = ±{banda.toFixed(2)} (IC95%)
+          Evolução consolidada · {primeira} → {ultima}
         </p>
       </div>
 
@@ -89,10 +87,10 @@ export default function IDNGrafico90Dias() {
         </ComposedChart>
       </ResponsiveContainer>
       <p className="text-gray-500 text-xs mt-2 leading-relaxed">
-        Faixas: <span className="text-ouro">Norte (IDN &gt; {CALIBRACAO_IDN.fronteiras[1].toFixed(2)})</span> ·
+        Faixas: <span className="text-ouro">Driver Norte</span> ·
         <span className="text-verde"> Sincronizado</span> ·
-        <span className="text-vermelho"> Sul (IDN &lt; {CALIBRACAO_IDN.fronteiras[0].toFixed(2)})</span>.
-        Banda azul = incerteza ±2σ via bootstrap (N={INCERTEZA_IDN.n_bootstrap}).
+        <span className="text-vermelho"> Driver Sul</span>.
+        Banda azul = incerteza ±2σ via bootstrap.
       </p>
     </div>
   );
