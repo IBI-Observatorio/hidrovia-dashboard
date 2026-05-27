@@ -42,15 +42,15 @@ export default function PortosLandingPage() {
     <main>
 
       {/* ── HERO ── */}
-      <section className="bg-azul-medio/50 border-b border-white/5 py-16 px-4">
+      <section className="bg-azul-medio/50 border-b border-white/5 py-10 px-4">
         <div className="max-w-screen-lg mx-auto">
           <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-3">
             Observatório IBI · Portos
           </p>
-          <h1 className="text-white text-4xl font-extrabold leading-tight mb-4 max-w-2xl">
+          <h1 className="text-white text-3xl sm:text-[2rem] font-extrabold leading-[1.15] mb-4 max-w-md">
             Movimentação, tendência e produção industrial nos portos brasileiros
           </h1>
-          <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mb-2">
+          <p className="text-gray-300 text-base leading-relaxed max-w-xl mb-2">
             Três entradas analíticas construídas sobre a base estatística da ANTAQ
             (2010–2026), cruzadas com séries macroeconômicas do BCB.
           </p>
