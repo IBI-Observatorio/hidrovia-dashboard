@@ -171,9 +171,6 @@ export default function DessincronizacaoGauge({
               <span className="text-gray-500 block">{(CALIBRACAO_IDN.componentes[2].pi*100).toFixed(0)}% hist.</span>
             </div>
           </div>
-          <p className="text-gray-500 text-[10px] text-center mt-1">
-            Fronteiras calibradas via GMM-3 sobre {CALIBRACAO_IDN.n_observacoes.toLocaleString("pt-BR")} dias (2016–2023, BIC={CALIBRACAO_IDN.bic.toFixed(0)}).
-          </p>
 
 
 
