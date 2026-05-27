@@ -42,3 +42,10 @@ next-env.d.ts
 
 # runtime caches
 /data/ana-diario-cache.json
+
+# SACE: PDFs e TXTs sao grandes/binários — só commitamos os JSONs
+/public/data/sace/boletins/**/*.pdf
+/public/data/sace/boletins/**/*.txt
+
+# Log do pipeline
+/logs/sace-pipeline.log

@@ -1,0 +1,58 @@
+{
+  "bacia": "Acre",
+  "data": "2026-05-27",
+  "numero": null,
+  "titulo": null,
+  "pdf_path": "public/data/sace/boletins/acre/20260527.pdf",
+  "sintese": "Chuva Acumulada Horário do último Nível Atual Variação nas Cota de Inundação Nome da Estação Município dado observado 24h 96h Últimas 24h (Horario local) (cm) (cm) (cm) ASSIS BRASIL ASSIS BRASIL 26/05/2026 09:15 0 0 274 -33 1250 BRASILÉIA / BRASILÉIA 26/05/2026 09:15 0 0 169,6 -7,9 1140 EPITACIOLÂNDIA XAPURI XAPURI 26/05/2026 09:30 0 0 258 -21 1340 RIO BRANCO RIO BRANCO 26/05/2026 09:45 0 0 426 -40 1400",
+  "estacoes": [
+    {
+      "rio": "Acre",
+      "estacao": "ASSIS BRASIL",
+      "municipio": "ASSIS BRASIL",
+      "nivel_cm": 274,
+      "variacao_cm": -33,
+      "variacao_periodo": "24h",
+      "data_medicao": "2026-05-26",
+      "hora_medicao": "09:15",
+      "cota_inundacao_cm": 1250,
+      "cota_mediana_cm": null,
+      "chuva_24h_mm": 0.0,
+      "chuva_96h_mm": 0.0,
+      "previsao": null,
+      "observacoes": null
+    },
+    {
+      "rio": "Acre",
+      "estacao": "XAPURI",
+      "municipio": "XAPURI",
+      "nivel_cm": 258,
+      "variacao_cm": -21,
+      "variacao_periodo": "24h",
+      "data_medicao": "2026-05-26",
+      "hora_medicao": "09:30",
+      "cota_inundacao_cm": 1340,
+      "cota_mediana_cm": null,
+      "chuva_24h_mm": 0.0,
+      "chuva_96h_mm": 0.0,
+      "previsao": null,
+      "observacoes": null
+    },
+    {
+      "rio": "Acre",
+      "estacao": "RIO BRANCO",
+      "municipio": "RIO BRANCO",
+      "nivel_cm": 426,
+      "variacao_cm": -40,
+      "variacao_periodo": "24h",
+      "data_medicao": "2026-05-26",
+      "hora_medicao": "09:45",
+      "cota_inundacao_cm": 1400,
+      "cota_mediana_cm": null,
+      "chuva_24h_mm": 0.0,
+      "chuva_96h_mm": 0.0,
+      "previsao": null,
+      "observacoes": null
+    }
+  ]
+}
