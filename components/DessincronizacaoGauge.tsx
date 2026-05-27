@@ -120,53 +120,23 @@ export default function DessincronizacaoGauge({
         </p>
       </div>
 
+      {/* Gauge + gráfico */}
       <div className="grid md:grid-cols-2 gap-6 items-center">
         {/* Velocímetro */}
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-2">
           <Velocimetro idn={idnAtual} />
           <div className="text-center">
             <p className="text-4xl font-extrabold" style={{ color: classAtual.cor }}>
               {idnAtual > 0 ? "+" : ""}{idnAtual.toFixed(2)}
-              <span className="text-base text-gray-400 font-normal ml-1">
-                ± {INCERTEZA_IDN.banda_idn_2sigma.toFixed(2)}
-              </span>
             </p>
             <p className="font-bold text-lg mt-1" style={{ color: classAtual.cor }}>
               {classAtual.regime}
             </p>
             <p className="text-gray-400 text-sm">{classAtual.descricao}</p>
-            <p className="text-gray-500 text-[10px] mt-1">
-              Banda ±2σ via bootstrap (N={INCERTEZA_IDN.n_bootstrap} re-amostragens por ano)
-            </p>
           </div>
-
-
-          {/* Legenda regimes — fronteiras calibradas por GMM */}
-          <div className="w-full grid grid-cols-3 gap-2 text-xs mt-2">
-            <div className="bg-azul-marinho rounded p-2 text-center border border-vermelho/40">
-              <span className="text-vermelho font-bold block">Driver Sul</span>
-              <span className="text-gray-400">IDN &lt; {CALIBRACAO_IDN.fronteiras[0].toFixed(2)}</span>
-              <span className="text-gray-500 block">{(CALIBRACAO_IDN.componentes[0].pi*100).toFixed(0)}% hist.</span>
-            </div>
-            <div className="bg-azul-marinho rounded p-2 text-center border border-verde/40">
-              <span className="text-verde font-bold block">Sincronizado</span>
-              <span className="text-gray-400">{CALIBRACAO_IDN.fronteiras[0].toFixed(2)} ≤ IDN ≤ {CALIBRACAO_IDN.fronteiras[1].toFixed(2)}</span>
-              <span className="text-gray-500 block">{(CALIBRACAO_IDN.componentes[1].pi*100).toFixed(0)}% hist.</span>
-            </div>
-            <div className="bg-azul-marinho rounded p-2 text-center border border-ouro/40">
-              <span className="text-ouro font-bold block">Driver Norte</span>
-              <span className="text-gray-400">IDN &gt; {CALIBRACAO_IDN.fronteiras[1].toFixed(2)}</span>
-              <span className="text-gray-500 block">{(CALIBRACAO_IDN.componentes[2].pi*100).toFixed(0)}% hist.</span>
-            </div>
-          </div>
-
-
-
-          {/* Previsão de regime via HMM */}
-          <HMMTransicaoRegime idnAtual={idnAtual} />
         </div>
 
-        {/* Série histórica IDN — calculada com pipeline atual (semanal 2016–2025) */}
+        {/* Série histórica */}
         <div>
           <p className="text-gray-300 text-sm font-semibold mb-2">Evolução histórica do IDN (2016–2025)</p>
           <ResponsiveContainer width="100%" height={220}>
@@ -188,26 +158,37 @@ export default function DessincronizacaoGauge({
                 formatter={(v: unknown) => [String(v), "IDN"]}
                 labelFormatter={(l) => String(l)}
               />
-              {/* Faixas de regime — fronteiras calibradas GMM */}
               <ReferenceArea y1={CALIBRACAO_IDN.fronteiras[1]} y2={1.2} fill="#D4922A" fillOpacity={0.15} />
               <ReferenceArea y1={CALIBRACAO_IDN.fronteiras[0]} y2={CALIBRACAO_IDN.fronteiras[1]} fill="#00C04B" fillOpacity={0.10} />
               <ReferenceArea y1={-1.2} y2={CALIBRACAO_IDN.fronteiras[0]} fill="#A0153E" fillOpacity={0.15} />
               <ReferenceLine y={0} stroke="#6B7280" strokeDasharray="4 2" />
               <ReferenceLine y={CALIBRACAO_IDN.fronteiras[1]} stroke="#D4922A" strokeDasharray="3 2" strokeOpacity={0.6} />
               <ReferenceLine y={CALIBRACAO_IDN.fronteiras[0]} stroke="#A0153E" strokeDasharray="3 2" strokeOpacity={0.6} />
-              <Line
-                dataKey="idn"
-                stroke="#60A5FA"
-                strokeWidth={1.5}
-                dot={false}
-                name="IDN"
-              />
+              <Line dataKey="idn" stroke="#60A5FA" strokeWidth={1.5} dot={false} name="IDN" />
             </LineChart>
           </ResponsiveContainer>
-          <p className="text-gray-500 text-xs mt-1">
-            Série calculada com pipeline atual (MA-7d, percentis DOY, 11 estações). Fronteiras GMM-calibradas.
-          </p>
         </div>
+      </div>
+
+      {/* Legenda de regimes */}
+      <div className="grid grid-cols-3 gap-2 text-xs mt-5">
+        <div className="bg-azul-marinho rounded p-2 text-center border border-vermelho/40">
+          <span className="text-vermelho font-bold block">Driver Sul</span>
+          <span className="text-gray-500 block">{(CALIBRACAO_IDN.componentes[0].pi*100).toFixed(0)}% do tempo historicamente</span>
+        </div>
+        <div className="bg-azul-marinho rounded p-2 text-center border border-verde/40">
+          <span className="text-verde font-bold block">Sincronizado</span>
+          <span className="text-gray-500 block">{(CALIBRACAO_IDN.componentes[1].pi*100).toFixed(0)}% do tempo historicamente</span>
+        </div>
+        <div className="bg-azul-marinho rounded p-2 text-center border border-ouro/40">
+          <span className="text-ouro font-bold block">Driver Norte</span>
+          <span className="text-gray-500 block">{(CALIBRACAO_IDN.componentes[2].pi*100).toFixed(0)}% do tempo historicamente</span>
+        </div>
+      </div>
+
+      {/* Previsão de regime via HMM */}
+      <div className="mt-4">
+        <HMMTransicaoRegime idnAtual={idnAtual} />
       </div>
     </div>
   );
