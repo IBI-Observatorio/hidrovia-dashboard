@@ -418,7 +418,6 @@ function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPa
           </div>
           <p className="text-gray-400 text-[11px] mt-1">
             Itacoatiara projetada em <strong className="text-gray-300">{cotaItaAlvo_m.toFixed(2)} m</strong> nessa data.
-            CMR oficial cairá abaixo do seu calado-alvo → comboios com calado &gt; {calado.toFixed(1)} m sofrerão restrição.
           </p>
         </div>
       </div>
