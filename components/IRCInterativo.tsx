@@ -427,10 +427,7 @@ function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPa
       <div className="bg-verde/5 border border-verde/20 rounded p-3 mb-3">
         <div className="flex items-center justify-between mb-2">
           <p className="text-verde text-[10px] font-bold uppercase tracking-wider">
-            Análogos históricos · banda empírica (não-paramétrica)
-          </p>
-          <p className="text-gray-400 text-[10px]">
-            Janela {eta_an.janela_dias}d · {eta_an.n_analogos} anos
+            Análogos históricos · banda empírica
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3 text-[11px] mb-2">
