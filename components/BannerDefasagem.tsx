@@ -1,13 +1,12 @@
 // Banner de aviso quando os dados estão defasados (sem atualização recente
-// via API ANA / boletim SEMA). Server-component — recebe a última data
-// vinda do fetch e calcula o atraso em dias.
+// via API ANA). Server-component — recebe a última data do fetch e calcula
+// o atraso em dias.
 
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
 interface Props {
   ultimaAtualizacao: string; // "YYYY-MM-DD"
   fonteANA: boolean;
-  fonteSEMA: boolean;
 }
 
 const LIMITE_DIAS_NORMAL = 2;       // <=2d: tudo OK
@@ -21,7 +20,7 @@ function diferencaDias(iso: string): number {
   return Math.max(0, diff);
 }
 
-export default function BannerDefasagem({ ultimaAtualizacao, fonteANA, fonteSEMA }: Props) {
+export default function BannerDefasagem({ ultimaAtualizacao, fonteANA }: Props) {
   if (!ultimaAtualizacao || ultimaAtualizacao === "—") return null;
   const dias = diferencaDias(ultimaAtualizacao);
 
@@ -32,7 +31,6 @@ export default function BannerDefasagem({ ultimaAtualizacao, fonteANA, fonteSEMA
         <span className="text-gray-300">
           Dados <strong className="text-verde">atualizados</strong> — última leitura em {ultimaAtualizacao}
           {fonteANA && " (API ANA)"}
-          {fonteSEMA && " · boletim SEMA"}
         </span>
       </div>
     );
@@ -59,7 +57,7 @@ export default function BannerDefasagem({ ultimaAtualizacao, fonteANA, fonteSEMA
             falha telemétrica nas estações, ou rotina de atualização de CSVs em atraso.
             Os valores exibidos podem não refletir o estado hidrológico atual da bacia.</>
           ) : (
-            <> Atualização normal pode levar 1-3 dias úteis (consolidação ANA + boletim SEMA semanal).</>
+            <> Atualização normal pode levar 1-3 dias úteis (consolidação e cache da API ANA).</>
           )}
         </p>
       </div>

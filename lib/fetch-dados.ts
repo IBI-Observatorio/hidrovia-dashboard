@@ -63,33 +63,6 @@ export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>
   return merged;
 }
 
-// ─── Boletim SEMA (mantido) ──────────────────────────────────────────────────
-
-export async function fetchUltimoBoletimSEMA(): Promise<{
-  data: string | null;
-  estacoes: Record<string, { cota_cm: number; variacao_cm: number }>;
-} | null> {
-  try {
-    const { readFileSync, existsSync } = await import("fs");
-    const { join } = await import("path");
-    const dataDir = process.env.DATA_DIR ?? join(process.cwd(), "data");
-    const caminho = join(dataDir, "boletins_sema_cache.json");
-    if (!existsSync(caminho)) return null;
-
-    const cache = JSON.parse(readFileSync(caminho, "utf-8"));
-    const ultimo = cache.boletins?.[cache.boletins.length - 1];
-    if (!ultimo || !ultimo.estacoes?.length) return null;
-
-    const mapa: Record<string, { cota_cm: number; variacao_cm: number }> = {};
-    for (const est of ultimo.estacoes) {
-      mapa[est.estacao] = { cota_cm: est.cota_cm, variacao_cm: est.variacao_cm };
-    }
-    return { data: ultimo.data, estacoes: mapa };
-  } catch {
-    return null;
-  }
-}
-
 // ─── IDN: cotas em 11 estações ──────────────────────────────────────────────
 // Suavização trailing MA(N) — mesma do gerador de percentis. Para
 // comparações coerentes, o "atual" precisa estar no mesmo regime de
@@ -342,25 +315,3 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
   }
 }
 
-// ─── SEMA override (mantido) ────────────────────────────────────────────────
-
-export function aplicarBoletimSEMA(
-  dados: Record<string, DadosEstacao>,
-  boletim: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>>
-): Record<string, DadosEstacao> {
-  if (!boletim) return dados;
-
-  const resultado = { ...dados };
-  for (const [nome, sema] of Object.entries(boletim.estacoes)) {
-    const chave = nome === "Humaitá" ? "Humaita" : nome;
-    if (resultado[chave]) {
-      resultado[chave] = {
-        ...resultado[chave],
-        cota_m:             +(sema.cota_cm / 100).toFixed(2),
-        variacao_24h:       sema.variacao_cm,
-        ultima_atualizacao: boletim.data ?? resultado[chave].ultima_atualizacao,
-      };
-    }
-  }
-  return resultado;
-}

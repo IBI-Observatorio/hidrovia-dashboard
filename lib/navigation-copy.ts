@@ -90,7 +90,6 @@ export const navigationCopy = {
         links: [
           { label: "ANA — HidroWeb", href: "https://www.snirh.gov.br/hidroweb/" },
           { label: "SGB/CPRM", href: "https://www.sgb.gov.br/" },
-          { label: "SEMA-AM", href: "https://www.sema.am.gov.br/" },
         ],
       },
       {

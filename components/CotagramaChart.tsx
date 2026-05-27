@@ -417,7 +417,7 @@ export default function CotagramaChart() {
       <p className="text-gray-500 text-xs mt-3">
         Faixa sombreada = P10–P90 histórico. Linhas tracejadas = referências percentílicas.
         {(opcao === "manaus" || opcao === "itacoatiara" || opcao === "duplo_mao_ita") &&
-          " Série diária 2016–2026 via CSV ANA/SEMA."
+          " Série diária 2016–2026 via CSV ANA."
         }
       </p>
     </div>

@@ -114,26 +114,6 @@ function lerCSVSimples(arquivo: string, anos?: Set<number>): Map<number, Ponto[]
   }
 }
 
-// boletins_sema_2026_consolidado.csv — valores em metros para CUR e HUM
-function lerSEMAConsolidado(col: "CUR" | "HUM"): Ponto[] {
-  const caminho = join(PROJECT_DATA, "boletins_sema_2026_consolidado.csv");
-  if (!existsSync(caminho)) return [];
-  const linhas = readFileSync(caminho, "utf-8").split("\n");
-  const cab = linhas[0].split(","); // data,bol,MAO,CUR,TAB,TFE,MNC,ITA,HUM,...
-  const idx = cab.indexOf(col);
-  if (idx < 0) return [];
-  const res: Ponto[] = [];
-  for (let i = 1; i < linhas.length; i++) {
-    const p = linhas[i].trim().split(",");
-    if (p.length <= idx) continue;
-    const data = p[0];
-    if (!data?.startsWith("2026")) continue;
-    const v = parseFloat(p[idx]);
-    if (isNaN(v)) continue;
-    res.push({ md: data.slice(5), cota_m: v });
-  }
-  return res;
-}
 
 // Mescla sem duplicar md — extra complementa base
 function merge(base: Ponto[], extra: Ponto[]): Ponto[] {
@@ -189,25 +169,19 @@ export async function GET(request: NextRequest) {
   } else if (estacao === "SGC") {
     // HidroWeb cobre 2016–out/2025 (consistido); sem telemetria disponível
     const hidroweb  = mapToArray(lerCSVSimples("sgc_hidroweb.csv", anos));
-    const sema2026  = anos.has(2026) ? lerSEMAConsolidado("CUR") : [];
     const todas2026 = anos.has(2026) ? lerTodasEstacoes2026("CUR") : [];
     for (const ano of anos) {
       let pts = hidroweb.get(ano) ?? [];
-      if (ano === 2026) {
-        pts = merge(pts, sema2026);
-        pts = merge(pts, todas2026);
-      }
+      if (ano === 2026) pts = merge(pts, todas2026);
       resultado[ano] = pts;
     }
   } else if (estacao === "Humaita") {
-    // HidroWeb cobre 2016–dez/2025; telemetria complementa 2024–2025; SEMA para 2026
-    const hidroweb  = mapToArray(lerCSVSimples("humaita_hidroweb.csv", anos));
+    // HidroWeb cobre 2016–dez/2025; telemetria complementa 2024–2025
+    const hidroweb   = mapToArray(lerCSVSimples("humaita_hidroweb.csv", anos));
     const telemetria = mapToArray(lerCSVSimples("humaita_historico.csv", anos));
-    const sema2026  = anos.has(2026) ? lerSEMAConsolidado("HUM") : [];
     for (const ano of anos) {
       let pts = hidroweb.get(ano) ?? [];
       if (telemetria.has(ano)) pts = merge(pts, telemetria.get(ano)!);
-      if (ano === 2026) pts = merge(pts, sema2026);
       resultado[ano] = pts;
     }
   } else if (estacao === "Borba") {

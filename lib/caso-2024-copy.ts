@@ -20,7 +20,7 @@ export const caso2024Copy = {
       version: "1.0",
     },
     abstract:
-      "A estiagem de 2024 foi a mais severa já registrada em séries históricas modernas da bacia amazônica. Entre outubro e novembro daquele ano, as estações de Manaus e Itacoatiara — separadas por 200 km no eixo do Rio Negro/Solimões — registraram suas mínimas em datas distintas, com 22 dias de defasagem. Este estudo documenta o episódio com base nas séries oficiais da ANA e dos boletins SEMA-AM, e oferece subsídios técnicos para o planejamento operacional em ciclos hidrológicos semelhantes.",
+      "A estiagem de 2024 foi a mais severa já registrada em séries históricas modernas da bacia amazônica. Entre outubro e novembro daquele ano, as estações de Manaus e Itacoatiara — separadas por 200 km no eixo do Rio Negro/Solimões — registraram suas mínimas em datas distintas, com 22 dias de defasagem. Este estudo documenta o episódio com base nas séries oficiais da ANA e oferece subsídios técnicos para o planejamento operacional em ciclos hidrológicos semelhantes.",
     keyFacts: [
       { label: "Mínima em Manaus", value: "12,11 m em 9/out/2024" },
       { label: "Mínima em Itacoatiara", value: "0,33 m em 31/out/2024" },
@@ -178,11 +178,6 @@ export const caso2024Copy = {
           source: "Agência Nacional de Águas (ANA)",
           description:
             "Séries históricas de cota das estações de Manaus (código 14990000) e Itacoatiara (código 16030000), via plataforma HidroWeb e API SOAP de telemetria.",
-        },
-        {
-          source: "SEMA-AM",
-          description:
-            "Boletins fluviométricos diários publicados pela Secretaria de Estado de Meio Ambiente do Amazonas, utilizados como validação cruzada das leituras telemétricas.",
         },
         {
           source: "SGB/CPRM",
