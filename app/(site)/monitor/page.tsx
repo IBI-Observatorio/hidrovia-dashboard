@@ -23,7 +23,6 @@ import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
 import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
 import { geraInsights } from "@/lib/gera-insights";
 import { dashboardCopy } from "@/lib/dashboard-copy";
-import { DESSINCRONIZACAO_2024_VS_2026 } from "@/lib/dados-historicos";
 import { navigationCopy } from "@/lib/navigation-copy";
 import { RefreshCw, Waves } from "lucide-react";
 import type { Estacao } from "@/lib/limiares";
@@ -39,8 +38,7 @@ export const metadata: Metadata = {
   },
 };
 
-// SGC removido em mai/2026 — sem telemetria ANA viva. O snapshot histórico
-// ainda aparece via card analítico do 11° Boletim SAH neste mesmo painel.
+// SGC removido em mai/2026 — sem telemetria ANA viva.
 const ESTACOES_ORDEM: Estacao[] = [
   // Negro / Norte
   "Manaus", "Curicuriari",
@@ -288,30 +286,6 @@ export default async function MonitorPage() {
                 <GaugeCard key={estacao} estacao={estacao} dados={dados[estacao]} />
               ))}
 
-              {/* Snapshot analítico 17/mar/2026 */}
-              <div className="bg-azul-medio rounded-lg p-4 border border-ouro/30 flex flex-col gap-2">
-                <div className="flex items-center gap-1.5">
-                  <h3 className="text-ouro font-bold text-sm uppercase tracking-wide">
-                    {dashboardCopy.panel1.snapshotCard.title}
-                  </h3>
-                  <Tooltip
-                    conteudo="Dados do 11° Boletim SAH — SGB/CPRM, data de máxima dessincronização entre as bacias Norte (Negro alto) e Sul (Madeira)."
-                    posicao="bottom"
-                  />
-                </div>
-                <p className="text-gray-400 text-xs">
-                  {dashboardCopy.panel1.snapshotCard.description}
-                </p>
-                {DESSINCRONIZACAO_2024_VS_2026.estacoes.map((e) => (
-                  <div key={e.nome} className="flex justify-between text-xs">
-                    <span className="text-gray-400">{e.nome}</span>
-                    <span className={`${e.delta < 0 ? "text-vermelho" : "text-verde"} font-semibold`}>
-                      {e.delta > 0 ? "+" : ""}{e.delta} vs 2024
-                    </span>
-                  </div>
-                ))}
-                <p className="text-gray-600 text-xs mt-auto">Fonte: SGB/CPRM, 11° Boletim SAH</p>
-              </div>
             </div>
 
             <p className="text-gray-600 text-xs mt-2">

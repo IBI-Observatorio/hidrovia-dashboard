@@ -75,12 +75,7 @@ export const dashboardCopy = {
       semaphore:
         "Verde: cota dentro da faixa histórica esperada. Amarelo: próximo aos limites históricos. Vermelho: fora da faixa histórica observada para esta data.",
     },
-    snapshotCard: {
-      title: "Snapshot analítico — 17 de março de 2026",
-      description:
-        "Pico observado de dessincronização Norte–Sul no ciclo de 2026. Mantido como referência analítica.",
-    },
-    sources: "Fontes: ANA (telemetria e HidroWeb), SEMA-AM (boletins).",
+    sources: "Fontes: ANA (telemetria e HidroWeb), SGB/CPRM (boletins).",
   },
 
   // =====================================================================
@@ -258,11 +253,11 @@ export const dashboardCopy = {
       },
       {
         q: "De onde vêm os dados deste painel?",
-        a: "Telemetria e séries históricas da Agência Nacional de Águas (ANA), via plataforma HidroWeb e API SOAP; boletins fluviométricos da Secretaria de Estado de Meio Ambiente do Amazonas (SEMA-AM); e previsões hidrológicas do Serviço Geológico do Brasil (SGB/CPRM).",
+        a: "Telemetria e séries históricas da Agência Nacional de Águas (ANA), via plataforma HidroWeb e API REST; e previsões e boletins hidrológicos do Serviço Geológico do Brasil (SGB/CPRM).",
       },
       {
         q: "Com que frequência os dados são atualizados?",
-        a: "As cotas atuais são atualizadas conforme a periodicidade da telemetria das estações (em geral, intervalos horários ou de 4 horas). Os boletins SEMA são incorporados diariamente. As previsões SGB/CPRM seguem o calendário oficial de publicação.",
+        a: "As cotas atuais são atualizadas conforme a periodicidade da telemetria das estações (em geral, intervalos horários ou de 4 horas). Os boletins SGB/CPRM seguem o calendário oficial de publicação.",
       },
       {
         q: "O fenômeno de dessincronização é novo?",
