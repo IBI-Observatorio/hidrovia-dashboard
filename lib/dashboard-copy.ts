@@ -27,21 +27,21 @@ export const dashboardCopy = {
       {
         marker: "🔵",
         label: "Norte da bacia",
-        stations: "SGC, Manaus",
+        stations: "Manaus, Curicuriari",
         description:
           "Rios alimentados por chuva equatorial. Sobem primeiro no ciclo anual.",
       },
       {
         marker: "🟠",
         label: "Sul da bacia",
-        stations: "Humaitá, Porto Velho",
+        stations: "Porto Velho, Humaitá, Manicoré, Lábrea",
         description:
           "Rios alimentados por chuva amazônica e do cerrado. Sobem depois.",
       },
       {
         marker: "⚖️",
         label: "Trecho central de navegação",
-        stations: "Manacapuru, Itacoatiara, Borba",
+        stations: "Manacapuru, Itacoatiara",
         description:
           "Refletem a confluência dos dois regimes e as condições efetivas do canal.",
       },
