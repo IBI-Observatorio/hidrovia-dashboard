@@ -8,7 +8,7 @@ import AlertaManausIta from "@/components/AlertaManausIta";
 import InsightsPanel from "@/components/InsightsPanel";
 import SidebarNav from "@/components/SidebarNav";
 import Tooltip from "@/components/Tooltip";
-import { fetchUltimoBoletimSEMA, aplicarBoletimSEMA, fetchPrevisao2026 } from "@/lib/fetch-dados";
+import { fetchPrevisao2026 } from "@/lib/fetch-dados";
 import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import AlertaOndaBranco from "@/components/AlertaOndaBranco";
 import IRCWidget from "@/components/IRCWidget";
@@ -23,6 +23,7 @@ import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
 import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
 import { geraInsights } from "@/lib/gera-insights";
 import { dashboardCopy } from "@/lib/dashboard-copy";
+import { DESSINCRONIZACAO_2024_VS_2026 } from "@/lib/dados-historicos";
 import { navigationCopy } from "@/lib/navigation-copy";
 import { RefreshCw, Waves } from "lucide-react";
 import type { Estacao } from "@/lib/limiares";
@@ -52,9 +53,6 @@ const ESTACOES_ORDEM: Estacao[] = [
 ];
 
 export default async function MonitorPage() {
-  let fonteSEMA = false;
-  let boletimSEMA: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>> = null;
-
   // ANA: chamada 1x por dia, cache em disco (data/ana-diario-cache.json).
   // O cache "vira" à meia-noite de Manaus, não UTC. Detalhe e fallbacks em
   // lib/cache-ana-diario.ts.
@@ -74,12 +72,6 @@ export default async function MonitorPage() {
     (d) => d.ultima_atualizacao >= hojeBacia
   ).length;
   const fonteANA = estacoesVivas > 0;
-
-  boletimSEMA = await fetchUltimoBoletimSEMA();
-  if (boletimSEMA) {
-    dados = aplicarBoletimSEMA(dados, boletimSEMA);
-    fonteSEMA = true;
-  }
 
   const ultimaAtualizacao = Object.values(dados)
     .map((d) => d.ultima_atualizacao)
@@ -205,7 +197,7 @@ export default async function MonitorPage() {
               {dashboardCopy.pageHeader.lead}
             </p>
 
-            {/* Status ANA / SEMA / timestamp */}
+            {/* Status ANA / timestamp */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs">
               {/* Badge API ANA */}
               <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[11px] font-medium ${
@@ -217,16 +209,6 @@ export default async function MonitorPage() {
                 {fonteANA
                   ? `API ANA · ${estacoesVivas}/${ESTACOES_ORDEM.length} ao vivo`
                   : "API ANA · dados estáticos"}
-              </span>
-
-              {/* Badge SEMA */}
-              <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[11px] font-medium ${
-                fonteSEMA
-                  ? "bg-verde/10 border-verde/30 text-verde"
-                  : "bg-gray-800 border-gray-700 text-gray-500"
-              }`}>
-                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${fonteSEMA ? "bg-verde" : "bg-gray-600"}`} />
-                {fonteSEMA ? "Boletim SEMA ativo" : "Sem boletim SEMA"}
               </span>
 
               {/* Última atualização */}
@@ -245,7 +227,6 @@ export default async function MonitorPage() {
               <BannerDefasagem
                 ultimaAtualizacao={ultimaAtualizacao}
                 fonteANA={fonteANA}
-                fonteSEMA={fonteSEMA}
               />
             </div>
 
@@ -321,15 +302,12 @@ export default async function MonitorPage() {
                 <p className="text-gray-400 text-xs">
                   {dashboardCopy.panel1.snapshotCard.description}
                 </p>
-                {[
-                  { nome: "SGC — Negro alto",   delta: "−927 vs 2024", cor: "text-vermelho" },
-                  { nome: "Porto Velho",         delta: "+679 vs 2024", cor: "text-verde"   },
-                  { nome: "Manaus",              delta: "+520 vs 2024", cor: "text-verde"   },
-                  { nome: "Itacoatiara",         delta: "+253 vs 2024", cor: "text-verde"   },
-                ].map((e) => (
+                {DESSINCRONIZACAO_2024_VS_2026.estacoes.map((e) => (
                   <div key={e.nome} className="flex justify-between text-xs">
                     <span className="text-gray-400">{e.nome}</span>
-                    <span className={`${e.cor} font-semibold`}>{e.delta}</span>
+                    <span className={`${e.delta < 0 ? "text-vermelho" : "text-verde"} font-semibold`}>
+                      {e.delta > 0 ? "+" : ""}{e.delta} vs 2024
+                    </span>
                   </div>
                 ))}
                 <p className="text-gray-600 text-xs mt-auto">Fonte: SGB/CPRM, 11° Boletim SAH</p>
@@ -337,9 +315,7 @@ export default async function MonitorPage() {
             </div>
 
             <p className="text-gray-600 text-xs mt-2">
-              {fonteSEMA
-                ? `Cotas do Boletim SEMA-AM (${boletimSEMA?.data}).`
-                : fonteANA
+              {fonteANA
                 ? "Cotas via API ANA (cache 1×/dia, fuso Manaus). Deltas: dados IBI/mai·2026."
                 : "Dados estáticos IBI/mai·2026."
               }{" "}
@@ -513,7 +489,7 @@ export default async function MonitorPage() {
             <p className="font-semibold text-gray-400 mb-1">Sobre este monitor</p>
             <p className="leading-relaxed">
               Desenvolvido pelo Observatório de Infraestrutura de Transportes do IBI com base em
-              dados primários oficiais (SEMA-AM, SGB/CPRM, ANA/SNIRH, NOAA/CPC). Análise da
+              dados primários oficiais (SGB/CPRM, ANA/SNIRH, NOAA/CPC). Análise da
               dessincronização Norte-Sul 2026 produzida em 07–08/mai/2026.
               API ANA descontinuada em 30/jun/2026 — migração para nova API SGB prevista.
             </p>

@@ -489,7 +489,44 @@ def build_latest(resultados: list[BoletimParsed]) -> dict[str, dict]:
 
 
 # ---------------------------------------------------------------------------
-# Step 4: dados.json consolidado
+# Step 4b: POST boletins do Amazonas para /api/sgb (alimenta PREVISAO_2026)
+# ---------------------------------------------------------------------------
+
+def upload_amazonas_para_api(resultados: list[BoletimParsed]) -> None:
+    """Envia os PDFs do Amazonas para /api/sgb (parser de previsões de pico)."""
+    log("== UPLOAD /api/sgb ==")
+    senha = "ibi2026"
+    base_url = "http://localhost:3000/api/sgb"
+
+    amz = sorted(
+        [r for r in resultados if r.bacia == "Amazonas"],
+        key=lambda r: r.data,
+    )
+    for bol in amz:
+        pdf_path = ROOT / bol.pdf_path
+        if not pdf_path.exists():
+            log(f"  PDF ausente: {pdf_path.name}")
+            continue
+        try:
+            with open(pdf_path, "rb") as f:
+                resp = requests.post(
+                    base_url,
+                    headers={"x-admin-password": senha},
+                    files={"arquivo": (pdf_path.name, f, "application/pdf")},
+                    timeout=30,
+                )
+            d = resp.json()
+            if d.get("ok"):
+                b = d["boletim"]
+                log(f"  #{b['numero']} {b['data']}  {len(b['estacoes'])} est  {len(b['previsoes'])} prev")
+            else:
+                log(f"  ERRO {bol.data}: {d}")
+        except Exception as e:
+            log(f"  ERRO upload {bol.data}: {e}")
+
+
+# ---------------------------------------------------------------------------
+# Step 5: dados.json consolidado
 # ---------------------------------------------------------------------------
 
 def salvar_consolidado(resultados: list[BoletimParsed], mes: str) -> None:
@@ -553,6 +590,7 @@ def main() -> int:
     salvar_consolidado(resultados, mes_label)
 
     build_latest(resultados)
+    upload_amazonas_para_api(resultados)
 
     log("Pipeline concluido.")
     return 0

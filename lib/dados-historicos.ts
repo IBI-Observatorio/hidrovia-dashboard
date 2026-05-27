@@ -72,7 +72,6 @@ export const DESSINCRONIZACAO_2024_VS_2026 = {
   data:  "17/03/2026",
   fonte: "SGB/CPRM — 11° Boletim SAH Amazonas",
   estacoes: [
-    { nome: "SGC — Negro alto",       cota_2026:  620, cota_2024: 1547, delta: -927 },
     { nome: "Porto Velho — Madeira",  cota_2026: 1398, cota_2024:  719, delta: +679 },
     { nome: "Manaus",                 cota_2026: 2482, cota_2024: 1962, delta: +520 },
     { nome: "Itacoatiara",            cota_2026: 1137, cota_2024:  884, delta: +253 },
@@ -92,7 +91,7 @@ export const PREVISAO_2026 = {
 
 // ---------------------------------------------------------------------------
 // Dados atuais simulados para o MVP (mai/2026)
-// Fonte: última leitura disponível dos boletins SEMA/SGB
+// Fonte: última leitura disponível dos boletins SGB/CPRM
 // ---------------------------------------------------------------------------
 export interface DadosEstacao {
   nome:          string;
