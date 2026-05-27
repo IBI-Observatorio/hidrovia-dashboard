@@ -458,14 +458,13 @@ function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPa
         </div>
         <div className="space-y-0.5">
           <p className="text-gray-500 text-[10px] uppercase tracking-wider mb-1">
-            Anos mais similares à trajetória 2026:
+            Anos com padrão mais próximo ao atual:
           </p>
           {eta_an.analogos.slice(0, 3).map((a) => {
             const pesoNorm = a.peso / eta_an.analogos.reduce((s, x) => s + x.peso, 0);
             return (
               <div key={a.ano} className="flex items-center gap-2 text-[10px]">
                 <span className="text-gray-400 w-12">{a.ano}:</span>
-                <span className="text-gray-300 w-20">RMSE {a.rmse_m.toFixed(2)}m</span>
                 <div className="flex-1 h-1.5 bg-azul-marinho/40 rounded overflow-hidden">
                   <div className="h-full bg-verde/60" style={{ width: `${pesoNorm * 100}%` }} />
                 </div>
@@ -476,10 +475,9 @@ function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPa
           })}
         </div>
         <p className="text-gray-500 text-[10px] mt-2 leading-relaxed">
-          Banda derivada da DISPERSÃO REAL dos {eta_an.n_analogos} anos análogos, ponderada por
-          similaridade da trajetória. <strong className="text-gray-400">Sem assunção paramétrica</strong> —
-          a banda fecha à medida que mais dias de 2026 entram. Cota ITA hoje:{" "}
-          <strong className="text-gray-300">{eta_an.cota_atual_m.toFixed(2)}m</strong> em {eta_an.data_atual}.
+          Projeção baseada nos {eta_an.n_analogos} anos históricos de comportamento mais próximo ao atual.
+          Itacoatiara hoje:{" "}
+          <strong className="text-gray-300">{eta_an.cota_atual_m.toFixed(2)}m</strong> ({eta_an.data_atual}).
         </p>
       </div>
 
