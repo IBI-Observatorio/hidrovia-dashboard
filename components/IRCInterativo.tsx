@@ -224,8 +224,7 @@ export default function IRCInterativo({
           </p>
           <p className="text-gray-400 text-xs leading-relaxed">
             A versão pública calcula o IRC com calado-alvo padrão. Assinantes parametrizam
-            o calado da sua operação — Cargill opera com 11,5m, comboios menores com 9m, etc.
-            Cada cliente vê sua leitura do mesmo dado público.
+            o calado da sua operação.
           </p>
         </div>
       )}
