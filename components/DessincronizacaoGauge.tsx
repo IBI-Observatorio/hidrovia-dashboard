@@ -109,26 +109,14 @@ export default function DessincronizacaoGauge({
   return (
     <div className="bg-azul-medio rounded-lg p-5">
       <div className="mb-4">
-        <h2 className="text-white font-bold text-lg">Monitor de Dessincronização Norte-Sul</h2>
         <p className="text-gray-400 text-sm">
-          IDN = média ponderada Sul ({nSul} estaç.) − Norte ({nNorte} estaç.), percentis
-          dia-do-ano (ref. 2016–2023, suavização MA-7d). Norte={resultadoIDN.pos_norte.toFixed(2)}, Sul={resultadoIDN.pos_sul.toFixed(2)}.
+          Negro/Norte: <strong className="text-white">{resultadoIDN.pos_norte.toFixed(2)}</strong>
+          {" · "}
+          Madeira-Purus/Sul: <strong className="text-white">{resultadoIDN.pos_sul.toFixed(2)}</strong>
         </p>
         <p className="text-gray-500 text-xs mt-1">
-          Norte: {SUB_BACIAS.Norte.membros.map(m => m.estacao).join(", ")} ·
-          Sul: {SUB_BACIAS.Sul.membros.map(m => `${m.estacao} (${(m.peso*100).toFixed(0)}%)`).join(", ")}
-        </p>
-        <p className="text-gray-500 text-[10px] mt-2 italic leading-relaxed">
-          ⚠ <strong>Limitação metodológica:</strong> baseline climatológico (2016–2023) não inclui
-          anos extremos 2024–2025; em contexto de não-estacionariedade hidroclimática (intensificação
-          do ciclo na Amazônia), os percentis podem subestimar a anomalia real. Resultado deve ser
-          interpretado como <strong>desvio relativo ao período recente</strong>, não como medida absoluta.
-          Período de referência será atualizado em rolling 10 anos a partir de 2027.
-        </p>
-        <p className="text-gray-500 text-[10px] mt-1 italic">
-          ✓ Estrutura Norte-Sul validada por PCA (separação PC2 = {PCA_VALIDACAO.separacao_norte_sul_pc2.toFixed(2)};
-          PC1 explica {PCA_VALIDACAO.variancia_explicada_pc1.toFixed(0)}% / PC2 {PCA_VALIDACAO.variancia_explicada_pc2.toFixed(0)}% da variância).
-          Pesos finais combinam loadings empíricos PCA + critério hidrológico (climatologia parcial, regime regulatório).
+          Norte: {SUB_BACIAS.Norte.membros.map(m => m.estacao).join(", ")} ·{" "}
+          Sul: {SUB_BACIAS.Sul.membros.map(m => m.estacao).join(", ")}
         </p>
       </div>
 
