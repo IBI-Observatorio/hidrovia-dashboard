@@ -175,32 +175,7 @@ export default function DessincronizacaoGauge({
             Fronteiras calibradas via GMM-3 sobre {CALIBRACAO_IDN.n_observacoes.toLocaleString("pt-BR")} dias (2016–2023, BIC={CALIBRACAO_IDN.bic.toFixed(0)}).
           </p>
 
-          {/* IDN técnico em vazão (camada pericial) */}
-          {resultadoVazao && !isNaN(resultadoVazao.idn) && (
-            <div className="w-full mt-4 bg-azul-marinho rounded p-3 border border-white/10">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-white text-xs font-bold uppercase tracking-wide">
-                  IDN técnico — vazão (m³/s)
-                </span>
-                <span
-                  className="text-2xl font-extrabold"
-                  style={{ color: classificaIDN(resultadoVazao.idn).cor }}
-                >
-                  {resultadoVazao.idn > 0 ? "+" : ""}{resultadoVazao.idn.toFixed(2)}
-                </span>
-              </div>
-              <p className="text-gray-400 text-xs leading-relaxed">
-                Camada pericial baseada em descarga (m³/s) de {resultadoVazao.estacoes_norte.length + resultadoVazao.estacoes_sul.length} estações
-                — Norte={resultadoVazao.pos_norte.toFixed(2)} ({resultadoVazao.estacoes_norte.length}),
-                Sul={resultadoVazao.pos_sul.toFixed(2)} ({resultadoVazao.estacoes_sul.length}).
-                Cota é o sinal regulatório (LWS); vazão é o sinal físico.
-              </p>
-              <p className="text-gray-500 text-[10px] mt-1">
-                Sul vazão: {SUB_BACIAS_VAZAO.Sul.membros.map(m => m.estacao).join(", ")} ·
-                Norte vazão: {SUB_BACIAS_VAZAO.Norte.membros.map(m => m.estacao).join(", ")}
-              </p>
-            </div>
-          )}
+
 
           {/* Previsão de regime via HMM */}
           <HMMTransicaoRegime idnAtual={idnAtual} />
