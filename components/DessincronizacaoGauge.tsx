@@ -215,8 +215,8 @@ export default function DessincronizacaoGauge({
               <XAxis
                 dataKey="data"
                 tick={{ fill: "#9CA3AF", fontSize: 10 }}
-                tickFormatter={(v: string) => v.slice(0, 7)}
-                interval={24}
+                tickFormatter={(v: string) => v.slice(0, 4)}
+                interval={65}
               />
               <YAxis
                 tick={{ fill: "#9CA3AF", fontSize: 10 }}
