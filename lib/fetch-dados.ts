@@ -26,7 +26,8 @@ import type { EstacaoVazao } from "./sub-bacias-vazao";
 // painel 1 (referência ao 11° Boletim SAH). Ver docs/monitor-cache-ana.md.
 const ESTACOES_PAINEL: EstacaoKey[] = [
   "Manaus", "Itacoatiara",
-  "Humaita", "Manacapuru", "PortoVelho", "Borba",
+  "Humaita", "Manacapuru", "PortoVelho",
+  "Manicore", "Labrea", "Curicuriari",
 ];
 
 // Busca cota/chuva/vazão das 7 estações em 1 chamada batch (≤10 estações).
@@ -132,7 +133,7 @@ function mediaTrailing7Cota(
 // está ausente, então o IDN segue válido com 10 estações.
 const ESTACOES_IDN_COTA: EstacaoComDOY[] = [
   "Curicuriari", "Serrinha", "Moura", "Caracarai",
-  "Abuna", "PortoVelho", "Humaita", "Manicore", "Borba", "Labrea",
+  "Abuna", "PortoVelho", "Humaita", "Manicore", "Labrea",
 ];
 
 export type CotaIDN = { cota_m: number; ultima_atualizacao: string };

@@ -144,6 +144,21 @@ export const DADOS_ATUAIS: Record<string, DadosEstacao> = {
     cota_m: 12.11, variacao_24h: -15, delta_2025: +35, delta_2024: +420,
     ultima_atualizacao: "2026-05-06",
   },
+  Manicore: {
+    nome: "Manicoré", rio: "Rio Madeira",
+    cota_m: 24.81, variacao_24h: 0, delta_2025: 0, delta_2024: 0,
+    ultima_atualizacao: "2026-05-26",
+  },
+  Labrea: {
+    nome: "Lábrea", rio: "Rio Purus",
+    cota_m: 19.65, variacao_24h: 0, delta_2025: 0, delta_2024: 0,
+    ultima_atualizacao: "2026-05-26",
+  },
+  Curicuriari: {
+    nome: "Curicuriari", rio: "Rio Negro",
+    cota_m: 12.66, variacao_24h: 0, delta_2025: 0, delta_2024: 0,
+    ultima_atualizacao: "2026-05-26",
+  },
 };
 
 // ---------------------------------------------------------------------------

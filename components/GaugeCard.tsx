@@ -24,6 +24,9 @@ const TOOLTIP_ESTACAO: Partial<Record<Estacao, string>> = {
   Manacapuru:  "Barômetro do Rio Solimões — principal artéria da calha central. Reflete o regime geral da bacia.",
   PortoVelho:  "Upstream do Madeira. Excedentes aqui chegam a Humaitá em ~7 dias.",
   Borba:       "Proxy do Madeira médio — mede a propagação da onda de cheia entre Porto Velho e Humaitá.",
+  Manicore:    "Madeira médio-baixo — downstream de Humaitá. Mede a onda de cheia antes de entrar no trecho de confluência com o Amazonas.",
+  Labrea:      "Rio Purus — tributário direito do Amazonas. Bacia independente dos drivers Norte/Sul; indica o regime do sudoeste do Amazonas.",
+  Curicuriari: "Negro alto — afluente do Negro próximo a SGC. Sinal do Driver Norte mais direto do que Manaus, que acumula toda a bacia.",
 };
 
 export default function GaugeCard({ estacao, dados }: GaugeCardProps) {

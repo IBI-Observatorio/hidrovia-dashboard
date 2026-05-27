@@ -9,7 +9,7 @@
   "destaque": false,
   "fonte": "ANTAQ — Estatística Aquaviária (2010–2026)",
   "ultima_atualizacao": "mai/2026",
-  "metodologia": "Cada ponto da linha é o volume médio dos 12 meses anteriores — um filtro que tira o ruído da sazonalidade (safra, feriados, paradas) e deixa só a tendência real. A projeção do contêiner usa o método campeão de um horse-race de 30 abordagens: ARIMA(1,1,1) sobre o log da soma de 12 meses da tonelagem, derivando a variação a/a. Em vez de prever diretamente o ritmo (objeto super-diferenciado e ruidoso), prevê-se o agregado liso e calcula-se a razão — forecasting indireto por agregação temporal. Validado em 38 meses fora da amostra (Theil U=0,50, corta o erro do palpite ingênuo pela metade). A faixa em torno da projeção é a margem de erro empírica em 80% e 95%.",
+  "metodologia": "Cada ponto da linha é a média dos 12 meses anteriores — isso elimina o efeito da safra, de feriados e de paradas operacionais, deixando visível só o que está de fato crescendo ou caindo. A projeção do contêiner é gerada por um modelo estatístico validado em 38 meses fora da amostra. A faixa ao redor da linha é a margem de erro — mais estreita em 80% de confiança, mais larga em 95%.",
   "achados": [
     "Granel sólido +6,6% em 2025: o Norte cresceu +10,3% vs +6,1% do país — eixo logístico migrando para o Arco Norte (Itaqui em recorde, soja por lá +19%, Santarém +13%)",
     "Granel líquido +6,3%: produção de petróleo bateu recorde (+13% a/a, ANP), pré-sal já é 80% do total e metade vira exportação — petróleo é o maior item da pauta exportadora pelo 2º ano",

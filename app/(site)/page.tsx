@@ -4,7 +4,6 @@ import SubscribeForm from "@/components/home/SubscribeForm";
 import AnticipationRibbon from "@/components/home/AnticipationRibbon";
 import DynamicMetricCard from "@/components/home/DynamicMetricCard";
 import PredictiveDraftCard from "@/components/home/PredictiveDraftCard";
-import StudyCard from "@/components/home/StudyCard";
 import {
   portoCard,
   portoModos,
@@ -12,7 +11,6 @@ import {
   navegacaoModos,
   hidrologiaCard,
   aereoCard,
-  estudos,
 } from "@/lib/home-content";
 import { computeHidrologiaDashboard } from "@/lib/compute-hidrologia";
 
@@ -132,27 +130,6 @@ export default function HomePage() {
       </section>
 
       <div className="h-px bg-white/10" />
-
-      {/* ───────────── ESTUDOS ───────────── */}
-      <section className="mx-auto max-w-screen-xl px-6 py-20">
-        <div className="mb-9">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-verde">
-            Indicadores originais
-          </p>
-          <h2 className="mt-2.5 text-3xl font-extrabold leading-tight tracking-tight md:text-4xl">
-            Análises que ninguém mais publica.
-          </h2>
-          <p className="mt-3 max-w-xl leading-relaxed text-gray-400">
-            Construídos sobre a Estatística Aquaviária da ANTAQ e a base hidrológica da ANA — do antecedente do PIB ao risco de calado.
-          </p>
-        </div>
-
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {estudos.map((e) => (
-            <StudyCard key={e.titulo} estudo={e} />
-          ))}
-        </div>
-      </section>
 
       {/* ───────────── CAPTURA ───────────── */}
       <section id="receber" className="mx-auto max-w-screen-xl px-6 py-20">

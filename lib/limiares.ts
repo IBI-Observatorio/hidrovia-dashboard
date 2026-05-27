@@ -5,7 +5,10 @@ export type Estacao =
   | "Humaita"
   | "Manacapuru"
   | "PortoVelho"
-  | "Borba";
+  | "Borba"
+  | "Manicore"
+  | "Labrea"
+  | "Curicuriari";
 
 export interface LimiarEstacao {
   p10: number;
@@ -34,6 +37,10 @@ export const LIMIARES: Record<Estacao, LimiarEstacao> = {
   Manacapuru:  { p10: 10.15, mediana: 16.50, p90: 19.60,                      unidade: "m", area_drenagem_km2: 2_200_000, latitude:  -3.3106, longitude: -60.6094 },
   PortoVelho:  { p10:  7.00, mediana: 13.00, p90: 17.00,                      unidade: "m", area_drenagem_km2:  976_000, latitude:  -8.7483, longitude: -63.9169, altitude_m: 42.88 },
   Borba:       { p10:  5.00, mediana: 14.00, p90: 20.00,                      unidade: "m", area_drenagem_km2: 1_310_000, latitude:  -4.3892, longitude: -59.5986 },
+  // P10/P50/P90 calibrados — série histórica HidroWeb 2016–2023 (n≈2922 obs cada)
+  Manicore:    { p10: 12.60, mediana: 19.10, p90: 25.41,                      unidade: "m", area_drenagem_km2: 1_200_000, latitude:  -5.8219, longitude: -61.2983 },
+  Labrea:      { p10:  4.83, mediana: 12.59, p90: 20.56,                      unidade: "m", area_drenagem_km2:   370_000, latitude:  -7.2578, longitude: -64.7997 },
+  Curicuriari: { p10:  7.75, mediana: 10.37, p90: 13.66,                      unidade: "m", area_drenagem_km2:    28_000, latitude:  -0.1700, longitude: -66.8000 },
 };
 
 export const NOMES_DISPLAY: Record<Estacao, string> = {
@@ -44,6 +51,9 @@ export const NOMES_DISPLAY: Record<Estacao, string> = {
   Manacapuru:  "Manacapuru",
   PortoVelho:  "Porto Velho",
   Borba:       "Borba",
+  Manicore:    "Manicoré",
+  Labrea:      "Lábrea",
+  Curicuriari: "Curicuriari",
 };
 
 export const RIO_DISPLAY: Record<Estacao, string> = {
@@ -54,6 +64,9 @@ export const RIO_DISPLAY: Record<Estacao, string> = {
   Manacapuru:  "Rio Solimões",
   PortoVelho:  "Rio Madeira",
   Borba:       "Rio Madeira",
+  Manicore:    "Rio Madeira",
+  Labrea:      "Rio Purus",
+  Curicuriari: "Rio Negro",
 };
 
 export function posicaoRelativa(cota_m: number, estacao: Estacao): number {

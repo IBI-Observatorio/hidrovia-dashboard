@@ -1,11 +1,11 @@
 {
-  "gerado_em": "2026-05-24T23:48:12.081074+00:00",
+  "gerado_em": "2026-05-26T04:33:17.264+00:00",
   "fonte": "ANTAQ — Estatística Aquaviária · soma móvel 12 meses (Mt)",
   "metrica": "toneladas",
   "suavizacao": "sum12",
   "unidade": "Mt",
   "ultimo_mes": "2026-02",
-  "n_pontos": 193,
+  "n_pontos": 194,
   "hero": {
     "longo": {
       "label": "Longo Curso",
@@ -52,7 +52,7 @@
       ]
     },
     "interior": {
-      "label": "Navegação Interior",
+      "label": "Interior",
       "valor_12m": 91.9,
       "share_pct": 6.5,
       "yoy_pct": 22.3,
@@ -794,355 +794,361 @@
       "data": "2019-12",
       "longo": 793.89,
       "cabotagem": 241.14,
-      "interior": 66.39
+      "interior": 66.4
     },
     {
       "data": "2020-01",
-      "longo": 783.8,
-      "cabotagem": 242.97,
-      "interior": 65.74
+      "longo": 783.68,
+      "cabotagem": 242.91,
+      "interior": 65.4
     },
     {
       "data": "2020-02",
-      "longo": 783.1,
-      "cabotagem": 247.57,
-      "interior": 66.15
+      "longo": 782.94,
+      "cabotagem": 247.39,
+      "interior": 65.63
     },
     {
       "data": "2020-03",
-      "longo": 787.82,
-      "cabotagem": 250.75,
-      "interior": 67.46
+      "longo": 787.56,
+      "cabotagem": 250.49,
+      "interior": 66.63
     },
     {
       "data": "2020-04",
-      "longo": 803.08,
-      "cabotagem": 250.75,
-      "interior": 68.81
+      "longo": 802.68,
+      "cabotagem": 250.28,
+      "interior": 67.81
     },
     {
       "data": "2020-05",
-      "longo": 806.69,
-      "cabotagem": 252.04,
-      "interior": 70.61
+      "longo": 806.15,
+      "cabotagem": 251.55,
+      "interior": 69.16
     },
     {
       "data": "2020-06",
-      "longo": 806.49,
-      "cabotagem": 254.44,
-      "interior": 71.66
+      "longo": 805.77,
+      "cabotagem": 253.85,
+      "interior": 69.89
     },
     {
       "data": "2020-07",
-      "longo": 804.53,
-      "cabotagem": 257.48,
-      "interior": 72.7
+      "longo": 803.72,
+      "cabotagem": 256.74,
+      "interior": 70.55
     },
     {
       "data": "2020-08",
-      "longo": 805.63,
-      "cabotagem": 261.28,
-      "interior": 73.36
+      "longo": 804.77,
+      "cabotagem": 260.4,
+      "interior": 70.87
     },
     {
       "data": "2020-09",
-      "longo": 807.01,
-      "cabotagem": 264.69,
-      "interior": 73.68
+      "longo": 806.05,
+      "cabotagem": 263.81,
+      "interior": 70.91
     },
     {
       "data": "2020-10",
-      "longo": 805.73,
-      "cabotagem": 268.21,
-      "interior": 73.51
+      "longo": 804.73,
+      "cabotagem": 267.24,
+      "interior": 70.55
     },
     {
       "data": "2020-11",
-      "longo": 807.67,
-      "cabotagem": 270.4,
-      "interior": 73.84
+      "longo": 806.56,
+      "cabotagem": 269.25,
+      "interior": 70.31
     },
     {
       "data": "2020-12",
-      "longo": 812.15,
-      "cabotagem": 272.99,
-      "interior": 74.54
+      "longo": 811.04,
+      "cabotagem": 271.82,
+      "interior": 70.95
     },
     {
       "data": "2021-01",
-      "longo": 818.27,
-      "cabotagem": 275.89,
-      "interior": 74.16
+      "longo": 817.27,
+      "cabotagem": 274.78,
+      "interior": 70.84
     },
     {
       "data": "2021-02",
-      "longo": 822.9,
-      "cabotagem": 276.03,
-      "interior": 75.09
+      "longo": 822.0,
+      "cabotagem": 275.01,
+      "interior": 71.84
     },
     {
       "data": "2021-03",
-      "longo": 832.6,
-      "cabotagem": 278.78,
-      "interior": 76.16
+      "longo": 831.67,
+      "cabotagem": 277.61,
+      "interior": 72.79
     },
     {
       "data": "2021-04",
-      "longo": 837.9,
-      "cabotagem": 281.79,
-      "interior": 77.16
+      "longo": 836.91,
+      "cabotagem": 280.71,
+      "interior": 73.72
     },
     {
       "data": "2021-05",
-      "longo": 846.97,
-      "cabotagem": 284.31,
-      "interior": 77.57
+      "longo": 845.98,
+      "cabotagem": 283.13,
+      "interior": 74.15
     },
     {
       "data": "2021-06",
-      "longo": 851.33,
-      "cabotagem": 285.39,
-      "interior": 77.01
+      "longo": 850.31,
+      "cabotagem": 284.15,
+      "interior": 73.68
     },
     {
       "data": "2021-07",
-      "longo": 857.7,
-      "cabotagem": 286.06,
-      "interior": 76.12
+      "longo": 856.61,
+      "cabotagem": 284.79,
+      "interior": 72.85
     },
     {
       "data": "2021-08",
-      "longo": 857.3,
-      "cabotagem": 285.4,
-      "interior": 74.44
+      "longo": 856.17,
+      "cabotagem": 284.12,
+      "interior": 71.34
     },
     {
       "data": "2021-09",
-      "longo": 857.98,
-      "cabotagem": 283.93,
-      "interior": 72.68
+      "longo": 856.84,
+      "cabotagem": 282.57,
+      "interior": 69.75
     },
     {
       "data": "2021-10",
-      "longo": 853.79,
-      "cabotagem": 283.5,
-      "interior": 71.06
+      "longo": 852.57,
+      "cabotagem": 282.19,
+      "interior": 68.12
     },
     {
       "data": "2021-11",
-      "longo": 855.28,
-      "cabotagem": 283.45,
-      "interior": 70.42
+      "longo": 854.13,
+      "cabotagem": 282.28,
+      "interior": 67.92
     },
     {
       "data": "2021-12",
-      "longo": 851.86,
-      "cabotagem": 281.52,
-      "interior": 70.19
+      "longo": 856.7,
+      "cabotagem": 281.31,
+      "interior": 67.96
     },
     {
       "data": "2022-01",
-      "longo": 793.26,
-      "cabotagem": 257.26,
-      "interior": 66.8
+      "longo": 859.15,
+      "cabotagem": 281.29,
+      "interior": 69.08
     },
     {
       "data": "2022-02",
-      "longo": 732.54,
-      "cabotagem": 235.91,
-      "interior": 60.23
+      "longo": 859.23,
+      "cabotagem": 281.19,
+      "interior": 68.7
     },
     {
       "data": "2022-03",
-      "longo": 659.35,
-      "cabotagem": 211.55,
-      "interior": 52.18
+      "longo": 852.37,
+      "cabotagem": 281.03,
+      "interior": 68.32
     },
     {
       "data": "2022-04",
-      "longo": 585.35,
-      "cabotagem": 188.57,
-      "interior": 44.51
+      "longo": 846.92,
+      "cabotagem": 282.08,
+      "interior": 67.96
     },
     {
       "data": "2022-05",
-      "longo": 506.6,
-      "cabotagem": 164.75,
-      "interior": 36.95
+      "longo": 841.81,
+      "cabotagem": 282.65,
+      "interior": 67.8
+    },
+    {
+      "data": "2022-06",
+      "longo": 840.06,
+      "cabotagem": 284.9,
+      "interior": 68.51
     },
     {
       "data": "2022-07",
-      "longo": 355.31,
-      "cabotagem": 142.4,
-      "interior": 23.69
+      "longo": 841.08,
+      "cabotagem": 286.05,
+      "interior": 69.36
     },
     {
       "data": "2022-08",
-      "longo": 276.25,
-      "cabotagem": 118.37,
-      "interior": 18.51
+      "longo": 841.64,
+      "cabotagem": 284.63,
+      "interior": 71.06
     },
     {
       "data": "2022-09",
-      "longo": 203.39,
-      "cabotagem": 94.07,
-      "interior": 14.77
+      "longo": 846.58,
+      "cabotagem": 286.45,
+      "interior": 72.96
     },
     {
       "data": "2022-10",
-      "longo": 135.38,
-      "cabotagem": 71.61,
-      "interior": 11.34
+      "longo": 853.91,
+      "cabotagem": 286.2,
+      "interior": 75.01
     },
     {
       "data": "2022-11",
-      "longo": 65.37,
-      "cabotagem": 47.15,
-      "interior": 6.99
+      "longo": 851.53,
+      "cabotagem": 285.21,
+      "interior": 75.69
     },
     {
       "data": "2022-12",
-      "longo": 6.86,
-      "cabotagem": 24.64,
-      "interior": 2.98
+      "longo": 855.09,
+      "cabotagem": 285.78,
+      "interior": 76.57
     },
     {
       "data": "2023-01",
-      "longo": 66.67,
-      "cabotagem": 26.71,
-      "interior": 8.27
+      "longo": 853.76,
+      "cabotagem": 285.86,
+      "interior": 77.2
     },
     {
       "data": "2023-02",
-      "longo": 128.46,
-      "cabotagem": 48.82,
-      "interior": 15.48
+      "longo": 854.53,
+      "cabotagem": 286.45,
+      "interior": 78.03
     },
     {
       "data": "2023-03",
-      "longo": 202.46,
-      "cabotagem": 72.63,
-      "interior": 24.16
+      "longo": 862.22,
+      "cabotagem": 286.55,
+      "interior": 79.35
     },
     {
       "data": "2023-04",
-      "longo": 274.66,
-      "cabotagem": 96.08,
-      "interior": 32.46
+      "longo": 865.95,
+      "cabotagem": 286.03,
+      "interior": 80.45
     },
     {
       "data": "2023-05",
-      "longo": 355.24,
-      "cabotagem": 120.04,
-      "interior": 41.03
+      "longo": 872.87,
+      "cabotagem": 285.58,
+      "interior": 81.69
     },
     {
       "data": "2023-06",
-      "longo": 436.43,
-      "cabotagem": 144.7,
-      "interior": 49.55
+      "longo": 881.82,
+      "cabotagem": 285.7,
+      "interior": 83.05
     },
     {
       "data": "2023-07",
-      "longo": 520.23,
-      "cabotagem": 170.59,
-      "interior": 58.09
+      "longo": 887.55,
+      "cabotagem": 286.49,
+      "interior": 84.01
     },
     {
       "data": "2023-08",
-      "longo": 606.72,
-      "cabotagem": 195.3,
-      "interior": 66.62
+      "longo": 894.41,
+      "cabotagem": 288.34,
+      "interior": 85.43
     },
     {
       "data": "2023-09",
-      "longo": 690.9,
-      "cabotagem": 219.39,
-      "interior": 73.04
+      "longo": 900.83,
+      "cabotagem": 288.11,
+      "interior": 86.02
     },
     {
       "data": "2023-10",
-      "longo": 774.13,
-      "cabotagem": 243.51,
-      "interior": 78.38
+      "longo": 908.7,
+      "cabotagem": 288.08,
+      "interior": 85.53
     },
     {
       "data": "2023-11",
-      "longo": 851.56,
-      "cabotagem": 268.52,
-      "interior": 81.67
+      "longo": 918.56,
+      "cabotagem": 290.11,
+      "interior": 83.8
     },
     {
       "data": "2023-12",
-      "longo": 927.75,
-      "cabotagem": 291.76,
-      "interior": 87.18
+      "longo": 926.7,
+      "cabotagem": 290.82,
+      "interior": 84.03
     },
     {
       "data": "2024-01",
-      "longo": 936.62,
-      "cabotagem": 292.87,
-      "interior": 88.01
+      "longo": 935.65,
+      "cabotagem": 292.01,
+      "interior": 85.06
     },
     {
       "data": "2024-02",
-      "longo": 945.55,
-      "cabotagem": 295.15,
-      "interior": 87.36
+      "longo": 944.73,
+      "cabotagem": 294.37,
+      "interior": 84.72
     },
     {
       "data": "2024-03",
-      "longo": 947.19,
-      "cabotagem": 295.71,
-      "interior": 86.23
+      "longo": 946.49,
+      "cabotagem": 294.96,
+      "interior": 83.72
     },
     {
       "data": "2024-04",
-      "longo": 948.83,
-      "cabotagem": 295.7,
-      "interior": 85.36
+      "longo": 948.26,
+      "cabotagem": 295.03,
+      "interior": 82.99
     },
     {
       "data": "2024-05",
-      "longo": 948.51,
-      "cabotagem": 295.54,
-      "interior": 83.66
+      "longo": 948.1,
+      "cabotagem": 294.94,
+      "interior": 81.62
     },
     {
       "data": "2024-06",
-      "longo": 953.6,
-      "cabotagem": 296.67,
-      "interior": 82.61
+      "longo": 953.19,
+      "cabotagem": 296.17,
+      "interior": 80.71
     },
     {
       "data": "2024-07",
-      "longo": 955.12,
-      "cabotagem": 296.45,
-      "interior": 82.12
+      "longo": 954.8,
+      "cabotagem": 296.06,
+      "interior": 80.56
     },
     {
       "data": "2024-08",
-      "longo": 960.32,
-      "cabotagem": 296.64,
-      "interior": 80.29
+      "longo": 960.12,
+      "cabotagem": 296.43,
+      "interior": 79.14
     },
     {
       "data": "2024-09",
-      "longo": 961.37,
-      "cabotagem": 296.75,
-      "interior": 78.61
+      "longo": 961.22,
+      "cabotagem": 296.55,
+      "interior": 77.75
     },
     {
       "data": "2024-10",
       "longo": 960.24,
-      "cabotagem": 295.58,
-      "interior": 76.74
+      "cabotagem": 295.4,
+      "interior": 76.44
     },
     {
       "data": "2024-11",
       "longo": 957.59,
-      "cabotagem": 293.94,
-      "interior": 77.17
+      "cabotagem": 293.93,
+      "interior": 76.98
     },
     {
       "data": "2024-12",

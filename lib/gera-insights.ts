@@ -29,7 +29,7 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
       SGC:        sgc.cota_m,
       Humaita:    hum.cota_m,
       PortoVelho: pvo?.cota_m,
-      Borba:      dados.Borba?.cota_m,
+      Manicore:   dados.Manicore?.cota_m,
     },
     sgc.ultima_atualizacao
   );

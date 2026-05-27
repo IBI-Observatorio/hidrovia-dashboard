@@ -12,7 +12,7 @@ import type { PercentisDOY } from "./percentis-doy";
 
 export type EstacaoComDOY =
   | "SGC"         | "Curicuriari" | "Serrinha" | "Moura" | "Caracarai"
-  | "Abuna"       | "PortoVelho"  | "Humaita"  | "Manicore" | "Borba"
+  | "Abuna"       | "PortoVelho"  | "Humaita"  | "Manicore"
   | "Labrea";
 
 export interface DefinicaoSubBacia {
@@ -45,10 +45,9 @@ export const SUB_BACIAS: Record<"Norte" | "Sul", DefinicaoSubBacia> = {
       { estacao: "Abuna",      peso: 0.15 }, // upstream PVH, fronteira BOL
       { estacao: "PortoVelho", peso: 0.20 }, // sinal andino consolidado
       { estacao: "Humaita",    peso: 0.15 }, // médio
-      { estacao: "Manicore",   peso: 0.10 }, // entre Humaitá e Borba
-      { estacao: "Borba",      peso: 0.15 }, // médio-inferior
+      { estacao: "Manicore",   peso: 0.20 }, // médio-inferior (peso aumentado após remoção de Borba)
       // Rio Purus: drenagem sul independente do Madeira
-      { estacao: "Labrea",     peso: 0.25 }, // Purus (única estação Purus)
+      { estacao: "Labrea",     peso: 0.30 }, // Purus (única estação Purus)
     ],
   },
 };

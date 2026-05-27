@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Star, Database, Beaker, BookOpen, Calendar, MapPin, TrendingUp, FileText, Archive, RefreshCw, AlertTriangle, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Star, Database, Beaker, BookOpen, Calendar, MapPin, TrendingUp, FileText, Archive, RefreshCw, AlertTriangle, ExternalLink, BarChart3 } from 'lucide-react';
 import IndicadorInterativo from '@/components/antaq/IndicadorInterativo';
 import { CORES_CLUSTER, DATA_BASE } from '@/components/antaq/cores';
 
@@ -76,16 +76,6 @@ export default function IndicadorPage() {
             </svg>
             Voltar
           </a>
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-            <Link href="/portos" className="hover:text-ibi-blue transition-colors">Indicadores</Link>
-            <span>/</span>
-            <Link href={`/portos/${slugCluster}`} className="hover:text-ibi-blue transition-colors">
-              {cluster?.nome || slugCluster}
-            </Link>
-            <span>/</span>
-            <span className="text-gray-300 font-mono">#{indicador.id}</span>
-          </div>
-
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span className="rounded-lg px-2.5 py-1 text-xs font-mono"
                   style={{ backgroundColor: `${cor}25`, color: cor }}>
@@ -169,6 +159,10 @@ export default function IndicadorPage() {
 
             {indicador.card_previsao_atual && (
               <CardPrevisaoAtual card={indicador.card_previsao_atual} />
+            )}
+
+            {indicador.diagnosticos_estatisticos && (
+              <BlocoDiagnosticos data={indicador.diagnosticos_estatisticos} />
             )}
 
             {indicador.track_record?.length > 0 && (
@@ -265,12 +259,19 @@ function CardPrevisaoAtual({ card }) {
       <div className="mb-4 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-lg font-semibold">
           <TrendingUp className="h-5 w-5 text-red-400" />
-          Previsão atual — PIM-PF Combinado IBI
+          Previsão em vigor
         </h2>
         <span className="rounded-full bg-red-500/15 px-2 py-0.5 text-xs text-red-300">
           h = {card.horizonte}
         </span>
       </div>
+
+      {card.headline_texto && (
+        <p className="mb-4 text-sm leading-relaxed text-gray-200">
+          <Markdown source={card.headline_texto} />
+        </p>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <div className="text-xs uppercase tracking-wide text-gray-500">
@@ -284,17 +285,17 @@ function CardPrevisaoAtual({ card }) {
           <div className="text-xs uppercase tracking-wide text-gray-500">
             Var. 12m prevista
           </div>
-          <div className="mt-0.5 text-2xl font-bold" style={{ color: dirCor }}>
+          <div className="mt-0.5 text-2xl font-bold tabular-nums" style={{ color: dirCor }}>
             {fmtPp(card.var12m_prevista_pp)}
           </div>
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-gray-400 tabular-nums">
             IC 80%: [{fmtPp(card.intervalo_inferior_pp)}, {fmtPp(card.intervalo_superior_pp)}]
           </div>
         </div>
       </div>
       <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-gray-400">
         <div>
-          <div className="text-[10px] uppercase text-gray-500">Última obs.</div>
+          <div className="text-[10px] uppercase text-gray-500">Última obs. PIM-PF</div>
           <div className="text-gray-300">{card.ultima_obs_pim_pf}</div>
         </div>
         <div>
@@ -304,7 +305,7 @@ function CardPrevisaoAtual({ card }) {
         {card.peso_dfm != null && (
           <div>
             <div className="text-[10px] uppercase text-gray-500">Peso DFM</div>
-            <div className="text-gray-300">{(card.peso_dfm * 100).toFixed(1)}%</div>
+            <div className="text-gray-300 tabular-nums">{(card.peso_dfm * 100).toFixed(1)}%</div>
           </div>
         )}
         <div>
@@ -312,6 +313,54 @@ function CardPrevisaoAtual({ card }) {
           <div className="font-mono text-gray-300">{card.modelo_dfm}</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Diagnósticos estatísticos (público sênior) ──────────────────────────
+function BlocoDiagnosticos({ data }) {
+  if (!data?.metricas?.length) return null;
+  return (
+    <div className="rounded-2xl border border-gray-700 bg-gray-900/60 p-6">
+      <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold">
+        <BarChart3 className="h-5 w-5 text-ibi-blue" /> Diagnósticos estatísticos
+      </h2>
+      {(data.n_origens_oos || data.janela) && (
+        <p className="mb-3 text-xs leading-relaxed text-gray-400">
+          {data.introducao} {data.n_origens_oos && (
+            <span className="text-gray-300">
+              n = {data.n_origens_oos} origens · janela {data.janela}.
+            </span>
+          )}
+        </p>
+      )}
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="border-b border-gray-700 text-left text-gray-400">
+              <th className="px-3 py-2 font-medium w-[28%]">Métrica</th>
+              <th className="px-3 py-2 font-medium w-[22%]">Valor</th>
+              <th className="px-3 py-2 font-medium w-[20%]">Comparação</th>
+              <th className="px-3 py-2 font-medium">Leitura</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.metricas.map((m, i) => (
+              <tr key={i} className="border-b border-gray-800/50 hover:bg-gray-800/30 align-top">
+                <td className="px-3 py-2 text-gray-200 font-medium">{m.label}</td>
+                <td className="px-3 py-2 text-gray-100 tabular-nums">{m.valor}</td>
+                <td className="px-3 py-2 text-gray-400 tabular-nums">{m.comparacao || '—'}</td>
+                <td className="px-3 py-2 text-gray-300 leading-relaxed">{m.leitura}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {data.nota_amostra_recente && (
+        <p className="mt-3 rounded-lg border border-gray-700 bg-gray-900/40 px-3 py-2 text-[11px] leading-relaxed text-gray-400">
+          <span className="font-semibold text-gray-300">Nota.</span> {data.nota_amostra_recente}
+        </p>
+      )}
     </div>
   );
 }
@@ -325,8 +374,10 @@ function TrackRecord({ registros, metricas }) {
   };
   const fmtPp = (v) => v == null ? '—' : (v >= 0 ? '+' : '') + Number(v).toFixed(2);
 
-  const valHist = registros.filter((r) => r.tipo === 'validacao_historica');
-  const prod    = registros.filter((r) => r.tipo === 'producao');
+  // Defensivo: filtramos h=2 (o indicador não é publicado em h=1).
+  const h2 = registros.filter((r) => r.horizonte === 2);
+  const valHist = h2.filter((r) => r.tipo === 'validacao_historica');
+  const prod    = h2.filter((r) => r.tipo === 'producao');
 
   return (
     <div className="rounded-2xl border border-gray-700 bg-gray-900/60 p-6">
@@ -334,11 +385,12 @@ function TrackRecord({ registros, metricas }) {
         <BookOpen className="h-5 w-5 text-ibi-green" /> Track record
       </h2>
       <p className="mb-4 text-xs text-gray-400 leading-relaxed">
-        As previsões abaixo separam <span className="text-gray-200 font-medium">
-        validação histórica</span> (rolling-origin walk-forward, jan/2024–out/2025)
-        de <span className="text-gray-200 font-medium">previsões em produção</span>
-        {' '}(emitidas mensalmente desde mai/2026). Performance em produção é
-        reportada separadamente conforme dados realizados ficam disponíveis.
+        Tabela mostra duas coisas distintas: <span className="text-gray-200 font-medium">
+        amostra recente de validação histórica</span> (6 origens jul–dez/2025, h=2,
+        recortadas das 95 origens completas reportadas em &quot;Diagnósticos
+        estatísticos&quot;) e <span className="text-gray-200 font-medium">
+        previsões em produção</span> (emitidas desde mai/2026, ainda sem
+        realizado disponível).
       </p>
 
       <div className="overflow-x-auto">

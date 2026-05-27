@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import {
   AreaChart, Area, BarChart, Bar, Cell, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, LabelList, ReferenceArea,
+  ResponsiveContainer, LabelList,
 } from 'recharts';
 import { motion } from 'framer-motion';
 import { useDashboardData } from '@/components/antaq/useDashboardData';
@@ -58,16 +58,6 @@ const SEGMENTS: Record<NavKey, {
     color: OURO,
     description: 'Hidrovias — rios e lagos navegáveis (Amazônica, Tocantins, Tietê–Paraná).',
   },
-};
-
-// Lacuna conhecida na base ANTAQ: faltam meses em meados de 2022.
-// Como a série usa soma móvel 12m, o "buraco" se reflete por ~24 meses
-// (até o gap sair da janela). Intervalo a sinalizar no gráfico:
-const LACUNA_ANTAQ = {
-  inicio: '2022-01',
-  fim:    '2023-12',
-  rotulo: 'Lacuna ANTAQ',
-  motivo: 'Meses ausentes em 2022 na base ANTAQ; afeta a soma móvel 12m até dez/2023.',
 };
 
 // Fonte ÚNICA de dados de navegação (gerada por scripts/update_home_cards.py):
@@ -406,16 +396,6 @@ function CompositionChart({
               {SEGMENTS[k].label}
             </span>
           ))}
-          <span className="flex items-center gap-1.5 text-gray-500">
-            <span
-              className="size-3 rounded-sm inline-block border border-white/20"
-              style={{
-                backgroundImage:
-                  'repeating-linear-gradient(45deg, #1f2937 0 2px, #94a3b8 2px 3px)',
-              }}
-            />
-            Lacuna ANTAQ
-          </span>
         </div>
       </div>
 
@@ -439,13 +419,6 @@ function CompositionChart({
                   <stop offset="100%" stopColor={SEGMENTS.interior.color}  stopOpacity={0.55} />
                 </linearGradient>
               </defs>
-              {/* hachura diagonal para a lacuna ANTAQ */}
-              <defs>
-                <pattern id="hachuraLacuna" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
-                  <rect width="8" height="8" fill="#1f2937" fillOpacity={0.55} />
-                  <line x1="0" y1="0" x2="0" y2="8" stroke="#94a3b8" strokeWidth="1" strokeOpacity={0.35} />
-                </pattern>
-              </defs>
               <CartesianGrid stroke="#374151" strokeDasharray="3 3" />
               <XAxis
                 dataKey="data"
@@ -463,30 +436,8 @@ function CompositionChart({
               />
               <Tooltip
                 contentStyle={{ backgroundColor: '#111827', border: '1px solid #4b5563', borderRadius: 8, fontSize: 12 }}
-                labelFormatter={(label: any) => {
-                  const s = String(label);
-                  const dentro = s >= LACUNA_ANTAQ.inicio && s <= LACUNA_ANTAQ.fim;
-                  return dentro ? `${fmtMes(s)} · ⚠ lacuna ANTAQ` : fmtMes(s);
-                }}
+                labelFormatter={(label: any) => fmtMes(String(label))}
                 formatter={(v: any, name: any) => [`${Number(v)?.toFixed(1)} Mt`, name as string]}
-              />
-              {/* faixa de lacuna — fica atrás das áreas */}
-              <ReferenceArea
-                x1={LACUNA_ANTAQ.inicio}
-                x2={LACUNA_ANTAQ.fim}
-                fill="url(#hachuraLacuna)"
-                stroke="#94a3b8"
-                strokeOpacity={0.4}
-                strokeDasharray="4 3"
-                ifOverflow="extendDomain"
-                label={{
-                  value: '⚠ lacuna ANTAQ',
-                  position: 'insideTop',
-                  fill: '#cbd5e1',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  dy: 6,
-                }}
               />
               <Area type="monotone" stackId="1" dataKey="longo"     stroke={SEGMENTS.longo.color}     strokeWidth={1.5} fill="url(#gl)" name="Longo Curso" />
               <Area type="monotone" stackId="1" dataKey="cabotagem" stroke={SEGMENTS.cabotagem.color} strokeWidth={1.5} fill="url(#gc)" name="Cabotagem"   />
@@ -500,14 +451,6 @@ function CompositionChart({
         Longo curso responde por <strong className="text-gray-400">~69%</strong> do volume aquaviário brasileiro;
         cabotagem por <strong className="text-gray-400">~24%</strong> (com quase metade em petróleo offshore);
         navegação interior por <strong className="text-gray-400">~7%</strong>.
-      </p>
-      <p className="text-[11px] text-gray-600 flex items-start gap-2">
-        <span className="text-amber-400/80 mt-px">⚠</span>
-        <span>
-          <strong className="text-gray-400">Lacuna ANTAQ ({fmtMes(LACUNA_ANTAQ.inicio)} → {fmtMes(LACUNA_ANTAQ.fim)}):</strong>{' '}
-          {LACUNA_ANTAQ.motivo} Os valores nessa faixa não devem ser lidos como queda real do
-          setor, mas como artefato de dados incompletos.
-        </span>
       </p>
     </section>
   );

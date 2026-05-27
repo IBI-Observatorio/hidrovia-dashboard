@@ -41,8 +41,14 @@ export const metadata: Metadata = {
 // SGC removido em mai/2026 — sem telemetria ANA viva. O snapshot histórico
 // ainda aparece via card analítico do 11° Boletim SAH neste mesmo painel.
 const ESTACOES_ORDEM: Estacao[] = [
-  "Manaus", "Itacoatiara", "Humaita",
-  "Manacapuru", "PortoVelho", "Borba",
+  // Negro / Norte
+  "Manaus", "Curicuriari",
+  // Solimões / central
+  "Itacoatiara", "Manacapuru",
+  // Madeira / Sul
+  "PortoVelho", "Humaita", "Manicore",
+  // Purus
+  "Labrea",
 ];
 
 export default async function MonitorPage() {
@@ -178,8 +184,7 @@ export default async function MonitorPage() {
 
       {/* ── LEAD ── */}
       <div className="bg-azul-medio/50 border-b border-white/5">
-        <div className="max-w-screen-xl mx-auto px-4 py-5 lg:grid lg:grid-cols-[220px_1fr] lg:gap-x-10">
-          <div className="hidden lg:block" />
+        <div className="max-w-screen-xl mx-auto px-4 py-5">
           <div>
             <a
               href="/"
@@ -210,7 +215,7 @@ export default async function MonitorPage() {
               }`}>
                 <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${fonteANA ? "bg-verde animate-pulse" : "bg-gray-600"}`} />
                 {fonteANA
-                  ? `API ANA · ${estacoesVivas}/6 ao vivo`
+                  ? `API ANA · ${estacoesVivas}/${ESTACOES_ORDEM.length} ao vivo`
                   : "API ANA · dados estáticos"}
               </span>
 
@@ -260,15 +265,11 @@ export default async function MonitorPage() {
         </div>
       </div>
 
-      {/* ── CORPO: sidebar + painéis ── */}
-      <div className="max-w-screen-xl mx-auto px-4 py-8 lg:grid lg:grid-cols-[220px_1fr] lg:gap-x-10">
+      {/* ── NAV HORIZONTAL ── */}
+      <SidebarNav />
 
-        {/* Sidebar sticky — altura usa h-14 (56px) do GlobalHeader */}
-        <aside className="hidden lg:block">
-          <div className="sticky top-14 pt-2 h-[calc(100vh-56px)] overflow-y-auto pb-10 pr-2">
-            <SidebarNav />
-          </div>
-        </aside>
+      {/* ── CORPO: painéis ── */}
+      <div className="max-w-screen-xl mx-auto px-4 py-8">
 
         {/* Painéis */}
         <main className="flex flex-col gap-16 min-w-0">
@@ -367,7 +368,7 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel3.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel3.subtitle}</p>
             </div>
-            <AlertaManausIta dados={dados} />
+            <AlertaManausIta dados={dados} idn={idnAtual} />
 
             {/* Cross-link → /caso-2024 */}
             <div className="mt-3 bg-azul-medio/50 border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between gap-4">

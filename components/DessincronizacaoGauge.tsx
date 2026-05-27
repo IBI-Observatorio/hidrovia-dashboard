@@ -70,7 +70,7 @@ export default function DessincronizacaoGauge({
   const cotasParaIDN: Partial<Record<EstacaoComDOY, number>> = {
     Humaita:     cotasIDN?.Humaita?.cota_m     ?? dados.Humaita?.cota_m,
     PortoVelho:  cotasIDN?.PortoVelho?.cota_m  ?? dados.PortoVelho?.cota_m,
-    Borba:       cotasIDN?.Borba?.cota_m       ?? dados.Borba?.cota_m,
+    Manicore:    cotasIDN?.Manicore?.cota_m,
     Curicuriari: cotasIDN?.Curicuriari?.cota_m,
     Caracarai:   cotasIDN?.Caracarai?.cota_m,
     Serrinha:    cotasIDN?.Serrinha?.cota_m,

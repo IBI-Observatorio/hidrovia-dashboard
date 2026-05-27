@@ -2,7 +2,7 @@
 
 import { AlertTriangle, CheckCircle, XCircle, Info } from "lucide-react";
 import { DADOS_ATUAIS, type DadosEstacao } from "@/lib/dados-historicos";
-import { calculaIDNSimples, riscoDescasamento } from "@/lib/calcula-idn";
+import { riscoDescasamento } from "@/lib/calcula-idn";
 
 const ICONE_RISCO = {
   NORMAL:   <CheckCircle className="text-verde" size={22} />,
@@ -44,20 +44,14 @@ function MetricRow({
 
 export default function AlertaManausIta({
   dados = DADOS_ATUAIS,
+  idn,
 }: {
   dados?: Record<string, DadosEstacao>;
+  idn?: number;
 }) {
   const mao = dados.Manaus;
   const ita = dados.Itacoatiara;
-  // SGC removido em mai/2026 — calculaIDN renormaliza os pesos automaticamente.
-  const idnAtual = calculaIDNSimples(
-    {
-      Humaita:    dados.Humaita?.cota_m,
-      PortoVelho: dados.PortoVelho?.cota_m,
-      Borba:      dados.Borba?.cota_m,
-    },
-    mao.ultima_atualizacao
-  );
+  const idnAtual = idn ?? 0;
   const risco    = riscoDescasamento(mao.cota_m, ita.cota_m, mao.delta_2025, ita.delta_2025);
 
   const abaixoGatilho = mao.cota_m < 17.7;

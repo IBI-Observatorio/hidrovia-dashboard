@@ -290,11 +290,6 @@ function ForecastConteinerBloco() {
           valor={meta.ult_obs.obs} sufixo="%" cor={COR_OBS} decimais={2}
           comSinal sub="Crescimento a/a observado"
         />
-        <NuggetCard
-          label="Precisão do modelo"
-          valor={meta.theilU_h5} sufixo="" cor={COR_GREEN} decimais={2}
-          sub={`Theil U(h=5) — erro = ${Math.round(meta.theilU_h5 * 100)}% do palpite ingênuo`}
-        />
       </div>
 
       {/* (b) Gráfico principal */}
