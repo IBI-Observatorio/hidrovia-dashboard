@@ -51,9 +51,7 @@ export default function HMMTransicaoRegime({ idnAtual }: { idnAtual: number }) {
       </div>
 
       <p className="text-gray-500 text-[10px] mt-2 leading-relaxed">
-        HMM gaussiano K=3 calibrado sobre {CALIBRACAO_HMM.n_observacoes.toLocaleString("pt-BR")} dias (2016–2023).
-        Matriz de transição estimada por Baum-Welch (log-lik={CALIBRACAO_HMM.log_likelihood.toFixed(0)}).
-        Diferente do GMM, captura estrutura temporal — útil para alerta antecipado.
+        Baseado no histórico 2016–2023. Probabilidades condicionais ao regime atual.
       </p>
     </div>
   );
