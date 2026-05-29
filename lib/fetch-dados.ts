@@ -231,13 +231,17 @@ export async function fetchSerieCaracarai(
 // Sprint Tese Regulatória v1 (21/05/2026): lê o último boletim SGB parseado
 // (cache em `data/boletins_sgb_cache.json`, alimentado por `app/api/sgb`) e
 // devolve a previsão de pico Manaus/Manacapuru/Itacoatiara + fonte. Quando
-// não houver cache, devolve `PREVISAO_2026` hardcoded (boletim 18°) com a
-// fonte marcada como "fallback".
+// não houver cache, devolve `PREVISAO_2026` hardcoded com a fonte marcada
+// como "fallback". O cron semanal (scripts/pipeline-sace.py) faz POST no
+// /api/sgb com os PDFs novos — então o cache se mantém sozinho.
 import { PREVISAO_2026 } from "./dados-historicos";
+import { lerENSOAdvisory } from "./enso-cpc";
 
 export interface Previsao2026 {
   fonte:               string;
   fonte_dinamica:      boolean;            // true se veio do parser SGB
+  numero_boletim?:     number;             // ex: 21 (do parser SGB)
+  data_boletim?:       string;             // ex: "2026-05-26" (ISO, do parser SGB)
   manaus_pico_cheia:   {
     media:     number;
     ic80_min:  number;
@@ -247,13 +251,21 @@ export interface Previsao2026 {
   manacapuru_pico:     number;
   itacoatiara_pico:    number;
   parintins_pico?:     number;             // só vem do cache, não do hardcoded
-  enso:                string;
+  enso:                string;             // texto sintético em PT, ex: "El Niño Watch — 82% mai–jul/26..."
+  enso_data_emissao?:  string;             // ISO yyyy-mm-dd da última discussion CPC
+  enso_status?:        string;             // "El Niño Watch" | "La Niña Advisory" | "Not Active" | ...
   // Anomalia de precipitação por bacia (categoria −3..+3) — vem do parser SGB v2
   anomalia_pp_negro?:    number;           // bacia do Negro (driver do colapso 2026)
   anomalia_pp_madeira?:  number;           // bacia do Madeira (driver 2024)
 }
 
 export async function fetchPrevisao2026(): Promise<Previsao2026> {
+  // ENSO: tenta cache dinâmico (scrape mensal CPC) antes do fallback.
+  const ensoCache = lerENSOAdvisory();
+  const ensoTexto       = ensoCache?.sintese_pt        ?? PREVISAO_2026.enso;
+  const ensoDataEmissao = ensoCache?.data_emissao      ?? PREVISAO_2026.enso_data_emissao;
+  const ensoStatus      = ensoCache?.status;
+
   try {
     const { readFileSync, existsSync } = await import("fs");
     const { join } = await import("path");
@@ -293,6 +305,8 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
     return {
       fonte:           fonteLabel,
       fonte_dinamica:  true,
+      numero_boletim:  typeof ultimo.numero === "number" ? ultimo.numero : undefined,
+      data_boletim:    typeof ultimo.data === "string" ? ultimo.data : undefined,
       manaus_pico_cheia: {
         media:     manaus.cota_prevista_m,
         ic80_min:  manaus.ic80_min_m,
@@ -302,15 +316,20 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
       manacapuru_pico:  manacapuru?.cota_prevista_m  ?? PREVISAO_2026.manacapuru_pico,
       itacoatiara_pico: itacoatiara?.cota_prevista_m ?? PREVISAO_2026.itacoatiara_pico,
       parintins_pico:   parintins?.cota_prevista_m,
-      enso:             PREVISAO_2026.enso,
+      enso:                ensoTexto,
+      enso_data_emissao:   ensoDataEmissao,
+      enso_status:         ensoStatus,
       anomalia_pp_negro:   findPP("Negro"),
       anomalia_pp_madeira: findPP("Madeira"),
     };
   } catch {
     return {
       ...PREVISAO_2026,
-      fonte:          PREVISAO_2026.fonte + " (fallback)",
-      fonte_dinamica: false,
+      enso:                ensoTexto,
+      enso_data_emissao:   ensoDataEmissao,
+      enso_status:         ensoStatus,
+      fonte:               PREVISAO_2026.fonte + " (fallback)",
+      fonte_dinamica:      false,
     };
   }
 }

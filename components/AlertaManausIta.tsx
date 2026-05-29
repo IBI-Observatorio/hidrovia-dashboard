@@ -1,8 +1,26 @@
 ﻿"use client";
 
 import { AlertTriangle, CheckCircle, XCircle, Info } from "lucide-react";
-import { DADOS_ATUAIS, type DadosEstacao } from "@/lib/dados-historicos";
+import { DADOS_ATUAIS, PREVISAO_2026, type DadosEstacao } from "@/lib/dados-historicos";
 import { riscoDescasamento } from "@/lib/calcula-idn";
+import type { Previsao2026 } from "@/lib/fetch-dados";
+
+const MESES_PT = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+
+// "2026-05-26" → "26/mai/2026". Aceita também formatos tipo "05/05/2026" e
+// devolve o input sem mudança quando não reconhecer (failsafe).
+function formataDataBoletim(data: string | undefined): string {
+  if (!data) return "—";
+  const iso = data.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (iso) {
+    const [, y, m, d] = iso;
+    return `${d}/${MESES_PT[parseInt(m, 10) - 1]}/${y}`;
+  }
+  return data;
+}
+
+const fmt = (n: number) => n.toFixed(2).replace(".", ",");
+const pct = (p: number) => `${Math.round(p * 100)}%`;
 
 const ICONE_RISCO = {
   NORMAL:   <CheckCircle className="text-verde" size={22} />,
@@ -45,13 +63,21 @@ function MetricRow({
 export default function AlertaManausIta({
   dados = DADOS_ATUAIS,
   idn,
+  previsao,
 }: {
   dados?: Record<string, DadosEstacao>;
   idn?: number;
+  previsao?: Previsao2026;
 }) {
   const mao = dados.Manaus;
   const ita = dados.Itacoatiara;
   const idnAtual = idn ?? 0;
+  // Fallback hardcoded só dispara se o componente for usado fora da página
+  // /monitor (que sempre passa `previsao` do cache SGB).
+  const prev: Previsao2026 = previsao ?? {
+    ...PREVISAO_2026,
+    fonte_dinamica: false,
+  };
   const risco    = riscoDescasamento(mao.cota_m, ita.cota_m, mao.delta_2025, ita.delta_2025);
 
   const abaixoGatilho = mao.cota_m < 17.7;
@@ -136,23 +162,33 @@ export default function AlertaManausIta({
             </div>
           </div>
 
-          {/* Previsão SGB */}
+          {/* Previsão SGB — alimentado pelo cache de boletins (data/boletins_sgb_cache.json),
+              atualizado pelo cron semanal (scripts/pipeline-sace.py → /api/sgb). */}
           <div className="bg-azul-marinho rounded-lg p-3">
-            <p className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-2">
-              Previsão SGB (18° Boletim, 05/mai/2026)
+            <p className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <span>
+                Previsão SGB ({prev.numero_boletim ?? "?"}° Boletim, {formataDataBoletim(prev.data_boletim)})
+              </span>
+              {!prev.fonte_dinamica && (
+                <span className="text-[9px] font-bold uppercase px-1 py-0.5 rounded bg-gray-800 text-gray-500 border border-gray-700">
+                  fallback
+                </span>
+              )}
             </p>
             <div className="space-y-1 text-xs">
               <div className="flex justify-between">
                 <span className="text-gray-400">Pico cheia Manaus</span>
-                <span className="text-verde font-bold">28,23 m (IC80: 27,69–28,76)</span>
+                <span className="text-verde font-bold">
+                  {fmt(prev.manaus_pico_cheia.media)} m (IC80: {fmt(prev.manaus_pico_cheia.ic80_min)}–{fmt(prev.manaus_pico_cheia.ic80_max)})
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Prob. acima de 27,5 m</span>
-                <span className="text-verde font-bold">96%</span>
+                <span className="text-verde font-bold">{pct(prev.manaus_pico_cheia.prob_27_5)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">ENSO</span>
-                <span className="text-ouro font-bold">El Niño emergindo (61%)</span>
+                <span className="text-ouro font-bold">{prev.enso}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Mínima Itacoatiara 2026</span>
