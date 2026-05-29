@@ -165,6 +165,10 @@ export default function IndicadorPage() {
               <BlocoDiagnosticos data={indicador.diagnosticos_estatisticos} />
             )}
 
+            {indicador.analise_incerteza && (
+              <BlocoAnaliseIncerteza data={indicador.analise_incerteza} />
+            )}
+
             {indicador.track_record?.length > 0 && (
               <TrackRecord
                 registros={indicador.track_record}
@@ -288,8 +292,25 @@ function CardPrevisaoAtual({ card }) {
           <div className="mt-0.5 text-2xl font-bold tabular-nums" style={{ color: dirCor }}>
             {fmtPp(card.var12m_prevista_pp)}
           </div>
-          <div className="text-xs text-gray-400 tabular-nums">
-            IC 80%: [{fmtPp(card.intervalo_inferior_pp)}, {fmtPp(card.intervalo_superior_pp)}]
+          <div className="mt-1 space-y-0.5 text-xs text-gray-400 tabular-nums">
+            <div>
+              <span className="text-gray-500">IC 80% conformal:</span>{' '}
+              [{fmtPp(card.intervalo_inferior_pp)}, {fmtPp(card.intervalo_superior_pp)}]
+            </div>
+            {card.ic50_inferior_pp != null && (
+              <div>
+                <span className="text-gray-500">IC 50% Gaussiano (via RMSE):</span>{' '}
+                [{fmtPp(card.ic50_inferior_pp)}, {fmtPp(card.ic50_superior_pp)}]
+              </div>
+            )}
+            {card.prob_var12m_positiva != null && (
+              <div>
+                <span className="text-gray-500">P(var12m {'>'} 0):</span>{' '}
+                <span className="text-gray-200">
+                  {(card.prob_var12m_positiva * 100).toFixed(1)}%
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -359,6 +380,136 @@ function BlocoDiagnosticos({ data }) {
       {data.nota_amostra_recente && (
         <p className="mt-3 rounded-lg border border-gray-700 bg-gray-900/40 px-3 py-2 text-[11px] leading-relaxed text-gray-400">
           <span className="font-semibold text-gray-300">Nota.</span> {data.nota_amostra_recente}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─── Análise de incerteza (por que IC80 é largo + roadmap) ───────────────
+function BlocoAnaliseIncerteza({ data }) {
+  if (!data) return null;
+  return (
+    <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br
+                    from-amber-950/15 via-gray-900/60 to-gray-900/60 p-6">
+      <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+        <AlertTriangle className="h-5 w-5 text-amber-400" />
+        Análise de incerteza — por que a banda IC 80% é tão larga
+      </h2>
+
+      {data.tldr && (
+        <p className="mb-5 rounded-lg border border-amber-500/30 bg-amber-950/20 px-4 py-3 text-sm leading-relaxed text-amber-100/90">
+          <span className="font-semibold text-amber-200">TL;DR.</span> {data.tldr}
+        </p>
+      )}
+
+      {data.comparacao_marginal?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            IC do modelo vs distribuição marginal histórica
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <tbody>
+                {data.comparacao_marginal.map((r, i) => {
+                  const destaque = /raz[ãa]o/i.test(r.label);
+                  return (
+                    <tr key={i} className={`border-b border-gray-800/50 ${destaque ? 'bg-amber-950/30' : ''}`}>
+                      <td className="px-3 py-2 text-gray-300">{r.label}</td>
+                      <td className={`px-3 py-2 text-right tabular-nums font-medium ${destaque ? 'text-amber-300' : 'text-gray-200'}`}>
+                        {r.valor}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {data.leituras_alternativas?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            Leituras alternativas (mais informativas para o decisor)
+          </h3>
+          <div className="space-y-2">
+            {data.leituras_alternativas.map((r, i) => (
+              <div key={i} className="rounded-lg border border-gray-700 bg-gray-900/40 p-3">
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <span className="text-sm text-gray-200">{r.label}</span>
+                  <span className="text-sm font-semibold text-gray-100 tabular-nums">{r.valor}</span>
+                </div>
+                {r.obs && (
+                  <p className="mt-1 text-[11px] leading-relaxed text-gray-500">{r.obs}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {data.leitura_decisor && (
+        <div className="mb-5 rounded-lg border border-gray-700 bg-gray-900/40 p-4">
+          <div className="mb-1 text-xs uppercase tracking-wider text-gray-400">
+            Leitura para o decisor
+          </div>
+          <p className="text-sm leading-relaxed text-gray-300">{data.leitura_decisor}</p>
+        </div>
+      )}
+
+      {data.porque_amplo?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            Por que a banda fica larga
+          </h3>
+          <ul className="space-y-2">
+            {data.porque_amplo.map((t, i) => (
+              <li key={i} className="text-sm text-gray-300 leading-relaxed">
+                <span className="mr-2 text-amber-400">·</span>
+                <Markdown source={t} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {data.roadmap_reducao?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            Roadmap de redução de incerteza (re-test mai/2028)
+          </h3>
+          <div className="space-y-3">
+            {data.roadmap_reducao.map((r, i) => (
+              <div key={i} className="rounded-lg border border-gray-700 bg-gray-900/40 p-4">
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <span className="text-sm font-semibold text-gray-100">
+                    <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-[10px] text-amber-300 font-bold">{i + 1}</span>
+                    {r.tecnica}
+                  </span>
+                  {r.ref && (
+                    <span className="text-[10px] text-gray-500 italic">{r.ref}</span>
+                  )}
+                </div>
+                {r.ganho_esperado && (
+                  <div className="mt-1 text-xs text-amber-200/90">
+                    <span className="text-gray-500 mr-1">Ganho esperado:</span>
+                    {r.ganho_esperado}
+                  </div>
+                )}
+                {r.como && (
+                  <p className="mt-1.5 text-xs leading-relaxed text-gray-400">{r.como}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {data.compromisso && (
+        <p className="rounded-lg border border-gray-700 bg-gray-900/40 px-3 py-2 text-[11px] leading-relaxed text-gray-400">
+          <span className="font-semibold text-gray-300">Compromisso. </span>
+          <Markdown source={data.compromisso} />
         </p>
       )}
     </div>
