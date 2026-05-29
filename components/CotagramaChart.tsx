@@ -196,7 +196,6 @@ const OPCOES = [
   { id: "manaus",      label: "Manaus — Rio Negro (2016–2026)" },
   { id: "itacoatiara", label: "Itacoatiara — Rio Amazonas (2016–2026)" },
   { id: "humaita",     label: "Humaitá — Rio Madeira" },
-  { id: "borba",       label: "Borba — Rio Madeira (2016–2026)" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -299,19 +298,6 @@ export default function CotagramaChart() {
             p10={LIMIARES.Itacoatiara.p10}
             p90={LIMIARES.Itacoatiara.p90}
             mediana={LIMIARES.Itacoatiara.mediana}
-          />
-        </div>
-      )}
-
-      {opcao === "borba" && (
-        <div>
-          <p className="text-blue-300 text-sm font-semibold mb-2">Borba — Rio Madeira (proxy Madeira médio)</p>
-          <ChartHistorico
-            estacao="Borba"
-            domain={[2, 22]}
-            p10={LIMIARES.Borba.p10}
-            p90={LIMIARES.Borba.p90}
-            mediana={LIMIARES.Borba.mediana}
           />
         </div>
       )}
