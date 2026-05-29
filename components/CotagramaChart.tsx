@@ -197,7 +197,6 @@ const OPCOES = [
   { id: "itacoatiara", label: "Itacoatiara — Rio Amazonas (2016–2026)" },
   { id: "humaita",     label: "Humaitá — Rio Madeira" },
   { id: "borba",       label: "Borba — Rio Madeira (2016–2026)" },
-  { id: "manacapuru",  label: "Manacapuru — Rio Solimões (2016–2026)" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -313,19 +312,6 @@ export default function CotagramaChart() {
             p10={LIMIARES.Borba.p10}
             p90={LIMIARES.Borba.p90}
             mediana={LIMIARES.Borba.mediana}
-          />
-        </div>
-      )}
-
-      {opcao === "manacapuru" && (
-        <div>
-          <p className="text-blue-300 text-sm font-semibold mb-2">Manacapuru — Rio Solimões (barômetro da cheia)</p>
-          <ChartHistorico
-            estacao="Manacapuru"
-            domain={[5, 22]}
-            p10={LIMIARES.Manacapuru.p10}
-            p90={LIMIARES.Manacapuru.p90}
-            mediana={LIMIARES.Manacapuru.mediana}
           />
         </div>
       )}
