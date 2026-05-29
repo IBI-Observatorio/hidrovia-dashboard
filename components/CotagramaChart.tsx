@@ -14,7 +14,14 @@ import { LIMIARES } from "@/lib/limiares";
 // ---------------------------------------------------------------------------
 
 function normalizaData(iso: string): string {
-  return iso.slice(5); // "MM-DD"
+  return iso.slice(5); // "MM-DD" (chave interna p/ merge entre anos)
+}
+
+// "MM-DD" → "DD/MM" só para EXIBIÇÃO (eixo X e tooltip). A chave `md` segue
+// em "MM-DD" porque é usada para ordenar e cruzar os anos.
+function mdParaBR(md: string): string {
+  const [m, d] = md.split("-");
+  return d && m ? `${d}/${m}` : md;
 }
 
 function buildSerie(dados: Record<string, number>, ano: number) {
@@ -80,11 +87,12 @@ function ChartHumaita() {
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={dados} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
-        <XAxis dataKey="md" tick={{ fill: "#9CA3AF", fontSize: 11 }} />
+        <XAxis dataKey="md" tick={{ fill: "#9CA3AF", fontSize: 11 }} tickFormatter={mdParaBR} />
         <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={[8, 25]} />
         <Tooltip
           contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
           formatter={(v: unknown) => [`${v} m`, ""]}
+          labelFormatter={(l) => mdParaBR(String(l))}
         />
         <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
         <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
@@ -145,12 +153,13 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
             dataKey="md"
             tick={{ fill: "#9CA3AF", fontSize: 10 }}
             interval={Math.floor(serie.length / 10)}
+            tickFormatter={mdParaBR}
           />
           <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={domain} />
           <Tooltip
             contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
             formatter={(v: unknown) => [`${v} m`, ""]}
-            labelFormatter={(l) => `Dia ${l}`}
+            labelFormatter={(l) => mdParaBR(String(l))}
           />
           <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
           <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
