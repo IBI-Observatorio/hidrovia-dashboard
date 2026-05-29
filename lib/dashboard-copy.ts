@@ -167,16 +167,11 @@ export const dashboardCopy = {
       label: "Selecione a estação ou par de comparação",
       options: [
         {
-          value: "curicuriari-humaita",
-          label: "SGC × Humaitá",
-          caption: "Comparação Norte–Sul: dois extremos da bacia",
-          isDefault: true,
-        },
-        {
           value: "manaus-itacoatiara",
           label: "Manaus × Itacoatiara",
           caption:
             "Trecho de navegação: leitura conjunta a montante e a jusante",
+          isDefault: true,
         },
         {
           value: "individual",
@@ -205,12 +200,10 @@ export const dashboardCopy = {
       items: [
         {
           label: "Cheia esperada em Manaus",
-          value: "28,23 m",
           context: "Pico previsto para o ciclo de 2026.",
         },
         {
           label: "Estiagem esperada em Itacoatiara",
-          value: "entre 4,10 m e 5,15 m",
           context:
             "Faixa de mínima projetada — abaixo do limite operacional típico para comboios graneleiros de maior calado.",
         },
