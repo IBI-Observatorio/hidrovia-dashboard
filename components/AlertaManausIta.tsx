@@ -154,9 +154,9 @@ export default function AlertaManausIta({
               <div>
                 <p className="text-ouro text-xs font-semibold mb-1">Referência 2024</p>
                 <p className="text-gray-300 text-xs leading-relaxed">
-                  Quando Manaus cruzou abaixo de 17,7 m em 10/set/2024, Itacoatiara
-                  ainda <strong className="text-white">caiu por mais 22 dias</strong>, atingindo
-                  mínima histórica de −0,17 m em 31/out/2024 — 22 dias após a mínima de Manaus.
+                  Quando Manaus atingiu sua mínima histórica (12,11 m) em 9/out/2024,
+                  Itacoatiara ainda <strong className="text-white">caiu por mais 22 dias</strong>,
+                  marcando sua própria mínima de −0,17 m em 31/out/2024.
                 </p>
               </div>
             </div>
