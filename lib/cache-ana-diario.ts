@@ -30,17 +30,20 @@ import {
 import type { DadosEstacao } from "./dados-historicos";
 import type { EstacaoComDOY } from "./sub-bacias";
 import type { EstacaoVazao } from "./sub-bacias-vazao";
+import { calculaIDN } from "./calcula-idn";
 
 export interface DadosDiariosANA {
   dados:          Record<string, DadosEstacao>;
   cotasIDN:       Partial<Record<EstacaoComDOY, CotaIDN>>;
   vazoesIDN:      Partial<Record<EstacaoVazao,  VazaoIDN>>;
   serieCaracarai: { data: string; cota_m: number }[];
+  idn_atual?:     number;   // IDN calculado de cotasIDN — mesma fonte do gauge
 }
 
 interface CacheArquivo extends DadosDiariosANA {
   data:       string; // YYYY-MM-DD em America/Manaus
   fetched_em: string; // ISO timestamp UTC
+  // idn_atual herdado de DadosDiariosANA
 }
 
 function hojeManaus(): string {
@@ -82,6 +85,7 @@ function snapshotDe(cache: CacheArquivo): DadosDiariosANA {
     cotasIDN:       cache.cotasIDN,
     vazoesIDN:      cache.vazoesIDN,
     serieCaracarai: cache.serieCaracarai,
+    idn_atual:      cache.idn_atual,
   };
 }
 
@@ -113,6 +117,19 @@ export async function obterDadosDiariosANA(): Promise<DadosDiariosANA> {
     return { dados, cotasIDN, vazoesIDN, serieCaracarai };
   }
 
+  // Computa IDN com os cotasIDN ao vivo — mesma lógica do gauge na UI
+  const dataRef =
+    Object.values(cotasIDN)
+      .map((v) => v?.ultima_atualizacao ?? "")
+      .filter(Boolean).sort().reverse()[0] ?? hoje;
+  const idnResult = calculaIDN(
+    Object.fromEntries(
+      Object.entries(cotasIDN).map(([k, v]) => [k, v?.cota_m])
+    ) as Parameters<typeof calculaIDN>[0],
+    dataRef
+  );
+  const idn_atual = idnResult.idn;
+
   const algumaViva = Object.values(dados).some(
     (d) => d.ultima_atualizacao >= hoje
   );
@@ -124,8 +141,9 @@ export async function obterDadosDiariosANA(): Promise<DadosDiariosANA> {
       cotasIDN,
       vazoesIDN,
       serieCaracarai,
+      idn_atual,
     });
   }
 
-  return { dados, cotasIDN, vazoesIDN, serieCaracarai };
+  return { dados, cotasIDN, vazoesIDN, serieCaracarai, idn_atual };
 }
