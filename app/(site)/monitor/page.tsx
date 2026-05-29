@@ -3,6 +3,7 @@ import GaugeCard from "@/components/GaugeCard";
 import CotagramaChart from "@/components/CotagramaChart";
 import DessincronizacaoGauge from "@/components/DessincronizacaoGauge";
 import IDNGrafico90Dias from "@/components/IDNGrafico90Dias";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import BannerDefasagem from "@/components/BannerDefasagem";
 import AlertaManausIta from "@/components/AlertaManausIta";
 import InsightsPanel from "@/components/InsightsPanel";
@@ -22,6 +23,7 @@ import { detectaFaseCiclo, calculaIRC } from "@/lib/irc";
 import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
 import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
 import { geraInsights } from "@/lib/gera-insights";
+import { lerInsightsAI } from "@/lib/insights-ai-cache";
 import { dashboardCopy } from "@/lib/dashboard-copy";
 import { navigationCopy } from "@/lib/navigation-copy";
 import { lerSerieIDN } from "@/lib/ana-idn-series";
@@ -79,6 +81,7 @@ export default async function MonitorPage() {
 
   const insights = geraInsights(dados);
   const criticos = insights.filter((i) => i.tipo === "critico").length;
+  const insightsAICache = lerInsightsAI();
 
   // ─── IRC snapshot — IDN com todas as estações Norte+Sul (renormaliza se SGC faltar)
   // IMPORTANTE: usar APENAS cotasIDN (fetchCotasIDN, MA-7d) para o IDN.
@@ -305,9 +308,13 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel2.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel2.subtitle}</p>
             </div>
-            <DessincronizacaoGauge dados={dados} cotasIDN={cotasIDN} vazoesIDN={vazoesIDN} serieIDN={serieIDN.serie} />
+            <ErrorBoundary titulo="O índice de dessincronização">
+              <DessincronizacaoGauge dados={dados} cotasIDN={cotasIDN} vazoesIDN={vazoesIDN} serieIDN={serieIDN.serie} />
+            </ErrorBoundary>
             <div className="mt-6">
-              <IDNGrafico90Dias serieIDN={serieIDN.serie} />
+              <ErrorBoundary titulo="A trajetória recente do IDN">
+                <IDNGrafico90Dias serieIDN={serieIDN.serie} />
+              </ErrorBoundary>
             </div>
             <p className="text-gray-500 text-xs mt-3 max-w-2xl">
               {dashboardCopy.panel2.interpretation}
@@ -320,7 +327,7 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel3.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel3.subtitle}</p>
             </div>
-            <AlertaManausIta dados={dados} idn={idnAtual} />
+            <AlertaManausIta dados={dados} idn={idnAtual} previsao={previsao} />
 
             {/* Cross-link → /caso-2024 */}
             <div className="mt-3 bg-azul-medio/50 border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between gap-4">
@@ -401,7 +408,14 @@ export default async function MonitorPage() {
                   </div>
 
                   <div className="bg-ouro/10 border border-ouro/30 rounded-lg p-3">
-                    <p className="text-ouro text-xs font-semibold">ENSO — mai/2026</p>
+                    <p className="text-ouro text-xs font-semibold">
+                      ENSO{previsao.enso_data_emissao ? (() => {
+                        const m = previsao.enso_data_emissao.match(/^(\d{4})-(\d{2})-/);
+                        if (!m) return "";
+                        const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+                        return ` — ${meses[parseInt(m[2], 10) - 1]}/${m[1]}`;
+                      })() : ""}
+                    </p>
                     <p className="text-white text-sm">{previsao.enso}</p>
                   </div>
 
@@ -422,7 +436,11 @@ export default async function MonitorPage() {
                 <p className="text-gray-600 text-xs mt-3">{dashboardCopy.panel5.forecast.source}</p>
               </div>
 
-              <InsightsPanel dados={dados} />
+              <InsightsPanel
+                dados={dados}
+                insightsAI={insightsAICache?.insights}
+                insightsAIGeradoEm={insightsAICache?.gerado_em}
+              />
             </div>
           </section>
 
@@ -469,14 +487,6 @@ export default async function MonitorPage() {
               dessincronização Norte-Sul 2026 produzida em 07–08/mai/2026.
               API ANA descontinuada em 30/jun/2026 — migração para nova API SGB prevista.
             </p>
-            <div className="flex flex-wrap gap-4 mt-2 text-gray-600">
-              <a href="/api/ana?estacao=Manaus" target="_blank" rel="noopener" className="hover:text-gray-400">
-                API ANA →
-              </a>
-              <a href="/api/insights" target="_blank" rel="noopener" className="hover:text-gray-400">
-                API Insights →
-              </a>
-            </div>
           </section>
 
         </main>

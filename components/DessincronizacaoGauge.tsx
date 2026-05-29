@@ -16,41 +16,44 @@ import type { CotaIDN, VazaoIDN } from "@/lib/fetch-dados";
 import { DADOS_ATUAIS, type DadosEstacao } from "@/lib/dados-historicos";
 import type { PontoIDN } from "@/lib/ana-idn-series";
 
-// Velocímetro SVG simples
+// Velocímetro SVG. As zonas coloridas seguem `CALIBRACAO_IDN.fronteiras`
+// (GMM-3comp, série 2016–2023) — mesma fonte de verdade da `classificaIDN`.
 function Velocimetro({ idn }: { idn: number }) {
-  // Mapeia -1..+1 para 0..180 graus (0 = extremo esq, 180 = extremo dir).
-  // Clampa apenas a visualização — o valor numérico exibido pode extrapolar.
-  const idnVis = Math.max(-1, Math.min(1, idn));
-  const angle = 90 + idnVis * 90; // graus
-  const rad = (angle * Math.PI) / 180;
-  const cx = 100, cy = 90, r = 70;
-  const px = cx + r * Math.cos(Math.PI - rad);
-  const py = cy - r * Math.sin(Math.PI - rad);
+  const idnVis = Number.isFinite(idn) ? Math.max(-1, Math.min(1, idn)) : 0;
+  const cx = 100, cy = 90, rArc = 90, rPtr = 70;
 
-  // Cor do ponteiro — usa fronteiras calibradas (GMM)
-  const fSul   = CALIBRACAO_IDN.fronteiras[0];
-  const fNorte = CALIBRACAO_IDN.fronteiras[1];
+  function pt(v: number, r: number) {
+    const theta = ((90 - v * 90) * Math.PI) / 180;
+    return {
+      x: +(cx + r * Math.cos(theta)).toFixed(2),
+      y: +(cy - r * Math.sin(theta)).toFixed(2),
+    };
+  }
+
+  const fSul   = CALIBRACAO_IDN.fronteiras[0];        // ≈ −0,15
+  const fNorte = CALIBRACAO_IDN.fronteiras[1];        // ≈ +0,56
+  const pSul   = pt(fSul, rArc);
+  const pNorte = pt(fNorte, rArc);
+  const ptr    = pt(idnVis, rPtr);
+
   const cor = idn > fNorte ? "#D4922A" : idn < fSul ? "#A0153E" : "#00C04B";
 
   return (
-    // viewBox expandido 16px acima (y=-16) para dar espaço à label "0 Neutro"
-    // acima da faixa verde (arco topo em y≈0, stroke 18px → borda superior em y≈−9)
-    <svg viewBox="0 -16 200 116" className="w-full max-w-[220px] mx-auto">
-      {/* Arco fundo */}
+    <svg viewBox="-4 -8 208 124" className="w-full max-w-[240px] mx-auto">
       <path d="M 10 90 A 90 90 0 0 1 190 90" fill="none" stroke="#2c2c2c" strokeWidth="18" strokeLinecap="round" />
-      {/* Zona Sul (vermelho, -1 a -0.2) */}
-      <path d="M 10 90 A 90 90 0 0 1 64 23" fill="none" stroke="#A0153E" strokeWidth="18" strokeLinecap="round" opacity={0.7} />
-      {/* Zona Neutro (verde, -0.2 a +0.2) */}
-      <path d="M 64 23 A 90 90 0 0 1 136 23" fill="none" stroke="#00C04B" strokeWidth="18" strokeLinecap="round" opacity={0.7} />
-      {/* Zona Norte (ouro, +0.2 a +1) */}
-      <path d="M 136 23 A 90 90 0 0 1 190 90" fill="none" stroke="#D4922A" strokeWidth="18" strokeLinecap="round" opacity={0.7} />
-      {/* Ponteiro */}
-      <line x1={cx} y1={cy} x2={px} y2={py} stroke={cor} strokeWidth="3" strokeLinecap="round" />
+      <path d={`M 10 90 A 90 90 0 0 1 ${pSul.x} ${pSul.y}`}
+            fill="none" stroke="#A0153E" strokeWidth="18" strokeLinecap="round" opacity={0.75} />
+      <path d={`M ${pSul.x} ${pSul.y} A 90 90 0 0 1 ${pNorte.x} ${pNorte.y}`}
+            fill="none" stroke="#00C04B" strokeWidth="18" strokeLinecap="round" opacity={0.75} />
+      <path d={`M ${pNorte.x} ${pNorte.y} A 90 90 0 0 1 190 90`}
+            fill="none" stroke="#D4922A" strokeWidth="18" strokeLinecap="round" opacity={0.75} />
+
+      <line x1={cx} y1={cy} x2={ptr.x} y2={ptr.y} stroke={cor} strokeWidth="3" strokeLinecap="round" />
       <circle cx={cx} cy={cy} r="5" fill={cor} />
-      {/* Labels — "0 Neutro" posicionada acima da borda superior do arco (y≈−9) */}
-      <text x="8"   y="108" fill="#A0153E" fontSize="9" textAnchor="middle">−1 Sul</text>
-      <text x="100" y="-4"  fill="#00C04B" fontSize="9" textAnchor="middle">0 Neutro</text>
-      <text x="192" y="108" fill="#D4922A" fontSize="9" textAnchor="end">Norte +1</text>
+
+      <text x="2"   y="108" fill="#6B7280" fontSize="9" textAnchor="start">−1</text>
+      <text x="100" y="108" fill="#6B7280" fontSize="9" textAnchor="middle">0</text>
+      <text x="198" y="108" fill="#6B7280" fontSize="9" textAnchor="end">+1</text>
     </svg>
   );
 }
@@ -134,6 +137,14 @@ export default function DessincronizacaoGauge({
               {classAtual.regime}
             </p>
             <p className="text-gray-400 text-sm">{classAtual.descricao}</p>
+            <p className="text-gray-600 text-[10px] mt-2 tracking-wide">
+              Fronteiras GMM:{" "}
+              <span className="text-vermelho/80">≤ {CALIBRACAO_IDN.fronteiras[0].toFixed(2).replace(".", ",")}</span>
+              {" · "}
+              <span className="text-verde/80">neutro</span>
+              {" · "}
+              <span className="text-ouro/80">≥ +{CALIBRACAO_IDN.fronteiras[1].toFixed(2).replace(".", ",")}</span>
+            </p>
           </div>
         </div>
 

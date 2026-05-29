@@ -100,6 +100,11 @@ export const CALIBRACAO_HMM: CalibracaoHMM = {
 
 // Classifica um IDN observado no estado mais provável do HMM (max gauss)
 export function estadoHMM(idn: number): { indice: number; nome: string; probabilidades: number[] } {
+  // Sem IDN válido (ex.: nenhuma cota disponível), assume regime Sincronizado.
+  if (!Number.isFinite(idn)) {
+    const indice = 1;
+    return { indice, nome: CALIBRACAO_HMM.nomes[indice], probabilidades: [0, 1, 0] };
+  }
   const probs = CALIBRACAO_HMM.componentes.map(c => {
     return Math.exp(-((idn - c.mu) ** 2) / (2 * c.sigma * c.sigma)) / (c.sigma * Math.sqrt(2 * Math.PI));
   });
