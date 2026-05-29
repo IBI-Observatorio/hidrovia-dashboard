@@ -163,16 +163,23 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
           />
           <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
           <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
-          <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10 }} />
+          {/* P10 ancorado à esquerda: em Manaus o P10 (17,38) fica a só 0,32 m
+              da referência 17,7 m, então separamos os rótulos horizontalmente
+              (P10 à esquerda, Ref. à direita) para não sobrepor. */}
+          <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10, position: "insideBottomLeft" }} />
           <ReferenceLine y={mediana} stroke="#9CA3AF" strokeDasharray="4 2" label={{ value: "Mediana", fill: "#9CA3AF", fontSize: 10 }} />
           <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10 }} />
           {gatilho_lws && (
             <ReferenceLine y={gatilho_lws} stroke="#D4922A" strokeDasharray="6 3"
-              label={{ value: "Ref. 17,7 m", fill: "#D4922A", fontSize: 10 }} />
+              label={{ value: "Ref. 17,7 m", fill: "#D4922A", fontSize: 10, position: "insideTopRight" }} />
           )}
           <Line dataKey="2024" stroke="#A0153E" strokeWidth={1.5} strokeDasharray="5 3" dot={false} name="2024 (mega-seca)" connectNulls={false} />
           <Line dataKey="2025" stroke="#00C04B" strokeWidth={1.5} strokeDasharray="5 3" dot={false} name="2025" connectNulls={false} />
-          <Line dataKey="2026" stroke="#60A5FA" strokeWidth={2.5} dot={false} name="2026" connectNulls={false} />
+          {/* connectNulls: a série 2026 mistura fontes (porto jan–abr, semanal,
+              diário ANA a partir de mai) e tem dias faltando que outros anos têm.
+              Como `mesclaAPI` une as datas de todos os anos, esses buracos viram
+              null e quebrariam a linha — então ligamos os pontos para 2026. */}
+          <Line dataKey="2026" stroke="#60A5FA" strokeWidth={2.5} dot={false} name="2026" connectNulls={true} />
         </LineChart>
       </ResponsiveContainer>
       <p className="text-gray-500 text-xs mt-1">{totais}</p>
@@ -326,7 +333,7 @@ export default function CotagramaChart() {
       <p className="text-gray-500 text-xs mt-3">
         Faixa sombreada = P10–P90 histórico. Linhas tracejadas = referências percentílicas.
         {(opcao === "manaus" || opcao === "itacoatiara" || opcao === "duplo") &&
-          " Série diária 2016–2026 via CSV ANA."
+          " Histórico 2016–2025 via CSV; 2026 atualizado diariamente pela API da ANA."
         }
       </p>
     </div>
