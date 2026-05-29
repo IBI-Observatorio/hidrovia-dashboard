@@ -27,7 +27,7 @@ import { lerInsightsAI } from "@/lib/insights-ai-cache";
 import { dashboardCopy } from "@/lib/dashboard-copy";
 import { navigationCopy } from "@/lib/navigation-copy";
 import { lerSerieIDN } from "@/lib/ana-idn-series";
-import { RefreshCw, Waves } from "lucide-react";
+import { Waves } from "lucide-react";
 import type { Estacao } from "@/lib/limiares";
 
 export const revalidate = 21600;
@@ -212,11 +212,6 @@ export default async function MonitorPage() {
                 {fonteANA
                   ? `API ANA · ${estacoesVivas}/${ESTACOES_ORDEM.length} ao vivo`
                   : "API ANA · dados estáticos"}
-              </span>
-
-              {/* Última atualização */}
-              <span className="inline-flex items-center gap-1 text-gray-500 text-[11px]">
-                <RefreshCw size={10} /> {ultimaAtualizacao}
               </span>
             </div>
 

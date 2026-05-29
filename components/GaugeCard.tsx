@@ -16,6 +16,13 @@ const SEMAFORO_CORES = {
   critico: { borda: "border-vermelho", badge: "bg-vermelho", texto: "Crítico" },
 };
 
+// "YYYY-MM-DD" → "DD/MM/YYYY" (padrão brasileiro). Reformata a string direto,
+// sem `new Date`, para não correr risco de deslocamento de fuso.
+function isoParaBR(iso: string): string {
+  const [y, m, d] = (iso ?? "").split("-");
+  return d && m && y ? `${d}/${m}/${y}` : iso;
+}
+
 const TOOLTIP_ESTACAO: Partial<Record<Estacao, string>> = {
   Manaus:      "Estação-referência histórica do Rio Negro. A marca de 17,7 m é associada historicamente ao início do período de baixas águas.",
   Itacoatiara: "Ponto de controle real da calha navegável (Tabocal). Em 2024, caiu 22 dias depois que Manaus já subia.",
@@ -146,7 +153,7 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
       </div>
 
       <p className="text-gray-500 text-xs text-right">
-        {dados.ultima_atualizacao}
+        {isoParaBR(dados.ultima_atualizacao)}
       </p>
     </div>
   );
