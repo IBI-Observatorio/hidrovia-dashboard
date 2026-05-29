@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
+import { lerSerieCotas } from "@/lib/ana-cotas-series";
 
 export const revalidate = 86400;
 
@@ -115,6 +116,38 @@ function lerCSVSimples(arquivo: string, anos?: Set<number>): Map<number, Ponto[]
 }
 
 
+// Série diária acumulada de cota (ana-cotas-series.json) → pontos de 2026.
+// É o histórico que cresce 1 ponto/dia a partir do cache ANA, dando densidade
+// diária à linha de 2026 sem depender do CSV semanal. Valores em metros.
+function lerCotasSeries2026(estacao: string): Ponto[] {
+  const serie = lerSerieCotas();
+  const arr = serie.estacoes[estacao] ?? [];
+  return arr
+    .filter((p) => p.data.startsWith("2026"))
+    .map((p) => ({ md: p.data.slice(5), cota_m: p.cota_m }));
+}
+
+// Leitura ANA ao vivo (cache diário do /monitor) → ponto "hoje" de 2026.
+// Fallback usado só enquanto a série acumulada ainda não tem ponto da estação
+// (ex.: deploy novo antes do primeiro acesso ao /monitor). Valores em metros.
+function lerLiveDiario(estacao: string): Ponto | null {
+  try {
+    const p = join(PROJECT_DATA, "ana-diario-cache.json");
+    if (!existsSync(p)) return null;
+    const cache = JSON.parse(readFileSync(p, "utf-8")) as {
+      data?: string;
+      dados?: Record<string, { cota_m?: number; ultima_atualizacao?: string }>;
+    };
+    const d = cache.dados?.[estacao];
+    if (!d || typeof d.cota_m !== "number") return null;
+    const data = d.ultima_atualizacao ?? cache.data;
+    if (!data?.startsWith("2026")) return null;
+    return { md: data.slice(5), cota_m: +d.cota_m.toFixed(2) };
+  } catch {
+    return null;
+  }
+}
+
 // Mescla sem duplicar md — extra complementa base
 function merge(base: Ponto[], extra: Ponto[]): Ponto[] {
   const mds = new Set(base.map((p) => p.md));
@@ -216,6 +249,17 @@ export async function GET(request: NextRequest) {
       if (ano === 2026) pts = merge(pts, todas2026);
       resultado[ano] = pts;
     }
+  }
+
+  // Estende a linha de 2026 com a série diária acumulada (ou, na ausência dela,
+  // ao menos o ponto de hoje), para não "parar" na última data do CSV estático.
+  if (anos.has(2026) && resultado["2026"]) {
+    let live2026 = lerCotasSeries2026(estacao);
+    if (live2026.length === 0) {
+      const p = lerLiveDiario(estacao);
+      if (p) live2026 = [p];
+    }
+    if (live2026.length) resultado["2026"] = merge(resultado["2026"], live2026);
   }
 
   return Response.json(resultado, {

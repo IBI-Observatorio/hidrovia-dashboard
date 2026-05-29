@@ -43,6 +43,7 @@ next-env.d.ts
 # runtime caches
 /data/ana-diario-cache.json
 /data/ana-idn-series.json
+/data/ana-cotas-series.json
 /data/boletins_sgb_cache.json
 /data/enso_cpc_cache.json
 /data/insights_ai_cache.json

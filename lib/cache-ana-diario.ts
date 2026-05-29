@@ -31,6 +31,7 @@ import type { DadosEstacao } from "./dados-historicos";
 import type { EstacaoComDOY } from "./sub-bacias";
 import type { EstacaoVazao } from "./sub-bacias-vazao";
 import { calculaIDN } from "./calcula-idn";
+import { anexaCotasSerie } from "./ana-cotas-series";
 
 export interface DadosDiariosANA {
   dados:          Record<string, DadosEstacao>;
@@ -97,7 +98,12 @@ function snapshotDe(cache: CacheArquivo): DadosDiariosANA {
 export async function obterDadosDiariosANA(): Promise<DadosDiariosANA> {
   const hoje  = hojeManaus();
   const cache = await carregaCache();
-  if (cache && cache.data === hoje) return snapshotDe(cache);
+  if (cache && cache.data === hoje) {
+    // Mesmo servindo do cache, mantém a série diária acumulada em dia
+    // (idempotente: só grava se ainda não tiver o ponto de hoje).
+    anexaCotasSerie(cache.dados);
+    return snapshotDe(cache);
+  }
 
   let dados:          Record<string, DadosEstacao>             = {};
   let cotasIDN:       Partial<Record<EstacaoComDOY, CotaIDN>>  = {};
@@ -143,6 +149,8 @@ export async function obterDadosDiariosANA(): Promise<DadosDiariosANA> {
       serieCaracarai,
       idn_atual,
     });
+    // Acumula a leitura do dia na série histórica de cota por estação.
+    anexaCotasSerie(dados);
   }
 
   return { dados, cotasIDN, vazoesIDN, serieCaracarai, idn_atual };
