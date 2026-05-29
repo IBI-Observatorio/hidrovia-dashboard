@@ -163,15 +163,15 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
           />
           <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
           <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
-          {/* P10 ancorado à esquerda: em Manaus o P10 (17,38) fica a só 0,32 m
-              da referência 17,7 m, então separamos os rótulos horizontalmente
-              (P10 à esquerda, Ref. à direita) para não sobrepor. */}
-          <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10, position: "insideBottomLeft" }} />
+          {/* Em Manaus o P10 (17,38) fica a só 0,32 m da referência 17,7 m.
+              Separamos verticalmente: Ref. 17,7 m ACIMA da sua linha (à direita),
+              P10 ABAIXO da sua linha (à esquerda). P90 alinhado à esquerda com P10. */}
+          <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10, position: "insideTopLeft" }} />
           <ReferenceLine y={mediana} stroke="#9CA3AF" strokeDasharray="4 2" label={{ value: "Mediana", fill: "#9CA3AF", fontSize: 10 }} />
-          <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10 }} />
+          <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10, position: "insideTopLeft" }} />
           {gatilho_lws && (
             <ReferenceLine y={gatilho_lws} stroke="#D4922A" strokeDasharray="6 3"
-              label={{ value: "Ref. 17,7 m", fill: "#D4922A", fontSize: 10, position: "insideTopRight" }} />
+              label={{ value: "Ref. 17,7 m", fill: "#D4922A", fontSize: 10, position: "insideBottomRight" }} />
           )}
           <Line dataKey="2024" stroke="#A0153E" strokeWidth={1.5} strokeDasharray="5 3" dot={false} name="2024 (mega-seca)" connectNulls={false} />
           <Line dataKey="2025" stroke="#00C04B" strokeWidth={1.5} strokeDasharray="5 3" dot={false} name="2025" connectNulls={false} />
