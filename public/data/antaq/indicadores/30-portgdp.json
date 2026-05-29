@@ -189,11 +189,76 @@
     "var12m_prevista_pp": 0.4644,
     "intervalo_inferior_pp": -4.0756,
     "intervalo_superior_pp": 5.0045,
+    "ic50_inferior_pp": -2.08,
+    "ic50_superior_pp": 3.01,
+    "rmse_implicito_pp": 3.77,
+    "prob_var12m_positiva": 0.549,
     "peso_dfm": 0.3157,
     "ultima_obs_pim_pf": "2026-02-01",
     "data_emissao": "2026-05-12",
     "modelo_dfm": "dfm_2026",
-    "headline_texto": "Para **abril de 2026**, projetamos variação interanual do PIM-PF Indústria Geral de **+0,46 pp** (IC 80%: −4,08 a +5,00 pp), com peso do componente portuário de **31,6%**. A previsão usa observações do PIM-PF até **fev/2026** e foi emitida em **12/mai/2026**."
+    "headline_texto": "Para **abril de 2026**, projetamos variação interanual do PIM-PF Indústria Geral de **+0,46 pp**. Em probabilidade direcional (Gaussiana via RMSE OOS), **P(var12m > 0) ≈ 55%** — leitura essencialmente neutra. Banda conformal IC 80% nominal: **−4,08 a +5,00 pp**; ver bloco *Análise de incerteza* abaixo para por que essa banda é tão larga e o que estamos fazendo a respeito."
+  },
+  "analise_incerteza": {
+    "tldr": "A banda conformal IC 80% para abr/2026 tem largura de 9,08 pp — 12% mais larga que a faixa central 80% empírica do próprio PIM-PF var12m em regime normal (8,09 pp, n=83 meses jan/2018–dez/2025 excluindo COVID). Em termos práticos: o modelo, no horizonte bimestral, não reduz a incerteza marginal sobre o próximo número. Isto é uma propriedade real do sinal, não bug do método — e tem caminhos concretos de melhoria.",
+    "comparacao_marginal": [
+      { "label": "Vol incondicional PIM-PF var12m (jan/2018–dez/2025, n=96)", "valor": "dp = 6,32 pp" },
+      { "label": "Vol regime normal (excl. COVID abr/2020–abr/2021, n=83)", "valor": "dp = 4,14 pp" },
+      { "label": "Faixa central 80% empírica (regime normal)", "valor": "−4,01 a +4,08 pp (largura 8,09 pp)" },
+      { "label": "IC 80% conformal do modelo (abr/2026)", "valor": "−4,08 a +5,00 pp (largura 9,08 pp)" },
+      { "label": "Razão largura modelo / largura marginal", "valor": "1,12 — modelo 12% mais largo que distribuição marginal" }
+    ],
+    "leituras_alternativas": [
+      {
+        "label": "IC 50% Gaussiano implícito (via RMSE OOS = 3,77 pp)",
+        "valor": "−2,08 a +3,01 pp",
+        "obs": "Mais apertado, mas só metade das realizações cairão dentro. Útil como faixa central; não substitui IC 80% para risk-on/risk-off."
+      },
+      {
+        "label": "P(var12m > 0) — probabilidade direcional",
+        "valor": "≈ 55% (Gaussiana com média = previsão, dp = RMSE)",
+        "obs": "Sinal direcional pouco informativo para abr/2026: dentro do intervalo [45%, 55%] o modelo não distingue alta de baixa com confiança útil."
+      }
+    ],
+    "leitura_decisor": "O IC 80% nominal cobre quase toda a distribuição marginal histórica do PIM-PF var12m. Para o decisor, isto significa: a previsão pontual carrega pouca informação adicional sobre a próxima observação além do que um analista já saberia olhando para a vol histórica. Tratar a previsão como referência ordinal (a indústria provavelmente fica em torno de +0,5 pp, não +5 ou −5), não como sinal de timing de ciclo.",
+    "porque_amplo": [
+      "**Sinal preditivo fraco.** O DM HLN p=0,75 já tinha indicado: a combinação não reduz erro pontual frente ao AR(1) puro. Quando o sinal é fraco, conformal honestamente abre a banda.",
+      "**Amostra de calibração pequena (n=29).** Cobertura empírica 100% num quantil empírico de n=29 tem alta variância. IC 95% Wilson sobre a cobertura: [88,3%, 100%] — mesmo no piso, está acima do nominal 80%, indicando sobre-conservadorismo estrutural.",
+      "**Autocorrelação residual (Ljung-Box p=0,007).** Viola exchangeability do split conformal padrão — o método compensa essa violação alargando a banda para preservar a garantia formal de cobertura."
+    ],
+    "roadmap_reducao": [
+      {
+        "tecnica": "CQR — Conformalized Quantile Regression",
+        "ref": "Romano, Patterson, Candès (2019)",
+        "ganho_esperado": "30–50% mais estreitas em regime calmo (bandas heterocedásticas)",
+        "como": "Treinar dois quantile regressors (q10 e q90) sobre F_t e var12m_{t}, calibrar conformal. Permite banda larga em regime de stress e estreita em regime calmo, em vez de largura única."
+      },
+      {
+        "tecnica": "ACI — Adaptive Conformal Inference online",
+        "ref": "Gibbs & Candès (2021)",
+        "ganho_esperado": "Convergência empírica ao nível nominal em janelas de 12–24 obs",
+        "como": "α ajusta-se com regra α_{t+1} = α_t + γ·(1{y_t ∉ band_t} − α). Dada cobertura 100% atual, α dispararia para baixo e bandas apertariam progressivamente conforme produção acumula observações."
+      },
+      {
+        "tecnica": "DFM com k≥2 fatores",
+        "ref": "Bai & Ng (2002) IC information criteria",
+        "ganho_esperado": "Captura granel × contêiner × exportação × importação como dimensões separadas; RMSE potencialmente 10–20% menor",
+        "como": "Reestimar via IC1/IC2 sobre as 35 séries. k=1 atual pode estar agregando demais."
+      },
+      {
+        "tecnica": "MIDAS — Mixed-Data Sampling",
+        "ref": "Ghysels, Sinko, Valkanov (2007)",
+        "ganho_esperado": "Incorporar dados ANTAQ intra-mês que hoje são ignorados até o mês fechar; estreita IC por reduzir vintage lag",
+        "como": "Bridge equations com lags polinomiais sobre dados semanais/quinzenais da ANTAQ."
+      },
+      {
+        "tecnica": "Variáveis exógenas adicionais",
+        "ref": "Bańbura, Giannone, Reichlin (2010) large DFM",
+        "ganho_esperado": "PMI manufatura (Markit), Focus expectativas (BCB), consumo de energia industrial (CCEE), Comex insumos — qualquer um pode reduzir variância residual",
+        "como": "Adicionar como blocos no DFM ou como features no AR(1) com seleção via LASSO/elastic net."
+      }
+    ],
+    "compromisso": "Implementação destes 5 caminhos está na fila para a re-validação pré-registrada de **mai/2028** (ver `compromisso_retest_2028.md`). Reduções de IC só serão publicadas após passar o critério de cobertura empírica em janela de teste independente — não aceitamos reduzir banda por construção e descobrir furos depois."
   },
   "diagnosticos_estatisticos": {
     "introducao": "Métricas reportadas sobre a janela completa de validação out-of-sample (rolling-origin walk-forward, jan/2018–out/2025, h=2 fixo). Comparações contra benchmarks calculadas no mesmo conjunto de origens.",
