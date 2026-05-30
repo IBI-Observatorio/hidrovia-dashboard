@@ -6,7 +6,11 @@ import * as fs from "fs";
 import * as path from "path";
 import type { InsightData } from "./gera-insights";
 
-const CACHE_PATH = path.join(process.cwd(), "data", "insights_ai_cache.json");
+// Lê do volume persistente em produção (mesmo DATA_DIR onde /api/cron/insights
+// grava). Em dev cai para ./data. Antes lia só de cwd/data, então o cache
+// gerado pelo cron nunca aparecia no Railway.
+const DATA_DIR   = process.env.DATA_DIR ?? path.join(process.cwd(), "data");
+const CACHE_PATH = path.join(DATA_DIR, "insights_ai_cache.json");
 
 export interface InsightsAICache {
   gerado_em:   string;   // ISO 8601

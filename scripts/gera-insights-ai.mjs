@@ -23,7 +23,7 @@ function carregaEnv() {
 carregaEnv();
 
 const CACHE_OUT = path.join(ROOT, "data", "insights_ai_cache.json");
-const MODELO    = "claude-sonnet-4-5";
+const MODELO    = "claude-haiku-4-5-20251001";
 
 function log(msg) {
   console.log(`[${new Date().toISOString()}] ${msg}`);

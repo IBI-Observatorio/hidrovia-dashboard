@@ -111,12 +111,29 @@ data de emissão não mudou). Consumido por `/monitor`.
 
 ## 🤖 INSIGHTS AI — semanal
 
+**Em produção roda sozinho** via cron do Railway na rota `app/api/cron/insights/route.ts`
+(terça, mesma infra do briefing). A rota busca níveis + IDN **ao vivo**, chama o
+Claude (`claude-haiku-4-5`) e grava o cache no **volume `DATA_DIR`** — que é de onde
+`lerInsightsAI()` lê. Protegida por `Authorization: Bearer $CRON_SECRET`.
+
+Configuração no Railway: `ANTHROPIC_API_KEY` e `CRON_SECRET` no service web; um cron
+service com schedule `0 11 * * 2` (terça 08:00 Manaus) chamando:
+
 ```bash
-node scripts/gera-insights-ai.mjs    # → data/insights_ai_cache.json
+curl -fsS -X POST -H "Authorization: Bearer $CRON_SECRET" \
+  "https://$RAILWAY_PUBLIC_DOMAIN/api/cron/insights"
 ```
 
-Usa a Claude API (lê `ANTHROPIC_API_KEY` do `.env.local`). Roda toda terça via
-`run-pipeline-sace.bat`.
+O script CLI continua existindo para rodar à mão / em dev:
+
+```bash
+node scripts/gera-insights-ai.mjs    # → data/insights_ai_cache.json (lê caches locais)
+```
+
+> ⚠️ O passo `gera-insights-ai.mjs` ainda está no `run-pipeline-sace.bat` (terça, na
+> máquina do Bruno). Com a rota no ar isso vira **redundante para produção** (e gasta
+> API 2×). Avaliar remover essa linha do `.bat` — os outros 3 passos (SACE/IDN/ENSO)
+> seguem locais.
 
 ---
 
@@ -126,6 +143,7 @@ Usa a Claude API (lê `ANTHROPIC_API_KEY` do `.env.local`). Roda toda terça via
 |-----|--------|------|
 | **Dados de portos** | **dia 16, 11:00 UTC (mensal)** | **GitHub Actions `.github/workflows/atualiza-portos.yml`** — roda `gera-portos-series.mjs` + `gera-series-tendencia.mjs`, commita o JSON se mudou; o push dispara o deploy. Botão "Run workflow" na aba Actions para rodar sob demanda. |
 | Briefing semanal | quarta 13:00 UTC | Cron Service no Railway → `POST /api/cron/briefing`. Config em `docs/RAILWAY-CRON.md`. |
+| **Insights AI** | **terça 11:00 UTC (08:00 Manaus)** | **Cron Service no Railway → `POST /api/cron/insights`** — busca dados ao vivo, chama Claude Haiku 4.5, grava `insights_ai_cache.json` no volume `DATA_DIR`. Protegido por `CRON_SECRET`. |
 | Severity calendar (prod) | a cada request | rota `/api/severity-calendar` recalcula com feed live |
 
 > **Por que portos via GitHub Actions e não cron Railway?** Os JSONs de portos são
