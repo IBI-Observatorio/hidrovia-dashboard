@@ -9,7 +9,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "atualiza-dados": "node scripts/atualiza-dados.mjs",
-    "atualiza-dados:force": "node scripts/atualiza-dados.mjs --force"
+    "atualiza-dados:force": "node scripts/atualiza-dados.mjs --force",
+    "update-calendar": "node scripts/gera-severity-calendar.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

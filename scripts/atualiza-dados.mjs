@@ -1,29 +1,30 @@
 // Orquestrador de atualização periódica dos dados do projeto.
 //
 // Executa em sequência (idempotente):
-//   1. Baixa/atualiza CSVs de cota (11 estações)     — scripts/baixa-hidroweb.mjs
-//   2. Baixa/atualiza CSVs de vazão (8 estações)     — scripts/baixa-vazao.mjs
-//   3. Regenera percentis DOY de cota e vazão        — scripts/gera-percentis-*.mjs
-//   4. Recalibra fronteiras GMM                      — scripts/calibra-limiares-idn.mjs
-//   5. Recalibra HMM                                 — scripts/calibra-hmm.mjs
-//   6. Re-roda bootstrap de incerteza                — scripts/bootstrap-incerteza.mjs
-//   7. Regenera série histórica de IDN               — scripts/gera-idn-historico.mjs
-//   8. Re-roda PCA                                   — scripts/pca-validacao-pesos.mjs
+//   1. Baixa/atualiza CSVs de cota (11 estações)        — scripts/baixa-hidroweb.mjs
+//   2. Baixa/atualiza CSVs de vazão (8 estações)        — scripts/baixa-vazao.mjs
+//   3. Regenera percentis DOY de cota                   — scripts/gera-percentis-doy.mjs
+//   4. Regenera percentis DOY de vazão                  — scripts/gera-percentis-vazao-doy.mjs
+//   5. Recalibra fronteiras GMM                         — scripts/calibra-limiares-idn.mjs
+//   6. Recalibra HMM                                    — scripts/calibra-hmm.mjs
+//   7. Re-roda bootstrap de incerteza                   — scripts/bootstrap-incerteza.mjs
+//   8. Regenera série histórica de IDN                  — scripts/gera-idn-historico.mjs
+//   9. Regenera Calendário de Severidade (usa CSVs      — scripts/gera-severity-calendar.mjs
+//      atualizados + feed live data/ana-cotas-series.json)
+//  10. PCA de validação (opcional)                      — scripts/pca-validacao-pesos.mjs
 //
-// Por padrão, NÃO sobrescreve CSVs existentes (idempotente, apenas adiciona
-// estações novas se houver). Use --force para forçar redownload.
+// Fonte única de verdade: CSVs HidroWeb (passos 1-2) + ana-cotas-series.json (feed live).
+// Todos os dashboards derivam desses dois — nenhum passo manual extra necessário.
+//
+// Por padrão, NÃO sobrescreve CSVs existentes (idempotente). Use --force para rebaixar.
 //
 // Uso:
-//   node scripts/atualiza-dados.mjs              # rota normal
-//   node scripts/atualiza-dados.mjs --force      # apaga e rebaixa tudo
+//   node scripts/atualiza-dados.mjs                  # rota normal
+//   node scripts/atualiza-dados.mjs --force          # apaga e rebaixa tudo
 //   node scripts/atualiza-dados.mjs --skip-download  # só recalcula derivados
 //
-// Cadência recomendada: 1× por mês até a API ANA SOAP descontinuar (30/jun/2026).
-// Sugestão de calendário:
-//   - Dia 5 de cada mês: rodar este script
-//   - Validar saída (todos os passos OK)
-//   - git diff em lib/ — checar se as fronteiras/percentis estão consistentes
-//   - Commit + push se OK
+// Cadência recomendada: 1× por mês (dia 5 de cada mês).
+// Após rodar: git diff lib/ → confirmar → npm test → npm run build → commit + push.
 
 import { spawnSync, execSync } from "node:child_process";
 import { existsSync, unlinkSync, readdirSync } from "node:fs";
@@ -62,18 +63,22 @@ if (!SKIP_DOWNLOAD) {
       }
     }
   }
-  step("1/8 Baixar cotas (HidroSerieHistorica tipoDados=1)",  "node scripts/baixa-hidroweb.mjs");
-  step("2/8 Baixar vazões (HidroSerieHistorica tipoDados=3)", "node scripts/baixa-vazao.mjs");
+  step(" 1/9 Baixar cotas (HidroSerieHistorica tipoDados=1)",  "node scripts/baixa-hidroweb.mjs");
+  step(" 2/9 Baixar vazões (HidroSerieHistorica tipoDados=3)", "node scripts/baixa-vazao.mjs");
 } else {
   console.log("⏭ --skip-download: pulando passos 1 e 2");
 }
 
-step("3/8 Regenerar percentis DOY de cota",   "node scripts/gera-percentis-doy.mjs");
-step("4/8 Regenerar percentis DOY de vazão",  "node scripts/gera-percentis-vazao-doy.mjs");
-step("5/8 Recalibrar fronteiras GMM",         "node scripts/calibra-limiares-idn.mjs");
-step("6/8 Recalibrar HMM",                    "node scripts/calibra-hmm.mjs");
-step("7/8 Bootstrap de incerteza (N=200)",    "node scripts/bootstrap-incerteza.mjs 200");
-step("8/8 Regenerar série histórica do IDN",  "node scripts/gera-idn-historico.mjs");
+step(" 3/9 Regenerar percentis DOY de cota",         "node scripts/gera-percentis-doy.mjs");
+step(" 4/9 Regenerar percentis DOY de vazão",        "node scripts/gera-percentis-vazao-doy.mjs");
+step(" 5/9 Recalibrar fronteiras GMM",               "node scripts/calibra-limiares-idn.mjs");
+step(" 6/9 Recalibrar HMM",                          "node scripts/calibra-hmm.mjs");
+step(" 7/9 Bootstrap de incerteza (N=200)",          "node scripts/bootstrap-incerteza.mjs 200");
+step(" 8/9 Regenerar série histórica do IDN",        "node scripts/gera-idn-historico.mjs");
+// Passo 9: regenera o ARTEFATO ESTÁTICO do calendário (fallback + tipos).
+// Em produção o calendário é servido pela rota /api/severity-calendar, que já
+// recalcula sozinha com o feed live. Este passo só atualiza o fallback do build.
+step(" 9/9 Regenerar Calendário de Severidade (estático/fallback)", "node scripts/gera-severity-calendar.mjs");
 
 // PCA opcional — só para validação interna
 step("Bônus: PCA de validação de pesos", "node scripts/pca-validacao-pesos.mjs");
@@ -82,9 +87,11 @@ const segundos = Math.round((Date.now() - tempoInicio) / 1000);
 console.log(`\n${"=".repeat(60)}`);
 console.log(`✓ Atualização concluída em ${segundos}s`);
 console.log("=".repeat(60));
-console.log("\nPróximos passos manuais:");
-console.log("  1. Verificar git diff em lib/ — confirmar que mudanças fazem sentido");
-console.log("  2. Rodar npm test para sanity check");
-console.log("  3. Rodar npm run build para confirmar produção");
-console.log("  4. Commit + push se tudo OK");
-console.log("\nLembrete: API ANA SOAP descontinua em 30/jun/2026.\n");
+console.log("\nPróximos passos:");
+console.log("  1. git diff lib/   → confirmar que percentis/fronteiras fazem sentido");
+console.log("  2. npm test        → sanity check");
+console.log("  3. npm run build   → confirmar build de produção");
+console.log("  4. commit + push   → Railway redeploy atualiza todos os dashboards\n");
+console.log("  Calendário de Severidade: já regenerado no passo 9 acima.");
+console.log("  Nenhum passo manual adicional necessário.\n");
+console.log("Lembrete: API ANA SOAP descontinua em 30/jun/2026.\n");
