@@ -19,6 +19,7 @@ export const navigationCopy = {
       { label: "Portos",   href: "/portos" },
       { label: "Hidrovia", href: "/hidrovia" },
       { label: "Análises", href: "/analises" },
+      { label: "Sobrecusto Rodoviário", href: "/sobrecusto-rodoviario" },
       { label: "Receber dados", href: "/#receber" },
     ],
   },
