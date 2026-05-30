@@ -26,15 +26,6 @@ const cards = [
     cta: "Ver a tendência →",
     href: "/portos/ineditas/tendencia-cargas",
   },
-  {
-    eyebrow: "Análise inédita",
-    title: "PIM-PF Combinado IBI",
-    description:
-      "Combinação AR(1) + Dynamic Factor Model sobre 35 séries portuárias da ANTAQ — previsão validada para a produção industrial em horizonte bimestral.",
-    meta: "Bimestral · validado OOS",
-    cta: "Ver o índice →",
-    href: "/portos/ineditas/portgdp",
-  },
 ];
 
 export default function PortosLandingPage() {
