@@ -1,30 +1,15 @@
-// Logo SVG do IBI — Institut Brasileiro de Infraestrutura
-// Baseado na identidade visual: azul-marinho + verde IBI
+import Image from "next/image";
+
 export default function LogoIBI({ className = "" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 120 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <Image
+      src="/logo.png"
+      alt="IBI — Instituto Brasileiro de Infraestrutura"
+      width={1352}
+      height={595}
       className={className}
-      aria-label="IBI — Instituto Brasileiro de Infraestrutura"
-    >
-      {/* Barra verde lateral */}
-      <rect x="0" y="0" width="4" height="40" fill="#00C04B" rx="2" />
-      {/* Texto IBI */}
-      <text x="10" y="16" fill="#FFFFFF" fontSize="14" fontWeight="800" fontFamily="Inter, Arial, sans-serif">
-        IBI
-      </text>
-      {/* Linha divisória */}
-      <line x1="10" y1="20" x2="116" y2="20" stroke="#00C04B" strokeWidth="0.5" opacity="0.4" />
-      {/* Subtexto */}
-      <text x="10" y="30" fill="#9CA3AF" fontSize="5.5" fontFamily="Inter, Arial, sans-serif" letterSpacing="0.5">
-        INFRAESTRUTURA
-      </text>
-      <text x="10" y="37" fill="#9CA3AF" fontSize="5" fontFamily="Inter, Arial, sans-serif" letterSpacing="0.3">
-        OBSERVATÓRIO DE TRANSPORTES
-      </text>
-    </svg>
+      priority
+    />
   );
 }
 

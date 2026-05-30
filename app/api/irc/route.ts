@@ -26,9 +26,10 @@ import { FAIXAS_IRC_CALIBRADAS } from "@/lib/irc-faixas-calibradas";
 import { caladoEconomico, CONVERSAO_ECONOMICA_META } from "@/lib/conversao-economica";
 import { calculaIRCMonteCarlo } from "@/lib/irc-incerteza";
 import { calculaIDNSimples } from "@/lib/calcula-idn";
+import { fetchCotasIDN } from "@/lib/fetch-dados";
 import { detectaOndaBranco } from "@/lib/onda-branco";
 import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
-import { projetaCruzamentoTabocal, projetaCruzamentoCaladoMC } from "@/lib/recessao-itacoatiara";
+import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
 import { projetaETAporAnalogos } from "@/lib/recessao-analogos";
 import { ITACOATIARA_HISTORICO_DIARIO } from "@/lib/itacoatiara-historico-diario";
 import { IRC_HISTORICO_CALCULADO } from "@/lib/irc-historico-calculado";
@@ -37,23 +38,32 @@ export const revalidate = 21600;
 
 export async function GET(request: NextRequest) {
   try {
-    const [dados, previsao, serieCaracarai] = await Promise.all([
+    const [dados, previsao, serieCaracarai, cotasIDN] = await Promise.all([
       fetchTodasEstacoes(),
       fetchPrevisao2026(),
       fetchSerieCaracarai(14),
+      fetchCotasIDN(),
     ]);
 
-    const sgc = dados.SGC;
     const hum = dados.Humaita;
     const mao = dados.Manaus;
-    if (!sgc || !hum || !mao) {
+    if (!hum || !mao) {
       return NextResponse.json({ erro: "Dados insuficientes" }, { status: 503 });
     }
 
-    const idnAtual = calculaIDNSimples(
-      { SGC: sgc.cota_m, Humaita: hum.cota_m, PortoVelho: dados.PortoVelho?.cota_m, Borba: dados.Borba?.cota_m },
-      sgc.ultima_atualizacao,
-    );
+    // IDN com todas as estações Norte+Sul via fetchCotasIDN (MA-7d, ESTACOES_IDN_COTA).
+    // NÃO injetar dados.SGC: SGC não tem telemetria ANA; a última leitura estática
+    // pode ter semanas de defasagem e produz pos_SGC absurda (ex: −3.10 em mai/26).
+    // posicaoSubBacia() renormaliza os pesos Norte automaticamente quando SGC falta.
+    // Humaita, PortoVelho e Borba já estão em ESTACOES_IDN_COTA — chegam via cotasIDN.
+    const cotasIDNCompletas: Record<string, number> = {};
+    for (const [k, v] of Object.entries(cotasIDN)) {
+      cotasIDNCompletas[k] = v.cota_m;
+    }
+
+    const dataIDN = Object.values(cotasIDN).map(v => v.ultima_atualizacao).sort().reverse()[0]
+      ?? hum.ultima_atualizacao;
+    const idnAtual = calculaIDNSimples(cotasIDNCompletas, dataIDN);
     // Onda Branco com lag por regime (v2)
     const ondaBranco = serieCaracarai.length >= 8
       ? detectaOndaBranco(serieCaracarai, 7, idnAtual)
@@ -111,26 +121,6 @@ export async function GET(request: NextRequest) {
     // Query param ?calado=10.5 permite uso direto da API por sistemas integrados
     const caladoParam = new URL(request.url).searchParams.get("calado");
     const caladoAlvo = caladoParam ? parseFloat(caladoParam) : 11.0;
-    // v3.4: Monte Carlo end-to-end com propagação completa de incerteza
-    //   • pico ~ N(13,73, 0,7²)         (IC80 SGB)
-    //   • data_pico ~ N(15-jun, 10²)    (heurística com σ histórica)
-    //   • (k, h_min) ~ MVN(μ, Σ)        (covariância dos 10 anos calibrados)
-    //   • curva CMR ~ U(P10, P90)/bin   (banda observada)
-    //   • bias correction +12d          (validação LOO 2016-2025)
-    const etaCalado = previsao.itacoatiara_pico
-      ? projetaCruzamentoCaladoMC({
-          picoCota_m:        previsao.itacoatiara_pico,
-          picoCota_sigma_m:  0.7,
-          picoData:          `${ano}-06-15`,
-          picoData_sigma_d:  10,
-          calado_alvo:       caladoAlvo,
-          horizonte:         300,
-          n_amostras:        10000,
-          seed:              42,
-          aplicar_bias:      true,
-        })
-      : null;
-
     // ETA via análogos históricos (v3.5) — incerteza vem da dispersão observada
     // entre os 10 anos de 2016-2025, ponderada por similaridade da trajetória
     // 2026 atual. Banda fecha à medida que mais dias entram. Sem assunção
@@ -173,41 +163,9 @@ export async function GET(request: NextRequest) {
       calado_alvo_m:     r_tabocal.detalhes.calado_alvo_m,
       cmr_fonte:         "Capitania dos Portos da Amazônia Ocidental",
 
-      // v3.4: ETA do calado-alvo via Monte Carlo end-to-end (n=10000, seed=42).
-      // Banda IC80 (P10/P90) propaga σ_pico, σ_data, MVN(k,h_min), banda CMR,
-      // e aplica bias correction +12d da validação LOO 2016-2025.
-      // Use ?calado=X.X para customizar o alvo (default 11m).
-      eta_calado: etaCalado ? {
-        calado_alvo_m:        etaCalado.calado_alvo_m,
-        // Banda honesta (quantis empíricos do MC)
-        data_p10:             etaCalado.data_p10,
-        data_p50:             etaCalado.data_p50,
-        data_p90:             etaCalado.data_p90,
-        dias_p10:             etaCalado.dias_p10,
-        dias_p50:             etaCalado.dias_p50,
-        dias_p90:             etaCalado.dias_p90,
-        // Estatísticas
-        prob_cruzamento:      etaCalado.prob_cruzamento,
-        media_dias:           etaCalado.media_dias,
-        desvio_dias:          etaCalado.desvio_dias,
-        ic80_largura_dias:    etaCalado.ic80_largura_dias,
-        // Metadados
-        n_amostras:           etaCalado.n_amostras,
-        n_cruzaram:           etaCalado.n_cruzaram,
-        seed:                 etaCalado.seed,
-        cota_ita_no_alvo:     etaCalado.cota_ita_no_alvo_m,
-        // Backward-compat (P50→central, P10→pessimista, P90→otimista)
-        data_central:         etaCalado.data_p50,
-        dias_central:         etaCalado.dias_p50,
-        data_pessimista:      etaCalado.data_p10,
-        dias_pessimista:      etaCalado.dias_p10,
-        data_otimista:        etaCalado.data_p90,
-        dias_otimista:        etaCalado.dias_p90,
-      } : null,
-
       // v3.5: ETA via ANÁLOGOS HISTÓRICOS — comparação direta da trajetória
       // 2026 contra 2016-2025, sem assunção paramétrica. Banda fecha conforme
-      // mais dias entram. Reportado lado-a-lado com o MC para auditoria.
+      // mais dias entram. Use ?calado=X.X para customizar o alvo (default 11m).
       eta_analogos: etaAnalogos ? {
         calado_alvo_m:    etaAnalogos.cmr_alvo_m,
         cota_alvo_m:      etaAnalogos.cota_alvo_m,

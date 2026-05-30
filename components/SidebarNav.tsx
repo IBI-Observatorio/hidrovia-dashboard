@@ -38,26 +38,30 @@ export default function SidebarNav() {
   }, []);
 
   return (
-    <nav className="text-xs">
-      <p className="text-gray-500 font-semibold uppercase tracking-widest mb-4 text-[10px]">
-        Nesta página
-      </p>
-      <ul className="space-y-0.5">
-        {SECTIONS.map((s) => (
-          <li key={s.id}>
-            <a
-              href={`#${s.id}`}
-              className={`block py-1.5 px-2 rounded transition-colors leading-snug ${
-                active === s.id
-                  ? "text-verde bg-verde/5 font-medium"
-                  : "text-gray-500 hover:text-gray-300"
-              }`}
-            >
-              {s.label}
-            </a>
+    <nav className="sticky top-14 z-30 bg-azul-marinho/95 backdrop-blur border-b border-white/5">
+      <div className="max-w-screen-xl mx-auto px-4">
+        <ul className="flex items-center gap-1 overflow-x-auto py-2 scrollbar-none">
+          <li className="shrink-0">
+            <span className="text-gray-600 text-[10px] font-semibold uppercase tracking-widest pr-3 border-r border-white/10 mr-1">
+              Nesta página
+            </span>
           </li>
-        ))}
-      </ul>
+          {SECTIONS.map((s) => (
+            <li key={s.id} className="shrink-0">
+              <a
+                href={`#${s.id}`}
+                className={`block px-3 py-1 rounded-full text-xs transition-colors whitespace-nowrap ${
+                  active === s.id
+                    ? "bg-verde/10 text-verde font-semibold border border-verde/30"
+                    : "text-gray-500 hover:text-gray-300 hover:bg-white/5"
+                }`}
+              >
+                {s.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </nav>
   );
 }

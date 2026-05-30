@@ -1,7 +1,7 @@
 // Extração de boletins SGB/CPRM — Sistema de Alerta Hidrológico (SAH) Amazonas
 //
-// Diferente do boletim SEMA-AM (tabela única bem formatada), o boletim SGB
-// tem múltiplas tabelas com layouts desalinhados quando extraídas via pdftotext.
+// O boletim SGB tem múltiplas tabelas com layouts desalinhados quando
+// extraídas via pdftotext.
 // Por isso o parser foca em PADRÕES TEXTUAIS ROBUSTOS que sobrevivem à
 // extração, ignorando estrutura de coluna:
 //

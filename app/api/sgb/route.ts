@@ -4,8 +4,9 @@
 // GET  /api/sgb     — público: retorna o último boletim parseado
 // GET  /api/sgb?todos=1  — retorna o cache inteiro (uso interno/debug)
 //
-// O cache também é consumido por `lib/dados-historicos.ts` para devolver
-// PREVISAO_2026 dinâmica (fallback: hardcoded do boletim 18°).
+// O cache também é consumido por `lib/fetch-dados.ts → fetchPrevisao2026()`
+// para devolver a previsão dinâmica usada na home, /monitor e briefing
+// semanal (fallback: PREVISAO_2026 hardcoded em lib/dados-historicos.ts).
 
 import { NextRequest, NextResponse } from "next/server";
 import { readFileSync, writeFileSync, existsSync } from "fs";

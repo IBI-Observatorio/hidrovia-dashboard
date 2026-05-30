@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Star, Database, Beaker, BookOpen, Calendar, MapPin, TrendingUp, FileText, Archive, RefreshCw, AlertTriangle, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Star, Database, Beaker, BookOpen, Calendar, MapPin, TrendingUp, FileText, Archive, RefreshCw, AlertTriangle, ExternalLink, BarChart3 } from 'lucide-react';
 import IndicadorInterativo from '@/components/antaq/IndicadorInterativo';
 import { CORES_CLUSTER, DATA_BASE } from '@/components/antaq/cores';
 
@@ -65,18 +65,17 @@ export default function IndicadorPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       <section className="border-b border-gray-800 bg-gradient-to-br
-                          from-gray-900 via-ibi-dark to-gray-900 pt-32 pb-10">
+                          from-gray-900 via-ibi-dark to-gray-900 pt-12 pb-10">
         <div className="container mx-auto px-6">
-          <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-            <Link href="/portos" className="hover:text-ibi-blue transition-colors">Indicadores</Link>
-            <span>/</span>
-            <Link href={`/portos/${slugCluster}`} className="hover:text-ibi-blue transition-colors">
-              {cluster?.nome || slugCluster}
-            </Link>
-            <span>/</span>
-            <span className="text-gray-300 font-mono">#{indicador.id}</span>
-          </div>
-
+          <a
+            href="/"
+            className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-white transition-colors mb-4"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            Voltar
+          </a>
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span className="rounded-lg px-2.5 py-1 text-xs font-mono"
                   style={{ backgroundColor: `${cor}25`, color: cor }}>
@@ -160,6 +159,14 @@ export default function IndicadorPage() {
 
             {indicador.card_previsao_atual && (
               <CardPrevisaoAtual card={indicador.card_previsao_atual} />
+            )}
+
+            {indicador.diagnosticos_estatisticos && (
+              <BlocoDiagnosticos data={indicador.diagnosticos_estatisticos} />
+            )}
+
+            {indicador.analise_incerteza && (
+              <BlocoAnaliseIncerteza data={indicador.analise_incerteza} />
             )}
 
             {indicador.track_record?.length > 0 && (
@@ -256,12 +263,19 @@ function CardPrevisaoAtual({ card }) {
       <div className="mb-4 flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-lg font-semibold">
           <TrendingUp className="h-5 w-5 text-red-400" />
-          Previsão atual — PIM-PF Combinado IBI
+          Previsão em vigor
         </h2>
         <span className="rounded-full bg-red-500/15 px-2 py-0.5 text-xs text-red-300">
           h = {card.horizonte}
         </span>
       </div>
+
+      {card.headline_texto && (
+        <p className="mb-4 text-sm leading-relaxed text-gray-200">
+          <Markdown source={card.headline_texto} />
+        </p>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <div className="text-xs uppercase tracking-wide text-gray-500">
@@ -275,17 +289,34 @@ function CardPrevisaoAtual({ card }) {
           <div className="text-xs uppercase tracking-wide text-gray-500">
             Var. 12m prevista
           </div>
-          <div className="mt-0.5 text-2xl font-bold" style={{ color: dirCor }}>
+          <div className="mt-0.5 text-2xl font-bold tabular-nums" style={{ color: dirCor }}>
             {fmtPp(card.var12m_prevista_pp)}
           </div>
-          <div className="text-xs text-gray-400">
-            IC 80%: [{fmtPp(card.intervalo_inferior_pp)}, {fmtPp(card.intervalo_superior_pp)}]
+          <div className="mt-1 space-y-0.5 text-xs text-gray-400 tabular-nums">
+            <div>
+              <span className="text-gray-500">IC 80% conformal:</span>{' '}
+              [{fmtPp(card.intervalo_inferior_pp)}, {fmtPp(card.intervalo_superior_pp)}]
+            </div>
+            {card.ic50_inferior_pp != null && (
+              <div>
+                <span className="text-gray-500">IC 50% Gaussiano (via RMSE):</span>{' '}
+                [{fmtPp(card.ic50_inferior_pp)}, {fmtPp(card.ic50_superior_pp)}]
+              </div>
+            )}
+            {card.prob_var12m_positiva != null && (
+              <div>
+                <span className="text-gray-500">P(var12m {'>'} 0):</span>{' '}
+                <span className="text-gray-200">
+                  {(card.prob_var12m_positiva * 100).toFixed(1)}%
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
       <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-gray-400">
         <div>
-          <div className="text-[10px] uppercase text-gray-500">Última obs.</div>
+          <div className="text-[10px] uppercase text-gray-500">Última obs. PIM-PF</div>
           <div className="text-gray-300">{card.ultima_obs_pim_pf}</div>
         </div>
         <div>
@@ -295,7 +326,7 @@ function CardPrevisaoAtual({ card }) {
         {card.peso_dfm != null && (
           <div>
             <div className="text-[10px] uppercase text-gray-500">Peso DFM</div>
-            <div className="text-gray-300">{(card.peso_dfm * 100).toFixed(1)}%</div>
+            <div className="text-gray-300 tabular-nums">{(card.peso_dfm * 100).toFixed(1)}%</div>
           </div>
         )}
         <div>
@@ -303,6 +334,184 @@ function CardPrevisaoAtual({ card }) {
           <div className="font-mono text-gray-300">{card.modelo_dfm}</div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Diagnósticos estatísticos (público sênior) ──────────────────────────
+function BlocoDiagnosticos({ data }) {
+  if (!data?.metricas?.length) return null;
+  return (
+    <div className="rounded-2xl border border-gray-700 bg-gray-900/60 p-6">
+      <h2 className="mb-2 flex items-center gap-2 text-lg font-semibold">
+        <BarChart3 className="h-5 w-5 text-ibi-blue" /> Diagnósticos estatísticos
+      </h2>
+      {(data.n_origens_oos || data.janela) && (
+        <p className="mb-3 text-xs leading-relaxed text-gray-400">
+          {data.introducao} {data.n_origens_oos && (
+            <span className="text-gray-300">
+              n = {data.n_origens_oos} origens · janela {data.janela}.
+            </span>
+          )}
+        </p>
+      )}
+      <div className="overflow-x-auto">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="border-b border-gray-700 text-left text-gray-400">
+              <th className="px-3 py-2 font-medium w-[28%]">Métrica</th>
+              <th className="px-3 py-2 font-medium w-[22%]">Valor</th>
+              <th className="px-3 py-2 font-medium w-[20%]">Comparação</th>
+              <th className="px-3 py-2 font-medium">Leitura</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.metricas.map((m, i) => (
+              <tr key={i} className="border-b border-gray-800/50 hover:bg-gray-800/30 align-top">
+                <td className="px-3 py-2 text-gray-200 font-medium">{m.label}</td>
+                <td className="px-3 py-2 text-gray-100 tabular-nums">{m.valor}</td>
+                <td className="px-3 py-2 text-gray-400 tabular-nums">{m.comparacao || '—'}</td>
+                <td className="px-3 py-2 text-gray-300 leading-relaxed">{m.leitura}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {data.nota_amostra_recente && (
+        <p className="mt-3 rounded-lg border border-gray-700 bg-gray-900/40 px-3 py-2 text-[11px] leading-relaxed text-gray-400">
+          <span className="font-semibold text-gray-300">Nota.</span> {data.nota_amostra_recente}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─── Análise de incerteza (por que IC80 é largo + roadmap) ───────────────
+function BlocoAnaliseIncerteza({ data }) {
+  if (!data) return null;
+  return (
+    <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br
+                    from-amber-950/15 via-gray-900/60 to-gray-900/60 p-6">
+      <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+        <AlertTriangle className="h-5 w-5 text-amber-400" />
+        Análise de incerteza — por que a banda IC 80% é tão larga
+      </h2>
+
+      {data.tldr && (
+        <p className="mb-5 rounded-lg border border-amber-500/30 bg-amber-950/20 px-4 py-3 text-sm leading-relaxed text-amber-100/90">
+          <span className="font-semibold text-amber-200">TL;DR.</span> {data.tldr}
+        </p>
+      )}
+
+      {data.comparacao_marginal?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            IC do modelo vs distribuição marginal histórica
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <tbody>
+                {data.comparacao_marginal.map((r, i) => {
+                  const destaque = /raz[ãa]o/i.test(r.label);
+                  return (
+                    <tr key={i} className={`border-b border-gray-800/50 ${destaque ? 'bg-amber-950/30' : ''}`}>
+                      <td className="px-3 py-2 text-gray-300">{r.label}</td>
+                      <td className={`px-3 py-2 text-right tabular-nums font-medium ${destaque ? 'text-amber-300' : 'text-gray-200'}`}>
+                        {r.valor}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {data.leituras_alternativas?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            Leituras alternativas (mais informativas para o decisor)
+          </h3>
+          <div className="space-y-2">
+            {data.leituras_alternativas.map((r, i) => (
+              <div key={i} className="rounded-lg border border-gray-700 bg-gray-900/40 p-3">
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <span className="text-sm text-gray-200">{r.label}</span>
+                  <span className="text-sm font-semibold text-gray-100 tabular-nums">{r.valor}</span>
+                </div>
+                {r.obs && (
+                  <p className="mt-1 text-[11px] leading-relaxed text-gray-500">{r.obs}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {data.leitura_decisor && (
+        <div className="mb-5 rounded-lg border border-gray-700 bg-gray-900/40 p-4">
+          <div className="mb-1 text-xs uppercase tracking-wider text-gray-400">
+            Leitura para o decisor
+          </div>
+          <p className="text-sm leading-relaxed text-gray-300">{data.leitura_decisor}</p>
+        </div>
+      )}
+
+      {data.porque_amplo?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            Por que a banda fica larga
+          </h3>
+          <ul className="space-y-2">
+            {data.porque_amplo.map((t, i) => (
+              <li key={i} className="text-sm text-gray-300 leading-relaxed">
+                <span className="mr-2 text-amber-400">·</span>
+                <Markdown source={t} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {data.roadmap_reducao?.length > 0 && (
+        <div className="mb-5">
+          <h3 className="mb-2 text-xs uppercase tracking-wider text-gray-400">
+            Roadmap de redução de incerteza (re-test mai/2028)
+          </h3>
+          <div className="space-y-3">
+            {data.roadmap_reducao.map((r, i) => (
+              <div key={i} className="rounded-lg border border-gray-700 bg-gray-900/40 p-4">
+                <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                  <span className="text-sm font-semibold text-gray-100">
+                    <span className="mr-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-[10px] text-amber-300 font-bold">{i + 1}</span>
+                    {r.tecnica}
+                  </span>
+                  {r.ref && (
+                    <span className="text-[10px] text-gray-500 italic">{r.ref}</span>
+                  )}
+                </div>
+                {r.ganho_esperado && (
+                  <div className="mt-1 text-xs text-amber-200/90">
+                    <span className="text-gray-500 mr-1">Ganho esperado:</span>
+                    {r.ganho_esperado}
+                  </div>
+                )}
+                {r.como && (
+                  <p className="mt-1.5 text-xs leading-relaxed text-gray-400">{r.como}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {data.compromisso && (
+        <p className="rounded-lg border border-gray-700 bg-gray-900/40 px-3 py-2 text-[11px] leading-relaxed text-gray-400">
+          <span className="font-semibold text-gray-300">Compromisso. </span>
+          <Markdown source={data.compromisso} />
+        </p>
+      )}
     </div>
   );
 }
@@ -316,8 +525,10 @@ function TrackRecord({ registros, metricas }) {
   };
   const fmtPp = (v) => v == null ? '—' : (v >= 0 ? '+' : '') + Number(v).toFixed(2);
 
-  const valHist = registros.filter((r) => r.tipo === 'validacao_historica');
-  const prod    = registros.filter((r) => r.tipo === 'producao');
+  // Defensivo: filtramos h=2 (o indicador não é publicado em h=1).
+  const h2 = registros.filter((r) => r.horizonte === 2);
+  const valHist = h2.filter((r) => r.tipo === 'validacao_historica');
+  const prod    = h2.filter((r) => r.tipo === 'producao');
 
   return (
     <div className="rounded-2xl border border-gray-700 bg-gray-900/60 p-6">
@@ -325,11 +536,12 @@ function TrackRecord({ registros, metricas }) {
         <BookOpen className="h-5 w-5 text-ibi-green" /> Track record
       </h2>
       <p className="mb-4 text-xs text-gray-400 leading-relaxed">
-        As previsões abaixo separam <span className="text-gray-200 font-medium">
-        validação histórica</span> (rolling-origin walk-forward, jan/2024–out/2025)
-        de <span className="text-gray-200 font-medium">previsões em produção</span>
-        {' '}(emitidas mensalmente desde mai/2026). Performance em produção é
-        reportada separadamente conforme dados realizados ficam disponíveis.
+        Tabela mostra duas coisas distintas: <span className="text-gray-200 font-medium">
+        amostra recente de validação histórica</span> (6 origens jul–dez/2025, h=2,
+        recortadas das 95 origens completas reportadas em &quot;Diagnósticos
+        estatísticos&quot;) e <span className="text-gray-200 font-medium">
+        previsões em produção</span> (emitidas desde mai/2026, ainda sem
+        realizado disponível).
       </p>
 
       <div className="overflow-x-auto">

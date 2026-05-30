@@ -6,18 +6,22 @@ import {
   Tooltip, Legend, ResponsiveContainer, ReferenceLine,
   ReferenceArea,
 } from "recharts";
-import {
-  CURICURIARI_2024, CURICURIARI_2025, CURICURIARI_2026,
-  HUMAITA_2026,
-} from "@/lib/dados-historicos";
+import { HUMAITA_2026 } from "@/lib/dados-historicos";
 import { LIMIARES } from "@/lib/limiares";
 
 // ---------------------------------------------------------------------------
-// Helpers para gráficos de dados hardcoded (Curicuriari / Humaitá)
+// Helpers para gráfico hardcoded de Humaitá (fallback quando API offline)
 // ---------------------------------------------------------------------------
 
 function normalizaData(iso: string): string {
-  return iso.slice(5); // "MM-DD"
+  return iso.slice(5); // "MM-DD" (chave interna p/ merge entre anos)
+}
+
+// "MM-DD" → "DD/MM" só para EXIBIÇÃO (eixo X e tooltip). A chave `md` segue
+// em "MM-DD" porque é usada para ordenar e cruzar os anos.
+function mdParaBR(md: string): string {
+  const [m, d] = md.split("-");
+  return d && m ? `${d}/${m}` : md;
 }
 
 function buildSerie(dados: Record<string, number>, ano: number) {
@@ -25,19 +29,6 @@ function buildSerie(dados: Record<string, number>, ano: number) {
     md: normalizaData(dt),
     [`${ano}`]: +(cm / 100).toFixed(2),
   }));
-}
-
-function mesclaHardcoded(...series: ReturnType<typeof buildSerie>[]) {
-  const map: Record<string, Record<string, unknown>> = {};
-  for (const serie of series) {
-    for (const ponto of serie) {
-      if (!map[ponto.md]) map[ponto.md] = { md: ponto.md };
-      Object.assign(map[ponto.md], ponto);
-    }
-  }
-  return Object.values(map).sort((a, b) =>
-    String(a.md).localeCompare(String(b.md))
-  );
 }
 
 // ---------------------------------------------------------------------------
@@ -82,40 +73,8 @@ function useSerieHistorica(estacao: string | null) {
 }
 
 // ---------------------------------------------------------------------------
-// Gráficos hardcoded (Curicuriari e Humaitá)
+// Gráfico hardcoded (Humaitá) — fallback se a API /historico estiver vazia
 // ---------------------------------------------------------------------------
-
-function ChartCuricuriari() {
-  const dados = mesclaHardcoded(
-    buildSerie(CURICURIARI_2024, 2024),
-    buildSerie(CURICURIARI_2025, 2025),
-    buildSerie(CURICURIARI_2026, 2026),
-  ) as Record<string, unknown>[];
-
-  const { p10, p90, mediana } = LIMIARES.SGC;
-
-  return (
-    <ResponsiveContainer width="100%" height={280}>
-      <LineChart data={dados} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
-        <XAxis dataKey="md" tick={{ fill: "#9CA3AF", fontSize: 11 }} />
-        <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={[4, 14]} />
-        <Tooltip
-          contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
-          formatter={(v: unknown) => [`${v} m`, ""]}
-        />
-        <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
-        <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
-        <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10 }} />
-        <ReferenceLine y={mediana} stroke="#9CA3AF" strokeDasharray="4 2" label={{ value: "Mediana", fill: "#9CA3AF", fontSize: 10 }} />
-        <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10 }} />
-        <Line dataKey="2024" stroke="#A0153E" strokeWidth={2} strokeDasharray="5 3" dot={false} name="2024 (mega-seca)" />
-        <Line dataKey="2025" stroke="#00C04B" strokeWidth={2} strokeDasharray="5 3" dot={false} name="2025" />
-        <Line dataKey="2026" stroke="#60A5FA" strokeWidth={3} dot={{ r: 3, fill: "#60A5FA" }} name="2026" />
-      </LineChart>
-    </ResponsiveContainer>
-  );
-}
 
 function ChartHumaita() {
   const dados = buildSerie(HUMAITA_2026, 2026).map((d) => ({
@@ -128,11 +87,12 @@ function ChartHumaita() {
     <ResponsiveContainer width="100%" height={280}>
       <LineChart data={dados} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#2c2c2c" />
-        <XAxis dataKey="md" tick={{ fill: "#9CA3AF", fontSize: 11 }} />
+        <XAxis dataKey="md" tick={{ fill: "#9CA3AF", fontSize: 11 }} tickFormatter={mdParaBR} />
         <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={[8, 25]} />
         <Tooltip
           contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
           formatter={(v: unknown) => [`${v} m`, ""]}
+          labelFormatter={(l) => mdParaBR(String(l))}
         />
         <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
         <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
@@ -150,7 +110,7 @@ function ChartHumaita() {
 // ---------------------------------------------------------------------------
 
 interface ChartHistoricoProps {
-  estacao: "Manaus" | "Itacoatiara" | "SGC" | "Humaita" | "Borba" | "Manacapuru" | "PortoVelho";
+  estacao: "Manaus" | "Itacoatiara" | "Humaita" | "Borba" | "Manacapuru" | "PortoVelho";
   domain: [number, number];
   gatilho_lws?: number;
   p10: number;
@@ -193,25 +153,33 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
             dataKey="md"
             tick={{ fill: "#9CA3AF", fontSize: 10 }}
             interval={Math.floor(serie.length / 10)}
+            tickFormatter={mdParaBR}
           />
           <YAxis tick={{ fill: "#9CA3AF", fontSize: 11 }} unit=" m" domain={domain} />
           <Tooltip
             contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff" }}
             formatter={(v: unknown) => [`${v} m`, ""]}
-            labelFormatter={(l) => `Dia ${l}`}
+            labelFormatter={(l) => mdParaBR(String(l))}
           />
           <Legend wrapperStyle={{ color: "#9CA3AF", fontSize: 12 }} />
           <ReferenceArea y1={p10} y2={p90} fill="#2c2c2c" fillOpacity={0.5} />
-          <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10 }} />
+          {/* Em Manaus o P10 (17,38) fica a só 0,32 m da referência 17,7 m.
+              Separamos verticalmente: Ref. 17,7 m ACIMA da sua linha (à direita),
+              P10 ABAIXO da sua linha (à esquerda). P90 alinhado à esquerda com P10. */}
+          <ReferenceLine y={p10}    stroke="#A0153E" strokeDasharray="4 2" label={{ value: "P10", fill: "#A0153E", fontSize: 10, position: "insideTopLeft" }} />
           <ReferenceLine y={mediana} stroke="#9CA3AF" strokeDasharray="4 2" label={{ value: "Mediana", fill: "#9CA3AF", fontSize: 10 }} />
-          <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10 }} />
+          <ReferenceLine y={p90}    stroke="#00C04B" strokeDasharray="4 2" label={{ value: "P90", fill: "#00C04B", fontSize: 10, position: "insideTopLeft" }} />
           {gatilho_lws && (
             <ReferenceLine y={gatilho_lws} stroke="#D4922A" strokeDasharray="6 3"
-              label={{ value: "Ref. 17,7 m", fill: "#D4922A", fontSize: 10 }} />
+              label={{ value: "Ref. 17,7 m", fill: "#D4922A", fontSize: 10, position: "insideBottomRight" }} />
           )}
           <Line dataKey="2024" stroke="#A0153E" strokeWidth={1.5} strokeDasharray="5 3" dot={false} name="2024 (mega-seca)" connectNulls={false} />
           <Line dataKey="2025" stroke="#00C04B" strokeWidth={1.5} strokeDasharray="5 3" dot={false} name="2025" connectNulls={false} />
-          <Line dataKey="2026" stroke="#60A5FA" strokeWidth={2.5} dot={false} name="2026" connectNulls={false} />
+          {/* connectNulls: a série 2026 mistura fontes (porto jan–abr, semanal,
+              diário ANA a partir de mai) e tem dias faltando que outros anos têm.
+              Como `mesclaAPI` une as datas de todos os anos, esses buracos viram
+              null e quebrariam a linha — então ligamos os pontos para 2026. */}
+          <Line dataKey="2026" stroke="#60A5FA" strokeWidth={2.5} dot={false} name="2026" connectNulls={true} />
         </LineChart>
       </ResponsiveContainer>
       <p className="text-gray-500 text-xs mt-1">{totais}</p>
@@ -224,14 +192,10 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
 // ---------------------------------------------------------------------------
 
 const OPCOES = [
-  { id: "duplo",         label: "Duplo: SGC × Humaitá (IDN)" },
-  { id: "curicuriari",   label: "SGC (Curicuriari) — Negro alto" },
-  { id: "humaita",       label: "Humaitá — Rio Madeira" },
-  { id: "duplo_mao_ita", label: "Duplo: Manaus × Itacoatiara (lag 22 dias)" },
-  { id: "manaus",        label: "Manaus — Rio Negro (2016–2026)" },
-  { id: "itacoatiara",   label: "Itacoatiara — Rio Amazonas (2016–2026)" },
-  { id: "borba",         label: "Borba — Rio Madeira (2016–2026)" },
-  { id: "manacapuru",    label: "Manacapuru — Rio Solimões (2016–2026)" },
+  { id: "duplo",       label: "Duplo: Manaus × Itacoatiara (lag 22 dias)" },
+  { id: "manaus",      label: "Manaus — Rio Negro (2016–2026)" },
+  { id: "itacoatiara", label: "Itacoatiara — Rio Amazonas (2016–2026)" },
+  { id: "humaita",     label: "Humaitá — Rio Madeira" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -262,50 +226,32 @@ export default function CotagramaChart() {
       {opcao === "duplo" && (
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <p className="text-verde text-sm font-semibold mb-2">
-              SGC (Curicuriari) — Negro alto
-              <span className="ml-2 text-vermelho font-normal text-xs">⚠ Colapso 2026</span>
+            <p className="text-blue-300 text-sm font-semibold mb-2">
+              Manaus — Rio Negro
+              <span className="ml-2 text-ouro font-normal text-xs">Referência histórica: 17,7 m</span>
             </p>
             <ChartHistorico
-              estacao="SGC"
-              domain={[4, 14]}
-              p10={LIMIARES.SGC.p10}
-              p90={LIMIARES.SGC.p90}
-              mediana={LIMIARES.SGC.mediana}
-              fallback={<ChartCuricuriari />}
+              estacao="Manaus"
+              domain={[10, 31]}
+              gatilho_lws={17.7}
+              p10={LIMIARES.Manaus.p10}
+              p90={LIMIARES.Manaus.p90}
+              mediana={LIMIARES.Manaus.mediana}
             />
           </div>
           <div>
-            <p className="text-ouro text-sm font-semibold mb-2">
-              Humaitá — Rio Madeira
-              <span className="ml-2 text-verde font-normal text-xs">✓ Acima da média</span>
+            <p className="text-blue-300 text-sm font-semibold mb-2">
+              Itacoatiara — Rio Amazonas
+              <span className="ml-2 text-vermelho font-normal text-xs">Lag de 22 dias vs Manaus em 2024</span>
             </p>
             <ChartHistorico
-              estacao="Humaita"
-              domain={[8, 25]}
-              p10={LIMIARES.Humaita.p10}
-              p90={LIMIARES.Humaita.p90}
-              mediana={LIMIARES.Humaita.mediana}
-              fallback={<ChartHumaita />}
+              estacao="Itacoatiara"
+              domain={[-2, 15]}
+              p10={LIMIARES.Itacoatiara.p10}
+              p90={LIMIARES.Itacoatiara.p90}
+              mediana={LIMIARES.Itacoatiara.mediana}
             />
           </div>
-        </div>
-      )}
-
-      {opcao === "curicuriari" && (
-        <div>
-          <p className="text-verde text-sm font-semibold mb-2">
-            SGC (Curicuriari) — Negro alto
-            <span className="ml-2 text-vermelho font-normal text-xs">⚠ Colapso 2026</span>
-          </p>
-          <ChartHistorico
-            estacao="SGC"
-            domain={[4, 14]}
-            p10={LIMIARES.SGC.p10}
-            p90={LIMIARES.SGC.p90}
-            mediana={LIMIARES.SGC.mediana}
-            fallback={<ChartCuricuriari />}
-          />
         </div>
       )}
 
@@ -356,68 +302,10 @@ export default function CotagramaChart() {
         </div>
       )}
 
-      {opcao === "duplo_mao_ita" && (
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <p className="text-blue-300 text-sm font-semibold mb-2">
-              Manaus
-              <span className="ml-2 text-ouro font-normal text-xs">Referência histórica: 17,7 m</span>
-            </p>
-            <ChartHistorico
-              estacao="Manaus"
-              domain={[10, 31]}
-              gatilho_lws={17.7}
-              p10={LIMIARES.Manaus.p10}
-              p90={LIMIARES.Manaus.p90}
-              mediana={LIMIARES.Manaus.mediana}
-            />
-          </div>
-          <div>
-            <p className="text-blue-300 text-sm font-semibold mb-2">
-              Itacoatiara
-              <span className="ml-2 text-vermelho font-normal text-xs">Lag de 22 dias vs Manaus em 2024</span>
-            </p>
-            <ChartHistorico
-              estacao="Itacoatiara"
-              domain={[-2, 15]}
-              p10={LIMIARES.Itacoatiara.p10}
-              p90={LIMIARES.Itacoatiara.p90}
-              mediana={LIMIARES.Itacoatiara.mediana}
-            />
-          </div>
-        </div>
-      )}
-
-      {opcao === "borba" && (
-        <div>
-          <p className="text-blue-300 text-sm font-semibold mb-2">Borba — Rio Madeira (proxy Madeira médio)</p>
-          <ChartHistorico
-            estacao="Borba"
-            domain={[2, 22]}
-            p10={LIMIARES.Borba.p10}
-            p90={LIMIARES.Borba.p90}
-            mediana={LIMIARES.Borba.mediana}
-          />
-        </div>
-      )}
-
-      {opcao === "manacapuru" && (
-        <div>
-          <p className="text-blue-300 text-sm font-semibold mb-2">Manacapuru — Rio Solimões (barômetro da cheia)</p>
-          <ChartHistorico
-            estacao="Manacapuru"
-            domain={[5, 22]}
-            p10={LIMIARES.Manacapuru.p10}
-            p90={LIMIARES.Manacapuru.p90}
-            mediana={LIMIARES.Manacapuru.mediana}
-          />
-        </div>
-      )}
-
       <p className="text-gray-500 text-xs mt-3">
         Faixa sombreada = P10–P90 histórico. Linhas tracejadas = referências percentílicas.
-        {(opcao === "manaus" || opcao === "itacoatiara" || opcao === "duplo_mao_ita") &&
-          " Série diária 2016–2026 via CSV ANA/SEMA."
+        {(opcao === "manaus" || opcao === "itacoatiara" || opcao === "duplo") &&
+          " Histórico 2016–2025 via CSV; 2026 atualizado diariamente pela API da ANA."
         }
       </p>
     </div>

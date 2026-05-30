@@ -83,8 +83,9 @@ function idnDia(iso) {
       if (c == null) continue;
       const p10 = PERCENTIS[est]?.p10[d];
       const p90 = PERCENTIS[est]?.p90[d];
-      if (p10 == null || p90 == null) continue;
-      sv += ((c - p10) / (p90 - p10)) * w;
+      const med = PERCENTIS[est]?.mediana[d];
+      if (p10 == null || p90 == null || med == null) continue;
+      sv += ((c - med) / (p90 - p10)) * w;
       sp += w;
     }
     return sp > 0 ? sv / sp : NaN;

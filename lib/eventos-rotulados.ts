@@ -10,7 +10,6 @@
 //   - Boletins SGB/CPRM SAH Amazonas
 //   - Documentação ANTAQ de eventos LWS
 //   - Histórico de cotas (Manaus, Itacoatiara, Madeira, Negro)
-//   - Boletins SEMA-AM
 //   - Reports IBI/FPPA do Observatório
 
 import type { SnapshotIRC } from "./irc";

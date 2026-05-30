@@ -1,13 +1,12 @@
 // Banner de aviso quando os dados estão defasados (sem atualização recente
-// via API ANA / boletim SEMA). Server-component — recebe a última data
-// vinda do fetch e calcula o atraso em dias.
+// via API ANA). Server-component — recebe a última data do fetch e calcula
+// o atraso em dias.
 
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
 interface Props {
   ultimaAtualizacao: string; // "YYYY-MM-DD"
   fonteANA: boolean;
-  fonteSEMA: boolean;
 }
 
 const LIMITE_DIAS_NORMAL = 2;       // <=2d: tudo OK
@@ -21,7 +20,14 @@ function diferencaDias(iso: string): number {
   return Math.max(0, diff);
 }
 
-export default function BannerDefasagem({ ultimaAtualizacao, fonteANA, fonteSEMA }: Props) {
+// "YYYY-MM-DD" → "DD/MM/YYYY" (padrão brasileiro). Reformata a string direto,
+// sem `new Date`, para não correr risco de deslocamento de fuso.
+function isoParaBR(iso: string): string {
+  const [y, m, d] = iso.split("-");
+  return d && m && y ? `${d}/${m}/${y}` : iso;
+}
+
+export default function BannerDefasagem({ ultimaAtualizacao, fonteANA }: Props) {
   if (!ultimaAtualizacao || ultimaAtualizacao === "—") return null;
   const dias = diferencaDias(ultimaAtualizacao);
 
@@ -30,9 +36,8 @@ export default function BannerDefasagem({ ultimaAtualizacao, fonteANA, fonteSEMA
       <div className="bg-verde/10 border border-verde/40 rounded p-2 flex items-center gap-2 text-xs">
         <CheckCircle2 className="w-4 h-4 text-verde flex-shrink-0" />
         <span className="text-gray-300">
-          Dados <strong className="text-verde">atualizados</strong> — última leitura em {ultimaAtualizacao}
+          Dados <strong className="text-verde">atualizados</strong> — última leitura em {isoParaBR(ultimaAtualizacao)}
           {fonteANA && " (API ANA)"}
-          {fonteSEMA && " · boletim SEMA"}
         </span>
       </div>
     );
@@ -53,13 +58,13 @@ export default function BannerDefasagem({ ultimaAtualizacao, fonteANA, fonteSEMA
           {nivel} — Dados defasados há {dias} dias
         </p>
         <p className="text-gray-300 text-xs mt-1">
-          Última leitura consolidada: <strong>{ultimaAtualizacao}</strong>.
+          Última leitura consolidada: <strong>{isoParaBR(ultimaAtualizacao)}</strong>.
           {dias > LIMITE_DIAS_ATRASO ? (
             <> Possíveis causas: indisponibilidade da API ANA (descontinuação prevista em 30/jun/2026),
             falha telemétrica nas estações, ou rotina de atualização de CSVs em atraso.
             Os valores exibidos podem não refletir o estado hidrológico atual da bacia.</>
           ) : (
-            <> Atualização normal pode levar 1-3 dias úteis (consolidação ANA + boletim SEMA semanal).</>
+            <> Atualização normal pode levar 1-3 dias úteis (consolidação e cache da API ANA).</>
           )}
         </p>
       </div>

@@ -18,18 +18,14 @@ interface SeverityCalendarJSON {
 // ─────────────────────────────────────────────────────────────
 
 const STATION_OPTIONS: { key: SeverityStation; label: string; sub: string; group: string }[] = [
-  { key: "Itacoatiara", label: "Itacoatiara", sub: "Rio Amazonas",    group: "Calha Principal" },
-  { key: "SGC",         label: "S. G. Cachoeira", sub: "Rio Negro alto", group: "Afluentes Norte" },
-  { key: "Labrea",      label: "Lábrea",      sub: "Rio Purus",       group: "Afluentes Sul"   },
-  { key: "Manicore",    label: "Manicoré",    sub: "Rio Madeira",     group: "Afluentes Sul"   },
-  { key: "Humaita",     label: "Humaitá",     sub: "Rio Madeira",     group: "Afluentes Sul"   },
-  { key: "PortoVelho",  label: "Porto Velho", sub: "Rio Madeira",     group: "Afluentes Sul"   },
-  { key: "Borba",       label: "Borba",       sub: "Rio Madeira",     group: "Afluentes Sul"   },
-  { key: "Abuna",       label: "Abuná",       sub: "Rio Mamoré",      group: "Afluentes Sul"   },
-  { key: "Curicuriari", label: "Curicuriari", sub: "Rio Negro alto",  group: "Afluentes Norte" },
-  { key: "Moura",       label: "Moura",       sub: "Rio Negro",       group: "Afluentes Norte" },
-  { key: "Serrinha",    label: "Serrinha",    sub: "Rio Negro",       group: "Afluentes Norte" },
-  { key: "Caracarai",   label: "Caracaraí",   sub: "Rio Branco",      group: "Afluentes Norte" },
+  { key: "Itacoatiara", label: "Itacoatiara", sub: "Rio Amazonas",   group: "Calha Principal" },
+  { key: "Curicuriari", label: "Curicuriari", sub: "Rio Negro alto", group: "Afluentes Norte" },
+  { key: "Labrea",      label: "Lábrea",      sub: "Rio Purus",      group: "Afluentes Sul"   },
+  { key: "Manicore",    label: "Manicoré",    sub: "Rio Madeira",    group: "Afluentes Sul"   },
+  { key: "Humaita",     label: "Humaitá",     sub: "Rio Madeira",    group: "Afluentes Sul"   },
+  { key: "PortoVelho",  label: "Porto Velho", sub: "Rio Madeira",    group: "Afluentes Sul"   },
+  { key: "Borba",       label: "Borba",       sub: "Rio Madeira",    group: "Afluentes Sul"   },
+  // SGC, Serrinha, Moura, Caracarai, Abuna desativadas — sem feed live ANA
 ];
 
 const BUCKETS: { max: number; color: string; label: string }[] = [
@@ -373,15 +369,23 @@ export default function SeverityCalendarPanel() {
   const canvasRef    = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Fetch data from public JSON (avoids bundling 233KB of arrays)
+  // Busca da rota on-demand /api/severity-calendar, que recalcula com o feed
+  // live (volume) sempre que o cache de 6h expira — nunca fica stale.
+  // Fallback: JSON estático do build, caso a rota falhe.
   useEffect(() => {
-    fetch("/data/severity-calendar.json")
-      .then((r) => {
+    let cancelled = false;
+    (async () => {
+      try {
+        let r = await fetch("/api/severity-calendar");
+        if (!r.ok) r = await fetch("/data/severity-calendar.json"); // fallback estático
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json() as Promise<SeverityCalendarJSON>;
-      })
-      .then(setCalendarData)
-      .catch((e) => setLoadError(String(e)));
+        const json = (await r.json()) as SeverityCalendarJSON;
+        if (!cancelled) setCalendarData(json);
+      } catch (e) {
+        if (!cancelled) setLoadError(String(e));
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   const data    = calendarData?.stations[station] ?? null;
@@ -565,8 +569,7 @@ export default function SeverityCalendarPanel() {
       {/* ── Station sub-label ── */}
       <div className="px-4 py-1.5 border-b border-white/5 text-xs text-gray-500">
         {STATION_OPTIONS.find((s) => s.key === station)?.sub} · {data.anoMin}–{data.anoMax}
-        {(station === "Curicuriari" || station === "Moura" || station === "Serrinha" ||
-          station === "Caracarai" || station === "Borba" || station === "Abuna") && (
+        {station === "Borba" && (
           <span className="ml-2 text-gray-600">· percentis calculados sobre 2016–2023</span>
         )}
       </div>

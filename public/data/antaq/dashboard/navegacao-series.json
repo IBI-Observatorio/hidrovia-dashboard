@@ -1,0 +1,1244 @@
+{
+  "gerado_em": "2026-05-26T04:33:17.264+00:00",
+  "fonte": "ANTAQ — Estatística Aquaviária · soma móvel 12 meses (Mt)",
+  "metrica": "toneladas",
+  "suavizacao": "sum12",
+  "unidade": "Mt",
+  "ultimo_mes": "2026-02",
+  "n_pontos": 194,
+  "hero": {
+    "longo": {
+      "label": "Longo Curso",
+      "valor_12m": 1007.2,
+      "share_pct": 71.6,
+      "yoy_pct": 6.8,
+      "spark": [
+        946.8,
+        942.8,
+        948.6,
+        954.0,
+        960.6,
+        962.5,
+        966.9,
+        972.7,
+        976.1,
+        984.8,
+        994.0,
+        1007.2,
+        1012.3,
+        1007.2
+      ]
+    },
+    "cabotagem": {
+      "label": "Cabotagem",
+      "valor_12m": 307.6,
+      "share_pct": 21.9,
+      "yoy_pct": 5.8,
+      "spark": [
+        293.0,
+        290.7,
+        290.8,
+        290.8,
+        292.3,
+        291.6,
+        292.1,
+        295.3,
+        296.9,
+        299.4,
+        302.1,
+        304.1,
+        306.9,
+        307.6
+      ]
+    },
+    "interior": {
+      "label": "Interior",
+      "valor_12m": 91.9,
+      "share_pct": 6.5,
+      "yoy_pct": 22.3,
+      "spark": [
+        73.9,
+        75.2,
+        76.1,
+        76.7,
+        78.6,
+        79.5,
+        80.4,
+        82.3,
+        85.1,
+        87.7,
+        90.1,
+        91.6,
+        93.2,
+        91.9
+      ]
+    },
+    "total_12m": 1406.7
+  },
+  "serie": [
+    {
+      "data": "2010-01",
+      "longo": 44.54,
+      "cabotagem": 14.55,
+      "interior": 2.05
+    },
+    {
+      "data": "2010-02",
+      "longo": 87.88,
+      "cabotagem": 27.4,
+      "interior": 4.68
+    },
+    {
+      "data": "2010-03",
+      "longo": 137.59,
+      "cabotagem": 41.6,
+      "interior": 7.41
+    },
+    {
+      "data": "2010-04",
+      "longo": 187.5,
+      "cabotagem": 55.58,
+      "interior": 10.32
+    },
+    {
+      "data": "2010-05",
+      "longo": 241.96,
+      "cabotagem": 71.73,
+      "interior": 13.35
+    },
+    {
+      "data": "2010-06",
+      "longo": 295.65,
+      "cabotagem": 85.92,
+      "interior": 15.94
+    },
+    {
+      "data": "2010-07",
+      "longo": 349.4,
+      "cabotagem": 102.13,
+      "interior": 18.43
+    },
+    {
+      "data": "2010-08",
+      "longo": 407.49,
+      "cabotagem": 117.91,
+      "interior": 20.81
+    },
+    {
+      "data": "2010-09",
+      "longo": 461.75,
+      "cabotagem": 133.37,
+      "interior": 22.63
+    },
+    {
+      "data": "2010-10",
+      "longo": 519.4,
+      "cabotagem": 149.49,
+      "interior": 25.49
+    },
+    {
+      "data": "2010-11",
+      "longo": 572.04,
+      "cabotagem": 165.47,
+      "interior": 27.53
+    },
+    {
+      "data": "2010-12",
+      "longo": 624.2,
+      "cabotagem": 183.13,
+      "interior": 29.6
+    },
+    {
+      "data": "2011-01",
+      "longo": 626.67,
+      "cabotagem": 185.9,
+      "interior": 29.51
+    },
+    {
+      "data": "2011-02",
+      "longo": 629.99,
+      "cabotagem": 188.34,
+      "interior": 28.91
+    },
+    {
+      "data": "2011-03",
+      "longo": 631.81,
+      "cabotagem": 190.58,
+      "interior": 28.95
+    },
+    {
+      "data": "2011-04",
+      "longo": 635.89,
+      "cabotagem": 191.9,
+      "interior": 29.12
+    },
+    {
+      "data": "2011-05",
+      "longo": 637.07,
+      "cabotagem": 191.26,
+      "interior": 29.22
+    },
+    {
+      "data": "2011-06",
+      "longo": 638.19,
+      "cabotagem": 193.36,
+      "interior": 29.5
+    },
+    {
+      "data": "2011-07",
+      "longo": 643.71,
+      "cabotagem": 193.2,
+      "interior": 29.83
+    },
+    {
+      "data": "2011-08",
+      "longo": 646.25,
+      "cabotagem": 193.16,
+      "interior": 30.21
+    },
+    {
+      "data": "2011-09",
+      "longo": 649.09,
+      "cabotagem": 192.96,
+      "interior": 30.97
+    },
+    {
+      "data": "2011-10",
+      "longo": 650.08,
+      "cabotagem": 193.24,
+      "interior": 30.66
+    },
+    {
+      "data": "2011-11",
+      "longo": 652.52,
+      "cabotagem": 192.89,
+      "interior": 30.93
+    },
+    {
+      "data": "2011-12",
+      "longo": 657.34,
+      "cabotagem": 192.26,
+      "interior": 30.99
+    },
+    {
+      "data": "2012-01",
+      "longo": 657.06,
+      "cabotagem": 192.69,
+      "interior": 31.26
+    },
+    {
+      "data": "2012-02",
+      "longo": 657.53,
+      "cabotagem": 193.03,
+      "interior": 31.64
+    },
+    {
+      "data": "2012-03",
+      "longo": 660.41,
+      "cabotagem": 193.28,
+      "interior": 31.87
+    },
+    {
+      "data": "2012-04",
+      "longo": 660.77,
+      "cabotagem": 193.09,
+      "interior": 31.6
+    },
+    {
+      "data": "2012-05",
+      "longo": 662.29,
+      "cabotagem": 193.48,
+      "interior": 31.61
+    },
+    {
+      "data": "2012-06",
+      "longo": 665.4,
+      "cabotagem": 193.73,
+      "interior": 31.68
+    },
+    {
+      "data": "2012-07",
+      "longo": 664.75,
+      "cabotagem": 194.76,
+      "interior": 31.92
+    },
+    {
+      "data": "2012-08",
+      "longo": 665.48,
+      "cabotagem": 195.24,
+      "interior": 32.14
+    },
+    {
+      "data": "2012-09",
+      "longo": 667.06,
+      "cabotagem": 196.03,
+      "interior": 31.73
+    },
+    {
+      "data": "2012-10",
+      "longo": 669.47,
+      "cabotagem": 197.06,
+      "interior": 31.46
+    },
+    {
+      "data": "2012-11",
+      "longo": 670.09,
+      "cabotagem": 197.04,
+      "interior": 31.61
+    },
+    {
+      "data": "2012-12",
+      "longo": 670.98,
+      "cabotagem": 197.48,
+      "interior": 31.88
+    },
+    {
+      "data": "2013-01",
+      "longo": 672.29,
+      "cabotagem": 196.18,
+      "interior": 32.13
+    },
+    {
+      "data": "2013-02",
+      "longo": 671.21,
+      "cabotagem": 196.16,
+      "interior": 32.18
+    },
+    {
+      "data": "2013-03",
+      "longo": 670.83,
+      "cabotagem": 196.58,
+      "interior": 32.16
+    },
+    {
+      "data": "2013-04",
+      "longo": 669.55,
+      "cabotagem": 197.43,
+      "interior": 32.59
+    },
+    {
+      "data": "2013-05",
+      "longo": 670.79,
+      "cabotagem": 198.81,
+      "interior": 32.85
+    },
+    {
+      "data": "2013-06",
+      "longo": 672.65,
+      "cabotagem": 199.27,
+      "interior": 33.03
+    },
+    {
+      "data": "2013-07",
+      "longo": 673.93,
+      "cabotagem": 200.11,
+      "interior": 33.33
+    },
+    {
+      "data": "2013-08",
+      "longo": 677.13,
+      "cabotagem": 200.73,
+      "interior": 33.65
+    },
+    {
+      "data": "2013-09",
+      "longo": 680.11,
+      "cabotagem": 202.35,
+      "interior": 34.37
+    },
+    {
+      "data": "2013-10",
+      "longo": 682.23,
+      "cabotagem": 203.7,
+      "interior": 35.03
+    },
+    {
+      "data": "2013-11",
+      "longo": 685.07,
+      "cabotagem": 205.46,
+      "interior": 35.7
+    },
+    {
+      "data": "2013-12",
+      "longo": 684.23,
+      "cabotagem": 205.69,
+      "interior": 36.01
+    },
+    {
+      "data": "2014-01",
+      "longo": 686.42,
+      "cabotagem": 207.13,
+      "interior": 36.4
+    },
+    {
+      "data": "2014-02",
+      "longo": 690.27,
+      "cabotagem": 207.87,
+      "interior": 36.45
+    },
+    {
+      "data": "2014-03",
+      "longo": 695.62,
+      "cabotagem": 207.07,
+      "interior": 36.61
+    },
+    {
+      "data": "2014-04",
+      "longo": 699.91,
+      "cabotagem": 208.21,
+      "interior": 36.55
+    },
+    {
+      "data": "2014-05",
+      "longo": 704.41,
+      "cabotagem": 208.52,
+      "interior": 36.97
+    },
+    {
+      "data": "2014-06",
+      "longo": 707.91,
+      "cabotagem": 208.84,
+      "interior": 37.56
+    },
+    {
+      "data": "2014-07",
+      "longo": 711.44,
+      "cabotagem": 209.36,
+      "interior": 38.01
+    },
+    {
+      "data": "2014-08",
+      "longo": 710.12,
+      "cabotagem": 209.96,
+      "interior": 38.5
+    },
+    {
+      "data": "2014-09",
+      "longo": 707.78,
+      "cabotagem": 210.54,
+      "interior": 38.31
+    },
+    {
+      "data": "2014-10",
+      "longo": 708.41,
+      "cabotagem": 210.39,
+      "interior": 38.57
+    },
+    {
+      "data": "2014-11",
+      "longo": 708.59,
+      "cabotagem": 210.37,
+      "interior": 38.56
+    },
+    {
+      "data": "2014-12",
+      "longo": 713.19,
+      "cabotagem": 211.63,
+      "interior": 38.93
+    },
+    {
+      "data": "2015-01",
+      "longo": 714.07,
+      "cabotagem": 211.13,
+      "interior": 38.41
+    },
+    {
+      "data": "2015-02",
+      "longo": 716.21,
+      "cabotagem": 210.73,
+      "interior": 38.47
+    },
+    {
+      "data": "2015-03",
+      "longo": 717.99,
+      "cabotagem": 212.98,
+      "interior": 38.85
+    },
+    {
+      "data": "2015-04",
+      "longo": 722.69,
+      "cabotagem": 213.51,
+      "interior": 39.18
+    },
+    {
+      "data": "2015-05",
+      "longo": 724.17,
+      "cabotagem": 213.2,
+      "interior": 38.97
+    },
+    {
+      "data": "2015-06",
+      "longo": 726.9,
+      "cabotagem": 212.86,
+      "interior": 38.86
+    },
+    {
+      "data": "2015-07",
+      "longo": 733.57,
+      "cabotagem": 213.16,
+      "interior": 38.75
+    },
+    {
+      "data": "2015-08",
+      "longo": 734.31,
+      "cabotagem": 213.64,
+      "interior": 38.59
+    },
+    {
+      "data": "2015-09",
+      "longo": 743.73,
+      "cabotagem": 212.7,
+      "interior": 38.8
+    },
+    {
+      "data": "2015-10",
+      "longo": 747.88,
+      "cabotagem": 211.33,
+      "interior": 38.4
+    },
+    {
+      "data": "2015-11",
+      "longo": 752.54,
+      "cabotagem": 211.44,
+      "interior": 38.41
+    },
+    {
+      "data": "2015-12",
+      "longo": 755.24,
+      "cabotagem": 210.89,
+      "interior": 38.79
+    },
+    {
+      "data": "2016-01",
+      "longo": 756.45,
+      "cabotagem": 210.81,
+      "interior": 39.76
+    },
+    {
+      "data": "2016-02",
+      "longo": 760.2,
+      "cabotagem": 210.06,
+      "interior": 40.86
+    },
+    {
+      "data": "2016-03",
+      "longo": 762.45,
+      "cabotagem": 209.89,
+      "interior": 41.92
+    },
+    {
+      "data": "2016-04",
+      "longo": 763.93,
+      "cabotagem": 208.41,
+      "interior": 42.76
+    },
+    {
+      "data": "2016-05",
+      "longo": 767.69,
+      "cabotagem": 209.36,
+      "interior": 43.81
+    },
+    {
+      "data": "2016-06",
+      "longo": 763.01,
+      "cabotagem": 210.17,
+      "interior": 44.04
+    },
+    {
+      "data": "2016-07",
+      "longo": 758.64,
+      "cabotagem": 209.46,
+      "interior": 43.98
+    },
+    {
+      "data": "2016-08",
+      "longo": 761.31,
+      "cabotagem": 210.81,
+      "interior": 43.67
+    },
+    {
+      "data": "2016-09",
+      "longo": 756.76,
+      "cabotagem": 211.79,
+      "interior": 43.3
+    },
+    {
+      "data": "2016-10",
+      "longo": 750.48,
+      "cabotagem": 213.42,
+      "interior": 42.72
+    },
+    {
+      "data": "2016-11",
+      "longo": 744.01,
+      "cabotagem": 213.32,
+      "interior": 42.21
+    },
+    {
+      "data": "2016-12",
+      "longo": 743.07,
+      "cabotagem": 213.84,
+      "interior": 41.33
+    },
+    {
+      "data": "2017-01",
+      "longo": 749.24,
+      "cabotagem": 215.69,
+      "interior": 41.24
+    },
+    {
+      "data": "2017-02",
+      "longo": 752.85,
+      "cabotagem": 217.54,
+      "interior": 41.92
+    },
+    {
+      "data": "2017-03",
+      "longo": 756.39,
+      "cabotagem": 217.43,
+      "interior": 41.95
+    },
+    {
+      "data": "2017-04",
+      "longo": 756.68,
+      "cabotagem": 218.83,
+      "interior": 42.82
+    },
+    {
+      "data": "2017-05",
+      "longo": 758.19,
+      "cabotagem": 218.57,
+      "interior": 43.15
+    },
+    {
+      "data": "2017-06",
+      "longo": 766.67,
+      "cabotagem": 219.47,
+      "interior": 44.28
+    },
+    {
+      "data": "2017-07",
+      "longo": 772.16,
+      "cabotagem": 219.46,
+      "interior": 45.92
+    },
+    {
+      "data": "2017-08",
+      "longo": 776.15,
+      "cabotagem": 219.17,
+      "interior": 47.67
+    },
+    {
+      "data": "2017-09",
+      "longo": 782.29,
+      "cabotagem": 220.18,
+      "interior": 49.51
+    },
+    {
+      "data": "2017-10",
+      "longo": 792.45,
+      "cabotagem": 220.75,
+      "interior": 52.29
+    },
+    {
+      "data": "2017-11",
+      "longo": 801.68,
+      "cabotagem": 222.29,
+      "interior": 54.41
+    },
+    {
+      "data": "2017-12",
+      "longo": 805.07,
+      "cabotagem": 223.02,
+      "interior": 56.85
+    },
+    {
+      "data": "2018-01",
+      "longo": 806.18,
+      "cabotagem": 222.31,
+      "interior": 57.08
+    },
+    {
+      "data": "2018-02",
+      "longo": 803.19,
+      "cabotagem": 223.35,
+      "interior": 57.31
+    },
+    {
+      "data": "2018-03",
+      "longo": 802.48,
+      "cabotagem": 224.32,
+      "interior": 58.35
+    },
+    {
+      "data": "2018-04",
+      "longo": 804.76,
+      "cabotagem": 225.66,
+      "interior": 58.94
+    },
+    {
+      "data": "2018-05",
+      "longo": 802.8,
+      "cabotagem": 226.76,
+      "interior": 59.58
+    },
+    {
+      "data": "2018-06",
+      "longo": 803.48,
+      "cabotagem": 226.9,
+      "interior": 60.04
+    },
+    {
+      "data": "2018-07",
+      "longo": 806.52,
+      "cabotagem": 228.71,
+      "interior": 60.03
+    },
+    {
+      "data": "2018-08",
+      "longo": 811.76,
+      "cabotagem": 230.52,
+      "interior": 60.49
+    },
+    {
+      "data": "2018-09",
+      "longo": 815.15,
+      "cabotagem": 230.05,
+      "interior": 61.55
+    },
+    {
+      "data": "2018-10",
+      "longo": 814.23,
+      "cabotagem": 230.32,
+      "interior": 61.09
+    },
+    {
+      "data": "2018-11",
+      "longo": 820.26,
+      "cabotagem": 230.7,
+      "interior": 61.62
+    },
+    {
+      "data": "2018-12",
+      "longo": 825.71,
+      "cabotagem": 231.4,
+      "interior": 61.98
+    },
+    {
+      "data": "2019-01",
+      "longo": 828.83,
+      "cabotagem": 232.56,
+      "interior": 63.22
+    },
+    {
+      "data": "2019-02",
+      "longo": 829.4,
+      "cabotagem": 231.39,
+      "interior": 64.24
+    },
+    {
+      "data": "2019-03",
+      "longo": 821.96,
+      "cabotagem": 230.6,
+      "interior": 64.36
+    },
+    {
+      "data": "2019-04",
+      "longo": 809.33,
+      "cabotagem": 231.64,
+      "interior": 63.95
+    },
+    {
+      "data": "2019-05",
+      "longo": 807.83,
+      "cabotagem": 232.68,
+      "interior": 64.0
+    },
+    {
+      "data": "2019-06",
+      "longo": 807.37,
+      "cabotagem": 232.79,
+      "interior": 64.73
+    },
+    {
+      "data": "2019-07",
+      "longo": 805.92,
+      "cabotagem": 233.34,
+      "interior": 66.26
+    },
+    {
+      "data": "2019-08",
+      "longo": 808.41,
+      "cabotagem": 233.73,
+      "interior": 67.23
+    },
+    {
+      "data": "2019-09",
+      "longo": 805.51,
+      "cabotagem": 235.52,
+      "interior": 67.24
+    },
+    {
+      "data": "2019-10",
+      "longo": 808.11,
+      "cabotagem": 237.26,
+      "interior": 68.14
+    },
+    {
+      "data": "2019-11",
+      "longo": 802.64,
+      "cabotagem": 239.74,
+      "interior": 67.72
+    },
+    {
+      "data": "2019-12",
+      "longo": 793.89,
+      "cabotagem": 241.14,
+      "interior": 66.4
+    },
+    {
+      "data": "2020-01",
+      "longo": 783.68,
+      "cabotagem": 242.91,
+      "interior": 65.4
+    },
+    {
+      "data": "2020-02",
+      "longo": 782.94,
+      "cabotagem": 247.39,
+      "interior": 65.63
+    },
+    {
+      "data": "2020-03",
+      "longo": 787.56,
+      "cabotagem": 250.49,
+      "interior": 66.63
+    },
+    {
+      "data": "2020-04",
+      "longo": 802.68,
+      "cabotagem": 250.28,
+      "interior": 67.81
+    },
+    {
+      "data": "2020-05",
+      "longo": 806.15,
+      "cabotagem": 251.55,
+      "interior": 69.16
+    },
+    {
+      "data": "2020-06",
+      "longo": 805.77,
+      "cabotagem": 253.85,
+      "interior": 69.89
+    },
+    {
+      "data": "2020-07",
+      "longo": 803.72,
+      "cabotagem": 256.74,
+      "interior": 70.55
+    },
+    {
+      "data": "2020-08",
+      "longo": 804.77,
+      "cabotagem": 260.4,
+      "interior": 70.87
+    },
+    {
+      "data": "2020-09",
+      "longo": 806.05,
+      "cabotagem": 263.81,
+      "interior": 70.91
+    },
+    {
+      "data": "2020-10",
+      "longo": 804.73,
+      "cabotagem": 267.24,
+      "interior": 70.55
+    },
+    {
+      "data": "2020-11",
+      "longo": 806.56,
+      "cabotagem": 269.25,
+      "interior": 70.31
+    },
+    {
+      "data": "2020-12",
+      "longo": 811.04,
+      "cabotagem": 271.82,
+      "interior": 70.95
+    },
+    {
+      "data": "2021-01",
+      "longo": 817.27,
+      "cabotagem": 274.78,
+      "interior": 70.84
+    },
+    {
+      "data": "2021-02",
+      "longo": 822.0,
+      "cabotagem": 275.01,
+      "interior": 71.84
+    },
+    {
+      "data": "2021-03",
+      "longo": 831.67,
+      "cabotagem": 277.61,
+      "interior": 72.79
+    },
+    {
+      "data": "2021-04",
+      "longo": 836.91,
+      "cabotagem": 280.71,
+      "interior": 73.72
+    },
+    {
+      "data": "2021-05",
+      "longo": 845.98,
+      "cabotagem": 283.13,
+      "interior": 74.15
+    },
+    {
+      "data": "2021-06",
+      "longo": 850.31,
+      "cabotagem": 284.15,
+      "interior": 73.68
+    },
+    {
+      "data": "2021-07",
+      "longo": 856.61,
+      "cabotagem": 284.79,
+      "interior": 72.85
+    },
+    {
+      "data": "2021-08",
+      "longo": 856.17,
+      "cabotagem": 284.12,
+      "interior": 71.34
+    },
+    {
+      "data": "2021-09",
+      "longo": 856.84,
+      "cabotagem": 282.57,
+      "interior": 69.75
+    },
+    {
+      "data": "2021-10",
+      "longo": 852.57,
+      "cabotagem": 282.19,
+      "interior": 68.12
+    },
+    {
+      "data": "2021-11",
+      "longo": 854.13,
+      "cabotagem": 282.28,
+      "interior": 67.92
+    },
+    {
+      "data": "2021-12",
+      "longo": 856.7,
+      "cabotagem": 281.31,
+      "interior": 67.96
+    },
+    {
+      "data": "2022-01",
+      "longo": 859.15,
+      "cabotagem": 281.29,
+      "interior": 69.08
+    },
+    {
+      "data": "2022-02",
+      "longo": 859.23,
+      "cabotagem": 281.19,
+      "interior": 68.7
+    },
+    {
+      "data": "2022-03",
+      "longo": 852.37,
+      "cabotagem": 281.03,
+      "interior": 68.32
+    },
+    {
+      "data": "2022-04",
+      "longo": 846.92,
+      "cabotagem": 282.08,
+      "interior": 67.96
+    },
+    {
+      "data": "2022-05",
+      "longo": 841.81,
+      "cabotagem": 282.65,
+      "interior": 67.8
+    },
+    {
+      "data": "2022-06",
+      "longo": 840.06,
+      "cabotagem": 284.9,
+      "interior": 68.51
+    },
+    {
+      "data": "2022-07",
+      "longo": 841.08,
+      "cabotagem": 286.05,
+      "interior": 69.36
+    },
+    {
+      "data": "2022-08",
+      "longo": 841.64,
+      "cabotagem": 284.63,
+      "interior": 71.06
+    },
+    {
+      "data": "2022-09",
+      "longo": 846.58,
+      "cabotagem": 286.45,
+      "interior": 72.96
+    },
+    {
+      "data": "2022-10",
+      "longo": 853.91,
+      "cabotagem": 286.2,
+      "interior": 75.01
+    },
+    {
+      "data": "2022-11",
+      "longo": 851.53,
+      "cabotagem": 285.21,
+      "interior": 75.69
+    },
+    {
+      "data": "2022-12",
+      "longo": 855.09,
+      "cabotagem": 285.78,
+      "interior": 76.57
+    },
+    {
+      "data": "2023-01",
+      "longo": 853.76,
+      "cabotagem": 285.86,
+      "interior": 77.2
+    },
+    {
+      "data": "2023-02",
+      "longo": 854.53,
+      "cabotagem": 286.45,
+      "interior": 78.03
+    },
+    {
+      "data": "2023-03",
+      "longo": 862.22,
+      "cabotagem": 286.55,
+      "interior": 79.35
+    },
+    {
+      "data": "2023-04",
+      "longo": 865.95,
+      "cabotagem": 286.03,
+      "interior": 80.45
+    },
+    {
+      "data": "2023-05",
+      "longo": 872.87,
+      "cabotagem": 285.58,
+      "interior": 81.69
+    },
+    {
+      "data": "2023-06",
+      "longo": 881.82,
+      "cabotagem": 285.7,
+      "interior": 83.05
+    },
+    {
+      "data": "2023-07",
+      "longo": 887.55,
+      "cabotagem": 286.49,
+      "interior": 84.01
+    },
+    {
+      "data": "2023-08",
+      "longo": 894.41,
+      "cabotagem": 288.34,
+      "interior": 85.43
+    },
+    {
+      "data": "2023-09",
+      "longo": 900.83,
+      "cabotagem": 288.11,
+      "interior": 86.02
+    },
+    {
+      "data": "2023-10",
+      "longo": 908.7,
+      "cabotagem": 288.08,
+      "interior": 85.53
+    },
+    {
+      "data": "2023-11",
+      "longo": 918.56,
+      "cabotagem": 290.11,
+      "interior": 83.8
+    },
+    {
+      "data": "2023-12",
+      "longo": 926.7,
+      "cabotagem": 290.82,
+      "interior": 84.03
+    },
+    {
+      "data": "2024-01",
+      "longo": 935.65,
+      "cabotagem": 292.01,
+      "interior": 85.06
+    },
+    {
+      "data": "2024-02",
+      "longo": 944.73,
+      "cabotagem": 294.37,
+      "interior": 84.72
+    },
+    {
+      "data": "2024-03",
+      "longo": 946.49,
+      "cabotagem": 294.96,
+      "interior": 83.72
+    },
+    {
+      "data": "2024-04",
+      "longo": 948.26,
+      "cabotagem": 295.03,
+      "interior": 82.99
+    },
+    {
+      "data": "2024-05",
+      "longo": 948.1,
+      "cabotagem": 294.94,
+      "interior": 81.62
+    },
+    {
+      "data": "2024-06",
+      "longo": 953.19,
+      "cabotagem": 296.17,
+      "interior": 80.71
+    },
+    {
+      "data": "2024-07",
+      "longo": 954.8,
+      "cabotagem": 296.06,
+      "interior": 80.56
+    },
+    {
+      "data": "2024-08",
+      "longo": 960.12,
+      "cabotagem": 296.43,
+      "interior": 79.14
+    },
+    {
+      "data": "2024-09",
+      "longo": 961.22,
+      "cabotagem": 296.55,
+      "interior": 77.75
+    },
+    {
+      "data": "2024-10",
+      "longo": 960.24,
+      "cabotagem": 295.4,
+      "interior": 76.44
+    },
+    {
+      "data": "2024-11",
+      "longo": 957.59,
+      "cabotagem": 293.93,
+      "interior": 76.98
+    },
+    {
+      "data": "2024-12",
+      "longo": 948.86,
+      "cabotagem": 293.98,
+      "interior": 76.08
+    },
+    {
+      "data": "2025-01",
+      "longo": 946.8,
+      "cabotagem": 293.0,
+      "interior": 73.88
+    },
+    {
+      "data": "2025-02",
+      "longo": 942.81,
+      "cabotagem": 290.71,
+      "interior": 75.16
+    },
+    {
+      "data": "2025-03",
+      "longo": 948.62,
+      "cabotagem": 290.83,
+      "interior": 76.13
+    },
+    {
+      "data": "2025-04",
+      "longo": 954.02,
+      "cabotagem": 290.76,
+      "interior": 76.69
+    },
+    {
+      "data": "2025-05",
+      "longo": 960.63,
+      "cabotagem": 292.27,
+      "interior": 78.63
+    },
+    {
+      "data": "2025-06",
+      "longo": 962.55,
+      "cabotagem": 291.61,
+      "interior": 79.52
+    },
+    {
+      "data": "2025-07",
+      "longo": 966.85,
+      "cabotagem": 292.09,
+      "interior": 80.37
+    },
+    {
+      "data": "2025-08",
+      "longo": 972.72,
+      "cabotagem": 295.3,
+      "interior": 82.3
+    },
+    {
+      "data": "2025-09",
+      "longo": 976.1,
+      "cabotagem": 296.86,
+      "interior": 85.08
+    },
+    {
+      "data": "2025-10",
+      "longo": 984.84,
+      "cabotagem": 299.38,
+      "interior": 87.71
+    },
+    {
+      "data": "2025-11",
+      "longo": 993.95,
+      "cabotagem": 302.13,
+      "interior": 90.13
+    },
+    {
+      "data": "2025-12",
+      "longo": 1007.19,
+      "cabotagem": 304.15,
+      "interior": 91.59
+    },
+    {
+      "data": "2026-01",
+      "longo": 1012.33,
+      "cabotagem": 306.85,
+      "interior": 93.24
+    },
+    {
+      "data": "2026-02",
+      "longo": 1007.18,
+      "cabotagem": 307.6,
+      "interior": 91.94
+    }
+  ]
+}

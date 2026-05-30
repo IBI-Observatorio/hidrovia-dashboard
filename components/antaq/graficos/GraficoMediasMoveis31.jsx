@@ -1,23 +1,45 @@
 "use client";
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
 import {
-  ComposedChart, LineChart, Line, Area,
+  ComposedChart, BarChart, LineChart, Line, Bar, Area, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ReferenceLine, ResponsiveContainer,
+  ReferenceLine, ResponsiveContainer, LabelList,
 } from 'recharts';
-import { useAntaqSeries } from '../useAntaqApi';
 import { useDashboardData } from '../useDashboardData';
+import { useCountUp } from '../../home/metric-utils';
+import forecastConteiner from '@/lib/forecast-conteiner.json';
+import horseRace       from '@/lib/horse-race-30.json';
 
-// ── Constantes ───────────────────────────────────────────────────────────────
+// ── Paleta ──────────────────────────────────────────────────────────────────
 
-const NATUREZA_API = {
-  granel_solido:  'Granel Sólido',
-  granel_liquido: 'Granel Líquido e Gasoso',
-  carga_geral:    'Carga Geral',
-  conteinerizada: 'Carga Conteinerizada',
+const COR_OBS    = '#0099D8';  // ibi-blue (observado)
+const COR_CHAMP  = '#D4922A';  // ouro (campeão / projeção / banda)
+const COR_GREEN  = '#00A652';
+const COR_GRID   = '#374151';
+
+const COR_ESCOLA = {
+  naive:           '#6b7280',
+  autorregressiva: '#0099D8',
+  estrutural:      '#A0153E',
+  decomposicao:    '#8B5CF6',
+  ml:              '#EC4899',
+  robusta:         '#D97706',
+  combinacao:      '#14B8A6',
 };
-const NATUREZAS = Object.keys(NATUREZA_API);
+const LABEL_ESCOLA = {
+  naive:           'Naïve / benchmark',
+  autorregressiva: 'Autorregressiva',
+  estrutural:      'Estrutural (exógena)',
+  decomposicao:    'Decomposição',
+  ml:              'Machine Learning',
+  robusta:         'Robusta a quebra',
+  combinacao:      'Combinação',
+};
 
+// ── Histórico das 4 cargas (mantido) ────────────────────────────────────────
+
+const NATUREZAS = ['granel_solido', 'granel_liquido', 'carga_geral', 'conteinerizada'];
 const CORES = {
   granel_solido:  '#00A652',
   granel_liquido: '#c1322f',
@@ -31,200 +53,356 @@ const LABELS = {
   conteinerizada: 'Contêiner',
 };
 
-// Uma query por natureza — MA12 dos últimos 15 anos
-const QUERIES_SERIES = NATUREZAS.map(nat => ({
-  natureza:             NATUREZA_API[nat],
-  metrica:              'toneladas',
-  freq:                 'mensal',
-  suavizacao:           'ma12',
-  apenas_movimentacao:  true,
-}));
-
 const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-
-function fmtMes(ym) {
-  if (!ym) return '';
-  const [y, m] = ym.split('-');
-  return `${MESES[+m - 1]}/${y.slice(2)}`;
-}
-function fmtNum(v, d = 1) {
-  if (v == null || isNaN(v)) return '—';
-  return v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
-}
+const fmtMes = (ym) => { if (!ym) return ''; const [y, m] = ym.split('-'); return `${MESES[+m - 1]}/${y.slice(2)}`; };
+const fmtNum = (v, d = 1) => v == null || isNaN(v) ? '—' : v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const fmtPct = (v, d = 2) => v == null || isNaN(v) ? '—' : (v >= 0 ? '+' : '') + v.toFixed(d).replace('.', ',') + '%';
 
 const tickStyle    = { fill: '#9ca3af', fontSize: 11 };
-const gridProps    = { stroke: '#374151', strokeDasharray: '3 3' };
+const gridProps    = { stroke: COR_GRID, strokeDasharray: '3 3' };
 const tooltipStyle = { backgroundColor: '#111827', border: '1px solid #4b5563', borderRadius: 8, fontSize: 12 };
 
-// ── Componente ───────────────────────────────────────────────────────────────
+// ─── Subcomponente: Nugget de antecipação ───────────────────────────────────
+
+function NuggetCard({ label, valor, sufixo = '', cor, sub, decimais = 1, comSinal = false }) {
+  const v = useCountUp(valor, decimais);
+  const sinalPrefix = comSinal && valor > 0 ? '+' : '';
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="rounded-xl p-4 border"
+      style={{ background: `${cor}10`, borderColor: `${cor}40` }}
+    >
+      <div className="text-[11px] uppercase tracking-wide text-gray-400 mb-1">{label}</div>
+      <div className="text-2xl font-bold tabular-nums" style={{ color: cor }}>
+        {sinalPrefix}{v}{sufixo}
+      </div>
+      {sub && <div className="text-xs text-gray-500 mt-1 leading-snug">{sub}</div>}
+    </motion.div>
+  );
+}
+
+// ─── Subcomponente: Gráfico de forecast 15 anos ─────────────────────────────
+
+function GraficoForecast({ allData, ultObs }) {
+  return (
+    <ResponsiveContainer width="100%" height={320}>
+      <ComposedChart data={allData} margin={{ top: 8, right: 20, bottom: 20, left: 4 }}>
+        <CartesianGrid {...gridProps} />
+        <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} interval={11} />
+        <YAxis tick={tickStyle} tickFormatter={(v) => v.toFixed(0) + '%'}
+               label={{ value: 'a/a (%)', angle: -90, position: 'insideLeft', fill: '#9ca3af', fontSize: 11, dy: 30 }} />
+        <Tooltip contentStyle={tooltipStyle} labelFormatter={fmtMes}
+                 formatter={(v, n) => [fmtPct(v, 2), n]} />
+        <Legend iconSize={10} wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
+        <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="4 2" />
+        <ReferenceLine x={ultObs.data} stroke="#9ca3af" strokeDasharray="2 4"
+                       label={{ value: 'hoje', position: 'top', fill: '#9ca3af', fontSize: 10 }} />
+        {/* Leque 95% (mais externo, mais transparente) */}
+        <Area type="monotone" dataKey="lo95"      stackId="ic95"
+              fill="transparent" stroke="none" legendType="none" connectNulls />
+        <Area type="monotone" dataKey="span95"    stackId="ic95"
+              fill="rgba(212,146,42,0.08)" stroke="none" name="IC 95%" connectNulls />
+        {/* Leque 80% (interno) */}
+        <Area type="monotone" dataKey="lo80"      stackId="ic80"
+              fill="transparent" stroke="none" legendType="none" connectNulls />
+        <Area type="monotone" dataKey="span80"    stackId="ic80"
+              fill="rgba(212,146,42,0.20)" stroke="none" name="IC 80%" connectNulls />
+        {/* Linhas históricas e projeção */}
+        <Line type="monotone" dataKey="obs"        stroke={COR_OBS}   strokeWidth={2}
+              dot={false} connectNulls name="Observado (ANTAQ)" />
+        <Line type="monotone" dataKey="champ_back" stroke={COR_CHAMP} strokeWidth={1.5}
+              strokeDasharray="4 2" dot={false} connectNulls name="Modelo (backtest)" />
+        <Line type="monotone" dataKey="central"    stroke={COR_CHAMP} strokeWidth={2.4}
+              dot={{ r: 4, fill: COR_CHAMP }} connectNulls name="Projeção 5m" />
+      </ComposedChart>
+    </ResponsiveContainer>
+  );
+}
+
+// ─── Subcomponente: "O que isso significa" ──────────────────────────────────
+
+function SignificadoBox({ forward, meta }) {
+  const c0   = forward[0].central;
+  const lo80 = forward[0].lo80;
+  const hi80 = forward[0].hi80;
+  return (
+    <motion.div
+      initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className="rounded-xl border border-gray-700 bg-gradient-to-br from-gray-900/80 to-gray-900/40 p-5"
+    >
+      <h3 className="text-base font-semibold text-white mb-2">O que isso significa</h3>
+      <div className="space-y-2 text-sm text-gray-300 leading-relaxed">
+        <p>
+          O ritmo de crescimento do contêiner deve se manter perto de{' '}
+          <strong style={{ color: COR_CHAMP }}>{fmtPct(c0, 1)}</strong> a/a nos próximos meses
+          (intervalo de 80%: {fmtPct(lo80, 1)} a {fmtPct(hi80, 1)}).
+          Não há sinal estatístico de desaceleração brusca.
+        </p>
+        <p className="text-gray-400">
+          O método prevê o agregado liso (soma de 12 meses da tonelagem, que muda devagar e é
+          altamente previsível h passos à frente) e deriva o ritmo a/a — em vez de tentar prever
+          diretamente a variação, objeto super-diferenciado, ruidoso e frágil a quebras de regime.
+        </p>
+        <p className="text-xs text-gray-500 mt-3">
+          Método: <span className="font-mono text-gray-400">{meta.metodo}</span> ·
+          Theil U(h=5) = <strong className="text-gray-300">{meta.theilU_h5.toFixed(2)}</strong> ·
+          Viés = <strong className="text-gray-300">{meta.vies > 0 ? '+' : ''}{meta.vies.toFixed(2)} p.p.</strong>
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Subcomponente: Ficha técnica do horse-race ─────────────────────────────
+
+function FichaTecnicaHorseRace() {
+  const dados = useMemo(() => {
+    const rows = horseRace.ranking.map(([nome, rmse, U, escola, label], i) => ({
+      posOriginal: i + 1,
+      nome,
+      rmse,
+      U,
+      escola,
+      label,
+      cor: label === 'campeao' ? COR_CHAMP : COR_ESCOLA[escola] || '#6b7280',
+    }));
+    return rows.sort((a, b) => a.U - b.U);
+  }, []);
+
+  const escolasUsadas = [...new Set(dados.map(d => d.escola))];
+  const posBench = dados.findIndex(d => d.label === 'bench') + 1;
+
+  return (
+    <motion.details
+      initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="rounded-xl border border-gray-700 bg-gray-900/40 overflow-hidden"
+    >
+      <summary className="cursor-pointer p-5 text-sm font-semibold text-gray-300 hover:text-white select-none list-none">
+        ▶ Ficha técnica — horse-race de 30 abordagens de forecast
+      </summary>
+      <div className="px-5 pb-5 border-t border-gray-700 pt-4">
+        <p className="text-xs text-gray-400 mb-3 max-w-3xl leading-relaxed">
+          Cada barra é um modelo testado em walk-forward sobre {horseRace.meta.janela_oos.replace(' a ', ' → ')} ({horseRace.meta.horizonte_meses} meses à frente, recursivo, sem vazamento).
+          Quanto menor o <strong>Theil U</strong>, melhor: <strong>1,0 = empate</strong> com o palpite ingênuo de "amanhã = hoje".
+          O <span style={{ color: COR_CHAMP }}>campeão</span> corta o erro pela metade. Benchmark naïve (no-change) está na posição {posBench}.
+        </p>
+        {/* Legenda de escolas */}
+        <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-4 text-xs">
+          {escolasUsadas.map(esc => (
+            <div key={esc} className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-sm inline-block" style={{ background: COR_ESCOLA[esc] }} />
+              <span className="text-gray-400">{LABEL_ESCOLA[esc] || esc}</span>
+            </div>
+          ))}
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-sm inline-block" style={{ background: COR_CHAMP }} />
+            <span className="text-gray-300 font-medium">campeão</span>
+          </div>
+        </div>
+        <ResponsiveContainer width="100%" height={dados.length * 20 + 60}>
+          <BarChart data={dados} layout="vertical" margin={{ top: 8, right: 60, bottom: 24, left: 4 }}>
+            <CartesianGrid {...gridProps} horizontal={false} />
+            <XAxis type="number" tick={tickStyle} tickFormatter={(v) => v.toFixed(1)}
+                   domain={[0, (max) => Math.ceil(max * 10) / 10]}
+                   label={{ value: 'Theil U (menor = melhor; 1,0 = palpite ingênuo)',
+                            position: 'insideBottom', offset: -8, fill: '#9ca3af', fontSize: 11 }} />
+            <YAxis type="category" dataKey="nome" width={210}
+                   tick={{ fill: '#d1d5db', fontSize: 10 }} interval={0} />
+            <Tooltip contentStyle={tooltipStyle}
+                     formatter={(v, n, p) => {
+                       if (n === 'U') return [v.toFixed(3), 'Theil U'];
+                       return [v, n];
+                     }}
+                     labelFormatter={(label, payload) => {
+                       const p = payload?.[0]?.payload;
+                       if (!p) return label;
+                       return `${label}  ·  RMSE=${p.rmse.toFixed(2)}pp  ·  ${LABEL_ESCOLA[p.escola] || p.escola}`;
+                     }} />
+            <ReferenceLine x={1.0} stroke="#9ca3af" strokeDasharray="3 3"
+                           label={{ value: 'palpite ingênuo', position: 'top',
+                                    fill: '#9ca3af', fontSize: 10 }} />
+            <Bar dataKey="U" radius={[0, 4, 4, 0]} barSize={14}>
+              {dados.map((d, i) => <Cell key={i} fill={d.cor} />)}
+              <LabelList dataKey="U" position="right"
+                         formatter={(v) => v.toFixed(2)}
+                         style={{ fill: '#9ca3af', fontSize: 10 }} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </motion.details>
+  );
+}
+
+// ─── Bloco: Forecast do contêiner (toda a parte de cima) ────────────────────
+
+function ForecastConteinerBloco() {
+  const { meta, historico, backtest, forward } = forecastConteiner;
+
+  // Pivot único pro gráfico principal
+  const allData = useMemo(() => {
+    const map = {};
+    for (const p of historico) {
+      map[p.data] = { ...map[p.data], data: p.data, obs: p.obs };
+    }
+    for (const p of backtest) {
+      map[p.data] = { ...map[p.data], data: p.data, champ_back: p.champ };
+    }
+    // Forward + spans para as bandas empilhadas
+    for (const p of forward) {
+      map[p.data] = {
+        ...map[p.data],
+        data:    p.data,
+        central: p.central,
+        lo80:    p.lo80,
+        lo95:    p.lo95,
+        span80:  p.hi80 - p.lo80,
+        span95:  p.hi95 - p.lo95,
+      };
+    }
+    return Object.values(map).sort((a, b) => a.data.localeCompare(b.data));
+  }, []);
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <div className="text-base font-semibold text-white mb-1">E o que vem pelos próximos meses?</div>
+        <p className="text-xs text-gray-400 leading-relaxed max-w-3xl">
+          Projeção do momentum do contêiner brasileiro — variação a/a da média móvel de 12 meses
+          da tonelagem (ANTAQ). Modelo campeão de um horse-race de 30 abordagens, validado em
+          38 meses fora da amostra.
+        </p>
+      </div>
+
+      {/* (a) Nuggets de antecipação */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <NuggetCard
+          label={`Projeção — ${fmtMes(forward[0].data)}`}
+          valor={forward[0].central} sufixo="%" cor={COR_CHAMP} decimais={1}
+          comSinal sub="Próxima leitura projetada (a/a, MA12)"
+        />
+        <NuggetCard
+          label={`Último dado ANTAQ — ${fmtMes(meta.ult_obs.data)}`}
+          valor={meta.ult_obs.obs} sufixo="%" cor={COR_OBS} decimais={2}
+          comSinal sub="Crescimento a/a observado"
+        />
+      </div>
+
+      {/* (b) Gráfico principal */}
+      <motion.div
+        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="rounded-xl border border-gray-700 bg-gray-900/60 p-5"
+      >
+        <h3 className="text-base font-semibold text-white mb-1">
+          Momentum do contêiner — observado e projeção
+        </h3>
+        <p className="text-xs text-gray-400 mb-4 max-w-3xl leading-relaxed">
+          Linha azul: observado (ANTAQ). Linha ouro tracejada: backtest do modelo campeão
+          sobre o período fora da amostra (jan/2023 → fev/2026). Pontos em ouro: projeção 5
+          meses à frente, com leques de 80% e 95%.
+        </p>
+        <GraficoForecast allData={allData} ultObs={meta.ult_obs} />
+      </motion.div>
+
+      {/* (d) O que isso significa */}
+      <SignificadoBox forward={forward} meta={meta} />
+
+      {/* (e) Ficha técnica */}
+      <FichaTecnicaHorseRace />
+    </div>
+  );
+}
+
+// ─── Componente principal ───────────────────────────────────────────────────
 
 export default function GraficoMediasMoveis31() {
-  const { data: seriesData, loading: loadingSeries, erro: erroSeries, retry } = useAntaqSeries(QUERIES_SERIES);
-  const { data: staticData, loading: loadingFc,    erro: erroFc     } = useDashboardData(['forecast.json']);
+  // Histórico das 4 cargas (mantém useDashboardData)
+  const { data, loading, erro } = useDashboardData(['series-tendencia.json']);
   const [metrica, setMetrica] = useState('ma12_mt');
 
-  const { historico, forecastData, momentumAtual } = useMemo(() => {
-    if (!seriesData) return {};
+  const { historicoCargas, momentumAtual } = useMemo(() => {
+    if (!data) return {};
+    const rawSeries = data['series-tendencia'];
+    if (!rawSeries) return {};
 
-    // ── Pivot: [{ data, ma12_mt_X, yoy_ma_pct_X, indice100_X }] ─────────
     const byDate = {};
-
-    NATUREZAS.forEach((nat, i) => {
-      const serie = seriesData[i]?.serie || [];
+    NATUREZAS.forEach(nat => {
+      const serie = rawSeries.series?.[nat] || [];
       for (const pt of serie) {
         if (!byDate[pt.data]) byDate[pt.data] = { data: pt.data };
-        // ma12 da API está em toneladas → converter para Mt
-        byDate[pt.data][`ma12_mt_${nat}`] = pt.ma12 != null ? pt.ma12 / 1e6 : null;
+        byDate[pt.data][`ma12_mt_${nat}`] = pt.ma12_mt ?? null;
       }
     });
+    const historicoCargas = Object.values(byDate).sort((a, b) => a.data.localeCompare(b.data));
 
-    const historico = Object.values(byDate).sort((a, b) => a.data.localeCompare(b.data));
-
-    // ── YoY da MA12 calculado client-side ─────────────────────────────────
-    for (let i = 12; i < historico.length; i++) {
+    for (let i = 12; i < historicoCargas.length; i++) {
       for (const nat of NATUREZAS) {
-        const curr = historico[i][`ma12_mt_${nat}`];
-        const prev = historico[i - 12][`ma12_mt_${nat}`];
-        historico[i][`yoy_ma_pct_${nat}`] =
-          curr != null && prev != null && prev !== 0
-            ? ((curr / prev) - 1) * 100
-            : null;
+        const curr = historicoCargas[i][`ma12_mt_${nat}`];
+        const prev = historicoCargas[i - 12][`ma12_mt_${nat}`];
+        historicoCargas[i][`yoy_ma_pct_${nat}`] =
+          curr != null && prev != null && prev !== 0 ? ((curr / prev) - 1) * 100 : null;
       }
     }
-
-    // ── Índice base 100 (primeiro mês com todas as séries disponíveis) ────
     let baseValues = {};
-    for (const row of historico) {
+    for (const row of historicoCargas) {
       if (NATUREZAS.every(n => (row[`ma12_mt_${n}`] ?? 0) > 0)) {
         baseValues = Object.fromEntries(NATUREZAS.map(n => [n, row[`ma12_mt_${n}`]]));
         break;
       }
     }
-    for (const row of historico) {
+    for (const row of historicoCargas) {
       for (const nat of NATUREZAS) {
         const base = baseValues[nat];
         const v    = row[`ma12_mt_${nat}`];
         row[`indice100_${nat}`] = base && v != null ? (v / base * 100) : null;
       }
     }
-
-    // ── Momentum atual: último YoY disponível de cada natureza ───────────
     const momentumAtual = {};
     for (const nat of NATUREZAS) {
-      for (let i = historico.length - 1; i >= 0; i--) {
-        const v = historico[i][`yoy_ma_pct_${nat}`];
+      for (let i = historicoCargas.length - 1; i >= 0; i--) {
+        const v = historicoCargas[i][`yoy_ma_pct_${nat}`];
         if (v != null) { momentumAtual[nat] = v; break; }
       }
     }
-
-    // ── Forecast (OLS, arquivo estático) ─────────────────────────────────
-    const fc = staticData?.['forecast'] || {};
-    const fcMap  = Object.fromEntries((fc.forecast || []).map(r => [r.data, r]));
-    const obsLookup = Object.fromEntries((fc.serie  || []).map(r => [r.data, r]));
-
-    // Array único ordenado por data — recharts precisa de um só dataset no topo
-    const allFcDates = [...new Set([...Object.keys(obsLookup), ...Object.keys(fcMap)])].sort();
-    const fcMerged = allFcDates.map(date => {
-      const o = obsLookup[date];
-      const f = fcMap[date];
-      return {
-        data:      date,
-        observado: o?.observado     ?? null,
-        predito:   o?.predito       ?? null,
-        central:   f?.central_pct   ?? null,
-        fc_low:    f?.low_pct       ?? null,
-        // fc_span = altura da faixa (para área empilhada: base=fc_low, span=high-low)
-        fc_span:   f ? (f.high_pct - f.low_pct) : null,
-      };
-    });
-
-    const forecastData = {
-      merged: fcMerged,
-      modelo: fc.modelo || {},
-    };
-
-    return { historico, forecastData, momentumAtual };
-  }, [seriesData, staticData]);
-
-  const loading = loadingSeries || loadingFc;
-  const erro    = erroSeries   || erroFc;
+    return { historicoCargas, momentumAtual };
+  }, [data]);
 
   if (loading) return <div className="h-80 flex items-center justify-center text-gray-400 text-sm">Carregando…</div>;
   if (erro)    return (
     <div className="h-80 flex flex-col items-center justify-center gap-3">
-      <p className="text-red-400 text-sm">Erro ao carregar dados da API: {erro}</p>
-      <button onClick={retry}
+      <p className="text-red-400 text-sm">Erro ao carregar dados: {erro}</p>
+      <button onClick={() => window.location.reload()}
               className="px-4 py-1.5 text-xs rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 border border-gray-600">
         Tentar novamente
       </button>
     </div>
   );
-  if (!historico) return null;
+  if (!historicoCargas) return null;
 
   const fmtMom  = (v) => v == null ? '—' : (v >= 0 ? '+' : '') + Math.abs(v).toFixed(1) + '%';
-
-  const yKey = (nat) =>
-    metrica === 'indice100'  ? `indice100_${nat}`  :
-    metrica === 'yoy_ma_pct' ? `yoy_ma_pct_${nat}` :
-    `ma12_mt_${nat}`;
-
-  const yLabel =
-    metrica === 'indice100'  ? 'Índice (base 100)' :
-    metrica === 'yoy_ma_pct' ? 'Crescimento a/a (%)' :
-    'Mt/mês (média 12m)';
+  const yKey    = (nat) => metrica === 'indice100'  ? `indice100_${nat}`
+                         : metrica === 'yoy_ma_pct' ? `yoy_ma_pct_${nat}`
+                         : `ma12_mt_${nat}`;
+  const yLabel  = metrica === 'indice100'  ? 'Índice (base 100)'
+                : metrica === 'yoy_ma_pct' ? 'Crescimento a/a (%)'
+                : 'Mt/mês (média 12m)';
 
   return (
-    <div className="space-y-8">
-      {/* ── Projeção primeiro ────────────────────────────────────────────── */}
-      <div>
-        <div className="text-base font-semibold text-white mb-1">E o que vem pelos próximos meses?</div>
-        <p className="text-xs text-gray-400 mb-3 leading-relaxed max-w-3xl">
-          Projeção do ritmo do contêiner usando dois sinais antecedentes:
-          atividade econômica geral (IBC-Br do Banco Central, defasagem de 5 meses) e
-          ritmo da carga geral 12 meses antes. A faixa dourada é a margem de erro típica.{' '}
-          {forecastData.modelo.r2_oos != null && (
-            <span>
-              O modelo explica ~{Math.round(forecastData.modelo.r2_oos * 100)}% da variação
-              fora da amostra (correlação: {(forecastData.modelo.corr_oos || 0).toFixed(2)}).
-            </span>
-          )}
-        </p>
-        {/* ComposedChart com dataset único — evita concatenação indevida do eixo X */}
-        <ResponsiveContainer width="100%" height={300}>
-          <ComposedChart data={forecastData.merged} margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
-            <CartesianGrid {...gridProps} />
-            <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} interval={11} />
-            <YAxis tick={tickStyle} tickFormatter={v => fmtNum(v, 1)}
-                   label={{ value: 'Crescimento a/a (%)', angle: -90, position: 'insideLeft',
-                            fill: '#9ca3af', fontSize: 11, dy: 70 }} />
-            <Tooltip contentStyle={tooltipStyle} labelFormatter={fmtMes}
-                     formatter={(v, n) => [fmtNum(v, 2) + '%', n]} />
-            <Legend iconSize={10} wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
-            <ReferenceLine y={0} stroke="#6b7280" strokeDasharray="4 2" />
-            {/* Faixa de incerteza: base invisível + span colorido empilhado */}
-            <Area type="monotone" dataKey="fc_low"  stackId="fc"
-                  fill="transparent" stroke="none" legendType="none" />
-            <Area type="monotone" dataKey="fc_span" stackId="fc"
-                  fill="rgba(212,146,42,0.22)" stroke="none" name="Margem de erro" />
-            {/* Séries históricas */}
-            <Line type="monotone" dataKey="observado" name="Observado (contêiner)"
-                  stroke="#0099D8" strokeWidth={2} dot={false} connectNulls />
-            <Line type="monotone" dataKey="predito" name="Calculado pelo modelo"
-                  stroke="#9ca3af" strokeWidth={1.4} strokeDasharray="4 2" dot={false} connectNulls />
-            {/* Projeção central */}
-            <Line type="monotone" dataKey="central" name="Projeção (5m à frente)"
-                  stroke="#D4922A" strokeWidth={2.4} dot={{ r: 4, fill: '#D4922A' }} connectNulls />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </div>
+    <div className="space-y-10">
+      {/* ── Forecast (substitui o antigo) ──────────────────────────────────── */}
+      <ForecastConteinerBloco />
 
-      {/* ── Contexto histórico ───────────────────────────────────────────── */}
+      {/* ── Histórico das 4 cargas (mantém) ────────────────────────────────── */}
       <div className="border-t border-gray-700 pt-6">
         <div className="text-base font-semibold text-white mb-3">
-          Contexto histórico: 15 anos de médias móveis por carga
+          Contexto histórico: médias móveis por carga (2011–2026)
         </div>
 
-        {/* KPI cards de momentum */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
           {NATUREZAS.map(nat => (
             <div key={nat} className="rounded-lg p-3"
@@ -237,7 +415,6 @@ export default function GraficoMediasMoveis31() {
           ))}
         </div>
 
-        {/* Seletor de métrica */}
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="text-xs text-gray-400">Como medir:</span>
           {[
@@ -258,7 +435,7 @@ export default function GraficoMediasMoveis31() {
         </div>
 
         <ResponsiveContainer width="100%" height={380}>
-          <LineChart data={historico} margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
+          <LineChart data={historicoCargas} margin={{ top: 8, right: 16, bottom: 24, left: 8 }}>
             <CartesianGrid {...gridProps} />
             <XAxis dataKey="data" tickFormatter={fmtMes} tick={tickStyle} interval={11} />
             <YAxis tick={tickStyle} tickFormatter={v => fmtNum(v, metrica === 'indice100' ? 0 : 1)}
@@ -277,7 +454,7 @@ export default function GraficoMediasMoveis31() {
         </ResponsiveContainer>
         <p className="text-xs text-gray-500 mt-1">
           Cada ponto = média dos 12 meses anteriores — remove sazonalidade e revela tendência real.
-          Dados: ANTAQ Estatística Aquaviária · API ao vivo.
+          Dados: ANTAQ Estatística Aquaviária · Atualizado mensalmente.
         </p>
       </div>
     </div>

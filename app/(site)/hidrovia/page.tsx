@@ -24,10 +24,10 @@ export default function HomePage() {
           <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-3">
             {hero.eyebrow}
           </p>
-          <h1 className="text-white text-4xl font-extrabold leading-tight mb-4 max-w-2xl">
+          <h1 className="text-white text-4xl font-extrabold leading-tight mb-4 whitespace-nowrap">
             {hero.title}
           </h1>
-          <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mb-2">
+          <p className="text-gray-300 text-lg leading-relaxed mb-2 whitespace-nowrap">
             {hero.subtitle}
           </p>
           <p className="text-gray-500 text-sm">{hero.description}</p>

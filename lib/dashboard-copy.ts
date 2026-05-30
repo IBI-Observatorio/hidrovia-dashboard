@@ -27,21 +27,21 @@ export const dashboardCopy = {
       {
         marker: "🔵",
         label: "Norte da bacia",
-        stations: "SGC, Manaus",
+        stations: "Manaus, Curicuriari",
         description:
           "Rios alimentados por chuva equatorial. Sobem primeiro no ciclo anual.",
       },
       {
         marker: "🟠",
         label: "Sul da bacia",
-        stations: "Humaitá, Porto Velho",
+        stations: "Porto Velho, Humaitá, Manicoré, Lábrea",
         description:
           "Rios alimentados por chuva amazônica e do cerrado. Sobem depois.",
       },
       {
         marker: "⚖️",
         label: "Trecho central de navegação",
-        stations: "Manacapuru, Itacoatiara, Borba",
+        stations: "Manacapuru, Itacoatiara",
         description:
           "Refletem a confluência dos dois regimes e as condições efetivas do canal.",
       },
@@ -75,12 +75,7 @@ export const dashboardCopy = {
       semaphore:
         "Verde: cota dentro da faixa histórica esperada. Amarelo: próximo aos limites históricos. Vermelho: fora da faixa histórica observada para esta data.",
     },
-    snapshotCard: {
-      title: "Snapshot analítico — 17 de março de 2026",
-      description:
-        "Pico observado de dessincronização Norte–Sul no ciclo de 2026. Mantido como referência analítica.",
-    },
-    sources: "Fontes: ANA (telemetria e HidroWeb), SEMA-AM (boletins).",
+    sources: "Fontes: ANA (telemetria e HidroWeb), SGB/CPRM (boletins).",
   },
 
   // =====================================================================
@@ -172,16 +167,11 @@ export const dashboardCopy = {
       label: "Selecione a estação ou par de comparação",
       options: [
         {
-          value: "curicuriari-humaita",
-          label: "SGC × Humaitá",
-          caption: "Comparação Norte–Sul: dois extremos da bacia",
-          isDefault: true,
-        },
-        {
           value: "manaus-itacoatiara",
           label: "Manaus × Itacoatiara",
           caption:
             "Trecho de navegação: leitura conjunta a montante e a jusante",
+          isDefault: true,
         },
         {
           value: "individual",
@@ -210,12 +200,10 @@ export const dashboardCopy = {
       items: [
         {
           label: "Cheia esperada em Manaus",
-          value: "28,23 m",
           context: "Pico previsto para o ciclo de 2026.",
         },
         {
           label: "Estiagem esperada em Itacoatiara",
-          value: "entre 4,10 m e 5,15 m",
           context:
             "Faixa de mínima projetada — abaixo do limite operacional típico para comboios graneleiros de maior calado.",
         },
@@ -258,11 +246,11 @@ export const dashboardCopy = {
       },
       {
         q: "De onde vêm os dados deste painel?",
-        a: "Telemetria e séries históricas da Agência Nacional de Águas (ANA), via plataforma HidroWeb e API SOAP; boletins fluviométricos da Secretaria de Estado de Meio Ambiente do Amazonas (SEMA-AM); e previsões hidrológicas do Serviço Geológico do Brasil (SGB/CPRM).",
+        a: "Telemetria e séries históricas da Agência Nacional de Águas (ANA), via plataforma HidroWeb e API REST; e previsões e boletins hidrológicos do Serviço Geológico do Brasil (SGB/CPRM).",
       },
       {
         q: "Com que frequência os dados são atualizados?",
-        a: "As cotas atuais são atualizadas conforme a periodicidade da telemetria das estações (em geral, intervalos horários ou de 4 horas). Os boletins SEMA são incorporados diariamente. As previsões SGB/CPRM seguem o calendário oficial de publicação.",
+        a: "As cotas atuais são atualizadas conforme a periodicidade da telemetria das estações (em geral, intervalos horários ou de 4 horas). Os boletins SGB/CPRM seguem o calendário oficial de publicação.",
       },
       {
         q: "O fenômeno de dessincronização é novo?",

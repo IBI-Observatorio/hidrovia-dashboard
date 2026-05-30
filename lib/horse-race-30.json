@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "descricao": "Horse-race de 30 abordagens de forecast para o momentum do contêiner (YoY MA12). Avaliado em 38 meses OOS (jan/2023 → fev/2026), horizonte h=5, recursivo, sem vazamento.",
+    "janela_oos": "2023-01 a 2026-02",
+    "horizonte_meses": 5,
+    "n_modelos": 30,
+    "campeao_pos": 1,
+    "benchmark_pos": 16,
+    "reproduz_com": "python scripts/panel_horserace.py"
+  },
+  "ranking": [
+    [
+      "ARIMA log(soma-12m)→YoY",
+      3.28,
+      0.51,
+      "autorregressiva",
+      "campeao"
+    ],
+    [
+      "AR(p)-AIC direto",
+      4.41,
+      0.69,
+      "autorregressiva",
+      ""
+    ],
+    [
+      "combo inv-MSE (top-pool)",
+      4.61,
+      0.72,
+      "combinacao",
+      ""
+    ],
+    [
+      "Ridge (lags+lead)",
+      4.86,
+      0.76,
+      "estrutural",
+      ""
+    ],
+    [
+      "Holt amortecido",
+      5.1,
+      0.8,
+      "autorregressiva",
+      ""
+    ],
+    [
+      "ARIMA(1,1,1) no momentum",
+      5.11,
+      0.8,
+      "autorregressiva",
+      ""
+    ],
+    [
+      "combo inv-MSE (NC + OLS leadings)",
+      5.51,
+      0.86,
+      "combinacao",
+      ""
+    ],
+    [
+      "combo igual (NC + OLS leadings)",
+      5.55,
+      0.87,
+      "combinacao",
+      ""
+    ],
+    [
+      "média aparada do pool",
+      5.56,
+      0.87,
+      "combinacao",
+      ""
+    ],
+    [
+      "mediana do pool (11)",
+      5.71,
+      0.89,
+      "combinacao",
+      ""
+    ],
+    [
+      "QuantReg mediana (ADL)",
+      6.04,
+      0.94,
+      "estrutural",
+      ""
+    ],
+    [
+      "ADL (y₋₅ + leadings)",
+      6.07,
+      0.95,
+      "estrutural",
+      ""
+    ],
+    [
+      "ECM (correção de erro)",
+      6.22,
+      0.97,
+      "estrutural",
+      ""
+    ],
+    [
+      "combo mediana {NC, AR5, OLS leadings}",
+      6.32,
+      0.99,
+      "combinacao",
+      ""
+    ],
+    [
+      "AR direto-5",
+      6.38,
+      1.0,
+      "autorregressiva",
+      ""
+    ],
+    [
+      "no-change h=5 (benchmark)",
+      6.41,
+      1.0,
+      "naive",
+      "bench"
+    ],
+    [
+      "AR(1) iterado",
+      6.46,
+      1.01,
+      "autorregressiva",
+      ""
+    ],
+    [
+      "Random Forest",
+      6.87,
+      1.07,
+      "ml",
+      ""
+    ],
+    [
+      "Theta",
+      7.01,
+      1.09,
+      "autorregressiva",
+      ""
+    ],
+    [
+      "OLS leadings (IBC-Br + carga geral)",
+      7.19,
+      1.12,
+      "estrutural",
+      ""
+    ],
+    [
+      "k-NN análogos",
+      7.28,
+      1.14,
+      "ml",
+      ""
+    ],
+    [
+      "ADL média de janelas",
+      7.31,
+      1.14,
+      "robusta",
+      ""
+    ],
+    [
+      "OLS leadings + interc.-correção",
+      7.76,
+      1.21,
+      "robusta",
+      ""
+    ],
+    [
+      "ADL janela rolante 36m",
+      7.93,
+      1.24,
+      "robusta",
+      ""
+    ],
+    [
+      "RW + drift",
+      8.09,
+      1.26,
+      "naive",
+      ""
+    ],
+    [
+      "média móvel 6m",
+      8.69,
+      1.36,
+      "naive",
+      ""
+    ],
+    [
+      "SARIMA mensal → agrega",
+      9.81,
+      1.53,
+      "autorregressiva",
+      ""
+    ],
+    [
+      "média móvel 12m",
+      10.55,
+      1.65,
+      "naive",
+      ""
+    ],
+    [
+      "naive sazonal y(t-12)",
+      12.67,
+      1.98,
+      "naive",
+      ""
+    ],
+    [
+      "STL tendência → extrapola",
+      14.45,
+      2.26,
+      "decomposicao",
+      ""
+    ]
+  ]
+}

@@ -16,6 +16,13 @@ const SEMAFORO_CORES = {
   critico: { borda: "border-vermelho", badge: "bg-vermelho", texto: "Crítico" },
 };
 
+// "YYYY-MM-DD" → "DD/MM/YYYY" (padrão brasileiro). Reformata a string direto,
+// sem `new Date`, para não correr risco de deslocamento de fuso.
+function isoParaBR(iso: string): string {
+  const [y, m, d] = (iso ?? "").split("-");
+  return d && m && y ? `${d}/${m}/${y}` : iso;
+}
+
 const TOOLTIP_ESTACAO: Partial<Record<Estacao, string>> = {
   Manaus:      "Estação-referência histórica do Rio Negro. A marca de 17,7 m é associada historicamente ao início do período de baixas águas.",
   Itacoatiara: "Ponto de controle real da calha navegável (Tabocal). Em 2024, caiu 22 dias depois que Manaus já subia.",
@@ -24,6 +31,9 @@ const TOOLTIP_ESTACAO: Partial<Record<Estacao, string>> = {
   Manacapuru:  "Barômetro do Rio Solimões — principal artéria da calha central. Reflete o regime geral da bacia.",
   PortoVelho:  "Upstream do Madeira. Excedentes aqui chegam a Humaitá em ~7 dias.",
   Borba:       "Proxy do Madeira médio — mede a propagação da onda de cheia entre Porto Velho e Humaitá.",
+  Manicore:    "Madeira médio-baixo — downstream de Humaitá. Mede a onda de cheia antes de entrar no trecho de confluência com o Amazonas.",
+  Labrea:      "Rio Purus — tributário direito do Amazonas. Bacia independente dos drivers Norte/Sul; indica o regime do sudoeste do Amazonas.",
+  Curicuriari: "Negro alto — afluente do Negro próximo a SGC. Sinal do Driver Norte mais direto do que Manaus, que acumula toda a bacia.",
 };
 
 export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
@@ -143,7 +153,7 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
       </div>
 
       <p className="text-gray-500 text-xs text-right">
-        {dados.ultima_atualizacao}
+        {isoParaBR(dados.ultima_atualizacao)}
       </p>
     </div>
   );

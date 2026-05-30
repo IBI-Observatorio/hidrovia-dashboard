@@ -38,9 +38,8 @@ const analises = [
     statusColor: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
     icon: Waves,
     iconColor: 'text-emerald-400',
-    // TODO: substituir pela URL real do Railway
-    href: 'https://hidrovia-dashboard-production.up.railway.app',
-    isExternal: true,
+    href: '/hidrovia',
+    isExternal: false,
   },
 ];
 

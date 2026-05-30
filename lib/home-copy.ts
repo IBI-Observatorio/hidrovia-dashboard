@@ -13,7 +13,7 @@ export const homeCopy = {
     subtitle:
       "Dados, indicadores e estudos sobre os ciclos de cheia e estiagem que condicionam a navegação comercial na maior bacia hidrográfica do mundo.",
     description:
-      "Mantido pelo Instituto Brasileiro de Infraestrutura — IBI, com dados oficiais da ANA, SEMA-AM e SGB/CPRM.",
+      "Mantido pelo Instituto Brasileiro de Infraestrutura — IBI, com dados oficiais da ANA e SGB/CPRM.",
   },
 
   // =====================================================================
@@ -84,11 +84,6 @@ export const homeCopy = {
         acronym: "ANA",
         name: "Agência Nacional de Águas e Saneamento Básico",
         role: "Telemetria fluviométrica e séries históricas (HidroWeb).",
-      },
-      {
-        acronym: "SEMA-AM",
-        name: "Secretaria de Estado de Meio Ambiente do Amazonas",
-        role: "Boletins fluviométricos diários.",
       },
       {
         acronym: "SGB/CPRM",

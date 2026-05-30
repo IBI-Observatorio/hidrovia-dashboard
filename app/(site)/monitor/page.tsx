@@ -3,31 +3,32 @@ import GaugeCard from "@/components/GaugeCard";
 import CotagramaChart from "@/components/CotagramaChart";
 import DessincronizacaoGauge from "@/components/DessincronizacaoGauge";
 import IDNGrafico90Dias from "@/components/IDNGrafico90Dias";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import BannerDefasagem from "@/components/BannerDefasagem";
 import AlertaManausIta from "@/components/AlertaManausIta";
 import InsightsPanel from "@/components/InsightsPanel";
 import SidebarNav from "@/components/SidebarNav";
 import Tooltip from "@/components/Tooltip";
-import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA, fetchCotasIDN, fetchVazoesIDN, fetchPrevisao2026, fetchSerieCaracarai, type CotaIDN, type VazaoIDN } from "@/lib/fetch-dados";
+import { fetchPrevisao2026 } from "@/lib/fetch-dados";
+import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import AlertaOndaBranco from "@/components/AlertaOndaBranco";
 import IRCWidget from "@/components/IRCWidget";
 import IRCDuploWidget from "@/components/IRCDuploWidget";
 import IRCInterativo from "@/components/IRCInterativo";
 import { tokenAssinanteAtual, nomeClienteDoToken } from "@/lib/auth-assinante";
 import { detectaOndaBranco } from "@/lib/onda-branco";
-import { calculaIDNSimples } from "@/lib/calcula-idn";
+import { calculaIDNSimples, classificaIDN, descreveIntensidadeIDN } from "@/lib/calcula-idn";
 import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
 import { detectaFaseCiclo, calculaIRC } from "@/lib/irc";
 import { calculaIRCTabocal, divergenciaIRC } from "@/lib/irc-tabocal";
 import { projetaCruzamentoTabocal } from "@/lib/recessao-itacoatiara";
-import type { EstacaoComDOY } from "@/lib/sub-bacias";
-import type { EstacaoVazao } from "@/lib/sub-bacias-vazao";
 import { geraInsights } from "@/lib/gera-insights";
+import { lerInsightsAI } from "@/lib/insights-ai-cache";
 import { dashboardCopy } from "@/lib/dashboard-copy";
 import { navigationCopy } from "@/lib/navigation-copy";
-import { RefreshCw, Waves } from "lucide-react";
+import { lerSerieIDN } from "@/lib/ana-idn-series";
+import { Waves } from "lucide-react";
 import type { Estacao } from "@/lib/limiares";
-import type { DadosEstacao } from "@/lib/dados-historicos";
 
 export const revalidate = 21600;
 
@@ -40,51 +41,39 @@ export const metadata: Metadata = {
   },
 };
 
+// SGC removido em mai/2026 — sem telemetria ANA viva.
 const ESTACOES_ORDEM: Estacao[] = [
-  "Manaus", "Itacoatiara", "SGC", "Humaita",
-  "Manacapuru", "PortoVelho", "Borba",
+  // Negro / Norte
+  "Manaus", "Curicuriari",
+  // Solimões / central
+  "Itacoatiara", "Manacapuru",
+  // Madeira / Sul
+  "PortoVelho", "Humaita", "Manicore",
+  // Purus
+  "Labrea",
 ];
 
 export default async function MonitorPage() {
-  let dados: Record<string, DadosEstacao>;
-  let fonteANA = false;
-  let fonteSEMA = false;
-  let estacoesVivas = 0;
-  let boletimSEMA: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>> = null;
-
-  // Painéis, IDN cota e IDN vazão buscam em paralelo (cache 6h compartilhado).
+  // ANA: chamada 1x por dia, cache em disco (data/ana-diario-cache.json).
+  // O cache "vira" à meia-noite de Manaus, não UTC. Detalhe e fallbacks em
+  // lib/cache-ana-diario.ts.
   // Previsão 2026 é lida do cache SGB (fonte dinâmica) ou cai para hardcoded.
-  let cotasIDN:  Partial<Record<EstacaoComDOY, CotaIDN>>   = {};
-  let vazoesIDN: Partial<Record<EstacaoVazao,  VazaoIDN>>  = {};
-  let serieCaracarai: Awaited<ReturnType<typeof fetchSerieCaracarai>> = [];
   const previsao = await fetchPrevisao2026();
-  try {
-    const [d, idn, vaz, caracarai] = await Promise.all([
-      fetchTodasEstacoes(),
-      fetchCotasIDN(),
-      fetchVazoesIDN(),
-      fetchSerieCaracarai(14),
-    ]);
-    dados = d;
-    cotasIDN = idn;
-    vazoesIDN = vaz;
-    serieCaracarai = caracarai;
-    // Usa fuso da bacia (Manaus) — evita falso "dados estáticos" no Railway (UTC)
-    const hoje = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
-    estacoesVivas = Object.values(dados).filter(
-      (d) => d.ultima_atualizacao >= hoje
-    ).length;
-    fonteANA = estacoesVivas > 0;
-  } catch {
+  const serieIDN = lerSerieIDN();
+  const diario = await obterDadosDiariosANA();
+  let { dados } = diario;
+  const { cotasIDN, vazoesIDN, serieCaracarai } = diario;
+  if (Object.keys(dados).length === 0) {
     const { DADOS_ATUAIS } = await import("@/lib/dados-historicos");
     dados = { ...DADOS_ATUAIS };
   }
-
-  boletimSEMA = await fetchUltimoBoletimSEMA();
-  if (boletimSEMA) {
-    dados = aplicarBoletimSEMA(dados, boletimSEMA);
-    fonteSEMA = true;
-  }
+  // "Vivas" = estações cuja última leitura é de hoje (fuso da bacia).
+  // Usa fuso da bacia (Manaus) — evita falso "dados estáticos" no Railway (UTC).
+  const hojeBacia = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
+  const estacoesVivas = Object.values(dados).filter(
+    (d) => d.ultima_atualizacao >= hojeBacia
+  ).length;
+  const fonteANA = estacoesVivas > 0;
 
   const ultimaAtualizacao = Object.values(dados)
     .map((d) => d.ultima_atualizacao)
@@ -92,13 +81,20 @@ export default async function MonitorPage() {
 
   const insights = geraInsights(dados);
   const criticos = insights.filter((i) => i.tipo === "critico").length;
+  const insightsAICache = lerInsightsAI();
 
-  // ─── IRC snapshot — calcula em tempo real para o widget no topo do monitor
-  const idnAtual = dados.SGC && dados.Humaita
-    ? calculaIDNSimples(
-        { SGC: dados.SGC.cota_m, Humaita: dados.Humaita.cota_m, PortoVelho: dados.PortoVelho?.cota_m, Borba: dados.Borba?.cota_m },
-        dados.SGC.ultima_atualizacao,
-      )
+  // ─── IRC snapshot — IDN com todas as estações Norte+Sul (renormaliza se SGC faltar)
+  // IMPORTANTE: usar APENAS cotasIDN (fetchCotasIDN, MA-7d) para o IDN.
+  // NÃO injetar dados.SGC aqui — SGC não tem telemetria ANA; a última leitura
+  // estática tem semanas de defasagem e produz pos_SGC absurda (ex: −3.10 em mai/26).
+  // posicaoSubBacia() renormaliza automaticamente os pesos quando SGC está ausente.
+  // Humaita, PortoVelho e Borba já estão em ESTACOES_IDN_COTA e chegam via cotasIDN.
+  const cotasIDNCompletas: Record<string, number> = {};
+  for (const [k, v] of Object.entries(cotasIDN)) cotasIDNCompletas[k] = v.cota_m;
+  const dataIDN = Object.values(cotasIDN).map(v => v.ultima_atualizacao).sort().reverse()[0]
+    ?? dados.Humaita?.ultima_atualizacao ?? new Date().toISOString().slice(0, 10);
+  const idnAtual = Object.keys(cotasIDNCompletas).length > 0
+    ? calculaIDNSimples(cotasIDNCompletas, dataIDN)
     : 0;
   const ondaBranco = serieCaracarai.length >= 8
     ? detectaOndaBranco(serieCaracarai, 7, idnAtual)   // v2: lag por regime
@@ -160,22 +156,40 @@ export default async function MonitorPage() {
         </div>
       )}
 
-      {/* ── BANNER DESSINCRONIZAÇÃO ── */}
-      <div className="bg-ouro/10 border-b border-ouro/20">
-        <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start gap-2">
-          <span className="text-ouro text-xs shrink-0 font-bold">2026</span>
-          <p className="text-ouro text-xs">
-            <strong>Dessincronização Norte-Sul sem precedente:</strong> Negro alto (SGC) 927 cm
-            abaixo de 2024; Madeira (Humaitá) 679 cm acima. IDN atual: +0,58 — padrão Driver Norte.
-          </p>
+      {/* ── BANNER DESSINCRONIZAÇÃO — condicional e calibrado pela posição histórica ── */}
+      {classificaIDN(idnAtual).regime !== "Sincronizado" && (
+        <div className={`border-b ${
+          classificaIDN(idnAtual).regime === "Driver Norte"
+            ? "bg-ouro/10 border-ouro/20"
+            : "bg-vermelho/10 border-vermelho/20"
+        }`}>
+          <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start gap-2">
+            <span className={`text-xs shrink-0 font-bold ${
+              classificaIDN(idnAtual).regime === "Driver Norte" ? "text-ouro" : "text-vermelho"
+            }`}>IDN</span>
+            <p className={`text-xs ${
+              classificaIDN(idnAtual).regime === "Driver Norte" ? "text-ouro" : "text-vermelho"
+            }`}>
+              <strong>Dessincronização Norte-Sul:</strong>{" "}
+              {descreveIntensidadeIDN(idnAtual)}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── LEAD ── */}
       <div className="bg-azul-medio/50 border-b border-white/5">
-        <div className="max-w-screen-xl mx-auto px-4 py-5 lg:grid lg:grid-cols-[220px_1fr] lg:gap-x-10">
-          <div className="hidden lg:block" />
+        <div className="max-w-screen-xl mx-auto px-4 py-5">
           <div>
+            <a
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-white transition-colors mb-3"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Voltar
+            </a>
             <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-1">
               {dashboardCopy.pageHeader.eyebrow}
             </p>
@@ -186,7 +200,7 @@ export default async function MonitorPage() {
               {dashboardCopy.pageHeader.lead}
             </p>
 
-            {/* Status ANA / SEMA / timestamp */}
+            {/* Status ANA / timestamp */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs">
               {/* Badge API ANA */}
               <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[11px] font-medium ${
@@ -196,23 +210,8 @@ export default async function MonitorPage() {
               }`}>
                 <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${fonteANA ? "bg-verde animate-pulse" : "bg-gray-600"}`} />
                 {fonteANA
-                  ? `API ANA · ${estacoesVivas}/7 ao vivo`
+                  ? `API ANA · ${estacoesVivas}/${ESTACOES_ORDEM.length} ao vivo`
                   : "API ANA · dados estáticos"}
-              </span>
-
-              {/* Badge SEMA */}
-              <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[11px] font-medium ${
-                fonteSEMA
-                  ? "bg-verde/10 border-verde/30 text-verde"
-                  : "bg-gray-800 border-gray-700 text-gray-500"
-              }`}>
-                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${fonteSEMA ? "bg-verde" : "bg-gray-600"}`} />
-                {fonteSEMA ? "Boletim SEMA ativo" : "Sem boletim SEMA"}
-              </span>
-
-              {/* Última atualização */}
-              <span className="inline-flex items-center gap-1 text-gray-500 text-[11px]">
-                <RefreshCw size={10} /> {ultimaAtualizacao}
               </span>
             </div>
 
@@ -226,7 +225,6 @@ export default async function MonitorPage() {
               <BannerDefasagem
                 ultimaAtualizacao={ultimaAtualizacao}
                 fonteANA={fonteANA}
-                fonteSEMA={fonteSEMA}
               />
             </div>
 
@@ -246,15 +244,11 @@ export default async function MonitorPage() {
         </div>
       </div>
 
-      {/* ── CORPO: sidebar + painéis ── */}
-      <div className="max-w-screen-xl mx-auto px-4 py-8 lg:grid lg:grid-cols-[220px_1fr] lg:gap-x-10">
+      {/* ── NAV HORIZONTAL ── */}
+      <SidebarNav />
 
-        {/* Sidebar sticky — altura usa h-14 (56px) do GlobalHeader */}
-        <aside className="hidden lg:block">
-          <div className="sticky top-14 pt-2 h-[calc(100vh-56px)] overflow-y-auto pb-10 pr-2">
-            <SidebarNav />
-          </div>
-        </aside>
+      {/* ── CORPO: painéis ── */}
+      <div className="max-w-screen-xl mx-auto px-4 py-8">
 
         {/* Painéis */}
         <main className="flex flex-col gap-16 min-w-0">
@@ -270,8 +264,7 @@ export default async function MonitorPage() {
                   irc_manaus_faixa={rManaus.faixa}
                   isAssinante={tokenAss !== null}
                   nomeAssinante={nomeClienteDoToken(tokenAss)}
-                  picoItacoatiara_m={previsao.itacoatiara_pico}
-                  picoData={`${new Date().getUTCFullYear()}-06-15`}
+
                 />
               );
             })()}
@@ -293,40 +286,11 @@ export default async function MonitorPage() {
                 <GaugeCard key={estacao} estacao={estacao} dados={dados[estacao]} />
               ))}
 
-              {/* Snapshot analítico 17/mar/2026 */}
-              <div className="bg-azul-medio rounded-lg p-4 border border-ouro/30 flex flex-col gap-2">
-                <div className="flex items-center gap-1.5">
-                  <h3 className="text-ouro font-bold text-sm uppercase tracking-wide">
-                    {dashboardCopy.panel1.snapshotCard.title}
-                  </h3>
-                  <Tooltip
-                    conteudo="Dados do 11° Boletim SAH — SGB/CPRM, data de máxima dessincronização entre as bacias Norte (Negro alto) e Sul (Madeira)."
-                    posicao="bottom"
-                  />
-                </div>
-                <p className="text-gray-400 text-xs">
-                  {dashboardCopy.panel1.snapshotCard.description}
-                </p>
-                {[
-                  { nome: "SGC — Negro alto",   delta: "−927 vs 2024", cor: "text-vermelho" },
-                  { nome: "Porto Velho",         delta: "+679 vs 2024", cor: "text-verde"   },
-                  { nome: "Manaus",              delta: "+520 vs 2024", cor: "text-verde"   },
-                  { nome: "Itacoatiara",         delta: "+253 vs 2024", cor: "text-verde"   },
-                ].map((e) => (
-                  <div key={e.nome} className="flex justify-between text-xs">
-                    <span className="text-gray-400">{e.nome}</span>
-                    <span className={`${e.cor} font-semibold`}>{e.delta}</span>
-                  </div>
-                ))}
-                <p className="text-gray-600 text-xs mt-auto">Fonte: SGB/CPRM, 11° Boletim SAH</p>
-              </div>
             </div>
 
             <p className="text-gray-600 text-xs mt-2">
-              {fonteSEMA
-                ? `Cotas do Boletim SEMA-AM (${boletimSEMA?.data}).`
-                : fonteANA
-                ? "Cotas via API ANA (cache 6h). Deltas: dados IBI/mai·2026."
+              {fonteANA
+                ? "Cotas via API ANA (cache 1×/dia, fuso Manaus). Deltas: dados IBI/mai·2026."
                 : "Dados estáticos IBI/mai·2026."
               }{" "}
               {dashboardCopy.panel1.sources}
@@ -339,9 +303,13 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel2.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel2.subtitle}</p>
             </div>
-            <DessincronizacaoGauge dados={dados} cotasIDN={cotasIDN} vazoesIDN={vazoesIDN} />
+            <ErrorBoundary titulo="O índice de dessincronização">
+              <DessincronizacaoGauge dados={dados} cotasIDN={cotasIDN} vazoesIDN={vazoesIDN} serieIDN={serieIDN.serie} />
+            </ErrorBoundary>
             <div className="mt-6">
-              <IDNGrafico90Dias />
+              <ErrorBoundary titulo="A trajetória recente do IDN">
+                <IDNGrafico90Dias serieIDN={serieIDN.serie} />
+              </ErrorBoundary>
             </div>
             <p className="text-gray-500 text-xs mt-3 max-w-2xl">
               {dashboardCopy.panel2.interpretation}
@@ -354,7 +322,7 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel3.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel3.subtitle}</p>
             </div>
-            <AlertaManausIta dados={dados} />
+            <AlertaManausIta dados={dados} idn={idnAtual} previsao={previsao} />
 
             {/* Cross-link → /caso-2024 */}
             <div className="mt-3 bg-azul-medio/50 border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between gap-4">
@@ -435,7 +403,14 @@ export default async function MonitorPage() {
                   </div>
 
                   <div className="bg-ouro/10 border border-ouro/30 rounded-lg p-3">
-                    <p className="text-ouro text-xs font-semibold">ENSO — mai/2026</p>
+                    <p className="text-ouro text-xs font-semibold">
+                      ENSO{previsao.enso_data_emissao ? (() => {
+                        const m = previsao.enso_data_emissao.match(/^(\d{4})-(\d{2})-/);
+                        if (!m) return "";
+                        const meses = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+                        return ` — ${meses[parseInt(m[2], 10) - 1]}/${m[1]}`;
+                      })() : ""}
+                    </p>
                     <p className="text-white text-sm">{previsao.enso}</p>
                   </div>
 
@@ -456,7 +431,11 @@ export default async function MonitorPage() {
                 <p className="text-gray-600 text-xs mt-3">{dashboardCopy.panel5.forecast.source}</p>
               </div>
 
-              <InsightsPanel dados={dados} />
+              <InsightsPanel
+                dados={dados}
+                insightsAI={insightsAICache?.insights}
+                insightsAIGeradoEm={insightsAICache?.gerado_em}
+              />
             </div>
           </section>
 
@@ -499,18 +478,10 @@ export default async function MonitorPage() {
             <p className="font-semibold text-gray-400 mb-1">Sobre este monitor</p>
             <p className="leading-relaxed">
               Desenvolvido pelo Observatório de Infraestrutura de Transportes do IBI com base em
-              dados primários oficiais (SEMA-AM, SGB/CPRM, ANA/SNIRH, NOAA/CPC). Análise da
+              dados primários oficiais (SGB/CPRM, ANA/SNIRH, NOAA/CPC). Análise da
               dessincronização Norte-Sul 2026 produzida em 07–08/mai/2026.
               API ANA descontinuada em 30/jun/2026 — migração para nova API SGB prevista.
             </p>
-            <div className="flex flex-wrap gap-4 mt-2 text-gray-600">
-              <a href="/api/ana?estacao=Manaus" target="_blank" rel="noopener" className="hover:text-gray-400">
-                API ANA →
-              </a>
-              <a href="/api/insights" target="_blank" rel="noopener" className="hover:text-gray-400">
-                API Insights →
-              </a>
-            </div>
           </section>
 
         </main>

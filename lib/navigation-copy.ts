@@ -19,6 +19,7 @@ export const navigationCopy = {
       { label: "Portos",   href: "/portos" },
       { label: "Hidrovia", href: "/hidrovia" },
       { label: "Análises", href: "/analises" },
+      { label: "Sobrecusto Rodoviário", href: "/sobrecusto-rodoviario" },
       { label: "Receber dados", href: "/#receber" },
     ],
   },
@@ -90,7 +91,6 @@ export const navigationCopy = {
         links: [
           { label: "ANA — HidroWeb", href: "https://www.snirh.gov.br/hidroweb/" },
           { label: "SGB/CPRM", href: "https://www.sgb.gov.br/" },
-          { label: "SEMA-AM", href: "https://www.sema.am.gov.br/" },
         ],
       },
       {

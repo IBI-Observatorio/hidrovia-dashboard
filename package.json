@@ -9,12 +9,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "atualiza-dados": "node scripts/atualiza-dados.mjs",
-    "atualiza-dados:force": "node scripts/atualiza-dados.mjs --force"
+    "atualiza-dados:force": "node scripts/atualiza-dados.mjs --force",
+    "update-calendar": "node scripts/gera-severity-calendar.mjs"
   },
   "engines": {
     "node": ">=20.9.0"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.99.0",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.14.0",
     "next": "16.2.6",

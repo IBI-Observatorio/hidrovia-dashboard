@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# runtime caches
+/data/ana-diario-cache.json
+/data/ana-idn-series.json
+/data/ana-cotas-series.json
+/data/boletins_sgb_cache.json
+/data/enso_cpc_cache.json
+/data/insights_ai_cache.json
+
+# SACE: PDFs e TXTs sao grandes/binários — só commitamos os JSONs
+/public/data/sace/boletins/**/*.pdf
+/public/data/sace/boletins/**/*.txt
+
+# Log do pipeline
+/logs/

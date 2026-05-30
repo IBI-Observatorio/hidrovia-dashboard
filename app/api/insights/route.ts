@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchTodasEstacoes, fetchUltimoBoletimSEMA, aplicarBoletimSEMA } from "@/lib/fetch-dados";
+import { fetchTodasEstacoes } from "@/lib/fetch-dados";
 import { geraInsights } from "@/lib/gera-insights";
 
 // GET /api/insights
@@ -9,13 +9,9 @@ export const revalidate = 21600; // cache 6h
 
 export async function GET() {
   try {
-    let dados = await fetchTodasEstacoes();
-    const boletim = await fetchUltimoBoletimSEMA();
-    if (boletim) dados = aplicarBoletimSEMA(dados, boletim);
-
+    const dados = await fetchTodasEstacoes();
     const insights = geraInsights(dados);
 
-    // Resumo executivo das estações
     const resumo = Object.fromEntries(
       Object.entries(dados).map(([k, d]) => [
         k,
@@ -30,13 +26,11 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        gerado_em:    new Date().toISOString(),
-        fonte_sema:   !!boletim,
-        data_sema:    boletim?.data ?? null,
+        gerado_em:      new Date().toISOString(),
         total_insights: insights.length,
-        criticos:     insights.filter((i) => i.tipo === "critico").length,
+        criticos:       insights.filter((i) => i.tipo === "critico").length,
         insights,
-        estacoes:     resumo,
+        estacoes:       resumo,
       },
       {
         headers: {

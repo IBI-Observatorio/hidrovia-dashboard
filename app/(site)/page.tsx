@@ -1,13 +1,25 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import HeroStat from "@/components/home/HeroStat";
+import { Plane } from "lucide-react";
 import SubscribeForm from "@/components/home/SubscribeForm";
-import { heroCopy, achados, paineis } from "@/lib/home-content";
+import AnticipationRibbon from "@/components/home/AnticipationRibbon";
+import DynamicMetricCard from "@/components/home/DynamicMetricCard";
+import PredictiveDraftCard from "@/components/home/PredictiveDraftCard";
+import {
+  portoCard,
+  portoModos,
+  navegacaoCard,
+  navegacaoModos,
+  hidrologiaCard,
+  aereoCard,
+} from "@/lib/home-content";
+import { computeHidrologiaDashboard } from "@/lib/compute-hidrologia";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Observatório IBI — Dados de infraestrutura de transportes",
   description:
-    "Movimentação portuária, hidrovias e análises sobre a infraestrutura logística brasileira. Dados oficiais, indicadores originais e leitura para decisão. Mantido pelo Instituto Brasileiro de Infraestrutura (IBI).",
+    "Movimentação portuária, navegação, hidrovias e aviação lidas como sinais antecedentes. Indicadores próprios, dados oficiais e leitura para decisão. Mantido pelo Instituto Brasileiro de Infraestrutura (IBI).",
   openGraph: {
     title: "Observatório IBI — Dados de infraestrutura de transportes",
     description:
@@ -15,167 +27,116 @@ export const metadata: Metadata = {
   },
 };
 
-const corNumero: Record<string, string> = {
-  blue: "text-ibi-blue",
-  red: "text-vermelho",
-  green: "text-verde",
-};
-const corBarra: Record<string, string> = {
-  blue: "bg-ibi-blue",
-  red: "bg-vermelho",
-  green: "bg-verde",
-};
-const badge: Record<string, { txt: string; cls: string }> = {
-  novo: { txt: "Novo", cls: "bg-ibi-blue/15 text-ibi-blue" },
-  live: { txt: "No ar", cls: "bg-ibi-green/15 text-verde" },
-  breve: { txt: "Em breve", cls: "bg-white/5 text-gray-500" },
-};
-
 export default function HomePage() {
+  const hidrologia = computeHidrologiaDashboard();
+
   return (
     <main>
-      {/* ───────────── HERO ───────────── */}
-      <section className="relative overflow-hidden border-b border-white/5 pt-28 pb-16">
-        {/* atmosfera */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-50"
-          style={{
-            background:
-              "radial-gradient(560px 360px at 78% 18%,rgba(0,153,216,.16),transparent 70%),radial-gradient(620px 420px at 8% 92%,rgba(0,166,82,.12),transparent 70%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-screen-xl px-6">
-          {/* eyebrow */}
-          <div className="mb-7 flex flex-wrap items-center gap-3.5">
-            <span className="inline-flex items-center gap-2">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-ibi-green" />
-              <span className="text-xs font-bold uppercase tracking-[0.16em] text-gray-400">
-                {heroCopy.eyebrow[0]}
-              </span>
-            </span>
-            {heroCopy.eyebrow.slice(1).map((e) => (
-              <span key={e} className="flex items-center gap-3.5">
-                <span className="h-1 w-1 rounded-full bg-gray-600" />
-                <span className="text-xs font-bold uppercase tracking-[0.16em] text-gray-400">{e}</span>
-              </span>
-            ))}
-          </div>
-
-          <HeroStat />
-
-          {/* CTAs */}
-          <div className="mt-9 flex flex-wrap gap-3.5">
-            <Link
-              href="/portos/movimentacao"
-              className="rounded-full bg-gradient-to-r from-ibi-green to-ibi-blue px-6 py-3.5 font-semibold text-white transition-transform hover:-translate-y-0.5"
-            >
-              Explorar o painel de portos →
-            </Link>
-            <Link
-              href="#receber"
-              className="rounded-full border border-white/15 px-6 py-3.5 font-semibold text-white transition-colors hover:border-ibi-blue"
-            >
-              Receber todo mês
-            </Link>
-          </div>
-        </div>
+      {/* ───────────── RIBBON ───────────── */}
+      <section className="mx-auto max-w-screen-xl px-6 py-8">
+        <AnticipationRibbon />
       </section>
 
-      {/* ───────────── ACHADOS ───────────── */}
-      <section id="analises" className="mx-auto max-w-screen-xl px-6 py-20">
+      {/* ───────────── 4 CARDS ───────────── */}
+      <section className="mx-auto max-w-screen-xl px-6 pb-20">
         <div className="mb-9">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-ibi-blue">
-            O que os dados estão dizendo
+            Painéis ao vivo
           </p>
           <h2 className="mt-2.5 text-3xl font-extrabold leading-tight tracking-tight md:text-4xl">
-            Análises que ninguém mais publica.
+            Quatro verticais. Um observatório.
           </h2>
           <p className="mt-3 max-w-xl leading-relaxed text-gray-400">
-            Indicadores originais construídos sobre a Estatística Aquaviária da ANTAQ — do antecedente do PIB ao custo do navio parado.
+            Porto, Navegação, Hidrologia e Aviação — cada card é uma janela para a base oficial com a leitura do IBI.
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {achados.map((a) => (
-            <Link
-              key={a.valor}
-              href={a.href}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-azul-medio p-7 transition-all hover:-translate-y-1 hover:border-white/20"
-            >
-              <span className={`absolute inset-x-0 top-0 h-[3px] ${corBarra[a.cor]}`} />
-              <div className={`text-[2.7rem] font-black leading-none tracking-tight ${corNumero[a.cor]}`}>
-                {a.valor}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Porto */}
+          <DynamicMetricCard
+            tag={portoCard.tag}
+            acento={portoCard.acento}
+            periodo={portoCard.periodo}
+            unidade={portoCard.unidade}
+            modos={portoModos}
+            insight={portoCard.insight}
+            href={portoCard.href}
+            hrefDados={portoCard.hrefDados}
+            ilustrativo={false}
+          />
+
+          {/* Navegação */}
+          <DynamicMetricCard
+            tag={navegacaoCard.tag}
+            acento={navegacaoCard.acento}
+            periodo={navegacaoCard.periodo}
+            unidade={navegacaoCard.unidade}
+            modos={navegacaoModos}
+            insight={navegacaoCard.insight}
+            href={navegacaoCard.href}
+            ilustrativo={false}
+          />
+
+          {/* Hidrologia — dados reais via compute-hidrologia */}
+          <PredictiveDraftCard
+            tag={hidrologiaCard.tag}
+            periodo={hidrologiaCard.periodo}
+            limiarM={hidrologiaCard.limiarM}
+            diasParaLimiar={hidrologia.diasParaLimiar}
+            dataLimiar={hidrologia.dataLimiar}
+            janelaIC80={hidrologia.janelaIC80}
+            caladoAtualM={hidrologia.cmrAtual_m}
+            irc={hidrologia.irc}
+            ircFaixa={hidrologia.ircFaixa}
+            gaugePct={hidrologia.irc}
+            insight={hidrologia.insight}
+            href={hidrologiaCard.href}
+            ilustrativo={false}
+          />
+
+          {/* Aéreo */}
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-azul-medio p-7 opacity-70">
+            <span className="absolute inset-x-0 top-0 h-[3px] bg-gray-600" />
+            <div className="mb-5 flex items-start justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="h-2.5 w-2.5 rounded-[3px] bg-gray-500" />
+                <span className="text-sm font-bold uppercase tracking-[0.1em]">{aereoCard.tag}</span>
               </div>
-              <div className="mt-2 min-h-[34px] text-sm font-semibold text-gray-400">{a.label}</div>
-              <p className="mt-4 mb-5 text-sm leading-relaxed text-gray-500">{a.texto}</p>
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-white">
-                Ver indicador
-                <span className="transition-transform group-hover:translate-x-1">→</span>
+              <div className="text-right text-[0.66rem] uppercase leading-[1.4] tracking-[0.04em] text-gray-500">
+                {aereoCard.periodo.split(" · ").map((p, i, arr) => (
+                  <span key={i}>{p}{i < arr.length - 1 && <br />}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex h-[46px] w-[46px] items-center justify-center rounded-xl bg-white/[0.06]">
+              <Plane className="h-6 w-6 text-gray-500" strokeWidth={1.8} />
+            </div>
+
+            <h3 className="mt-4 text-[1.1rem] font-bold text-gray-300">{aereoCard.titulo}</h3>
+            <p className="mt-1.5 text-[0.82rem] text-gray-500">{aereoCard.teaser}</p>
+
+            <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+              <span className="mt-0.5 shrink-0 rounded border border-gray-600 px-1.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.1em] text-gray-500">
+                Em breve
               </span>
-            </Link>
-          ))}
+              <p
+                className="text-[0.84rem] leading-[1.45] text-gray-500 [&_b]:font-semibold [&_b]:text-gray-400"
+                dangerouslySetInnerHTML={{ __html: aereoCard.insight }}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
       <div className="h-px bg-white/10" />
-
-      {/* ───────────── PAINÉIS ───────────── */}
-      <section id="dados" className="mx-auto max-w-screen-xl px-6 py-20">
-        <div className="mb-9">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-verde">Explore os dados</p>
-          <h2 className="mt-2.5 text-3xl font-extrabold leading-tight tracking-tight md:text-4xl">
-            Painéis vivos, porto a porto.
-          </h2>
-          <p className="mt-3 max-w-xl leading-relaxed text-gray-400">
-            Cada painel é uma porta de entrada para a base — com o número certo, do mês certo, do porto certo.
-          </p>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-3">
-          {paineis.map((p) => {
-            const Icon = p.icon;
-            const isBreve = p.status === "breve";
-            const inner = (
-              <>
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-xl ${
-                    p.iconCor === "green" ? "bg-ibi-green/12 text-verde" : "bg-ibi-blue/12 text-ibi-blue"
-                  }`}
-                >
-                  <Icon className="h-6 w-6" strokeWidth={1.8} />
-                </div>
-                <h3 className="flex items-center gap-2.5 text-lg font-bold">
-                  {p.titulo}
-                  <span className={`rounded px-1.5 py-0.5 text-[0.6rem] font-extrabold uppercase tracking-wider ${badge[p.status].cls}`}>
-                    {badge[p.status].txt}
-                  </span>
-                </h3>
-                <p className="text-sm leading-relaxed text-gray-400">{p.descricao}</p>
-                <span className={`mt-auto inline-flex items-center gap-1.5 text-sm font-bold ${isBreve ? "text-gray-500" : "text-white"}`}>
-                  {p.cta}{!isBreve && " →"}
-                </span>
-              </>
-            );
-            const cls =
-              "flex min-h-[200px] flex-col gap-3.5 rounded-2xl border border-white/10 bg-azul-medio p-7 transition-all";
-            return isBreve ? (
-              <div key={p.titulo} className={`${cls} opacity-60`}>{inner}</div>
-            ) : (
-              <Link key={p.titulo} href={p.href} className={`${cls} hover:-translate-y-1 hover:border-ibi-blue`}>
-                {inner}
-              </Link>
-            );
-          })}
-        </div>
-      </section>
 
       {/* ───────────── CAPTURA ───────────── */}
       <section id="receber" className="mx-auto max-w-screen-xl px-6 py-20">
         <div
           className="overflow-hidden rounded-3xl border border-white/10 px-8 py-14 text-center"
           style={{
-            background:
-              "linear-gradient(120deg,rgba(0,153,216,.1),rgba(0,166,82,.08))",
+            background: "linear-gradient(120deg,rgba(0,153,216,.1),rgba(0,166,82,.08))",
           }}
         >
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-ibi-blue">Boletim mensal</p>

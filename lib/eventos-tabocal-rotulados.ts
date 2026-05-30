@@ -5,7 +5,7 @@
 //   - Cota de Itacoatiara no evento
 //   - Restrição efetiva de calado no canal Tabocal (do conhecimento setorial)
 //   - Duração do evento abaixo de patamares operacionais
-//   - Documentação ANTAQ/SEMA/imprensa especializada
+//   - Documentação ANTAQ/imprensa especializada
 //
 //   1 = Itacoatiara saudável (cota ≥ 8m), navegação irrestrita
 //   2 = Itacoatiara em vazante normal (4–8m), atenção leve

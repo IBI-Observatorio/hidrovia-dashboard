@@ -1,0 +1,78 @@
+name: Atualiza dados de portos (ANTAQ)
+
+# Regenera os JSONs de portos a partir da API ANTAQ e commita as mudanças.
+# Como os JSONs são versionados e o push na main dispara o deploy (deploy.yml),
+# isto atualiza os dashboards de portos sem nenhum passo manual.
+#
+# Cadência: dia 16 de cada mês, 11:00 UTC (08:00 Manaus) — a ANTAQ costuma
+# publicar o mês novo por volta do dia 15. Também roda sob demanda (botão
+# "Run workflow" na aba Actions).
+
+on:
+  schedule:
+    - cron: "0 11 16 * *"
+  workflow_dispatch:
+
+# Permite ao job fazer commit de volta no repositório.
+permissions:
+  contents: write
+
+# Evita execuções concorrentes (uma rodada por vez).
+concurrency:
+  group: atualiza-portos
+  cancel-in-progress: false
+
+jobs:
+  atualiza:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checa saúde da API ANTAQ
+        run: |
+          set -e
+          echo "Aguardando API responder…"
+          for i in 1 2 3 4 5; do
+            if curl -fsS "${ANTAQ_API_URL}/api/v1/saude" -o saude.json; then
+              cat saude.json; echo
+              break
+            fi
+            echo "tentativa $i falhou, aguardando 15s…"; sleep 15
+            if [ "$i" = "5" ]; then echo "API ANTAQ indisponível — abortando"; exit 1; fi
+          done
+        env:
+          ANTAQ_API_URL: ${{ vars.ANTAQ_API_URL || 'https://antaq-api-production.up.railway.app' }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Geradores que escrevem em public/data/antaq/dashboard/ (ver docs/RUNBOOK-DADOS.md).
+      # update-navegacao-series.py e forecast_conteiner.py ficam de fora: o primeiro é
+      # Python (sem deps no runner), o segundo só muda ao revisar metodologia.
+      - name: Gera portos-series.json (movimentação)
+        run: node scripts/gera-portos-series.mjs
+        env:
+          ANTAQ_API_URL: ${{ vars.ANTAQ_API_URL || 'https://antaq-api-production.up.railway.app' }}
+
+      - name: Gera series-tendencia.json (médias móveis)
+        run: node scripts/gera-series-tendencia.mjs
+        env:
+          ANTAQ_API_URL: ${{ vars.ANTAQ_API_URL || 'https://antaq-api-production.up.railway.app' }}
+
+      - name: Commita se houver mudança
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- public/data/antaq/dashboard/; then
+            echo "Nenhuma mudança nos dados — nada a commitar."
+            exit 0
+          fi
+          REF=$(node -e "try{console.log(require('./public/data/antaq/dashboard/portos-series.json').referencia)}catch{console.log('?')}")
+          git add public/data/antaq/dashboard/
+          git commit \
+            -m "chore(dados): atualiza dados de portos (ref ${REF}) [skip ci]" \
+            -m "Regenerado automaticamente pela API ANTAQ." \
+            -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+          git push

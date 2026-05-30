@@ -20,10 +20,10 @@ export const caso2024Copy = {
       version: "1.0",
     },
     abstract:
-      "A estiagem de 2024 foi a mais severa já registrada em séries históricas modernas da bacia amazônica. Entre outubro e novembro daquele ano, as estações de Manaus e Itacoatiara — separadas por 200 km no eixo do Rio Negro/Solimões — registraram suas mínimas em datas distintas, com 22 dias de defasagem. Este estudo documenta o episódio com base nas séries oficiais da ANA e dos boletins SEMA-AM, e oferece subsídios técnicos para o planejamento operacional em ciclos hidrológicos semelhantes.",
+      "A estiagem de 2024 foi a mais severa já registrada em séries históricas modernas da bacia amazônica. Entre outubro e novembro daquele ano, as estações de Manaus e Itacoatiara — separadas por 200 km no eixo Rio Negro/Amazonas — registraram suas mínimas em datas distintas, com 22 dias de defasagem. Este estudo documenta o episódio com base nas séries oficiais da ANA e oferece subsídios técnicos para o planejamento operacional em ciclos hidrológicos semelhantes.",
     keyFacts: [
       { label: "Mínima em Manaus", value: "12,11 m em 9/out/2024" },
-      { label: "Mínima em Itacoatiara", value: "0,33 m em 31/out/2024" },
+      { label: "Mínima em Itacoatiara", value: "−0,17 m em 31/out/2024" },
       { label: "Defasagem temporal", value: "22 dias" },
       { label: "Severidade", value: "Mínima histórica em ambas as estações" },
     ],
@@ -62,7 +62,7 @@ export const caso2024Copy = {
     paragraphs: [
       "O ciclo hidrológico de 2023–2024 ocorreu sob influência simultânea de dois fenômenos climáticos: El Niño no Pacífico equatorial, classificado como de intensidade forte, e aquecimento anômalo do Atlântico Norte tropical. A combinação reduziu de forma significativa a precipitação sobre a bacia amazônica, especialmente no setor norte e central.",
       "Como consequência, a recarga dos rios formadores do Negro e do Solimões durante o período de chuvas de 2023–2024 ficou abaixo da média histórica. A estiagem subsequente, observada entre julho e novembro de 2024, registrou mínimas inéditas em diversas estações da bacia.",
-      "Em Manaus, a cota mínima de 12,11 m superou — para baixo — o recorde anterior, de 13,59 m, registrado em 2010. Em Itacoatiara, a mínima também foi a mais baixa da série histórica.",
+      "Em Manaus, a cota mínima de 12,11 m superou — para baixo — o recorde anterior, de 13,63 m, registrado em 2010. Em Itacoatiara, a mínima também foi a mais baixa da série histórica.",
     ],
     sources:
       "Fontes: SGB/CPRM, INPE, NOAA Climate Prediction Center, Boletim Hidrológico da Bacia Amazônica (ANA, 2024).",
@@ -95,7 +95,7 @@ export const caso2024Copy = {
       {
         date: "31 de outubro de 2024",
         station: "Itacoatiara",
-        event: "Mínima histórica registrada — 0,33 m",
+        event: "Mínima histórica registrada — −0,17 m",
         note: "A partir deste ponto, Itacoatiara inicia ascensão.",
       },
     ],
@@ -124,7 +124,7 @@ export const caso2024Copy = {
         ["1963", "13,64", "13 de outubro", "Sem evento significativo"],
         ["2005", "14,75", "26 de outubro", "Atlântico Norte aquecido"],
       ],
-      note: "Os anos de 2023 e 2024 representam, respectivamente, a segunda e a primeira mínima da série de mais de 120 anos.",
+      note: "Os anos de 2024 e 2023 representam, respectivamente, a primeira e a segunda menor cota da série de mais de 120 anos.",
     },
     interpretation:
       "A frequência de eventos extremos nos últimos vinte anos — com três das cinco menores cotas históricas registradas após 2005 — é compatível com projeções de maior variabilidade hidrológica na bacia em cenários de mudança climática.",
@@ -178,11 +178,6 @@ export const caso2024Copy = {
           source: "Agência Nacional de Águas (ANA)",
           description:
             "Séries históricas de cota das estações de Manaus (código 14990000) e Itacoatiara (código 16030000), via plataforma HidroWeb e API SOAP de telemetria.",
-        },
-        {
-          source: "SEMA-AM",
-          description:
-            "Boletins fluviométricos diários publicados pela Secretaria de Estado de Meio Ambiente do Amazonas, utilizados como validação cruzada das leituras telemétricas.",
         },
         {
           source: "SGB/CPRM",

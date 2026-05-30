@@ -111,7 +111,7 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
     const idn = s.serie_idn?.length
       ? s.serie_idn[s.serie_idn.length - 1].idn
       : calculaIDNSimples(
-          { SGC: sgc.cota_m, Humaita: hum.cota_m, PortoVelho: s.dados.PortoVelho?.cota_m, Borba: s.dados.Borba?.cota_m },
+          { SGC: sgc.cota_m, Humaita: hum.cota_m, PortoVelho: s.dados.PortoVelho?.cota_m, Manicore: s.dados.Manicore?.cota_m },
           sgc.ultima_atualizacao,
         );
     dessinc = dessincronizacaoExcedeP85(idn, s.data_ref);

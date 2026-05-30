@@ -58,7 +58,8 @@ describe("calculaIDN — pipeline completa", () => {
   it("retorna lista de estações usadas em cada sub-bacia", () => {
     const r = calculaIDN(cotasEquilibradas, "2026-05-11");
     expect(r.estacoes_norte.length).toBe(5);
-    expect(r.estacoes_sul.length).toBe(6);
+    // Sul = Abuna, PortoVelho, Humaita, Manicore, Labrea (Borba removida — ver sub-bacias.ts)
+    expect(r.estacoes_sul.length).toBe(5);
   });
 
   it("falhas individuais (estação ausente) renormalizam os pesos", () => {

@@ -7,14 +7,14 @@
   "granularidade": "mensal",
   "cobertura": { "inicio": "2010", "fim": "2026" },
   "destaque": false,
-  "fonte": "ANTAQ — Estatística Aquaviária (2010–2026) + BCB SGS (IBC-Br)",
+  "fonte": "ANTAQ — Estatística Aquaviária (2010–2026)",
   "ultima_atualizacao": "mai/2026",
-  "metodologia": "Média móvel trailing de 12 meses (MA12) aplicada à tonelagem mensal por natureza de carga. Filtro FlagMCOperacaoCarga=1 evita dupla contagem em cabotagem. Projeção OLS: momentum_conteiner(t) = a + b·IBC-Br_yoy(t-5) + c·momentum_cargageral(t-12). Intervalo de confiança estimado pelo erro padrão da regressão.",
+  "metodologia": "Cada ponto da linha é a média dos 12 meses anteriores — isso elimina o efeito da safra, de feriados e de paradas operacionais, deixando visível só o que está de fato crescendo ou caindo. A projeção do contêiner é gerada por um modelo estatístico validado em 38 meses fora da amostra. A faixa ao redor da linha é a margem de erro — mais estreita em 80% de confiança, mais larga em 95%.",
   "achados": [
-    "Granel sólido (soja, milho, minério) cresce +7% a/a — puxado pela safra recorde e pelo Arco Norte",
-    "Granel líquido (petróleo, combustíveis) acelerou 11% a/a com o pré-sal exportando a todo vapor",
-    "Carga geral (pallets, fardos, máquinas) cai ~3% — substituída gradualmente pelo contêiner",
-    "Contêiner (+5%) mantém trajetória positiva confirmada pelo modelo OLS com IBC-Br como antecedente"
+    "Granel sólido +6,6% em 2025: o Norte cresceu +10,3% vs +6,1% do país — eixo logístico migrando para o Arco Norte (Itaqui em recorde, soja por lá +19%, Santarém +13%)",
+    "Granel líquido +6,3%: produção de petróleo bateu recorde (+13% a/a, ANP), pré-sal já é 80% do total e metade vira exportação — petróleo é o maior item da pauta exportadora pelo 2º ano",
+    "Carga geral quase parada (+1,3%)",
+    "Dentro do total: cabotagem doméstica recuou −3,6%, mas o offshore (apoio ao pré-sal) saltou +12,9%"
   ],
   "grafico": { "tipo": "medias_moveis_31" }
 }

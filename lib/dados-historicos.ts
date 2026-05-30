@@ -47,9 +47,11 @@ export const MANAUS_2024_ESTIAGEM: Record<string, number> = {
   "2024-12-28": 17.71,
 };
 
-// Itacoatiara 2024 — mínimas conhecidas (em metros)
+// Itacoatiara 2024 — mínimas conhecidas (em metros).
+// Fonte: ANA HidroWeb estação 17900000 (data/itacoatiara_hidroweb.csv).
+// 13/10 é o vale do primeiro mergulho; 31/10 é a mínima absoluta do ano.
 export const ITACOATIARA_2024_MINIMAS: Record<string, number> = {
-  "2024-10-13": -0.11,
+  "2024-10-13": -0.13,
   "2024-10-31": -0.17,
 };
 
@@ -66,33 +68,30 @@ export const LAG_2024 = {
 };
 
 // ---------------------------------------------------------------------------
-// Dessincronização 17/03/2026 — snapshot
-// ---------------------------------------------------------------------------
-export const DESSINCRONIZACAO_2024_VS_2026 = {
-  data:  "17/03/2026",
-  fonte: "SGB/CPRM — 11° Boletim SAH Amazonas",
-  estacoes: [
-    { nome: "SGC — Negro alto",       cota_2026:  620, cota_2024: 1547, delta: -927 },
-    { nome: "Porto Velho — Madeira",  cota_2026: 1398, cota_2024:  719, delta: +679 },
-    { nome: "Manaus",                 cota_2026: 2482, cota_2024: 1962, delta: +520 },
-    { nome: "Itacoatiara",            cota_2026: 1137, cota_2024:  884, delta: +253 },
-  ],
-};
-
-// ---------------------------------------------------------------------------
-// Previsão 2026 (SGB 18° boletim, 05/05/2026)
+// Previsão 2026 — fallback usado apenas se o cache SGB (data/boletins_sgb_cache.json)
+// estiver ausente. O cron semanal (scripts/pipeline-sace.py → /api/sgb) mantém
+// o cache atualizado, então `fetchPrevisao2026()` quase sempre devolve o valor
+// dinâmico. Quando este fallback for usado, fica marcado como "(fallback)" no
+// label da fonte. Mantemos sincronizado com o último boletim conhecido pra
+// reduzir defasagem em caso de cache vazio.
 // ---------------------------------------------------------------------------
 export const PREVISAO_2026 = {
-  fonte:               "SGB/CPRM — 18° Boletim SAH Amazonas (05/05/2026)",
+  fonte:               "SGB/CPRM — 21° Boletim SAH Amazonas (26/05/2026)",
+  numero_boletim:      21,
+  data_boletim:        "2026-05-26",
   manaus_pico_cheia:   { media: 28.23, ic80_min: 27.69, ic80_max: 28.76, prob_27_5: 0.96 },
   manacapuru_pico:     19.16,
   itacoatiara_pico:    13.73,
-  enso:                "El Niño emergindo — 61% prob mai–jul/2026 (CPC/NOAA, abr/2026)",
+  // Fallback ENSO: o cache dinâmico em `data/enso_cpc_cache.json`
+  // (atualizado mensalmente pelo `scripts/scrape-enso-cpc.py`) sobrescreve
+  // este texto via `fetchPrevisao2026()`. CPC publica toda 2ª quinta do mês.
+  enso:                "El Niño Watch — 82% prob mai–jul/2026; 96% prob dez/2026–fev/2027 (CPC/NOAA, 14/mai/2026)",
+  enso_data_emissao:   "2026-05-14",
 };
 
 // ---------------------------------------------------------------------------
 // Dados atuais simulados para o MVP (mai/2026)
-// Fonte: última leitura disponível dos boletins SEMA/SGB
+// Fonte: última leitura disponível dos boletins SGB/CPRM
 // ---------------------------------------------------------------------------
 export interface DadosEstacao {
   nome:          string;
@@ -143,6 +142,21 @@ export const DADOS_ATUAIS: Record<string, DadosEstacao> = {
     nome: "Borba", rio: "Rio Madeira",
     cota_m: 12.11, variacao_24h: -15, delta_2025: +35, delta_2024: +420,
     ultima_atualizacao: "2026-05-06",
+  },
+  Manicore: {
+    nome: "Manicoré", rio: "Rio Madeira",
+    cota_m: 24.81, variacao_24h: 0, delta_2025: 0, delta_2024: 0,
+    ultima_atualizacao: "2026-05-26",
+  },
+  Labrea: {
+    nome: "Lábrea", rio: "Rio Purus",
+    cota_m: 19.65, variacao_24h: 0, delta_2025: 0, delta_2024: 0,
+    ultima_atualizacao: "2026-05-26",
+  },
+  Curicuriari: {
+    nome: "Curicuriari", rio: "Rio Negro",
+    cota_m: 12.66, variacao_24h: 0, delta_2025: 0, delta_2024: 0,
+    ultima_atualizacao: "2026-05-26",
   },
 };
 

@@ -1,0 +1,205 @@
+{
+  "mes_atual": "2026-05",
+  "total": 18,
+  "bytes_total": 34227777,
+  "boletins": [
+    {
+      "bacia": "Acre",
+      "data": "2026-05-05",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Acre/20260505_15-20260505%20-%20153221.pdf",
+      "pdf_path": "public/data/sace/boletins/acre/20260505.pdf",
+      "txt_path": "public/data/sace/boletins/acre/20260505.txt",
+      "paginas": 4,
+      "bytes": 1094822
+    },
+    {
+      "bacia": "Acre",
+      "data": "2026-05-12",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Acre/20260512_16-20260512%20-%20161849.pdf",
+      "pdf_path": "public/data/sace/boletins/acre/20260512.pdf",
+      "txt_path": "public/data/sace/boletins/acre/20260512.txt",
+      "paginas": 4,
+      "bytes": 1127152
+    },
+    {
+      "bacia": "Acre",
+      "data": "2026-05-19",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Acre/20260519_16-20260519%20-%20163929.pdf",
+      "pdf_path": "public/data/sace/boletins/acre/20260519.pdf",
+      "txt_path": "public/data/sace/boletins/acre/20260519.txt",
+      "paginas": 4,
+      "bytes": 1067680
+    },
+    {
+      "bacia": "Acre",
+      "data": "2026-05-27",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Acre/20260527_09-20260527%20-%20095709.pdf",
+      "pdf_path": "public/data/sace/boletins/acre/20260527.pdf",
+      "txt_path": "public/data/sace/boletins/acre/20260527.txt",
+      "paginas": 4,
+      "bytes": 1055412
+    },
+    {
+      "bacia": "Amazonas",
+      "data": "2026-05-05",
+      "numero": "18°",
+      "titulo": "18° BOLETIM HIDROLÓGICO",
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Amazonas/20260505_15-20260505%20-%20150809.pdf",
+      "pdf_path": "public/data/sace/boletins/amazonas/20260505.pdf",
+      "txt_path": "public/data/sace/boletins/amazonas/20260505.txt",
+      "paginas": 18,
+      "bytes": 3305203
+    },
+    {
+      "bacia": "Amazonas",
+      "data": "2026-05-12",
+      "numero": "19°",
+      "titulo": "19° BOLETIM HIDROLÓGICO",
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Amazonas/20260512_17-20260512%20-%20170301.pdf",
+      "pdf_path": "public/data/sace/boletins/amazonas/20260512.pdf",
+      "txt_path": "public/data/sace/boletins/amazonas/20260512.txt",
+      "paginas": 18,
+      "bytes": 3330252
+    },
+    {
+      "bacia": "Amazonas",
+      "data": "2026-05-19",
+      "numero": "20°",
+      "titulo": "20° BOLETIM HIDROLÓGICO",
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Amazonas/20260519_17-20260519%20-%20174421.pdf",
+      "pdf_path": "public/data/sace/boletins/amazonas/20260519.pdf",
+      "txt_path": "public/data/sace/boletins/amazonas/20260519.txt",
+      "paginas": 18,
+      "bytes": 3316344
+    },
+    {
+      "bacia": "Amazonas",
+      "data": "2026-05-26",
+      "numero": "21°",
+      "titulo": "21° BOLETIM HIDROLÓGICO",
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Amazonas/20260526_16-20260526%20-%20163258.pdf",
+      "pdf_path": "public/data/sace/boletins/amazonas/20260526.pdf",
+      "txt_path": "public/data/sace/boletins/amazonas/20260526.txt",
+      "paginas": 18,
+      "bytes": 3237723
+    },
+    {
+      "bacia": "Branco",
+      "data": "2026-05-15",
+      "numero": "1º",
+      "titulo": "1º BOLETIM DE MONITORAMENTO HIDROLÓGICO DA BACIA DO RIO BRANCO",
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Branco/20260515_18-20260515%20-%20185816.pdf",
+      "pdf_path": "public/data/sace/boletins/branco/20260515.pdf",
+      "txt_path": "public/data/sace/boletins/branco/20260515.txt",
+      "paginas": 6,
+      "bytes": 1434184
+    },
+    {
+      "bacia": "Branco",
+      "data": "2026-05-22",
+      "numero": "2º",
+      "titulo": "2º BOLETIM DE MONITORAMENTO HIDROLÓGICO DA BACIA DO RIO BRANCO",
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Branco/20260522_13-20260522%20-%20130656.pdf",
+      "pdf_path": "public/data/sace/boletins/branco/20260522.pdf",
+      "txt_path": "public/data/sace/boletins/branco/20260522.txt",
+      "paginas": 6,
+      "bytes": 1449187
+    },
+    {
+      "bacia": "Madeira",
+      "data": "2026-05-01",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Madeira/20260501_17-20260501%20-%20175305.pdf",
+      "pdf_path": "public/data/sace/boletins/madeira/20260501.pdf",
+      "txt_path": "public/data/sace/boletins/madeira/20260501.txt",
+      "paginas": 4,
+      "bytes": 6860784
+    },
+    {
+      "bacia": "Madeira",
+      "data": "2026-05-05",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Madeira/20260505_15-20260505%20-%20154750.pdf",
+      "pdf_path": "public/data/sace/boletins/madeira/20260505.pdf",
+      "txt_path": "public/data/sace/boletins/madeira/20260505.txt",
+      "paginas": 4,
+      "bytes": 894143
+    },
+    {
+      "bacia": "Madeira",
+      "data": "2026-05-12",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Madeira/20260512_17-20260512%20-%20170342.pdf",
+      "pdf_path": "public/data/sace/boletins/madeira/20260512.pdf",
+      "txt_path": "public/data/sace/boletins/madeira/20260512.txt",
+      "paginas": 4,
+      "bytes": 942670
+    },
+    {
+      "bacia": "Madeira",
+      "data": "2026-05-19",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Madeira/20260519_17-20260519%20-%20175432.pdf",
+      "pdf_path": "public/data/sace/boletins/madeira/20260519.pdf",
+      "txt_path": "public/data/sace/boletins/madeira/20260519.txt",
+      "paginas": 4,
+      "bytes": 885366
+    },
+    {
+      "bacia": "Madeira",
+      "data": "2026-05-26",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Madeira/20260526_17-20260526%20-%20171524.pdf",
+      "pdf_path": "public/data/sace/boletins/madeira/20260526.pdf",
+      "txt_path": "public/data/sace/boletins/madeira/20260526.txt",
+      "paginas": 4,
+      "bytes": 880700
+    },
+    {
+      "bacia": "Xingu",
+      "data": "2026-05-06",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Xingu/20260506_18-20260507%20-%20115701.pdf",
+      "pdf_path": "public/data/sace/boletins/xingu/20260506.pdf",
+      "txt_path": "public/data/sace/boletins/xingu/20260506.txt",
+      "paginas": 9,
+      "bytes": 1171179
+    },
+    {
+      "bacia": "Xingu",
+      "data": "2026-05-13",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Xingu/20260513_18-20260514%20-%20175444.pdf",
+      "pdf_path": "public/data/sace/boletins/xingu/20260513.pdf",
+      "txt_path": "public/data/sace/boletins/xingu/20260513.txt",
+      "paginas": 9,
+      "bytes": 1026249
+    },
+    {
+      "bacia": "Xingu",
+      "data": "2026-05-20",
+      "numero": null,
+      "titulo": null,
+      "pdf_url": "https://www.sgb.gov.br/sace/boletins/Xingu/20260520_18-20260521%20-%20203221.pdf",
+      "pdf_path": "public/data/sace/boletins/xingu/20260520.pdf",
+      "txt_path": "public/data/sace/boletins/xingu/20260520.txt",
+      "paginas": 9,
+      "bytes": 1148727
+    }
+  ]
+}

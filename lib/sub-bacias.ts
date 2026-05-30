@@ -12,7 +12,7 @@ import type { PercentisDOY } from "./percentis-doy";
 
 export type EstacaoComDOY =
   | "SGC"         | "Curicuriari" | "Serrinha" | "Moura" | "Caracarai"
-  | "Abuna"       | "PortoVelho"  | "Humaita"  | "Manicore" | "Borba"
+  | "Abuna"       | "PortoVelho"  | "Humaita"  | "Manicore"
   | "Labrea";
 
 export interface DefinicaoSubBacia {
@@ -45,10 +45,9 @@ export const SUB_BACIAS: Record<"Norte" | "Sul", DefinicaoSubBacia> = {
       { estacao: "Abuna",      peso: 0.15 }, // upstream PVH, fronteira BOL
       { estacao: "PortoVelho", peso: 0.20 }, // sinal andino consolidado
       { estacao: "Humaita",    peso: 0.15 }, // médio
-      { estacao: "Manicore",   peso: 0.10 }, // entre Humaitá e Borba
-      { estacao: "Borba",      peso: 0.15 }, // médio-inferior
+      { estacao: "Manicore",   peso: 0.20 }, // médio-inferior (peso aumentado após remoção de Borba)
       // Rio Purus: drenagem sul independente do Madeira
-      { estacao: "Labrea",     peso: 0.25 }, // Purus (única estação Purus)
+      { estacao: "Labrea",     peso: 0.30 }, // Purus (única estação Purus)
     ],
   },
 };
@@ -75,8 +74,12 @@ export function posicaoSubBacia(
     if (cota == null || !p) continue;
     const p10 = p.p10[doy];
     const p90 = p.p90[doy];
-    if (p10 == null || p90 == null) continue;
-    const pos = (cota - p10) / (p90 - p10);
+    const med = p.mediana[doy];
+    // Normalização centrada na mediana: IDN = 0 quando ambas as sub-bacias estão
+    // nos seus valores medianos históricos. Elimina o viés estrutural de +0.12
+    // que existia com a fórmula (cota − p10)/(p90 − p10).
+    if (p10 == null || p90 == null || med == null) continue;
+    const pos = (cota - med) / (p90 - p10);
     somaValores += pos * peso;
     somaPesos += peso;
     usadas.push(estacao);

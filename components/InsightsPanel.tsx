@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, TrendingDown, Info, Zap, CheckCircle } from "lucide-react";
+import { AlertTriangle, TrendingDown, Info, Zap, CheckCircle, Sparkles } from "lucide-react";
 import { DADOS_ATUAIS, type DadosEstacao } from "@/lib/dados-historicos";
 import { geraInsights, type InsightData } from "@/lib/gera-insights";
 
@@ -27,21 +27,52 @@ const BADGE: Record<InsightData["tipo"], string> = {
 
 export default function InsightsPanel({
   dados = DADOS_ATUAIS,
+  insightsAI,
+  insightsAIGeradoEm,
 }: {
-  dados?: Record<string, DadosEstacao>;
+  dados?:              Record<string, DadosEstacao>;
+  insightsAI?:         InsightData[];
+  insightsAIGeradoEm?: string;   // ISO 8601 — data de geração do cache AI
 }) {
-  const insights = geraInsights(dados);
+  // Prioriza insights IA; cai para rule-based se não houver cache
+  const usandoAI = Array.isArray(insightsAI) && insightsAI.length > 0;
+  const insights = usandoAI ? insightsAI : geraInsights(dados);
 
-  const criticos  = insights.filter((i) => i.tipo === "critico").length;
-  const alertas   = insights.filter((i) => i.tipo === "alerta").length;
+  const criticos = insights.filter((i) => i.tipo === "critico").length;
+  const alertas  = insights.filter((i) => i.tipo === "alerta").length;
+
+  // Formata "gerado em X dias atrás" ou "hoje"
+  function labelGeradoEm() {
+    if (!insightsAIGeradoEm) return null;
+    try {
+      const d = new Date(insightsAIGeradoEm);
+      const dias = Math.round((Date.now() - d.getTime()) / 86400000);
+      if (dias === 0) return "hoje";
+      if (dias === 1) return "ontem";
+      return `há ${dias} dias`;
+    } catch {
+      return null;
+    }
+  }
 
   return (
     <div className="bg-azul-medio rounded-lg p-5">
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h2 className="text-white font-bold text-lg">Insights Automáticos</h2>
+          <h2 className="text-white font-bold text-lg flex items-center gap-2">
+            Insights Automáticos
+            {usandoAI && (
+              <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded-full tracking-wide">
+                <Sparkles size={10} />
+                IA
+              </span>
+            )}
+          </h2>
           <p className="text-gray-400 text-sm">
-            Gerados dos dados mais recentes — cache 6h.
+            {usandoAI
+              ? <>Análise Claude · atualizado {labelGeradoEm() ?? "semanalmente"}</>
+              : <>Gerados dos dados mais recentes — regras calibradas</>
+            }
           </p>
         </div>
         {/* Contadores */}
@@ -90,11 +121,6 @@ export default function InsightsPanel({
         )}
       </div>
 
-      <p className="text-gray-600 text-xs mt-3 text-right">
-        <a href="/api/insights" target="_blank" rel="noopener" className="hover:text-gray-400 transition-colors">
-          JSON API →
-        </a>
-      </p>
     </div>
   );
 }

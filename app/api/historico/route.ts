@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { readFileSync, existsSync } from "fs";
 import { join } from "path";
+import { lerSerieCotas } from "@/lib/ana-cotas-series";
 
 export const revalidate = 86400;
 
@@ -114,25 +115,37 @@ function lerCSVSimples(arquivo: string, anos?: Set<number>): Map<number, Ponto[]
   }
 }
 
-// boletins_sema_2026_consolidado.csv — valores em metros para CUR e HUM
-function lerSEMAConsolidado(col: "CUR" | "HUM"): Ponto[] {
-  const caminho = join(PROJECT_DATA, "boletins_sema_2026_consolidado.csv");
-  if (!existsSync(caminho)) return [];
-  const linhas = readFileSync(caminho, "utf-8").split("\n");
-  const cab = linhas[0].split(","); // data,bol,MAO,CUR,TAB,TFE,MNC,ITA,HUM,...
-  const idx = cab.indexOf(col);
-  if (idx < 0) return [];
-  const res: Ponto[] = [];
-  for (let i = 1; i < linhas.length; i++) {
-    const p = linhas[i].trim().split(",");
-    if (p.length <= idx) continue;
-    const data = p[0];
-    if (!data?.startsWith("2026")) continue;
-    const v = parseFloat(p[idx]);
-    if (isNaN(v)) continue;
-    res.push({ md: data.slice(5), cota_m: v });
+
+// Série diária acumulada de cota (ana-cotas-series.json) → pontos de 2026.
+// É o histórico que cresce 1 ponto/dia a partir do cache ANA, dando densidade
+// diária à linha de 2026 sem depender do CSV semanal. Valores em metros.
+function lerCotasSeries2026(estacao: string): Ponto[] {
+  const serie = lerSerieCotas();
+  const arr = serie.estacoes[estacao] ?? [];
+  return arr
+    .filter((p) => p.data.startsWith("2026"))
+    .map((p) => ({ md: p.data.slice(5), cota_m: p.cota_m }));
+}
+
+// Leitura ANA ao vivo (cache diário do /monitor) → ponto "hoje" de 2026.
+// Fallback usado só enquanto a série acumulada ainda não tem ponto da estação
+// (ex.: deploy novo antes do primeiro acesso ao /monitor). Valores em metros.
+function lerLiveDiario(estacao: string): Ponto | null {
+  try {
+    const p = join(PROJECT_DATA, "ana-diario-cache.json");
+    if (!existsSync(p)) return null;
+    const cache = JSON.parse(readFileSync(p, "utf-8")) as {
+      data?: string;
+      dados?: Record<string, { cota_m?: number; ultima_atualizacao?: string }>;
+    };
+    const d = cache.dados?.[estacao];
+    if (!d || typeof d.cota_m !== "number") return null;
+    const data = d.ultima_atualizacao ?? cache.data;
+    if (!data?.startsWith("2026")) return null;
+    return { md: data.slice(5), cota_m: +d.cota_m.toFixed(2) };
+  } catch {
+    return null;
   }
-  return res;
 }
 
 // Mescla sem duplicar md — extra complementa base
@@ -189,25 +202,19 @@ export async function GET(request: NextRequest) {
   } else if (estacao === "SGC") {
     // HidroWeb cobre 2016–out/2025 (consistido); sem telemetria disponível
     const hidroweb  = mapToArray(lerCSVSimples("sgc_hidroweb.csv", anos));
-    const sema2026  = anos.has(2026) ? lerSEMAConsolidado("CUR") : [];
     const todas2026 = anos.has(2026) ? lerTodasEstacoes2026("CUR") : [];
     for (const ano of anos) {
       let pts = hidroweb.get(ano) ?? [];
-      if (ano === 2026) {
-        pts = merge(pts, sema2026);
-        pts = merge(pts, todas2026);
-      }
+      if (ano === 2026) pts = merge(pts, todas2026);
       resultado[ano] = pts;
     }
   } else if (estacao === "Humaita") {
-    // HidroWeb cobre 2016–dez/2025; telemetria complementa 2024–2025; SEMA para 2026
-    const hidroweb  = mapToArray(lerCSVSimples("humaita_hidroweb.csv", anos));
+    // HidroWeb cobre 2016–dez/2025; telemetria complementa 2024–2025
+    const hidroweb   = mapToArray(lerCSVSimples("humaita_hidroweb.csv", anos));
     const telemetria = mapToArray(lerCSVSimples("humaita_historico.csv", anos));
-    const sema2026  = anos.has(2026) ? lerSEMAConsolidado("HUM") : [];
     for (const ano of anos) {
       let pts = hidroweb.get(ano) ?? [];
       if (telemetria.has(ano)) pts = merge(pts, telemetria.get(ano)!);
-      if (ano === 2026) pts = merge(pts, sema2026);
       resultado[ano] = pts;
     }
   } else if (estacao === "Borba") {
@@ -242,6 +249,17 @@ export async function GET(request: NextRequest) {
       if (ano === 2026) pts = merge(pts, todas2026);
       resultado[ano] = pts;
     }
+  }
+
+  // Estende a linha de 2026 com a série diária acumulada (ou, na ausência dela,
+  // ao menos o ponto de hoje), para não "parar" na última data do CSV estático.
+  if (anos.has(2026) && resultado["2026"]) {
+    let live2026 = lerCotasSeries2026(estacao);
+    if (live2026.length === 0) {
+      const p = lerLiveDiario(estacao);
+      if (p) live2026 = [p];
+    }
+    if (live2026.length) resultado["2026"] = merge(resultado["2026"], live2026);
   }
 
   return Response.json(resultado, {

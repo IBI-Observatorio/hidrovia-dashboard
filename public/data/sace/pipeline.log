@@ -1,0 +1,314 @@
+[2026-05-27T10:29:09Z] ============================================================
+[2026-05-27T10:29:09Z] Pipeline SACE iniciado | dry-run=True
+[2026-05-27T10:29:09Z] == SCRAPE 2026-05 ==
+[2026-05-27T10:29:11Z]   Amazonas: 4 boletins
+[2026-05-27T10:29:11Z]     [cache] Amazonas 2026-05-26 (3161 KB)
+[2026-05-27T10:29:11Z]     [cache] Amazonas 2026-05-19 (3238 KB)
+[2026-05-27T10:29:11Z]     [cache] Amazonas 2026-05-12 (3252 KB)
+[2026-05-27T10:29:11Z]     [cache] Amazonas 2026-05-05 (3227 KB)
+[2026-05-27T10:29:12Z]   Madeira: 5 boletins
+[2026-05-27T10:29:12Z]     [cache] Madeira 2026-05-26 (860 KB)
+[2026-05-27T10:29:12Z]     [cache] Madeira 2026-05-19 (864 KB)
+[2026-05-27T10:29:12Z]     [cache] Madeira 2026-05-12 (920 KB)
+[2026-05-27T10:29:12Z]     [cache] Madeira 2026-05-05 (873 KB)
+[2026-05-27T10:29:12Z]     [cache] Madeira 2026-05-01 (6699 KB)
+[2026-05-27T10:29:13Z]   Acre: 3 boletins
+[2026-05-27T10:29:13Z]     [cache] Acre 2026-05-19 (1042 KB)
+[2026-05-27T10:29:13Z]     [cache] Acre 2026-05-12 (1100 KB)
+[2026-05-27T10:29:13Z]     [cache] Acre 2026-05-05 (1069 KB)
+[2026-05-27T10:29:14Z]   Branco: 2 boletins
+[2026-05-27T10:29:14Z]     [cache] Branco 2026-05-22 (1415 KB)
+[2026-05-27T10:29:14Z]     [cache] Branco 2026-05-15 (1400 KB)
+[2026-05-27T10:29:15Z]   Xingu: 3 boletins
+[2026-05-27T10:29:15Z]     [cache] Xingu 2026-05-20 (1121 KB)
+[2026-05-27T10:29:15Z]     [cache] Xingu 2026-05-13 (1002 KB)
+[2026-05-27T10:29:15Z]     [cache] Xingu 2026-05-06 (1143 KB)
+[2026-05-27T10:29:15Z]   -> 17 boletins de 2026-05 | 31.6 MB
+[2026-05-27T10:29:15Z] == PARSE ==
+[2026-05-27T10:29:15Z]   Acre       2026-05-05   4 estacoes
+[2026-05-27T10:29:15Z]   Acre       2026-05-12   4 estacoes
+[2026-05-27T10:29:15Z]   Acre       2026-05-19   4 estacoes
+[2026-05-27T10:29:21Z]   Amazonas   2026-05-05  14 estacoes
+[2026-05-27T10:29:27Z]   Amazonas   2026-05-12  14 estacoes
+[2026-05-27T10:29:33Z]   Amazonas   2026-05-19  14 estacoes
+[2026-05-27T10:29:39Z]   Amazonas   2026-05-26  14 estacoes
+[2026-05-27T10:29:39Z]   Branco     2026-05-15  10 estacoes
+[2026-05-27T10:29:40Z]   Branco     2026-05-22  10 estacoes
+[2026-05-27T10:29:42Z]   Madeira    2026-05-01   5 estacoes
+[2026-05-27T10:29:42Z]   Madeira    2026-05-05   5 estacoes
+[2026-05-27T10:29:43Z]   Madeira    2026-05-12   5 estacoes
+[2026-05-27T10:29:43Z]   Madeira    2026-05-19   5 estacoes
+[2026-05-27T10:29:44Z]   Madeira    2026-05-26   5 estacoes
+[2026-05-27T10:29:44Z]   Xingu      2026-05-06   4 estacoes
+[2026-05-27T10:29:44Z]   Xingu      2026-05-13   4 estacoes
+[2026-05-27T10:29:44Z]   Xingu      2026-05-20   4 estacoes
+[2026-05-27T10:29:44Z]   dados.json: 125 medicoes em 17 boletins
+[2026-05-27T10:29:44Z]   -> latest.json: 38 estacoes
+[2026-05-27T10:29:44Z] == PATCH lib/dados-historicos.ts ==
+[2026-05-27T10:29:44Z]   Manaus          27.70m var24h=+4cm  (2026-05-26)
+[2026-05-27T10:29:44Z]   Manacapuru      18.49m var24h=+3cm  (2026-05-26)
+[2026-05-27T10:29:44Z]   SGC             10.25m var24h=-3cm  (2026-05-26)
+[2026-05-27T10:29:44Z]   Itacoatiara     13.49m var24h=-1cm  (2026-05-26)
+[2026-05-27T10:30:07Z] ============================================================
+[2026-05-27T10:30:07Z] Pipeline SACE iniciado | dry-run=True
+[2026-05-27T10:30:07Z] == SCRAPE 2026-05 ==
+[2026-05-27T10:30:08Z]   Amazonas: 4 boletins
+[2026-05-27T10:30:08Z]     [cache] Amazonas 2026-05-26 (3161 KB)
+[2026-05-27T10:30:08Z]     [cache] Amazonas 2026-05-19 (3238 KB)
+[2026-05-27T10:30:08Z]     [cache] Amazonas 2026-05-12 (3252 KB)
+[2026-05-27T10:30:08Z]     [cache] Amazonas 2026-05-05 (3227 KB)
+[2026-05-27T10:30:09Z]   Madeira: 5 boletins
+[2026-05-27T10:30:09Z]     [cache] Madeira 2026-05-26 (860 KB)
+[2026-05-27T10:30:09Z]     [cache] Madeira 2026-05-19 (864 KB)
+[2026-05-27T10:30:09Z]     [cache] Madeira 2026-05-12 (920 KB)
+[2026-05-27T10:30:09Z]     [cache] Madeira 2026-05-05 (873 KB)
+[2026-05-27T10:30:09Z]     [cache] Madeira 2026-05-01 (6699 KB)
+[2026-05-27T10:30:10Z]   Acre: 3 boletins
+[2026-05-27T10:30:10Z]     [cache] Acre 2026-05-19 (1042 KB)
+[2026-05-27T10:30:10Z]     [cache] Acre 2026-05-12 (1100 KB)
+[2026-05-27T10:30:10Z]     [cache] Acre 2026-05-05 (1069 KB)
+[2026-05-27T10:30:11Z]   Branco: 2 boletins
+[2026-05-27T10:30:11Z]     [cache] Branco 2026-05-22 (1415 KB)
+[2026-05-27T10:30:11Z]     [cache] Branco 2026-05-15 (1400 KB)
+[2026-05-27T10:30:12Z]   Xingu: 3 boletins
+[2026-05-27T10:30:12Z]     [cache] Xingu 2026-05-20 (1121 KB)
+[2026-05-27T10:30:12Z]     [cache] Xingu 2026-05-13 (1002 KB)
+[2026-05-27T10:30:12Z]     [cache] Xingu 2026-05-06 (1143 KB)
+[2026-05-27T10:30:12Z]   -> 17 boletins de 2026-05 | 31.6 MB
+[2026-05-27T10:30:12Z] == PARSE ==
+[2026-05-27T10:30:12Z]   Acre       2026-05-05   4 estacoes
+[2026-05-27T10:30:12Z]   Acre       2026-05-12   4 estacoes
+[2026-05-27T10:30:12Z]   Acre       2026-05-19   4 estacoes
+[2026-05-27T10:30:18Z]   Amazonas   2026-05-05  14 estacoes
+[2026-05-27T10:30:24Z]   Amazonas   2026-05-12  14 estacoes
+[2026-05-27T10:30:31Z]   Amazonas   2026-05-19  14 estacoes
+[2026-05-27T10:30:38Z]   Amazonas   2026-05-26  14 estacoes
+[2026-05-27T10:30:39Z]   Branco     2026-05-15  10 estacoes
+[2026-05-27T10:30:39Z]   Branco     2026-05-22  10 estacoes
+[2026-05-27T10:30:41Z]   Madeira    2026-05-01   5 estacoes
+[2026-05-27T10:30:42Z]   Madeira    2026-05-05   5 estacoes
+[2026-05-27T10:30:42Z]   Madeira    2026-05-12   5 estacoes
+[2026-05-27T10:30:43Z]   Madeira    2026-05-19   5 estacoes
+[2026-05-27T10:30:43Z]   Madeira    2026-05-26   5 estacoes
+[2026-05-27T10:30:43Z]   Xingu      2026-05-06   4 estacoes
+[2026-05-27T10:30:43Z]   Xingu      2026-05-13   4 estacoes
+[2026-05-27T10:30:43Z]   Xingu      2026-05-20   4 estacoes
+[2026-05-27T10:30:43Z]   dados.json: 125 medicoes em 17 boletins
+[2026-05-27T10:30:43Z]   -> latest.json: 38 estacoes
+[2026-05-27T10:30:43Z] == PATCH lib/dados-historicos.ts ==
+[2026-05-27T10:30:43Z]   Manaus          27.70m var24h=+4cm  (2026-05-26)
+[2026-05-27T10:30:43Z]   Manacapuru      18.49m var24h=+3cm  (2026-05-26)
+[2026-05-27T10:30:43Z]   SGC             10.25m var24h=-3cm  (2026-05-26)
+[2026-05-27T10:30:43Z]   Itacoatiara     13.49m var24h=-1cm  (2026-05-26)
+[2026-05-27T10:30:43Z]     [!] ITACOATIARA: verifique se a regua SACE bate com lib/fetch-dados.ts
+[2026-05-27T10:30:43Z]   PortoVelho      12.07m (var inalterada)  (2026-05-26)
+[2026-05-27T10:30:43Z]   [DRY RUN] 5 campos seriam atualizados: ['Manaus', 'Manacapuru', 'SGC', 'Itacoatiara', 'PortoVelho']
+[2026-05-27T10:30:43Z] Pipeline concluido.
+[2026-05-27T10:30:49Z] ============================================================
+[2026-05-27T10:30:49Z] Pipeline SACE iniciado | dry-run=False
+[2026-05-27T10:30:49Z] == SCRAPE 2026-05 ==
+[2026-05-27T10:30:50Z]   Amazonas: 4 boletins
+[2026-05-27T10:30:50Z]     [cache] Amazonas 2026-05-26 (3161 KB)
+[2026-05-27T10:30:50Z]     [cache] Amazonas 2026-05-19 (3238 KB)
+[2026-05-27T10:30:50Z]     [cache] Amazonas 2026-05-12 (3252 KB)
+[2026-05-27T10:30:50Z]     [cache] Amazonas 2026-05-05 (3227 KB)
+[2026-05-27T10:30:51Z]   Madeira: 5 boletins
+[2026-05-27T10:30:51Z]     [cache] Madeira 2026-05-26 (860 KB)
+[2026-05-27T10:30:51Z]     [cache] Madeira 2026-05-19 (864 KB)
+[2026-05-27T10:30:51Z]     [cache] Madeira 2026-05-12 (920 KB)
+[2026-05-27T10:30:51Z]     [cache] Madeira 2026-05-05 (873 KB)
+[2026-05-27T10:30:51Z]     [cache] Madeira 2026-05-01 (6699 KB)
+[2026-05-27T10:30:52Z]   Acre: 3 boletins
+[2026-05-27T10:30:52Z]     [cache] Acre 2026-05-19 (1042 KB)
+[2026-05-27T10:30:52Z]     [cache] Acre 2026-05-12 (1100 KB)
+[2026-05-27T10:30:52Z]     [cache] Acre 2026-05-05 (1069 KB)
+[2026-05-27T10:30:53Z]   Branco: 2 boletins
+[2026-05-27T10:30:53Z]     [cache] Branco 2026-05-22 (1415 KB)
+[2026-05-27T10:30:53Z]     [cache] Branco 2026-05-15 (1400 KB)
+[2026-05-27T10:30:54Z]   Xingu: 3 boletins
+[2026-05-27T10:30:54Z]     [cache] Xingu 2026-05-20 (1121 KB)
+[2026-05-27T10:30:54Z]     [cache] Xingu 2026-05-13 (1002 KB)
+[2026-05-27T10:30:54Z]     [cache] Xingu 2026-05-06 (1143 KB)
+[2026-05-27T10:30:54Z]   -> 17 boletins de 2026-05 | 31.6 MB
+[2026-05-27T10:30:54Z] == PARSE ==
+[2026-05-27T10:30:54Z]   Acre       2026-05-05   4 estacoes
+[2026-05-27T10:30:54Z]   Acre       2026-05-12   4 estacoes
+[2026-05-27T10:30:54Z]   Acre       2026-05-19   4 estacoes
+[2026-05-27T10:31:00Z]   Amazonas   2026-05-05  14 estacoes
+[2026-05-27T10:31:06Z]   Amazonas   2026-05-12  14 estacoes
+[2026-05-27T10:31:12Z]   Amazonas   2026-05-19  14 estacoes
+[2026-05-27T10:31:18Z]   Amazonas   2026-05-26  14 estacoes
+[2026-05-27T10:31:19Z]   Branco     2026-05-15  10 estacoes
+[2026-05-27T10:31:20Z]   Branco     2026-05-22  10 estacoes
+[2026-05-27T10:31:22Z]   Madeira    2026-05-01   5 estacoes
+[2026-05-27T10:31:23Z]   Madeira    2026-05-05   5 estacoes
+[2026-05-27T10:31:23Z]   Madeira    2026-05-12   5 estacoes
+[2026-05-27T10:31:24Z]   Madeira    2026-05-19   5 estacoes
+[2026-05-27T10:31:24Z]   Madeira    2026-05-26   5 estacoes
+[2026-05-27T10:31:24Z]   Xingu      2026-05-06   4 estacoes
+[2026-05-27T10:31:24Z]   Xingu      2026-05-13   4 estacoes
+[2026-05-27T10:31:24Z]   Xingu      2026-05-20   4 estacoes
+[2026-05-27T10:31:24Z]   dados.json: 125 medicoes em 17 boletins
+[2026-05-27T10:31:24Z]   -> latest.json: 38 estacoes
+[2026-05-27T10:31:24Z] == PATCH lib/dados-historicos.ts ==
+[2026-05-27T10:31:24Z]   Manaus          27.70m var24h=+4cm  (2026-05-26)
+[2026-05-27T10:31:24Z]   Manacapuru      18.49m var24h=+3cm  (2026-05-26)
+[2026-05-27T10:31:24Z]   SGC             10.25m var24h=-3cm  (2026-05-26)
+[2026-05-27T10:31:24Z]   Itacoatiara     13.49m var24h=-1cm  (2026-05-26)
+[2026-05-27T10:31:24Z]     [!] ITACOATIARA: verifique se a regua SACE bate com lib/fetch-dados.ts
+[2026-05-27T10:31:24Z]   PortoVelho      12.07m (var inalterada)  (2026-05-26)
+[2026-05-27T10:31:24Z]   5 estacoes atualizadas: ['Manaus', 'Manacapuru', 'SGC', 'Itacoatiara', 'PortoVelho']
+[2026-05-27T10:31:24Z]   diff salvo em public\data\sace\boletins\dados-historicos.diff.txt
+[2026-05-27T10:31:24Z] Pipeline concluido.
+[2026-05-27T13:01:54Z] ============================================================
+[2026-05-27T13:01:54Z] Pipeline SACE iniciado
+[2026-05-27T13:01:54Z] == SCRAPE 2026-05 ==
+[2026-05-27T13:01:54Z]   Amazonas: 4 boletins
+[2026-05-27T13:01:54Z]     [cache] Amazonas 2026-05-26 (3161 KB)
+[2026-05-27T13:01:54Z]     [cache] Amazonas 2026-05-19 (3238 KB)
+[2026-05-27T13:01:54Z]     [cache] Amazonas 2026-05-12 (3252 KB)
+[2026-05-27T13:01:54Z]     [cache] Amazonas 2026-05-05 (3227 KB)
+[2026-05-27T13:01:55Z]   Madeira: 5 boletins
+[2026-05-27T13:01:55Z]     [cache] Madeira 2026-05-26 (860 KB)
+[2026-05-27T13:01:55Z]     [cache] Madeira 2026-05-19 (864 KB)
+[2026-05-27T13:01:55Z]     [cache] Madeira 2026-05-12 (920 KB)
+[2026-05-27T13:01:55Z]     [cache] Madeira 2026-05-05 (873 KB)
+[2026-05-27T13:01:55Z]     [cache] Madeira 2026-05-01 (6699 KB)
+[2026-05-27T13:01:56Z]   Acre: 4 boletins
+[2026-05-27T13:01:57Z]     baixado Acre 2026-05-27 (1030 KB)
+[2026-05-27T13:01:57Z]     [cache] Acre 2026-05-19 (1042 KB)
+[2026-05-27T13:01:57Z]     [cache] Acre 2026-05-12 (1100 KB)
+[2026-05-27T13:01:57Z]     [cache] Acre 2026-05-05 (1069 KB)
+[2026-05-27T13:01:58Z]   Branco: 2 boletins
+[2026-05-27T13:01:58Z]     [cache] Branco 2026-05-22 (1415 KB)
+[2026-05-27T13:01:58Z]     [cache] Branco 2026-05-15 (1400 KB)
+[2026-05-27T13:01:58Z]   Xingu: 3 boletins
+[2026-05-27T13:01:58Z]     [cache] Xingu 2026-05-20 (1121 KB)
+[2026-05-27T13:01:58Z]     [cache] Xingu 2026-05-13 (1002 KB)
+[2026-05-27T13:01:58Z]     [cache] Xingu 2026-05-06 (1143 KB)
+[2026-05-27T13:01:58Z]   -> 18 boletins de 2026-05 | 32.6 MB
+[2026-05-27T13:01:58Z] == PARSE ==
+[2026-05-27T13:01:58Z]   Acre       2026-05-05   4 estacoes
+[2026-05-27T13:01:58Z]   Acre       2026-05-12   4 estacoes
+[2026-05-27T13:01:58Z]   Acre       2026-05-19   4 estacoes
+[2026-05-27T13:01:58Z]   Acre       2026-05-27   3 estacoes
+[2026-05-27T13:02:00Z]   Amazonas   2026-05-05  14 estacoes
+[2026-05-27T13:02:03Z]   Amazonas   2026-05-12  14 estacoes
+[2026-05-27T13:02:05Z]   Amazonas   2026-05-19  14 estacoes
+[2026-05-27T13:02:08Z]   Amazonas   2026-05-26  14 estacoes
+[2026-05-27T13:02:08Z]   Branco     2026-05-15  10 estacoes
+[2026-05-27T13:02:08Z]   Branco     2026-05-22  10 estacoes
+[2026-05-27T13:02:09Z]   Madeira    2026-05-01   5 estacoes
+[2026-05-27T13:02:10Z]   Madeira    2026-05-05   5 estacoes
+[2026-05-27T13:02:10Z]   Madeira    2026-05-12   5 estacoes
+[2026-05-27T13:02:10Z]   Madeira    2026-05-19   5 estacoes
+[2026-05-27T13:02:10Z]   Madeira    2026-05-26   5 estacoes
+[2026-05-27T13:02:10Z]   Xingu      2026-05-06   4 estacoes
+[2026-05-27T13:02:10Z]   Xingu      2026-05-13   4 estacoes
+[2026-05-27T13:02:10Z]   Xingu      2026-05-20   4 estacoes
+[2026-05-27T13:02:10Z]   dados.json: 128 medicoes em 18 boletins
+[2026-05-27T13:02:10Z]   -> latest.json: 38 estacoes
+[2026-05-27T13:02:10Z] Pipeline concluido.
+[2026-05-27T14:42:01Z] ============================================================
+[2026-05-27T14:42:01Z] Pipeline SACE iniciado
+[2026-05-27T14:42:01Z] == SCRAPE 2026-05 ==
+[2026-05-27T14:42:01Z]   Amazonas: 4 boletins
+[2026-05-27T14:42:01Z]     [cache] Amazonas 2026-05-26 (3161 KB)
+[2026-05-27T14:42:01Z]     [cache] Amazonas 2026-05-19 (3238 KB)
+[2026-05-27T14:42:01Z]     [cache] Amazonas 2026-05-12 (3252 KB)
+[2026-05-27T14:42:01Z]     [cache] Amazonas 2026-05-05 (3227 KB)
+[2026-05-27T14:42:02Z]   Madeira: 5 boletins
+[2026-05-27T14:42:02Z]     [cache] Madeira 2026-05-26 (860 KB)
+[2026-05-27T14:42:02Z]     [cache] Madeira 2026-05-19 (864 KB)
+[2026-05-27T14:42:02Z]     [cache] Madeira 2026-05-12 (920 KB)
+[2026-05-27T14:42:02Z]     [cache] Madeira 2026-05-05 (873 KB)
+[2026-05-27T14:42:02Z]     [cache] Madeira 2026-05-01 (6699 KB)
+[2026-05-27T14:42:03Z]   Acre: 4 boletins
+[2026-05-27T14:42:03Z]     [cache] Acre 2026-05-27 (1030 KB)
+[2026-05-27T14:42:03Z]     [cache] Acre 2026-05-19 (1042 KB)
+[2026-05-27T14:42:03Z]     [cache] Acre 2026-05-12 (1100 KB)
+[2026-05-27T14:42:03Z]     [cache] Acre 2026-05-05 (1069 KB)
+[2026-05-27T14:42:03Z]   Branco: 2 boletins
+[2026-05-27T14:42:03Z]     [cache] Branco 2026-05-22 (1415 KB)
+[2026-05-27T14:42:03Z]     [cache] Branco 2026-05-15 (1400 KB)
+[2026-05-27T14:42:03Z]   Xingu: 3 boletins
+[2026-05-27T14:42:03Z]     [cache] Xingu 2026-05-20 (1121 KB)
+[2026-05-27T14:42:04Z]     [cache] Xingu 2026-05-13 (1002 KB)
+[2026-05-27T14:42:04Z]     [cache] Xingu 2026-05-06 (1143 KB)
+[2026-05-27T14:42:04Z]   -> 18 boletins de 2026-05 | 32.6 MB
+[2026-05-27T14:42:04Z] == PARSE ==
+[2026-05-27T14:42:04Z]   Acre       2026-05-05   4 estacoes
+[2026-05-27T14:42:04Z]   Acre       2026-05-12   4 estacoes
+[2026-05-27T14:42:04Z]   Acre       2026-05-19   4 estacoes
+[2026-05-27T14:42:04Z]   Acre       2026-05-27   3 estacoes
+[2026-05-27T14:42:08Z]   Amazonas   2026-05-05  14 estacoes
+[2026-05-27T14:42:13Z]   Amazonas   2026-05-12  14 estacoes
+[2026-05-27T14:42:18Z]   Amazonas   2026-05-19  14 estacoes
+[2026-05-27T14:42:23Z]   Amazonas   2026-05-26  14 estacoes
+[2026-05-27T14:42:23Z]   Branco     2026-05-15  10 estacoes
+[2026-05-27T14:42:23Z]   Branco     2026-05-22  10 estacoes
+[2026-05-27T14:42:25Z]   Madeira    2026-05-01   5 estacoes
+[2026-05-27T14:42:26Z]   Madeira    2026-05-05   5 estacoes
+[2026-05-27T14:42:26Z]   Madeira    2026-05-12   5 estacoes
+[2026-05-27T14:42:26Z]   Madeira    2026-05-19   5 estacoes
+[2026-05-27T14:42:27Z]   Madeira    2026-05-26   5 estacoes
+[2026-05-27T14:42:27Z]   Xingu      2026-05-06   4 estacoes
+[2026-05-27T14:42:27Z]   Xingu      2026-05-13   4 estacoes
+[2026-05-27T14:42:27Z]   Xingu      2026-05-20   4 estacoes
+[2026-05-27T14:42:27Z]   dados.json: 128 medicoes em 18 boletins
+[2026-05-27T14:42:27Z]   -> latest.json: 38 estacoes
+[2026-05-27T14:42:27Z] Pipeline concluido.
+[2026-05-27T14:44:18Z] ============================================================
+[2026-05-27T14:44:18Z] Pipeline SACE iniciado
+[2026-05-27T14:44:18Z] == SCRAPE 2026-05 ==
+[2026-05-27T14:44:18Z]   Amazonas: 4 boletins
+[2026-05-27T14:44:18Z]     [cache] Amazonas 2026-05-26 (3161 KB)
+[2026-05-27T14:44:18Z]     [cache] Amazonas 2026-05-19 (3238 KB)
+[2026-05-27T14:44:18Z]     [cache] Amazonas 2026-05-12 (3252 KB)
+[2026-05-27T14:44:18Z]     [cache] Amazonas 2026-05-05 (3227 KB)
+[2026-05-27T14:44:19Z]   Madeira: 5 boletins
+[2026-05-27T14:44:19Z]     [cache] Madeira 2026-05-26 (860 KB)
+[2026-05-27T14:44:19Z]     [cache] Madeira 2026-05-19 (864 KB)
+[2026-05-27T14:44:19Z]     [cache] Madeira 2026-05-12 (920 KB)
+[2026-05-27T14:44:19Z]     [cache] Madeira 2026-05-05 (873 KB)
+[2026-05-27T14:44:19Z]     [cache] Madeira 2026-05-01 (6699 KB)
+[2026-05-27T14:44:20Z]   Acre: 4 boletins
+[2026-05-27T14:44:20Z]     [cache] Acre 2026-05-27 (1030 KB)
+[2026-05-27T14:44:20Z]     [cache] Acre 2026-05-19 (1042 KB)
+[2026-05-27T14:44:20Z]     [cache] Acre 2026-05-12 (1100 KB)
+[2026-05-27T14:44:20Z]     [cache] Acre 2026-05-05 (1069 KB)
+[2026-05-27T14:44:20Z]   Branco: 2 boletins
+[2026-05-27T14:44:20Z]     [cache] Branco 2026-05-22 (1415 KB)
+[2026-05-27T14:44:20Z]     [cache] Branco 2026-05-15 (1400 KB)
+[2026-05-27T14:44:20Z]   Xingu: 3 boletins
+[2026-05-27T14:44:20Z]     [cache] Xingu 2026-05-20 (1121 KB)
+[2026-05-27T14:44:20Z]     [cache] Xingu 2026-05-13 (1002 KB)
+[2026-05-27T14:44:20Z]     [cache] Xingu 2026-05-06 (1143 KB)
+[2026-05-27T14:44:20Z]   -> 18 boletins de 2026-05 | 32.6 MB
+[2026-05-27T14:44:20Z] == PARSE ==
+[2026-05-27T14:44:20Z]   Acre       2026-05-05   4 estacoes
+[2026-05-27T14:44:20Z]   Acre       2026-05-12   4 estacoes
+[2026-05-27T14:44:20Z]   Acre       2026-05-19   4 estacoes
+[2026-05-27T14:44:20Z]   Acre       2026-05-27   3 estacoes
+[2026-05-27T14:44:24Z]   Amazonas   2026-05-05  14 estacoes
+[2026-05-27T14:44:28Z]   Amazonas   2026-05-12  14 estacoes
+[2026-05-27T14:44:32Z]   Amazonas   2026-05-19  14 estacoes
+[2026-05-27T14:44:36Z]   Amazonas   2026-05-26  14 estacoes
+[2026-05-27T14:44:36Z]   Branco     2026-05-15  10 estacoes
+[2026-05-27T14:44:36Z]   Branco     2026-05-22  10 estacoes
+[2026-05-27T14:44:38Z]   Madeira    2026-05-01   5 estacoes
+[2026-05-27T14:44:38Z]   Madeira    2026-05-05   5 estacoes
+[2026-05-27T14:44:38Z]   Madeira    2026-05-12   5 estacoes
+[2026-05-27T14:44:38Z]   Madeira    2026-05-19   5 estacoes
+[2026-05-27T14:44:39Z]   Madeira    2026-05-26   5 estacoes
+[2026-05-27T14:44:39Z]   Xingu      2026-05-06   4 estacoes
+[2026-05-27T14:44:39Z]   Xingu      2026-05-13   4 estacoes
+[2026-05-27T14:44:39Z]   Xingu      2026-05-20   4 estacoes
+[2026-05-27T14:44:39Z]   dados.json: 128 medicoes em 18 boletins
+[2026-05-27T14:44:39Z]   -> latest.json: 38 estacoes
+[2026-05-27T14:44:39Z] == UPLOAD /api/sgb ==
+[2026-05-27T14:44:39Z]   #18 2026-05-05  6 est  4 prev
+[2026-05-27T14:44:40Z]   #19 2026-05-12  4 est  4 prev
+[2026-05-27T14:44:40Z]   #20 2026-05-19  9 est  4 prev
+[2026-05-27T14:44:40Z]   #21 2026-05-26  7 est  4 prev
+[2026-05-27T14:44:40Z] Pipeline concluido.

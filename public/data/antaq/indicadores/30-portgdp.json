@@ -1,7 +1,7 @@
 {
   "id": "30",
   "slug": "portgdp",
-  "titulo": "PIM-PF Combinado IBI — componente DFM em horizonte bimestral",
+  "titulo": "PIM-PF Combinado IBI — previsão em horizonte bimestral",
   "cluster": "ineditas",
   "destaque": true,
   "granularidade": "bimestral",
@@ -11,903 +11,173 @@
     "fim": 2025
   },
   "fonte": "ANTAQ — Estatística Aquaviária + BCB SGS 28503 (PIM-PF Indústria Geral)",
-  "descricao": "Combinação convexa entre uma previsão AR(1) do PIM-PF Indústria Geral (IBGE) e uma previsão de Dynamic Factor Model (DFM) extraído de 35 séries de movimentação portuária ANTAQ. Os pesos da combinação são estimados rolling OOS por Granger-Ramanathan a cada origem, sem look-ahead. Indicador validado **apenas em horizonte bimestral (h=2)**; em h=1 não passou no critério pré-registrado e está documentado em `h1_arquivado/`.",
-  "metodologia": "Pipeline completo: dicionário de 35 séries (top 10 portos × 4 naturezas × 2 sentidos com `FlagLongoCurso=1`, filtro de cobertura). STL para dessaz, var12m para estacionariedade. DFM-1f (1 fator, AR(2)) via Kalman MLE em `statsmodels`. Regressão de previsão `var12m(PIM)_{t+2} ~ α + γ·F_t` com HAC Newey-West (lag 12). Combinação Granger-Ramanathan rolling OOS (aquecimento 36 origens). Intervalos via split conformal padrão (Lei et al. 2018) com cobertura nominal 80%. Decisão Linha D aplicada mecanicamente conforme pré-registro em `REGRA_LANCAMENTO.md`.",
-  "achados": [],
+  "descricao": "Previsão da variação interanual do **PIM-PF Indústria Geral** (IBGE) emitida dois meses antes da divulgação oficial. Combinação convexa entre um AR(1) do próprio PIM-PF e a previsão de um Dynamic Factor Model (1 fator, AR(2)) extraído de 35 séries portuárias da ANTAQ. Os pesos são reestimados rolling OOS por Granger-Ramanathan a cada origem, sem look-ahead. Publicado **apenas em h=2**; o horizonte mensal (h=1) não passou no critério pré-registrado e está arquivado.",
+  "metodologia": "Dicionário de 35 séries (top 10 portos × 4 naturezas × 2 sentidos, `FlagLongoCurso=1`). STL para dessaz, var12m para estacionariedade. DFM-1f via Kalman MLE (`statsmodels`). Regressão de previsão `var12m(PIM)_{t+2} ~ α + γ·F_t` com HAC Newey-West (lag 12). Combinação Granger-Ramanathan rolling OOS (aquecimento 36 origens). Intervalos via split conformal (Lei et al. 2018), cobertura nominal 80%. Decisão Linha D mecânica conforme `REGRA_LANCAMENTO.md`.",
+  "achados": [
+    "Em h=2, a combinação iguala o AR(1) puro em loss pontual (MAE 3,01 vs 3,02 pp; DM HLN p=0,75 — diferença estatisticamente indistinguível). O ganho aparece no encompassing test, não na redução de erro absoluto.",
+    "Encompassing simétrico rejeita ambas as direções (λ_AR(1)→DFM=0,49 e λ_DFM→AR(1)=0,51; p<0,001 nos dois) — portos e PIM-PF carregam informação preditiva mutuamente não-redundante.",
+    "Peso rolling do componente DFM oscila entre 27,3% e 48,5% (média 42,4%) ao longo das 58 origens OOS-legítimas; nenhuma origem truncada nos extremos de [0,1] — combinação interior, não degenerada.",
+    "Bandas conformais de 80% nominal apresentam cobertura empírica de 100% (IC95 Wilson [88,3%, 100%]) em 29 origens de teste — bandas sobre-conservadoras; o intervalo informa pouco sobre direção.",
+    "Em h=1, o critério pré-registrado falha (peso DFM 15,5% no piso, DM p=0,64). O Observatório optou por não publicar previsão mensal — arquivada em `h1_arquivado/` como compromisso de transparência."
+  ],
   "imagem": "figs/30_portgdp.png",
   "dados": [
-    {
-      "mes": "2014-01-01",
-      "portgdp_total": 98.52074407068456,
-      "portgdp_imp": 96.06848351945081,
-      "pim_pf": 101.83131907723863
-    },
-    {
-      "mes": "2014-02-01",
-      "portgdp_total": 95.51141579067891,
-      "portgdp_imp": 99.33679091477653,
-      "pim_pf": 102.23368523589993
-    },
-    {
-      "mes": "2014-03-01",
-      "portgdp_total": 96.35287790894021,
-      "portgdp_imp": 109.87662755564294,
-      "pim_pf": 101.8039564807387
-    },
-    {
-      "mes": "2014-04-01",
-      "portgdp_total": 98.42578075415534,
-      "portgdp_imp": 92.61283782650298,
-      "pim_pf": 101.01606268433912
-    },
-    {
-      "mes": "2014-05-01",
-      "portgdp_total": 102.44854905912572,
-      "portgdp_imp": 112.4822153032699,
-      "pim_pf": 100.00587269402558
-    },
-    {
-      "mes": "2014-06-01",
-      "portgdp_total": 101.78104507620382,
-      "portgdp_imp": 115.41332267696625,
-      "pim_pf": 97.15424665505464
-    },
-    {
-      "mes": "2014-07-01",
-      "portgdp_total": 105.47716702858068,
-      "portgdp_imp": 102.82677325710104,
-      "pim_pf": 99.58572387926604
-    },
-    {
-      "mes": "2014-08-01",
-      "portgdp_total": 96.39172270729334,
-      "portgdp_imp": 98.69904984139357,
-      "pim_pf": 99.94488502642321
-    },
-    {
-      "mes": "2014-09-01",
-      "portgdp_total": 100.90513857624146,
-      "portgdp_imp": 90.2432428540431,
-      "pim_pf": 100.14716382226455
-    },
-    {
-      "mes": "2014-10-01",
-      "portgdp_total": 101.86764348746425,
-      "portgdp_imp": 97.00467284008502,
-      "pim_pf": 100.28343111195647
-    },
-    {
-      "mes": "2014-11-01",
-      "portgdp_total": 102.4654884631137,
-      "portgdp_imp": 98.4832171828972,
-      "pim_pf": 99.34932629025813
-    },
-    {
-      "mes": "2014-12-01",
-      "portgdp_total": 99.85242707751813,
-      "portgdp_imp": 86.9527662278706,
-      "pim_pf": 96.64432704253466
-    },
-    {
-      "mes": "2015-01-01",
-      "portgdp_total": 95.72158144300063,
-      "portgdp_imp": 93.41570466003013,
-      "pim_pf": 97.07290377954632
-    },
-    {
-      "mes": "2015-02-01",
-      "portgdp_total": 98.65131273257145,
-      "portgdp_imp": 97.48984164838018,
-      "pim_pf": 96.1837016803094
-    },
-    {
-      "mes": "2015-03-01",
-      "portgdp_total": 102.81229608734364,
-      "portgdp_imp": 90.65653364812631,
-      "pim_pf": 95.85625134853248
-    },
-    {
-      "mes": "2015-04-01",
-      "portgdp_total": 99.83754572912473,
-      "portgdp_imp": 88.90488696793412,
-      "pim_pf": 94.00882134078105
-    },
-    {
-      "mes": "2015-05-01",
-      "portgdp_total": 100.08077436614684,
-      "portgdp_imp": 89.04731438059873,
-      "pim_pf": 92.93189225390789
-    },
-    {
-      "mes": "2015-06-01",
-      "portgdp_total": 102.16439978726761,
-      "portgdp_imp": 96.94841391985513,
-      "pim_pf": 92.22522006794826
-    },
-    {
-      "mes": "2015-07-01",
-      "portgdp_total": 101.53150089530052,
-      "portgdp_imp": 84.73337529844022,
-      "pim_pf": 90.59554747583725
-    },
-    {
-      "mes": "2015-08-01",
-      "portgdp_total": 97.66198501597863,
-      "portgdp_imp": 78.21147872096685,
-      "pim_pf": 90.96937303447729
-    },
-    {
-      "mes": "2015-09-01",
-      "portgdp_total": 100.51289750460926,
-      "portgdp_imp": 82.96703199390852,
-      "pim_pf": 88.92184700211527
-    },
-    {
-      "mes": "2015-10-01",
-      "portgdp_total": 92.86601487898265,
-      "portgdp_imp": 70.25091440727186,
-      "pim_pf": 88.79276899861989
-    },
-    {
-      "mes": "2015-11-01",
-      "portgdp_total": 99.37613355153546,
-      "portgdp_imp": 74.05444480948444,
-      "pim_pf": 87.23230411338905
-    },
-    {
-      "mes": "2015-12-01",
-      "portgdp_total": 98.85114396201331,
-      "portgdp_imp": 69.82417183970587,
-      "pim_pf": 85.96640074103348
-    },
-    {
-      "mes": "2016-01-01",
-      "portgdp_total": 96.06670112963994,
-      "portgdp_imp": 77.72226032809992,
-      "pim_pf": 86.66196851144615
-    },
-    {
-      "mes": "2016-02-01",
-      "portgdp_total": 94.31046174461832,
-      "portgdp_imp": 74.95089300966104,
-      "pim_pf": 85.75457665195286
-    },
-    {
-      "mes": "2016-03-01",
-      "portgdp_total": 98.03181587174394,
-      "portgdp_imp": 72.84892389354987,
-      "pim_pf": 86.249788544037
-    },
-    {
-      "mes": "2016-04-01",
-      "portgdp_total": 97.59541819401062,
-      "portgdp_imp": 77.64315495625695,
-      "pim_pf": 86.27186744827198
-    },
-    {
-      "mes": "2016-05-01",
-      "portgdp_total": 100.65900998087194,
-      "portgdp_imp": 76.70434360498088,
-      "pim_pf": 86.60503456184372
-    },
-    {
-      "mes": "2016-06-01",
-      "portgdp_total": 96.87442796804505,
-      "portgdp_imp": 72.47451065027485,
-      "pim_pf": 85.44255296923147
-    },
-    {
-      "mes": "2016-07-01",
-      "portgdp_total": 95.92173839952932,
-      "portgdp_imp": 75.54209119292244,
-      "pim_pf": 86.03170198035382
-    },
-    {
-      "mes": "2016-08-01",
-      "portgdp_total": 100.81642070382256,
-      "portgdp_imp": 74.66195405481139,
-      "pim_pf": 84.4566246543837
-    },
-    {
-      "mes": "2016-09-01",
-      "portgdp_total": 98.10451505005202,
-      "portgdp_imp": 74.3654791520263,
-      "pim_pf": 85.3319678886634
-    },
-    {
-      "mes": "2016-10-01",
-      "portgdp_total": 101.21847453989541,
-      "portgdp_imp": 72.22139819291257,
-      "pim_pf": 84.15358324851272
-    },
-    {
-      "mes": "2016-11-01",
-      "portgdp_total": 96.7963868652917,
-      "portgdp_imp": 77.7528576144873,
-      "pim_pf": 84.98173704761307
-    },
-    {
-      "mes": "2016-12-01",
-      "portgdp_total": 102.34018904150079,
-      "portgdp_imp": 79.55438387003704,
-      "pim_pf": 86.39083714213918
-    },
-    {
-      "mes": "2017-01-01",
-      "portgdp_total": 104.60874841022229,
-      "portgdp_imp": 71.55672728987535,
-      "pim_pf": 87.00681171874434
-    },
-    {
-      "mes": "2017-02-01",
-      "portgdp_total": 101.46468678410685,
-      "portgdp_imp": 80.14656818928198,
-      "pim_pf": 87.9213928644342
-    },
-    {
-      "mes": "2017-03-01",
-      "portgdp_total": 100.84628940989847,
-      "portgdp_imp": 83.03302487164763,
-      "pim_pf": 86.60793626169415
-    },
-    {
-      "mes": "2017-04-01",
-      "portgdp_total": 101.17358880318841,
-      "portgdp_imp": 78.91814312138767,
-      "pim_pf": 86.57283868618997
-    },
-    {
-      "mes": "2017-05-01",
-      "portgdp_total": 100.58334020545455,
-      "portgdp_imp": 79.6519699987755,
-      "pim_pf": 86.96273186638977
-    },
-    {
-      "mes": "2017-06-01",
-      "portgdp_total": 104.88872196135135,
-      "portgdp_imp": 97.50282688663219,
-      "pim_pf": 87.74787987516972
-    },
-    {
-      "mes": "2017-07-01",
-      "portgdp_total": 101.42657040569507,
-      "portgdp_imp": 88.74520812757407,
-      "pim_pf": 87.90735210187441
-    },
-    {
-      "mes": "2017-08-01",
-      "portgdp_total": 97.36928031100396,
-      "portgdp_imp": 86.0964283467718,
-      "pim_pf": 87.95675895544693
-    },
-    {
-      "mes": "2017-09-01",
-      "portgdp_total": 104.87199008102195,
-      "portgdp_imp": 89.12252537633886,
-      "pim_pf": 88.26019880368541
-    },
-    {
-      "mes": "2017-10-01",
-      "portgdp_total": 110.8835890961666,
-      "portgdp_imp": 90.86265957221097,
-      "pim_pf": 89.10532105056775
-    },
-    {
-      "mes": "2017-11-01",
-      "portgdp_total": 105.19234379644477,
-      "portgdp_imp": 91.84347118746138,
-      "pim_pf": 89.49601111550261
-    },
-    {
-      "mes": "2017-12-01",
-      "portgdp_total": 107.47320150631484,
-      "portgdp_imp": 86.01663483159314,
-      "pim_pf": 91.88508887473549
-    },
-    {
-      "mes": "2018-01-01",
-      "portgdp_total": 104.56635372049064,
-      "portgdp_imp": 83.03428105517526,
-      "pim_pf": 89.81492958354022
-    },
-    {
-      "mes": "2018-02-01",
-      "portgdp_total": 105.03395493795608,
-      "portgdp_imp": 78.64867117711162,
-      "pim_pf": 89.17569809917869
-    },
-    {
-      "mes": "2018-03-01",
-      "portgdp_total": 106.55585231475632,
-      "portgdp_imp": 83.17107356048227,
-      "pim_pf": 90.55229049358951
-    },
-    {
-      "mes": "2018-04-01",
-      "portgdp_total": 106.73128212403422,
-      "portgdp_imp": 81.65098813187056,
-      "pim_pf": 90.85323574613571
-    },
-    {
-      "mes": "2018-05-01",
-      "portgdp_total": 100.20180684850521,
-      "portgdp_imp": 77.3215767151561,
-      "pim_pf": 80.94459771482906
-    },
-    {
-      "mes": "2018-06-01",
-      "portgdp_total": 104.35121303411754,
-      "portgdp_imp": 85.9242081151819,
-      "pim_pf": 90.97010928667814
-    },
-    {
-      "mes": "2018-07-01",
-      "portgdp_total": 107.97603156605034,
-      "portgdp_imp": 81.21976992174378,
-      "pim_pf": 90.6743264613285
-    },
-    {
-      "mes": "2018-08-01",
-      "portgdp_total": 113.64308318873427,
-      "portgdp_imp": 90.26267178076877,
-      "pim_pf": 89.93587416566382
-    },
-    {
-      "mes": "2018-09-01",
-      "portgdp_total": 107.06174714630863,
-      "portgdp_imp": 83.85911760786327,
-      "pim_pf": 87.33033825938024
-    },
-    {
-      "mes": "2018-10-01",
-      "portgdp_total": 106.6101480752764,
-      "portgdp_imp": 82.62058690140765,
-      "pim_pf": 88.61648423636396
-    },
-    {
-      "mes": "2018-11-01",
-      "portgdp_total": 111.78244194788991,
-      "portgdp_imp": 82.9155881106197,
-      "pim_pf": 88.48648808306515
-    },
-    {
-      "mes": "2018-12-01",
-      "portgdp_total": 111.72761997694496,
-      "portgdp_imp": 75.4315462412467,
-      "pim_pf": 88.35546117668517
-    },
-    {
-      "mes": "2019-01-01",
-      "portgdp_total": 106.13865645192358,
-      "portgdp_imp": 78.72286703481356,
-      "pim_pf": 87.92143617338719
-    },
-    {
-      "mes": "2019-02-01",
-      "portgdp_total": 105.28057752959586,
-      "portgdp_imp": 83.54443052111368,
-      "pim_pf": 88.20005999156166
-    },
-    {
-      "mes": "2019-03-01",
-      "portgdp_total": 104.91522498099559,
-      "portgdp_imp": 85.26736359958394,
-      "pim_pf": 87.69572723397754
-    },
-    {
-      "mes": "2019-04-01",
-      "portgdp_total": 110.9935980114213,
-      "portgdp_imp": 87.84231366295684,
-      "pim_pf": 88.23307873732226
-    },
-    {
-      "mes": "2019-05-01",
-      "portgdp_total": 111.52176428658646,
-      "portgdp_imp": 83.32100744943807,
-      "pim_pf": 88.1838277959805
-    },
-    {
-      "mes": "2019-06-01",
-      "portgdp_total": 108.37292559804025,
-      "portgdp_imp": 89.45070071456692,
-      "pim_pf": 87.31893068116233
-    },
-    {
-      "mes": "2019-07-01",
-      "portgdp_total": 109.41121716636486,
-      "portgdp_imp": 90.13982705415422,
-      "pim_pf": 86.86754744950542
-    },
-    {
-      "mes": "2019-08-01",
-      "portgdp_total": 116.8551269814573,
-      "portgdp_imp": 89.17679740821517,
-      "pim_pf": 87.78499564788328
-    },
-    {
-      "mes": "2019-09-01",
-      "portgdp_total": 116.06202004474441,
-      "portgdp_imp": 89.44237090183368,
-      "pim_pf": 87.78605238633627
-    },
-    {
-      "mes": "2019-10-01",
-      "portgdp_total": 116.06782994402099,
-      "portgdp_imp": 86.31428078054878,
-      "pim_pf": 89.7950247887454
-    },
-    {
-      "mes": "2019-11-01",
-      "portgdp_total": 119.46042530981191,
-      "portgdp_imp": 84.70173318866726,
-      "pim_pf": 87.67781465102033
-    },
-    {
-      "mes": "2019-12-01",
-      "portgdp_total": 117.50123340622325,
-      "portgdp_imp": 83.7005421483869,
-      "pim_pf": 86.44591746855356
-    },
-    {
-      "mes": "2020-01-01",
-      "portgdp_total": 117.28714642606433,
-      "portgdp_imp": 88.4016614505955,
-      "pim_pf": 87.63235757396063
-    },
-    {
-      "mes": "2020-02-01",
-      "portgdp_total": 125.21103140294872,
-      "portgdp_imp": 85.95919567357899,
-      "pim_pf": 88.23124243771542
-    },
-    {
-      "mes": "2020-03-01",
-      "portgdp_total": 117.21913419030514,
-      "portgdp_imp": 81.70438089137718,
-      "pim_pf": 81.42045050492607
-    },
-    {
-      "mes": "2020-04-01",
-      "portgdp_total": 118.70414162469967,
-      "portgdp_imp": 81.24287313708697,
-      "pim_pf": 65.38321450655899
-    },
-    {
-      "mes": "2020-05-01",
-      "portgdp_total": 119.08018338929163,
-      "portgdp_imp": 70.64574238509836,
-      "pim_pf": 70.45302117625901
-    },
-    {
-      "mes": "2020-06-01",
-      "portgdp_total": 115.59015163894601,
-      "portgdp_imp": 58.250339644834284,
-      "pim_pf": 77.54435984473564
-    },
-    {
-      "mes": "2020-07-01",
-      "portgdp_total": 117.07424912157119,
-      "portgdp_imp": 62.098559775249115,
-      "pim_pf": 84.51974312247327
-    },
-    {
-      "mes": "2020-08-01",
-      "portgdp_total": 125.15913772120466,
-      "portgdp_imp": 68.66619281468438,
-      "pim_pf": 87.20942832441902
-    },
-    {
-      "mes": "2020-09-01",
-      "portgdp_total": 122.5044277147725,
-      "portgdp_imp": 72.1163283373006,
-      "pim_pf": 89.53014723225039
-    },
-    {
-      "mes": "2020-10-01",
-      "portgdp_total": 128.81283061516905,
-      "portgdp_imp": 85.38175495065758,
-      "pim_pf": 90.94540585989186
-    },
-    {
-      "mes": "2020-11-01",
-      "portgdp_total": 135.03706387721422,
-      "portgdp_imp": 108.08204832019341,
-      "pim_pf": 91.32576240864297
-    },
-    {
-      "mes": "2020-12-01",
-      "portgdp_total": 128.49777922987892,
-      "portgdp_imp": 105.14429271959396,
-      "pim_pf": 90.86869704235362
-    },
-    {
-      "mes": "2021-01-01",
-      "portgdp_total": 130.43391681012474,
-      "portgdp_imp": 96.81399494447052,
-      "pim_pf": 91.43044014802304
-    },
-    {
-      "mes": "2021-02-01",
-      "portgdp_total": 134.94512262105945,
-      "portgdp_imp": 107.70005607782558,
-      "pim_pf": 90.18579280979563
-    },
-    {
-      "mes": "2021-03-01",
-      "portgdp_total": 134.71321724024145,
-      "portgdp_imp": 104.68981610777644,
-      "pim_pf": 88.30443456827078
-    },
-    {
-      "mes": "2021-04-01",
-      "portgdp_total": 136.69076830674203,
-      "portgdp_imp": 109.3693841490132,
-      "pim_pf": 86.6736965759162
-    },
-    {
-      "mes": "2021-05-01",
-      "portgdp_total": 136.57334392156844,
-      "portgdp_imp": 102.64228248595735,
-      "pim_pf": 87.64241391284521
-    },
-    {
-      "mes": "2021-06-01",
-      "portgdp_total": 128.8397886176994,
-      "portgdp_imp": 99.99830841957687,
-      "pim_pf": 87.31266820655976
-    },
-    {
-      "mes": "2021-07-01",
-      "portgdp_total": 132.60789919053587,
-      "portgdp_imp": 102.71226256271346,
-      "pim_pf": 85.99279321698641
-    },
-    {
-      "mes": "2021-08-01",
-      "portgdp_total": 136.75481968678767,
-      "portgdp_imp": 100.26676127546258,
-      "pim_pf": 86.11158967504163
-    },
-    {
-      "mes": "2021-09-01",
-      "portgdp_total": 125.84201281173499,
-      "portgdp_imp": 101.18720164223363,
-      "pim_pf": 85.80601902631597
-    },
-    {
-      "mes": "2021-10-01",
-      "portgdp_total": 129.08224809257135,
-      "portgdp_imp": 99.53684295779273,
-      "pim_pf": 85.4684170759579
-    },
-    {
-      "mes": "2021-11-01",
-      "portgdp_total": 132.93095409467153,
-      "portgdp_imp": 101.5336387313748,
-      "pim_pf": 85.47700957223138
-    },
-    {
-      "mes": "2021-12-01",
-      "portgdp_total": 130.35735059094097,
-      "portgdp_imp": 104.84823687377303,
-      "pim_pf": 86.84183059321916
-    },
-    {
-      "mes": "2022-01-01",
-      "portgdp_total": 134.72975050780448,
-      "portgdp_imp": 93.53678958103687,
-      "pim_pf": 86.61539406339925
-    },
-    {
-      "mes": "2022-02-01",
-      "portgdp_total": 130.3059835087045,
-      "portgdp_imp": 96.09654544984565,
-      "pim_pf": 87.43062447092697
-    },
-    {
-      "mes": "2022-03-01",
-      "portgdp_total": 129.33003345624672,
-      "portgdp_imp": 86.48086920146704,
-      "pim_pf": 86.68377890017257
-    },
-    {
-      "mes": "2022-04-01",
-      "portgdp_total": 136.86803814852004,
-      "portgdp_imp": 90.42625852585043,
-      "pim_pf": 87.26321804403426
-    },
-    {
-      "mes": "2022-05-01",
-      "portgdp_total": 140.63410750681305,
-      "portgdp_imp": 95.50226366753333,
-      "pim_pf": 86.82251480018502
-    },
-    {
-      "mes": "2022-06-01",
-      "portgdp_total": 133.83892798639306,
-      "portgdp_imp": 85.17063807192156,
-      "pim_pf": 86.7801326587877
-    },
-    {
-      "mes": "2022-07-01",
-      "portgdp_total": 130.93574091058636,
-      "portgdp_imp": 96.07048341290994,
-      "pim_pf": 87.54806102785828
-    },
-    {
-      "mes": "2022-08-01",
-      "portgdp_total": 127.51064463826837,
-      "portgdp_imp": 94.03801523646749,
-      "pim_pf": 86.44175980906638
-    },
-    {
-      "mes": "2022-09-01",
-      "portgdp_total": 139.42010659798981,
-      "portgdp_imp": 103.86086463770113,
-      "pim_pf": 85.02293252369842
-    },
-    {
-      "mes": "2022-10-01",
-      "portgdp_total": 139.29757971789488,
-      "portgdp_imp": 100.10985597025972,
-      "pim_pf": 86.4401660395963
-    },
-    {
-      "mes": "2022-11-01",
-      "portgdp_total": 124.81381135203404,
-      "portgdp_imp": 85.37948222224216,
-      "pim_pf": 86.44158657325443
-    },
-    {
-      "mes": "2022-12-01",
-      "portgdp_total": 133.44233717831779,
-      "portgdp_imp": 103.9955974886442,
-      "pim_pf": 86.57846885007883
-    },
-    {
-      "mes": "2023-01-01",
-      "portgdp_total": 136.6376998548035,
-      "portgdp_imp": 93.31279142766266,
-      "pim_pf": 86.37315842752811
-    },
-    {
-      "mes": "2023-02-01",
-      "portgdp_total": 133.34788404747366,
-      "portgdp_imp": 83.30119479956682,
-      "pim_pf": 86.22489455785758
-    },
-    {
-      "mes": "2023-03-01",
-      "portgdp_total": 134.77037050323952,
-      "portgdp_imp": 98.92747948419391,
-      "pim_pf": 86.85469335225758
-    },
-    {
-      "mes": "2023-04-01",
-      "portgdp_total": 135.83335557053354,
-      "portgdp_imp": 91.69669924391005,
-      "pim_pf": 86.52078998648498
-    },
-    {
-      "mes": "2023-05-01",
-      "portgdp_total": 133.33626865886515,
-      "portgdp_imp": 100.65646420586984,
-      "pim_pf": 87.13600232551751
-    },
-    {
-      "mes": "2023-06-01",
-      "portgdp_total": 135.1794124292657,
-      "portgdp_imp": 95.4660647008286,
-      "pim_pf": 86.73101164430493
-    },
-    {
-      "mes": "2023-07-01",
-      "portgdp_total": 142.52118243661894,
-      "portgdp_imp": 98.50365419244785,
-      "pim_pf": 86.14336978474668
-    },
-    {
-      "mes": "2023-08-01",
-      "portgdp_total": 135.75107800026302,
-      "portgdp_imp": 91.85021415390156,
-      "pim_pf": 86.65079480157438
-    },
-    {
-      "mes": "2023-09-01",
-      "portgdp_total": 135.22053699984195,
-      "portgdp_imp": 88.16008732448728,
-      "pim_pf": 86.29207540573773
-    },
-    {
-      "mes": "2023-10-01",
-      "portgdp_total": 134.35152980035656,
-      "portgdp_imp": 92.2466539490777,
-      "pim_pf": 86.68888069483496
-    },
-    {
-      "mes": "2023-11-01",
-      "portgdp_total": 136.05571580978219,
-      "portgdp_imp": 84.46708917228175,
-      "pim_pf": 87.72061255836637
-    },
-    {
-      "mes": "2023-12-01",
-      "portgdp_total": 134.4089293764772,
-      "portgdp_imp": 92.04410233560158,
-      "pim_pf": 89.32139807883215
-    },
-    {
-      "mes": "2024-01-01",
-      "portgdp_total": 142.85277025021693,
-      "portgdp_imp": 107.44156844080703,
-      "pim_pf": 88.11899429335247
-    },
-    {
-      "mes": "2024-02-01",
-      "portgdp_total": 148.1946611916772,
-      "portgdp_imp": 95.8025509217126,
-      "pim_pf": 88.06738734496798
-    },
-    {
-      "mes": "2024-03-01",
-      "portgdp_total": 141.60544530426515,
-      "portgdp_imp": 101.48445903871097,
-      "pim_pf": 88.38150718101416
-    },
-    {
-      "mes": "2024-04-01",
-      "portgdp_total": 137.0441051115907,
-      "portgdp_imp": 100.04311896711052,
-      "pim_pf": 88.20717132164283
-    },
-    {
-      "mes": "2024-05-01",
-      "portgdp_total": 135.859219449177,
-      "portgdp_imp": 108.19434785238118,
-      "pim_pf": 87.17954514685499
-    },
-    {
-      "mes": "2024-06-01",
-      "portgdp_total": 148.78641584299172,
-      "portgdp_imp": 106.32210545118244,
-      "pim_pf": 91.04688739854117
-    },
-    {
-      "mes": "2024-07-01",
-      "portgdp_total": 141.16949843086923,
-      "portgdp_imp": 112.31686458804224,
-      "pim_pf": 89.65902601456199
-    },
-    {
-      "mes": "2024-08-01",
-      "portgdp_total": 142.67279073770962,
-      "portgdp_imp": 123.62138140554728,
-      "pim_pf": 89.44158908517369
-    },
-    {
-      "mes": "2024-09-01",
-      "portgdp_total": 142.1001462850676,
-      "portgdp_imp": 119.56900704982323,
-      "pim_pf": 90.34110737701315
-    },
-    {
-      "mes": "2024-10-01",
-      "portgdp_total": 135.2971775102707,
-      "portgdp_imp": 120.24354766904493,
-      "pim_pf": 90.37066140653444
-    },
-    {
-      "mes": "2024-11-01",
-      "portgdp_total": 134.76309721867426,
-      "portgdp_imp": 102.6225346562748,
-      "pim_pf": 89.88009223421099
-    },
-    {
-      "mes": "2024-12-01",
-      "portgdp_total": 137.74204244816735,
-      "portgdp_imp": 108.78390470301565,
-      "pim_pf": 89.8570172240572
-    },
-    {
-      "mes": "2025-01-01",
-      "portgdp_total": 141.75608331905272,
-      "portgdp_imp": 112.57614630340281,
-      "pim_pf": 89.76554871533948
-    },
-    {
-      "mes": "2025-02-01",
-      "portgdp_total": 137.54733868566947,
-      "portgdp_imp": 112.10504827479535,
-      "pim_pf": 89.27337711175535
-    },
-    {
-      "mes": "2025-03-01",
-      "portgdp_total": 148.13992577010467,
-      "portgdp_imp": 108.32039672750258,
-      "pim_pf": 90.73054148231124
-    },
-    {
-      "mes": "2025-04-01",
-      "portgdp_total": 140.6090826933278,
-      "portgdp_imp": 110.22222435217665,
-      "pim_pf": 90.42302193070097
-    },
-    {
-      "mes": "2025-05-01",
-      "portgdp_total": 149.23982835214397,
-      "portgdp_imp": 120.73186310594708,
-      "pim_pf": 89.90819974470236
-    },
-    {
-      "mes": "2025-06-01",
-      "portgdp_total": 153.37259434684282,
-      "portgdp_imp": 116.70030038978885,
-      "pim_pf": 89.96490848774921
-    },
-    {
-      "mes": "2025-07-01",
-      "portgdp_total": 149.06218268702057,
-      "portgdp_imp": 112.68002002862296,
-      "pim_pf": 89.83066805705727
-    },
-    {
-      "mes": "2025-08-01",
-      "portgdp_total": 160.84220079790262,
-      "portgdp_imp": 111.07967964556855,
-      "pim_pf": 90.49554710338026
-    },
-    {
-      "mes": "2025-09-01",
-      "portgdp_total": 150.61774792216792,
-      "portgdp_imp": 113.47193588453712,
-      "pim_pf": 90.15367489025725
-    },
-    {
-      "mes": "2025-10-01",
-      "portgdp_total": 149.75870423702213,
-      "portgdp_imp": 109.25192224546079,
-      "pim_pf": 90.31509601984655
-    },
-    {
-      "mes": "2025-11-01",
-      "portgdp_total": 148.46514927091388,
-      "portgdp_imp": 123.75021007483402,
-      "pim_pf": 90.17711369561616
-    },
-    {
-      "mes": "2025-12-01",
-      "portgdp_total": 153.04762032395425,
-      "portgdp_imp": 115.22602576347336,
-      "pim_pf": 88.43553943076616
-    }
+    { "mes": "2014-01-01", "portgdp_total": 98.5207, "portgdp_imp": 96.0685, "pim_pf": 101.8313 },
+    { "mes": "2014-02-01", "portgdp_total": 95.5114, "portgdp_imp": 99.3368, "pim_pf": 102.2337 },
+    { "mes": "2014-03-01", "portgdp_total": 96.3529, "portgdp_imp": 109.8766, "pim_pf": 101.8040 },
+    { "mes": "2014-04-01", "portgdp_total": 98.4258, "portgdp_imp": 92.6128, "pim_pf": 101.0161 },
+    { "mes": "2014-05-01", "portgdp_total": 102.4485, "portgdp_imp": 112.4822, "pim_pf": 100.0059 },
+    { "mes": "2014-06-01", "portgdp_total": 101.7810, "portgdp_imp": 115.4133, "pim_pf": 97.1542 },
+    { "mes": "2014-07-01", "portgdp_total": 105.4772, "portgdp_imp": 102.8268, "pim_pf": 99.5857 },
+    { "mes": "2014-08-01", "portgdp_total": 96.3917, "portgdp_imp": 98.6990, "pim_pf": 99.9449 },
+    { "mes": "2014-09-01", "portgdp_total": 100.9051, "portgdp_imp": 90.2432, "pim_pf": 100.1472 },
+    { "mes": "2014-10-01", "portgdp_total": 101.8676, "portgdp_imp": 97.0047, "pim_pf": 100.2834 },
+    { "mes": "2014-11-01", "portgdp_total": 102.4655, "portgdp_imp": 98.4832, "pim_pf": 99.3493 },
+    { "mes": "2014-12-01", "portgdp_total": 99.8524, "portgdp_imp": 86.9528, "pim_pf": 96.6443 },
+    { "mes": "2015-01-01", "portgdp_total": 95.7216, "portgdp_imp": 93.4157, "pim_pf": 97.0729 },
+    { "mes": "2015-02-01", "portgdp_total": 98.6513, "portgdp_imp": 97.4898, "pim_pf": 96.1837 },
+    { "mes": "2015-03-01", "portgdp_total": 102.8123, "portgdp_imp": 90.6565, "pim_pf": 95.8563 },
+    { "mes": "2015-04-01", "portgdp_total": 99.8375, "portgdp_imp": 88.9049, "pim_pf": 94.0088 },
+    { "mes": "2015-05-01", "portgdp_total": 100.0808, "portgdp_imp": 89.0473, "pim_pf": 92.9319 },
+    { "mes": "2015-06-01", "portgdp_total": 102.1644, "portgdp_imp": 96.9484, "pim_pf": 92.2252 },
+    { "mes": "2015-07-01", "portgdp_total": 101.5315, "portgdp_imp": 84.7334, "pim_pf": 90.5955 },
+    { "mes": "2015-08-01", "portgdp_total": 97.6620, "portgdp_imp": 78.2115, "pim_pf": 90.9694 },
+    { "mes": "2015-09-01", "portgdp_total": 100.5129, "portgdp_imp": 82.9670, "pim_pf": 88.9218 },
+    { "mes": "2015-10-01", "portgdp_total": 92.8660, "portgdp_imp": 70.2509, "pim_pf": 88.7928 },
+    { "mes": "2015-11-01", "portgdp_total": 99.3761, "portgdp_imp": 74.0544, "pim_pf": 87.2323 },
+    { "mes": "2015-12-01", "portgdp_total": 98.8511, "portgdp_imp": 69.8242, "pim_pf": 85.9664 },
+    { "mes": "2016-01-01", "portgdp_total": 96.0667, "portgdp_imp": 77.7223, "pim_pf": 86.6620 },
+    { "mes": "2016-02-01", "portgdp_total": 94.3105, "portgdp_imp": 74.9509, "pim_pf": 85.7546 },
+    { "mes": "2016-03-01", "portgdp_total": 98.0318, "portgdp_imp": 72.8489, "pim_pf": 86.2498 },
+    { "mes": "2016-04-01", "portgdp_total": 97.5954, "portgdp_imp": 77.6432, "pim_pf": 86.2719 },
+    { "mes": "2016-05-01", "portgdp_total": 100.6590, "portgdp_imp": 76.7043, "pim_pf": 86.6050 },
+    { "mes": "2016-06-01", "portgdp_total": 96.8744, "portgdp_imp": 72.4745, "pim_pf": 85.4426 },
+    { "mes": "2016-07-01", "portgdp_total": 95.9217, "portgdp_imp": 75.5421, "pim_pf": 86.0317 },
+    { "mes": "2016-08-01", "portgdp_total": 100.8164, "portgdp_imp": 74.6620, "pim_pf": 84.4566 },
+    { "mes": "2016-09-01", "portgdp_total": 98.1045, "portgdp_imp": 74.3655, "pim_pf": 85.3320 },
+    { "mes": "2016-10-01", "portgdp_total": 101.2185, "portgdp_imp": 72.2214, "pim_pf": 84.1536 },
+    { "mes": "2016-11-01", "portgdp_total": 96.7964, "portgdp_imp": 77.7529, "pim_pf": 84.9817 },
+    { "mes": "2016-12-01", "portgdp_total": 102.3402, "portgdp_imp": 79.5544, "pim_pf": 86.3908 },
+    { "mes": "2017-01-01", "portgdp_total": 104.6087, "portgdp_imp": 71.5567, "pim_pf": 87.0068 },
+    { "mes": "2017-02-01", "portgdp_total": 101.4647, "portgdp_imp": 80.1466, "pim_pf": 87.9214 },
+    { "mes": "2017-03-01", "portgdp_total": 100.8463, "portgdp_imp": 83.0330, "pim_pf": 86.6079 },
+    { "mes": "2017-04-01", "portgdp_total": 101.1736, "portgdp_imp": 78.9181, "pim_pf": 86.5728 },
+    { "mes": "2017-05-01", "portgdp_total": 100.5833, "portgdp_imp": 79.6520, "pim_pf": 86.9627 },
+    { "mes": "2017-06-01", "portgdp_total": 104.8887, "portgdp_imp": 97.5028, "pim_pf": 87.7479 },
+    { "mes": "2017-07-01", "portgdp_total": 101.4266, "portgdp_imp": 88.7452, "pim_pf": 87.9074 },
+    { "mes": "2017-08-01", "portgdp_total": 97.3693, "portgdp_imp": 86.0964, "pim_pf": 87.9568 },
+    { "mes": "2017-09-01", "portgdp_total": 104.8720, "portgdp_imp": 89.1225, "pim_pf": 88.2602 },
+    { "mes": "2017-10-01", "portgdp_total": 110.8836, "portgdp_imp": 90.8627, "pim_pf": 89.1053 },
+    { "mes": "2017-11-01", "portgdp_total": 105.1923, "portgdp_imp": 91.8435, "pim_pf": 89.4960 },
+    { "mes": "2017-12-01", "portgdp_total": 107.4732, "portgdp_imp": 86.0166, "pim_pf": 91.8851 },
+    { "mes": "2018-01-01", "portgdp_total": 104.5664, "portgdp_imp": 83.0343, "pim_pf": 89.8149 },
+    { "mes": "2018-02-01", "portgdp_total": 105.0340, "portgdp_imp": 78.6487, "pim_pf": 89.1757 },
+    { "mes": "2018-03-01", "portgdp_total": 106.5559, "portgdp_imp": 83.1711, "pim_pf": 90.5523 },
+    { "mes": "2018-04-01", "portgdp_total": 106.7313, "portgdp_imp": 81.6510, "pim_pf": 90.8532 },
+    { "mes": "2018-05-01", "portgdp_total": 100.2018, "portgdp_imp": 77.3216, "pim_pf": 80.9446 },
+    { "mes": "2018-06-01", "portgdp_total": 104.3512, "portgdp_imp": 85.9242, "pim_pf": 90.9701 },
+    { "mes": "2018-07-01", "portgdp_total": 107.9760, "portgdp_imp": 81.2198, "pim_pf": 90.6743 },
+    { "mes": "2018-08-01", "portgdp_total": 113.6431, "portgdp_imp": 90.2627, "pim_pf": 89.9359 },
+    { "mes": "2018-09-01", "portgdp_total": 107.0617, "portgdp_imp": 83.8591, "pim_pf": 87.3303 },
+    { "mes": "2018-10-01", "portgdp_total": 106.6101, "portgdp_imp": 82.6206, "pim_pf": 88.6165 },
+    { "mes": "2018-11-01", "portgdp_total": 111.7824, "portgdp_imp": 82.9156, "pim_pf": 88.4865 },
+    { "mes": "2018-12-01", "portgdp_total": 111.7276, "portgdp_imp": 75.4315, "pim_pf": 88.3555 },
+    { "mes": "2019-01-01", "portgdp_total": 106.1387, "portgdp_imp": 78.7229, "pim_pf": 87.9214 },
+    { "mes": "2019-02-01", "portgdp_total": 105.2806, "portgdp_imp": 83.5444, "pim_pf": 88.2001 },
+    { "mes": "2019-03-01", "portgdp_total": 104.9152, "portgdp_imp": 85.2674, "pim_pf": 87.6957 },
+    { "mes": "2019-04-01", "portgdp_total": 110.9936, "portgdp_imp": 87.8423, "pim_pf": 88.2331 },
+    { "mes": "2019-05-01", "portgdp_total": 111.5218, "portgdp_imp": 83.3210, "pim_pf": 88.1838 },
+    { "mes": "2019-06-01", "portgdp_total": 108.3729, "portgdp_imp": 89.4507, "pim_pf": 87.3189 },
+    { "mes": "2019-07-01", "portgdp_total": 109.4112, "portgdp_imp": 90.1398, "pim_pf": 86.8675 },
+    { "mes": "2019-08-01", "portgdp_total": 116.8551, "portgdp_imp": 89.1768, "pim_pf": 87.7850 },
+    { "mes": "2019-09-01", "portgdp_total": 116.0620, "portgdp_imp": 89.4424, "pim_pf": 87.7861 },
+    { "mes": "2019-10-01", "portgdp_total": 116.0678, "portgdp_imp": 86.3143, "pim_pf": 89.7950 },
+    { "mes": "2019-11-01", "portgdp_total": 119.4604, "portgdp_imp": 84.7017, "pim_pf": 87.6778 },
+    { "mes": "2019-12-01", "portgdp_total": 117.5012, "portgdp_imp": 83.7005, "pim_pf": 86.4459 },
+    { "mes": "2020-01-01", "portgdp_total": 117.2871, "portgdp_imp": 88.4017, "pim_pf": 87.6324 },
+    { "mes": "2020-02-01", "portgdp_total": 125.2110, "portgdp_imp": 85.9592, "pim_pf": 88.2312 },
+    { "mes": "2020-03-01", "portgdp_total": 117.2191, "portgdp_imp": 81.7044, "pim_pf": 81.4205 },
+    { "mes": "2020-04-01", "portgdp_total": 118.7041, "portgdp_imp": 81.2429, "pim_pf": 65.3832 },
+    { "mes": "2020-05-01", "portgdp_total": 119.0802, "portgdp_imp": 70.6457, "pim_pf": 70.4530 },
+    { "mes": "2020-06-01", "portgdp_total": 115.5902, "portgdp_imp": 58.2503, "pim_pf": 77.5444 },
+    { "mes": "2020-07-01", "portgdp_total": 117.0742, "portgdp_imp": 62.0986, "pim_pf": 84.5197 },
+    { "mes": "2020-08-01", "portgdp_total": 125.1591, "portgdp_imp": 68.6662, "pim_pf": 87.2094 },
+    { "mes": "2020-09-01", "portgdp_total": 122.5044, "portgdp_imp": 72.1163, "pim_pf": 89.5301 },
+    { "mes": "2020-10-01", "portgdp_total": 128.8128, "portgdp_imp": 85.3818, "pim_pf": 90.9454 },
+    { "mes": "2020-11-01", "portgdp_total": 135.0371, "portgdp_imp": 108.0820, "pim_pf": 91.3258 },
+    { "mes": "2020-12-01", "portgdp_total": 128.4978, "portgdp_imp": 105.1443, "pim_pf": 90.8687 },
+    { "mes": "2021-01-01", "portgdp_total": 130.4339, "portgdp_imp": 96.8140, "pim_pf": 91.4304 },
+    { "mes": "2021-02-01", "portgdp_total": 134.9451, "portgdp_imp": 107.7001, "pim_pf": 90.1858 },
+    { "mes": "2021-03-01", "portgdp_total": 134.7132, "portgdp_imp": 104.6898, "pim_pf": 88.3044 },
+    { "mes": "2021-04-01", "portgdp_total": 136.6908, "portgdp_imp": 109.3694, "pim_pf": 86.6737 },
+    { "mes": "2021-05-01", "portgdp_total": 136.5733, "portgdp_imp": 102.6423, "pim_pf": 87.6424 },
+    { "mes": "2021-06-01", "portgdp_total": 128.8398, "portgdp_imp": 99.9983, "pim_pf": 87.3127 },
+    { "mes": "2021-07-01", "portgdp_total": 132.6079, "portgdp_imp": 102.7123, "pim_pf": 85.9928 },
+    { "mes": "2021-08-01", "portgdp_total": 136.7548, "portgdp_imp": 100.2668, "pim_pf": 86.1116 },
+    { "mes": "2021-09-01", "portgdp_total": 125.8420, "portgdp_imp": 101.1872, "pim_pf": 85.8060 },
+    { "mes": "2021-10-01", "portgdp_total": 129.0822, "portgdp_imp": 99.5368, "pim_pf": 85.4684 },
+    { "mes": "2021-11-01", "portgdp_total": 132.9310, "portgdp_imp": 101.5336, "pim_pf": 85.4770 },
+    { "mes": "2021-12-01", "portgdp_total": 130.3574, "portgdp_imp": 104.8482, "pim_pf": 86.8418 },
+    { "mes": "2022-01-01", "portgdp_total": 134.7298, "portgdp_imp": 93.5368, "pim_pf": 86.6154 },
+    { "mes": "2022-02-01", "portgdp_total": 130.3060, "portgdp_imp": 96.0965, "pim_pf": 87.4306 },
+    { "mes": "2022-03-01", "portgdp_total": 129.3300, "portgdp_imp": 86.4809, "pim_pf": 86.6838 },
+    { "mes": "2022-04-01", "portgdp_total": 136.8680, "portgdp_imp": 90.4263, "pim_pf": 87.2632 },
+    { "mes": "2022-05-01", "portgdp_total": 140.6341, "portgdp_imp": 95.5023, "pim_pf": 86.8225 },
+    { "mes": "2022-06-01", "portgdp_total": 133.8389, "portgdp_imp": 85.1706, "pim_pf": 86.7801 },
+    { "mes": "2022-07-01", "portgdp_total": 130.9357, "portgdp_imp": 96.0705, "pim_pf": 87.5481 },
+    { "mes": "2022-08-01", "portgdp_total": 127.5106, "portgdp_imp": 94.0380, "pim_pf": 86.4418 },
+    { "mes": "2022-09-01", "portgdp_total": 139.4201, "portgdp_imp": 103.8609, "pim_pf": 85.0229 },
+    { "mes": "2022-10-01", "portgdp_total": 139.2976, "portgdp_imp": 100.1099, "pim_pf": 86.4402 },
+    { "mes": "2022-11-01", "portgdp_total": 124.8138, "portgdp_imp": 85.3795, "pim_pf": 86.4416 },
+    { "mes": "2022-12-01", "portgdp_total": 133.4423, "portgdp_imp": 103.9956, "pim_pf": 86.5785 },
+    { "mes": "2023-01-01", "portgdp_total": 136.6377, "portgdp_imp": 93.3128, "pim_pf": 86.3732 },
+    { "mes": "2023-02-01", "portgdp_total": 133.3479, "portgdp_imp": 83.3012, "pim_pf": 86.2249 },
+    { "mes": "2023-03-01", "portgdp_total": 134.7704, "portgdp_imp": 98.9275, "pim_pf": 86.8547 },
+    { "mes": "2023-04-01", "portgdp_total": 135.8334, "portgdp_imp": 91.6967, "pim_pf": 86.5208 },
+    { "mes": "2023-05-01", "portgdp_total": 133.3363, "portgdp_imp": 100.6565, "pim_pf": 87.1360 },
+    { "mes": "2023-06-01", "portgdp_total": 135.1794, "portgdp_imp": 95.4661, "pim_pf": 86.7310 },
+    { "mes": "2023-07-01", "portgdp_total": 142.5212, "portgdp_imp": 98.5037, "pim_pf": 86.1434 },
+    { "mes": "2023-08-01", "portgdp_total": 135.7511, "portgdp_imp": 91.8502, "pim_pf": 86.6508 },
+    { "mes": "2023-09-01", "portgdp_total": 135.2205, "portgdp_imp": 88.1601, "pim_pf": 86.2921 },
+    { "mes": "2023-10-01", "portgdp_total": 134.3515, "portgdp_imp": 92.2467, "pim_pf": 86.6889 },
+    { "mes": "2023-11-01", "portgdp_total": 136.0557, "portgdp_imp": 84.4671, "pim_pf": 87.7206 },
+    { "mes": "2023-12-01", "portgdp_total": 134.4089, "portgdp_imp": 92.0441, "pim_pf": 89.3214 },
+    { "mes": "2024-01-01", "portgdp_total": 142.8528, "portgdp_imp": 107.4416, "pim_pf": 88.1190 },
+    { "mes": "2024-02-01", "portgdp_total": 148.1947, "portgdp_imp": 95.8026, "pim_pf": 88.0674 },
+    { "mes": "2024-03-01", "portgdp_total": 141.6054, "portgdp_imp": 101.4845, "pim_pf": 88.3815 },
+    { "mes": "2024-04-01", "portgdp_total": 137.0441, "portgdp_imp": 100.0431, "pim_pf": 88.2072 },
+    { "mes": "2024-05-01", "portgdp_total": 135.8592, "portgdp_imp": 108.1943, "pim_pf": 87.1795 },
+    { "mes": "2024-06-01", "portgdp_total": 148.7864, "portgdp_imp": 106.3221, "pim_pf": 91.0469 },
+    { "mes": "2024-07-01", "portgdp_total": 141.1695, "portgdp_imp": 112.3169, "pim_pf": 89.6590 },
+    { "mes": "2024-08-01", "portgdp_total": 142.6728, "portgdp_imp": 123.6214, "pim_pf": 89.4416 },
+    { "mes": "2024-09-01", "portgdp_total": 142.1001, "portgdp_imp": 119.5690, "pim_pf": 90.3411 },
+    { "mes": "2024-10-01", "portgdp_total": 135.2972, "portgdp_imp": 120.2435, "pim_pf": 90.3707 },
+    { "mes": "2024-11-01", "portgdp_total": 134.7631, "portgdp_imp": 102.6225, "pim_pf": 89.8801 },
+    { "mes": "2024-12-01", "portgdp_total": 137.7420, "portgdp_imp": 108.7839, "pim_pf": 89.8570 },
+    { "mes": "2025-01-01", "portgdp_total": 141.7561, "portgdp_imp": 112.5761, "pim_pf": 89.7655 },
+    { "mes": "2025-02-01", "portgdp_total": 137.5473, "portgdp_imp": 112.1050, "pim_pf": 89.2734 },
+    { "mes": "2025-03-01", "portgdp_total": 148.1399, "portgdp_imp": 108.3204, "pim_pf": 90.7305 },
+    { "mes": "2025-04-01", "portgdp_total": 140.6091, "portgdp_imp": 110.2222, "pim_pf": 90.4230 },
+    { "mes": "2025-05-01", "portgdp_total": 149.2398, "portgdp_imp": 120.7319, "pim_pf": 89.9082 },
+    { "mes": "2025-06-01", "portgdp_total": 153.3726, "portgdp_imp": 116.7003, "pim_pf": 89.9649 },
+    { "mes": "2025-07-01", "portgdp_total": 149.0622, "portgdp_imp": 112.6800, "pim_pf": 89.8307 },
+    { "mes": "2025-08-01", "portgdp_total": 160.8422, "portgdp_imp": 111.0797, "pim_pf": 90.4955 },
+    { "mes": "2025-09-01", "portgdp_total": 150.6177, "portgdp_imp": 113.4719, "pim_pf": 90.1537 },
+    { "mes": "2025-10-01", "portgdp_total": 149.7587, "portgdp_imp": 109.2519, "pim_pf": 90.3151 },
+    { "mes": "2025-11-01", "portgdp_total": 148.4651, "portgdp_imp": 123.7502, "pim_pf": 90.1771 },
+    { "mes": "2025-12-01", "portgdp_total": 153.0476, "portgdp_imp": 115.2260, "pim_pf": 88.4355 }
   ],
   "grafico": {
-    "tipo": "line_dual",
+    "tipo": "portgdp_forecast",
     "x": "mes",
-    "series": [
-      {
-        "y": "portgdp_imp",
-        "label": "PortGDP Importações",
-        "cor": "#7fb069"
-      },
-      {
-        "y": "pim_pf",
-        "label": "PIM-PF (IBGE)",
-        "cor": "#c1322f"
-      }
-    ],
-    "label_x": "Mês",
-    "label_y": "Índice (base 2014 = 100)"
+    "y_pim_pf": "pim_pf",
+    "track_record_key": "track_record",
+    "card_previsao_key": "card_previsao_atual",
+    "label_y": "Variação 12m do PIM-PF (pp)"
   },
-  "subtitulo": "Previsão da produção industrial brasileira com 2 meses de antecedência.",
+  "subtitulo": "Previsão da variação interanual do PIM-PF (IBGE) com dois meses de antecedência.",
   "categoria": "Inédita",
-  "tags": [
-    "pim-pf",
-    "producao-industrial",
-    "previsao",
-    "dfm",
-    "bimestral"
-  ],
+  "tags": ["pim-pf", "producao-industrial", "previsao", "dfm", "bimestral"],
   "links_transparencia": {
     "nota_tecnica": "docs/nota_tecnica_pimpf_combinado_v1.md",
     "h1_arquivado": "validacao/portgdp_v2/h1_arquivado/README.md",
@@ -919,23 +189,135 @@
     "var12m_prevista_pp": 0.4644,
     "intervalo_inferior_pp": -4.0756,
     "intervalo_superior_pp": 5.0045,
+    "ic50_inferior_pp": -2.08,
+    "ic50_superior_pp": 3.01,
+    "rmse_implicito_pp": 3.77,
+    "prob_var12m_positiva": 0.549,
     "peso_dfm": 0.3157,
     "ultima_obs_pim_pf": "2026-02-01",
     "data_emissao": "2026-05-12",
-    "modelo_dfm": "dfm_2026"
+    "modelo_dfm": "dfm_2026",
+    "headline_texto": "Para **abril de 2026**, projetamos variação interanual do PIM-PF Indústria Geral de **+0,46 pp**. Em probabilidade direcional (Gaussiana via RMSE OOS), **P(var12m > 0) ≈ 55%** — leitura essencialmente neutra. Banda conformal IC 80% nominal: **−4,08 a +5,00 pp**; ver bloco *Análise de incerteza* abaixo para por que essa banda é tão larga e o que estamos fazendo a respeito."
+  },
+  "analise_incerteza": {
+    "tldr": "A banda conformal IC 80% para abr/2026 tem largura de 9,08 pp — 12% mais larga que a faixa central 80% empírica do próprio PIM-PF var12m em regime normal (8,09 pp, n=83 meses jan/2018–dez/2025 excluindo COVID). Em termos práticos: o modelo, no horizonte bimestral, não reduz a incerteza marginal sobre o próximo número. Isto é uma propriedade real do sinal, não bug do método — e tem caminhos concretos de melhoria.",
+    "comparacao_marginal": [
+      { "label": "Vol incondicional PIM-PF var12m (jan/2018–dez/2025, n=96)", "valor": "dp = 6,32 pp" },
+      { "label": "Vol regime normal (excl. COVID abr/2020–abr/2021, n=83)", "valor": "dp = 4,14 pp" },
+      { "label": "Faixa central 80% empírica (regime normal)", "valor": "−4,01 a +4,08 pp (largura 8,09 pp)" },
+      { "label": "IC 80% conformal do modelo (abr/2026)", "valor": "−4,08 a +5,00 pp (largura 9,08 pp)" },
+      { "label": "Razão largura modelo / largura marginal", "valor": "1,12 — modelo 12% mais largo que distribuição marginal" }
+    ],
+    "leituras_alternativas": [
+      {
+        "label": "IC 50% Gaussiano implícito (via RMSE OOS = 3,77 pp)",
+        "valor": "−2,08 a +3,01 pp",
+        "obs": "Mais apertado, mas só metade das realizações cairão dentro. Útil como faixa central; não substitui IC 80% para risk-on/risk-off."
+      },
+      {
+        "label": "P(var12m > 0) — probabilidade direcional",
+        "valor": "≈ 55% (Gaussiana com média = previsão, dp = RMSE)",
+        "obs": "Sinal direcional pouco informativo para abr/2026: dentro do intervalo [45%, 55%] o modelo não distingue alta de baixa com confiança útil."
+      }
+    ],
+    "leitura_decisor": "O IC 80% nominal cobre quase toda a distribuição marginal histórica do PIM-PF var12m. Para o decisor, isto significa: a previsão pontual carrega pouca informação adicional sobre a próxima observação além do que um analista já saberia olhando para a vol histórica. Tratar a previsão como referência ordinal (a indústria provavelmente fica em torno de +0,5 pp, não +5 ou −5), não como sinal de timing de ciclo.",
+    "porque_amplo": [
+      "**Sinal preditivo fraco.** O DM HLN p=0,75 já tinha indicado: a combinação não reduz erro pontual frente ao AR(1) puro. Quando o sinal é fraco, conformal honestamente abre a banda.",
+      "**Amostra de calibração pequena (n=29).** Cobertura empírica 100% num quantil empírico de n=29 tem alta variância. IC 95% Wilson sobre a cobertura: [88,3%, 100%] — mesmo no piso, está acima do nominal 80%, indicando sobre-conservadorismo estrutural.",
+      "**Autocorrelação residual (Ljung-Box p=0,007).** Viola exchangeability do split conformal padrão — o método compensa essa violação alargando a banda para preservar a garantia formal de cobertura."
+    ],
+    "roadmap_reducao": [
+      {
+        "tecnica": "CQR — Conformalized Quantile Regression",
+        "ref": "Romano, Patterson, Candès (2019)",
+        "ganho_esperado": "30–50% mais estreitas em regime calmo (bandas heterocedásticas)",
+        "como": "Treinar dois quantile regressors (q10 e q90) sobre F_t e var12m_{t}, calibrar conformal. Permite banda larga em regime de stress e estreita em regime calmo, em vez de largura única."
+      },
+      {
+        "tecnica": "ACI — Adaptive Conformal Inference online",
+        "ref": "Gibbs & Candès (2021)",
+        "ganho_esperado": "Convergência empírica ao nível nominal em janelas de 12–24 obs",
+        "como": "α ajusta-se com regra α_{t+1} = α_t + γ·(1{y_t ∉ band_t} − α). Dada cobertura 100% atual, α dispararia para baixo e bandas apertariam progressivamente conforme produção acumula observações."
+      },
+      {
+        "tecnica": "DFM com k≥2 fatores",
+        "ref": "Bai & Ng (2002) IC information criteria",
+        "ganho_esperado": "Captura granel × contêiner × exportação × importação como dimensões separadas; RMSE potencialmente 10–20% menor",
+        "como": "Reestimar via IC1/IC2 sobre as 35 séries. k=1 atual pode estar agregando demais."
+      },
+      {
+        "tecnica": "MIDAS — Mixed-Data Sampling",
+        "ref": "Ghysels, Sinko, Valkanov (2007)",
+        "ganho_esperado": "Incorporar dados ANTAQ intra-mês que hoje são ignorados até o mês fechar; estreita IC por reduzir vintage lag",
+        "como": "Bridge equations com lags polinomiais sobre dados semanais/quinzenais da ANTAQ."
+      },
+      {
+        "tecnica": "Variáveis exógenas adicionais",
+        "ref": "Bańbura, Giannone, Reichlin (2010) large DFM",
+        "ganho_esperado": "PMI manufatura (Markit), Focus expectativas (BCB), consumo de energia industrial (CCEE), Comex insumos — qualquer um pode reduzir variância residual",
+        "como": "Adicionar como blocos no DFM ou como features no AR(1) com seleção via LASSO/elastic net."
+      }
+    ],
+    "compromisso": "Implementação destes 5 caminhos está na fila para a re-validação pré-registrada de **mai/2028** (ver `compromisso_retest_2028.md`). Reduções de IC só serão publicadas após passar o critério de cobertura empírica em janela de teste independente — não aceitamos reduzir banda por construção e descobrir furos depois."
+  },
+  "diagnosticos_estatisticos": {
+    "introducao": "Métricas reportadas sobre a janela completa de validação out-of-sample (rolling-origin walk-forward, jan/2018–out/2025, h=2 fixo). Comparações contra benchmarks calculadas no mesmo conjunto de origens.",
+    "n_origens_oos": 95,
+    "janela": "jan/2018 – out/2025",
+    "metricas": [
+      {
+        "label": "MAE pontual (combinação)",
+        "valor": "3,01 pp",
+        "comparacao": "AR(1) puro: 3,02 pp · DFM-1f isolado: 3,49 pp",
+        "leitura": "A combinação iguala o AR(1) — não o supera em loss pontual."
+      },
+      {
+        "label": "Diebold-Mariano (HLN) vs AR(1)",
+        "valor": "p = 0,75",
+        "comparacao": "h=1 (arquivado): p = 0,64",
+        "leitura": "Não rejeita igualdade de erros. Honestidade: o ganho do indicador não está no erro absoluto."
+      },
+      {
+        "label": "Encompassing test (HLN 1998)",
+        "valor": "λ_AR→DFM = 0,49 · λ_DFM→AR = 0,51 · p < 0,001 nos dois",
+        "leitura": "Padrão simétrico: cada componente carrega informação preditiva não-redundante. Esta é a base estatística para publicar como combinado."
+      },
+      {
+        "label": "Peso DFM rolling OOS",
+        "valor": "42,4% (mediana 43,2%; dp 2,8 pp)",
+        "comparacao": "Intervalo: [27,3%, 48,5%]. Zero truncamentos em [0,1].",
+        "leitura": "Combinação interior estável — portos entram com peso material em todas as origens."
+      },
+      {
+        "label": "Cobertura conformal (nominal 80%)",
+        "valor": "100% empírica (n = 29)",
+        "comparacao": "IC95 Wilson: [88,3%, 100%]",
+        "leitura": "Bandas sobre-conservadoras. O IC informa pouco sobre direção — assuma-o como envelope, não como sinal."
+      },
+      {
+        "label": "Ljung-Box(12) nos resíduos",
+        "valor": "p = 0,007",
+        "leitura": "Rejeita ausência de autocorrelação. Implica que (i) erros-padrão dos pesos GR podem estar subestimados e (ii) exchangeability do split conformal parcialmente violada — garantia formal degrada em janela curta."
+      },
+      {
+        "label": "ARCH-LM · Jarque-Bera",
+        "valor": "ARCH-LM n.s. · JB rejeita normalidade",
+        "leitura": "Homocedasticidade preservada. Não-normalidade esperada em var12m com janela cobrindo COVID."
+      }
+    ],
+    "nota_amostra_recente": "A amostra de 6 origens (jul–dez/2025) exibida na tabela 'Validação histórica recente' abaixo é um corte para inspeção visual, não a base do MAE 3,01 pp reportado aqui. Nesta amostra: MAE = 0,91 pp, hit rate de direção = 3/6 (50%) — n pequeno demais para inferência."
   },
   "metricas_producao": {
     "n_previsoes": 0,
-    "mensagem": "Aguardando 6 previsões com realizado para reportar métricas em produção (atual: 0).",
-    "mae_validacao_historica_pp": 3.01
+    "mensagem": "Nenhuma previsão emitida em produção tem realizado disponível ainda. Primeira realização esperada em jul/2026 (mes alvo mar/2026). Métricas em produção serão reportadas a partir de n=6 acumulado."
   },
   "disclaimer_vintage": "Validação realizada em série revisada do PIM-PF (BCB SGS 28503). Performance em previsão real, contra primeiro vintage publicado pelo IBGE, pode degradar 10–25% conforme literatura padrão de nowcasting macroeconômico. Snapshots de cada release do PIM-PF e da ANTAQ são arquivados desde mai/2026 para análise comparativa de degradação por revisão, a ser publicada na re-validação de mai/2028.",
   "track_record": [
     {
       "mes_alvo": "2025-07",
       "horizonte": 2,
-      "previsto_pp": 1.3275000000000001,
-      "realizado_pp": 0.19319999999999998,
+      "previsto_pp": 1.3275,
+      "realizado_pp": 0.1932,
       "erro_abs_pp": 1.1343,
       "dentro_intervalo": true,
       "tipo": "validacao_historica"
@@ -943,7 +325,7 @@
     {
       "mes_alvo": "2025-08",
       "horizonte": 2,
-      "previsto_pp": -0.23839999999999997,
+      "previsto_pp": -0.2384,
       "realizado_pp": 1.1617,
       "erro_abs_pp": 1.4001,
       "dentro_intervalo": true,
@@ -954,7 +336,7 @@
       "horizonte": 2,
       "previsto_pp": 0.2762,
       "realizado_pp": -0.1918,
-      "erro_abs_pp": 0.468,
+      "erro_abs_pp": 0.4680,
       "dentro_intervalo": true,
       "tipo": "validacao_historica"
     },
@@ -971,8 +353,8 @@
       "mes_alvo": "2025-11",
       "horizonte": 2,
       "previsto_pp": 0.0857,
-      "realizado_pp": 0.38570000000000004,
-      "erro_abs_pp": 0.3,
+      "realizado_pp": 0.3857,
+      "erro_abs_pp": 0.3000,
       "dentro_intervalo": true,
       "tipo": "validacao_historica"
     },
@@ -980,51 +362,17 @@
       "mes_alvo": "2025-12",
       "horizonte": 2,
       "previsto_pp": -0.1188,
-      "realizado_pp": -1.6393000000000002,
+      "realizado_pp": -1.6393,
       "erro_abs_pp": 1.5205,
       "dentro_intervalo": true,
       "tipo": "validacao_historica"
     },
     {
-      "mes_alvo": "2026-01",
-      "horizonte": 1,
-      "previsto_pp": -1.4586,
-      "realizado_pp": null,
-      "erro_abs_pp": null,
-      "dentro_intervalo": null,
-      "tipo": "producao"
-    },
-    {
-      "mes_alvo": "2026-01",
-      "horizonte": 1,
-      "previsto_pp": -1.4586,
-      "realizado_pp": null,
-      "erro_abs_pp": null,
-      "dentro_intervalo": null,
-      "tipo": "producao"
-    },
-    {
       "mes_alvo": "2026-02",
       "horizonte": 2,
-      "previsto_pp": -1.497,
-      "realizado_pp": null,
-      "erro_abs_pp": null,
-      "dentro_intervalo": null,
-      "tipo": "producao"
-    },
-    {
-      "mes_alvo": "2026-02",
-      "horizonte": 2,
-      "previsto_pp": -1.497,
-      "realizado_pp": null,
-      "erro_abs_pp": null,
-      "dentro_intervalo": null,
-      "tipo": "producao"
-    },
-    {
-      "mes_alvo": "2026-03",
-      "horizonte": 1,
-      "previsto_pp": 1.1292,
+      "previsto_pp": -1.4970,
+      "intervalo_inferior_pp": -6.0000,
+      "intervalo_superior_pp": 3.0060,
       "realizado_pp": null,
       "erro_abs_pp": null,
       "dentro_intervalo": null,
@@ -1034,6 +382,8 @@
       "mes_alvo": "2026-04",
       "horizonte": 2,
       "previsto_pp": 0.4644,
+      "intervalo_inferior_pp": -4.0756,
+      "intervalo_superior_pp": 5.0045,
       "realizado_pp": null,
       "erro_abs_pp": null,
       "dentro_intervalo": null,
@@ -1041,10 +391,10 @@
     }
   ],
   "o_que_e": {
-    "o_que_e": "Modelo do Observatório IBI que prevê a produção industrial brasileira (PIM-PF Indústria Geral, do IBGE) dois meses antes do IBGE divulgar.",
-    "para_que_serve": "Antecipar movimentos da indústria — desacelerações, recuperações, inflexões de ciclo — usando um sinal que aparece nos portos antes de aparecer na produção. Quando a indústria importa mais insumos, a produção tende a subir alguns meses depois; quando importa menos, tende a cair. O modelo lê esse sinal nas movimentações portuárias da ANTAQ.",
-    "quao_bom": "Em validação histórica de 95 meses (jan/2018 a out/2025), o erro médio das previsões foi de cerca de 3 pontos percentuais na variação interanual. Isso é suficiente para detectar direção e timing de ciclo industrial, não para previsão de magnitude exata.",
-    "o_que_nao_faz": "Não prevê o PIB. Não é um indicador de atividade econômica geral. Cobre apenas a indústria, que corresponde a cerca de 20% do PIB brasileiro."
+    "o_que_e": "Modelo do Observatório IBI que prevê a variação interanual da produção industrial brasileira (PIM-PF Indústria Geral, do IBGE) dois meses antes do IBGE divulgar.",
+    "para_que_serve": "Antecipar movimentos da indústria — desacelerações, recuperações, inflexões de ciclo — usando um sinal antecedente: quando a indústria importa mais insumos via portos, a produção tende a subir alguns meses depois; quando importa menos, tende a cair. O modelo lê esse sinal nas 35 séries de movimentação portuária da ANTAQ.",
+    "quao_bom": "Em 95 origens de validação out-of-sample (jan/2018–out/2025, walk-forward), MAE de 3,01 pp na variação interanual — estatisticamente indistinguível do AR(1) puro do próprio PIM-PF (DM p=0,75). O ganho vem do encompassing test (cada componente carrega informação não-redundante), não de menor erro pontual. Suficiente para detectar direção e timing de ciclo, não magnitude exata.",
+    "o_que_nao_faz": "Não prevê PIB. Não é indicador de atividade econômica geral. Cobre apenas a indústria, que corresponde a cerca de 20% do PIB brasileiro. Não publica em horizonte mensal — apenas bimestral."
   },
   "como_funciona": {
     "introducao": "O modelo combina duas fontes de informação:",
@@ -1052,30 +402,30 @@
       {
         "numero": 1,
         "titulo": "A própria história do PIM-PF",
-        "descricao": "A produção industrial tem inércia — o mês que vem tende a parecer com o mês que passou. Modelos estatísticos simples capturam essa inércia bem."
+        "descricao": "A produção industrial tem inércia — o mês que vem tende a parecer com o mês que passou. Um AR(1) na variação interanual captura essa inércia de forma robusta e difícil de superar."
       },
       {
         "numero": 2,
         "titulo": "A movimentação dos portos",
-        "descricao": "O IBI extraiu, das estatísticas da ANTAQ, um sinal latente comum a 35 séries de movimentação portuária (os 10 maiores portos do Brasil, em quatro tipos de carga e dois sentidos). Esse sinal aparece nos portos antes de aparecer na produção industrial, com defasagem média de 2 meses."
+        "descricao": "O IBI extraiu, das estatísticas da ANTAQ, um fator latente comum a 35 séries portuárias (10 maiores portos × 4 naturezas × 2 sentidos). O fator aparece nos portos antes de aparecer na produção industrial, com defasagem média de 2 meses."
       }
     ],
-    "pesos": "O peso de cada fonte na previsão final é recalculado a cada mês, automaticamente, sem usar informação do futuro. Em média, o sinal portuário entra com peso de 42% e a inércia do próprio PIM-PF com peso de 58%."
+    "pesos": "O peso de cada fonte é recalculado a cada origem por Granger-Ramanathan, sem usar informação do futuro. Em média, o sinal portuário entra com 42,4% e a inércia do PIM-PF com 57,6%. O peso é estável: dp de 2,8 pp ao longo das 58 origens OOS-legítimas e nenhuma origem com truncamento nos extremos do intervalo [0,1]."
   },
   "por_que_bimestral": {
-    "texto": "Em horizonte de 1 mês, o sinal portuário não acrescentou valor estatístico significativo frente à inércia do próprio PIM-PF. O Observatório optou por não publicar previsão mensal — apenas a bimestral, onde o ganho é demonstrável. Os artefatos da análise descartada estão arquivados como compromisso de transparência.",
+    "texto": "Em horizonte de 1 mês, o sinal portuário não acrescentou valor estatístico significativo frente à inércia do PIM-PF (peso DFM rolling 15,5% no piso, DM p=0,64). O Observatório optou por não publicar previsão mensal — apenas a bimestral, onde o ganho é demonstrável via encompassing. Os artefatos da análise descartada estão arquivados como compromisso de transparência.",
     "link_arquivado": "validacao/portgdp_v2/h1_arquivado/README.md"
   },
   "detalhes_tecnicos": {
     "collapsed": true,
     "label": "Detalhes técnicos da especificação e validação",
-    "especificacao": "Combinação convexa entre uma previsão AR(1) do PIM-PF Indústria Geral (BCB SGS 28503) e uma previsão extraída de Dynamic Factor Model de 1 fator com dinâmica AR(2), aplicado a 35 séries da ANTAQ defasadas em 2 meses (top 10 portos × 4 naturezas × 2 sentidos, FlagLongoCurso=1). Pesos estimados por Granger-Ramanathan restrito (soma=1, OLS sem intercepto) em rolling expansivo OOS, com aquecimento mínimo de 36 origens.",
-    "validacao": "Rolling-origin walk-forward com 95 origens (jan/2018 a out/2025), horizonte fixo h=2. MAE da combinação: 3,01 pp em var12m, vs 3,02 pp do AR(1) puro e 3,49 pp do DFM-1f isolado. Diebold-Mariano com correção HLN da combinação contra AR(1): p=0,75 — não rejeita igualdade de erros pontuais.",
-    "encompassing_test": "Encompassing test simétrico (HLN 1998). Rejeita “AR(1) encompasses DFM” (λ=0,49, p<0,001) e rejeita “DFM encompasses AR(1)” (λ=0,51, p<0,001). O padrão simétrico indica que ambos os componentes carregam informação preditiva não-redundante — base estatística para a publicação como indicador combinado.",
+    "especificacao": "Combinação convexa entre AR(1) do PIM-PF Indústria Geral (BCB SGS 28503) e DFM-1f com dinâmica AR(2), aplicado a 35 séries da ANTAQ defasadas em 2 meses (top 10 portos × 4 naturezas × 2 sentidos, FlagLongoCurso=1). Pesos por Granger-Ramanathan restrito (soma=1, OLS sem intercepto) em rolling expansivo OOS, aquecimento mínimo 36 origens.",
+    "validacao": "Rolling-origin walk-forward com 95 origens (jan/2018–out/2025), horizonte fixo h=2. MAE da combinação: 3,01 pp em var12m; AR(1) puro: 3,02 pp; DFM-1f isolado: 3,49 pp. Diebold-Mariano com correção HLN da combinação contra AR(1): p=0,75 — não rejeita igualdade de erros pontuais.",
+    "encompassing_test": "Encompassing simétrico (HLN 1998). Rejeita 'AR(1) encompasses DFM' (λ=0,49, p<0,001) e 'DFM encompasses AR(1)' (λ=0,51, p<0,001). O padrão simétrico indica que ambos os componentes carregam informação preditiva não-redundante — base estatística para a publicação como indicador combinado, mesmo sem ganho em loss pontual.",
     "pesos_rolling": "Peso médio do componente DFM ao longo das 58 origens OOS-legítimas: 42,4% (mediana 43,2%, dp 2,8 pp, intervalo [27,3%, 48,5%], zero truncamentos em [0,1]).",
-    "intervalos_previsao": "Split conformal padrão (Lei et al. 2018), cobertura nominal 80%, calculado com correção ⌈(n+1)(1−α)⌉/n sobre 29 erros absolutos do conjunto de calibração. Cobertura empírica em janela de teste de 29 origens: 100%, IC95% Wilson [88,3%, 100%]. Bandas conservadoras frente ao nível nominal — o método tende a errar incluindo mais observações do que o promissor, não menos.",
-    "diagnosticos_residuo": "Ljung-Box rejeita ausência de autocorrelação em lag 12 (p=0,007); Jarque-Bera rejeita normalidade (esperado em var12m com período COVID); ARCH-LM não rejeita homocedasticidade. A autocorrelação residual implica que (i) erros-padrão dos pesos GR rolling podem estar subestimados e (ii) a premissa de exchangeability do split conformal está parcialmente violada — a garantia formal degrada em janela curta. Ambos os fatos reforçam a decisão de publicar bandas conservadoras e re-avaliar no re-test de mai/2028.",
-    "criterio_publicacao": "Análise pré-registrada com regra de decisão fechada antes da execução. O modelo passou no critério apenas em h=2; em h=1, peso médio do DFM rolling foi 15,5% (no piso da banda) e DM p=0,64 — falha no critério forte, e o produto não é publicado nesse horizonte. Consultar h1_arquivado/README.md para detalhes."
+    "intervalos_previsao": "Split conformal padrão (Lei et al. 2018), cobertura nominal 80%, correção ⌈(n+1)(1−α)⌉/n sobre 29 erros absolutos do conjunto de calibração. Cobertura empírica em janela de teste de 29 origens: 100% (IC95 Wilson [88,3%, 100%]). Bandas sobre-conservadoras — o método inclui mais observações do que promete em vez de incluir menos.",
+    "diagnosticos_residuo": "Ljung-Box rejeita ausência de autocorrelação em lag 12 (p=0,007); Jarque-Bera rejeita normalidade (esperado em var12m com período COVID); ARCH-LM não rejeita homocedasticidade. A autocorrelação residual implica que (i) erros-padrão dos pesos GR podem estar subestimados e (ii) exchangeability do split conformal parcialmente violada — garantia formal degrada em janela curta. Ambos reforçam a decisão de publicar bandas conservadoras e re-avaliar no re-test de mai/2028.",
+    "criterio_publicacao": "Análise pré-registrada com regra de decisão fechada antes da execução. O modelo passou no critério apenas em h=2; em h=1, peso médio do DFM rolling foi 15,5% (no piso da banda) e DM p=0,64 — falha no critério forte, e o produto não é publicado nesse horizonte. Consultar `h1_arquivado/README.md` para detalhes."
   },
   "limitacoes": {
     "items": [
@@ -1092,6 +442,10 @@
         "texto": "Publicado apenas em horizonte bimestral (h=2). Em horizonte mensal, o componente portuário não passou no critério de publicação."
       },
       {
+        "label": "Ganho do modelo",
+        "texto": "A combinação não bate o AR(1) puro em loss pontual (DM p=0,75) — não use este indicador esperando MAE menor que um AR(1) ingênuo. O valor está em (i) confirmação cruzada via portos no encompassing e (ii) leitura de direção e timing de ciclo via componente DFM."
+      },
+      {
         "label": "Re-validação",
         "texto": "Bateria completa será re-rodada em mai/2028 com regra de decisão pré-registrada e publicação integral do resultado, incluindo possível descontinuação caso o sinal não persista."
       }
@@ -1099,26 +453,10 @@
   },
   "reprodutibilidade": {
     "links": [
-      {
-        "emoji": "📄",
-        "label": "Nota técnica completa",
-        "href": "docs/nota_tecnica_pimpf_combinado_v1.md"
-      },
-      {
-        "emoji": "🗂",
-        "label": "Por que não publicamos em horizonte mensal",
-        "href": "validacao/portgdp_v2/h1_arquivado/README.md"
-      },
-      {
-        "emoji": "📅",
-        "label": "Compromisso de re-validação 2028",
-        "href": "validacao/portgdp_v2/compromisso_retest_2028.md"
-      },
-      {
-        "emoji": "📊",
-        "label": "Calendário de releases",
-        "href": "docs/calendario_releases.md"
-      }
+      { "emoji": "📄", "label": "Nota técnica completa", "href": "docs/nota_tecnica_pimpf_combinado_v1.md" },
+      { "emoji": "🗂", "label": "Por que não publicamos em horizonte mensal", "href": "validacao/portgdp_v2/h1_arquivado/README.md" },
+      { "emoji": "📅", "label": "Compromisso de re-validação 2028", "href": "validacao/portgdp_v2/compromisso_retest_2028.md" },
+      { "emoji": "📊", "label": "Calendário de releases", "href": "docs/calendario_releases.md" }
     ]
   }
 }

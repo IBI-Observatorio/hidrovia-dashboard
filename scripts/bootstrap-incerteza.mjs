@@ -94,6 +94,7 @@ function calculaPercentisDOY(anosSubset) {
     }
     const p10 = new Array(367).fill(null);
     const p90 = new Array(367).fill(null);
+    const mediana = new Array(367).fill(null);
     for (let d = 1; d <= 366; d++) {
       const am = [];
       for (let off = -JANELA_DIAS; off <= JANELA_DIAS; off++) {
@@ -107,9 +108,10 @@ function calculaPercentisDOY(anosSubset) {
         const ord = [...am].sort((a, b) => a - b);
         p10[d] = ord[Math.floor(0.1 * (ord.length - 1))];
         p90[d] = ord[Math.floor(0.9 * (ord.length - 1))];
+        mediana[d] = ord[Math.floor(0.5 * (ord.length - 1))];
       }
     }
-    out[est] = { p10, p90 };
+    out[est] = { p10, p90, mediana };
   }
   return out;
 }
@@ -123,8 +125,9 @@ function idnDia(iso, percentis) {
       if (c == null) continue;
       const p10 = percentis[est]?.p10[d];
       const p90 = percentis[est]?.p90[d];
-      if (p10 == null || p90 == null) continue;
-      sv += ((c - p10) / (p90 - p10)) * w;
+      const med = percentis[est]?.mediana[d];
+      if (p10 == null || p90 == null || med == null) continue;
+      sv += ((c - med) / (p90 - p10)) * w;
       sp += w;
     }
     return sp > 0 ? sv / sp : NaN;

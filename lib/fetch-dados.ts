@@ -20,9 +20,14 @@ import type { EstacaoVazao } from "./sub-bacias-vazao";
 
 // ─── Painel principal (7 estações) ───────────────────────────────────────────
 
+// SGC removido do painel em mai/2026: a estação 14320001 não tem telemetria
+// ANA ao vivo (a "última leitura" da API costuma ter semanas de defasagem).
+// Snapshot histórico ainda aparece via DADOS_ATUAIS.SGC + card analítico no
+// painel 1 (referência ao 11° Boletim SAH). Ver docs/monitor-cache-ana.md.
 const ESTACOES_PAINEL: EstacaoKey[] = [
-  "Manaus", "Itacoatiara", "SGC",
-  "Humaita", "Manacapuru", "PortoVelho", "Borba",
+  "Manaus", "Itacoatiara",
+  "Humaita", "Manacapuru", "PortoVelho",
+  "Manicore", "Labrea", "Curicuriari",
 ];
 
 // Busca cota/chuva/vazão das 7 estações em 1 chamada batch (≤10 estações).
@@ -58,33 +63,6 @@ export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>
   return merged;
 }
 
-// ─── Boletim SEMA (mantido) ──────────────────────────────────────────────────
-
-export async function fetchUltimoBoletimSEMA(): Promise<{
-  data: string | null;
-  estacoes: Record<string, { cota_cm: number; variacao_cm: number }>;
-} | null> {
-  try {
-    const { readFileSync, existsSync } = await import("fs");
-    const { join } = await import("path");
-    const dataDir = process.env.DATA_DIR ?? join(process.cwd(), "data");
-    const caminho = join(dataDir, "boletins_sema_cache.json");
-    if (!existsSync(caminho)) return null;
-
-    const cache = JSON.parse(readFileSync(caminho, "utf-8"));
-    const ultimo = cache.boletins?.[cache.boletins.length - 1];
-    if (!ultimo || !ultimo.estacoes?.length) return null;
-
-    const mapa: Record<string, { cota_cm: number; variacao_cm: number }> = {};
-    for (const est of ultimo.estacoes) {
-      mapa[est.estacao] = { cota_cm: est.cota_cm, variacao_cm: est.variacao_cm };
-    }
-    return { data: ultimo.data, estacoes: mapa };
-  } catch {
-    return null;
-  }
-}
-
 // ─── IDN: cotas em 11 estações ──────────────────────────────────────────────
 // Suavização trailing MA(N) — mesma do gerador de percentis. Para
 // comparações coerentes, o "atual" precisa estar no mesmo regime de
@@ -102,19 +80,33 @@ function mediaTrailing7Cota(
   const diarios = [...porDia.entries()]
     .map(([data, vs]) => ({ data, cota_cm: vs.reduce((s, x) => s + x, 0) / vs.length }))
     .sort((a, b) => a.data.localeCompare(b.data));
-  if (diarios.length < SUAVIZACAO_DIAS) return null;
+  if (diarios.length === 0) return null;
 
-  const ultimos = diarios.slice(-SUAVIZACAO_DIAS);
-  const media_cm = ultimos.reduce((s, x) => s + x.cota_cm, 0) / ultimos.length;
+  // Tolera gaps de até 2 dias: filtra os dias dentro dos últimos 7 dias calendário.
+  // Requer mínimo de 5 dias com dados (era 7/7, causava exclusão total da estação
+  // com 1 dia de falha de telemetria — exatamente quando o sinal seria mais crítico).
+  const ultimaData = diarios[diarios.length - 1].data;
+  const ultDt = new Date(ultimaData + "T00:00:00Z");
+  const naJanela = diarios.filter((d) => {
+    const dt = new Date(d.data + "T00:00:00Z");
+    return (ultDt.getTime() - dt.getTime()) / 86400000 < SUAVIZACAO_DIAS;
+  });
+  const MIN_DIAS = 5;
+  if (naJanela.length < MIN_DIAS) return null;
+
+  const media_cm = naJanela.reduce((s, x) => s + x.cota_cm, 0) / naJanela.length;
   return {
     cota_m: +(media_cm / 100).toFixed(2),
-    ultima_atualizacao: ultimos[ultimos.length - 1].data,
+    ultima_atualizacao: ultimaData,
   };
 }
 
+// SGC removido em mai/2026 — sem telemetria ANA viva.
+// `posicaoSubBacia()` em sub-bacias.ts já renormaliza os pesos quando a estação
+// está ausente, então o IDN segue válido com 10 estações.
 const ESTACOES_IDN_COTA: EstacaoComDOY[] = [
-  "SGC", "Curicuriari", "Serrinha", "Moura", "Caracarai",
-  "Abuna", "PortoVelho", "Humaita", "Manicore", "Borba", "Labrea",
+  "Curicuriari", "Serrinha", "Moura", "Caracarai",
+  "Abuna", "PortoVelho", "Humaita", "Manicore", "Labrea",
 ];
 
 export type CotaIDN = { cota_m: number; ultima_atualizacao: string };
@@ -239,13 +231,17 @@ export async function fetchSerieCaracarai(
 // Sprint Tese Regulatória v1 (21/05/2026): lê o último boletim SGB parseado
 // (cache em `data/boletins_sgb_cache.json`, alimentado por `app/api/sgb`) e
 // devolve a previsão de pico Manaus/Manacapuru/Itacoatiara + fonte. Quando
-// não houver cache, devolve `PREVISAO_2026` hardcoded (boletim 18°) com a
-// fonte marcada como "fallback".
+// não houver cache, devolve `PREVISAO_2026` hardcoded com a fonte marcada
+// como "fallback". O cron semanal (scripts/pipeline-sace.py) faz POST no
+// /api/sgb com os PDFs novos — então o cache se mantém sozinho.
 import { PREVISAO_2026 } from "./dados-historicos";
+import { lerENSOAdvisory } from "./enso-cpc";
 
 export interface Previsao2026 {
   fonte:               string;
   fonte_dinamica:      boolean;            // true se veio do parser SGB
+  numero_boletim?:     number;             // ex: 21 (do parser SGB)
+  data_boletim?:       string;             // ex: "2026-05-26" (ISO, do parser SGB)
   manaus_pico_cheia:   {
     media:     number;
     ic80_min:  number;
@@ -255,13 +251,21 @@ export interface Previsao2026 {
   manacapuru_pico:     number;
   itacoatiara_pico:    number;
   parintins_pico?:     number;             // só vem do cache, não do hardcoded
-  enso:                string;
+  enso:                string;             // texto sintético em PT, ex: "El Niño Watch — 82% mai–jul/26..."
+  enso_data_emissao?:  string;             // ISO yyyy-mm-dd da última discussion CPC
+  enso_status?:        string;             // "El Niño Watch" | "La Niña Advisory" | "Not Active" | ...
   // Anomalia de precipitação por bacia (categoria −3..+3) — vem do parser SGB v2
   anomalia_pp_negro?:    number;           // bacia do Negro (driver do colapso 2026)
   anomalia_pp_madeira?:  number;           // bacia do Madeira (driver 2024)
 }
 
 export async function fetchPrevisao2026(): Promise<Previsao2026> {
+  // ENSO: tenta cache dinâmico (scrape mensal CPC) antes do fallback.
+  const ensoCache = lerENSOAdvisory();
+  const ensoTexto       = ensoCache?.sintese_pt        ?? PREVISAO_2026.enso;
+  const ensoDataEmissao = ensoCache?.data_emissao      ?? PREVISAO_2026.enso_data_emissao;
+  const ensoStatus      = ensoCache?.status;
+
   try {
     const { readFileSync, existsSync } = await import("fs");
     const { join } = await import("path");
@@ -301,6 +305,8 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
     return {
       fonte:           fonteLabel,
       fonte_dinamica:  true,
+      numero_boletim:  typeof ultimo.numero === "number" ? ultimo.numero : undefined,
+      data_boletim:    typeof ultimo.data === "string" ? ultimo.data : undefined,
       manaus_pico_cheia: {
         media:     manaus.cota_prevista_m,
         ic80_min:  manaus.ic80_min_m,
@@ -310,38 +316,21 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
       manacapuru_pico:  manacapuru?.cota_prevista_m  ?? PREVISAO_2026.manacapuru_pico,
       itacoatiara_pico: itacoatiara?.cota_prevista_m ?? PREVISAO_2026.itacoatiara_pico,
       parintins_pico:   parintins?.cota_prevista_m,
-      enso:             PREVISAO_2026.enso,
+      enso:                ensoTexto,
+      enso_data_emissao:   ensoDataEmissao,
+      enso_status:         ensoStatus,
       anomalia_pp_negro:   findPP("Negro"),
       anomalia_pp_madeira: findPP("Madeira"),
     };
   } catch {
     return {
       ...PREVISAO_2026,
-      fonte:          PREVISAO_2026.fonte + " (fallback)",
-      fonte_dinamica: false,
+      enso:                ensoTexto,
+      enso_data_emissao:   ensoDataEmissao,
+      enso_status:         ensoStatus,
+      fonte:               PREVISAO_2026.fonte + " (fallback)",
+      fonte_dinamica:      false,
     };
   }
 }
 
-// ─── SEMA override (mantido) ────────────────────────────────────────────────
-
-export function aplicarBoletimSEMA(
-  dados: Record<string, DadosEstacao>,
-  boletim: Awaited<ReturnType<typeof fetchUltimoBoletimSEMA>>
-): Record<string, DadosEstacao> {
-  if (!boletim) return dados;
-
-  const resultado = { ...dados };
-  for (const [nome, sema] of Object.entries(boletim.estacoes)) {
-    const chave = nome === "Humaitá" ? "Humaita" : nome;
-    if (resultado[chave]) {
-      resultado[chave] = {
-        ...resultado[chave],
-        cota_m:             +(sema.cota_cm / 100).toFixed(2),
-        variacao_24h:       sema.variacao_cm,
-        ultima_atualizacao: boletim.data ?? resultado[chave].ultima_atualizacao,
-      };
-    }
-  }
-  return resultado;
-}
