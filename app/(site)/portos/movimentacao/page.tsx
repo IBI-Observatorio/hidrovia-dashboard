@@ -9,27 +9,38 @@ import { useDashboardData } from '@/components/antaq/useDashboardData';
 
 // ── types ──────────────────────────────────────────────────────────────────────
 
-type Porto = {
-  porto: string;
-  uf: string;
-  cagr_pct: number;
-  volume_mt: number;
-  divergencia_pp: number;
-};
-
-type PortoDisplay = Porto & {
-  volume_display: number;
-  delta_yoy: number | null;   // % vs mesmo período ano anterior (null se 2018)
-  _label: string;
-  _tipo: 'ganhador' | 'perdedor';
-  _color: string;
-  _naturezaKey: NaturezaKey;
-};
-
 type NaturezaKey = 'granel_solido' | 'granel_liquido' | 'carga_geral' | 'conteinerizada';
 type NaturezaFilter = NaturezaKey | 'todos';
 
+type Ponto = { data: string; mt: number };
+type PortoSerie = {
+  porto: string;
+  uf: string | null;
+  regiao: string | null;
+  vol12m_mt: number;
+  naturezas: Record<NaturezaKey, Ponto[]>;
+};
+type Dataset = {
+  gerado_em: string;
+  referencia: string;            // "YYYY-MM" — último mês ANTAQ
+  fonte: string;
+  metrica: string;
+  top_n: number;
+  portos: PortoSerie[];
+  nacional_por_natureza: Record<NaturezaKey, Ponto[]>;
+};
+
 type NcmEntry = { ncm: string; descricao: string; portos: string[] };
+
+type PortoDisplay = {
+  porto: string;
+  uf: string | null;
+  volume_display: number;
+  delta_yoy: number | null;
+  _label: string;
+  _color: string;
+  _naturezaKey: NaturezaKey | 'mix';
+};
 
 // ── constants ──────────────────────────────────────────────────────────────────
 
@@ -40,7 +51,12 @@ const NATUREZAS: { key: NaturezaKey; label: string; short: string; color: string
   { key: 'conteinerizada', label: 'Conteinerizada', short: 'CTZ', color: '#8B5CF6' },
 ];
 
-const ANOS = ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+const NAT_LABEL: Record<NaturezaKey, string> = Object.fromEntries(
+  NATUREZAS.map(n => [n.key, n.label]),
+) as Record<NaturezaKey, string>;
+const NAT_COLOR: Record<NaturezaKey, string> = Object.fromEntries(
+  NATUREZAS.map(n => [n.key, n.color]),
+) as Record<NaturezaKey, string>;
 
 const MESES = [
   { v: 'todos', l: 'Todos' },
@@ -50,23 +66,16 @@ const MESES = [
   { v: '10', l: 'Out' }, { v: '11', l: 'Nov' }, { v: '12', l: 'Dez' },
 ];
 
-// Fatores sazonais reais derivados da série mensal ANTAQ 2015-2025
-// valor 1.0 = volume igual à média anual; >1 = mês acima da média
-const SEASONAL: Record<NaturezaKey, Record<string, number>> = {
-  granel_solido:  { '01':0.8025,'02':0.8547,'03':0.9804,'04':0.9675,'05':1.0598,'06':1.0712,'07':1.1041,'08':1.1349,'09':1.0566,'10':1.0181,'11':0.9645,'12':0.9858 },
-  granel_liquido: { '01':0.9910,'02':0.8994,'03':0.9853,'04':0.9760,'05':0.9977,'06':0.9729,'07':1.0355,'08':1.0449,'09':1.0157,'10':1.0442,'11':1.0018,'12':1.0358 },
-  carga_geral:    { '01':0.9776,'02':0.9151,'03':0.9991,'04':0.9686,'05':0.9917,'06':0.9968,'07':0.9923,'08':1.0240,'09':1.0002,'10':1.0347,'11':1.0251,'12':1.0748 },
-  conteinerizada: { '01':0.9288,'02':0.8841,'03':0.9865,'04':0.9578,'05':0.9853,'06':0.9762,'07':1.0305,'08':1.0598,'09':1.0492,'10':1.0769,'11':1.0208,'12':1.0442 },
-};
+const MAX_BARRAS = 25;
 
 // ── formatters ─────────────────────────────────────────────────────────────────
 
 function fmtVol(v: number, mes: string) {
-  const unit = mes === 'todos' ? 'Mt/ano' : 'Mt/mês';
+  const unit = mes === 'todos' ? 'Mt' : 'Mt/mês';
   if (v >= 100) return `${v.toFixed(0)} ${unit}`;
   if (v >= 10)  return `${v.toFixed(1)} ${unit}`;
   if (v >= 1)   return `${v.toFixed(2)} ${unit}`;
-  return `${(v * 1000).toFixed(0)} kt/${mes === 'todos' ? 'ano' : 'mês'}`;
+  return `${(v * 1000).toFixed(0)} kt${mes === 'todos' ? '' : '/mês'}`;
 }
 
 function fmtPct(v: number, sign = true) {
@@ -78,19 +87,32 @@ function truncate(s: string, n = 32) {
   return s.length > n ? s.slice(0, n - 1) + '…' : s;
 }
 
-// ── volume per year/month computation ─────────────────────────────────────────
+// ── data helpers ────────────────────────────────────────────────────────────────
 
-function computeDisplayVolume(porto: Porto, ano: string, mes: string, natureza: NaturezaKey): number {
-  const yearsBack = 2025 - parseInt(ano);
-  // Back-calculate annual volume from CAGR
-  const annualVol = porto.volume_mt / Math.pow(1 + porto.cagr_pct / 100, yearsBack);
-  if (mes === 'todos') return annualVol;
-  // Scale by seasonal factor to get monthly estimate
-  const sf = SEASONAL[natureza][mes] ?? 1;
-  return (annualVol / 12) * sf;
+/** Soma os pontos de `serie` cujo ano == `ano` e mês ∈ `meses`. null se nenhum. */
+function somaMeses(serie: Ponto[] | undefined, ano: string, meses: string[]): number | null {
+  if (!serie?.length) return null;
+  let total = 0;
+  let achou = false;
+  for (const p of serie) {
+    if (p.data.slice(0, 4) === ano && meses.includes(p.data.slice(5, 7))) {
+      total += p.mt;
+      achou = true;
+    }
+  }
+  return achou ? total : null;
 }
 
-// ── tooltips ───────────────────────────────────────────────────────────────────
+/** Meses (MM) presentes nos dados para um dado ano (a partir da série nacional). */
+function mesesDisponiveis(nacional: Record<NaturezaKey, Ponto[]>, ano: string): string[] {
+  const set = new Set<string>();
+  for (const k of Object.keys(nacional) as NaturezaKey[])
+    for (const p of nacional[k])
+      if (p.data.slice(0, 4) === ano) set.add(p.data.slice(5, 7));
+  return [...set].sort();
+}
+
+// ── tooltip ──────────────────────────────────────────────────────────────────
 
 function TooltipVolume({ active, payload, mes }: any) {
   if (!active || !payload?.length) return null;
@@ -98,12 +120,20 @@ function TooltipVolume({ active, payload, mes }: any) {
   return (
     <div className="bg-[#111827] border border-white/10 rounded-xl p-3 shadow-xl text-sm min-w-[220px]">
       <p className="font-semibold text-white text-sm leading-snug">{d.porto}</p>
-      <span className="text-xs text-gray-500">{d.uf}</span>
+      <span className="text-xs text-gray-500">{d.uf ?? ''}</span>
       <div className="mt-2 space-y-0.5 text-xs">
         <div className="flex justify-between gap-4">
           <span className="text-gray-400">Volume</span>
           <span className="text-white font-medium">{fmtVol(d.volume_display, mes)}</span>
         </div>
+        {d.delta_yoy != null && (
+          <div className="flex justify-between gap-4">
+            <span className="text-gray-400">vs ano anterior</span>
+            <span className={d.delta_yoy >= 0 ? 'text-[#00a652]' : 'text-[#A0153E]'}>
+              {fmtPct(d.delta_yoy)}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -112,11 +142,7 @@ function TooltipVolume({ active, payload, mes }: any) {
 // ── NCM search dropdown ────────────────────────────────────────────────────────
 
 function NcmSearch({
-  ncmList,
-  query,
-  onQuery,
-  selected,
-  onSelect,
+  ncmList, query, onQuery, selected, onSelect,
 }: {
   ncmList: NcmEntry[];
   query: string;
@@ -136,9 +162,7 @@ function NcmSearch({
   }, []);
 
   const filtered = ncmList.filter(
-    n =>
-      n.ncm.includes(query) ||
-      n.descricao.toLowerCase().includes(query.toLowerCase())
+    n => n.ncm.includes(query) || n.descricao.toLowerCase().includes(query.toLowerCase()),
   );
 
   function handleSelect(n: NcmEntry) {
@@ -173,7 +197,7 @@ function NcmSearch({
       </div>
 
       {open && filtered.length > 0 && (
-        <div className="absolute z-50 top-full mt-1 left-0 right-0 bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden shadow-xl">
+        <div className="absolute z-50 top-full mt-1 left-0 right-0 bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden shadow-xl max-h-72 overflow-y-auto">
           {filtered.map(n => (
             <button
               key={n.ncm}
@@ -201,120 +225,171 @@ function NcmSearch({
 // ── main component ─────────────────────────────────────────────────────────────
 
 export default function MovimentacaoPage() {
+  const { data: raw, loading, erro } = useDashboardData(['portos-series.json', 'ncm_sh4.json']);
+  const bag = raw as Record<string, unknown> | null;
+  const data = (bag?.['portos-series'] ?? null) as Dataset | null;
+  const ncmData = (bag?.ncm_sh4 ?? null) as Record<NaturezaKey, NcmEntry[]> | null;
+
+  // referência e anos derivados dos dados reais
+  const refYear = data ? parseInt(data.referencia.slice(0, 4)) : 2026;
+  const refMonthLabel = data ? MESES.find(m => m.v === data.referencia.slice(5, 7))?.l ?? '' : '';
+
+  // último ano completo (12 meses) = default; senão o ano de referência
+  const anoPadrao = useMemo(() => {
+    if (!data) return String(refYear);
+    for (let y = refYear; y >= refYear - 2; y--) {
+      if (mesesDisponiveis(data.nacional_por_natureza, String(y)).length >= 12) return String(y);
+    }
+    return String(refYear);
+  }, [data, refYear]);
+
+  const ANOS = useMemo(() => {
+    const arr: string[] = [];
+    for (let y = refYear; y >= refYear - 8; y--) arr.push(String(y));
+    return arr.reverse();
+  }, [refYear]);
+
   const [natureza, setNatureza] = useState<NaturezaFilter>('granel_solido');
-  const [ano, setAno]           = useState('2025');
+  const [ano, setAno]           = useState<string>('');
   const [mes, setMes]           = useState('todos');
   const [ncmQuery, setNcmQuery] = useState('');
   const [ncmSel, setNcmSel]     = useState<NcmEntry | null>(null);
 
-  const { data: raw, loading, erro } = useDashboardData(['movimentacao.json']);
-  const data = raw?.movimentacao ?? null;
+  // inicializa o ano quando os dados chegam
+  useEffect(() => { if (data && !ano) setAno(anoPadrao); }, [data, anoPadrao, ano]);
 
   const isTodos = natureza === 'todos';
-  const hasActiveFilters = ano !== '2025' || mes !== 'todos' || ncmSel !== null;
+  const anoEfetivo = ano || anoPadrao;
+  const hasActiveFilters = anoEfetivo !== anoPadrao || mes !== 'todos' || ncmSel !== null;
 
   function clearFilters() {
-    setAno('2025');
+    setAno(anoPadrao);
     setMes('todos');
     setNcmSel(null);
     setNcmQuery('');
   }
 
-  // nat só faz sentido para natureza única
   const nat = isTodos ? null : NATUREZAS.find(n => n.key === natureza)!;
   const activeColor = nat?.color ?? '#9ca3af';
 
-  // NCM list — todos os NCMs quando "Todos", senão só da natureza selecionada
+  // NCM list
   const ncmList: NcmEntry[] = useMemo(() => {
-    if (!data?.ncm_sh4) return [];
-    if (isTodos) return NATUREZAS.flatMap(n => data.ncm_sh4[n.key] ?? []);
-    return data.ncm_sh4[natureza as NaturezaKey] ?? [];
-  }, [data, natureza, isTodos]);
+    if (!ncmData) return [];
+    if (isTodos) return NATUREZAS.flatMap(n => ncmData[n.key] ?? []);
+    return ncmData[natureza as NaturezaKey] ?? [];
+  }, [ncmData, natureza, isTodos]);
 
-  // Clear NCM selection when natureza changes
   useEffect(() => { setNcmSel(null); setNcmQuery(''); }, [natureza]);
 
-  // Build ranked ports
+  // meses-alvo: mês específico ou todos os meses presentes no ano
+  const mesesAno = useMemo(
+    () => (data ? mesesDisponiveis(data.nacional_por_natureza, anoEfetivo) : []),
+    [data, anoEfetivo],
+  );
+  const mesesAlvo = mes === 'todos' ? mesesAno : [mes];
+  const prevAno = String(parseInt(anoEfetivo) - 1);
+  const isParcial = mes === 'todos' && mesesAno.length > 0 && mesesAno.length < 12;
+
+  // ranking de portos
   const ranking = useMemo<PortoDisplay[]>(() => {
-    if (!data?.portos) return [];
+    if (!data) return [];
 
-    const natsToProcess = isTodos ? NATUREZAS : NATUREZAS.filter(n => n.key === natureza);
-    const all: PortoDisplay[] = [];
+    let portos = data.portos;
+    if (ncmSel) portos = portos.filter(p => ncmSel.portos.includes(p.porto));
 
-    for (const n of natsToProcess) {
-      const nd = data.portos.naturezas[n.key];
-      const seen = new Set<string>();
-      const entries: Porto[] = [];
-      for (const p of nd.ganhadores) { if (!seen.has(p.porto)) { seen.add(p.porto); entries.push(p); } }
-      for (const p of nd.perdedores) { if (!seen.has(p.porto)) { seen.add(p.porto); entries.push(p); } }
+    const linhas: PortoDisplay[] = [];
 
-      for (const p of entries) {
-        all.push({
-          ...p,
-          _tipo: nd.ganhadores.some((g: Porto) => g.porto === p.porto) ? 'ganhador' : 'perdedor',
-          _color: n.color,
-          _naturezaKey: n.key,
-          volume_display: 0,   // filled below
-          delta_yoy: null,     // filled below
-          _label: '',          // filled below
+    for (const p of portos) {
+      if (isTodos) {
+        // soma das 4 naturezas + cor pela natureza dominante no período
+        let vol = 0, prev = 0;
+        let dom: NaturezaKey = 'granel_solido', domVal = -1;
+        let temAlgum = false, temPrev = false;
+        for (const n of NATUREZAS) {
+          const v = somaMeses(p.naturezas[n.key], anoEfetivo, mesesAlvo);
+          const vp = somaMeses(p.naturezas[n.key], prevAno, mesesAlvo);
+          if (v != null) { vol += v; temAlgum = true; if (v > domVal) { domVal = v; dom = n.key; } }
+          if (vp != null) { prev += vp; temPrev = true; }
+        }
+        if (!temAlgum || vol <= 0) continue;
+        linhas.push({
+          porto: p.porto, uf: p.uf,
+          volume_display: vol,
+          delta_yoy: temPrev && prev > 0 ? ((vol - prev) / prev) * 100 : null,
+          _color: NAT_COLOR[dom],
+          _naturezaKey: 'mix',
+          _label: `${truncate(p.porto, 30)} (${p.uf ?? '—'})`,
+        });
+      } else {
+        const k = natureza as NaturezaKey;
+        const vol = somaMeses(p.naturezas[k], anoEfetivo, mesesAlvo);
+        if (vol == null || vol <= 0) continue;
+        const prev = somaMeses(p.naturezas[k], prevAno, mesesAlvo);
+        linhas.push({
+          porto: p.porto, uf: p.uf,
+          volume_display: vol,
+          delta_yoy: prev != null && prev > 0 ? ((vol - prev) / prev) * 100 : null,
+          _color: NAT_COLOR[k],
+          _naturezaKey: k,
+          _label: `${truncate(p.porto, 32)} (${p.uf ?? '—'})`,
         });
       }
     }
 
-    // NCM filter (cross-natureza: match by porto name)
-    const filtered = ncmSel ? all.filter(p => ncmSel.portos.includes(p.porto)) : all;
+    return linhas.sort((a, b) => b.volume_display - a.volume_display).slice(0, MAX_BARRAS);
+  }, [data, natureza, isTodos, anoEfetivo, mes, mesesAlvo, prevAno, ncmSel]);
 
-    const prevAno = String(parseInt(ano) - 1);
-    const hasPrev = parseInt(ano) > 2018;
+  // KPIs nacionais (todos os portos do país, não só o top N)
+  const nacionalPeriodo = useMemo(() => {
+    if (!data) return null;
+    const keys = isTodos ? NATUREZAS.map(n => n.key) : [natureza as NaturezaKey];
+    let tot = 0, achou = false;
+    for (const k of keys) {
+      const v = somaMeses(data.nacional_por_natureza[k], anoEfetivo, mesesAlvo);
+      if (v != null) { tot += v; achou = true; }
+    }
+    return achou ? tot : null;
+  }, [data, natureza, isTodos, anoEfetivo, mesesAlvo]);
 
-    return filtered
-      .map(p => {
-        const vol = computeDisplayVolume(p, ano, mes, p._naturezaKey);
-        const prevVol = hasPrev ? computeDisplayVolume(p, prevAno, mes, p._naturezaKey) : null;
-        const delta = prevVol && prevVol > 0 ? ((vol - prevVol) / prevVol) * 100 : null;
-        return {
-          ...p,
-          volume_display: vol,
-          delta_yoy: delta,
-          _label: isTodos
-            ? `${truncate(p.porto, 28)} · ${NATUREZAS.find(n => n.key === p._naturezaKey)!.short} (${p.uf})`
-            : `${truncate(p.porto, 32)} (${p.uf})`,
-        };
-      })
-      .sort((a, b) => b.volume_display - a.volume_display);
-  }, [data, natureza, isTodos, ano, mes, ncmSel]);
+  const nacionalTotalTodos = useMemo(() => {
+    if (!data) return null;
+    let tot = 0;
+    for (const n of NATUREZAS) {
+      const v = somaMeses(data.nacional_por_natureza[n.key], anoEfetivo, mesesAlvo);
+      if (v != null) tot += v;
+    }
+    return tot;
+  }, [data, anoEfetivo, mesesAlvo]);
 
-  // KPI helpers
-  const sectorCagr = isTodos
-    ? NATUREZAS.reduce((acc, n) => acc + (data?.portos?.naturezas[n.key]?.cagr_natureza_pct ?? 0), 0) / 4
-    : (data?.portos?.naturezas[natureza as NaturezaKey]?.cagr_natureza_pct ?? 0);
-  const sectorLabel = isTodos ? 'Todos os tipos' : (data?.portos?.naturezas[natureza as NaturezaKey]?.natureza_label ?? '');
-  const composicao  = isTodos
-    ? (data?.kpis?.total_12m_mt ?? 0)
-    : (data?.kpis?.composicao_12m?.[natureza as NaturezaKey] ?? 0);
-  const momentum = isTodos
-    ? NATUREZAS.reduce((acc, n) => acc + (data?.kpis?.momentum_atual?.[n.key] ?? 0), 0) / 4
-    : (data?.kpis?.momentum_atual?.[natureza as NaturezaKey] ?? 0);
+  const momentum = useMemo(() => {
+    if (!data) return null;
+    const keys = isTodos ? NATUREZAS.map(n => n.key) : [natureza as NaturezaKey];
+    let atual = 0, prev = 0, okA = false, okP = false;
+    for (const k of keys) {
+      const a = somaMeses(data.nacional_por_natureza[k], anoEfetivo, mesesAlvo);
+      const p = somaMeses(data.nacional_por_natureza[k], prevAno, mesesAlvo);
+      if (a != null) { atual += a; okA = true; }
+      if (p != null) { prev += p; okP = true; }
+    }
+    return okA && okP && prev > 0 ? ((atual - prev) / prev) * 100 : null;
+  }, [data, natureza, isTodos, anoEfetivo, mesesAlvo, prevAno]);
+
+  const sectorLabel = isTodos ? 'Todos os tipos' : NAT_LABEL[natureza as NaturezaKey];
   const topPort = ranking[0];
 
-  // Year-adjusted total volume
-  const totalVol = useMemo(() => {
-    if (!ranking.length) return composicao;
-    const yearsBack = 2025 - parseInt(ano);
-    const factor = Math.pow(1 + sectorCagr / 100, yearsBack);
-    const annualTotal = composicao / factor;
-    if (mes === 'todos') return annualTotal;
-    // For "todos", use simple avg seasonal factor
-    const natKey = isTodos ? 'granel_solido' : (natureza as NaturezaKey);
-    const sf = SEASONAL[natKey][mes] ?? 1;
-    return (annualTotal / 12) * sf;
-  }, [ranking, ano, mes, natureza, isTodos, composicao, sectorCagr]);
-
-  if (loading) return <LoadingState />;
+  if (loading || (!data && !erro)) return <LoadingState />;
   if (erro)    return <ErrorState msg={erro} />;
+  if (!data)   return <ErrorState msg="Dataset de movimentação indisponível." />;
 
   const isMensal = mes !== 'todos';
   const mesLabel = MESES.find(m => m.v === mes)?.l ?? '';
+  const periodoLabel = isMensal ? `${mesLabel}/${anoEfetivo}` : anoEfetivo;
+  const refLabel = `${refMonthLabel}/${refYear}`;
+  const participacao = isTodos
+    ? 100
+    : (nacionalPeriodo != null && nacionalTotalTodos)
+      ? (nacionalPeriodo / nacionalTotalTodos) * 100
+      : null;
 
   return (
     <main className="max-w-screen-xl mx-auto px-4 md:px-6 py-10 space-y-8">
@@ -341,11 +416,13 @@ export default function MovimentacaoPage() {
           </span>
         </h1>
         <p className="text-gray-400 text-sm max-w-2xl">
-          Ranking de portos e terminais por volume e crescimento — filtre por tipo de carga,
-          ano, mês e produto (NCM SH4).
+          Ranking de portos e terminais por tonelagem movimentada — dados mensais reais da ANTAQ.
+          Filtre por tipo de carga, ano, mês e produto (NCM SH4).
         </p>
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-xs text-gray-600">Período base: 2018–2025 · Ref. fev/2026</span>
+          <span className="text-xs text-gray-600">
+            Dados reais até {refLabel} · {data.portos.length} maiores portos · atualização mensal
+          </span>
         </div>
       </div>
 
@@ -356,7 +433,6 @@ export default function MovimentacaoPage() {
         <div className="space-y-1.5">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">Tipo de carga</p>
           <div className="flex flex-wrap gap-2">
-            {/* Botão Todos */}
             <button
               onClick={() => setNatureza('todos')}
               className={[
@@ -397,7 +473,7 @@ export default function MovimentacaoPage() {
                   onClick={() => setAno(a)}
                   className={[
                     'px-2.5 py-1 rounded-lg text-xs font-medium border transition-all',
-                    ano === a
+                    anoEfetivo === a
                       ? 'bg-white/10 border-white/25 text-white'
                       : 'border-white/8 text-gray-500 hover:text-gray-300 hover:border-white/15',
                   ].join(' ')}
@@ -412,20 +488,27 @@ export default function MovimentacaoPage() {
           <div className="space-y-1">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">Mês</p>
             <div className="flex flex-wrap gap-1">
-              {MESES.map(m => (
-                <button
-                  key={m.v}
-                  onClick={() => setMes(m.v)}
-                  className={[
-                    'px-2.5 py-1 rounded-lg text-xs font-medium border transition-all',
-                    mes === m.v
-                      ? 'bg-white/10 border-white/25 text-white'
-                      : 'border-white/8 text-gray-500 hover:text-gray-300 hover:border-white/15',
-                  ].join(' ')}
-                >
-                  {m.l}
-                </button>
-              ))}
+              {MESES.map(m => {
+                const indisponivel = m.v !== 'todos' && !mesesAno.includes(m.v);
+                return (
+                  <button
+                    key={m.v}
+                    onClick={() => !indisponivel && setMes(m.v)}
+                    disabled={indisponivel}
+                    title={indisponivel ? `Sem dados ANTAQ para ${m.l}/${anoEfetivo}` : undefined}
+                    className={[
+                      'px-2.5 py-1 rounded-lg text-xs font-medium border transition-all',
+                      mes === m.v
+                        ? 'bg-white/10 border-white/25 text-white'
+                        : indisponivel
+                          ? 'border-white/5 text-gray-700 cursor-not-allowed'
+                          : 'border-white/8 text-gray-500 hover:text-gray-300 hover:border-white/15',
+                    ].join(' ')}
+                  >
+                    {m.l}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -449,7 +532,7 @@ export default function MovimentacaoPage() {
             ? <Chip label="Todos os tipos" onClear={undefined} />
             : <Chip label={nat!.label} color={nat!.color} onClear={undefined} />
           }
-          <Chip label={ano} onClear={ano !== '2025' ? () => setAno('2025') : undefined} />
+          <Chip label={anoEfetivo} onClear={anoEfetivo !== anoPadrao ? () => setAno(anoPadrao) : undefined} />
           {mes !== 'todos' && <Chip label={mesLabel} onClear={() => setMes('todos')} />}
           {ncmSel && <Chip label={`NCM ${ncmSel.ncm}`} onClear={() => { setNcmSel(null); setNcmQuery(''); }} />}
           <button
@@ -467,25 +550,33 @@ export default function MovimentacaoPage() {
         </div>
       </div>
 
+      {/* parcial note */}
+      {isParcial && (
+        <p className="text-xs text-amber-300/80 -mt-4">
+          ⚠️ {anoEfetivo} é ano parcial — acumulado de {mesesAno.length} {mesesAno.length === 1 ? 'mês' : 'meses'}
+          {' '}(jan–{MESES.find(m => m.v === mesesAno.at(-1))?.l.toLowerCase()}). Variação a/a compara o mesmo período do ano anterior.
+        </p>
+      )}
+
       {/* ── kpi cards ───────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <KpiCard
-          label={`Movimentação — ${isMensal ? mesLabel + '/' + ano : ano}`}
-          value={fmtVol(totalVol, mes)}
-          sub={isMensal ? `Estimativa sazonal` : `Referência 2025`}
+          label={`Movimentação — ${periodoLabel}`}
+          value={nacionalPeriodo != null ? fmtVol(nacionalPeriodo, mes) : '—'}
+          sub={isMensal ? 'Tonelagem do mês (nacional)' : `Acumulado ${anoEfetivo} (nacional)`}
           color={activeColor}
         />
         <KpiCard
           label="Participação no total nacional"
-          value={isTodos ? '100%' : `${(composicao / (data?.kpis?.total_12m_mt ?? 1) * 100).toFixed(0)}%`}
-          sub={`${composicao.toFixed(0)} Mt · ${sectorLabel}`}
+          value={participacao != null ? `${participacao.toFixed(0)}%` : '—'}
+          sub={nacionalPeriodo != null ? `${nacionalPeriodo.toFixed(0)} Mt · ${sectorLabel}` : sectorLabel}
           color={activeColor}
         />
         <KpiCard
-          label="Momentum YoY (últ. 12m)"
-          value={fmtPct(momentum)}
-          sub={isTodos ? 'Média dos 4 tipos de carga' : `Período 2018–2025`}
-          positive={momentum > 0}
+          label={`Variação a/a — ${periodoLabel}`}
+          value={momentum != null ? fmtPct(momentum) : '—'}
+          sub={`vs ${isMensal ? mesLabel + '/' + prevAno : prevAno} (nacional)`}
+          positive={momentum != null ? momentum > 0 : undefined}
           color={activeColor}
         />
         <KpiCard
@@ -506,10 +597,8 @@ export default function MovimentacaoPage() {
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
               {ranking.length} porto{ranking.length !== 1 ? 's' : ''} ·{' '}
-              {isMensal ? `estimativa mensal (${mesLabel}/${ano})` : `tonelagem anual (${ano})`}
-              {parseInt(ano) > 2018 && (
-                <span className="ml-1 text-gray-600">· variação vs {String(parseInt(ano) - 1)}</span>
-              )}
+              {isMensal ? `tonelagem de ${mesLabel}/${anoEfetivo}` : `tonelagem acumulada ${anoEfetivo}`}
+              <span className="ml-1 text-gray-600">· variação vs {prevAno}</span>
             </p>
           </div>
           <div className="flex items-center gap-3 text-xs text-gray-500 flex-wrap">
@@ -531,9 +620,12 @@ export default function MovimentacaoPage() {
         </div>
 
         {ranking.length === 0 ? (
-          <EmptyState msg={ncmSel ? `Nenhum porto encontrado para NCM ${ncmSel.ncm} em ${sectorLabel}` : 'Sem dados'} />
+          <EmptyState msg={ncmSel ? `Nenhum porto encontrado para NCM ${ncmSel.ncm} em ${sectorLabel}` : 'Sem dados para o período selecionado'} />
         ) : (
-          <VolumeChart data={ranking} mes={mes} ano={ano} />
+          <VolumeChart data={ranking} mes={mes} />
+        )}
+        {isTodos && (
+          <p className="text-[11px] text-gray-600">Em &quot;Todos os tipos&quot;, a barra soma as 4 naturezas; a cor indica a carga predominante no porto.</p>
         )}
       </div>
 
@@ -542,11 +634,11 @@ export default function MovimentacaoPage() {
         <span className="text-base mt-0.5 shrink-0">ℹ️</span>
         <div className="space-y-1">
           <p>
-            <strong className="text-gray-400">Volumes por ano</strong> — retroprojetados a partir do volume de referência 2025 com base na taxa histórica de crescimento do porto.{' '}
-            <strong className="text-gray-400">Volumes por mês</strong> — ajustados pelo fator sazonal real da série ANTAQ 2015–2025.{' '}
+            <strong className="text-gray-400">Tonelagem</strong> — movimentação efetiva (peso bruto de carga, operações de carga/descarga) extraída mês a mês da Base Estatística Aquaviária da ANTAQ.{' '}
+            <strong className="text-gray-400">Variação a/a</strong> — compara o mesmo período do ano anterior (mesmos meses).{' '}
             <strong className="text-gray-400">NCM SH4</strong> — associação porto × produto baseada na composição típica de carga de cada terminal.
           </p>
-          <p>Fonte: ANTAQ — Estatística Aquaviária (2010–2026). Elaboração: Observatório IBI, mai/2026.</p>
+          <p>Fonte: {data.fonte}. Último mês disponível: {refLabel}. Elaboração: Observatório IBI.</p>
         </div>
       </div>
 
@@ -605,14 +697,13 @@ function DeltaLabel(props: any) {
   );
 }
 
-function VolumeChart({ data, mes, ano }: { data: PortoDisplay[]; mes: string; ano: string }) {
-  const hasPrev = parseInt(ano) > 2018;
+function VolumeChart({ data, mes }: { data: PortoDisplay[]; mes: string }) {
   const altura = Math.max(300, data.length * 30);
 
   return (
     <div className="w-full" style={{ height: altura }}>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data} layout="vertical" margin={{ top: 4, right: hasPrev ? 72 : 16, bottom: 4, left: 8 }}>
+        <BarChart data={data} layout="vertical" margin={{ top: 4, right: 72, bottom: 4, left: 8 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" horizontal={false} />
           <XAxis
             type="number"
@@ -635,7 +726,7 @@ function VolumeChart({ data, mes, ano }: { data: PortoDisplay[]; mes: string; an
             {data.map((entry, i) => (
               <Cell key={i} fill={entry._color} fillOpacity={0.85} />
             ))}
-            {hasPrev && <LabelList dataKey="delta_yoy" content={DeltaLabel} />}
+            <LabelList dataKey="delta_yoy" content={DeltaLabel} />
           </Bar>
         </BarChart>
       </ResponsiveContainer>
