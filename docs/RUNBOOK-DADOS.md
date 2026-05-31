@@ -61,7 +61,8 @@ cache sumiria a cada deploy. Caches no volume: `ana-diario-cache.json`,
 
 `watchdog.yml` roda **todo dia 14:00 UTC** e verifica dois níveis:
 1. **"Rodou?"** — via API do GitHub, confere se cada workflow rodou no prazo e com
-   sucesso (réguas ≤30h; insights/IDN/ENSO/SGB ≤8d; portos/deploy só falha-na-última).
+   sucesso (réguas ≤30h; insights/IDN/ENSO/SGB/briefing ≤8d; portos ≤40d — pega
+   falha e parada silenciosa; deploy só falha-na-última, por ser gatilho de push).
 2. **"Dado fresco?"** — bate em **`GET /api/health`**, que reporta a idade real dos
    caches no volume (pega a falha silenciosa: job verde, dado velho).
 
