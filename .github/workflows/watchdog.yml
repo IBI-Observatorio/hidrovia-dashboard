@@ -1,0 +1,116 @@
+name: Sistema imunologico (watchdog)
+
+# Verifica TODO DIA se os crons rodaram quando deviam e se os dados em producao
+# estao frescos. Dois niveis:
+#   1. "Rodou?" - via API do GitHub, checa a ultima execucao de cada workflow.
+#   2. "Produziu dado fresco?" - via /api/health (idade real dos caches no volume).
+# Se algo falhar: abre/atualiza uma issue (label `healthcheck`) E falha o run,
+# o que dispara o e-mail automatico de workflow falho do GitHub. Quando tudo
+# volta ao normal, fecha a issue sozinho.
+#
+# Limite conhecido: o pipeline LOCAL do Windows (SACE/IDN/ENSO) nao e visivel
+# daqui - este watchdog cobre os crons de nuvem e o dado em producao.
+
+on:
+  schedule:
+    - cron: "0 14 * * *"   # diario 14:00 UTC (10:00 Manaus) - apos reguas(13h) e insights(11h)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+    steps:
+      - name: Garante a label healthcheck
+        run: gh label create healthcheck --repo "$REPO" --color B60205 --description "Alertas do sistema imunologico" --force || true
+
+      - name: Verifica crons e dados
+        run: |
+          set -uo pipefail
+          PROBLEMS=()
+
+          # ---------- 1. Frescura dos dados via /api/health ----------
+          echo "== GET ${BASE_URL}/api/health =="
+          if curl -sS --max-time 60 -o health.json -w "%{http_code}" "${BASE_URL}/api/health" | grep -q '^200$'; then
+            cat health.json; echo
+            if [ "$(jq -r '.ok' health.json)" != "true" ]; then
+              while read -r line; do PROBLEMS+=("dado — $line"); done < <(jq -r '.checks | to_entries[] | select(.value.ok==false) | "\(.key): \(.value.detalhe // "stale")"' health.json)
+            fi
+          else
+            PROBLEMS+=("/api/health inacessivel ou != 200 (producao fora do ar?)")
+          fi
+
+          # ---------- 2. Workflows rodaram no prazo? ----------
+          # Cadencia frequente: flag se nunca rodou, ultima != success, ou idade > limite_h
+          check_freshness () {
+            local file="$1" nome="$2" limite_h="$3" json created concl age_h
+            json=$(gh api "repos/${REPO}/actions/workflows/${file}/runs?per_page=1" 2>/dev/null || echo '{}')
+            created=$(echo "$json" | jq -r '.workflow_runs[0].created_at // empty')
+            concl=$(echo "$json" | jq -r '.workflow_runs[0].conclusion // "em_andamento"')
+            if [ -z "$created" ]; then PROBLEMS+=("$nome: nunca rodou"); return; fi
+            age_h=$(( ( $(date -u +%s) - $(date -u -d "$created" +%s) ) / 3600 ))
+            case "$concl" in
+              success|em_andamento) ;;
+              *) PROBLEMS+=("$nome: ultima execucao '$concl' (ha ${age_h}h)") ;;
+            esac
+            if [ "$age_h" -gt "$limite_h" ]; then PROBLEMS+=("$nome: sem rodar ha ${age_h}h (limite ${limite_h}h)"); fi
+          }
+          # Cadencia esparsa (mensal/eventual): so flag se a ULTIMA execucao FALHOU
+          check_failed_only () {
+            local file="$1" nome="$2" concl
+            concl=$(gh api "repos/${REPO}/actions/workflows/${file}/runs?per_page=1" 2>/dev/null | jq -r '.workflow_runs[0].conclusion // "nunca"')
+            if [ "$concl" = "failure" ] || [ "$concl" = "timed_out" ]; then PROBLEMS+=("$nome: ultima execucao FALHOU ($concl)"); fi
+          }
+
+          check_freshness   "reguas-diario.yml"    "Reguas (diario)"    30
+          check_freshness   "insights-semanal.yml" "Insights (terca)"   192
+          check_failed_only "atualiza-portos.yml"  "Portos (dia 16)"
+          check_failed_only "deploy.yml"           "Deploy"
+
+          # ---------- 3. Resultado ----------
+          if [ ${#PROBLEMS[@]} -eq 0 ]; then
+            echo "✅ TUDO SAUDAVEL"
+            n=$(gh issue list --repo "$REPO" --label healthcheck --state open --json number -q '.[0].number // empty')
+            if [ -n "$n" ]; then
+              gh issue close "$n" --repo "$REPO" --comment "✅ Imunologico: tudo voltou ao normal em $(date -u +%FT%TZ)."
+            fi
+            exit 0
+          fi
+
+          echo "🚨 PROBLEMAS DETECTADOS:"
+          printf ' - %s\n' "${PROBLEMS[@]}"
+
+          {
+            echo "🚨 **Sistema imunologico detectou problemas** — $(date -u +%FT%TZ)"
+            echo ""
+            printf '-  %s\n' "${PROBLEMS[@]}"
+            echo ""
+            echo "Detalhe da saude dos dados:"
+            echo '```json'
+            cat health.json 2>/dev/null || echo "(health.json indisponivel)"
+            echo '```'
+            echo ""
+            echo "_Gerado automaticamente pelo workflow watchdog._"
+          } > body.md
+
+          n=$(gh issue list --repo "$REPO" --label healthcheck --state open --json number -q '.[0].number // empty')
+          if [ -z "$n" ]; then
+            gh issue create --repo "$REPO" --title "🚨 Imunologico: cron(s) ou dado(s) com problema" --label healthcheck --body-file body.md
+          else
+            gh issue comment "$n" --repo "$REPO" --body-file body.md
+          fi
+
+          # Falha o run -> GitHub envia e-mail de workflow falho ao(s) responsavel(eis).
+          exit 1
