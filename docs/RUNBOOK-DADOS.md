@@ -27,6 +27,7 @@ O schedule só vale a partir da branch `main`. Todos têm botão **Run workflow*
 | **SACE/SGB** | terça 12:00 | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia |
 | **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + Claude **Haiku 4.5**, grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
 | **ENSO** | quinta 17:00 | `enso-mensal.yml` | `POST /api/cron/refresh-enso` → Railway raspa CPC/NOAA, grava `enso_cpc_cache.json`. (Roda toda quinta; idempotente — CPC publica na 2ª quinta) |
+| **Briefing** | quarta 13:00 | `briefing-semanal.yml` | `POST /api/cron/briefing` → regenera o briefing editorial da semana, grava `briefings/YYYY-WW.json` no volume |
 | **Portos / ANTAQ** | dia 16, 11:00 | `atualiza-portos.yml` | Roda `gera-portos-series.mjs` + `gera-series-tendencia.mjs`, **commita** os JSONs |
 | **Deploy** | push na `main` + manual | `deploy.yml` | `railway up`. Tem `workflow_dispatch` (crons que commitam dados disparam ele) |
 | **Sistema imunológico** | diário 14:00 | `watchdog.yml` | Ver seção abaixo |
@@ -171,15 +172,16 @@ Script CLI (uso manual/dev, lê caches locais): `node scripts/gera-insights-ai.m
 
 ---
 
-## 📰 BRIEFING SEMANAL — ⚠️ snapshot NÃO automatizado
+## 📰 BRIEFING SEMANAL — automático (quarta)
 
-A rota `app/api/cron/briefing/route.ts` existe e gera o snapshot
-`data/briefings/YYYY-WW.json`, mas **nenhum cron a chama** (o "Cron Service no
-Railway" do `docs/RAILWAY-CRON.md` nunca foi criado). Hoje a página
-`/briefing-semanal` se mantém via `revalidate=86400` (regenera na visita).
+`briefing-semanal.yml` (quarta 13:00 UTC) dispara `/api/cron/briefing`, que
+regenera o briefing editorial da semana com dados ao vivo e grava o snapshot
+`data/briefings/YYYY-WW.json` no volume (mantém 52 = 1 ano). Protegido por
+`CRON_SECRET`. A página `/briefing-semanal` também tem `revalidate=86400` como
+rede de segurança.
 
-> Para automatizar de verdade (como os outros), basta um `briefing-semanal.yml`
-> dando `POST /api/cron/briefing` com o `CRON_SECRET` (quarta 13:00 UTC). Pendente.
+> Substituiu o "Cron Service no Railway" do `docs/RAILWAY-CRON.md`, que nunca
+> chegou a ser criado — agora segue o mesmo padrão GitHub Actions dos demais.
 
 ---
 
@@ -199,12 +201,12 @@ npm run update-calendar          # → public/data/severity-calendar.json + lib/
 | Frequência | Automático (nuvem) | Manual (metodologia/backfill) |
 |-----------|---------------------|-------------------------------|
 | **Diário** | réguas (13h), watchdog (14h) | — |
-| **Semanal** | IDN (ter), SGB (ter), Insights (ter), ENSO (qui) | — |
+| **Semanal** | IDN (ter), SGB (ter), Insights (ter), ENSO (qui), Briefing (qua) | — |
 | **Mensal** | portos (dia 16) | `update-navegacao-series.py` |
 | **Eventual** | — | `atualiza-dados.mjs` (metodologia), `forecast_conteiner.py`, `panel_horserace.py` |
 
-> Pendência conhecida: automatizar o **briefing** (ver seção). Tudo o mais roda na
-> nuvem — a máquina local não tem mais nenhuma tarefa agendada.
+> **Tudo roda na nuvem** — a máquina local não tem mais nenhuma tarefa agendada, e
+> não há pendências de automação. Só sobra trabalho manual para metodologia/backfill.
 >
 > Docs relacionadas: `docs/TENDENCIA-CARGAS.md` (forecast), `docs/RAILWAY-CRON.md`
-> (briefing — desatualizado, descreve cron que não existe), `docs/severity-calendar.md`.
+> (briefing — histórico; o cron real é o `briefing-semanal.yml`), `docs/severity-calendar.md`.
