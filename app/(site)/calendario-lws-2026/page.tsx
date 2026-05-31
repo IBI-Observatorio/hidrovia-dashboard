@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { fetchPrevisao2026 } from "@/lib/fetch-dados";
 import { geraCalendarioLWS, formataDataCurta } from "@/lib/calendario-lws";
 import CalendarioLWS2026 from "@/components/CalendarioLWS2026";
+import BackLink from "@/components/BackLink";
 import { navigationCopy } from "@/lib/navigation-copy";
 
 export const revalidate = 21600; // 6h
@@ -27,7 +28,8 @@ export default async function CalendarioLWSPage() {
     <div className="max-w-screen-xl mx-auto px-4 py-10">
       {/* ── Lead ── */}
       <div className="max-w-3xl mb-8">
-        <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-2">
+        <BackLink />
+        <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-2 mt-1">
           Projeção 2026 · Modelo IBI
         </p>
         <h1 className="text-white text-3xl font-extrabold mb-3 leading-tight">

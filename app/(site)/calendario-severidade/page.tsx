@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SeverityCalendarLoader from "@/components/panels/SeverityCalendarLoader";
+import BackLink from "@/components/BackLink";
 
 export const metadata: Metadata = {
   title: "Calendário de Severidade Hidrológica — Observatório IBI",
@@ -20,6 +21,7 @@ export default function CalendarioSeveridadePage() {
 
   return (
     <main className="max-w-screen-xl mx-auto px-4 py-8 space-y-6">
+      <BackLink />
       {/* Breadcrumb */}
       <nav className="text-xs text-gray-500 flex gap-1.5 items-center">
         {breadcrumbs.map((b, i) => (

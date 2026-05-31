@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BackLink from "@/components/BackLink";
 
 export const metadata: Metadata = {
   title: "Portos — Observatório IBI",
@@ -14,7 +15,7 @@ const cards = [
     description:
       "Ranking de portos e terminais por volume e crescimento — filtre por tipo de carga, ano, mês e produto (NCM SH4).",
     meta: "Base 2018–2025 · ref. fev/2026",
-    cta: "Abrir o ranking →",
+    cta: "Abrir o ranking",
     href: "/portos/movimentacao",
   },
   {
@@ -23,7 +24,7 @@ const cards = [
     description:
       "Médias móveis de 12 meses por tipo de carga e projeção do contêiner para os próximos 5 meses, com banda de incerteza empírica.",
     meta: "Mensal · 2010–2026",
-    cta: "Ver a tendência →",
+    cta: "Ver a tendência",
     href: "/portos/ineditas/tendencia-cargas",
   },
 ];
@@ -35,7 +36,8 @@ export default function PortosLandingPage() {
       {/* ── HERO ── */}
       <section className="bg-azul-medio/50 border-b border-white/5 py-10 px-4">
         <div className="max-w-screen-lg mx-auto">
-          <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-3">
+          <BackLink />
+          <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-3 mt-1">
             Observatório IBI · Portos
           </p>
           <h1 className="text-white text-2xl sm:text-[1.75rem] font-extrabold leading-[1.2] mb-4">
@@ -72,10 +74,13 @@ export default function PortosLandingPage() {
               <p className="text-gray-400 text-sm leading-relaxed mb-4">
                 {card.description}
               </p>
-              <div className="flex items-center justify-between">
-                <p className="text-gray-600 text-xs">{card.meta}</p>
-                <span className="text-verde text-sm font-semibold">{card.cta}</span>
-              </div>
+              <p className="text-gray-600 text-xs mb-2">{card.meta}</p>
+              <span className="inline-flex items-center gap-1.5 text-verde text-sm font-semibold whitespace-nowrap">
+                {card.cta}
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
             </Link>
           ))}
         </div>

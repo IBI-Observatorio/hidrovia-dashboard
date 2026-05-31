@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, type ReactNode } from "react";
+import Link from "next/link";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, ArrowLeft } from "lucide-react";
 
 // =====================================================================
 // DESIGN TOKENS
@@ -909,6 +910,21 @@ export default function SobrecustoDashboard() {
           }}
         />
         <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
+          <Link
+            href="/"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 13,
+              color: "rgba(250,250,247,0.6)",
+              textDecoration: "none",
+              marginBottom: 20,
+            }}
+          >
+            <ArrowLeft size={14} />
+            Voltar
+          </Link>
           <Eyebrow color={C.green}>Observatório IBI / Análise quantitativa</Eyebrow>
           <h1
             style={{
