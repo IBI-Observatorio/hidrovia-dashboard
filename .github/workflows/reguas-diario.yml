@@ -1,0 +1,49 @@
+name: Refresh diario das reguas
+
+# Forca o refresh diario dos cards de regua do /monitor chamando
+# /api/cron/refresh-reguas no Railway (force-dynamic -> fetch ANA + grava o cache
+# diario no volume DATA_DIR). Sem este cron, o cache so "vira" quando alguem abre
+# a pagina; com ele, atualiza todo dia de manha independente de trafego.
+#
+# Cadencia: diario 13:00 UTC (09:00 Manaus / 10:00 Brasilia). Tambem roda sob
+# demanda pelo botao "Run workflow".
+#
+# Pre-requisitos:
+#   - Secret do repositorio CRON_SECRET (mesmo valor da var CRON_SECRET no Railway)
+#   - O schedule so dispara a partir da branch padrao (main).
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: reguas-diario
+  cancel-in-progress: false
+
+jobs:
+  dispara:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispara /api/cron/refresh-reguas
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET}" ]; then
+            echo "::error::Secret CRON_SECRET não configurado no repositório."
+            exit 1
+          fi
+          echo "POST ${BASE_URL}/api/cron/refresh-reguas"
+          http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+            --retry 3 --retry-all-errors --retry-delay 15 --max-time 180 \
+            -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${BASE_URL}/api/cron/refresh-reguas")
+          echo "HTTP ${http}"
+          cat /tmp/resp.json || true
+          echo
+          if [ "${http}" != "200" ]; then
+            echo "::error::Esperado HTTP 200, recebido ${http}."
+            exit 1
+          fi
