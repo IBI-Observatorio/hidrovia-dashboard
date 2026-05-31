@@ -1,0 +1,47 @@
+name: Briefing semanal
+
+# Dispara /api/cron/briefing no Railway, que regenera o briefing editorial da
+# semana e grava o snapshot data/briefings/YYYY-WW.json no volume DATA_DIR.
+# A geracao roda no servidor (dados ao vivo); este workflow so dispara.
+# Substitui o "Cron Service no Railway" que o docs/RAILWAY-CRON.md descrevia mas
+# que nunca foi criado — agora segue o mesmo padrao dos outros crons.
+#
+# Cadencia: quarta 13:00 UTC (09:00 Manaus). A quarta e ideal: o SGB publica o
+# boletim na terca, entao o briefing sai com os dados oficiais frescos.
+# Tambem roda sob demanda.
+
+on:
+  schedule:
+    - cron: "0 13 * * 3"
+  workflow_dispatch:
+
+concurrency:
+  group: briefing-semanal
+  cancel-in-progress: false
+
+jobs:
+  dispara:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispara /api/cron/briefing
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET}" ]; then
+            echo "::error::Secret CRON_SECRET não configurado no repositório."
+            exit 1
+          fi
+          echo "POST ${BASE_URL}/api/cron/briefing"
+          http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+            --retry 3 --retry-all-errors --retry-delay 15 --max-time 120 \
+            -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${BASE_URL}/api/cron/briefing")
+          echo "HTTP ${http}"
+          cat /tmp/resp.json || true
+          echo
+          if [ "${http}" != "200" ]; then
+            echo "::error::Esperado HTTP 200, recebido ${http}."
+            exit 1
+          fi
