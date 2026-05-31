@@ -42,7 +42,8 @@ next-env.d.ts
 
 # runtime caches
 /data/ana-diario-cache.json
-/data/ana-idn-series.json
+# ana-idn-series.json é VERSIONADO de propósito: série IDN cumulativa, entregue a
+# produção via commit (GitHub Actions: idn-semanal.yml). lerSerieIDN lê de cwd/data.
 /data/ana-cotas-series.json
 /data/boletins_sgb_cache.json
 /data/enso_cpc_cache.json

@@ -1,0 +1,3525 @@
+{
+  "gerado_em": "2026-05-27T17:59:47.618Z",
+  "serie": [
+    {
+      "data": "2016-01-07",
+      "idn": -0.006,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-01-14",
+      "idn": -0.149,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-01-21",
+      "idn": 0.037,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-01-28",
+      "idn": 0.127,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-02-04",
+      "idn": 0.003,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-02-11",
+      "idn": 0.1,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-02-18",
+      "idn": 0.08,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-02-25",
+      "idn": -0.209,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-03-03",
+      "idn": -0.407,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-03-10",
+      "idn": -0.445,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-03-17",
+      "idn": -0.245,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-03-24",
+      "idn": -0.276,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-03-31",
+      "idn": -0.26,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-04-07",
+      "idn": -0.25,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-04-14",
+      "idn": -0.524,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-04-21",
+      "idn": -0.56,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-04-28",
+      "idn": -0.4,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-05-05",
+      "idn": -0.357,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-05-12",
+      "idn": -0.411,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-05-19",
+      "idn": -0.394,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-05-26",
+      "idn": -0.216,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-06-02",
+      "idn": -0.276,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-06-09",
+      "idn": -0.4,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-06-16",
+      "idn": -0.263,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-06-23",
+      "idn": -0.334,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-06-30",
+      "idn": -0.415,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-07-07",
+      "idn": -0.361,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-07-14",
+      "idn": -0.553,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-07-21",
+      "idn": -0.55,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-07-28",
+      "idn": -0.764,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-08-04",
+      "idn": -0.856,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-08-11",
+      "idn": -0.792,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-08-18",
+      "idn": -0.697,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-08-25",
+      "idn": -0.348,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-09-01",
+      "idn": -0.362,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-09-08",
+      "idn": -0.19,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-09-15",
+      "idn": -0.111,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-09-22",
+      "idn": -0.382,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-09-29",
+      "idn": -0.363,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-10-06",
+      "idn": -0.175,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-10-13",
+      "idn": -0.077,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-10-20",
+      "idn": -0.059,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-10-27",
+      "idn": 0.032,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-11-03",
+      "idn": -0.11,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-11-10",
+      "idn": 0.057,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-11-17",
+      "idn": 0.152,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-11-24",
+      "idn": 0.251,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-12-01",
+      "idn": 0.025,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-12-08",
+      "idn": -0.121,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-12-15",
+      "idn": -0.078,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-12-22",
+      "idn": -0.219,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2016-12-29",
+      "idn": -0.611,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-01-05",
+      "idn": -0.847,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-01-12",
+      "idn": -0.892,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-01-19",
+      "idn": -0.711,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-01-26",
+      "idn": -0.578,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-02-02",
+      "idn": -0.345,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-02-09",
+      "idn": -0.473,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-02-16",
+      "idn": -0.561,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-02-23",
+      "idn": -0.302,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-03-02",
+      "idn": -0.228,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-03-09",
+      "idn": -0.26,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-03-16",
+      "idn": -0.566,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-03-23",
+      "idn": -0.664,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-03-30",
+      "idn": -0.467,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-04-06",
+      "idn": -0.335,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-04-13",
+      "idn": -0.06,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-04-20",
+      "idn": -0.018,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-04-27",
+      "idn": -0.148,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-05-04",
+      "idn": 0.181,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-05-11",
+      "idn": 0.147,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-05-18",
+      "idn": -0.115,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-05-25",
+      "idn": 0.114,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-06-01",
+      "idn": 0.489,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-06-08",
+      "idn": 0.736,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-06-15",
+      "idn": 0.703,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-06-22",
+      "idn": 0.833,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-06-29",
+      "idn": 0.715,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-07-06",
+      "idn": 0.417,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-07-13",
+      "idn": 0.215,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-07-20",
+      "idn": 0.218,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-07-27",
+      "idn": 0.273,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-08-03",
+      "idn": 0.156,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-08-10",
+      "idn": -0.005,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-08-17",
+      "idn": 0.076,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-08-24",
+      "idn": 0.255,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-08-31",
+      "idn": 0.598,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-09-07",
+      "idn": 0.336,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-09-14",
+      "idn": 0.132,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-09-21",
+      "idn": 0.309,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-09-28",
+      "idn": 0.335,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-10-05",
+      "idn": 0.048,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-10-12",
+      "idn": -0.036,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-10-19",
+      "idn": -0.236,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-10-26",
+      "idn": -0.195,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-11-02",
+      "idn": -0.227,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-11-09",
+      "idn": -0.065,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-11-16",
+      "idn": 0.163,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-11-23",
+      "idn": 0.336,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-11-30",
+      "idn": 0.515,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-12-07",
+      "idn": 0.619,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-12-14",
+      "idn": 0.712,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-12-21",
+      "idn": 0.711,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2017-12-28",
+      "idn": 0.479,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-01-04",
+      "idn": 0.366,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-01-11",
+      "idn": 0.197,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-01-18",
+      "idn": 0.354,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-01-25",
+      "idn": 0.352,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-02-01",
+      "idn": 0.149,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-02-08",
+      "idn": 0.258,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-02-15",
+      "idn": 0.477,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-02-22",
+      "idn": 0.493,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-03-01",
+      "idn": 0.476,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-03-08",
+      "idn": 0.59,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-03-15",
+      "idn": 0.606,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-03-22",
+      "idn": 0.725,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-03-29",
+      "idn": 0.81,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-04-05",
+      "idn": 0.471,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-04-12",
+      "idn": 0.322,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-04-19",
+      "idn": 0.344,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-04-26",
+      "idn": 0.303,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-05-03",
+      "idn": 0.065,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-05-10",
+      "idn": -0.075,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-05-17",
+      "idn": -0.063,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-05-24",
+      "idn": -0.029,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-05-31",
+      "idn": -0.017,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-06-07",
+      "idn": -0.051,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-06-14",
+      "idn": 0.077,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-06-21",
+      "idn": -0.002,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-06-28",
+      "idn": -0.192,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-07-05",
+      "idn": -0.31,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-07-12",
+      "idn": -0.327,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-07-19",
+      "idn": -0.397,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-07-26",
+      "idn": -0.456,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-08-02",
+      "idn": -0.48,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-08-09",
+      "idn": -0.556,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-08-16",
+      "idn": -0.162,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-08-23",
+      "idn": -0.019,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-08-30",
+      "idn": 0.166,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-09-06",
+      "idn": 0.173,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-09-13",
+      "idn": -0.081,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-09-20",
+      "idn": -0.196,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-09-27",
+      "idn": 0.028,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-10-04",
+      "idn": 0.318,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-10-11",
+      "idn": 0.341,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-10-18",
+      "idn": 0.597,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-10-25",
+      "idn": 0.626,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-11-01",
+      "idn": 0.525,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-11-08",
+      "idn": 0.681,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-11-15",
+      "idn": 0.687,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-11-22",
+      "idn": 0.718,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-11-29",
+      "idn": 0.541,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-12-06",
+      "idn": 0.428,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-12-13",
+      "idn": 0.413,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-12-20",
+      "idn": 0.495,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2018-12-27",
+      "idn": 0.424,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-01-03",
+      "idn": 0.46,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-01-10",
+      "idn": 0.48,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-01-17",
+      "idn": 0.499,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-01-24",
+      "idn": 0.543,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-01-31",
+      "idn": 0.336,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-02-07",
+      "idn": 0.381,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-02-14",
+      "idn": 0.28,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-02-21",
+      "idn": 0.251,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-02-28",
+      "idn": 0.455,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-03-07",
+      "idn": 0.711,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-03-14",
+      "idn": 0.798,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-03-21",
+      "idn": 0.685,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-03-28",
+      "idn": 0.73,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-04-04",
+      "idn": 0.728,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-04-11",
+      "idn": 0.694,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-04-18",
+      "idn": 0.734,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-04-25",
+      "idn": 0.637,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-05-02",
+      "idn": 0.52,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-05-09",
+      "idn": 0.496,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-05-16",
+      "idn": 0.278,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-05-23",
+      "idn": 0.123,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-05-30",
+      "idn": -0.073,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-06-06",
+      "idn": -0.049,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-06-13",
+      "idn": 0.093,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-06-20",
+      "idn": 0.128,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-06-27",
+      "idn": 0.161,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-07-04",
+      "idn": 0.132,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-07-11",
+      "idn": 0.127,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-07-18",
+      "idn": 0.191,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-07-25",
+      "idn": 0.31,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-08-01",
+      "idn": 0.308,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-08-08",
+      "idn": 0.271,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-08-15",
+      "idn": 0.295,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-08-22",
+      "idn": 0.05,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-08-29",
+      "idn": -0.042,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-09-05",
+      "idn": 0.033,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-09-12",
+      "idn": 0.077,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-09-19",
+      "idn": 0,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-09-26",
+      "idn": 0.083,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-10-03",
+      "idn": -0.16,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-10-10",
+      "idn": -0.015,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-10-17",
+      "idn": 0.44,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-10-24",
+      "idn": 0.159,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-10-31",
+      "idn": 0.191,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-11-07",
+      "idn": 0.211,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-11-14",
+      "idn": 0.09,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-11-21",
+      "idn": -0.048,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-11-28",
+      "idn": 0.025,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-12-05",
+      "idn": 0.228,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-12-12",
+      "idn": 0.272,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-12-19",
+      "idn": 0.292,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2019-12-26",
+      "idn": 0.267,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-01-02",
+      "idn": 0.069,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-01-09",
+      "idn": 0.157,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-01-16",
+      "idn": 0.531,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-01-23",
+      "idn": 0.484,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-01-30",
+      "idn": 0.258,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-02-06",
+      "idn": 0.261,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-02-13",
+      "idn": 0.454,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-02-20",
+      "idn": 0.575,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-02-27",
+      "idn": 0.518,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-03-05",
+      "idn": 0.433,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-03-12",
+      "idn": 0.172,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-03-19",
+      "idn": 0.079,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-03-26",
+      "idn": 0.117,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-04-02",
+      "idn": 0.329,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-04-09",
+      "idn": 0.115,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-04-16",
+      "idn": -0.082,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-04-23",
+      "idn": -0.018,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-04-30",
+      "idn": -0.041,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-05-07",
+      "idn": 0.262,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-05-14",
+      "idn": 0.24,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-05-21",
+      "idn": 0.04,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-05-28",
+      "idn": 0.081,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-06-04",
+      "idn": -0.023,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-06-11",
+      "idn": 0.028,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-06-18",
+      "idn": 0.045,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-06-25",
+      "idn": -0.091,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-07-02",
+      "idn": -0.056,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-07-09",
+      "idn": 0.048,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-07-16",
+      "idn": 0.098,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-07-23",
+      "idn": 0.342,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-07-30",
+      "idn": 0.199,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-08-06",
+      "idn": 0.285,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-08-13",
+      "idn": 0.352,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-08-20",
+      "idn": 0.071,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-08-27",
+      "idn": 0.269,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-09-03",
+      "idn": 0.656,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-09-10",
+      "idn": 0.577,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-09-17",
+      "idn": 0.378,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-09-24",
+      "idn": 0.231,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-10-01",
+      "idn": 0.202,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-10-08",
+      "idn": 0.124,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-10-15",
+      "idn": -0.128,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-10-22",
+      "idn": -0.181,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-10-29",
+      "idn": -0.175,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-11-05",
+      "idn": -0.206,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-11-12",
+      "idn": -0.334,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-11-19",
+      "idn": -0.552,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-11-26",
+      "idn": -0.372,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-12-03",
+      "idn": -0.478,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-12-10",
+      "idn": -0.615,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-12-17",
+      "idn": -0.282,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-12-24",
+      "idn": -0.136,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2020-12-31",
+      "idn": -0.41,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-01-07",
+      "idn": -0.535,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-01-14",
+      "idn": -0.624,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-01-21",
+      "idn": -0.521,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-01-28",
+      "idn": -0.425,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-02-04",
+      "idn": -0.445,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-02-11",
+      "idn": -0.327,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-02-18",
+      "idn": -0.271,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-02-25",
+      "idn": -0.028,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-03-04",
+      "idn": 0.136,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-03-11",
+      "idn": 0.105,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-03-18",
+      "idn": 0.039,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-03-25",
+      "idn": 0.065,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-04-01",
+      "idn": 0.239,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-04-08",
+      "idn": -0.015,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-04-15",
+      "idn": -0.396,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-04-22",
+      "idn": -0.463,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-04-29",
+      "idn": -0.33,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-05-06",
+      "idn": -0.318,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-05-13",
+      "idn": -0.275,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-05-20",
+      "idn": -0.214,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-05-27",
+      "idn": -0.341,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-06-03",
+      "idn": -0.332,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-06-10",
+      "idn": -0.339,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-06-17",
+      "idn": -0.174,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-06-24",
+      "idn": -0.057,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-07-01",
+      "idn": -0.096,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-07-08",
+      "idn": 0.162,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-07-15",
+      "idn": 0.185,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-07-22",
+      "idn": 0.15,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-07-29",
+      "idn": 0.198,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-08-05",
+      "idn": -0.037,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-08-12",
+      "idn": -0.166,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-08-19",
+      "idn": -0.313,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-08-26",
+      "idn": -0.416,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-09-02",
+      "idn": -0.511,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-09-09",
+      "idn": -0.561,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-09-16",
+      "idn": -0.46,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-09-23",
+      "idn": -0.295,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-09-30",
+      "idn": -0.394,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-10-07",
+      "idn": -0.478,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-10-14",
+      "idn": -0.404,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-10-21",
+      "idn": -0.376,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-10-28",
+      "idn": -0.341,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-11-04",
+      "idn": -0.386,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-11-11",
+      "idn": -0.438,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-11-18",
+      "idn": -0.521,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-11-25",
+      "idn": -0.289,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-12-02",
+      "idn": -0.189,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-12-09",
+      "idn": -0.079,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-12-16",
+      "idn": -0.152,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-12-23",
+      "idn": -0.244,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2021-12-30",
+      "idn": -0.273,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-01-06",
+      "idn": -0.195,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-01-13",
+      "idn": -0.052,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-01-20",
+      "idn": 0.131,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-01-27",
+      "idn": -0.191,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-02-03",
+      "idn": -0.297,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-02-10",
+      "idn": -0.046,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-02-17",
+      "idn": -0.18,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-02-24",
+      "idn": -0.389,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-03-03",
+      "idn": -0.432,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-03-10",
+      "idn": -0.699,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-03-17",
+      "idn": -0.929,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-03-24",
+      "idn": -0.672,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-03-31",
+      "idn": -0.644,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-04-07",
+      "idn": -0.591,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-04-14",
+      "idn": -0.56,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-04-21",
+      "idn": -0.516,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-04-28",
+      "idn": -0.531,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-05-05",
+      "idn": -0.557,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-05-12",
+      "idn": -0.405,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-05-19",
+      "idn": -0.477,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-05-26",
+      "idn": -0.738,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-06-02",
+      "idn": -0.866,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-06-09",
+      "idn": -0.777,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-06-16",
+      "idn": -0.564,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-06-23",
+      "idn": -0.389,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-06-30",
+      "idn": -0.285,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-07-07",
+      "idn": -0.342,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-07-14",
+      "idn": -0.311,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-07-21",
+      "idn": -0.345,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-07-28",
+      "idn": -0.379,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-08-04",
+      "idn": -0.436,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-08-11",
+      "idn": -0.345,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-08-18",
+      "idn": 0.057,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-08-25",
+      "idn": 0.058,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-09-01",
+      "idn": -0.095,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-09-08",
+      "idn": -0.373,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-09-15",
+      "idn": -0.575,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-09-22",
+      "idn": -0.576,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-09-29",
+      "idn": -0.069,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-10-06",
+      "idn": -0.108,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-10-13",
+      "idn": 0.006,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-10-20",
+      "idn": 0.063,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-10-27",
+      "idn": 0.106,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-11-03",
+      "idn": 0.055,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-11-10",
+      "idn": -0.249,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-11-17",
+      "idn": -0.4,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-11-24",
+      "idn": -0.339,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-12-01",
+      "idn": -0.563,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-12-08",
+      "idn": -0.554,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-12-15",
+      "idn": -0.492,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-12-22",
+      "idn": -0.412,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2022-12-29",
+      "idn": -0.245,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-01-05",
+      "idn": -0.093,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-01-12",
+      "idn": -0.344,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-01-19",
+      "idn": -0.657,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-01-26",
+      "idn": -0.75,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-02-02",
+      "idn": -0.785,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-02-09",
+      "idn": -0.525,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-02-16",
+      "idn": -0.398,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-02-23",
+      "idn": -0.592,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-03-02",
+      "idn": -0.649,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-03-09",
+      "idn": -0.686,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-03-16",
+      "idn": -0.655,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-03-23",
+      "idn": -0.565,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-03-30",
+      "idn": -0.12,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-04-06",
+      "idn": 0.111,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-04-13",
+      "idn": 0.191,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-04-20",
+      "idn": 0.306,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-04-27",
+      "idn": 0.119,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-05-04",
+      "idn": 0.011,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-05-11",
+      "idn": 0.389,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-05-18",
+      "idn": 0.487,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-05-25",
+      "idn": 0.307,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-06-01",
+      "idn": 0.428,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-06-08",
+      "idn": 0.568,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-06-15",
+      "idn": 0.556,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-06-22",
+      "idn": 0.613,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-06-29",
+      "idn": 0.709,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-07-06",
+      "idn": 0.759,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-07-13",
+      "idn": 0.529,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-07-20",
+      "idn": 0.63,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-07-27",
+      "idn": 0.675,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-08-03",
+      "idn": 0.309,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-08-10",
+      "idn": 0.304,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-08-17",
+      "idn": 0.186,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-08-24",
+      "idn": 0.192,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-08-31",
+      "idn": 0.287,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-09-07",
+      "idn": 0.332,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-09-14",
+      "idn": 0.437,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-09-21",
+      "idn": 0.328,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-09-28",
+      "idn": 0.12,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-10-05",
+      "idn": 0.104,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-10-12",
+      "idn": 0.162,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-10-19",
+      "idn": 0.387,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-10-26",
+      "idn": 0.215,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-11-02",
+      "idn": -0.002,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-11-09",
+      "idn": 0.264,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-11-16",
+      "idn": 0.273,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-11-23",
+      "idn": 0.058,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-11-30",
+      "idn": 0.094,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-12-07",
+      "idn": 0.192,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-12-14",
+      "idn": 0.314,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-12-21",
+      "idn": 0.175,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2023-12-28",
+      "idn": 0.071,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-01-04",
+      "idn": -0.209,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-01-11",
+      "idn": -0.339,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-01-18",
+      "idn": -0.378,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-01-25",
+      "idn": -0.461,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-02-01",
+      "idn": -0.333,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-02-08",
+      "idn": -0.115,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-02-15",
+      "idn": -0.228,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-02-22",
+      "idn": -0.367,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-02-29",
+      "idn": -0.149,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-03-07",
+      "idn": 0.116,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-03-14",
+      "idn": 0.094,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-03-21",
+      "idn": -0.086,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-03-28",
+      "idn": -0.104,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-04-04",
+      "idn": -0.042,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-04-11",
+      "idn": -0.383,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-04-18",
+      "idn": -0.48,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-04-25",
+      "idn": -0.35,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-05-02",
+      "idn": -0.387,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-05-09",
+      "idn": -0.281,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-05-16",
+      "idn": -0.351,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-05-23",
+      "idn": -0.274,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-05-30",
+      "idn": -0.339,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-06-06",
+      "idn": -0.425,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-06-13",
+      "idn": -0.638,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-06-20",
+      "idn": -0.732,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-06-27",
+      "idn": -0.609,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-07-01",
+      "idn": 0.05,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2024-07-04",
+      "idn": -0.631,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-07-11",
+      "idn": -0.441,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-07-18",
+      "idn": -0.348,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-07-25",
+      "idn": -0.469,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-08-01",
+      "idn": -0.12,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2024-08-08",
+      "idn": -0.506,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-08-15",
+      "idn": -0.431,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-08-22",
+      "idn": -0.36,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-08-29",
+      "idn": -0.258,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-09-01",
+      "idn": -0.28,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2024-09-05",
+      "idn": -0.405,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-09-12",
+      "idn": -0.538,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-09-19",
+      "idn": -0.698,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-09-26",
+      "idn": -0.93,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-10-01",
+      "idn": -0.45,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2024-10-03",
+      "idn": -0.897,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-10-10",
+      "idn": -0.937,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-10-17",
+      "idn": -0.51,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-10-24",
+      "idn": -0.295,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-10-31",
+      "idn": -0.52,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2024-11-07",
+      "idn": -0.065,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-11-14",
+      "idn": 0.132,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-11-21",
+      "idn": 0.371,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-11-28",
+      "idn": 0.208,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-12-01",
+      "idn": -0.15,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2024-12-05",
+      "idn": 0.37,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-12-12",
+      "idn": 0.495,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-12-19",
+      "idn": 0.523,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2024-12-26",
+      "idn": 0.413,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-01-01",
+      "idn": 0.02,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2025-01-02",
+      "idn": 0.024,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-01-09",
+      "idn": -0.413,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-01-16",
+      "idn": -0.289,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-01-23",
+      "idn": 0.155,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-01-30",
+      "idn": 0.289,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-02-06",
+      "idn": -0.006,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-02-13",
+      "idn": -0.165,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-02-20",
+      "idn": -0.401,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-02-27",
+      "idn": -0.458,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-03-01",
+      "idn": 0.08,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2025-03-06",
+      "idn": -0.262,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-03-13",
+      "idn": 0.047,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-03-20",
+      "idn": 0.117,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-03-27",
+      "idn": 0.304,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-04-03",
+      "idn": 0.421,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-04-10",
+      "idn": 0.293,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-04-17",
+      "idn": 0.026,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-04-24",
+      "idn": 0.053,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-01",
+      "idn": 0.178,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-05",
+      "idn": 0.305,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-06",
+      "idn": 0.348,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-07",
+      "idn": 0.385,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-08",
+      "idn": 0.406,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-09",
+      "idn": 0.406,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-10",
+      "idn": 0.385,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-11",
+      "idn": 0.365,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-12",
+      "idn": 0.348,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-13",
+      "idn": 0.342,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-14",
+      "idn": 0.345,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-15",
+      "idn": 0.356,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-16",
+      "idn": 0.364,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-17",
+      "idn": 0.368,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-18",
+      "idn": 0.38,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-19",
+      "idn": 0.373,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-20",
+      "idn": 0.05,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2025-05-21",
+      "idn": 0.339,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-22",
+      "idn": 0.318,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-23",
+      "idn": 0.298,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-24",
+      "idn": 0.273,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-25",
+      "idn": 0.261,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-26",
+      "idn": 0.243,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-27",
+      "idn": 0.222,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-28",
+      "idn": 0.197,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-29",
+      "idn": 0.196,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-30",
+      "idn": 0.2,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-05-31",
+      "idn": 0.204,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-01",
+      "idn": 0.207,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-02",
+      "idn": 0.217,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-03",
+      "idn": 0.218,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-04",
+      "idn": 0.224,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-05",
+      "idn": 0.236,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-06",
+      "idn": 0.237,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-07",
+      "idn": 0.22,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-08",
+      "idn": 0.205,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-09",
+      "idn": 0.18,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-10",
+      "idn": 0.159,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-11",
+      "idn": 0.13,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-12",
+      "idn": 0.107,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-13",
+      "idn": 0.082,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-14",
+      "idn": 0.054,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-15",
+      "idn": 0.029,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-16",
+      "idn": 0.013,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-17",
+      "idn": -0.003,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-18",
+      "idn": -0.02,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-19",
+      "idn": -0.033,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-20",
+      "idn": -0.036,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-21",
+      "idn": -0.038,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-22",
+      "idn": -0.04,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-23",
+      "idn": -0.038,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-24",
+      "idn": -0.027,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-25",
+      "idn": -0.01,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-26",
+      "idn": -0.002,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-27",
+      "idn": 0.014,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-28",
+      "idn": 0.034,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-29",
+      "idn": 0.058,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-06-30",
+      "idn": 0.083,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-01",
+      "idn": -0.04,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2025-07-02",
+      "idn": 0.116,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-03",
+      "idn": 0.032,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-04",
+      "idn": 0.083,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-05",
+      "idn": 0.13,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-06",
+      "idn": 0.177,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-07",
+      "idn": 0.216,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-08",
+      "idn": 0.233,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-09",
+      "idn": 0.238,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-10",
+      "idn": 0.24,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-11",
+      "idn": 0.238,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-12",
+      "idn": 0.232,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-13",
+      "idn": 0.22,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-14",
+      "idn": 0.208,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-15",
+      "idn": 0.196,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-16",
+      "idn": 0.179,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-17",
+      "idn": 0.163,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-18",
+      "idn": 0.147,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-19",
+      "idn": 0.122,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-20",
+      "idn": 0.092,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-21",
+      "idn": 0.051,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-22",
+      "idn": -0.004,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-23",
+      "idn": -0.061,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-24",
+      "idn": -0.104,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-25",
+      "idn": -0.159,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-26",
+      "idn": -0.208,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-27",
+      "idn": -0.174,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-28",
+      "idn": -0.184,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-29",
+      "idn": -0.199,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-30",
+      "idn": -0.208,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-07-31",
+      "idn": -0.204,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-01",
+      "idn": -0.21,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-02",
+      "idn": -0.192,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-03",
+      "idn": -0.152,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-04",
+      "idn": -0.104,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-05",
+      "idn": -0.064,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-06",
+      "idn": -0.01,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-07",
+      "idn": 0.029,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-08",
+      "idn": 0.062,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-09",
+      "idn": 0.102,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-10",
+      "idn": 0.121,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-11",
+      "idn": 0.143,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-12",
+      "idn": 0.172,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-13",
+      "idn": 0.199,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-14",
+      "idn": 0.227,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-15",
+      "idn": 0.252,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-16",
+      "idn": 0.273,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-17",
+      "idn": 0.287,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-18",
+      "idn": 0.291,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-19",
+      "idn": 0.287,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-20",
+      "idn": 0.27,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-21",
+      "idn": 0.261,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-22",
+      "idn": 0.256,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-23",
+      "idn": 0.243,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-24",
+      "idn": 0.227,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-25",
+      "idn": 0.255,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-26",
+      "idn": 0.253,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-27",
+      "idn": 0.254,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-28",
+      "idn": 0.25,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-29",
+      "idn": 0.245,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-30",
+      "idn": 0.218,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-08-31",
+      "idn": 0.2,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-01",
+      "idn": 0.177,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-02",
+      "idn": 0.155,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-03",
+      "idn": 0.136,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-04",
+      "idn": 0.131,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-05",
+      "idn": 0.121,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-06",
+      "idn": 0.109,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-07",
+      "idn": 0.087,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-08",
+      "idn": 0.061,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-09",
+      "idn": 0.03,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-10",
+      "idn": -0.009,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-11",
+      "idn": -0.043,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-12",
+      "idn": -0.056,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-13",
+      "idn": -0.058,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-14",
+      "idn": -0.042,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-15",
+      "idn": -0.01,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-16",
+      "idn": 0.029,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-17",
+      "idn": 0.066,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-18",
+      "idn": 0.094,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-19",
+      "idn": 0.12,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-20",
+      "idn": 0.138,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-21",
+      "idn": 0.167,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-22",
+      "idn": 0.179,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-23",
+      "idn": 0.187,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-24",
+      "idn": 0.188,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-25",
+      "idn": 0.187,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-26",
+      "idn": 0.191,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-27",
+      "idn": 0.19,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-28",
+      "idn": 0.198,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-29",
+      "idn": 0.203,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-09-30",
+      "idn": 0.212,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-01",
+      "idn": -0.1,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2025-10-02",
+      "idn": 0.135,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-03",
+      "idn": 0.166,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-04",
+      "idn": 0.201,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-05",
+      "idn": 0.228,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-06",
+      "idn": 0.252,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-07",
+      "idn": 0.275,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-08",
+      "idn": 0.3,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-09",
+      "idn": 0.327,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-10",
+      "idn": 0.367,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-11",
+      "idn": 0.399,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-12",
+      "idn": 0.422,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-13",
+      "idn": 0.439,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-14",
+      "idn": 0.449,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-15",
+      "idn": 0.45,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-16",
+      "idn": 0.455,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-17",
+      "idn": 0.454,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-18",
+      "idn": 0.446,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-19",
+      "idn": 0.431,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-20",
+      "idn": 0.434,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-21",
+      "idn": 0.454,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-22",
+      "idn": 0.46,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-23",
+      "idn": 0.463,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-24",
+      "idn": 0.458,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-25",
+      "idn": 0.455,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-26",
+      "idn": 0.46,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-27",
+      "idn": 0.455,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-28",
+      "idn": 0.439,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-29",
+      "idn": 0.426,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-30",
+      "idn": 0.412,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-10-31",
+      "idn": 0.404,
+      "fonte": "hidroweb"
+    },
+    {
+      "data": "2025-12-01",
+      "idn": 0.03,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-01-06",
+      "idn": 0.18,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-01-27",
+      "idn": 0.22,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-02-10",
+      "idn": 0.28,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-03-03",
+      "idn": 0.31,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-03-17",
+      "idn": 0.52,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-03-23",
+      "idn": 0.38,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-04-30",
+      "idn": 0.61,
+      "fonte": "boletim"
+    },
+    {
+      "data": "2026-05-05",
+      "idn": 0.674,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-06",
+      "idn": 0.725,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-07",
+      "idn": 0.766,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-08",
+      "idn": 0.796,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-09",
+      "idn": 0.811,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-10",
+      "idn": 0.798,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-11",
+      "idn": 0.779,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-12",
+      "idn": 0.755,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-13",
+      "idn": 0.737,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-14",
+      "idn": 0.719,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-15",
+      "idn": 0.696,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-16",
+      "idn": 0.678,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-17",
+      "idn": 0.657,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-18",
+      "idn": 0.641,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-19",
+      "idn": 0.62,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-20",
+      "idn": 0.593,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-21",
+      "idn": 0.562,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-22",
+      "idn": 0.53,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-23",
+      "idn": 0.507,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-24",
+      "idn": 0.48,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-25",
+      "idn": 0.456,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-26",
+      "idn": 0.43,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-05-27",
+      "idn": 0.399,
+      "fonte": "ana_api"
+    }
+  ]
+}
