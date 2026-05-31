@@ -1,0 +1,47 @@
+name: Refresh ENSO (CPC/NOAA)
+
+# Dispara /api/cron/refresh-enso no Railway, que busca a ENSO Diagnostic
+# Discussion da CPC/NOAA, parseia e grava enso_cpc_cache.json no volume DATA_DIR.
+# A geracao roda no servidor (o Railway faz o fetch da NOAA); este workflow so
+# dispara. Substitui o scrape-enso-cpc.py do run-pipeline-sace.bat (maquina local).
+#
+# A CPC publica na 2a quinta de cada mes. Como nao da pra expressar "2a quinta"
+# em cron (DOM e DOW sao OR), rodamos TODA quinta 17:00 UTC — a rota e idempotente
+# (so regrava se a data_emissao mudar), entao as quintas extras sao inofensivas.
+# Tambem roda sob demanda.
+
+on:
+  schedule:
+    - cron: "0 17 * * 4"
+  workflow_dispatch:
+
+concurrency:
+  group: enso-mensal
+  cancel-in-progress: false
+
+jobs:
+  dispara:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispara /api/cron/refresh-enso
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET}" ]; then
+            echo "::error::Secret CRON_SECRET não configurado no repositório."
+            exit 1
+          fi
+          echo "POST ${BASE_URL}/api/cron/refresh-enso"
+          http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+            --retry 3 --retry-all-errors --retry-delay 15 --max-time 90 \
+            -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${BASE_URL}/api/cron/refresh-enso")
+          echo "HTTP ${http}"
+          cat /tmp/resp.json || true
+          echo
+          if [ "${http}" != "200" ]; then
+            echo "::error::Esperado HTTP 200, recebido ${http}."
+            exit 1
+          fi
