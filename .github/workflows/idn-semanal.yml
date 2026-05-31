@@ -1,0 +1,59 @@
+name: Atualiza serie IDN (ANA)
+
+# Recalcula a serie IDN historica buscando os ultimos 30 dias na API ANA e
+# commita data/ana-idn-series.json (serie cumulativa). O push dispara o deploy,
+# entao o grafico IDN do /monitor atualiza sem passo manual. Substitui o passo
+# atualiza-idn-series.mjs do run-pipeline-sace.bat (que rodava na maquina local).
+#
+# Entrega via commit (igual aos dados de portos): lerSerieIDN() le de cwd/data,
+# que no build do Railway e o proprio repo. Sem volume/endpoint.
+#
+# Cadencia: terca 10:00 UTC (06:00 Manaus). Tambem roda sob demanda.
+# A ANA ja e comprovadamente acessivel da nuvem (as reguas do /monitor a usam).
+
+on:
+  schedule:
+    - cron: "0 10 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: idn-semanal
+  cancel-in-progress: false
+
+jobs:
+  atualiza:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # O script usa apenas builtins do Node (fs/path/url) + le lib/percentis-doy.ts
+      # como texto, entao nao precisa de npm install.
+      - name: Recalcula serie IDN (API ANA)
+        env:
+          HIDRO_IDENTIFICADOR: ${{ secrets.HIDRO_IDENTIFICADOR }}
+          HIDRO_SENHA: ${{ secrets.HIDRO_SENHA }}
+        run: node scripts/atualiza-idn-series.mjs
+
+      - name: Commita se houver mudanca
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/ana-idn-series.json; then
+            echo "Sem mudanca na serie IDN — nada a commitar."
+            exit 0
+          fi
+          ULT=$(node -e "try{const s=require('./data/ana-idn-series.json').serie;console.log(s.at(-1).data)}catch{console.log('?')}")
+          git add data/ana-idn-series.json
+          git commit \
+            -m "chore(dados): atualiza serie IDN (ate ${ULT})" \
+            -m "Regenerado pela API ANA via GitHub Actions." \
+            -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+          git push
