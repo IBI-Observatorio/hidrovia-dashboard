@@ -1,0 +1,46 @@
+name: Refresh boletim SGB (SACE)
+
+# Dispara /api/cron/refresh-sgb no Railway, que raspa a listagem de boletins do
+# Amazonas no sgb.gov.br, baixa o PDF mais recente, parseia (parseBoletimSGB) e
+# grava boletins_sgb_cache.json no volume DATA_DIR — de onde fetchPrevisao2026 le
+# a previsao de cheia (home, /monitor, briefing). O Railway faz o fetch do SGB;
+# este workflow so dispara. Substitui o pipeline-sace.py do run-pipeline-sace.bat.
+#
+# Cadencia: terca 12:00 UTC (08:00 Manaus). Dedup por numero+data, entao re-runs
+# sem boletim novo sao inofensivos. Tambem roda sob demanda.
+
+on:
+  schedule:
+    - cron: "0 12 * * 2"
+  workflow_dispatch:
+
+concurrency:
+  group: sgb-semanal
+  cancel-in-progress: false
+
+jobs:
+  dispara:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispara /api/cron/refresh-sgb
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET}" ]; then
+            echo "::error::Secret CRON_SECRET não configurado no repositório."
+            exit 1
+          fi
+          echo "POST ${BASE_URL}/api/cron/refresh-sgb"
+          http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+            --retry 3 --retry-all-errors --retry-delay 20 --max-time 120 \
+            -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${BASE_URL}/api/cron/refresh-sgb")
+          echo "HTTP ${http}"
+          cat /tmp/resp.json || true
+          echo
+          if [ "${http}" != "200" ]; then
+            echo "::error::Esperado HTTP 200, recebido ${http}."
+            exit 1
+          fi

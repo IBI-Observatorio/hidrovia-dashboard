@@ -86,6 +86,13 @@ export async function GET() {
     };
   }
 
+  // ── SGB/SACE: informativo (cadência irregular do boletim; tem fallback) ─────
+  const sgb = lerJSON(join(DATA_DIR, "boletins_sgb_cache.json"));
+  const ultimoSgb = sgb?.boletins?.[sgb.boletins.length - 1];
+  checks.sgb = ultimoSgb
+    ? { ok: true, numero: ultimoSgb.numero ?? null, data: ultimoSgb.data ?? null, total: sgb.total ?? sgb.boletins.length, detalhe: `boletim ${ultimoSgb.numero ?? "?"} de ${ultimoSgb.data}` }
+    : { ok: true, presente: false, detalhe: "sem cache SGB — previsão usando fallback" };
+
   // ── Portos: informativo (mensal, com lag ANTAQ — não derruba o ok) ──────────
   const portos = lerJSON(join(process.cwd(), "public", "data", "antaq", "dashboard", "portos-series.json"));
   checks.portos = {
