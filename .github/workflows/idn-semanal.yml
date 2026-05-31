@@ -18,6 +18,7 @@ on:
 
 permissions:
   contents: write
+  actions: write   # para disparar o deploy.yml apos commitar a serie
 
 concurrency:
   group: idn-semanal
@@ -42,7 +43,9 @@ jobs:
           HIDRO_SENHA: ${{ secrets.HIDRO_SENHA }}
         run: node scripts/atualiza-idn-series.mjs
 
-      - name: Commita se houver mudanca
+      - name: Commita e dispara deploy se houver mudanca
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -57,3 +60,6 @@ jobs:
             -m "Regenerado pela API ANA via GitHub Actions." \
             -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
           git push
+          # Push via GITHUB_TOKEN nao aciona o gatilho push do deploy.yml;
+          # disparamos explicitamente (workflow_dispatch e excecao a regra).
+          gh workflow run deploy.yml --ref main && echo "deploy disparado" || echo "::warning::falha ao disparar deploy"

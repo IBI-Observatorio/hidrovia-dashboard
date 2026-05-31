@@ -3,6 +3,10 @@ name: Deploy to Railway
 on:
   push:
     branches: [main]
+  # Permite que outros workflows (ex.: idn-semanal) disparem o deploy apos
+  # commitar dados — pushes via GITHUB_TOKEN nao acionam o gatilho `push`,
+  # mas workflow_dispatch e excecao a essa regra anti-recursao do GitHub.
+  workflow_dispatch:
 
 jobs:
   deploy:
