@@ -70,6 +70,22 @@ export async function GET() {
     };
   }
 
+  // ── ENSO: mensal (CPC publica na 2a quinta; tolera ate ~40 dias) ────────────
+  const enso = lerJSON(join(DATA_DIR, "enso_cpc_cache.json"));
+  if (!enso?.data_emissao) {
+    checks.enso = { ok: false, detalhe: "cache ENSO ausente" };
+  } else {
+    const dias = diasDesde(enso.data_emissao + "T12:00:00Z");
+    checks.enso = {
+      ok: dias <= 40,
+      status: enso.status ?? null,
+      data_emissao: enso.data_emissao,
+      dias,
+      limite_dias: 40,
+      detalhe: `discussion de ${enso.data_emissao}`,
+    };
+  }
+
   // ── Portos: informativo (mensal, com lag ANTAQ — não derruba o ok) ──────────
   const portos = lerJSON(join(process.cwd(), "public", "data", "antaq", "dashboard", "portos-series.json"));
   checks.portos = {
