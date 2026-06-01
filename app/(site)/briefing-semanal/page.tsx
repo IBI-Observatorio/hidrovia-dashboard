@@ -13,6 +13,7 @@ import {
   fetchPrevisao2026,
   fetchCotasIDN,
 } from "@/lib/fetch-dados";
+import BackLink from "@/components/BackLink";
 import { geraBriefing, briefingMinimo, type SnapshotBriefing } from "@/lib/briefing-gerador";
 import { IDN_RECENTE_DIARIO } from "@/lib/idn-historico-calculado";
 import { navigationCopy } from "@/lib/navigation-copy";
@@ -89,6 +90,9 @@ export default async function BriefingSemanalPage() {
 function renderBriefing(b: ReturnType<typeof geraBriefing>) {
   return (
     <div className="max-w-screen-md mx-auto px-4 py-10 print:py-4">
+      <div className="print:hidden mb-4">
+        <BackLink />
+      </div>
       {/* ── Cabeçalho ── */}
       <div className="mb-6 pb-4 border-b border-white/10">
         <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-1">

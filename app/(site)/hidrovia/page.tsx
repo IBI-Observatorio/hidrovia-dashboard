@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BackLink from "@/components/BackLink";
 import { homeCopy } from "@/lib/home-copy";
 import { navigationCopy } from "@/lib/navigation-copy";
 
@@ -21,7 +22,8 @@ export default function HomePage() {
       {/* ── HERO ── */}
       <section className="bg-azul-medio/50 border-b border-white/5 py-16 px-4">
         <div className="max-w-screen-lg mx-auto">
-          <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-3">
+          <BackLink />
+          <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-3 mt-1">
             {hero.eyebrow}
           </p>
           <h1 className="text-white text-4xl font-extrabold leading-tight mb-4 whitespace-nowrap">

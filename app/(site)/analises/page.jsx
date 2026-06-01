@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { ExternalLink, ArrowRight, TrendingDown, Anchor, Waves } from 'lucide-react';
+import BackLink from '@/components/BackLink';
 
 const analises = [
   {
@@ -75,7 +76,8 @@ export default function AnalisesPage() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <p className="text-ibi-green text-xs font-bold uppercase tracking-widest mb-3">
+          <BackLink />
+          <p className="text-ibi-green text-xs font-bold uppercase tracking-widest mb-3 mt-2">
             Observatório de Infraestrutura de Transportes · IBI
           </p>
           <h1 className="text-white text-4xl font-bold mb-4">Análises</h1>

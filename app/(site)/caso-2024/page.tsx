@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BackLink from "@/components/BackLink";
 import { navigationCopy } from "@/lib/navigation-copy";
 import { caso2024Copy } from "@/lib/caso-2024-copy";
 import LagTimeline2024 from "@/components/LagTimeline2024";
@@ -21,7 +22,8 @@ export default function Caso2024Page() {
 
       {/* ── PAGE HEADER ── */}
       <header>
-        <p className="text-ouro text-[11px] font-bold uppercase tracking-widest mb-2">
+        <BackLink />
+        <p className="text-ouro text-[11px] font-bold uppercase tracking-widest mb-2 mt-1">
           {c.pageHeader.eyebrow}
         </p>
         <h1 className="text-white text-4xl font-extrabold leading-tight mb-3 max-w-3xl">

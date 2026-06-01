@@ -12,7 +12,7 @@ export const navigationCopy = {
     brand: {
       label: "Observatório de Infraestrutura de Transportes",
       caption: "",
-      href: "/",
+      href: "https://ibi-observatorio.org/",
     },
     links: [
       { label: "Início",   href: "/" },

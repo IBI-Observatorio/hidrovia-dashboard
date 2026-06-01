@@ -13,6 +13,7 @@
 import type { Metadata } from "next";
 import LagTimeline2024 from "@/components/LagTimeline2024";
 import IRCHistoricoChart from "@/components/IRCHistoricoChart";
+import BackLink from "@/components/BackLink";
 import { fetchPrevisao2026 } from "@/lib/fetch-dados";
 import { projetaDataCruzamento17_7 } from "@/lib/recessao-modelo";
 import { IRC_HISTORICO_RESUMO, IRC_HISTORICO_CALCULADO } from "@/lib/irc-historico-calculado";
@@ -60,6 +61,9 @@ export default async function RelatorioANTAQPage() {
 
   return (
     <article className="max-w-screen-md mx-auto px-4 py-10 print:py-2 prose-invert">
+      <div className="print:hidden mb-4">
+        <BackLink />
+      </div>
       {/* ── Cabeçalho institucional ── */}
       <header className="border-b border-white/10 pb-6 mb-8">
         <p className="text-verde text-[11px] font-bold uppercase tracking-widest mb-2">
