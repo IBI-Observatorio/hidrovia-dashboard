@@ -220,7 +220,7 @@ export default function IRCInterativo({
       ) : (
         <div className="bg-azul-marinho rounded-lg p-4 border border-ouro/30 mb-5">
           <p className="text-ouro text-[11px] font-bold uppercase tracking-wider mb-1">
-            🔒 Calado-alvo fixo em 11,0 m (padrão de comboio carregado)
+            🔒 Calado-alvo fixo em 11,0 m
           </p>
           <p className="text-gray-400 text-xs leading-relaxed">
             A versão pública calcula o IRC com calado-alvo padrão. Assinantes parametrizam
