@@ -18,7 +18,7 @@ import {
 import type { EstacaoComDOY } from "./sub-bacias";
 import type { EstacaoVazao } from "./sub-bacias-vazao";
 
-// ─── Painel principal (7 estações) ───────────────────────────────────────────
+// ─── Painel principal (8 estações) ───────────────────────────────────────────
 
 // SGC removido do painel em mai/2026: a estação 14320001 não tem telemetria
 // ANA ao vivo (a "última leitura" da API costuma ter semanas de defasagem).
@@ -30,7 +30,7 @@ const ESTACOES_PAINEL: EstacaoKey[] = [
   "Manicore", "Labrea", "Curicuriari",
 ];
 
-// Busca cota/chuva/vazão das 7 estações em 1 chamada batch (≤10 estações).
+// Busca cota/chuva/vazão das 8 estações em 1 chamada batch (≤10 estações).
 // Em caso de falha, mantém os dados estáticos do Sprint 1 como fallback.
 export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>> {
   let porEstacao: Map<EstacaoKey, LeituraANA[]>;

@@ -27,7 +27,7 @@ export const homeCopy = {
         eyebrow: "Tempo real",
         title: "Monitor Hidrológico",
         description:
-          "Acompanhamento integrado de 7 estações fluviométricas da bacia, com indicadores de dessincronização Norte–Sul e alertas automáticos.",
+          "Acompanhamento integrado de 8 estações fluviométricas da bacia, com indicadores de dessincronização Norte–Sul e alertas automáticos.",
         meta: "Atualizado continuamente",
         cta: "Ver o monitor →",
         href: "/monitor",

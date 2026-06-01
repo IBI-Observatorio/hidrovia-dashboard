@@ -96,8 +96,8 @@ export const navigationCopy = {
       {
         title: "Institucional",
         links: [
-          { label: "Sobre o IBI", href: "https://ibi.org.br/" },
-          { label: "Contato", href: "mailto:observatorio@ibi.org.br" },
+          { label: "Sobre o IBI", href: "https://portoseaeroportosfppa.com.br/ibi/" },
+          { label: "Contato", href: "mailto:observatorio@ibinfraestrutura.org.br" },
         ],
       },
     ],
@@ -124,7 +124,7 @@ export const navigationCopy = {
     monitor: {
       title: "Monitor Hidrológico da Bacia do Amazonas — Observatório IBI",
       description:
-        "Acompanhamento em tempo real de 7 estações fluviométricas da bacia amazônica, com indicadores de dessincronização Norte–Sul e alertas automáticos.",
+        "Acompanhamento em tempo real de 8 estações fluviométricas da bacia amazônica, com indicadores de dessincronização Norte–Sul e alertas automáticos.",
       ogTitle: "Monitor Hidrológico da Bacia do Amazonas 2026",
       ogDescription:
         "Cotas atuais, comparação plurianual e previsões oficiais para a bacia amazônica.",

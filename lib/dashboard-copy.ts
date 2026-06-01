@@ -10,7 +10,7 @@ export const dashboardCopy = {
     eyebrow: "Monitor",
     title: "Monitor Hidrológico da Bacia do Amazonas 2026",
     subtitle:
-      "Acompanhamento integrado de 7 estações fluviométricas para apoiar a navegação, a regulação e a gestão de risco hidrológico.",
+      "Acompanhamento integrado de 8 estações fluviométricas para apoiar a navegação, a regulação e a gestão de risco hidrológico.",
     lead:
       "A bacia amazônica tem dois regimes de chuva — equatorial ao Norte e tropical ao Sul — que produzem ciclos de cheia e estiagem em momentos diferentes do ano. Em anos de El Niño ou La Niña, esses ciclos podem se distanciar ainda mais. Este painel monitora a evolução dessas curvas em tempo quase real, permitindo identificar antecipadamente situações atípicas que demandem atenção operacional.",
     lastUpdated: {
@@ -55,7 +55,7 @@ export const dashboardCopy = {
     anchorId: "reguas-atuais",
     title: "Como estão os rios agora",
     subtitle:
-      "Cota atual das 7 estações de referência, comparada à média histórica e aos anos de 2024 e 2025.",
+      "Cota atual das 8 estações de referência, comparada à média histórica e aos anos de 2024 e 2025.",
     cardLabels: {
       currentLevel: "Cota atual",
       relativePosition: "Onde está hoje em relação aos últimos 30 anos",

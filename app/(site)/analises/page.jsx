@@ -34,7 +34,7 @@ const analises = [
     eyebrow: 'Hidrovias',
     title: 'Hidrologia Amazônica',
     description:
-      'Monitor em tempo real de 7 estações fluviométricas da bacia do Amazonas, com índice de dessincronização Norte–Sul e estudo de caso da estiagem histórica de 2024.',
+      'Monitor em tempo real de 8 estações fluviométricas da bacia do Amazonas, com índice de dessincronização Norte–Sul e estudo de caso da estiagem histórica de 2024.',
     status: 'Ao vivo',
     statusColor: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
     icon: Waves,

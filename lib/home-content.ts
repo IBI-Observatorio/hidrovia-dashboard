@@ -103,7 +103,7 @@ export const paineis: Painel[] = [
     iconCor: "blue",
     titulo: "Hidrovia Amazônica",
     descricao:
-      "Cheia e estiagem na maior bacia do mundo: monitor de 7 estações, calendário histórico 1927–2026 e o estudo da seca de 2024.",
+      "Cheia e estiagem na maior bacia do mundo: monitor de 8 estações, calendário histórico 1927–2026 e o estudo da seca de 2024.",
     href: "/hidrovia",
     status: "live",
     cta: "Abrir dashboard",
