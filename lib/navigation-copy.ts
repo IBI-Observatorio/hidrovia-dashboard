@@ -96,8 +96,8 @@ export const navigationCopy = {
       {
         title: "Institucional",
         links: [
-          { label: "Sobre o IBI", href: "https://ibi.org.br/" },
-          { label: "Contato", href: "mailto:observatorio@ibi.org.br" },
+          { label: "Sobre o IBI", href: "https://portoseaeroportosfppa.com.br/ibi/" },
+          { label: "Contato", href: "mailto:observatorio@ibinfraestrutura.org.br" },
         ],
       },
     ],
