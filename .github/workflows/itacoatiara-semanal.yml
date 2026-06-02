@@ -1,0 +1,65 @@
+name: Atualiza serie Itacoatiara (ANA)
+
+# Busca os ultimos 30 dias de cota da estacao Itacoatiara (16030000) na API ANA,
+# faz merge na serie historica e regenera lib/itacoatiara-historico-diario.ts.
+# Commita CSV + artefato; o push dispara o deploy, entao o ETA por ANALOGOS do
+# topo da pagina IRC ("Itacoatiara projetada em X m em DD/mmm") passa a ancorar
+# na cota real recente em vez de num snapshot congelado.
+#
+# Mesmo padrao do idn-semanal.yml. A serie e um modulo TS importado em build,
+# por isso entregamos por commit (nao volume/endpoint) e disparamos o deploy.
+#
+# Cadencia: terca 10:20 UTC (06:20 Manaus) - 20 min apos o IDN, para nao
+# coincidir o commit/deploy. Tambem roda sob demanda.
+
+on:
+  schedule:
+    - cron: "20 10 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write   # para disparar o deploy.yml apos commitar
+
+concurrency:
+  group: itacoatiara-semanal
+  cancel-in-progress: false
+
+jobs:
+  atualiza:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      # Script usa apenas builtins do Node (fs/path/url/child_process) - sem npm install.
+      - name: Atualiza serie Itacoatiara (API ANA)
+        env:
+          HIDRO_IDENTIFICADOR: ${{ secrets.HIDRO_IDENTIFICADOR }}
+          HIDRO_SENHA: ${{ secrets.HIDRO_SENHA }}
+        run: node scripts/atualiza-itacoatiara-series.mjs
+
+      - name: Commita e dispara deploy se houver mudanca
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/itacoatiara_hidroweb.csv lib/itacoatiara-historico-diario.ts; then
+            echo "Sem mudanca na serie Itacoatiara — nada a commitar."
+            exit 0
+          fi
+          ULT=$(tail -1 data/itacoatiara_hidroweb.csv | cut -d, -f1)
+          git add data/itacoatiara_hidroweb.csv lib/itacoatiara-historico-diario.ts
+          git commit \
+            -m "chore(dados): atualiza serie Itacoatiara (ate ${ULT})" \
+            -m "Regenerado pela API ANA via GitHub Actions." \
+            -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+          git push
+          # Push via GITHUB_TOKEN nao aciona o gatilho push do deploy.yml;
+          # disparamos explicitamente (workflow_dispatch e excecao a regra).
+          gh workflow run deploy.yml --ref main && echo "deploy disparado" || echo "::warning::falha ao disparar deploy"
