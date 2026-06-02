@@ -92,6 +92,7 @@ jobs:
           check_freshness   "reguas-diario.yml"    "Reguas (diario)"    30
           check_freshness   "insights-semanal.yml" "Insights (terca)"   192
           check_freshness   "idn-semanal.yml"      "IDN (terca)"        192
+          check_freshness   "itacoatiara-semanal.yml" "Itacoatiara (terca)" 192
           check_freshness   "enso-mensal.yml"      "ENSO (quinta)"      192
           check_freshness   "sgb-semanal.yml"      "SGB/SACE (terca)"   192
           check_freshness   "briefing-semanal.yml" "Briefing (quarta)"  192
