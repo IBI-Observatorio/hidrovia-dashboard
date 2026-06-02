@@ -24,6 +24,7 @@ O schedule só vale a partir da branch `main`. Todos têm botão **Run workflow*
 |-----|--------------|----------|-----------|
 | **Réguas / níveis** | diário 13:00 | `reguas-diario.yml` | `POST /api/cron/refresh-reguas` → busca ANA ao vivo, grava `ana-diario-cache.json` no volume. Atualiza os cards de cota do `/monitor` |
 | **Série IDN** | terça 10:00 | `idn-semanal.yml` | Roda `atualiza-idn-series.mjs` (API ANA), **commita** `data/ana-idn-series.json` e dispara o deploy. Gráfico IDN histórico |
+| **Série Itacoatiara** | terça 10:20 | `itacoatiara-semanal.yml` | Roda `atualiza-itacoatiara-series.mjs` (API ANA, estação 16030000), faz merge em `data/itacoatiara_hidroweb.csv`, regenera `lib/itacoatiara-historico-diario.ts`, **commita** e dispara o deploy. Alimenta o **ETA por análogos** do topo do `/monitor` (IRC) |
 | **SACE/SGB** | terça 12:00 | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia |
 | **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + Claude **Haiku 4.5**, grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
 | **ENSO** | quinta 17:00 | `enso-mensal.yml` | `POST /api/cron/refresh-enso` → Railway raspa CPC/NOAA, grava `enso_cpc_cache.json`. (Roda toda quinta; idempotente — CPC publica na 2ª quinta) |
@@ -61,7 +62,7 @@ cache sumiria a cada deploy. Caches no volume: `ana-diario-cache.json`,
 
 `watchdog.yml` roda **todo dia 14:00 UTC** e verifica dois níveis:
 1. **"Rodou?"** — via API do GitHub, confere se cada workflow rodou no prazo e com
-   sucesso (réguas ≤30h; insights/IDN/ENSO/SGB/briefing ≤8d; portos ≤40d — pega
+   sucesso (réguas ≤30h; insights/IDN/Itacoatiara/ENSO/SGB/briefing ≤8d; portos ≤40d — pega
    falha e parada silenciosa; deploy só falha-na-última, por ser gatilho de push).
 2. **"Dado fresco?"** — bate em **`GET /api/health`**, que reporta a idade real dos
    caches no volume (pega a falha silenciosa: job verde, dado velho).
@@ -123,7 +124,18 @@ diário via `/api/cron/refresh-reguas` (`obterDadosDiariosANA` em `lib/cache-ana
    `atualiza-idn-series.mjs`, busca os últimos 30 dias na ANA, recalcula o IDN e
    commita `data/ana-idn-series.json`. Não precisa fazer nada.
 
-2. **Orquestrador de metodologia (MANUAL)** — recalibra percentis/GMM/HMM/limiares.
+2. **Série Itacoatiara do ETA por análogos (semanal, AUTOMÁTICA)** —
+   `itacoatiara-semanal.yml` roda `atualiza-itacoatiara-series.mjs`: busca os
+   últimos 30 dias da estação 16030000 na ANA, faz merge em
+   `data/itacoatiara_hidroweb.csv` e regenera `lib/itacoatiara-historico-diario.ts`.
+   Essa série 2026 é a **janela de matching** do forecasting por análogos
+   (`lib/recessao-analogos.ts`), que produz o ETA do topo da página IRC
+   ("Itacoatiara projetada em X m em DD/mmm"). **Antes era gerada à mão** — se
+   ficasse parada, o ETA ancorava num "hoje" defasado e a contagem de dias saía
+   inflada (estava 25 dias congelada em mai/2026). Não precisa fazer nada; o cron
+   mantém a cauda em dia. Para regenerar à mão: `node scripts/atualiza-itacoatiara-series.mjs`.
+
+3. **Orquestrador de metodologia (MANUAL)** — recalibra percentis/GMM/HMM/limiares.
    Só rode ao **revisar metodologia** ou fazer backfill:
    ```bash
    npm run atualiza-dados            # baixa cotas/vazões → percentis → GMM → HMM → IDN histórico → severity
@@ -202,7 +214,7 @@ npm run update-calendar          # → public/data/severity-calendar.json + lib/
 | Frequência | Automático (nuvem) | Manual (metodologia/backfill) |
 |-----------|---------------------|-------------------------------|
 | **Diário** | réguas (13h), watchdog (14h) | — |
-| **Semanal** | IDN (ter), SGB (ter), Insights (ter), ENSO (qui), Briefing (qua) | — |
+| **Semanal** | IDN (ter), Itacoatiara (ter), SGB (ter), Insights (ter), ENSO (qui), Briefing (qua) | — |
 | **Mensal** | portos (dia 16) | `update-navegacao-series.py` |
 | **Eventual** | — | `atualiza-dados.mjs` (metodologia), `forecast_conteiner.py`, `panel_horserace.py` |
 
