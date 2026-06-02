@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function SubscribeForm() {
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot — fica invisível; só robô preenche
   const [ok, setOk] = useState(false);
   const [erro, setErro] = useState(false);
   const [enviando, setEnviando] = useState(false);
+  const montadoEm = useRef(0);
+
+  // Marca quando o formulário ficou visível, para medir o tempo até o envio.
+  useEffect(() => {
+    montadoEm.current = Date.now();
+  }, []);
 
   async function submit() {
     if (!email.includes("@")) {
@@ -19,7 +26,11 @@ export default function SubscribeForm() {
       const r = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email,
+          website, // honeypot
+          elapsedMs: Date.now() - montadoEm.current,
+        }),
       });
       if (!r.ok) throw new Error("falha");
       setOk(true);
@@ -55,6 +66,26 @@ export default function SubscribeForm() {
             erro ? "border-vermelho" : "border-white/15 focus:border-ibi-blue"
           }`}
         />
+
+        {/* Honeypot anti-robô: invisível para humanos, ignorado por leitores de tela.
+            Robôs costumam preencher todos os campos — se vier algo aqui, descartamos. */}
+        <input
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          style={{
+            position: "absolute",
+            left: "-9999px",
+            width: 1,
+            height: 1,
+            opacity: 0,
+          }}
+        />
+
         <button
           onClick={submit}
           disabled={enviando}

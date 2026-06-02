@@ -23,15 +23,31 @@ function emailValido(email: string): boolean {
 
 export async function POST(request: NextRequest) {
   let email = "";
+  let website = "";        // honeypot
+  let elapsedMs = NaN;     // tempo entre carregar o form e enviar
   try {
     const body = await request.json();
     email = String(body?.email ?? "").trim().toLowerCase();
+    website = String(body?.website ?? "").trim();
+    elapsedMs = Number(body?.elapsedMs);
   } catch {
     return NextResponse.json({ ok: false, erro: "Corpo inválido." }, { status: 400 });
   }
 
   if (!emailValido(email)) {
     return NextResponse.json({ ok: false, erro: "E-mail inválido." }, { status: 400 });
+  }
+
+  // Anti-robô (silencioso): finge sucesso para não ensinar o bot, mas NÃO grava.
+  // 1) Honeypot preenchido = robô (humano nunca vê esse campo).
+  // 2) Envio rápido demais (< 1,5s) = robô (humano leva alguns segundos para digitar).
+  if (website) {
+    console.warn("[subscribe] honeypot acionado — descartado:", email);
+    return NextResponse.json({ ok: true });
+  }
+  if (Number.isFinite(elapsedMs) && elapsedMs < 1500) {
+    console.warn("[subscribe] envio rápido demais (", elapsedMs, "ms) — descartado:", email);
+    return NextResponse.json({ ok: true });
   }
 
   if (!WEBHOOK_URL) {
