@@ -15,6 +15,7 @@ import horseRace       from '@/lib/horse-race-30.json';
 
 const COR_OBS    = '#0099D8';  // ibi-blue (observado)
 const COR_CHAMP  = '#D4922A';  // ouro (campeão / projeção / banda)
+const COR_PRELIM = '#F59E0B';  // âmbar (mês preliminar — carga manual IBI)
 const COR_GREEN  = '#00A652';
 const COR_GRID   = '#374151';
 
@@ -242,6 +243,12 @@ function FichaTecnicaHorseRace() {
 
 function ForecastConteinerBloco() {
   const { meta, historico, backtest, forward } = forecastConteiner;
+  const ultPrelim = meta.ult_obs_preliminar === true;
+  // meses preliminares presentes no histórico (carga manual IBI), em ordem
+  const prelimMeses = (meta.preliminar ?? []).filter(m => historico.some(h => h.data === m)).sort();
+  const prelimLabel = prelimMeses.length > 1
+    ? `${fmtMes(prelimMeses[0])}–${fmtMes(prelimMeses.at(-1))}`
+    : fmtMes(prelimMeses[0] ?? meta.ult_obs.data);
 
   // Pivot único pro gráfico principal
   const allData = useMemo(() => {
@@ -286,9 +293,13 @@ function ForecastConteinerBloco() {
           comSinal sub="Próxima leitura projetada (a/a, MA12)"
         />
         <NuggetCard
-          label={`Último dado ANTAQ — ${fmtMes(meta.ult_obs.data)}`}
-          valor={meta.ult_obs.obs} sufixo="%" cor={COR_OBS} decimais={2}
-          comSinal sub="Crescimento a/a observado"
+          label={ultPrelim
+            ? `Último dado — ${fmtMes(meta.ult_obs.data)} (preliminar)`
+            : `Último dado ANTAQ — ${fmtMes(meta.ult_obs.data)}`}
+          valor={meta.ult_obs.obs} sufixo="%" cor={ultPrelim ? COR_PRELIM : COR_OBS} decimais={2}
+          comSinal sub={ultPrelim
+            ? 'Estimativa IBI — ANTAQ ainda não publicou o mês'
+            : 'Crescimento a/a observado'}
         />
       </div>
 
@@ -303,10 +314,20 @@ function ForecastConteinerBloco() {
         </h3>
         <p className="text-xs text-gray-400 mb-4 max-w-3xl leading-relaxed">
           Linha azul: observado (ANTAQ). Linha ouro tracejada: backtest do modelo campeão
-          sobre o período fora da amostra (jan/2023 → fev/2026). Pontos em ouro: projeção 5
-          meses à frente, com leques de 80% e 95%.
+          sobre o período fora da amostra. Pontos em ouro: projeção 5 meses à frente, com
+          leques de 80% e 95%.
         </p>
         <GraficoForecast allData={allData} ultObs={meta.ult_obs} />
+        {ultPrelim && (
+          <p className="text-[11px] mt-3 leading-relaxed" style={{ color: COR_PRELIM }}>
+            ⚠️ {prelimMeses.length > 1 ? `Os últimos ${prelimMeses.length} pontos observados` : 'O último ponto observado'}
+            {' '}({prelimLabel}) {prelimMeses.length > 1 ? 'são' : 'é'} <strong>preliminar{prelimMeses.length > 1 ? 'es' : ''}</strong> —
+            tonelagem de contêiner carregada manualmente pelo IBI (coleta direta + estimativa do
+            agregado nacional), pois a ANTAQ ainda não publicou {prelimMeses.length > 1 ? 'esses meses' : 'o mês'}.
+            Entra{prelimMeses.length > 1 ? 'm' : ''} no cálculo do momentum e na base da projeção; pode{prelimMeses.length > 1 ? 'm' : ''} ser
+            revisto{prelimMeses.length > 1 ? 's' : ''} quando o dado oficial sair.
+          </p>
+        )}
       </motion.div>
 
       {/* (d) O que isso significa */}
