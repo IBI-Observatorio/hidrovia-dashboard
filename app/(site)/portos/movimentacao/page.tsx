@@ -7,7 +7,7 @@ import {
   ComposedChart, Area, ReferenceLine, ReferenceDot,
 } from 'recharts';
 import { useDashboardData } from '@/components/antaq/useDashboardData';
-import { fonteAntaqIbi } from '@/lib/fonte-portos';
+import { fonteAntaqIbi, listaMesesIBI } from '@/lib/fonte-portos';
 
 // ── types ──────────────────────────────────────────────────────────────────────
 
@@ -527,6 +527,7 @@ export default function MovimentacaoPage() {
     data.nacional_por_natureza.granel_solido.map(p => p.data),
     data.meses_preliminares ?? [],
   );
+  const mesesIBILabel = listaMesesIBI(data.meses_preliminares ?? []);   // "mar. e abr. 2026"
   // participação no total nacional é sempre em tonelada (comparar com o total de cargas);
   // em modo TEU usa a tonelagem do contêiner, não a contagem de TEU.
   const participacaoNum = ctnTeu ? ctnTonPeriodo : nacionalPeriodo;
@@ -929,7 +930,7 @@ export default function MovimentacaoPage() {
         <span className="text-base mt-0.5 shrink-0">ℹ️</span>
         <div className="space-y-1">
           <p>
-            <strong className="text-gray-400">Tonelagem</strong> — movimentação efetiva (peso bruto de carga, operações de carga/descarga) extraída mês a mês da Base Estatística Aquaviária da ANTAQ.{' '}
+            <strong className="text-gray-400">Tonelagem</strong> — movimentação efetiva (peso bruto de carga, operações de carga/descarga), conceito da Base Estatística Aquaviária da ANTAQ.{mesesIBILabel ? <> Série oficial da ANTAQ; os meses ainda não publicados ({mesesIBILabel}) são <strong className="text-gray-400">coleta IBI</strong>.</> : null}{' '}
             <strong className="text-gray-400">Variação a/a</strong> — compara o mesmo período do ano anterior (mesmos meses).{' '}
             <strong className="text-gray-400">NCM SH4</strong> — associação porto × produto baseada na composição típica de carga de cada terminal.
           </p>

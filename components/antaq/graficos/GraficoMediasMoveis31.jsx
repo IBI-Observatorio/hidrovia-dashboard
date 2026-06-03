@@ -280,7 +280,7 @@ function ForecastConteinerBloco() {
         <div className="text-base font-semibold text-white mb-1">E o que vem pelos próximos meses?</div>
         <p className="text-xs text-gray-400 leading-relaxed max-w-3xl">
           Projeção do momentum do contêiner brasileiro — variação a/a da média móvel de 12 meses
-          da tonelagem (ANTAQ). Modelo campeão de um horse-race de 30 abordagens, validado em
+          da tonelagem (ANTAQ{prelimMeses.length ? '; meses recentes do IBI' : ''}). Modelo campeão de um horse-race de 30 abordagens, validado em
           38 meses fora da amostra.
         </p>
       </div>
