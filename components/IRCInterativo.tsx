@@ -383,8 +383,15 @@ function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPa
     );
   }
 
-  const dias_headline = eta_an.dias_p50;
   const data_headline = eta_an.data_p50;
+  // dias contados de HOJE até a data do cruzamento (não da data do último dado, que tem lag)
+  const dias_headline = (() => {
+    if (!data_headline) return eta_an.dias_p50;
+    const ymd = (y: number, m: number, d: number) => Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+    const n = new Date();
+    const [ay, am, ad] = data_headline.split("-").map(Number);
+    return ymd(ay, am, ad) - ymd(n.getFullYear(), n.getMonth() + 1, n.getDate());
+  })();
 
   const urgencia = dias_headline <= 30 ? "vermelho"
                  : dias_headline <= 90 ? "ouro"
