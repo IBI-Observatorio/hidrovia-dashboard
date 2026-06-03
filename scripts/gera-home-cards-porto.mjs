@@ -87,7 +87,11 @@ for (const n of NAT) {
 
 const [y, m] = REF.split('-').map(Number);
 cards.porto.modos = modos;
-cards.porto.periodo = `${MESES_PT[m - 1]} ${y} · vs ${MES_ABREV[m - 1]} ${y - 1} · ANTAQ${preliminar ? ' (preliminar)' : ''}`;
+// Mês corrente preliminar = número IBI (estimativa); comparação/histórico = ANTAQ oficial.
+const comp = `vs ${MES_ABREV[m - 1]} ${y - 1}`;
+cards.porto.periodo = preliminar
+  ? `${MESES_PT[m - 1]} ${y} (IBI) ${comp} · ANTAQ`
+  : `${MESES_PT[m - 1]} ${y} · ${comp} · ANTAQ`;
 cards.porto.ultimaAtualizacao = REF;
 if (insightArg != null) cards.porto.insight = insightArg;
 
