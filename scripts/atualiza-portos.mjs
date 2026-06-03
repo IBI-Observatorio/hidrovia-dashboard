@@ -91,6 +91,10 @@ run(`node scripts/gera-home-cards-porto.mjs ${ref}${refPrelim ? ' --preliminar' 
 passo(5, 'Séries das 4 cargas (MA12) do rodapé do /tendencia-cargas');
 run('node scripts/gera-series-tendencia-canonico.mjs');
 
+// ── 6) fonte/atualização dos indicadores (ANTAQ oficial + IBI preliminar) ───────
+passo(6, 'Rótulo de Fonte/Atualização dos indicadores de porto');
+run('node scripts/gera-fonte-indicadores.mjs');
+
 console.log(`\n✓ Pipeline concluído. Todos os derivados em ${ref}${refPrelim ? ' (preliminar)' : ''}.`);
 console.log('  Lembrete: o texto editorial (home.insight) é preservado — revise à mão se quiser.');
 console.log('  Fora do pipeline: navegação/cabotagem (dataset próprio) e o cron do dia 16 (oficial).');
