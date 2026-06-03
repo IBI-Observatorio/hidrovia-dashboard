@@ -16,6 +16,10 @@ import {
   Building2,
   Globe,
 } from "lucide-react";
+// Números dos cards de PORTO vêm do pipeline (gerado de portos-series.json pelo
+// scripts/gera-home-cards-porto.mjs). Editar dado é via `npm run atualiza-portos`,
+// NÃO aqui. Só o texto editorial (insights) fica neste arquivo.
+import homeCards from "@/public/data/antaq/home-cards.json";
 
 export type AchadoCor = "blue" | "red" | "green";
 
@@ -185,58 +189,26 @@ export interface Modo {
   insight?: string;
 }
 
-export const portoModos: Modo[] = [
-  {
-    label: "Total",
-    valor: 101,
-    decimais: 0,
-    delta: "▲ 3,78%",
-    tendencia: "up",
-    share: "100% — todas as naturezas",
-    serie: [112, 98, 104, 109, 116, 118, 121, 114, 108, 111, 119, 123, 104, 101],
-    insight: "Contêineres batem <b>recorde da série</b> (≈1,12 mi TEU); o granel sólido sustenta o avanço com a antecipação da safra de soja no Arco Norte.",
-  },
-  {
-    label: "Granel Sólido",
-    valor: 57.4,
-    decimais: 1,
-    delta: "▲ 5,2%",
-    tendencia: "up",
-    share: "56,8% do total",
-    serie: [60, 55, 58, 61, 64, 66, 68, 63, 59, 62, 67, 70, 59, 57.4],
-    insight: "Safra recorde de soja (174,1 Mt) impulsiona o granel sólido <b>+5,2% a/a</b> via Arco Norte — Itaqui e São Luís como principais vetores de escoamento.",
-  },
-  {
-    label: "Granel Líquido",
-    valor: 25.1,
-    decimais: 1,
-    delta: "▲ 1,8%",
-    tendencia: "up",
-    share: "24,9% do total",
-    serie: [26, 24, 25, 25, 27, 26, 27, 26, 24, 25, 26, 27, 25, 25.1],
-    insight: "Granel líquido avança <b>+1,8% a/a</b> sustentado por derivados de petróleo — combustíveis respondem por cerca de 70% do segmento.",
-  },
-  {
-    label: "Carga Geral",
-    valor: 4.3,
-    decimais: 1,
-    delta: "▼ 2,1%",
-    tendencia: "down",
-    share: "4,3% do total",
-    serie: [4.6, 4.4, 4.5, 4.7, 4.8, 4.7, 4.6, 4.5, 4.3, 4.4, 4.5, 4.6, 4.4, 4.3],
-    insight: "Carga Geral recua <b>2,1% a/a</b> — único segmento negativo do mês, pressionado pela retração de veículos e carga breakbulk.",
-  },
-  {
-    label: "Contêiner",
-    valor: 14.2,
-    decimais: 1,
-    delta: "▲ 8,9%",
-    tendencia: "up",
-    share: "14,1% do total · ≈1,12 mi TEU",
-    serie: [11, 10, 11, 12, 13, 13, 14, 13, 12, 13, 14, 15, 14, 14.2],
-    insight: "Contêineres batem <b>recorde da série</b> (≈1,12 mi TEU), refletindo a alta temporada de importações e a antecipação de tarifas americanas.",
-  },
-];
+// Insights editoriais por tipo de carga (texto fica aqui; números vêm do JSON).
+const portoInsights: Record<string, string> = {
+  "Total":
+    "Movimentação total movimenta o acumulado de 12 meses ao <b>recorde da série</b> (≈1,42 bi t); contêiner e granel sólido sustentam o avanço.",
+  "Granel Sólido":
+    "Granel sólido sustentado pela safra de soja no Arco Norte — Ponta da Madeira, Itaqui e São Luís como principais vetores de escoamento.",
+  "Granel Líquido":
+    "Granel líquido por derivados de petróleo; valores dos terminais Transpetro corrigidos da dupla contagem de entrada+saída (convenção ANP 881).",
+  "Carga Geral":
+    "Carga Geral segue como o menor segmento, sensível à demanda de veículos e breakbulk.",
+  "Contêiner":
+    "Contêiner em alta e em <b>recorde da série</b> em TEU, refletindo a força das importações e do comércio de cabotagem.",
+};
+
+// Números do pipeline (gera-home-cards-porto.mjs → home-cards.json); insight editorial daqui.
+export const portoModos: Modo[] = (homeCards.porto.modos as Modo[]).map((m) => ({
+  ...m,
+  tendencia: m.tendencia as "up" | "down",
+  insight: portoInsights[m.label] ?? homeCards.porto.insight,
+}));
 
 export const navegacaoModos: Modo[] = [
   {
@@ -274,10 +246,9 @@ export const navegacaoModos: Modo[] = [
 export const portoCard = {
   tag: "Porto",
   acento: "green" as const,
-  periodo: "FEVEREIRO 2026 · vs FEV 2025 · ANTAQ",
+  periodo: homeCards.porto.periodo,        // do pipeline (ex.: "ABRIL 2026 · vs ABR 2025 · ANTAQ (preliminar)")
   unidade: "milhões de t",
-  insight:
-    "Contêineres batem <b>recorde da série</b> (≈1,12 mi TEU); o granel sólido sustenta o avanço com a antecipação da safra de soja no Arco Norte.",
+  insight: homeCards.porto.insight,        // do pipeline (--insight) — texto editorial do card
   href: "/portos/ineditas/tendencia-cargas",
   hrefDados: "/portos/movimentacao",
 };
