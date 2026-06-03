@@ -10,6 +10,7 @@
     "test:watch": "vitest",
     "atualiza-dados": "node scripts/atualiza-dados.mjs",
     "atualiza-dados:force": "node scripts/atualiza-dados.mjs --force",
+    "atualiza-portos": "node scripts/atualiza-portos.mjs",
     "update-calendar": "node scripts/gera-severity-calendar.mjs"
   },
   "engines": {

@@ -102,7 +102,82 @@ python scripts/forecast_conteiner.py --payload <antaq.json> --out lib/forecast-c
   (default 50), `ANTAQ_API_URL`, `DATA_INICIO`.
 - **`forecast_conteiner.py`** NÃO regenera `horse-race-30.json` (estático). Ver
   `docs/TENDENCIA-CARGAS.md`.
-- `public/data/antaq/home-cards.json` **não tem gerador** — editado à mão.
+- `public/data/antaq/home-cards.json` (cards da home): a seção **`porto`** tem gerador —
+  `node scripts/gera-home-cards-porto.mjs [AAAA-MM] [--preliminar] [--insight "..."]`
+  (recalcula os 5 cards do `portos-series.json`; sem mês usa `referencia`; preserva o
+  `insight` se não passar `--insight`). A seção **`navegacao`** (cabotagem) e o texto
+  editorial seguem **à mão**. Ex. mês manual: `node scripts/gera-home-cards-porto.mjs 2026-04 --preliminar`.
+
+### ⭐ Carga manual de um mês — PIPELINE ÚNICO (recomendado)
+
+Carregou dado novo? **Um comando** atualiza TODOS os painéis (tudo derivado do
+mesmo canônico `portos-series.json`). Não atualize página por página.
+
+```bash
+node scripts/atualiza-portos.mjs \
+  --merge ../../scrapers/data/portos_mar2026.csv=2026-03 \
+  --merge ../../scrapers/data/portos_abr2026.csv=2026-04 \
+  --teu   ../../scrapers/data/portos_teus_2026.csv
+```
+
+Ele faz, em ordem, derivando do canônico (detecta os meses preliminares sozinho):
+1. **merge** dos CSVs → `portos-series.json` (canônico)
+2. **TEU** (nacional + por porto) → mesmo JSON  *(só com `--teu`; ~1-2 min sequencial)*
+3. **forecast** do contêiner → `lib/forecast-conteiner.json`
+4. **cards de porto da home** → `home-cards.json`
+5. **séries das 4 cargas** (rodapé do tendência) → `series-tendencia.json`
+
+`/portos/movimentacao` lê o canônico **ao vivo** — atualiza sozinho, sem regerar nada.
+Rodar `node scripts/atualiza-portos.mjs` **sem args** só re-deriva tudo do canônico atual.
+**Fora do pipeline:** navegação/cabotagem (`navegacao-series.json`, fonte própria) e o
+texto editorial `home.insight` (revise à mão). Os scripts abaixo são os passos avulsos
+(o pipeline já os chama):
+
+### Passo avulso — merge de um mês (`scripts/merge-portos-manual.mjs`)
+
+```bash
+node scripts/merge-portos-manual.mjs <caminho-csv> <AAAA-MM>
+# ex.: node scripts/merge-portos-manual.mjs ../scrapers/data/portos_mar2026.csv 2026-03
+```
+
+- **CSV de entrada:** `escopo,porto,uf,natureza_key,natureza_label,toneladas_<mes>,origem`
+  — `escopo` ∈ {PORTO, NACIONAL}; `natureza_key` ∈ {granel_solido, granel_liquido,
+  carga_geral, conteinerizada}; toneladas **cruas** (o script divide por 1e6);
+  `origem` ∈ {primário, extrapolado}. Nomes de porto têm de bater **exatos** com os
+  do JSON (o script avisa os não-mapeados). Gere o template com os nomes certos via
+  o snippet em `data/manual/` ou peça ao Claude.
+- O script **anexa/atualiza** o ponto `{data, mt}` em cada série porto×natureza e no
+  `nacional_por_natureza`, marca os estimados com `est:true`, sobe `referencia` para
+  o mês e adiciona o mês em **`meses_preliminares`**. É **idempotente** (rodar de
+  novo substitui o ponto, não duplica).
+- A página `/portos/movimentacao` lê `meses_preliminares` e mostra **banner +
+  cabeçalho/rodapé "preliminar"** e KPIs marcados — não vende estimativa como dado
+  oficial. O `est:true` fica disponível por ponto para tratamento visual futuro.
+- ⚠️ **Não é permanente:** quando a `antaq-api` alcançar o mês, o cron do dia 16
+  roda `gera-portos-series.mjs` e **regenera o JSON inteiro do zero**, sobrescrevendo
+  o mês manual (incl. `meses_preliminares`) pelo oficial. É o comportamento desejado.
+  Se precisar carregar de novo antes disso, é só rodar o merge outra vez.
+
+### Contêiner em TEU (`gera-conteiner-teu.mjs`)
+
+A página `/portos/movimentacao` mede contêiner em **TEU** por padrão (toggle p/
+toneladas). As séries TEU ficam no mesmo `portos-series.json`:
+`nacional_conteiner_teu` (KPIs + bloco acumulado) e `portos[].teu_conteiner` (ranking).
+
+```bash
+node scripts/gera-conteiner-teu.mjs ../../scrapers/data/portos_teus_2026.csv
+```
+
+- Puxa TEU da `antaq-api` (`metrica=teu`): nacional + por porto (só ~18 têm contêiner).
+- **⚠️ Concorrência 1 obrigatória.** A API é DuckDB com 1 conexão; em paralelo as
+  respostas se **cruzam** (porto A volta com dados do porto B) — foi o que poluiu
+  portos de minério/petróleo com TEU de contêiner. O script já roda sequencial; **não
+  paralelize.** Por isso demora ~1-2 min.
+- Meses sem TEU oficial (carga manual): nacional vem da linha `NACIONAL` do CSV de
+  TEU; por porto é estimado **congelando o mix dos últimos 3 meses oficiais** e
+  escalando para o nacional do mês (não usa a tonelagem manual, que pode estar
+  inconsistente). Marcados `est:true`.
+- ⚠️ Também é **sobrescrito** pelo `gera-portos-series.mjs` do dia 16 — re-rode depois.
 
 ---
 

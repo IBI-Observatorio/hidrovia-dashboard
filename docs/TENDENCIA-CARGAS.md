@@ -65,10 +65,33 @@ Onde `<antaq.json>` é o payload com a série mensal de tonelagem (formato do pr
 
 Saída esperada:
 ```
-OK -> lib/forecast-conteiner.json  | Theil U(h5)=0.50  | forward[0]=5.16%  | n_hist=171
+OK -> lib/forecast-conteiner.json  | Theil U(h5)=0.50  | ult_obs=2026-02  | forward[0]=2026-03=5.16%  | n_hist=171
 ```
 
 ⚠️ **Não regenera** `horse-race-30.json` — esse é estático (prova de método).
+
+#### Mês manual (antaq-api atrasada)
+
+Se a ANTAQ já saiu mas a `antaq-api` ainda não ingeriu o mês, dá pra rodar o forecast
+sem esperar, montando o payload a partir da série nacional de contêiner do
+`portos-series.json` (que pode ter o mês via carga manual — ver
+`RUNBOOK-DADOS.md` › Portos › "Carga manual de um mês"):
+
+```bash
+# 1) gera o payload da série nacional de contêiner (inclui o mês manual, se houver)
+node -e "const d=require('./public/data/antaq/dashboard/portos-series.json');const s=d.nacional_por_natureza.conteinerizada;require('fs').writeFileSync('scripts/_payload.json',JSON.stringify({series:s.map(p=>({serie:'natureza:conteinerizada',data:p.data,mensal_mt:p.mt}))}))"
+# 2) roda o modelo, marcando o(s) mês(es) ainda não oficiais como preliminar
+python scripts/forecast_conteiner.py --payload scripts/_payload.json --out lib/forecast-conteiner.json --preliminar 2026-03
+```
+
+- `--preliminar AAAA-MM[,AAAA-MM]` grava `meta.preliminar` + `meta.ult_obs_preliminar`
+  no JSON. O componente `GraficoMediasMoveis31` lê isso e, quando o último observado é
+  preliminar, **troca o rótulo** ("Último dado — mês (preliminar)", em âmbar),
+  ajusta a legenda e mostra um **aviso** de que o ponto é estimativa IBI (não dado
+  ANTAQ). Sem o flag, o mês entra como observado normal.
+- ⚠️ O agregado nacional de contêiner pode ser estimativa (`est:true` no
+  `portos-series.json`) — por isso o ponto é preliminar, ainda que o port-level esteja
+  apurado. Quando a ANTAQ publicar e a `antaq-api` ingerir, re-rode **sem** o flag.
 
 ---
 
@@ -115,7 +138,9 @@ Validado em 38 meses fora da amostra (jan/2023 → fev/2026), recursivo, com `in
     "rmse_h":        { "1": 0.58, "2": 1.12, "3": 1.76, "4": 2.46, "5": 3.21 },
     "ult_obs":       { "data": "2026-02", "obs": 5.24 },
     "corte_treino":  "2022-12",
-    "vies":          0.92
+    "vies":          0.92,
+    "preliminar":         [],     // meses ainda não oficiais (carga manual IBI); ex.: ["2026-03"]
+    "ult_obs_preliminar": false   // true se o último observado está em `preliminar`
   },
   "historico":  [{ "data": "2011-12", "obs": 13.29 }, ...],      // 171 pts
   "backtest":   [{ "data": "2023-01", "obs": -3.8, "champ": -2.43 }, ...],  // 38 pts OOS

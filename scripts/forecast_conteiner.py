@@ -118,8 +118,20 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--payload", required=True, help="JSON com series ANTAQ (formato do protótipo)")
     ap.add_argument("--out", default="lib/forecast-conteiner.json")
+    ap.add_argument("--preliminar", default="",
+                    help="meses YYYY-MM (vírgula) ainda não publicados pela ANTAQ — "
+                         "carga manual IBI. Marcados em meta.preliminar; o dashboard "
+                         "sinaliza o ponto como estimativa, não dado oficial.")
     a = ap.parse_args()
     dados = gera(carrega_mensal_do_payload(a.payload))
+
+    prelim = [m.strip() for m in a.preliminar.split(",") if m.strip()]
+    dados["meta"]["preliminar"] = prelim
+    dados["meta"]["ult_obs_preliminar"] = dados["meta"]["ult_obs"]["data"] in prelim
+
     json.dump(dados, open(a.out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    flag = " (PRELIMINAR)" if dados["meta"]["ult_obs_preliminar"] else ""
     print(f"OK -> {a.out}  | Theil U(h5)={dados['meta']['theilU_h5']}  "
-          f"| forward[0]={dados['forward'][0]['central']}%  | n_hist={len(dados['historico'])}")
+          f"| ult_obs={dados['meta']['ult_obs']['data']}{flag}  "
+          f"| forward[0]={dados['forward'][0]['data']}={dados['forward'][0]['central']}%  "
+          f"| n_hist={len(dados['historico'])}")
