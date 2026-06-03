@@ -316,9 +316,11 @@ export default function MovimentacaoPage() {
   const prevAno = String(parseInt(anoEfetivo) - 1);
   const isParcial = mes === 'todos' && mesesAno.length > 0 && mesesAno.length < 12;
   // período em vista cobre algum mês carregado à mão (real + estimativa IBI)?
-  const isPreliminar = (data?.meses_preliminares ?? []).some(
-    ym => ym.slice(0, 4) === anoEfetivo && mesesAlvo.includes(ym.slice(5, 7)),
-  );
+  // contêiner NUNCA é preliminar (dado IBI sólido) → não dispara aviso de mês IBI
+  const isPreliminar = natureza !== 'conteinerizada'
+    && (data?.meses_preliminares ?? []).some(
+      ym => ym.slice(0, 4) === anoEfetivo && mesesAlvo.includes(ym.slice(5, 7)),
+    );
 
   // ranking de portos
   const ranking = useMemo<PortoDisplay[]>(() => {
@@ -562,13 +564,13 @@ export default function MovimentacaoPage() {
         </h1>
         <p className="text-gray-400 text-sm max-w-2xl">
           Ranking de portos e terminais por tonelagem movimentada — dados mensais da ANTAQ
-          {refPreliminar ? <> (mês corrente preliminar, estimativa IBI)</> : <> (oficial)</>}.
+          {refPreliminar ? <> (mês corrente: dado IBI)</> : <> (oficial)</>}.
           Filtre por tipo de carga, ano, mês e produto (NCM SH4).
         </p>
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-xs text-gray-600">
             {refPreliminar
-              ? <>Oficial ANTAQ até {refOficialLabel} · <span className="text-amber-300/80">{refLabel} preliminar</span></>
+              ? <>Oficial ANTAQ até {refOficialLabel} · <span className="text-amber-300/80">{refLabel} IBI</span></>
               : <>Dados reais até {refLabel}</>}
             {' '}· {data.portos.length} maiores portos · atualização mensal
           </span>
@@ -729,15 +731,14 @@ export default function MovimentacaoPage() {
         </p>
       )}
 
-      {/* aviso de mês preliminar (carga manual: real + estimativa IBI) */}
+      {/* aviso: mês corrente é dado IBI (ANTAQ ainda não publicou) */}
       {isPreliminar && (
         <div className="flex items-start gap-3 rounded-xl border border-amber-400/30 bg-amber-400/[0.06] p-3 -mt-4">
-          <span className="text-base leading-none mt-0.5 shrink-0">⚠️</span>
+          <span className="text-base leading-none mt-0.5 shrink-0">ℹ️</span>
           <p className="text-xs text-amber-200/90 leading-relaxed">
-            <strong className="text-amber-200">Período preliminar.</strong> Inclui {refLabel}, ainda
-            não publicado pela ANTAQ — combina coleta direta do IBI com estimativas para portos sem
-            dado divulgado. Os números podem mudar quando a ANTAQ fechar o mês. Dado oficial completo
-            vai até {refOficialLabel}.
+            <strong className="text-amber-200">Dado IBI.</strong> {refLabel} é número do IBI
+            (coleta direta; agregado nacional estimado para portos sem divulgação), pois a ANTAQ
+            ainda não publicou o mês. Oficial ANTAQ vai até {refOficialLabel}.
           </p>
         </div>
       )}
@@ -785,7 +786,7 @@ export default function MovimentacaoPage() {
         <KpiCard
           label={`Movimentação — ${periodoLabel}`}
           value={nacionalPeriodo != null ? fmtMov(nacionalPeriodo) : '—'}
-          sub={`${isMensal ? (ctnTeu ? 'TEU do mês (nacional)' : 'Tonelagem do mês (nacional)') : `Acumulado ${anoEfetivo} (nacional)`}${isPreliminar ? ' · preliminar' : ''}`}
+          sub={`${isMensal ? (ctnTeu ? 'TEU do mês (nacional)' : 'Tonelagem do mês (nacional)') : `Acumulado ${anoEfetivo} (nacional)`}${isPreliminar ? ' · IBI' : ''}`}
           color={activeColor}
         />
         <KpiCard
@@ -799,7 +800,7 @@ export default function MovimentacaoPage() {
         <KpiCard
           label={`Variação a/a — ${periodoLabel}`}
           value={momentum != null ? fmtPct(momentum) : '—'}
-          sub={`vs ${isMensal ? mesLabel + '/' + prevAno : prevAno} (nacional)${ctnTeu ? ' · em TEU' : ''}${isPreliminar ? ' · preliminar' : ''}`}
+          sub={`vs ${isMensal ? mesLabel + '/' + prevAno : prevAno} (nacional)${ctnTeu ? ' · em TEU' : ''}${isPreliminar ? ' · IBI' : ''}`}
           positive={momentum != null ? momentum > 0 : undefined}
           color={activeColor}
         />
@@ -859,6 +860,8 @@ export default function MovimentacaoPage() {
         const ini = acum12.roll[acum12.roll.length - 12]?.data ?? acum12.last.data;
         const janela = `${ymL(ini)}–${ymL(acum12.last.data)}`;
         const isTeu = acum12.unidade === 'TEU';
+        // contêiner nunca é preliminar → não sinaliza "inclui IBI" mesmo com pontos est
+        const estVisivel = acum12.last.est && natureza !== 'conteinerizada';
         // valor já vem em Mt (toneladas) ou em milhões de TEU
         const fmtVal = (v: number) => isTeu
           ? `${v.toFixed(2).replace('.', ',')} mi TEU`
@@ -887,7 +890,7 @@ export default function MovimentacaoPage() {
               <KpiCard
                 label={`Acumulado 12 meses · ${janela}`}
                 value={fmtVal(acum12.last.total)}
-                sub={`${!isTeu && isTodos ? `≈ ${(acum12.last.total / 1000).toFixed(2).replace('.', ',')} bi de t · ` : ''}${isTodos ? 'todas as cargas' : sectorLabel} (nacional)${acum12.last.est ? ' · inclui preliminares' : ''}`}
+                sub={`${!isTeu && isTodos ? `≈ ${(acum12.last.total / 1000).toFixed(2).replace('.', ',')} bi de t · ` : ''}${isTodos ? 'todas as cargas' : sectorLabel} (nacional)${estVisivel ? ' · inclui meses IBI' : ''}`}
                 color={acumColor}
               />
               <KpiCard
@@ -903,7 +906,7 @@ export default function MovimentacaoPage() {
                 sub={acum12.isRecord
                   ? (acum12.recordeOficial && acum12.maxOficial
                       ? `Confirmado no oficial: ${fmtVal(acum12.maxOficial.total)} (12m até ${ymL(acum12.maxOficial.data)})`
-                      : 'Pico apoiado em meses preliminares')
+                      : 'Pico apoiado em meses IBI')
                   : `Máxima: ${fmtVal(acum12.max.total)} (12m até ${ymL(acum12.max.data)})`}
                 color="#D4922A"
               />
@@ -913,8 +916,8 @@ export default function MovimentacaoPage() {
 
             <p className="text-[11px] text-gray-600 leading-relaxed">
               Cada ponto é a soma dos 12 meses anteriores — remove sazonalidade e mostra a tendência de fundo.
-              {acum12.last.est && ' A ponta inclui mar/abr/2026 (estimativa IBI).'}
-              {acum12.last.est && acum12.isRecord && acum12.recordeOficial && ' O status de recorde se mantém mesmo usando só o dado oficial.'}
+              {estVisivel && ' A ponta inclui mar/abr/2026 (dado IBI).'}
+              {estVisivel && acum12.isRecord && acum12.recordeOficial && ' O status de recorde se mantém mesmo usando só o dado oficial ANTAQ.'}
               {' '}Fonte: {fonteLabel}. Elaboração: Observatório IBI.
             </p>
           </div>
@@ -933,7 +936,7 @@ export default function MovimentacaoPage() {
           <p>
             Fonte: {fonteLabel}.{' '}
             {refPreliminar
-              ? <>Mês corrente {refLabel} é <span className="text-amber-300/80">preliminar (IBI)</span> — coleta direta + estimativas, sujeito a revisão quando a ANTAQ publicar.</>
+              ? <>Mês corrente {refLabel} é <span className="text-amber-300/80">dado IBI</span> (coleta direta + agregado nacional estimado); a ANTAQ publica o oficial depois.</>
               : <>Último mês disponível: {refLabel}.</>}
             {' '}Elaboração: Observatório IBI.
           </p>

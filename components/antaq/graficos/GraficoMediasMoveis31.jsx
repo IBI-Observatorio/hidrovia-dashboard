@@ -294,11 +294,11 @@ function ForecastConteinerBloco() {
         />
         <NuggetCard
           label={ultPrelim
-            ? `Último dado — ${fmtMes(meta.ult_obs.data)} (preliminar)`
+            ? `Último dado — ${fmtMes(meta.ult_obs.data)} (IBI)`
             : `Último dado ANTAQ — ${fmtMes(meta.ult_obs.data)}`}
           valor={meta.ult_obs.obs} sufixo="%" cor={ultPrelim ? COR_PRELIM : COR_OBS} decimais={2}
           comSinal sub={ultPrelim
-            ? 'Estimativa IBI — ANTAQ ainda não publicou o mês'
+            ? 'Coleta IBI · ANTAQ publica o oficial depois'
             : 'Crescimento a/a observado'}
         />
       </div>
@@ -313,20 +313,18 @@ function ForecastConteinerBloco() {
           Momentum do contêiner — observado e projeção
         </h3>
         <p className="text-xs text-gray-400 mb-4 max-w-3xl leading-relaxed">
-          Linha azul: observado{prelimMeses.length ? ' (ANTAQ; últimos meses preliminares, IBI)' : ' (ANTAQ)'}. Linha ouro tracejada: backtest do modelo campeão
+          Linha azul: observado{prelimMeses.length ? ' (ANTAQ; últimos meses do IBI)' : ' (ANTAQ)'}. Linha ouro tracejada: backtest do modelo campeão
           sobre o período fora da amostra. Pontos em ouro: projeção 5 meses à frente, com
           leques de 80% e 95%.
         </p>
         <GraficoForecast allData={allData} ultObs={meta.ult_obs}
-          obsLabel={prelimMeses.length ? 'Observado (ANTAQ · IBI prelim.)' : 'Observado (ANTAQ)'} />
-        {ultPrelim && (
+          obsLabel={prelimMeses.length ? 'Observado (ANTAQ + IBI)' : 'Observado (ANTAQ)'} />
+        {prelimMeses.length > 0 && (
           <p className="text-[11px] mt-3 leading-relaxed" style={{ color: COR_PRELIM }}>
-            ⚠️ {prelimMeses.length > 1 ? `Os últimos ${prelimMeses.length} pontos observados` : 'O último ponto observado'}
-            {' '}({prelimLabel}) {prelimMeses.length > 1 ? 'são' : 'é'} <strong>preliminar{prelimMeses.length > 1 ? 'es' : ''}</strong> —
-            tonelagem de contêiner carregada manualmente pelo IBI (coleta direta + estimativa do
-            agregado nacional), pois a ANTAQ ainda não publicou {prelimMeses.length > 1 ? 'esses meses' : 'o mês'}.
-            Entra{prelimMeses.length > 1 ? 'm' : ''} no cálculo do momentum e na base da projeção; pode{prelimMeses.length > 1 ? 'm' : ''} ser
-            revisto{prelimMeses.length > 1 ? 's' : ''} quando o dado oficial sair.
+            Os últimos {prelimMeses.length > 1 ? `${prelimMeses.length} meses` : 'mês'} ({prelimLabel})
+            {' '}{prelimMeses.length > 1 ? 'são do' : 'é do'} <strong>IBI</strong> — a ANTAQ ainda não
+            publicou {prelimMeses.length > 1 ? 'esses meses' : 'o mês'}; entra{prelimMeses.length > 1 ? 'm' : ''} normalmente
+            no momentum e na projeção.
           </p>
         )}
       </motion.div>
@@ -477,7 +475,7 @@ export default function GraficoMediasMoveis31() {
         <p className="text-xs text-gray-500 mt-1">
           Cada ponto = média dos 12 meses anteriores — remove sazonalidade e revela tendência real.
           Dados: ANTAQ Estatística Aquaviária
-          {(forecastConteiner.meta?.preliminar?.length ?? 0) > 0 ? ' (últimos meses preliminares — estimativa IBI)' : ''}
+          {(forecastConteiner.meta?.preliminar?.length ?? 0) > 0 ? ' (últimos meses do IBI)' : ''}
           {' '}· Atualizado mensalmente.
         </p>
       </div>
