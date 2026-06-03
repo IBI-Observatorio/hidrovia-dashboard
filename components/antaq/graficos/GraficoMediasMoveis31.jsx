@@ -86,7 +86,7 @@ function NuggetCard({ label, valor, sufixo = '', cor, sub, decimais = 1, comSina
 
 // ─── Subcomponente: Gráfico de forecast 15 anos ─────────────────────────────
 
-function GraficoForecast({ allData, ultObs, obsLabel }) {
+function GraficoForecast({ allData, ultObs, ibiLabel }) {
   return (
     <ResponsiveContainer width="100%" height={320}>
       <ComposedChart data={allData} margin={{ top: 8, right: 20, bottom: 20, left: 4 }}>
@@ -112,7 +112,11 @@ function GraficoForecast({ allData, ultObs, obsLabel }) {
               fill="rgba(212,146,42,0.20)" stroke="none" name="IC 80%" connectNulls />
         {/* Linhas históricas e projeção */}
         <Line type="monotone" dataKey="obs"        stroke={COR_OBS}   strokeWidth={2}
-              dot={false} connectNulls name={obsLabel} />
+              dot={false} connectNulls name="Observado (ANTAQ)" />
+        {ibiLabel && (
+          <Line type="monotone" dataKey="obs_ibi"  stroke={COR_PRELIM} strokeWidth={2.2}
+                dot={{ r: 3, fill: COR_PRELIM }} connectNulls name={ibiLabel} />
+        )}
         <Line type="monotone" dataKey="champ_back" stroke={COR_CHAMP} strokeWidth={1.5}
               strokeDasharray="4 2" dot={false} connectNulls name="Modelo (backtest)" />
         <Line type="monotone" dataKey="central"    stroke={COR_CHAMP} strokeWidth={2.4}
@@ -253,8 +257,18 @@ function ForecastConteinerBloco() {
   // Pivot único pro gráfico principal
   const allData = useMemo(() => {
     const map = {};
+    const prelimSet = new Set(prelimMeses);
+    // observado dividido: ANTAQ (obs) até fev, IBI (obs_ibi) em mar/abr — assim o
+    // tooltip de um mês IBI mostra "IBI", nunca "ANTAQ".
     for (const p of historico) {
-      map[p.data] = { ...map[p.data], data: p.data, obs: p.obs };
+      const ehIBI = prelimSet.has(p.data);
+      map[p.data] = { ...map[p.data], data: p.data, obs: ehIBI ? null : p.obs, obs_ibi: ehIBI ? p.obs : null };
+    }
+    // junção: o ponto oficial logo antes do 1º mês IBI também recebe obs_ibi p/ conectar
+    if (prelimMeses.length) {
+      const histOrd = [...historico].sort((a, b) => a.data.localeCompare(b.data));
+      const idx = histOrd.findIndex((p) => p.data === prelimMeses[0]);
+      if (idx > 0) { const j = histOrd[idx - 1]; if (map[j.data]) map[j.data].obs_ibi = j.obs; }
     }
     for (const p of backtest) {
       map[p.data] = { ...map[p.data], data: p.data, champ_back: p.champ };
@@ -313,12 +327,12 @@ function ForecastConteinerBloco() {
           Momentum do contêiner — observado e projeção
         </h3>
         <p className="text-xs text-gray-400 mb-4 max-w-3xl leading-relaxed">
-          Linha azul: observado{prelimMeses.length ? ' (ANTAQ; últimos meses do IBI)' : ' (ANTAQ)'}. Linha ouro tracejada: backtest do modelo campeão
+          Linha azul: observado ANTAQ{prelimMeses.length ? '. Linha âmbar: meses do IBI (ainda não publicados pela ANTAQ)' : ''}. Linha ouro tracejada: backtest do modelo campeão
           sobre o período fora da amostra. Pontos em ouro: projeção 5 meses à frente, com
           leques de 80% e 95%.
         </p>
         <GraficoForecast allData={allData} ultObs={meta.ult_obs}
-          obsLabel={prelimMeses.length ? 'Observado (ANTAQ + IBI)' : 'Observado (ANTAQ)'} />
+          ibiLabel={prelimMeses.length ? `IBI (${prelimLabel})` : null} />
         {prelimMeses.length > 0 && (
           <p className="text-[11px] mt-3 leading-relaxed" style={{ color: COR_PRELIM }}>
             Os últimos {prelimMeses.length > 1 ? `${prelimMeses.length} meses` : 'mês'} ({prelimLabel})
