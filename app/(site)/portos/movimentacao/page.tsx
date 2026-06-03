@@ -7,6 +7,7 @@ import {
   ComposedChart, Area, ReferenceLine, ReferenceDot,
 } from 'recharts';
 import { useDashboardData } from '@/components/antaq/useDashboardData';
+import { fonteAntaqIbi } from '@/lib/fonte-portos';
 
 // ── types ──────────────────────────────────────────────────────────────────────
 
@@ -519,6 +520,11 @@ export default function MovimentacaoPage() {
     return ym;
   })();
   const refOficialLabel = `${MESES.find(m => m.v === refOficial.slice(5, 7))?.l ?? ''}/${refOficial.slice(0, 4)}`;
+  // atribuição de fonte automática: ANTAQ até o último oficial + IBI nos preliminares
+  const fonteLabel = fonteAntaqIbi(
+    data.nacional_por_natureza.granel_solido.map(p => p.data),
+    data.meses_preliminares ?? [],
+  );
   // participação no total nacional é sempre em tonelada (comparar com o total de cargas);
   // em modo TEU usa a tonelagem do contêiner, não a contagem de TEU.
   const participacaoNum = ctnTeu ? ctnTonPeriodo : nacionalPeriodo;
@@ -555,7 +561,8 @@ export default function MovimentacaoPage() {
           </span>
         </h1>
         <p className="text-gray-400 text-sm max-w-2xl">
-          Ranking de portos e terminais por tonelagem movimentada — dados mensais reais da ANTAQ.
+          Ranking de portos e terminais por tonelagem movimentada — dados mensais da ANTAQ
+          {refPreliminar ? <> (mês corrente preliminar, estimativa IBI)</> : <> (oficial)</>}.
           Filtre por tipo de carga, ano, mês e produto (NCM SH4).
         </p>
         <div className="flex items-center gap-3 flex-wrap">
@@ -908,7 +915,7 @@ export default function MovimentacaoPage() {
               Cada ponto é a soma dos 12 meses anteriores — remove sazonalidade e mostra a tendência de fundo.
               {acum12.last.est && ' A ponta inclui mar/abr/2026 (estimativa IBI).'}
               {acum12.last.est && acum12.isRecord && acum12.recordeOficial && ' O status de recorde se mantém mesmo usando só o dado oficial.'}
-              {' '}Fonte: ANTAQ. Elaboração: Observatório IBI.
+              {' '}Fonte: {fonteLabel}. Elaboração: Observatório IBI.
             </p>
           </div>
         );
@@ -924,9 +931,9 @@ export default function MovimentacaoPage() {
             <strong className="text-gray-400">NCM SH4</strong> — associação porto × produto baseada na composição típica de carga de cada terminal.
           </p>
           <p>
-            Fonte: {data.fonte}.{' '}
+            Fonte: {fonteLabel}.{' '}
             {refPreliminar
-              ? <>Oficial até {refOficialLabel}; {refLabel} é preliminar (coleta IBI + estimativas, sujeito a revisão).</>
+              ? <>Mês corrente {refLabel} é <span className="text-amber-300/80">preliminar (IBI)</span> — coleta direta + estimativas, sujeito a revisão quando a ANTAQ publicar.</>
               : <>Último mês disponível: {refLabel}.</>}
             {' '}Elaboração: Observatório IBI.
           </p>

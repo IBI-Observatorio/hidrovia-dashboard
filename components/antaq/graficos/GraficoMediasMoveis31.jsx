@@ -86,7 +86,7 @@ function NuggetCard({ label, valor, sufixo = '', cor, sub, decimais = 1, comSina
 
 // ─── Subcomponente: Gráfico de forecast 15 anos ─────────────────────────────
 
-function GraficoForecast({ allData, ultObs }) {
+function GraficoForecast({ allData, ultObs, obsLabel }) {
   return (
     <ResponsiveContainer width="100%" height={320}>
       <ComposedChart data={allData} margin={{ top: 8, right: 20, bottom: 20, left: 4 }}>
@@ -112,7 +112,7 @@ function GraficoForecast({ allData, ultObs }) {
               fill="rgba(212,146,42,0.20)" stroke="none" name="IC 80%" connectNulls />
         {/* Linhas históricas e projeção */}
         <Line type="monotone" dataKey="obs"        stroke={COR_OBS}   strokeWidth={2}
-              dot={false} connectNulls name="Observado (ANTAQ)" />
+              dot={false} connectNulls name={obsLabel} />
         <Line type="monotone" dataKey="champ_back" stroke={COR_CHAMP} strokeWidth={1.5}
               strokeDasharray="4 2" dot={false} connectNulls name="Modelo (backtest)" />
         <Line type="monotone" dataKey="central"    stroke={COR_CHAMP} strokeWidth={2.4}
@@ -313,11 +313,12 @@ function ForecastConteinerBloco() {
           Momentum do contêiner — observado e projeção
         </h3>
         <p className="text-xs text-gray-400 mb-4 max-w-3xl leading-relaxed">
-          Linha azul: observado (ANTAQ). Linha ouro tracejada: backtest do modelo campeão
+          Linha azul: observado{prelimMeses.length ? ' (ANTAQ; últimos meses preliminares, IBI)' : ' (ANTAQ)'}. Linha ouro tracejada: backtest do modelo campeão
           sobre o período fora da amostra. Pontos em ouro: projeção 5 meses à frente, com
           leques de 80% e 95%.
         </p>
-        <GraficoForecast allData={allData} ultObs={meta.ult_obs} />
+        <GraficoForecast allData={allData} ultObs={meta.ult_obs}
+          obsLabel={prelimMeses.length ? 'Observado (ANTAQ · IBI prelim.)' : 'Observado (ANTAQ)'} />
         {ultPrelim && (
           <p className="text-[11px] mt-3 leading-relaxed" style={{ color: COR_PRELIM }}>
             ⚠️ {prelimMeses.length > 1 ? `Os últimos ${prelimMeses.length} pontos observados` : 'O último ponto observado'}
@@ -475,7 +476,9 @@ export default function GraficoMediasMoveis31() {
         </ResponsiveContainer>
         <p className="text-xs text-gray-500 mt-1">
           Cada ponto = média dos 12 meses anteriores — remove sazonalidade e revela tendência real.
-          Dados: ANTAQ Estatística Aquaviária · Atualizado mensalmente.
+          Dados: ANTAQ Estatística Aquaviária
+          {(forecastConteiner.meta?.preliminar?.length ?? 0) > 0 ? ' (últimos meses preliminares — estimativa IBI)' : ''}
+          {' '}· Atualizado mensalmente.
         </p>
       </div>
     </div>
