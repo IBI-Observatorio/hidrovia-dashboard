@@ -79,7 +79,9 @@ for (const r of rows) {
   if (!r.key || !NAT_KEYS.includes(r.key)) { if (r.key) stats.chaveInvalida.add(r.key); continue; }
   if (!Number.isFinite(r.ton)) continue;
   const mt = +(r.ton / 1e6).toFixed(4);
-  const est = r.origem.startsWith('extrapol');
+  // REAL apenas quando a origem começa com "primário"; tudo o mais (extrapolado,
+  // claude-estimado, estimado, …) é estimativa → est:true. (Robusto p/ tags futuras.)
+  const est = !/^\s*prim[aá]rio/i.test(r.origem ?? '');
 
   if (r.escopo === 'NACIONAL') {
     (data.nacional_por_natureza[r.key] ??= []);
