@@ -78,6 +78,58 @@ function nacionalManual(csvPath) {
   return out;
 }
 
+// Nome do CSV de TEU → nome canônico no portos-series.json. Combos vão para o porto
+// de contêiner principal; não-canônicos/residual ficam de fora (null).
+const ALIAS_TEU = {
+  'Santos (sem DPW)': 'Santos',
+  'DP World Santos': 'DP World Santos',
+  'Itapoá': 'Porto Itapoá Terminais Portuários',
+  'Paranaguá': 'Paranaguá',
+  'Portonave': 'Portonave - Terminais Portuários de Navegantes',
+  'Rio Grande': 'Rio Grande',
+  'Chibatão': 'Porto Chibatão',
+  'Suape': 'Suape',
+  'Salvador': 'Salvador',
+  'Rio de Janeiro + Itaguaí': 'Rio de Janeiro',
+  'Pecém': 'Terminal Portuário do Pecém',
+  'Vila do Conde': 'Vila do Conde',
+  'São Francisco do Sul': 'São Francisco do Sul',
+  'Itaqui': 'Itaqui',
+  // fora dos 48 canônicos (descartados): Super Terminais, Itajaí (APMI), Fortaleza, Demais portos
+};
+
+/**
+ * Linhas PORTO do CSV de TEU → Map<portoCanônico, { 'AAAA-MM': {teu, est} }>.
+ * Parse ancorado na direita (o nome do porto pode ter vírgulas). REAL só quando a
+ * origem começa com "primário"; o resto é estimativa (est:true).
+ */
+function teusPorPortoManual(csvPath) {
+  const linhas = readFileSync(csvPath, 'utf8').replace(/^﻿/, '').split(/\r?\n/)
+    .map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+  const header = linhas.shift().split(',');
+  const MES = { jan: '01', fev: '02', mar: '03', abr: '04', mai: '05', jun: '06', jul: '07', ago: '08', set: '09', out: '10', nov: '11', dez: '12' };
+  // meses (na ordem das colunas teus_*), p/ casar com os valores ancorados à direita
+  const meses = header.map(h => { const m = h.match(/teus?_([a-z]{3})(\d{4})/i); return m ? `${m[2]}-${MES[m[1].toLowerCase()]}` : null; }).filter(Boolean);
+  const nMeses = meses.length;
+  const out = new Map();
+  const naoMapeados = new Set();
+  for (const l of linhas) {
+    const c = l.split(',');
+    if (c[0]?.trim().toUpperCase() !== 'PORTO') continue;
+    const origem = (c[c.length - 1] ?? '').trim();
+    const nome = c.slice(1, c.length - (nMeses + 2)).join(',').trim();   // entre 'uf' e os valores
+    const canon = ALIAS_TEU[nome];
+    if (!canon) { naoMapeados.add(nome); continue; }
+    const est = !/^\s*prim[aá]rio/i.test(origem);
+    // valores: ancorados à direita, antes de 'origem' (mesma ordem de `meses`)
+    const vals = c.slice(c.length - (nMeses + 1), c.length - 1).map(Number);
+    const rec = out.get(canon) ?? {};
+    meses.forEach((ym, i) => { const v = vals[i]; if (Number.isFinite(v) && v > 0) rec[ym] = { teu: Math.round(v), est }; });
+    out.set(canon, rec);
+  }
+  return { porPorto: out, naoMapeados: [...naoMapeados] };
+}
+
 async function main() {
   const data = JSON.parse(readFileSync(jsonPath, 'utf8'));
   const refApi = '2026-02'; // último mês oficial conhecido da API (saude.ultimo_mes_dados)
@@ -118,26 +170,38 @@ async function main() {
   }
   console.log(`Cobertura: ${oficialPorPorto.size} portos com TEU` + (falhas ? ` · ${falhas} falhas de rede` : ''));
 
-  // ── 3) meses manuais por porto: congela o mix de TEU dos últimos 3 meses
-  //      oficiais e escala para o TEU nacional manual do mês. Ancora no TEU real
-  //      do porto (não na tonelagem manual, que em mar/abr está inconsistente).
+  // ── 3) meses manuais por porto ─────────────────────────────────────────────
+  //  PREFERE o TEU por porto do CSV (dado real do IBI, mapeado ao nome canônico).
+  //  Onde o CSV não tem o porto, cai no fallback: participação no TEU nacional dos
+  //  últimos 3 meses oficiais × nacional manual do mês.
+  const { porPorto: teuCsv, naoMapeados } = csvArg
+    ? teusPorPortoManual(path.resolve(aqui, csvArg))
+    : { porPorto: new Map(), naoMapeados: [] };
+  if (teuCsv.size) console.log(`TEU por porto do CSV: ${teuCsv.size} portos mapeados` + (naoMapeados.length ? ` · fora dos canônicos (ignorados): ${naoMapeados.join('; ')}` : ''));
+
   const ultimos3 = nac.slice(-3).map(p => p.data);          // últimos 3 meses oficiais
   const nacUlt3 = ultimos3.reduce((s, ym) => s + (nacMap.get(ym)?.teu ?? 0), 0);
-  let comTeu = 0;
+  let comTeu = 0, doCsv = 0, doShare = 0;
   for (const p of data.portos) {
     delete p.teu_conteiner;
     const serie = oficialPorPorto.get(p.porto) ?? [];
     const map = new Map(serie.map(x => [x.data, { data: x.data, teu: x.teu }]));
-    // participação do porto no TEU nacional, média dos últimos 3 meses oficiais
     const portoUlt3 = ultimos3.reduce((s, ym) => s + (map.get(ym)?.teu ?? 0), 0);
     const share = nacUlt3 > 0 ? portoUlt3 / nacUlt3 : 0;
+    const rec = teuCsv.get(p.porto);
     for (const ym of mesesManuais) {
-      if (share > 0 && manuais[ym] > 0) map.set(ym, { data: ym, teu: Math.round(share * manuais[ym]), est: true });
+      if (rec?.[ym] != null) {                                   // 1º: valor real do CSV
+        map.set(ym, rec[ym].est ? { data: ym, teu: rec[ym].teu, est: true } : { data: ym, teu: rec[ym].teu });
+        doCsv++;
+      } else if (share > 0 && manuais[ym] > 0) {                 // 2º: fallback por participação
+        map.set(ym, { data: ym, teu: Math.round(share * manuais[ym]), est: true });
+        doShare++;
+      }
     }
     const finalSerie = [...map.values()].sort((a, b) => (a.data < b.data ? -1 : 1));
     if (finalSerie.length) { p.teu_conteiner = finalSerie; comTeu++; }
   }
-  console.log(`Por porto: ${comTeu}/${data.portos.length} portos com série TEU`);
+  console.log(`Por porto: ${comTeu} portos com TEU · meses manuais: ${doCsv} do CSV, ${doShare} por participação`);
 
   writeFileSync(jsonPath, JSON.stringify(data));
   const prelim = nacSerie.filter(p => p.est).map(p => p.data);
