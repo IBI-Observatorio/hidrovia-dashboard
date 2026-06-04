@@ -173,10 +173,13 @@ node scripts/gera-conteiner-teu.mjs ../../scrapers/data/portos_teus_2026.csv
   respostas se **cruzam** (porto A volta com dados do porto B) — foi o que poluiu
   portos de minério/petróleo com TEU de contêiner. O script já roda sequencial; **não
   paralelize.** Por isso demora ~1-2 min.
-- Meses sem TEU oficial (carga manual): nacional vem da linha `NACIONAL` do CSV de
-  TEU; por porto é estimado **congelando o mix dos últimos 3 meses oficiais** e
-  escalando para o nacional do mês (não usa a tonelagem manual, que pode estar
-  inconsistente). Marcados `est:true`.
+- Meses sem TEU oficial (carga manual): **nacional** vem da linha `NACIONAL` do CSV;
+  **por porto** vem das linhas `PORTO` do CSV mapeadas ao nome canônico (tabela
+  `ALIAS_TEU` no script — combos como "Rio + Itaguaí" vão ao porto principal;
+  não-canônicos/residual são descartados). Onde o CSV não cobre um porto, cai no
+  **fallback**: participação no TEU nacional dos últimos 3 meses oficiais × nacional
+  do mês. ⚠️ Para maio: basta preencher a planilha de TEU (nacional + linhas por
+  porto) — o pipeline puxa sozinho. Conferir nomes novos contra `ALIAS_TEU`.
 - ⚠️ Também é **sobrescrito** pelo `gera-portos-series.mjs` do dia 16 — re-rode depois.
 
 ---
