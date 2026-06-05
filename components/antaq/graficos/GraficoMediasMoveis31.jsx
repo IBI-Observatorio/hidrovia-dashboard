@@ -15,6 +15,7 @@ import horseRace       from '@/lib/horse-race-30.json';
 
 const COR_OBS    = '#0099D8';  // ibi-blue (observado)
 const COR_CHAMP  = '#D4922A';  // ouro (campeão / projeção / banda)
+const COR_PRELIM = '#F59E0B';  // âmbar (mês preliminar — carga manual IBI)
 const COR_GREEN  = '#00A652';
 const COR_GRID   = '#374151';
 
@@ -85,7 +86,7 @@ function NuggetCard({ label, valor, sufixo = '', cor, sub, decimais = 1, comSina
 
 // ─── Subcomponente: Gráfico de forecast 15 anos ─────────────────────────────
 
-function GraficoForecast({ allData, ultObs }) {
+function GraficoForecast({ allData, ultObs, ibiLabel }) {
   return (
     <ResponsiveContainer width="100%" height={320}>
       <ComposedChart data={allData} margin={{ top: 8, right: 20, bottom: 20, left: 4 }}>
@@ -112,6 +113,10 @@ function GraficoForecast({ allData, ultObs }) {
         {/* Linhas históricas e projeção */}
         <Line type="monotone" dataKey="obs"        stroke={COR_OBS}   strokeWidth={2}
               dot={false} connectNulls name="Observado (ANTAQ)" />
+        {ibiLabel && (
+          <Line type="monotone" dataKey="obs_ibi"  stroke={COR_PRELIM} strokeWidth={2.2}
+                dot={{ r: 3, fill: COR_PRELIM }} connectNulls name={ibiLabel} />
+        )}
         <Line type="monotone" dataKey="champ_back" stroke={COR_CHAMP} strokeWidth={1.5}
               strokeDasharray="4 2" dot={false} connectNulls name="Modelo (backtest)" />
         <Line type="monotone" dataKey="central"    stroke={COR_CHAMP} strokeWidth={2.4}
@@ -242,12 +247,28 @@ function FichaTecnicaHorseRace() {
 
 function ForecastConteinerBloco() {
   const { meta, historico, backtest, forward } = forecastConteiner;
+  const ultPrelim = meta.ult_obs_preliminar === true;
+  // meses preliminares presentes no histórico (carga manual IBI), em ordem
+  const prelimMeses = (meta.preliminar ?? []).filter(m => historico.some(h => h.data === m)).sort();
+  const prelimLabel = prelimMeses.length > 1
+    ? `${fmtMes(prelimMeses[0])}–${fmtMes(prelimMeses.at(-1))}`
+    : fmtMes(prelimMeses[0] ?? meta.ult_obs.data);
 
   // Pivot único pro gráfico principal
   const allData = useMemo(() => {
     const map = {};
+    const prelimSet = new Set(prelimMeses);
+    // observado dividido: ANTAQ (obs) até fev, IBI (obs_ibi) em mar/abr — assim o
+    // tooltip de um mês IBI mostra "IBI", nunca "ANTAQ".
     for (const p of historico) {
-      map[p.data] = { ...map[p.data], data: p.data, obs: p.obs };
+      const ehIBI = prelimSet.has(p.data);
+      map[p.data] = { ...map[p.data], data: p.data, obs: ehIBI ? null : p.obs, obs_ibi: ehIBI ? p.obs : null };
+    }
+    // junção: o ponto oficial logo antes do 1º mês IBI também recebe obs_ibi p/ conectar
+    if (prelimMeses.length) {
+      const histOrd = [...historico].sort((a, b) => a.data.localeCompare(b.data));
+      const idx = histOrd.findIndex((p) => p.data === prelimMeses[0]);
+      if (idx > 0) { const j = histOrd[idx - 1]; if (map[j.data]) map[j.data].obs_ibi = j.obs; }
     }
     for (const p of backtest) {
       map[p.data] = { ...map[p.data], data: p.data, champ_back: p.champ };
@@ -273,7 +294,7 @@ function ForecastConteinerBloco() {
         <div className="text-base font-semibold text-white mb-1">E o que vem pelos próximos meses?</div>
         <p className="text-xs text-gray-400 leading-relaxed max-w-3xl">
           Projeção do momentum do contêiner brasileiro — variação a/a da média móvel de 12 meses
-          da tonelagem (ANTAQ). Modelo campeão de um horse-race de 30 abordagens, validado em
+          da tonelagem (ANTAQ{prelimMeses.length ? '; meses recentes do IBI' : ''}). Modelo campeão de um horse-race de 30 abordagens, validado em
           38 meses fora da amostra.
         </p>
       </div>
@@ -286,9 +307,13 @@ function ForecastConteinerBloco() {
           comSinal sub="Próxima leitura projetada (a/a, MA12)"
         />
         <NuggetCard
-          label={`Último dado ANTAQ — ${fmtMes(meta.ult_obs.data)}`}
-          valor={meta.ult_obs.obs} sufixo="%" cor={COR_OBS} decimais={2}
-          comSinal sub="Crescimento a/a observado"
+          label={ultPrelim
+            ? `Último dado — ${fmtMes(meta.ult_obs.data)} (IBI)`
+            : `Último dado ANTAQ — ${fmtMes(meta.ult_obs.data)}`}
+          valor={meta.ult_obs.obs} sufixo="%" cor={ultPrelim ? COR_PRELIM : COR_OBS} decimais={2}
+          comSinal sub={ultPrelim
+            ? 'Coleta IBI · ANTAQ publica o oficial depois'
+            : 'Crescimento a/a observado'}
         />
       </div>
 
@@ -302,11 +327,20 @@ function ForecastConteinerBloco() {
           Momentum do contêiner — observado e projeção
         </h3>
         <p className="text-xs text-gray-400 mb-4 max-w-3xl leading-relaxed">
-          Linha azul: observado (ANTAQ). Linha ouro tracejada: backtest do modelo campeão
-          sobre o período fora da amostra (jan/2023 → fev/2026). Pontos em ouro: projeção 5
-          meses à frente, com leques de 80% e 95%.
+          Linha azul: observado ANTAQ{prelimMeses.length ? '. Linha âmbar: meses do IBI (ainda não publicados pela ANTAQ)' : ''}. Linha ouro tracejada: backtest do modelo campeão
+          sobre o período fora da amostra. Pontos em ouro: projeção 5 meses à frente, com
+          leques de 80% e 95%.
         </p>
-        <GraficoForecast allData={allData} ultObs={meta.ult_obs} />
+        <GraficoForecast allData={allData} ultObs={meta.ult_obs}
+          ibiLabel={prelimMeses.length ? `IBI (${prelimLabel})` : null} />
+        {prelimMeses.length > 0 && (
+          <p className="text-[11px] mt-3 leading-relaxed" style={{ color: COR_PRELIM }}>
+            Os últimos {prelimMeses.length > 1 ? `${prelimMeses.length} meses` : 'mês'} ({prelimLabel})
+            {' '}{prelimMeses.length > 1 ? 'são do' : 'é do'} <strong>IBI</strong> — a ANTAQ ainda não
+            publicou {prelimMeses.length > 1 ? 'esses meses' : 'o mês'}; entra{prelimMeses.length > 1 ? 'm' : ''} normalmente
+            no momentum e na projeção.
+          </p>
+        )}
       </motion.div>
 
       {/* (d) O que isso significa */}
@@ -454,7 +488,9 @@ export default function GraficoMediasMoveis31() {
         </ResponsiveContainer>
         <p className="text-xs text-gray-500 mt-1">
           Cada ponto = média dos 12 meses anteriores — remove sazonalidade e revela tendência real.
-          Dados: ANTAQ Estatística Aquaviária · Atualizado mensalmente.
+          Dados: ANTAQ Estatística Aquaviária
+          {(forecastConteiner.meta?.preliminar?.length ?? 0) > 0 ? ' (últimos meses do IBI)' : ''}
+          {' '}· Atualizado mensalmente.
         </p>
       </div>
     </div>

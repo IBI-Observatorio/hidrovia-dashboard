@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, Star, Database, Beaker, BookOpen, Calendar, MapPin, TrendingUp, FileText, Archive, RefreshCw, AlertTriangle, ExternalLink, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Star, Database, Beaker, BookOpen, MapPin, TrendingUp, FileText, Archive, RefreshCw, AlertTriangle, ExternalLink, BarChart3 } from 'lucide-react';
 import IndicadorInterativo from '@/components/antaq/IndicadorInterativo';
 import { CORES_CLUSTER, DATA_BASE } from '@/components/antaq/cores';
 
@@ -231,15 +231,6 @@ export default function IndicadorPage() {
                 <p className="text-sm text-gray-400">{indicador.premissas}</p>
               </Bloco>
             )}
-            <Bloco titulo="Atualização" icon={Calendar}>
-              <p className="text-sm text-gray-400">
-                Última geração:{' '}
-                <span className="text-gray-200">{indicador.ultima_atualizacao}</span>
-              </p>
-              <p className="mt-1 text-xs text-gray-500">
-                Atualizado mensalmente quando a ANTAQ publica novos dados.
-              </p>
-            </Bloco>
           </aside>
         </div>
       </section>

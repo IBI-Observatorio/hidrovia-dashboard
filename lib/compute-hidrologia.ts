@@ -47,6 +47,10 @@ export function computeHidrologiaDashboard(): HidrologiaDashboard {
   const serieAtual: PontoSerie[] = datas.map((d) => ({ data: d, cota: s2026[d] }));
   const analogos = projetaETAporAnalogos(serieAtual, 11.0);
 
+  // Dias até o cruzamento contados de HOJE (não da data do último dado, que tem lag):
+  // a data absoluta do ETA (data_p50) é fixa; a contagem decresce conforme o tempo passa.
+  const diasAteLimiar = diasDeHojeAte(analogos.data_p50) ?? analogos.dias_p50 ?? 0;
+
   // ── 4. IDN — fallback anual (SGC + Humaitá, últimas entradas disponíveis) ─
   const sgcCm     = lastValue(CURICURIARI_2026) ?? 550;
   const humaitaCm = lastValue(HUMAITA_2026) ?? 1411;
@@ -87,7 +91,7 @@ export function computeHidrologiaDashboard(): HidrologiaDashboard {
     `Calado ${cmrExtrapolado ? "estimado" : "disponível"}: <b>~${cmrFmt} m</b>` +
     (cmrExtrapolado ? ` (extrapolação — ITA acima do dataset da Capitania)` : ``) +
     ` — ${statusCmr}. ` +
-    `Modelo por análogos projeta CMR < <b>${calado_alvo} m</b> em <b>~${analogos.dias_p50 ?? "?"} dias</b> ` +
+    `Modelo por análogos projeta CMR < <b>${calado_alvo} m</b> em <b>~${analogos.data_p50 ? diasAteLimiar : "?"} dias</b> ` +
     `(IC80: ${janelaIC80}), probabilidade de cruzamento: ${probPct}%.`;
 
   return {
@@ -95,7 +99,7 @@ export function computeHidrologiaDashboard(): HidrologiaDashboard {
     dataUltimaLeitura: dataRecente,
     cmrAtual_m:        +cmrAtual.toFixed(1),
     cmrExtrapolado,
-    diasParaLimiar:    analogos.dias_p50 ?? 0,
+    diasParaLimiar:    diasAteLimiar,
     dataLimiar:        analogos.data_p50,
     janelaIC80,
     irc:               Math.round(ircResult.irc),
@@ -106,6 +110,16 @@ export function computeHidrologiaDashboard(): HidrologiaDashboard {
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────
+
+/** Dias inteiros de HOJE (data local) até a data ISO `YYYY-MM-DD` do alvo. null se sem alvo. */
+function diasDeHojeAte(isoAlvo: string | null): number | null {
+  if (!isoAlvo) return null;
+  const ymd = (y: number, m: number, d: number) => Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+  const now = new Date();
+  const hoje = ymd(now.getFullYear(), now.getMonth() + 1, now.getDate());
+  const [ay, am, ad] = isoAlvo.split("-").map(Number);
+  return ymd(ay, am, ad) - hoje;
+}
 
 function lastValue(obj: Record<string, number>): number | undefined {
   const keys = Object.keys(obj).sort();
