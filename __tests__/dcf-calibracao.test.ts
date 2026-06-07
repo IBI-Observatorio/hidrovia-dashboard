@@ -6,11 +6,16 @@ import { LEVERS_NEUTROS } from "@/lib/dcf/types";
 import {
   calibrarOficial,
   calibrarRealista,
+  slipRealista,
+  upliftMedianoDaClasse,
   TIR_REALISTA_ALVO,
 } from "@/lib/dcf/referenceClass";
 import { runMonteCarlo } from "@/lib/dcf/montecarlo";
 
-const params = paramsFromAsset(ef170 as unknown as Asset);
+const asset = ef170 as unknown as Asset;
+const params = paramsFromAsset(asset);
+const slip = slipRealista(asset, params.obraAnos);
+const calibrarRe = () => calibrarRealista(params, calibrarOficial(params).levers, { slipAnos: slip });
 
 describe("calibração ancorada nas fontes (ANTT + Frischtak)", () => {
   it("WACC do seed = 11,04% (ANTT)", () => {
@@ -38,17 +43,34 @@ describe("calibração ancorada nas fontes (ANTT + Frischtak)", () => {
     expect(opLeno.imposto).toBeLessThan(opLeno.receita * params.aliquotaImposto);
   });
 
-  it("Realista: TIR ancorada em 1,6% (Frischtak/AMZ2030)", () => {
-    const cof = calibrarOficial(params);
-    const re = calibrarRealista(params, cof.levers);
+  it("Realista: TIR 1,6% EMERGE da COMBINAÇÃO de alavancas (não de uma só)", () => {
+    const re = calibrarRe();
     expect(re.tir).toBeCloseTo(TIR_REALISTA_ALVO, 3);
     expect(TIR_REALISTA_ALVO).toBe(0.016);
-    expect(re.upliftImplicito).toBeGreaterThan(1); // sobrecusto, não economia
+    // três alavancas ativas simultaneamente:
+    expect(re.capexUplift).toBeCloseTo(upliftMedianoDaClasse(), 3); // CAPEX = classe ref.
+    expect(re.slipAnos).toBeGreaterThan(0);                          // slip de cronograma
+    expect(re.demandaHaircut).toBeLessThan(1);                       // haircut residual
+    expect(re.demandaHaircut).toBeGreaterThanOrEqual(0.3);          // dentro do piso
+    // e NÃO mais um CAPEX inflado isolado (+179%): o uplift fica na classe (~1,46)
+    expect(re.capexUplift).toBeLessThan(2);
+  });
+
+  it("uplift do realista fica a ±10pp da mediana da classe de referência", () => {
+    const re = calibrarRe();
+    const classe = upliftMedianoDaClasse();
+    expect(Math.abs(re.capexUplift - classe)).toBeLessThanOrEqual(0.10);
+    // slip lido do seed: execução realista (22) − obra (9)
+    expect(re.slipAnos).toBe(22 - 9);
+  });
+
+  it("slip do realista = execução realista − obra (sourced no seed)", () => {
+    expect(slip).toBe(22 - params.obraAnos);
   });
 
   it("retorno realista ~7× menor que o oficial (11,04% / 1,6%)", () => {
     const cof = calibrarOficial(params);
-    const re = calibrarRealista(params, cof.levers);
+    const re = calibrarRe();
     expect(re.tir).toBeLessThan(cof.tir);
     expect(cof.tir / re.tir).toBeGreaterThan(5); // ordem de grandeza do "7×"
   });
@@ -82,5 +104,16 @@ describe("Monte Carlo (Build Brief §4.4)", () => {
   it("tarifa-teto oficial preservada ≈ R$110,05/mil TKU", () => {
     const tarifa = params.tarifaTKU * 1000;
     expect(tarifa).toBeCloseTo(110.05, 2);
+  });
+
+  it("faixa P5–P95 do Monte Carlo COBRE [realista 1,6%, oficial 11,04%]", () => {
+    const cof = calibrarOficial(params);
+    const re = calibrarRe();
+    const mc = runMonteCarlo(params, cof.levers, 4000, 42);
+    // P5 abaixo do realista, P95 acima do oficial — as duas âncoras dentro da faixa
+    expect(mc.tirP5).toBeLessThanOrEqual(re.tir);
+    expect(mc.tirP95).toBeGreaterThanOrEqual(cof.tir);
+    // e a cobertura é NÃO-degenerada: P5 não colapsou em −100% (sem-TIR em massa)
+    expect(mc.tirP5).toBeGreaterThan(-0.5);
   });
 });

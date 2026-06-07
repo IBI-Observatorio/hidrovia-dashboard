@@ -14,7 +14,7 @@ import {
 } from "./types";
 import { paramsFromAsset, buildCashflow, tirCenario } from "./cashflow";
 import { npv } from "./irr";
-import { calibrarOficial, calibrarRealista } from "./referenceClass";
+import { calibrarOficial, calibrarRealista, slipRealista } from "./referenceClass";
 import { runMonteCarlo, type MonteCarloResult } from "./montecarlo";
 
 /** Avalia um conjunto de alavancas e devolve um `ScenarioResult` completo. */
@@ -37,8 +37,10 @@ export interface AnaliseAtivo {
   monteCarlo: MonteCarloResult;
   tarifaTeto: number;             // R$/mil TKU (tarifa-teto oficial, fixa)
   operatingRatio: number;         // O&M/receita do oficial (input sourçado)
-  upliftImplicito: number;        // multiplicador de CAPEX do realista
-  sobrecustoImplicitoPct: number; // upliftImplicito − 1
+  realistaUplift: number;         // multiplicador de CAPEX do realista (= classe ref.)
+  realistaSlipAnos: number;       // atraso do realista (execução − obra, sourced)
+  realistaHaircut: number;        // demandaHaircut residual (model output)
+  realistaHaircutPct: number;     // 1 − demandaHaircut (perda de demanda implícita)
   upliftClasse: number;           // mediana da classe de referência
   wacc: number;
 }
@@ -54,7 +56,9 @@ export function analisarAtivo(
 ): AnaliseAtivo {
   const params = paramsFromAsset(asset);
   const cof = calibrarOficial(params);
-  const cre = calibrarRealista(params, cof.levers);
+  const cre = calibrarRealista(params, cof.levers, {
+    slipAnos: slipRealista(asset, params.obraAnos),
+  });
 
   const oficial = avaliarCenario(asset, "oficial", "Oficial", cof.levers);
   const realista = avaliarCenario(asset, "realista", "Realista", cre.levers);
@@ -71,8 +75,10 @@ export function analisarAtivo(
     monteCarlo,
     tarifaTeto: params.tarifaTKU * 1000,
     operatingRatio: cof.operatingRatio,
-    upliftImplicito: cre.upliftImplicito,
-    sobrecustoImplicitoPct: cre.sobrecustoImplicitoPct,
+    realistaUplift: cre.capexUplift,
+    realistaSlipAnos: cre.slipAnos,
+    realistaHaircut: cre.demandaHaircut,
+    realistaHaircutPct: cre.haircutImplicito,
     upliftClasse: cre.upliftClasse,
     wacc: params.wacc,
   };

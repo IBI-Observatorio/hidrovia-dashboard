@@ -7,22 +7,30 @@
 //   • Slip de cronograma — atraso no início (IBAMA reabriu o EIA de 2020).
 //
 // E as ÂNCORAS DE CALIBRAÇÃO obrigatórias:
-//   • Oficial:  tarifa calibrada para TIR ≈ WACC (por construção).
-//   • Realista: O&M + uplift + haircut calibrados para TIR ≈ 11,04%
-//     (Frischtak/Amazônia 2030, jun/2024).
+//   • Oficial:  inputs sourçados → TIR ≈ WACC (emerge, sem botão de fechamento).
+//   • Realista: TIR-alvo de Frischtak (1,6%) alcançada pela COMBINAÇÃO das três
+//     alavancas — CAPEX = mediana da classe de ref. (sourced) + slip = execução
+//     realista − obra (sourced) + haircut de demanda RESIDUAL (resolvido) — em vez
+//     de inflar só o CAPEX. A TIR emerge da combinação, como no caso oficial.
 
 import {
   type ModelingParams,
   type Levers,
   type ReferenceClassEntry,
+  type Asset,
   LEVERS_NEUTROS,
+  numVal,
 } from "./types";
 import { tirCenario } from "./cashflow";
 import { solve } from "./irr";
 import { randn } from "../prng";
 import railRefClass from "../../data/referenceClass/rail.json";
 
-/** Alvo do caso realista: TIR ≈ 1,6% (Frischtak/Amazônia 2030, 06/nov/2024). */
+/**
+ * Alvo do caso realista: TIR = 1,6% (Frischtak/Amazônia 2030, 06/nov/2024).
+ * É o PISO PESSIMISTA sourçado — único valor de TIR realista citável na fonte
+ * primária (junto do 11,04% oficial). Não há, na fonte, uma faixa ponderada.
+ */
 export const TIR_REALISTA_ALVO = 0.016;
 
 /** Classe de referência ferroviária carregada do seed. */
@@ -68,35 +76,66 @@ export function calibrarOficial(params: ModelingParams): CalibracaoOficial {
 
 export interface CalibracaoRealista {
   levers: Levers;
-  upliftImplicito: number;        // multiplicador de CAPEX implícito no alvo
-  sobrecustoImplicitoPct: number; // upliftImplicito − 1
-  upliftClasse: number;           // mediana da classe de referência (p/ comparar)
+  capexUplift: number;     // multiplicador de CAPEX = mediana da classe (sourced)
+  slipAnos: number;        // atraso = execução realista − obra (sourced no seed)
+  demandaHaircut: number;  // alavanca RESIDUAL resolvida p/ a TIR-alvo (model output)
+  haircutImplicito: number;// 1 − demandaHaircut (perda de demanda implícita)
+  upliftClasse: number;    // mediana da classe de referência (= capexUplift)
   tir: number;
 }
 
+export interface RealistaOpts {
+  target?: number;      // TIR-alvo (default 1,6% = piso Frischtak)
+  capexUplift?: number; // default = mediana da classe de ref.
+  slipAnos?: number;    // default 0; caller passa (execução realista − obra) do seed
+  haircutFloor?: number;// piso do haircut residual (default 0,3)
+}
+
+/** Slip de cronograma do realista = execução realista − obra oficial (anos), do seed. */
+export function slipRealista(asset: Asset, obraAnos: number): number {
+  const exec = asset.realistaAnchor?.execucaoAnos;
+  return exec !== undefined ? Math.max(0, numVal(exec) - obraAnos) : 0;
+}
+
 /**
- * Calibra o caso realista para a TIR-alvo (default 1,6%, Frischtak/Amazônia 2030,
- * 06/nov/2024). Parte do oficial (tarifa-teto + operating ratio + tributos reais) e
- * resolve o SOBRECUSTO DE CAPEX implícito que reconcilia com a TIR realista.
+ * Calibra o caso realista para a TIR-alvo (default 1,6%, piso Frischtak/Amazônia
+ * 2030, 06/nov/2024) pela COMBINAÇÃO das três alavancas, do mesmo jeito honesto que
+ * o oficial — deixando a TIR EMERGIR, sem inflar uma alavanca só:
+ *   • CAPEX  = mediana da classe de referência (sourced; Flyvbjerg/Frischtak ~+46%).
+ *   • Slip   = execução realista − obra (sourced no seed; 22 − 9 = 13 anos).
+ *   • Haircut de demanda = alavanca RESIDUAL resolvida p/ fechar na TIR-alvo.
  *
- * ATENÇÃO (proxy honesto): é uma alavanca ÚNICA. A Frischtak chega a 1,6% com
- * CAPEX +46% (parâmetros da FICO 1) E execução 9→22 anos. Como aqui só mexemos no
- * CAPEX, o uplift implícito SUPERESTIMA o sobrecusto (absorve também o atraso). Os
- * 1,6% são a âncora sourçada; este uplift é só a leitura "se fosse só custo".
- * TIR é monótona decrescente no uplift → bisseção robusta.
+ * Fixadas as duas alavancas sourçadas, a TIR é monótona crescente no haircut
+ * (mais demanda ⇒ mais TIR) → bisseção robusta em [haircutFloor, 1]. Usa tirSafe
+ * (NaN→−1) para não saturar no platô sem-TIR. O haircut resultante é SAÍDA DE
+ * MODELO (não um número sourçado): é o que sobra de demanda/tarifa para reconciliar
+ * o custo+atraso sourçados com a TIR realista sourçada.
  */
 export function calibrarRealista(
   params: ModelingParams,
   oficialLevers: Levers,
-  target: number = TIR_REALISTA_ALVO,
+  opts: RealistaOpts = {},
 ): CalibracaoRealista {
-  const f = (uplift: number) => tirSafe(params, { ...oficialLevers, capexUplift: uplift });
-  const uplift = solve(f, target, 1, 12); // CAPEX ×1 (oficial) … ×12
-  const levers: Levers = { ...oficialLevers, capexUplift: uplift };
+  const target = opts.target ?? TIR_REALISTA_ALVO;
+  const capexUplift = opts.capexUplift ?? upliftMedianoDaClasse();
+  const slipAnos = Math.max(0, opts.slipAnos ?? 0);
+  const haircutFloor = opts.haircutFloor ?? 0.3;
+
+  const f = (h: number) =>
+    tirSafe(params, { ...oficialLevers, capexUplift, slipAnos, demandaHaircut: h });
+  let demandaHaircut = solve(f, target, haircutFloor, 1);
+  // Alvo acima do alcançável só com haircut (TIR a haircut=1 já < alvo, ou alvo
+  // acima da TIR sem haircut): não há demanda a "recuperar" acima do oficial →
+  // fixa haircut=1 (sem corte) e deixa a TIR emergir das outras duas alavancas.
+  if (!isFinite(demandaHaircut)) demandaHaircut = 1;
+
+  const levers: Levers = { ...oficialLevers, capexUplift, slipAnos, demandaHaircut };
   return {
     levers,
-    upliftImplicito: uplift,
-    sobrecustoImplicitoPct: uplift - 1,
+    capexUplift,
+    slipAnos,
+    demandaHaircut,
+    haircutImplicito: 1 - demandaHaircut,
     upliftClasse: upliftMedianoDaClasse(),
     tir: tirCenario(params, levers),
   };
@@ -114,14 +153,26 @@ export interface DistribParams {
   slipSigma: number;
 }
 
+/**
+ * Distribuições do Monte Carlo. A mediana do uplift é a MESMA da classe de
+ * referência usada no realista (`upliftMedianoDaClasse`), garantindo que o sorteio
+ * e o caso realista partam da mesma premissa de custo.
+ *
+ * `upliftSigma` é MODELADO (sem fonte): foi calibrado em 0,33 para que a faixa
+ * P5–P95 da TIR PASSE A COBRIR as duas âncoras — o oficial (11,04%, que exige um
+ * draw de custo ABAIXO da mediana da classe, logo na cauda superior) e o realista
+ * (~1,6%, cauda inferior) — sem degenerar o P5 para −100% (o que ocorre com sigmas
+ * largos demais, que geram muitos draws sem TIR). Valor mínimo que cobre as duas
+ * âncoras de forma não-degenerada. Ver `distribPadrao` como ponto de sensibilidade.
+ */
 export function distribPadrao(): DistribParams {
   return {
     upliftMediana: upliftMedianoDaClasse(),
-    upliftSigma: 0.22,
-    haircutMediana: 0.92,
-    haircutSigma: 0.1,
-    slipMedia: 2,
-    slipSigma: 0.6,
+    upliftSigma: 0.33,    // modelado — calibrado p/ cobertura P5–P95 das âncoras
+    haircutMediana: 0.92, // modelado — realização média de demanda
+    haircutSigma: 0.1,    // modelado
+    slipMedia: 2,         // modelado — atraso médio de cronograma (anos)
+    slipSigma: 0.6,       // modelado
   };
 }
 

@@ -16,7 +16,7 @@ import { AlertTriangle, Info, TrendingDown } from "lucide-react";
 import type { Asset, Levers, Num } from "@/lib/dcf/types";
 import { LEVERS_NEUTROS } from "@/lib/dcf/types";
 import { paramsFromAsset, tirCenario, buildCashflow } from "@/lib/dcf/cashflow";
-import { calibrarOficial, calibrarRealista, distribPadrao } from "@/lib/dcf/referenceClass";
+import { calibrarOficial, calibrarRealista, slipRealista, distribPadrao } from "@/lib/dcf/referenceClass";
 import { runMonteCarlo } from "@/lib/dcf/montecarlo";
 import { npv } from "@/lib/dcf/irr";
 import { num, pct, sign } from "@/lib/radar/format";
@@ -211,7 +211,9 @@ export default function StressDCF({ asset }: { asset: Asset }) {
   // Calibração das âncoras + Monte Carlo (reprodutível; não recalcula no slider).
   const base = useMemo(() => {
     const cof = calibrarOficial(params);
-    const cre = calibrarRealista(params, cof.levers);
+    const cre = calibrarRealista(params, cof.levers, {
+      slipAnos: slipRealista(asset, params.obraAnos),
+    });
     const mc = runMonteCarlo(params, cof.levers, 4000, 42);
     const oficialVpl = npv(params.wacc, buildCashflow(params, cof.levers).fcl);
     const realistaVpl = npv(params.wacc, buildCashflow(params, cre.levers).fcl);
@@ -295,7 +297,7 @@ export default function StressDCF({ asset }: { asset: Asset }) {
           tir={base.cre.tir}
           spread={base.cre.tir - params.wacc}
           vpl={base.realistaVpl}
-          nota={`Frischtak/Amazônia 2030 (06/nov/2024): TIR ${pct(base.cre.tir, 1)}. Sobrecusto de CAPEX implícito +${num(base.cre.sobrecustoImplicitoPct * 100, 0)}% (alavanca única — absorve também o atraso 9→22 anos; classe ferroviária +${num((base.cre.upliftClasse - 1) * 100, 0)}%).`}
+          nota={`Frischtak/Amazônia 2030 (06/nov/2024): TIR ${pct(base.cre.tir, 1)} (piso pessimista). Emerge da COMBINAÇÃO: CAPEX +${num((base.cre.capexUplift - 1) * 100, 0)}% (mediana da classe de ref.) + execução ${num(params.obraAnos, 0)}→${num(params.obraAnos + base.cre.slipAnos, 0)} anos (slip ${num(base.cre.slipAnos, 0)}a) + haircut de demanda −${num(base.cre.haircutImplicito * 100, 0)}% (resíduo do modelo).`}
         />
         <CenarioCard
           titulo="Custom"
@@ -317,7 +319,7 @@ export default function StressDCF({ asset }: { asset: Asset }) {
               referencia={{ label: "teto oficial", value: tarifaTetoMilTKU }} />
             <Slider label="Uplift de CAPEX" unit="%" value={upliftPct} min={0} max={200} step={1}
               fmt={(v) => num(v, 0)} onChange={setUpliftPct}
-              referencia={{ label: "implícito p/ realista 1,6%", value: base.cre.sobrecustoImplicitoPct * 100 }} />
+              referencia={{ label: "mediana da classe (realista)", value: (base.cre.capexUplift - 1) * 100 }} />
             <Slider label="Haircut de demanda" unit="%" value={haircutPct} min={0} max={50} step={1}
               fmt={(v) => num(v, 0)} onChange={setHaircutPct} />
             <Slider label="Slip de cronograma" unit="anos" value={slip} min={0} max={8} step={1}
@@ -353,9 +355,11 @@ export default function StressDCF({ asset }: { asset: Asset }) {
           <div className="mt-5 flex items-start gap-2 rounded-lg border border-ouro/20 bg-ouro/5 p-3 text-[11px] text-gray-400">
             <TrendingDown className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ouro" />
             <span>
-              Frischtak chega a 1,6% combinando <strong className="text-gray-300">CAPEX +46%</strong>{" "}
-              (parâmetros da FICO 1) e execução de <strong className="text-gray-300">9→22 anos</strong>.
-              A alavanca única de CAPEX aqui é um proxy — superestima o sobrecusto.
+              O realista combina <strong className="text-gray-300">CAPEX +{num((base.cre.capexUplift - 1) * 100, 0)}%</strong>{" "}
+              (mediana da classe de ref.), execução de{" "}
+              <strong className="text-gray-300">{num(params.obraAnos, 0)}→{num(params.obraAnos + base.cre.slipAnos, 0)} anos</strong>{" "}
+              e <strong className="text-gray-300">haircut de demanda −{num(base.cre.haircutImplicito * 100, 0)}%</strong> (resíduo).
+              A TIR de 1,6% (piso Frischtak) EMERGE da combinação — não de uma alavanca única.
             </span>
           </div>
         </div>
@@ -413,8 +417,9 @@ export default function StressDCF({ asset }: { asset: Asset }) {
       <footer className="flex items-start gap-2 border-t border-white/10 pt-4 text-[11px] leading-relaxed text-gray-500">
         <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-600" />
         <span>
-          Os pontos âncora (oficial 11,04% e realista 1,6%) são <strong>números públicos de fonte
-          citável</strong>; a distribuição e o sobrecusto implícito são <strong>saída de modelo</strong>,
+          Os pontos âncora (oficial 11,04% e realista 1,6%), o uplift de CAPEX (classe de ref.) e o
+          slip de cronograma (execução realista) são <strong>números de fonte citável</strong>; o
+          haircut de demanda residual e a distribuição do Monte Carlo são <strong>saída de modelo</strong>,
           ilustrativos. Não constituem recomendação de investimento. Fontes: ANTT (params oficiais,
           WACC, demanda), Frischtak/Amazônia 2030 (06/nov/2024 — TIR realista 1,6%), TCU (furo de
           funding) e classe de referência ferroviária (Flyvbjerg 2002).
