@@ -19,7 +19,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import Anthropic from "@anthropic-ai/sdk";
-import { fetchTodasEstacoes, fetchPrevisao2026 } from "@/lib/fetch-dados";
+import { fetchPrevisao2026 } from "@/lib/fetch-dados";
+import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import { IDN_RECENTE_DIARIO } from "@/lib/idn-historico-calculado";
 import type { InsightData } from "@/lib/gera-insights";
 
@@ -88,9 +89,10 @@ async function handler(request: NextRequest) {
   const dataRef = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
 
   try {
-    const [dados, previsao] = await Promise.all([fetchTodasEstacoes(), fetchPrevisao2026()]);
+    const [dadosDiarios, previsao] = await Promise.all([obterDadosDiariosANA(), fetchPrevisao2026()]);
+    const dados = dadosDiarios.dados;
 
-    // ── Linhas por estação (mesma formatação do gera-insights-ai.mjs) ──────────
+    // ── Linhas por estação — usa o mesmo cache dos cards do /monitor ───────────
     const sinal = (v: number) => (v >= 0 ? `+${v}` : `${v}`);
     const linhasEstacoes = [
       "Manaus", "Itacoatiara", "Manacapuru",
@@ -105,9 +107,11 @@ async function handler(request: NextRequest) {
       .filter(Boolean)
       .join("\n");
 
-    // ── IDN: série diária calculada (mesma fonte do gauge histórico) ───────────
+    // ── IDN: usa idn_atual do cache diário (mesma fonte do gauge do /monitor) ──
+    // Fallback para série histórica compilada se o cache não tiver IDN ao vivo.
+    const idnAtualCache = dadosDiarios.idn_atual;
     const serie30 = IDN_RECENTE_DIARIO.slice(-30);
-    const idnAtual = +(serie30.at(-1)?.idn ?? 0).toFixed(3);
+    const idnAtual = +(idnAtualCache ?? serie30.at(-1)?.idn ?? 0).toFixed(3);
     const idnD30   = serie30.at(0)?.idn ?? idnAtual;
     const tendIDN  = +(idnAtual - idnD30).toFixed(3);
     const idnsArr  = serie30.map((p) => p.idn);
