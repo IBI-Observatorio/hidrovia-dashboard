@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Train } from "lucide-react";
+import { redirect } from "next/navigation";
+import { ArrowRight, Train, ShieldCheck } from "lucide-react";
 import type { Asset } from "@/lib/dcf/types";
 import { analisarAtivo } from "@/lib/dcf";
 import { ESTAGIOS, REGIME_INFO, classificaRegime } from "@/lib/radar/maturation";
 import { RADAR_ASSETS, fullAsset } from "@/lib/radar/assets";
 import { num } from "@/lib/radar/format";
-
-export const revalidate = 21600;
+import { clienteRadarAtual } from "@/lib/radar/acesso";
 
 export const metadata: Metadata = {
   title: "Radar de Maturação Ferroviária · Observatório IBI",
@@ -15,7 +15,10 @@ export const metadata: Metadata = {
     "Inteligência sobre a maturação dos próximos leilões ferroviários — esteira de estágios, P(leilão) e motor DCF. Piloto: Ferrogrão (EF-170).",
 };
 
-export default function RadarIndexPage() {
+export default async function RadarIndexPage() {
+  const cliente = await clienteRadarAtual();
+  if (!cliente) redirect("/radar/acesso");
+
   // Piloto com motor DCF completo (EF-170) — alimenta o regime econômico.
   const pilotoEntry = RADAR_ASSETS.find((a) => a.completo)!;
   const piloto = analisarAtivo(fullAsset(pilotoEntry) as Asset, { mcN: 4000, seed: 42 });
@@ -24,9 +27,14 @@ export default function RadarIndexPage() {
   return (
     <main className="mx-auto max-w-6xl px-4 pb-20 pt-28 md:pt-32">
       <header className="max-w-3xl">
-        <p className="inline-flex items-center gap-2 rounded-full border border-ibi-green/30 bg-ibi-green/10 px-3 py-1 text-xs font-medium text-ibi-green">
-          <Train className="h-3.5 w-3.5" /> Radar de Maturação
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="inline-flex items-center gap-2 rounded-full border border-ibi-green/30 bg-ibi-green/10 px-3 py-1 text-xs font-medium text-ibi-green">
+            <Train className="h-3.5 w-3.5" /> Radar de Maturação
+          </p>
+          <p className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-300">
+            <ShieldCheck className="h-3.5 w-3.5 text-ibi-green" /> Acesso: <strong className="text-white">{cliente}</strong>
+          </p>
+        </div>
         <h1 className="mt-4 text-3xl font-bold text-white md:text-4xl">
           Antecipando a maturação dos leilões ferroviários
         </h1>
