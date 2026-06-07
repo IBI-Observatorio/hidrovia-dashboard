@@ -1,0 +1,112 @@
+{
+  "id": "ef-170",
+  "name": "Ferrogrão (EF-170)",
+  "sub": "Sinop (MT) → Miritituba/Itaituba (PA)",
+  "route": "Corredor de grãos do Médio-Norte ao Arco Norte",
+  "arcoNorte": true,
+  "params": {
+    "anoBase": { "value": 2026, "unit": "ano", "modeled": true,
+      "source": { "label": "Premissa de modelagem — início da concessão (t=0)" } },
+    "prazoAnos": { "value": 69, "unit": "anos",
+      "source": { "label": "ANTT — Ferrogrão EF-170: prazo de 69 anos, vedada a prorrogação", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
+    "obraAnos": { "value": 9, "unit": "anos",
+      "source": { "label": "Prazo de execução do projeto (cenário oficial)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } },
+    "rampaAnos": { "value": 4, "unit": "anos", "modeled": true,
+      "source": { "label": "Premissa — rampa de demanda pós-obra (não há fonte oficial p/ a curva de captura)" } },
+    "rampaInicial": { "value": 0.6, "unit": "fração", "modeled": true,
+      "source": { "label": "Premissa — captura de demanda no 1º ano de operação (sem fonte oficial)" } },
+    "extensaoKm": { "value": 933, "unit": "km",
+      "source": { "label": "ANTT — extensão Sinop–Miritituba (+ ramais ~43 km)", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
+    "distTarifavelKm": { "value": 933, "unit": "km", "modeled": true,
+      "source": { "label": "Premissa — distância média tarifável ≈ extensão (sem fonte oficial)" } },
+    "capexImplant": { "value": 8.26, "unit": "R$ bi",
+      "source": { "label": "ANTT — CAPEX de implantação (total CAPEX R$ 25,20 bi)", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
+    "capexRecorr": { "value": 16.93, "unit": "R$ bi",
+      "source": { "label": "ANTT — CAPEX recorrente da concessão", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
+    "opexTotal": { "value": 49.25, "unit": "R$ bi",
+      "source": { "label": "ANTT — OpEx total da concessão (informativo)", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
+    "capacidadeMt": { "value": 58, "unit": "Mt/ano",
+      "source": { "label": "ANTT — capacidade instalada de 58 milhões de t", "url": "https://portal.antt.gov.br/en/resultado/-/asset_publisher/m2By5inRuGGs/content/id/2428779", "date": "2025" } },
+    "demandaCurva": [
+      { "ano": 2020, "mt": 23.41 },
+      { "ano": 2030, "mt": 33.54 },
+      { "ano": 2040, "mt": 38.63 },
+      { "ano": 2050, "mt": 40.6 }
+    ],
+    "tarifaTKU": { "value": 0.11005, "unit": "R$/TKU",
+      "source": { "label": "Tarifa Ferrogrão = R$ 110,05/mil TKU (ANTT / Frischtak-AMZ2030)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } },
+    "opexPctReceita": { "value": 0.65, "unit": "operating ratio", "modeled": true,
+      "source": { "label": "Operating ratio (O&M/receita) = 65% — central da faixa heavy-haul (~60–75%); com tributos (34%) + depreciação + aporte reais, reproduz a TIR oficial = WACC 11,04% sem botão de fechamento" } },
+    "aliquotaImposto": { "value": 0.34, "unit": "fração",
+      "source": { "label": "IRPJ (15% + adicional 10%) + CSLL 9% = 34% sobre o lucro tributável", "date": "2024" } },
+    "depreciacaoAnos": { "value": 25, "unit": "anos", "modeled": true,
+      "source": { "label": "Premissa — depreciação linear do CAPEX de implantação (escudo fiscal)" } },
+    "aportePublico": [
+      { "ano": 2028, "valor": 0.33 },
+      { "ano": 2029, "valor": 1.40 },
+      { "ano": 2030, "valor": 1.93 }
+    ],
+    "wacc": { "value": 0.1104, "unit": "fração",
+      "source": { "label": "ANTT — taxa de desconto (metodologia WACC) = 11,04%; por construção a TIR oficial = WACC", "url": "https://ppi.gov.br/projetos/ferrovia-ef-170-mt-pa-ferrograo/", "date": "2024" } }
+  },
+  "outorgaMinima": { "value": 66.48, "unit": "R$ mi",
+    "source": { "label": "ANTT — outorga (valor mínimo)", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
+  "realistaAnchor": {
+    "tir": { "value": 0.016, "unit": "fração",
+      "source": { "label": "Frischtak / Amazônia 2030 — TIR realista 1,6% (vs 11,04% otimista = 7× menor)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024-11-06" } },
+    "capexRealista": { "value": 36.86, "unit": "R$ bi",
+      "source": { "label": "Frischtak/AMZ2030 — CAPEX realista (parâmetros da FICO 1)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } },
+    "aporteRealista": { "value": 32.5, "unit": "R$ bi",
+      "source": { "label": "Frischtak/AMZ2030 — aporte público ≈ R$ 32,5 bi (~90% do custo)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } },
+    "execucaoAnos": { "value": 22, "unit": "anos",
+      "source": { "label": "Frischtak/AMZ2030 — execução realista 22 anos (vs 9 oficial)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } }
+  },
+  "referenceClass": [],
+  "risk": {
+    "stf": "atencao",
+    "tcu": "atencao",
+    "ambiental": "risco",
+    "concessionaria": "na",
+    "modelagem": "atencao",
+    "notes": {
+      "stf": "ADI 6553 (PSOL) questiona a Lei 13.452/2017, que reduziu ~862 ha do Parque Nacional do Jamanxim para o leito da EF-170. Em mai/2026 o STF manteve a redução (6 votos). Fonte: STF/Mattos Filho.",
+      "tcu": "TCU manteve suspensa a análise da concessão por falta de maturidade e riscos; apontou furo de funding no aporte cruzado (demanda R$ 3,66 bi vs R$ 2,25 bi projetado). Fonte: TCU/MPF.",
+      "ambiental": "Licenciamento (EIA) e custos socioambientais em aberto; o próprio governo admite que parte sobra ao erário. Fonte: ISA/IHU.",
+      "modelagem": "Custo oficial (R$ 11,45 bi de capital, 9 anos) é contestado por Frischtak: com parâmetros da FICO 1, CAPEX vai a R$ 36,86 bi e TIR cai a 1,6%. Fonte: AMZ2030."
+    }
+  },
+  "predictions": [],
+  "funding": {
+    "aporteNecessario": { "value": 3.66, "unit": "R$ bi",
+      "source": { "label": "TCU — demandas financeiras vinculadas ao modelo de aporte cruzado", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" } },
+    "coberturaCruzada": [
+      { "fonte": "Rumo Malha Paulista + MRS + Vale/EFVM (outorgas)", "valor": { "value": 2.25, "unit": "R$ bi",
+        "source": { "label": "ANTT/Min. Transportes — investimento cruzado projetado (apontado pelo TCU)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" } } }
+    ],
+    "deficit": { "value": 1.41, "unit": "R$ bi",
+      "source": { "label": "Déficit de funding = demanda 3,66 − projetado 2,25 (risco apontado pelo TCU)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" } }
+  },
+  "scenariosMeta": {
+    "oficial": { "label": "Oficial (ANTT)", "nota": "TIR = WACC = 11,04% por construção; tarifa-teto R$ 110,05/mil TKU." },
+    "realista": { "label": "Realista (Frischtak)", "nota": "Amazônia 2030 (06/nov/2024): TIR 1,6% — retorno ~7× menor que o oficial." }
+  },
+  "maturacao": {
+    "estagioAtual": 2,
+    "leilaoAnunciado": null,
+    "gateRisk": "alto",
+    "drivers": [
+      "Estudos técnicos aprovados pelo Min. dos Transportes (dez/2025).",
+      "TCU manteve SUSPENSA a análise da concessão (falta de maturidade + furo de funding).",
+      "STF: ADI 6553 (Jamanxim) pendente; leilão empurrado para além de 2026."
+    ],
+    "fonte": { "label": "ANTT / TCU / STF / Neofeed", "url": "https://neofeed.com.br/economia/concessao-da-ferrograo-sai-de-novo-dos-trilhos-e-empurra-o-leilao-para-alem-de-2026/en/", "date": "2026" }
+  },
+  "tabuleiro": {
+    "Vale": {
+      "papel": "A Vale/EFVM compõe a cobertura cruzada do aporte: parte dos R$ 2,25 bi de investimento cruzado viria de outorgas (Rumo Malha Paulista, MRS e EFVM/Vale), conforme o TCU.",
+      "moveNaMalha": "Ferrogrão consolida o escoamento de grãos pelo Arco Norte (Miritituba), rota concorrente/complementar aos corredores Sudeste; o furo de funding de ~R$ 1,4 bi pode respingar em quem banca a cobertura cruzada.",
+      "exposicao": "media",
+      "fonte": { "label": "TCU / MPF (aporte cruzado)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" }
+    }
+  }
+}

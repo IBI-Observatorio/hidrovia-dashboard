@@ -1,0 +1,34 @@
+{
+  "id": "ef-151-norte",
+  "name": "Ferrovia Norte–Sul — Trecho Norte (EF-151)",
+  "sub": "Açailândia (MA) → Barcarena (PA)",
+  "route": "Extensão norte da FNS; conexão ao Arco Norte (Pará)",
+  "arcoNorte": true,
+  "parcial": true,
+  "fatos": {
+    "outorgaEstimada": { "value": 2.7, "unit": "R$ bi",
+      "source": { "label": "EPL — estimativa de outorga da Ferrovia Norte-Sul (referência histórica)", "url": "https://www.epl.gov.br/leilao-da-ferrovia-norte-sul-rendera-r-27-bilhoes-ao-governo-federal", "date": "2019" } }
+  },
+  "maturacao": {
+    "estagioAtual": 1,
+    "leilaoAnunciado": 2027,
+    "gateRisk": "medio",
+    "drivers": [
+      "Estudos técnicos e ambientais do trecho Açailândia–Barcarena concluídos.",
+      "Leilão adiado de mar/2027 p/ out/2027 (pipeline de concessões empurrado).",
+      "Trecho central da FNS já concedido à Rumo (2019) — este é a extensão norte."
+    ],
+    "fonte": { "label": "PPI / Diário do Comércio / Senado", "url": "https://ppi.gov.br/projetos/ef-151-ferrovia-norte-sul-trecho-de-acailandia-ma-a-barcarena-pa/", "date": "2026" }
+  },
+  "scenariosMeta": {
+    "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
+  },
+  "tabuleiro": {
+    "Vale": {
+      "papel": "A Vale opera a Estrada de Ferro Carajás (EFC, Carajás–São Luís) na mesma região; a extensão norte da FNS a Barcarena (PA) cria uma rota alternativa de escoamento no Pará.",
+      "moveNaMalha": "Um novo acesso a Barcarena pode competir/complementar o eixo Carajás–Itaqui da Vale no Arco Norte; trecho central da FNS já é da Rumo (2019).",
+      "exposicao": "baixa",
+      "fonte": { "label": "PPI / EF-151 (público)", "url": "https://ppi.gov.br/projetos/ef-151-ferrovia-norte-sul-trecho-de-acailandia-ma-a-barcarena-pa/", "date": "2026" }
+    }
+  }
+}
