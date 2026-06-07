@@ -18,7 +18,7 @@
     "extensaoKm": { "value": 933, "unit": "km",
       "source": { "label": "ANTT — extensão Sinop–Miritituba (+ ramais ~43 km)", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
     "distTarifavelKm": { "value": 933, "unit": "km", "modeled": true,
-      "source": { "label": "Premissa — distância média tarifável ≈ extensão (sem fonte oficial)" } },
+      "source": { "label": "TODO/modeled — distância média tarifável ≈ extensão (933 km), SEM fonte. O esperado p/ corredor de grãos é dist. média < extensão, mas (a) não há base pública para o valor e (b) reduzi-la derruba a receita e quebra a calibração oficial (TIR=WACC depende do operating ratio 0,65 reproduzir 11,04%); mudar exige re-derivar o operating ratio. Aguardando fonte/decisão do Bruno antes de alterar." } },
     "capexImplant": { "value": 8.26, "unit": "R$ bi",
       "source": { "label": "ANTT — CAPEX de implantação (total CAPEX R$ 25,20 bi)", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
     "capexRecorr": { "value": 16.93, "unit": "R$ bi",

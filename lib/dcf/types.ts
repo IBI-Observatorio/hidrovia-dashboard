@@ -138,6 +138,13 @@ export interface Asset {
   route: string;
   arcoNorte?: boolean;
   params: Record<string, Num | number | DemandaPonto[] | AportePonto[]>;
+  /** Âncoras do cenário realista (Frischtak), sourçadas no seed. */
+  realistaAnchor?: {
+    tir?: Num;
+    capexRealista?: Num;
+    aporteRealista?: Num;
+    execucaoAnos?: Num;
+  };
   referenceClass: ReferenceClassEntry[];
   risk?: RiskVector;
   predictions?: Prediction[];

@@ -74,9 +74,10 @@ function histograma(tirs: number[], bins = 24): { bin: number; count: number }[]
 /**
  * Roda o Monte Carlo. Reprodutível: mesma `seed` ⇒ mesmo resultado.
  *
- * @param baseLevers alavancas calibradas do oficial (tarifa-teto + O&M de
- *                   fechamento) sobre as quais o sorteio de uplift/haircut/slip
- *                   é aplicado.
+ * @param baseLevers alavancas do oficial (tarifa-teto + operating ratio sourçado)
+ *                   sobre as quais o sorteio de uplift/haircut/slip é aplicado. A
+ *                   mediana do uplift = mediana da classe de ref. (mesma premissa de
+ *                   custo do realista); `upliftSigma` calibra a cobertura P5–P95.
  */
 export function runMonteCarlo(
   params: ModelingParams,
