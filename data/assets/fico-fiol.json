@@ -1,0 +1,26 @@
+{
+  "id": "fico-fiol",
+  "name": "Corredor Leste-Oeste (FICO + FIOL)",
+  "sub": "Água Boa (MT) → Mara Rosa (GO) → Barreiras/Caetité (BA)",
+  "route": "Integração Centro-Oeste–Nordeste, escoamento p/ Ilhéus (BA)",
+  "arcoNorte": false,
+  "parcial": true,
+  "fatos": {
+    "extensaoKm": { "value": 1700, "unit": "km",
+      "source": { "label": "PPI — Corredor Leste-Oeste: ~1,7 mil km em 4 segmentos (Fiol 2/3 + Fico 1), exclui Fiol 1 (Bamin)", "url": "https://ppi.gov.br/projetos/corredor-ferroviario-leste-oeste/", "date": "2026" } }
+  },
+  "maturacao": {
+    "estagioAtual": 2,
+    "leilaoAnunciado": 2026,
+    "gateRisk": "medio",
+    "drivers": [
+      "Modelagem de concessão concluída pelo Min. dos Transportes (sem o trecho Fiol 1).",
+      "Edital previsto p/ 2026; leilão reagendado p/ dez/2026 (após ANTT/TCU).",
+      "Obras de Fico/Fiol avançam em paralelo (execução pública)."
+    ],
+    "fonte": { "label": "PPI / Agência iNFRA / Tribuna dos Municípios", "url": "https://ppi.gov.br/projetos/corredor-ferroviario-leste-oeste/", "date": "2026" }
+  },
+  "scenariosMeta": {
+    "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
+  }
+}

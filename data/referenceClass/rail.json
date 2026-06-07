@@ -1,0 +1,20 @@
+[
+  {
+    "projeto": "Amostra global de ferrovias (258 projetos) — sobrecusto médio de CAPEX",
+    "sobrecustoPct": 0.447,
+    "fonte": {
+      "label": "Flyvbjerg, Holm & Buhl — Underestimating Costs in Public Works Projects (JAPA)",
+      "url": "https://doi.org/10.1080/01944360208976273",
+      "date": "2002"
+    }
+  },
+  {
+    "projeto": "Ferrogrão — sobrecusto implícito (CAPEX realista R$36,86 bi vs oficial R$25,20 bi, parâmetros FICO 1)",
+    "sobrecustoPct": 0.463,
+    "fonte": {
+      "label": "Frischtak / Amazônia 2030 — Lições para o Planejamento de Infraestrutura na Amazônia",
+      "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/",
+      "date": "2024-11-06"
+    }
+  }
+]

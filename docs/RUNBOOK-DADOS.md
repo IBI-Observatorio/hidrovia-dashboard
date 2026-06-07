@@ -301,3 +301,29 @@ npm run update-calendar          # → public/data/severity-calendar.json + lib/
 >
 > Docs relacionadas: `docs/TENDENCIA-CARGAS.md` (forecast), `docs/RAILWAY-CRON.md`
 > (briefing — histórico; o cron real é o `briefing-semanal.yml`), `docs/severity-calendar.md`.
+
+---
+
+## Radar de Maturação Ferroviária (`/radar`) — seeds de curadoria manual
+
+Diferente dos JSONs hidrológicos/portuários, os dados do Radar **não têm gerador
+automático** (Fase 1). São **seeds versionados, editados à mão**, com `source`/`date`
+em cada campo:
+
+| Arquivo | O que é | Fonte |
+|---------|---------|-------|
+| `data/assets/ef-170.json` | Piloto Ferrogrão — params + maturação (CAPEX/demanda/tarifa/**WACC 11,04%**/aporte/risco/funding) | **ANTT** (params, WACC, demanda, capacidade 58 Mt), **Frischtak/Amazônia 2030 06/nov/2024** (TIR realista 1,6%), **TCU** (furo funding), **STF** (ADI 6553) |
+| `data/assets/fico-fiol.json` · `ef-118.json` · `ef-151-norte.json` | 3 ativos PARCIAIS (só maturação sourçada; sem DCF) | PPI / ANTT / imprensa setorial |
+| `data/referenceClass/rail.json` | Classe de referência de sobrecusto ferroviário | Flyvbjerg 2002 (+44,7%) + Frischtak/Ferrogrão (+46%) |
+| `content/notes/*.md` | Boletins datados (frontmatter + markdown), lidos por `lib/radar/notes.ts` | Curadoria editorial sobre fatos públicos |
+| `lib/radar/alerts.ts` · `backtest.ts` | Alertas (eventos STF/TCU/Vale datados) e track record (previsões oficiais resolvidas + calls do Observatório) | STF/TCU/MPF/imprensa, com `fonte` em cada item |
+
+> ⚠️ Lição (jun/2026): NÃO inventar número. O brief original trazia WACC 13,74% e
+> "realista 11,04%" — AMBOS errados vs. fonte primária (WACC real 11,04% = TIR oficial;
+> realista real 1,6%). Todo campo do seed carrega `source` com URL ou `modeled:true`.
+> Lógica de maturação/P(leilão): `lib/radar/maturation.ts`. Motor DCF: `lib/dcf/*`.
+
+O motor (`lib/dcf/*`) calibra em runtime: tarifa → TIR ≈ WACC (oficial) e uplift de
+CAPEX implícito → TIR ≈ 11,04% (realista). Para editar um número, mexa no seed e
+mantenha a tag de fonte. Próximas fases podem adicionar adaptadores
+`lib/sources/{antt,ppi,tcu,ibama}.ts` — aí este runbook ganha as linhas de cron.

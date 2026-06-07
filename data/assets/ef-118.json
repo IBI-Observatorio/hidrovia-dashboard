@@ -1,0 +1,36 @@
+{
+  "id": "ef-118",
+  "name": "Ferrovia Vitória–Rio (EF-118)",
+  "sub": "Santa Leopoldina (ES) → Nova Iguaçu / São João da Barra (RJ)",
+  "route": "Anel Ferroviário Sudeste — eixo siderúrgico/contêiner",
+  "arcoNorte": false,
+  "parcial": true,
+  "fatos": {
+    "extensaoKm": { "value": 575, "unit": "km",
+      "source": { "label": "PPI — EF-118 (Anel Ferroviário Sudeste)", "url": "https://ppi.gov.br/projetos/ef-118-ferrovia-rio-vitoria-trecho-de-nova-iguacu-rj-a-vila-velha-es/", "date": "2026" } },
+    "aporteFederal": { "value": 3.28, "unit": "R$ bi",
+      "source": { "label": "Investimento federal previsto na EF-118", "url": "https://tribunaonline.com.br/economia/governo-oficializa-leilao-da-ferrovia-vitoria-rio-273808", "date": "2025" } }
+  },
+  "maturacao": {
+    "estagioAtual": 3,
+    "leilaoAnunciado": 2026,
+    "gateRisk": "medio",
+    "drivers": [
+      "Leilão oficializado; 1ª fase prevista p/ jun/2026 (mais maduro do pipeline).",
+      "Vale saiu da obra do trecho ES→RJ; trecho Santa Leopoldina–Anchieta (80 km) incorporado ao leilão.",
+      "Licenciamento ambiental ainda é gargalo apontado pela imprensa local."
+    ],
+    "fonte": { "label": "PPI / Tribuna Online / A Gazeta", "url": "https://tribunaonline.com.br/economia/governo-oficializa-leilao-da-ferrovia-vitoria-rio-273808", "date": "2025" }
+  },
+  "scenariosMeta": {
+    "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
+  },
+  "tabuleiro": {
+    "Vale": {
+      "papel": "A Vale iria construir e operar o trecho Santa Leopoldina–Anchieta (80 km + 10 km a Ubu), integrando-o à EFVM — mas DESISTIU (nov/2025) após o impasse com o governo sobre a renovação antecipada de EFVM e EFC (Carajás).",
+      "moveNaMalha": "A saída da Vale joga a obra para o futuro concessionário e desacopla a EF-118 da malha da Vale no ES; o trecho ES→RJ (Porto do Açu) vai a leilão em jun/2026 sem a mineradora.",
+      "exposicao": "alta",
+      "fonte": { "label": "A Gazeta / Trilhos do Rio / Folha Vitória", "url": "https://www.agazeta.com.br/es/economia/ef-118-vale-nao-vai-mais-fazer-trecho-de-ferrovia-do-es-ao-rj-1125", "date": "2025" }
+    }
+  }
+}
