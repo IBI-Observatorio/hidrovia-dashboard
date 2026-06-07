@@ -6,7 +6,8 @@ name: Insights AI diario
 # não gera nada por conta própria. Substitui o passo gera-insights-ai.mjs do
 # run-pipeline-sace.bat, que rodava só na máquina local. Ver docs/RUNBOOK-DADOS.md.
 #
-# Cadência: diário 11:00 UTC (08:00 em Brasília UTC-3 / 07:00 em Manaus UTC-4).
+# Cadência: diário 14:00 UTC (11:00 em Brasília UTC-3 / 10:00 em Manaus UTC-4).
+# Roda APÓS o reguas-diario (13:00 UTC) para garantir dados frescos da ANA.
 # Também roda sob demanda pelo botão "Run workflow" (workflow_dispatch).
 #
 # Pré-requisitos:
@@ -17,7 +18,7 @@ name: Insights AI diario
 
 on:
   schedule:
-    - cron: "0 11 * * *"
+    - cron: "0 14 * * *"
   workflow_dispatch:
 
 # Uma execução por vez.
