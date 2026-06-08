@@ -15,17 +15,19 @@ import Board from "@/components/radar/Board";
 import NotesFeed from "@/components/radar/NotesFeed";
 import Alerts from "@/components/radar/Alerts";
 import Backtest from "@/components/radar/Backtest";
+import RadarCopilot from "@/components/radar/RadarCopilot";
 import EmptyState from "@/components/radar/EmptyState";
 
 export const revalidate = 21600;
 
-type TabId = "maturacao" | "estresse" | "risco" | "tabuleiro" | "notas";
+type TabId = "maturacao" | "estresse" | "risco" | "tabuleiro" | "notas" | "copiloto";
 const TABS: { id: TabId; label: string; disponivel: boolean }[] = [
   { id: "maturacao", label: "Maturação", disponivel: true },
   { id: "estresse", label: "Estresse RCF", disponivel: true },
   { id: "risco", label: "Risco", disponivel: true },
   { id: "tabuleiro", label: "Tabuleiro", disponivel: true },
   { id: "notas", label: "Notas", disponivel: true },
+  { id: "copiloto", label: "Copiloto", disponivel: true },
 ];
 
 export async function generateMetadata({
@@ -128,6 +130,8 @@ export default async function AssetDeepDive({
             <Alerts alertas={alertasDoAtivo(asset)} />
             <Backtest previsoes={previsoesDoAtivo(asset)} />
           </div>
+        ) : tabAtiva === "copiloto" ? (
+          <RadarCopilot assetId={entry.id} assetName={name} />
         ) : (
           <EmBreve texto={`Módulo "${TABS.find((t) => t.id === tabAtiva)?.label}" entra nas próximas fases do Radar.`} />
         )}
