@@ -15,10 +15,12 @@ import { clienteRadarAtual } from "@/lib/radar/acesso";
 import { getRadarAsset, fullAsset, type RadarAssetEntry } from "@/lib/radar/assets";
 import { alertasDoAtivo } from "@/lib/radar/alerts";
 import { lerNotas, notasDoAtivo } from "@/lib/radar/notes";
+import { processosDoAtivo } from "@/lib/radar/processos";
 import {
   validarLevers,
   rotuloCenario,
   resolverFontes,
+  numerosSemLastro,
   montarContextoExplicador,
   extrairJSON,
   SISTEMA_ROTEADOR,
@@ -33,6 +35,7 @@ const MAX_PERGUNTA = 600;
 // ── partes da resposta (o client renderiza cada uma) ──
 type Parte =
   | { tipo: "explicacao"; texto: string; fontes: { label: string; url?: string; date?: string }[] }
+  | { tipo: "bloqueada"; numeros: string[] }
   | { tipo: "cenario"; tir: number | null; spread: number | null; vpl: number; wacc: number; semTir: boolean; rotulo: string; leversAplicadas: Levers; clamps: string[]; narrativa: string }
   | { tipo: "confirmar"; interpretacao: string; leversPropostas: Levers; clamps: string[] }
   | { tipo: "reformular"; texto: string }
@@ -142,7 +145,8 @@ async function rodarExplicador(
   const analise = full ? analisarAtivo(full, { mcN: 4000, seed: 42 }) : null;
   const alertas = alertasDoAtivo(entry.id);
   const notas = notasDoAtivo(lerNotas(), entry.id);
-  const { contexto, fontes } = montarContextoExplicador({ entry, full, analise, alertas, notas });
+  const processos = processosDoAtivo(entry.id);
+  const { contexto, fontes } = montarContextoExplicador({ entry, full, analise, alertas, notas, processos });
 
   try {
     const raw = await chamarIA(
@@ -153,6 +157,13 @@ async function rodarExplicador(
     const j = extrairJSON(raw) as Record<string, unknown> | null;
     if (!j || typeof j.texto !== "string") {
       return { tipo: "erro", texto: "Não consegui formular a explicação. Pode reformular?" };
+    }
+    // BLINDAGEM: todo número da resposta tem de existir nos dados injetados. Se a IA
+    // citar um número sem lastro (arredondado de memória, fabricado, data inventada),
+    // a resposta é RETIDA — melhor não responder do que arriscar um dado incorreto.
+    const semLastro = numerosSemLastro(j.texto, contexto);
+    if (semLastro.length > 0) {
+      return { tipo: "bloqueada", numeros: semLastro };
     }
     return { tipo: "explicacao", texto: j.texto, fontes: resolverFontes(j.fontes, fontes) };
   } catch (e) {

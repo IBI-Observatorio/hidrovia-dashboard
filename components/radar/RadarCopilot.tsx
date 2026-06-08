@@ -14,6 +14,7 @@ type Levers = { tarifaMult: number; capexUplift: number; demandaHaircut: number;
 
 type Parte =
   | { tipo: "explicacao"; texto: string; fontes: Fonte[] }
+  | { tipo: "bloqueada"; numeros: string[] }
   | { tipo: "cenario"; tir: number | null; spread: number | null; vpl: number; wacc: number; semTir: boolean; rotulo: string; leversAplicadas: Levers; clamps: string[]; narrativa: string }
   | { tipo: "confirmar"; interpretacao: string; leversPropostas: Levers; clamps: string[] }
   | { tipo: "reformular"; texto: string }
@@ -214,6 +215,21 @@ function ParteView({ parte, onConfirmar, carregando }: { parte: Parte; onConfirm
               <RotateCcw className="h-3 w-3" /> ou reformule com números explícitos
             </span>
           </div>
+        </div>
+      );
+
+    case "bloqueada":
+      return (
+        <div className="flex items-start gap-2 rounded-2xl border border-ouro/30 bg-ouro/5 p-4">
+          <Info className="mt-0.5 h-4 w-4 shrink-0 text-ouro" />
+          <p className="text-sm leading-relaxed text-gray-300">
+            Resposta retida: a explicação gerada continha número(s) sem lastro nos dados do ativo
+            {parte.numeros.length > 0 && (
+              <> (<span className="font-medium text-ouro">{parte.numeros.join(", ")}</span>)</>
+            )}{" "}
+            e foi bloqueada para não arriscar um dado incorreto. Reformule a pergunta ou consulte a
+            aba correspondente (Estresse RCF, Risco, Notas).
+          </p>
         </div>
       );
 
