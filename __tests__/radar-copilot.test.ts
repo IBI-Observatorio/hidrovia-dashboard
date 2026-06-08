@@ -4,6 +4,7 @@ import {
   validarLevers,
   rotuloCenario,
   resolverFontes,
+  numerosSemLastro,
   montarContextoExplicador,
   LEVER_RANGES,
   SISTEMA_EXPLICADOR,
@@ -132,6 +133,55 @@ describe("copiloto · integridade de fontes e ausência de base", () => {
     expect(full).toBeNull();
     expect(contexto).toContain("dados parciais");
     expect(contexto).not.toContain("VALORES-BASE DO MOTOR"); // sem motor ⇒ sem TIR
+  });
+});
+
+// ───────── blindagem do explicador: todo número da prosa tem de ter lastro ─────────
+describe("copiloto · blindagem do explicador (numerosSemLastro)", () => {
+  const ctx = "Déficit de funding: 1,41 R$ bi. TIR oficial 11,04% | TIR realista 1,60%. ADI 6553, Lei 13.452/2017. Maio de 2026.";
+
+  it("texto cujos números TODOS aparecem nos dados ⇒ nenhum suspeito", () => {
+    const texto = "O déficit é de R$ 1,41 bi e a TIR oficial é 11,04%, contra 1,60% no realista.";
+    expect(numerosSemLastro(texto, ctx)).toEqual([]);
+  });
+
+  it("número DECIMAL fabricado (não está nos dados) ⇒ flag", () => {
+    const texto = "A TIR realista seria de 7,77%.";
+    expect(numerosSemLastro(texto, ctx)).toContain("7,77%");
+  });
+
+  it("arredondamento de memória (1,4 vs 1,41) ⇒ flag (não casa por substring)", () => {
+    expect(numerosSemLastro("O déficit é R$ 1,4 bi.", ctx)).toContain("1,4");
+  });
+
+  it("normaliza ponto decimal estilo US (11.04% casa com 11,04%) ⇒ sem flag", () => {
+    expect(numerosSemLastro("A TIR é 11.04%.", ctx)).toEqual([]);
+  });
+
+  it("inteiros curtos (contagens) são ignorados — não geram falso-positivo", () => {
+    expect(numerosSemLastro("São 3 motivos e 5 etapas, com 6 votos no STF.", "sem esses números aqui")).toEqual([]);
+  });
+
+  it("data/ano inventado (≥4 díg.) é pego; ano real passa", () => {
+    expect(numerosSemLastro("O leilão sai em 2099.", ctx)).toContain("2099");
+    expect(numerosSemLastro("Decisão de 2026.", ctx)).toEqual([]);
+  });
+
+  it("nº de lei e de ADI com lastro nos dados passam", () => {
+    expect(numerosSemLastro("A Lei 13.452/2017 e a ADI 6553.", ctx)).toEqual([]);
+  });
+
+  it("contra o contexto REAL do EF-170: sourçado passa, fabricado é retido", () => {
+    const entry = getRadarAsset("ef-170")!;
+    const full = fullAsset(entry);
+    const analise = full ? analisarAtivo(full, { mcN: 1000, seed: 42 }) : null;
+    const { contexto } = montarContextoExplicador({
+      entry, full, analise,
+      alertas: alertasDoAtivo("ef-170"),
+      notas: notasDoAtivo(lerNotas(), "ef-170"),
+    });
+    expect(numerosSemLastro("O déficit é de R$ 1,41 bi.", contexto)).toEqual([]);
+    expect(numerosSemLastro("A TIR cairia para 9,99%.", contexto)).toContain("9,99%");
   });
 });
 

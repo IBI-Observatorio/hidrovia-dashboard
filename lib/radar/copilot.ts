@@ -21,6 +21,7 @@ import { ESTAGIOS } from "@/lib/radar/maturation";
 import type { RadarAssetEntry } from "@/lib/radar/assets";
 import type { Alert } from "@/lib/radar/alerts";
 import type { Nota } from "@/lib/radar/notes";
+import type { ProcessosAtivo } from "@/lib/radar/processos";
 import { num, pct } from "@/lib/radar/format";
 
 // ───────────────────────── parse defensivo de JSON da IA ─────────────────────────
@@ -146,6 +147,50 @@ export function resolverFontes(indices: unknown, fontes: SourceTag[]): SourceTag
   return out;
 }
 
+// ─────────────── blindagem do explicador (todo número tem lastro) ───────────────
+
+/** Chave normalizada de um token numérico: tira %/espaço e trata ponto decimal
+ *  estilo US (11.04) como vírgula (11,04), p/ casar com o formato pt-BR dos dados. */
+function chaveNum(t: string): string {
+  return t.replace(/\s|%/g, "").replace(/\.(\d)/g, ",$1").replace(/,+$/, "");
+}
+
+/**
+ * Extrai os números SIGNIFICATIVOS de um texto: decimais (3,66 / 11.04),
+ * percentuais (11,04%) e inteiros longos (≥4 díg.: anos, valores grandes, nº de lei).
+ * Inteiros de 1–3 dígitos (contagens: "5 estágios", "6 votos", "3 motivos") são
+ * IGNORADOS de propósito — não são o risco econômico e gerariam falso-positivo.
+ */
+function tokensSignificativos(s: string): { bruto: string; chave: string }[] {
+  const out: { bruto: string; chave: string }[] = [];
+  const re = /(?:\d[\d.,]*\d|\d)\s*%|\d+[.,]\d+|\b\d{4,}\b/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(s)) !== null) {
+    const bruto = m[0].trim();
+    out.push({ bruto, chave: chaveNum(bruto) });
+  }
+  return out;
+}
+
+/**
+ * BLINDAGEM: devolve os números do `texto` (resposta do explicador) que NÃO têm
+ * lastro no `contexto` (os dados do ativo injetados). Lista vazia = todo número
+ * citado existe nos dados. Comparação por TOKEN normalizado (não substring): "1,4"
+ * NÃO casa com "1,41" — pega arredondamento de memória, número fabricado e data
+ * inventada. É a rede que impede a única fresta onde a prosa da IA carrega número.
+ */
+export function numerosSemLastro(texto: string, contexto: string): string[] {
+  const lastro = new Set(tokensSignificativos(contexto).map((t) => t.chave));
+  const suspeitos: string[] = [];
+  const vistos = new Set<string>();
+  for (const { bruto, chave } of tokensSignificativos(texto)) {
+    if (lastro.has(chave) || vistos.has(chave)) continue;
+    vistos.add(chave);
+    suspeitos.push(bruto);
+  }
+  return suspeitos;
+}
+
 // ───────────────────── contexto do explicador (read-only) ─────────────────────
 
 export interface ContextoExplicador {
@@ -171,8 +216,9 @@ export function montarContextoExplicador(input: {
   analise: AnaliseAtivo | null;
   alertas: Alert[];
   notas: Nota[];
+  processos?: ProcessosAtivo | null;
 }): ContextoExplicador {
-  const { entry, full, analise, alertas, notas } = input;
+  const { entry, full, analise, alertas, notas, processos } = input;
   const fontes: SourceTag[] = [];
   const linhas: string[] = [];
 
@@ -247,6 +293,18 @@ export function montarContextoExplicador(input: {
       const fonteNota: SourceTag = { label: `Boletim IBI — ${n.title}`, date: n.date };
       linhas.push(`${n.date} — ${n.title}${ref(fonteNota)}`);
       if (n.body) linhas.push(n.body.trim());
+    }
+  }
+
+  // Andamento processual oficial (SEI/TCU) — snapshot curado do MonitoraSEI
+  if (processos && processos.processos.length) {
+    linhas.push(`\n== ANDAMENTO PROCESSUAL (SEI/TCU) — snapshot de ${processos.capturadoEm}, não-automático ==`);
+    for (const p of processos.processos) {
+      linhas.push(`${p.orgao} ${p.numero}${p.tipo ? ` — ${p.tipo}` : ""}${ref(p.fonte)}`);
+      if (p.papel) linhas.push(`  ${p.papel}`);
+      for (const m of p.movimentos)
+        linhas.push(`  ${m.data}${m.unidade ? ` [${m.unidade}]` : ""}: ${m.descricao}`);
+      if (p.movimentos.length === 0 && p.obs) linhas.push(`  (${p.obs})`);
     }
   }
 

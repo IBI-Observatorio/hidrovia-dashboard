@@ -8,6 +8,7 @@ import { getRadarAsset, fullAsset } from "@/lib/radar/assets";
 import { lerNotas, notasDoAtivo } from "@/lib/radar/notes";
 import { alertasDoAtivo } from "@/lib/radar/alerts";
 import { previsoesDoAtivo } from "@/lib/radar/backtest";
+import { processosDoAtivo } from "@/lib/radar/processos";
 import StressDCF from "@/components/radar/StressDCF";
 import MaturationRail from "@/components/radar/MaturationRail";
 import RiskMatrix from "@/components/radar/RiskMatrix";
@@ -15,6 +16,7 @@ import Board from "@/components/radar/Board";
 import NotesFeed from "@/components/radar/NotesFeed";
 import Alerts from "@/components/radar/Alerts";
 import Backtest from "@/components/radar/Backtest";
+import Processos from "@/components/radar/Processos";
 import RadarCopilot from "@/components/radar/RadarCopilot";
 import EmptyState from "@/components/radar/EmptyState";
 
@@ -128,6 +130,7 @@ export default async function AssetDeepDive({
           <div className="space-y-10">
             <NotesFeed notas={notasDoAtivo(lerNotas(), asset)} />
             <Alerts alertas={alertasDoAtivo(asset)} />
+            <Processos dados={processosDoAtivo(asset)} />
             <Backtest previsoes={previsoesDoAtivo(asset)} />
           </div>
         ) : tabAtiva === "copiloto" ? (

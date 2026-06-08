@@ -1,0 +1,44 @@
+{
+  "asset": "ef-170",
+  "capturadoEm": "2026-06-08",
+  "fonteGeral": "MonitoraSEI — andamento oficial (SEI/TCU). Snapshot de curadoria manual; não é atualização automática.",
+  "processos": [
+    {
+      "orgao": "ANTT",
+      "numero": "50500.036505/2016-15",
+      "tipo": "Processo administrativo — concessão Ferrogrão (EF-170)",
+      "papel": "Processo-mãe da concessão na ANTT (311 movimentações; o processo 50500.702124/2017-17 está anexado a ele).",
+      "unidadeAtual": "SUCON",
+      "totalMovimentacoes": 311,
+      "movimentos": [
+        { "data": "2026-04-07", "unidade": "SUCON", "descricao": "Acesso externo concedido à ABIOVE (gabriel.nakamura@ e daniel@abiove.org.br) para disponibilização de documentos." },
+        { "data": "2026-04-06", "unidade": "SUCON", "descricao": "Reabertura do processo na unidade." },
+        { "data": "2026-02-25", "unidade": "GEFER", "descricao": "Acesso externo concedido ao Ministério dos Transportes (vladimir.baleeiro@transportes.gov.br) — visualização integral do processo de EF-170." },
+        { "data": "2026-01-12", "unidade": "SUCON", "descricao": "Acesso externo concedido à Rumo (luis.gomes@ e natalia.baroni@rumolog.com) para disponibilização de documentos (ref. 50505.078286/2025-92)." },
+        { "data": "2026-01-06", "unidade": "GEFER", "descricao": "Acesso externo concedido ao Ministério dos Transportes (maryane.araujo@transportes.gov.br) — acompanhamento integral do processo de Ferrogrão (EF-170)." }
+      ],
+      "fonte": { "label": "ANTT/SEI — processo 50500.036505/2016-15", "date": "2026-06-08" }
+    },
+    {
+      "orgao": "ANTT",
+      "numero": "50500.702124/2017-17",
+      "tipo": "Processo administrativo — anexado",
+      "papel": "Anexado ao processo-mãe 50500.036505/2016-15; tramitação registrada concentra-se em 2020.",
+      "totalMovimentacoes": 62,
+      "movimentos": [
+        { "data": "2020-07-08", "unidade": "SUCON", "descricao": "Anexado ao processo 50500.036505/2016-15." }
+      ],
+      "fonte": { "label": "ANTT/SEI — processo 50500.702124/2017-17", "date": "2026-06-08" }
+    },
+    {
+      "orgao": "TCU",
+      "numero": "037.044/2020-6",
+      "tipo": "Representação — fiscalização da desestatização (EF-170)",
+      "papel": "Representação no TCU sobre atualização de estudos e condicionantes socioambientais da Ferrogrão; entre os interessados consta a FUNAI (povos indígenas).",
+      "totalMovimentacoes": null,
+      "movimentos": [],
+      "obs": "Cadastrado no monitoramento (verificando), mas os andamentos ainda não foram ingeridos pelo crawler até a data do snapshot — sem movimentações capturadas.",
+      "fonte": { "label": "TCU/SEI — processo 037.044/2020-6", "date": "2026-06-08" }
+    }
+  ]
+}
