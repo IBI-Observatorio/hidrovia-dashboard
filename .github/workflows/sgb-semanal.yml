@@ -6,12 +6,17 @@ name: Refresh boletim SGB (SACE)
 # a previsao de cheia (home, /monitor, briefing). O Railway faz o fetch do SGB;
 # este workflow so dispara. Substitui o pipeline-sace.py do run-pipeline-sace.bat.
 #
-# Cadencia: terca 12:00 UTC (08:00 Manaus). Dedup por numero+data, entao re-runs
-# sem boletim novo sao inofensivos. Tambem roda sob demanda.
+# Cadencia: terca 23:00 UTC + quarta 11:00 UTC (rede de seguranca). O SGB publica
+# o boletim de terca a TARDE (timestamps dos PDFs ~14h-18h local => ~17h-21h UTC),
+# entao um cron de manha pegava sempre o boletim da semana anterior. 23:00 UTC
+# (20:00 Brasilia / 19:00 Manaus) roda depois da publicacao; a quarta de manha
+# cobre publicacao tardia/atrasada. Dedup por numero+data => re-runs sao
+# inofensivos. Tambem roda sob demanda.
 
 on:
   schedule:
-    - cron: "0 12 * * 2"
+    - cron: "0 23 * * 2"
+    - cron: "0 11 * * 3"
   workflow_dispatch:
 
 concurrency:
