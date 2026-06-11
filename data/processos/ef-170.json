@@ -1,7 +1,7 @@
 {
   "asset": "ef-170",
-  "capturadoEm": "2026-06-08",
-  "fonteGeral": "MonitoraSEI — andamento oficial (SEI/TCU). Snapshot de curadoria manual; não é atualização automática.",
+  "capturadoEm": "2026-06-11",
+  "fonteGeral": "MonitoraSEI — andamento oficial (SEI/TCU). Snapshot de curadoria manual; não é atualização automática. Re-verificado em 2026-06-11: sem novas movimentações desde 2026-06-08.",
   "processos": [
     {
       "orgao": "ANTT",
@@ -17,7 +17,7 @@
         { "data": "2026-01-12", "unidade": "SUCON", "descricao": "Acesso externo concedido à Rumo (luis.gomes@ e natalia.baroni@rumolog.com) para disponibilização de documentos (ref. 50505.078286/2025-92)." },
         { "data": "2026-01-06", "unidade": "GEFER", "descricao": "Acesso externo concedido ao Ministério dos Transportes (maryane.araujo@transportes.gov.br) — acompanhamento integral do processo de Ferrogrão (EF-170)." }
       ],
-      "fonte": { "label": "ANTT/SEI — processo 50500.036505/2016-15", "date": "2026-06-08" }
+      "fonte": { "label": "ANTT/SEI — processo 50500.036505/2016-15", "date": "2026-06-11" }
     },
     {
       "orgao": "ANTT",
@@ -28,17 +28,17 @@
       "movimentos": [
         { "data": "2020-07-08", "unidade": "SUCON", "descricao": "Anexado ao processo 50500.036505/2016-15." }
       ],
-      "fonte": { "label": "ANTT/SEI — processo 50500.702124/2017-17", "date": "2026-06-08" }
+      "fonte": { "label": "ANTT/SEI — processo 50500.702124/2017-17", "date": "2026-06-11" }
     },
     {
       "orgao": "TCU",
       "numero": "037.044/2020-6",
       "tipo": "Representação — fiscalização da desestatização (EF-170)",
-      "papel": "Representação no TCU sobre atualização de estudos e condicionantes socioambientais da Ferrogrão; entre os interessados consta a FUNAI (povos indígenas).",
+      "papel": "Representação no TCU sobre atualização de estudos e condicionantes socioambientais da Ferrogrão. Interessados formais: FUNAI (povos indígenas) e sete representantes da sociedade civil (Carolina Piwowarczyk Reis, Ewesh Yawalapiti Waura, Gladys Terezinha Reis do Nascimento, Hugo Abrantes Fernandes, Johnatan Razen Ferreira Guimarães, Melillo Dinis do Nascimento, Silvio Marinho do Nascimento).",
       "totalMovimentacoes": null,
       "movimentos": [],
-      "obs": "Cadastrado no monitoramento (verificando), mas os andamentos ainda não foram ingeridos pelo crawler até a data do snapshot — sem movimentações capturadas.",
-      "fonte": { "label": "TCU/SEI — processo 037.044/2020-6", "date": "2026-06-08" }
+      "obs": "Re-verificado em 2026-06-11 (637 verificações no MonitoraSEI): os andamentos seguem não ingeridos pelo crawler — sem movimentações capturadas. Pela classificação do MonitoraSEI, a representação está \"aguardando atualização de estudos, análise judicial e cumprimento de condicionantes socioambientais\".",
+      "fonte": { "label": "TCU/SEI — processo 037.044/2020-6", "date": "2026-06-11" }
     }
   ]
 }
