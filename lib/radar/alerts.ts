@@ -43,6 +43,20 @@ export const ALERTAS: Alert[] = [
     fonte: { label: "A Gazeta", url: "https://www.agazeta.com.br/es/economia/ef-118-vale-nao-vai-mais-fazer-trecho-de-ferrovia-do-es-ao-rj-1125", date: "2025-11" },
   },
   {
+    date: "2026-06-05",
+    asset: "ef-170",
+    kind: "estagio",
+    text: "Leilão da Ferrogrão reagendado de setembro para dezembro de 2026 na revisão do cronograma ferroviário do Ministério dos Transportes (uma das fontes já projeta escorregamento para 2027).",
+    fonte: { label: "Jornal de Brasília / Diário do Comércio", url: "https://diariodocomercio.com.br/economia/concessoes-de-ferrovias-atrasam/", date: "2026-06" },
+  },
+  {
+    date: "2026-06-05",
+    asset: "ef-118",
+    kind: "estagio",
+    text: "Leilão do Anel Ferroviário Sudeste (EF-118, fase obrigatória de 245,95 km entre Santa Leopoldina/ES e São João da Barra/RJ) adiado de junho para setembro de 2026.",
+    fonte: { label: "É Hoje / Diário do Comércio", url: "https://eshoje.com.br/economia/2026/06/leiloes-ferrovias-adiados-2027-ef118-es-2026/", date: "2026-06" },
+  },
+  {
     date: "2026-04",
     asset: "fico-fiol",
     kind: "estagio",
