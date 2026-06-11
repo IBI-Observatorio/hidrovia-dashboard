@@ -9,7 +9,7 @@ import type { SourceTag } from "@/lib/dcf/types";
 import type { RadarAssetEntry } from "@/lib/radar/assets";
 
 /** Cliente configurado do tabuleiro (default). Trocável sem hardcode no componente. */
-export const CLIENTE_PADRAO = "Vale";
+export const CLIENTE_PADRAO = "VLI";
 
 export type Exposicao = "alta" | "media" | "baixa" | "nenhuma";
 

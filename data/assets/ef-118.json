@@ -26,11 +26,11 @@
     "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
   },
   "tabuleiro": {
-    "Vale": {
-      "papel": "A Vale iria construir e operar o trecho Santa Leopoldina–Anchieta (80 km + 10 km a Ubu), integrando-o à EFVM — mas DESISTIU (nov/2025) após o impasse com o governo sobre a renovação antecipada de EFVM e EFC (Carajás).",
-      "moveNaMalha": "A saída da Vale joga a obra para o futuro concessionário e desacopla a EF-118 da malha da Vale no ES; o trecho ES→RJ (Porto do Açu) vai a leilão em jun/2026 sem a mineradora.",
-      "exposicao": "alta",
-      "fonte": { "label": "A Gazeta / Trilhos do Rio / Folha Vitória", "url": "https://www.agazeta.com.br/es/economia/ef-118-vale-nao-vai-mais-fazer-trecho-de-ferrovia-do-es-ao-rj-1125", "date": "2025" }
+    "VLI": {
+      "papel": "A VLI opera a FCA em trechos de ES e MG, mas não tem papel de construção, operação ou compromisso documentado em fonte pública na EF-118. O projeto segue para leilão sem parceria operacional definida, após a Vale S.A. (mineração) desistir do trecho ES em nov/2025.",
+      "moveNaMalha": "A EF-118 cria uma nova ligação costeira ES→RJ que poderá criar pontos de interoperação com a malha FCA/VLI no ES; nenhum arranjo operacional VLI–EF-118 está documentado em fonte pública.",
+      "exposicao": "baixa",
+      "fonte": { "label": "A Gazeta / PPI (EF-118 — público)", "url": "https://www.agazeta.com.br/es/economia/ef-118-vale-nao-vai-mais-fazer-trecho-de-ferrovia-do-es-ao-rj-1125", "date": "2025-11" }
     }
   }
 }

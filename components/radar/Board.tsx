@@ -1,5 +1,5 @@
-// Módulo 4 — Tabuleiro Estratégico. Papel do cliente CONFIGURADO (default Vale)
-// por ativo, a partir de fatos públicos, + o furo de funding (peça da EFVM/Vale).
+// Módulo 4 — Tabuleiro Estratégico. Papel do cliente CONFIGURADO (default VLI)
+// por ativo, a partir de fatos públicos, + o furo de funding.
 // Guardrail §10: cliente configurável; nada que vaze posição de terceiros.
 
 import { Info, Users } from "lucide-react";

@@ -1,15 +1,14 @@
-// Controle de acesso do Radar — produto exclusivo (piloto: Vale).
+// Controle de acesso do Radar — Radar atualmente público (sem cookie obrigatório).
 //
-// Reusa o esquema de assinante existente (cookie `ibi_assinante` setado por
-// /api/auth?token=ASS-VALE-...). O Radar é liberado apenas para clientes na
-// allowlist (default: Vale + Ibi/admin). O token ASS-VALE-<segredo> mantém o
-// prefixo p/ o nome do cliente resolver como "Vale" (ver nomeClienteDoToken).
+// Cliente configurado: VLI. Se auth for re-habilitada no futuro, o cookie
+// `ibi_assinante` e o token ASS-VALE-<segredo> ainda existem; o prefixo do token
+// resolve o nome de cliente via nomeClienteDoToken (ver lib/auth-assinante).
 
 import { tokenAssinanteAtual, nomeClienteDoToken } from "@/lib/auth-assinante";
 
-/** Clientes liberados para o Radar (env `IBI_RADAR_CLIENTES`, default Vale+Ibi). */
+/** Clientes liberados para o Radar (env `IBI_RADAR_CLIENTES`, default VLI+Ibi). */
 export function clientesRadar(): string[] {
-  const raw = process.env.IBI_RADAR_CLIENTES ?? "Vale,Ibi";
+  const raw = process.env.IBI_RADAR_CLIENTES ?? "VLI,Ibi";
   return raw.split(",").map((s) => s.trim()).filter(Boolean);
 }
 

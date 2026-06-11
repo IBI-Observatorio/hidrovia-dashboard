@@ -24,11 +24,11 @@
     "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
   },
   "tabuleiro": {
-    "Vale": {
-      "papel": "A Vale opera a Estrada de Ferro Carajás (EFC, Carajás–São Luís) na mesma região; a extensão norte da FNS a Barcarena (PA) cria uma rota alternativa de escoamento no Pará.",
-      "moveNaMalha": "Um novo acesso a Barcarena pode competir/complementar o eixo Carajás–Itaqui da Vale no Arco Norte; trecho central da FNS já é da Rumo (2019).",
-      "exposicao": "baixa",
-      "fonte": { "label": "PPI / EF-151 (público)", "url": "https://ppi.gov.br/projetos/ef-151-ferrovia-norte-sul-trecho-de-acailandia-ma-a-barcarena-pa/", "date": "2026" }
+    "VLI": {
+      "papel": "A VLI é a subconcessionária da Ferrovia Norte-Sul (FNS) no trecho Porto Nacional (TO)–Açailândia (MA). A EF-151-Norte é a extensão direta dessa malha até Barcarena (PA), ampliando a rede VLI com acesso a um novo porto no Pará.",
+      "moveNaMalha": "A VLI é o operador incumbente da FNS no ponto de partida da EF-151 (Açailândia); a concessão da extensão norte representa a oportunidade de integração operacional mais imediata e direta de qualquer ativo neste radar para a VLI.",
+      "exposicao": "alta",
+      "fonte": { "label": "VLI/ANTT (FNS subconcessionária — público) · PPI (EF-151)", "url": "https://ppi.gov.br/projetos/ef-151-ferrovia-norte-sul-trecho-de-acailandia-ma-a-barcarena-pa/", "date": "2026" }
     }
   }
 }
