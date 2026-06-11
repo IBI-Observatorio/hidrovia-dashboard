@@ -25,7 +25,7 @@ O schedule só vale a partir da branch `main`. Todos têm botão **Run workflow*
 | **Réguas / níveis** | diário 13:00 | `reguas-diario.yml` | `POST /api/cron/refresh-reguas` → busca ANA ao vivo, grava `ana-diario-cache.json` no volume. Atualiza os cards de cota do `/monitor` |
 | **Série IDN** | terça 10:00 | `idn-semanal.yml` | Roda `atualiza-idn-series.mjs` (API ANA), **commita** `data/ana-idn-series.json` e dispara o deploy. Gráfico IDN histórico |
 | **Série Itacoatiara** | terça 10:20 | `itacoatiara-semanal.yml` | Roda `atualiza-itacoatiara-series.mjs` (API ANA, estação 16030000), faz merge em `data/itacoatiara_hidroweb.csv`, regenera `lib/itacoatiara-historico-diario.ts`, **commita** e dispara o deploy. Alimenta o **ETA por análogos** do topo do `/monitor` (IRC) |
-| **SACE/SGB** | terça 12:00 | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia |
+| **SACE/SGB** | terça 23:00 + quarta 11:00 | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia. **Roda à noite porque o SGB publica o boletim de terça à tarde** (ver seção SGB) |
 | **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + Claude **Haiku 4.5**, grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
 | **ENSO** | quinta 17:00 | `enso-mensal.yml` | `POST /api/cron/refresh-enso` → Railway raspa CPC/NOAA, grava `enso_cpc_cache.json`. (Roda toda quinta; idempotente — CPC publica na 2ª quinta) |
 | **Briefing** | quarta 13:00 | `briefing-semanal.yml` | `POST /api/cron/briefing` → regenera o briefing editorial da semana, grava `briefings/YYYY-WW.json` no volume |
@@ -239,13 +239,28 @@ Script CLI equivalente (uso manual): `python scripts/scrape-enso-cpc.py`.
 
 ---
 
-## 🌧️ SACE / SGB — automático (terça)
+## 🌧️ SACE / SGB — automático (terça à noite + quarta de manhã)
 
 `sgb-semanal.yml` dispara `/api/cron/refresh-sgb`: o Railway raspa a listagem de
 boletins do Amazonas em `sgb.gov.br`, baixa o PDF mais recente do mês, parseia com
 `parseBoletimSGB` (`lib/sgb-parser.ts`) e grava `boletins_sgb_cache.json` no volume
 (dedup por número+data, mantém 30). Consumido por `fetchPrevisao2026()` (previsão
 de cheia da home/`/monitor`/briefing); fallback: `PREVISAO_2026` hardcoded.
+
+> ⚠️ **TIMING (jun/2026):** o SGB publica o "Boletim de Alerta Hidrológico" de terça
+> **à tarde** (timestamps dos PDFs ~14h–18h local ≈ 17h–21h UTC). O cron antigo rodava
+> **terça 12:00 UTC** (de manhã) e por isso raspava sempre o boletim da **semana
+> anterior** — o cache ficou 13 dias congelado no boletim 21 sem ninguém notar. Agora
+> roda **terça 23:00 UTC** (após a publicação) com **rede de segurança quarta 11:00 UTC**
+> p/ publicação tardia. Como é idempotente (dedup número+data), os dois disparos são
+> inofensivos. Se mudar o horário de publicação do SGB, ajuste o cron.
+>
+> 🛡️ O `GET /api/health` agora reporta a **idade do boletim** (`dias`/`limite_dias: 10`)
+> e fica `ok:false` se passar de 10 dias — o watchdog passa a pegar o cache congelado
+> (antes o check do SGB não tinha verificação de idade). 10 dias = 1 semana de cadência
+> + folga. **Nota de cadência:** no fim da cheia o SGB pode espaçar/encerrar os boletins;
+> se isso acontecer, o health vai acusar "vencido" legitimamente (a previsão cai no
+> fallback `PREVISAO_2026`) — nesse caso, reavalie o `limite_dias` em vez de só re-disparar.
 
 Upload manual de um PDF avulso ainda funciona: `POST /api/sgb` (header
 `x-admin-password`). Script CLI (raspa as 5 bacias + gera `public/data/sace/...`):

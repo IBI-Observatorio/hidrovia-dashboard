@@ -86,12 +86,27 @@ export async function GET() {
     };
   }
 
-  // ── SGB/SACE: informativo (cadência irregular do boletim; tem fallback) ─────
+  // ── SGB/SACE: semanal (boletim de terça; tolera ate ~10 dias) ───────────────
+  // O boletim sai toda terça à tarde. Sem checagem de idade, um cache congelado
+  // (cron rodando antes da publicação, scraper quebrado etc.) passava verde e a
+  // previsão de cheia servia dado velho sem ninguém notar. 10 dias = 1 semana de
+  // cadência + folga p/ feriado/publicação tardia. (Tem fallback PREVISAO_2026.)
   const sgb = lerJSON(join(DATA_DIR, "boletins_sgb_cache.json"));
   const ultimoSgb = sgb?.boletins?.[sgb.boletins.length - 1];
-  checks.sgb = ultimoSgb
-    ? { ok: true, numero: ultimoSgb.numero ?? null, data: ultimoSgb.data ?? null, total: sgb.total ?? sgb.boletins.length, detalhe: `boletim ${ultimoSgb.numero ?? "?"} de ${ultimoSgb.data}` }
-    : { ok: true, presente: false, detalhe: "sem cache SGB — previsão usando fallback" };
+  if (!ultimoSgb) {
+    checks.sgb = { ok: true, presente: false, detalhe: "sem cache SGB — previsão usando fallback" };
+  } else {
+    const dias = ultimoSgb.data ? diasDesde(ultimoSgb.data + "T12:00:00-04:00") : 999;
+    checks.sgb = {
+      ok: dias <= 10,
+      numero: ultimoSgb.numero ?? null,
+      data: ultimoSgb.data ?? null,
+      dias,
+      limite_dias: 10,
+      total: sgb.total ?? sgb.boletins.length,
+      detalhe: `boletim ${ultimoSgb.numero ?? "?"} de ${ultimoSgb.data} (há ${dias} dia(s))`,
+    };
+  }
 
   // ── Portos: informativo (mensal, com lag ANTAQ — não derruba o ok) ──────────
   const portos = lerJSON(join(process.cwd(), "public", "data", "antaq", "dashboard", "portos-series.json"));
