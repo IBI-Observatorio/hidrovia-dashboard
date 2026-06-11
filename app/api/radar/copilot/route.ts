@@ -5,13 +5,11 @@
 // e resolve as fontes é este código. A IA nunca emite um número econômico exibido:
 // os números de cenário vêm do ScenarioResult do motor; os do explicador, dos dados.
 //
-// Acesso: reusa o guard do Radar (clienteRadarAtual) — endpoint fechado p/ a Vale.
 // Chave: ANTHROPIC_API_KEY é injetada pelo ambiente (Railway); nunca vai ao client.
 
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { avaliarCenario, analisarAtivo, paramsFromAsset, type Levers, type Asset } from "@/lib/dcf";
-import { clienteRadarAtual } from "@/lib/radar/acesso";
 import { getRadarAsset, fullAsset, type RadarAssetEntry } from "@/lib/radar/assets";
 import { alertasDoAtivo } from "@/lib/radar/alerts";
 import { lerNotas, notasDoAtivo } from "@/lib/radar/notes";
@@ -53,10 +51,6 @@ async function chamarIA(client: Anthropic, system: string, user: string): Promis
 }
 
 export async function POST(request: NextRequest) {
-  // 1) Acesso fechado (mesmo guard server-side do Radar).
-  if (!(await clienteRadarAtual())) {
-    return NextResponse.json({ erro: "Não autorizado" }, { status: 401 });
-  }
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json({ partes: [{ tipo: "erro", texto: "Copiloto indisponível (sem credencial de IA configurada)." }] });
   }

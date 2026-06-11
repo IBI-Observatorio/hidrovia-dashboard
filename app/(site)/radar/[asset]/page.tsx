@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { analisarAtivo } from "@/lib/dcf";
-import { clienteRadarAtual } from "@/lib/radar/acesso";
 import { getRadarAsset, fullAsset } from "@/lib/radar/assets";
 import { lerNotas, notasDoAtivo } from "@/lib/radar/notes";
 import { alertasDoAtivo } from "@/lib/radar/alerts";
@@ -52,8 +51,6 @@ export default async function AssetDeepDive({
   params: Promise<{ asset: string }>;
   searchParams: Promise<{ tab?: string }>;
 }) {
-  if (!(await clienteRadarAtual())) redirect("/radar/acesso");
-
   const { asset } = await params;
   const { tab } = await searchParams;
   const entry = getRadarAsset(asset);
