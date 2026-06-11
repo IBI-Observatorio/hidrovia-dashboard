@@ -102,11 +102,11 @@
     "fonte": { "label": "ANTT / TCU / STF / Neofeed", "url": "https://neofeed.com.br/economia/concessao-da-ferrograo-sai-de-novo-dos-trilhos-e-empurra-o-leilao-para-alem-de-2026/en/", "date": "2026" }
   },
   "tabuleiro": {
-    "Vale": {
-      "papel": "A Vale/EFVM compõe a cobertura cruzada do aporte: parte dos R$ 2,25 bi de investimento cruzado viria de outorgas (Rumo Malha Paulista, MRS e EFVM/Vale), conforme o TCU.",
-      "moveNaMalha": "Ferrogrão consolida o escoamento de grãos pelo Arco Norte (Miritituba), rota concorrente/complementar aos corredores Sudeste; o furo de funding de ~R$ 1,4 bi pode respingar em quem banca a cobertura cruzada.",
+    "VLI": {
+      "papel": "A VLI opera a Ferrovia Centro-Atlântica (FCA), principal corredor alternativo para o escoamento de soja de Mato Grosso pelo Sudeste. A Ferrogrão cria um corredor Norte concorrente à FCA para o mesmo fluxo originado no Médio-Norte mato-grossense. A VLI NÃO integra o aporte cruzado da EF-170 — este é composto por Rumo Malha Paulista, MRS e Vale/EFVM (outorgas, conforme TCU).",
+      "moveNaMalha": "A concorrência entre o Arco Norte (EF-170/Miritituba) e os corredores FCA/Sudeste pelo escoamento de soja de MT é o principal vetor de impacto para a VLI neste ativo. O furo de funding (~R$ 1,4 bi) e a suspensão da análise pelo TCU postergam esse risco.",
       "exposicao": "media",
-      "fonte": { "label": "TCU / MPF (aporte cruzado)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" }
+      "fonte": { "label": "VLI/ANTT (FCA — público) · TCU/MPF (aporte cruzado)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" }
     }
   }
 }

@@ -22,5 +22,13 @@
   },
   "scenariosMeta": {
     "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
+  },
+  "tabuleiro": {
+    "VLI": {
+      "papel": "A VLI opera a Ferrovia Centro-Atlântica (FCA) nos estados de GO e BA, exatamente o corredor percorrido pela FICO-FIOL (Água Boa–MT → Mara Rosa–GO → Barreiras/Caetité–BA). O Corredor Leste-Oeste cria um concorrente direto à FCA para o escoamento de grãos do Centro-Oeste ao Porto de Ilhéus.",
+      "moveNaMalha": "A FICO-FIOL, ao conectar o Centro-Oeste ao Nordeste por uma rota mais direta ao porto de Ilhéus, pressiona os fretes da FCA no eixo GO–BA — um dos principais corredores de grãos atualmente atendidos pela VLI.",
+      "exposicao": "alta",
+      "fonte": { "label": "VLI/ANTT (FCA em GO/BA — público) · PPI (FICO-FIOL)", "url": "https://ppi.gov.br/projetos/corredor-ferroviario-leste-oeste/", "date": "2026" }
+    }
   }
 }
