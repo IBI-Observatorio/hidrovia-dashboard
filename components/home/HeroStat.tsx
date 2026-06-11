@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { heroCopy } from "@/lib/home-content";
 
 // Animação de contagem (0 → alvo) com easing.
-function useCountUp(target: number, decimals = 0, duration = 1100) {
+// Exportado para reuso (components/agro) — não duplicar este utilitário.
+export function useCountUp(target: number, decimals = 0, duration = 1100) {
   const [val, setVal] = useState(0);
   useEffect(() => {
     let raf = 0;
@@ -22,7 +23,8 @@ function useCountUp(target: number, decimals = 0, duration = 1100) {
 }
 
 // Sparkline de área com curva suave (Catmull-Rom → Bézier simplificado).
-function buildPath(data: number[], w: number, h: number, pad: number) {
+// Exportado para reuso (components/agro) — não duplicar este utilitário.
+export function buildPath(data: number[], w: number, h: number, pad: number) {
   const min = Math.min(...data) - 6;
   const max = Math.max(...data) + 6;
   const x = (i: number) => pad + (i * (w - 2 * pad)) / (data.length - 1);

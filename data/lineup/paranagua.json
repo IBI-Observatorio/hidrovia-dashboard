@@ -1,0 +1,44 @@
+{
+  "fonte": "Porto de Paranaguá (APPA) — Relatório Line-Up (appaweb)",
+  "url": "https://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relLineUpRetroativo",
+  "porto": "paranagua",
+  "filtro": "graneleiros: soja, milho, farelo, óleo de soja/milho, açúcar, trigo, cevada, sorgo",
+  "coletadoEm": "2026-06-10",
+  "status": "ok",
+  "observacao": "snapshots acumulam histórico a cada coleta; a série de F nasce curta e fica rotulada 'calibração em construção' até cobrir 3 safras.",
+  "snapshots": [
+    {
+      "dataColeta": "2026-06-10",
+      "navios": [
+        { "navio": "REBEKAH", "dwt": 82113, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "status": "atracado" },
+        { "navio": "SHELTER ISLAND", "dwt": 61322, "sentido": "Imp", "mercadoria": "CEVADA CERVEJEIRA", "status": "atracado" },
+        { "navio": "CEMTEX INNOVATION", "dwt": 81326, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
+        { "navio": "PAN MUTIARA", "dwt": 81177, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
+        { "navio": "NBA STAR", "dwt": 24034, "sentido": "Exp", "mercadoria": "OUTS.ACUCARES", "status": "atracado" },
+        { "navio": "SEABULK", "dwt": 81996, "sentido": "Exp", "mercadoria": "MILHO", "status": "programado" },
+        { "navio": "CL DALIAO HE", "dwt": 80860, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "status": "programado" },
+        { "navio": "SEA LEOPARD", "dwt": 46087, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-09", "status": "ao_largo" },
+        { "navio": "ORIENT CHALLENGE", "dwt": 49972, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-09", "status": "ao_largo" },
+        { "navio": "AGIA FILOTHEI A", "dwt": 81795, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-08", "status": "ao_largo" },
+        { "navio": "IOLCOS UNITY", "dwt": 74476, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "eta": "2026-06-08", "status": "ao_largo" },
+        { "navio": "LADY DIMINE", "dwt": 28316, "sentido": "Exp", "mercadoria": "OUTS.ACUCARES", "eta": "2026-06-07", "status": "ao_largo" },
+        { "navio": "NORD SUNDA", "dwt": 63343, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-06", "status": "ao_largo" },
+        { "navio": "AGIA YPOMONI", "dwt": 75506, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-01", "status": "ao_largo" },
+        { "navio": "SDM TAICANG", "dwt": 64388, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "eta": "2026-07-02", "status": "esperado" },
+        { "navio": "SDM BEIHAI", "dwt": 70876, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "eta": "2026-06-27", "status": "esperado" },
+        { "navio": "JAL KAVERI", "dwt": 49990, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-20", "status": "esperado" },
+        { "navio": "NORSE DEVELOPMENT", "dwt": 81637, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-19", "status": "esperado" },
+        { "navio": "LIBERTY ISLAND", "dwt": 58032, "sentido": "Imp", "mercadoria": "CEVADA CERVEJEIRA", "eta": "2026-06-17", "status": "esperado" },
+        { "navio": "CHEMROAD POLARIS", "dwt": 35923, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-16", "status": "esperado" },
+        { "navio": "YAS", "dwt": 50250, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-15", "status": "esperado" },
+        { "navio": "TOXOTIS", "dwt": 56713, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "eta": "2026-06-15", "status": "esperado" },
+        { "navio": "ATLANTIS AMSTERDAM", "dwt": 49999, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-15", "status": "esperado" },
+        { "navio": "FATIMAH", "dwt": 55202, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-12", "status": "esperado" },
+        { "navio": "BANGUS", "dwt": 82388, "sentido": "Exp", "mercadoria": "OLEO DE SOJA", "eta": "2026-06-10", "status": "esperado" },
+        { "navio": "EVER ZENITH", "dwt": 81987, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-10", "status": "esperado" },
+        { "navio": "LILA ACE", "dwt": 19932, "sentido": "Exp", "mercadoria": "OLEO DE MILHO", "eta": "2026-06-10", "status": "esperado" },
+        { "navio": "FRIEDA", "dwt": 82210, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-08", "status": "esperado" }
+      ]
+    }
+  ]
+}

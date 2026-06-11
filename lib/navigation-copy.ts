@@ -18,6 +18,7 @@ export const navigationCopy = {
       { label: "Início",   href: "/" },
       { label: "Portos",   href: "/portos" },
       { label: "Hidrovia", href: "/hidrovia" },
+      { label: "Agro",     href: "/agro" },
       { label: "Análises", href: "/analises" },
       { label: "Sobrecusto Rodoviário", href: "/sobrecusto-rodoviario" },
       { label: "Receber dados", href: "/#receber" },
