@@ -73,7 +73,9 @@ import producaoConab from "../data/conab/producao-uf.json";
 import dieselAnp from "../data/anp/diesel.json";
 import lineupParanagua from "../data/lineup/paranagua.json";
 import lineupArcoNorte from "../data/lineup/arco-norte.json";
+import lineupSantos from "../data/lineup/santos.json";
 import hArcoNorte from "../data/agro/h-arco-norte.json";
+import capacidadeAntaq from "../data/antaq/capacidade-semanal.json";
 
 // ---------------------------------------------------------------------------
 // Calendário
@@ -171,6 +173,27 @@ export interface AgroData {
   colisao: ColisaoData;
   /** datas de referência das fontes reais (p/ rótulos) */
   fontes: { conabProgresso: string; conabProducao: string; anpDiesel: string; anpStatus: string };
+}
+
+// ---------------------------------------------------------------------------
+// Capacidade semanal: ANTAQ REAL quando o cache está ok; senão o parâmetro
+// declarado em iee-params (regra do PASSO 5: nunca duas verdades).
+// ---------------------------------------------------------------------------
+
+type CapAntaq = { status: string; corredores?: Record<string, { capacidadeSemanalMilT: number; dadosAte: string }> };
+
+/** Denominador único de F, S e colisão. */
+export function capacidadeSemanal(corredor: Corredor): number {
+  const c = (capacidadeAntaq as CapAntaq);
+  const real = c.status === "ok" ? c.corredores?.[corredor]?.capacidadeSemanalMilT : undefined;
+  return real ?? CAPACIDADE_SEMANAL_MIL_T[corredor];
+}
+
+/** Rótulo da fonte do denominador (UI/metodologia). */
+export function fonteCapacidade(corredor: Corredor): string {
+  const c = (capacidadeAntaq as CapAntaq);
+  const e = c.status === "ok" ? c.corredores?.[corredor] : undefined;
+  return e ? `capacidade: ANTAQ EA (média 12m até ${e.dadosAte})` : "capacidade: parâmetro IBI declarado";
 }
 
 // ---------------------------------------------------------------------------
@@ -292,7 +315,8 @@ function serieSReal(corredor: Corredor = "santos"): PontoS[] {
     const r = calculaComponenteS(
       {
         progresso: w.progresso, producaoUF,
-        embarcadoAcumMilT: estimaEmbarcadoProxyV0(semanasEscoando, CAPACIDADE_SEMANAL_MIL_T[corredor]),
+        embarcadoAcumMilT: estimaEmbarcadoProxyV0(semanasEscoando, capacidadeSemanal(corredor)),
+        denominadorMilTSemana: capacidadeSemanal(corredor),
       },
       [], w.semanaISO, corredor,
     );
@@ -517,6 +541,7 @@ function montaFLineup(corredor: Corredor): SerieComponenteAgro | null {
   const cache =
     corredor === "paranagua" ? lineupParanagua :
     corredor === "arco-norte" ? (lineupArcoNorte as unknown as typeof lineupParanagua) :
+    corredor === "santos" ? (lineupSantos as unknown as typeof lineupParanagua) :
     null;
   if (!cache?.snapshots?.length) return null;
 
@@ -530,7 +555,7 @@ function montaFLineup(corredor: Corredor): SerieComponenteAgro | null {
   const pontos = [...porSemana.values()].sort((a, b) => (a.d < b.d ? -1 : 1));
   const brutos = pontos.map((p) => ({
     d: p.d, semanaISO: semanaISODeData(p.d),
-    r: calculaComponenteF(p.navios, corredor, [], semanaISODeData(p.d)),
+    r: calculaComponenteF(p.navios, corredor, [], semanaISODeData(p.d), capacidadeSemanal(corredor)),
   }));
   const dets = percentisWalkForward(brutos.map((b) => ({ d: b.d, semanaISO: b.semanaISO, bruto: b.r.semanasDeFila })));
   const jan = brutos.slice(-N_SEMANAS); const det = dets.slice(-N_SEMANAS);
@@ -547,8 +572,10 @@ function montaFLineup(corredor: Corredor): SerieComponenteAgro | null {
     ilustrativo: false,
     fonte:
       corredor === "paranagua"
-        ? `Fonte: Porto de Paranaguá (APPA) — line-up de ${fmtBR(cache.coletadoEm)} · ${jan[n - 1].r.naviosAguardando} graneleiros aguardando`
-        : `Fonte: line-ups EMAP (Itaqui) + CDP (Vila do Conde) de ${fmtBR(cache.coletadoEm)} · ${jan[n - 1].r.naviosAguardando} graneleiros aguardando · Miritituba/Santarém: indisponível (parcial)`,
+        ? `Fonte: Porto de Paranaguá (APPA) — line-up de ${fmtBR(cache.coletadoEm)} · ${jan[n - 1].r.naviosAguardando} graneleiros aguardando · ${fonteCapacidade(corredor)}`
+        : corredor === "santos"
+        ? `Fonte: Porto de Santos (APS/DIOPE) — esperados de ${fmtBR(cache.coletadoEm)} · ${jan[n - 1].r.naviosAguardando} graneleiros aguardando · ${fonteCapacidade(corredor)}`
+        : `Fonte: line-ups EMAP (Itaqui) + CDP (Vila do Conde) de ${fmtBR(cache.coletadoEm)} · ${jan[n - 1].r.naviosAguardando} graneleiros aguardando · Miritituba/Santarém: indisponível (parcial) · ${fonteCapacidade(corredor)}`,
     calibracaoEmConstrucao: det[n - 1].calibracaoEmConstrucao,
     fonteAlvo: FONTE_ALVO.F,
   };
@@ -604,7 +631,7 @@ function montaCorredor(corredor: Corredor): CorredorAgroData {
     let r: SerieComponenteAgro | null = null;
     if (real && c === "S") r = montaSReal(corredor);
     else if (real && c === "T") r = montaTModelado(corredor);
-    else if (real && c === "F") r = montaFLineup(corredor);
+    else if (real && c === "F") r = montaFLineup(corredor); // santos incluso (PASSO 2)
     else if (real && c === "H") r = montaHReal(corredor);
     comps.push(r ?? montaComponenteIlustrativo(corredor, c));
   }
@@ -633,7 +660,8 @@ function montaCorredor(corredor: Corredor): CorredorAgroData {
 
   const cacheLineup =
     corredor === "paranagua" ? lineupParanagua :
-    corredor === "arco-norte" ? (lineupArcoNorte as unknown as typeof lineupParanagua) : null;
+    corredor === "arco-norte" ? (lineupArcoNorte as unknown as typeof lineupParanagua) :
+    corredor === "santos" ? (lineupSantos as unknown as typeof lineupParanagua) : null;
   const naviosReais =
     cacheLineup && cacheLineup.status === "ok"
       ? (cacheLineup.snapshots[cacheLineup.snapshots.length - 1].navios as NavioLineup[])
@@ -670,7 +698,7 @@ function montaColisao(): ColisaoData {
     if (i >= 0 && i < 12) agenda[i] = milT;
   }
   const pontos = calculaColisao(
-    agenda, pico, CAPACIDADE_SEMANAL_MIL_T["arco-norte"], SEMANA_ATUAL_ISO, 12,
+    agenda, pico, capacidadeSemanal("arco-norte"), SEMANA_ATUAL_ISO, 12,
   );
   return {
     pontos,

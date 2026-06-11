@@ -530,19 +530,22 @@ export interface ResultadoComponenteF {
  * @param corredor   corredor (define a capacidade usada no denominador)
  * @param serieHistorica  série semanal de `semanasDeFila` (snapshots passados)
  * @param semanaISO  semana ISO corrente
+ * @param denominadorMilTSemana  override do denominador (capacidade ANTAQ
+ *        real do cache, quando disponível) — MESMO valor usado no S
  */
 export function calculaComponenteF(
   lineup: NavioLineup[],
   corredor: Corredor,
   serieHistorica: PontoSemanal[],
   semanaISO: number,
+  denominadorMilTSemana?: number,
 ): ResultadoComponenteF {
   const AGUARDANDO = new Set(["ao_largo", "esperado", "programado"]);
   const fila = lineup.filter(
     (n) => AGUARDANDO.has(n.status) && /exp/i.test(n.sentido),
   );
   const dwtMilT = fila.reduce((s, n) => s + n.dwt, 0) / 1000;
-  const bruto = dwtMilT / CAPACIDADE_SEMANAL_MIL_T[corredor];
+  const bruto = dwtMilT / (denominadorMilTSemana ?? CAPACIDADE_SEMANAL_MIL_T[corredor]);
 
   return {
     naviosAguardando: fila.length,

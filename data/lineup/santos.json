@@ -1,0 +1,528 @@
+{
+ "fonte": "Porto de Santos (APS/DIOPE) — Navios Esperados · Carga",
+ "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+ "porto": "santos",
+ "filtro": "graneleiros EMB: soja, milho, açúcar, farelo, trigo, cevada, sorgo · campo dwt = PESO DA CARGA programada (proxy declarado, melhor que porte bruto)",
+ "coletadoEm": "2026-06-10",
+ "status": "ok",
+ "observacao": "Fundeados/atracados da APS não expõem mercadoria — fila v0 usa só os esperados de carga (documentado). Servidor da APS monta a lista em ~20 s e falha intermitentemente: o scraper usa retry.",
+ "snapshots": [
+  {
+   "dataColeta": "2026-06-10",
+   "navios": [
+    {
+     "navio": "SAKIZAYA ELEGANCE",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-05-18",
+     "status": "esperado"
+    },
+    {
+     "navio": "KM HONGKONG",
+     "dwt": 69415,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-05-21",
+     "status": "esperado"
+    },
+    {
+     "navio": "OBI ISLAND",
+     "dwt": 61000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-05-28",
+     "status": "esperado"
+    },
+    {
+     "navio": "APOLLON",
+     "dwt": 71500,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-05-29",
+     "status": "esperado"
+    },
+    {
+     "navio": "KM JAKARTA",
+     "dwt": 60000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-05-30",
+     "status": "esperado"
+    },
+    {
+     "navio": "DIMITRA M",
+     "dwt": 69300,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-02",
+     "status": "esperado"
+    },
+    {
+     "navio": "KAI HANG FA ZHAN",
+     "dwt": 63000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-03",
+     "status": "esperado"
+    },
+    {
+     "navio": "EASTERN ZINNIA",
+     "dwt": 64000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-05",
+     "status": "esperado"
+    },
+    {
+     "navio": "BBG WUZHOU",
+     "dwt": 70000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-05",
+     "status": "esperado"
+    },
+    {
+     "navio": "NGM LEGEND",
+     "dwt": 65000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-06",
+     "status": "esperado"
+    },
+    {
+     "navio": "STARLIGHT",
+     "dwt": 65000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-07",
+     "status": "esperado"
+    },
+    {
+     "navio": "CRYSTAL ADMIRER",
+     "dwt": 65000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-08",
+     "status": "esperado"
+    },
+    {
+     "navio": "JIN HANG ZHENG BANG",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-09",
+     "status": "esperado"
+    },
+    {
+     "navio": "WADI ALMALEKAT",
+     "dwt": 64000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-09",
+     "status": "esperado"
+    },
+    {
+     "navio": "BBG HONG KONG",
+     "dwt": 70000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "FEDERAL IMABARI",
+     "dwt": 63000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "GOLDEN ARION",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "HSL VARNA",
+     "dwt": 69300,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "KRINI",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "MV ARABICA",
+     "dwt": 55000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "MYRSINI",
+     "dwt": 69300,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "SELENA",
+     "dwt": 63000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "YANGTZE CROWN",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "ZEPHYROS",
+     "dwt": 69500,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "GRAECIA NAUTICA",
+     "dwt": 69300,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "OCEANIA GRAECA",
+     "dwt": 71000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "GERASIMOS",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "THE GUARDIAN",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-11",
+     "status": "esperado"
+    },
+    {
+     "navio": "DIMITRIS A",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-11",
+     "status": "esperado"
+    },
+    {
+     "navio": "JIA TONG",
+     "dwt": 65000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-11",
+     "status": "esperado"
+    },
+    {
+     "navio": "ROSALINA",
+     "dwt": 77000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-12",
+     "status": "esperado"
+    },
+    {
+     "navio": "JAG AKSHAY",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-13",
+     "status": "esperado"
+    },
+    {
+     "navio": "UNION VOYAGER",
+     "dwt": 65000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-13",
+     "status": "esperado"
+    },
+    {
+     "navio": "AFRICA GRAECA II",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-14",
+     "status": "esperado"
+    },
+    {
+     "navio": "PERSEUS",
+     "dwt": 64000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-14",
+     "status": "esperado"
+    },
+    {
+     "navio": "WOOYANG IVY",
+     "dwt": 63000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-14",
+     "status": "esperado"
+    },
+    {
+     "navio": "AURORA",
+     "dwt": 65000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-15",
+     "status": "esperado"
+    },
+    {
+     "navio": "YIANNIS N.G.",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-15",
+     "status": "esperado"
+    },
+    {
+     "navio": "TIGER JILIN",
+     "dwt": 63000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-15",
+     "status": "esperado"
+    },
+    {
+     "navio": "LEADER",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-16",
+     "status": "esperado"
+    },
+    {
+     "navio": "GEMINI OCEAN",
+     "dwt": 71000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-16",
+     "status": "esperado"
+    },
+    {
+     "navio": "AGIOS GEORGIOS S",
+     "dwt": 66000,
+     "sentido": "Exp",
+     "mercadoria": "SOJA A GRANEL",
+     "eta": "2026-06-18",
+     "status": "esperado"
+    },
+    {
+     "navio": "NAVIOS CORAL",
+     "dwt": 38363,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-05-26",
+     "status": "esperado"
+    },
+    {
+     "navio": "BETTY K",
+     "dwt": 69868,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-05-29",
+     "status": "esperado"
+    },
+    {
+     "navio": "NANAMI FORTUNE",
+     "dwt": 30000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-02",
+     "status": "esperado"
+    },
+    {
+     "navio": "TCLC QUANZHOU",
+     "dwt": 60000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-02",
+     "status": "esperado"
+    },
+    {
+     "navio": "BRANT",
+     "dwt": 29350,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-03",
+     "status": "esperado"
+    },
+    {
+     "navio": "GURNET BAY",
+     "dwt": 32450,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-05",
+     "status": "esperado"
+    },
+    {
+     "navio": "BLUE OPAL",
+     "dwt": 82000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-07",
+     "status": "esperado"
+    },
+    {
+     "navio": "FYM CRYSTAL",
+     "dwt": 51701,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-08",
+     "status": "esperado"
+    },
+    {
+     "navio": "WL UGLICH",
+     "dwt": 29000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-09",
+     "status": "esperado"
+    },
+    {
+     "navio": "JAG ADITI",
+     "dwt": 74800,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-09",
+     "status": "esperado"
+    },
+    {
+     "navio": "BLUEBILL",
+     "dwt": 20000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "KAVO ALKYON",
+     "dwt": 75000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "LODESTAR DE MAR",
+     "dwt": 28200,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "FEDERAL SHIMANTO",
+     "dwt": 31289,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    },
+    {
+     "navio": "FREYA SCHULTE",
+     "dwt": 37400,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-12",
+     "status": "esperado"
+    },
+    {
+     "navio": "GREY LUNA",
+     "dwt": 55050,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-15",
+     "status": "esperado"
+    },
+    {
+     "navio": "SEA PRIDE I (BAND. GREYLI",
+     "dwt": 64800,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR A GRANEL",
+     "eta": "2026-06-23",
+     "status": "esperado"
+    },
+    {
+     "navio": "STEEL C",
+     "dwt": 61100,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR",
+     "eta": "2026-05-31",
+     "status": "esperado"
+    },
+    {
+     "navio": "KEFALONIA",
+     "dwt": 26000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR",
+     "eta": "2026-06-01",
+     "status": "esperado"
+    },
+    {
+     "navio": "BRAVE PIONEER",
+     "dwt": 76370,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR",
+     "eta": "2026-06-06",
+     "status": "esperado"
+    },
+    {
+     "navio": "TOINY",
+     "dwt": 70000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR",
+     "eta": "2026-06-08",
+     "status": "esperado"
+    },
+    {
+     "navio": "AMALEA",
+     "dwt": 26000,
+     "sentido": "Exp",
+     "mercadoria": "ACUCAR",
+     "eta": "2026-06-10",
+     "status": "esperado"
+    }
+   ]
+  }
+ ]
+}

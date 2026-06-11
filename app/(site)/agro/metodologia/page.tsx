@@ -12,7 +12,7 @@ import {
   type ComponenteIEE,
   type Corredor,
 } from "@/lib/iee-params";
-import preRegistro from "@/data/agro/pre-registro-iee-v0.json";
+import preRegistro from "@/data/agro/pre-registro-iee-v1.json";
 
 export const metadata: Metadata = {
   title: agroCopy.pageMeta.metodologia.title,

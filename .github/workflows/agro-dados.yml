@@ -58,6 +58,7 @@ jobs:
       - name: Line-ups (APPA · EMAP · CDP · Santarém) + agregador Arco Norte
         if: steps.alvos.outputs.alvo == 'lineups' || steps.alvos.outputs.alvo == 'tudo'
         run: |
+          npx tsx scripts/lineup/santos.ts         || echo "::warning::APS/DIOPE indisponível (estado honesto commitado)"
           npx tsx scripts/lineup/paranagua.ts      || echo "::warning::APPA indisponível (estado honesto commitado)"
           npx tsx scripts/lineup/itaqui.ts         || echo "::warning::EMAP indisponível (estado honesto commitado)"
           npx tsx scripts/lineup/vila-do-conde.ts  || echo "::warning::CDP indisponível (estado honesto commitado)"

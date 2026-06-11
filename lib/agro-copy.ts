@@ -78,7 +78,7 @@ export const agroCopy = {
 
   // Insight de 1 frase por corredor — leitura serena. Santos: S real + T modelado.
   insights: {
-    santos: "Com a colheita encerrada, o excedente de campo escoa semana a semana; o custo rodoviário ainda carrega o repique do diesel de março — pressão em dissipação gradual.",
+    santos: "A fila de grão da APS abre o histórico do indicador com 64 graneleiros esperados (~2,5 semanas da capacidade ANTAQ); com a colheita encerrada, o excedente de campo escoa — pressão alta, em dissipação gradual.",
     paranagua: "A fila de graneleiros da APPA inaugura o histórico do indicador nesta semana; com a colheita encerrada no Paraná, a pressão de safra se dissipa — leitura inicial, em calibração.",
     "arco-norte": "Com a calha cheia, o risco hidrológico do Tabocal está no piso e a fila de soja domina a leitura; a contagem regressiva do calado volta a comandar o corredor na descida do rio.",
   } satisfies Record<Corredor, string>,
@@ -175,7 +175,7 @@ export const agroCopy = {
   // FONTES POR CORREDOR (rodapé do card preditivo)
   // ===================================================================
   fontesCorredor: {
-    santos: "line-up: ilustrativo (PASSO 2) · safra: Conab · custo rodoviário: modelo IBI · diesel: ANP",
+    santos: "line-up: Porto de Santos (APS/DIOPE) · safra: Conab · custo rodoviário: modelo IBI · diesel: ANP · capacidade: ANTAQ EA",
     paranagua: "line-up: Porto de Paranaguá (APPA) · safra: Conab · custo rodoviário: modelo IBI · diesel: ANP",
     "arco-norte": "line-up: EMAP · CDP (Miritituba/Santarém: indisponível — parcial) · safra: Conab · custo: modelo IBI · diesel: ANP · hidrologia: modelo IBI · CMR: Capitania dos Portos/AM",
   } satisfies Partial<Record<Corredor, string>>,
@@ -236,7 +236,7 @@ export const agroCopy = {
         texto:
           "S mede o excedente de campo da hinterlândia de Santos (SP, MG, GO, MS e MT — MT inteiro como aproximação do MT-sul, declarada): volume colhido de soja e milho (Conab, Progresso de Safra semanal × produção por UF do Acompanhamento da Safra) menos o já embarcado, normalizado pela capacidade semanal de embarque do porto. O resultado é lido em \"semanas de capacidade\" e convertido em percentil sazonal.",
         proxy:
-          "Enquanto o embarcado acumulado real da ANTAQ não entra (PASSO 2), o já embarcado usa um proxy declarado: capacidade semanal × semanas desde o início do escoamento × fator de utilização (0,7). O denominador de capacidade é o MESMO parâmetro que o pilar de line-up usará — declarado em um único lugar, nunca duplicado.",
+          "Enquanto o embarcado acumulado real da ANTAQ não entra (PASSO 2), o já embarcado usa um proxy declarado: capacidade semanal × semanas desde o início do escoamento × fator de utilização (0,7). O denominador de capacidade é ÚNICO para F e S: a média móvel de 12 meses do granel sólido vegetal embarcado em cada corredor, agregada da Estatística Aquaviária da ANTAQ (espelho parquet do IBI); na ausência do cache, vale o parâmetro declarado — nunca duas verdades.",
         fonte:
           "Fonte: Conab — Progresso de Safra / Acompanhamento da Safra (licença CC Atribuição-SemDerivações 3.0; uso sem fins lucrativos com citação). Onde o histórico tem menos de 3 safras, o percentil cai para z robusto (mediana/MAD) rotulado \"calibração em construção\".",
       },
@@ -261,7 +261,7 @@ export const agroCopy = {
       dados: {
         titulo: "Estado dos dados",
         texto:
-          "Santos: S real (Conab) + T modelado; F ilustrativo até o PASSO 2. Paranaguá: F real (APPA), S real, T modelado. Arco Norte: F real PARCIAL (EMAP + CDP; Miritituba/Santarém sem line-up público — lacuna rotulada, nunca silenciada), S real (hinterlândia MT·PA·TO·MA·PI·RO, MT inteiro como proxy de MT-norte), T modelado e H modelado sobre dados reais (IRC-Tabocal + recessão/CMR). Pilares com histórico < 3 safras carregam \"calibração em construção\".",
+          "Santos: F real (line-up APS/DIOPE), S real (Conab) e T modelado — corredor completo desde o PASSO 2. Paranaguá: F real (APPA), S real, T modelado. Arco Norte: F real PARCIAL (EMAP + CDP; Miritituba/Santarém sem line-up público — lacuna rotulada, nunca silenciada), S real (hinterlândia MT·PA·TO·MA·PI·RO, MT inteiro como proxy de MT-norte), T modelado e H modelado sobre dados reais (IRC-Tabocal + recessão/CMR). Pilares com histórico < 3 safras carregam \"calibração em construção\".",
       },
     },
     preRegistro: {

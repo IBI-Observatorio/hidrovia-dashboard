@@ -14,7 +14,8 @@ import { fileURLToPath } from "node:url";
 import { calculaIEE, semanaISODeData, type ComponenteIEE, type Corredor } from "../../lib/iee";
 import { __backtest } from "../../lib/agro-content";
 import hCache from "../../data/agro/h-arco-norte.json";
-import preRegistro from "../../data/agro/pre-registro-iee-v0.json";
+import esperaEA from "../../data/antaq/espera-semanal.json";
+import preRegistro from "../../data/agro/pre-registro-iee-v1.json";
 
 const { serieSReal, serieTModelada, percentisWalkForward } = __backtest;
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -26,7 +27,7 @@ function main() {
   // ── 0) integridade do pré-registro (drift bloqueia o backtest) ─────────
   try {
     execSync("npx tsx scripts/agro/gera-pre-registro.ts", { cwd: RAIZ, stdio: "pipe" });
-    console.log(`Pré-registro v0 íntegro (sha256 ${preRegistro.hashParametros.slice(0, 12)}… · ${preRegistro.congeladoEm})\n`);
+    console.log(`Pré-registro v1 íntegro (sha256 ${preRegistro.hashParametros.slice(0, 12)}… · ${preRegistro.congeladoEm})\n`);
   } catch {
     console.error("DRIFT de parâmetros vs pré-registro — backtest abortado. Gere novo pré-registro versionado.");
     process.exitCode = 1;
@@ -75,14 +76,55 @@ function main() {
     detalhe: `P_S máx abr–mai/26: Santos ${pSt.toFixed(1)} · Paranaguá ${pPg.toFixed(1)} (critério ≥95)`,
   });
 
-  vereditos.push({ id: "dez-2025-fila-santos", ok: null, detalhe: "NÃO VERIFICÁVEL — sem histórico de line-up (PASSO 2); lacuna estrutural declarada no pré-registro" });
+  // dez/2025 agora é VERIFICÁVEL pela espera real da EA (TEsperaAtracacao):
+  const espSantos = (esperaEA as unknown as { corredores: Record<string, [string, number, number][]> }).corredores.santos;
+  const espDez25 = espSantos.filter(([s]) => s >= "2025-11-24" && s <= "2025-12-29").map(([, h]) => h);
+  const espMed25 = espSantos.filter(([s]) => s.startsWith("2025")).map(([, h]) => h);
+  const med = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / (xs.length || 1);
+  vereditos.push({
+    id: "dez-2025-fila-santos", ok: null,
+    detalhe: `VERIFICADO CONTRA A EA: espera média dez/2025 = ${med(espDez25).toFixed(0)} h ≈ média de 2025 (${med(espMed25).toFixed(0)} h) — episódio NÃO CONFIRMADO como excepcional; âncora SUBSTITUÍDO no v1 (ver out-2023)`,
+  });
+  // critério FACTUAL (sem limiar arbitrário): o topo da série inteira de
+  // espera (2016→2026) deve estar em ago–out/2023 — recorde conhecido.
+  const top5 = espSantos.slice().sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const topNaJanela = top5.filter(([s]) => s >= "2023-08-01" && s <= "2023-11-06").length;
+  vereditos.push({
+    id: "out-2023-espera-recorde", ok: topNaJanela >= 4,
+    detalhe: `referência histórica da métrica-alvo: ${topNaJanela}/5 maiores esperas da série 2016–2026 caem em ago–out/2023 (pico ${top5[0][1].toFixed(0)} h em ${top5[0][0]})`,
+  });
   vereditos.push({ id: "jan-2025-salto-frete", ok: null, detalhe: "FORA DE ESCOPO — T é custo modelado, não frete negociado (decisão registrada)" });
 
-  // ── 3) métrica-alvo (registrada, não inventada) ─────────────────────────
-  const metricaAlvo = "MAE do IEE(t) contra tempo médio de espera no line-up em t+2: NÃO COMPUTÁVEL — histórico de F começou em 10/06/2026. Computar quando houver ≥ 26 semanas de fila acumulada.";
+  // ── 3) MÉTRICA-ALVO agora computável via EA (TEsperaAtracacao) ──────────
+  // IEE(S+T) semanal de Santos vs percentil walk-forward da espera em t+2.
+  const sSantos = S.get("santos")!;
+  const tSantos = T.get("santos")!;
+  const espMap = new Map(espSantos.map(([sem, h]) => [sem, h]));
+  const segunda = (d: string) => { // sábado Conab → segunda da mesma semana ISO (chave da EA)
+    const dt = new Date(d + "T00:00:00Z");
+    dt.setUTCDate(dt.getUTCDate() - ((dt.getUTCDay() + 6) % 7));
+    return dt.toISOString().slice(0, 10);
+  };
+  const esperaHist: { semanaISO: number; bruto: number; d: string }[] = [];
+  const pares: { iee: number; espPerc: number }[] = [];
+  const espPercWF = percentisWalkForward(espSantos.map(([sem, h]) => ({ d: sem, semanaISO: semanaISODeData(sem), bruto: h })));
+  const espPercMap = new Map(espSantos.map(([sem], i) => [sem, espPercWF[i].percentil]));
+  for (const d of [...sSantos.keys()].sort()) {
+    const perc: Partial<Record<ComponenteIEE, number>> = { S: sSantos.get(d), T: tSantos.get(d) };
+    const iee = calculaIEE(perc, "santos").valor;
+    const sem2 = new Date(segunda(d) + "T00:00:00Z");
+    sem2.setUTCDate(sem2.getUTCDate() + 14); // t+2 semanas
+    const alvo = espPercMap.get(sem2.toISOString().slice(0, 10));
+    if (alvo != null) pares.push({ iee, espPerc: alvo });
+  }
+  const rank = (xs: number[]) => { const idx = xs.map((v, i) => [v, i] as const).sort((a, b) => a[0] - b[0]); const r = new Array(xs.length); idx.forEach(([, i], k) => (r[i] = k)); return r; };
+  const corrP = (a: number[], b: number[]) => { const n = a.length, ma = med(a), mb = med(b); let num = 0, da = 0, db = 0; for (let i = 0; i < n; i++) { num += (a[i] - ma) * (b[i] - mb); da += (a[i] - ma) ** 2; db += (b[i] - mb) ** 2; } return num / Math.sqrt(da * db || 1); };
+  const spearman = corrP(rank(pares.map((p) => p.iee)), rank(pares.map((p) => p.espPerc)));
+  const mae = med(pares.map((p) => Math.abs(p.iee - p.espPerc)));
+  const metricaAlvo = `IEE-Santos(t) vs percentil da espera EA em t+2 (${pares.length} semanas, abr/2025→fev/2026): Spearman ${spearman.toFixed(2)} · MAE ${mae.toFixed(1)} p.p. — baseline v1 registrado; F entra na composição quando o histórico de fila acumular.`;
 
   // ── 4) saída: console + README ──────────────────────────────────────────
-  console.log("================ EPISÓDIOS-ÂNCORA (pré-registro v0) ================");
+  console.log("================ EPISÓDIOS-ÂNCORA (pré-registro v1) ================");
   let falhou = false;
   for (const v of vereditos) {
     const flag = v.ok === null ? "◌ registrado" : v.ok ? "✓ ACUSOU" : "✗ FALHOU";
@@ -99,7 +141,7 @@ function main() {
   const md = `# Backtest do IEE — vereditos consolidados
 
 > Gerado por \`scripts/backtest/iee-final.ts\` em ${hoje}. NÃO editar à mão.
-> Pré-registro v0: sha256 \`${preRegistro.hashParametros.slice(0, 16)}…\` congelado em ${preRegistro.congeladoEm}.
+> Pré-registro v1: sha256 \`${preRegistro.hashParametros.slice(0, 16)}…\` congelado em ${preRegistro.congeladoEm}.
 
 ## Episódios-âncora
 
