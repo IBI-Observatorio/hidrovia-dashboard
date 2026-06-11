@@ -1,0 +1,99 @@
+# Coleta automática dos dados da vertical AGRO (IEE).
+#
+# - DIÁRIO (06:00 BRT): line-ups APPA / EMAP / CDP / Santarém + agregador
+#   Arco Norte. Scraper que falhar grava status "indisponivel" no cache
+#   (estado honesto) — o commit acontece mesmo assim, NUNCA interpola.
+# - SEMANAL (sexta 18:00 BRT, pós-divulgações): Conab Progresso de Safra,
+#   Conab produção por UF, diesel ANP e regeneração da série H do Arco
+#   Norte. Antes de commitar, verifica a INTEGRIDADE DO PRÉ-REGISTRO v0
+#   (drift de parâmetro sem novo pré-registro ⇒ job falha, nada é publicado).
+#
+# O push de dados em main dispara o deploy existente — dashboard atualizado.
+
+name: agro-dados
+
+on:
+  schedule:
+    - cron: "0 9 * * *"   # diário 09:00 UTC = 06:00 BRT → line-ups
+    - cron: "0 21 * * 5"  # sexta 21:00 UTC = 18:00 BRT → Conab/ANP/H
+  workflow_dispatch:
+    inputs:
+      alvo:
+        description: "o que coletar (lineups | semanais | tudo)"
+        default: "tudo"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: agro-dados
+  cancel-in-progress: false
+
+jobs:
+  coleta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instala dependências
+        run: npm ci --no-audit --no-fund
+
+      - name: Decide alvos desta execução
+        id: alvos
+        run: |
+          ALVO="${{ github.event.inputs.alvo || 'auto' }}"
+          if [ "$ALVO" = "auto" ]; then
+            # agenda diária (09:00) → lineups; agenda de sexta (21:00) → semanais
+            if [ "$(date -u +%H)" = "09" ]; then ALVO=lineups; else ALVO=semanais; fi
+          fi
+          echo "alvo=$ALVO" >> "$GITHUB_OUTPUT"
+          echo "Alvo: $ALVO"
+
+      # ---------- DIÁRIO: line-ups (estado indisponível também é commitado) ----------
+      - name: Line-ups (APPA · EMAP · CDP · Santarém) + agregador Arco Norte
+        if: steps.alvos.outputs.alvo == 'lineups' || steps.alvos.outputs.alvo == 'tudo'
+        run: |
+          npx tsx scripts/lineup/paranagua.ts      || echo "::warning::APPA indisponível (estado honesto commitado)"
+          npx tsx scripts/lineup/itaqui.ts         || echo "::warning::EMAP indisponível (estado honesto commitado)"
+          npx tsx scripts/lineup/vila-do-conde.ts  || echo "::warning::CDP indisponível (estado honesto commitado)"
+          npx tsx scripts/lineup/santarem.ts       || true
+          npx tsx scripts/lineup/arco-norte-agregador.ts
+
+      # ---------- SEMANAL: Conab + ANP + série H ----------
+      - name: Conab (progresso + produção) e diesel ANP
+        if: steps.alvos.outputs.alvo == 'semanais' || steps.alvos.outputs.alvo == 'tudo'
+        run: |
+          npx tsx scripts/conab/progresso-colheita.ts || echo "::warning::Conab progresso indisponível (estado honesto commitado)"
+          npx tsx scripts/conab/producao-uf.ts        || echo "::warning::Conab produção indisponível (estado honesto commitado)"
+          npx tsx scripts/anp/diesel.ts               || echo "::warning::ANP indisponível (estado honesto commitado)"
+
+      - name: Regenera série H do Arco Norte
+        if: steps.alvos.outputs.alvo == 'semanais' || steps.alvos.outputs.alvo == 'tudo'
+        run: npx tsx scripts/agro/gera-h-arco-norte.ts
+
+      # ---------- GOVERNANÇA: pré-registro íntegro ou nada sai ----------
+      - name: Verifica integridade do pré-registro v0 (drift bloqueia)
+        run: npx tsx scripts/agro/gera-pre-registro.ts
+
+      - name: Backtest final (episódios-âncora do pré-registro)
+        if: steps.alvos.outputs.alvo == 'semanais' || steps.alvos.outputs.alvo == 'tudo'
+        run: npx tsx scripts/backtest/iee-final.ts
+
+      # ---------- COMMIT dos dados ----------
+      - name: Commita dados atualizados
+        run: |
+          git config user.name  "ibi-observatorio-bot"
+          git config user.email "observatorio@ibi.org.br"
+          git add data/ scripts/backtest/README.md
+          if git diff --cached --quiet; then
+            echo "Sem mudanças de dados nesta execução."
+          else
+            git commit -m "Atualiza dados da vertical Agro (${{ steps.alvos.outputs.alvo }}) [bot]"
+            git pull --rebase origin main
+            git push origin main
+          fi
