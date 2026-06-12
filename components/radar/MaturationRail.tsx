@@ -104,8 +104,17 @@ export default function MaturationRail({
             ))}
             {/* P(ocorre) — gates institucionais */}
             <path d={linha("pOcorre")} fill="none" stroke="#0099d8" strokeWidth={2} />
-            {/* P(atrativo) — × estrutura fecha (só com DCF) */}
-            {temDCF && <path d={linha("pAtrativo")} fill="none" stroke="#00a652" strokeWidth={2} />}
+            {/* P(atrativo) — × estrutura fecha (só com DCF); dashed quando estrutura raramente fecha */}
+            {temDCF && (
+              <path
+                d={linha("pAtrativo")}
+                fill="none"
+                stroke="#00a652"
+                strokeWidth={pEstruturaFecha! >= 0.15 ? 2 : 1.5}
+                strokeDasharray={pEstruturaFecha! < 0.15 ? "4 3" : undefined}
+                opacity={pEstruturaFecha! >= 0.15 ? 1 : 0.6}
+              />
+            )}
           </svg>
 
           <div className="space-y-2 text-[11px]">
@@ -114,15 +123,22 @@ export default function MaturationRail({
               Gates liberam · mediana <strong className="text-white">{medOcorre ?? "—"}</strong>
             </p>
             {temDCF ? (
-              <p className="flex items-center gap-1.5 text-gray-300">
-                <span className="inline-block h-2 w-3 rounded-sm" style={{ background: "#00a652" }} />
-                Leilão atrativo (×{pct(pEstruturaFecha!, 0)} estrutura) · mediana{" "}
-                <strong className="text-white">{medAtrativo ?? "não no horizonte"}</strong>
-              </p>
+              medAtrativo != null ? (
+                <p className="flex items-center gap-1.5 text-gray-300">
+                  <span className="inline-block h-2 w-3 rounded-sm" style={{ background: "#00a652" }} />
+                  Leilão atrativo (×{pct(pEstruturaFecha!, 0)} estrutura) · mediana{" "}
+                  <strong className="text-white">{medAtrativo}</strong>
+                </p>
+              ) : (
+                <div className="rounded-md border border-ouro/25 bg-ouro/10 px-2.5 py-2 text-[10px] leading-snug text-ouro">
+                  <strong>P(estrutura fecha) = {pct(pEstruturaFecha!, 0)}</strong> — leilão
+                  atrativo fora do horizonte modelado (2026–2032)
+                </div>
+              )
             ) : (
               <p className="text-gray-500">
-                Dimensão econômica (P estrutura fechar) não modelada — ativo parcial. Só a
-                trajetória institucional é exibida.
+                Dimensão econômica não modelada — ativo parcial. Só a trajetória institucional
+                é exibida.
               </p>
             )}
             {maturacao.leilaoAnunciado != null && (
