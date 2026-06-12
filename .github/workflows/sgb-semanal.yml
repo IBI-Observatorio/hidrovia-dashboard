@@ -6,41 +6,104 @@ name: Refresh boletim SGB (SACE)
 # a previsao de cheia (home, /monitor, briefing). O Railway faz o fetch do SGB;
 # este workflow so dispara. Substitui o pipeline-sace.py do run-pipeline-sace.bat.
 #
-# Cadencia: terca 12:00 UTC (08:00 Manaus). Dedup por numero+data, entao re-runs
-# sem boletim novo sao inofensivos. Tambem roda sob demanda.
+# Cadencia: terca 17:00 UTC (13:00 Manaus) — SGB costuma publicar ~16h UTC.
+# Se nao houver boletim novo, aguarda 1h e tenta de novo (total: ate 18:00 UTC).
+# Sem boletim apos 2 tentativas: cria issue de alerta (label boletim-sgb).
+# Dedup por numero+data, entao re-runs sem boletim novo sao inofensivos.
+# Tambem roda sob demanda (workflow_dispatch).
 
 on:
   schedule:
-    - cron: "0 12 * * 2"
+    - cron: "0 17 * * 2"   # terca 17:00 UTC (13:00 Manaus)
   workflow_dispatch:
 
 concurrency:
   group: sgb-semanal
   cancel-in-progress: false
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   dispara:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispara /api/cron/refresh-sgb
+      - name: Dispara /api/cron/refresh-sgb (com retry 1h)
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
           if [ -z "${CRON_SECRET}" ]; then
             echo "::error::Secret CRON_SECRET não configurado no repositório."
             exit 1
           fi
-          echo "POST ${BASE_URL}/api/cron/refresh-sgb"
-          http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
-            --retry 3 --retry-all-errors --retry-delay 20 --max-time 120 \
-            -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
-            "${BASE_URL}/api/cron/refresh-sgb")
-          echo "HTTP ${http}"
-          cat /tmp/resp.json || true
-          echo
-          if [ "${http}" != "200" ]; then
-            echo "::error::Esperado HTTP 200, recebido ${http}."
-            exit 1
+
+          chamar_cron() {
+            echo "POST ${BASE_URL}/api/cron/refresh-sgb"
+            http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+              --retry 3 --retry-all-errors --retry-delay 20 --max-time 120 \
+              -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
+              "${BASE_URL}/api/cron/refresh-sgb")
+            echo "HTTP ${http}"
+            cat /tmp/resp.json || true
+            echo
+            if [ "${http}" != "200" ]; then
+              echo "::error::Esperado HTTP 200, recebido ${http}."
+              exit 1
+            fi
+          }
+
+          # 1a tentativa (17:00 UTC)
+          chamar_cron
+          if [ "$(jq -r '.mudou' /tmp/resp.json)" = "true" ]; then
+            echo "✅ Boletim novo encontrado na 1ª tentativa."
+            exit 0
           fi
+
+          # Boletim ainda nao publicado — aguarda 1h e tenta de novo
+          echo "⏳ Nenhum boletim novo. Aguardando 1h para 2ª tentativa..."
+          sleep 3600
+
+          # 2a tentativa (~18:00 UTC)
+          chamar_cron
+          if [ "$(jq -r '.mudou' /tmp/resp.json)" = "true" ]; then
+            echo "✅ Boletim novo encontrado na 2ª tentativa."
+            exit 0
+          fi
+
+          # Ainda sem boletim — cria/atualiza issue de alerta
+          echo "🚨 Boletim SGB nao encontrado apos 2 tentativas (17h e 18h UTC)."
+          gh label create boletim-sgb --repo "${REPO}" \
+            --color FF8C00 --description "Boletim SGB/CPRM nao encontrado" --force || true
+
+          BODY="🚨 **Boletim SGB não encontrado** — $(date -u +%FT%TZ)
+
+O cron rodou às 17:00 UTC e às 18:00 UTC (terça) mas não encontrou boletim novo. O /monitor ainda exibe o boletim anterior.
+
+Última resposta da API:
+\`\`\`json
+$(cat /tmp/resp.json)
+\`\`\`
+
+**Possíveis causas:** SGB atrasou a publicação, PDF com nome inesperado, ou problema no parser.
+**Ação sugerida:** acesse a [listagem do SACE Amazonas](https://www.sgb.gov.br/sace/amazonas_boletins.php) e, se o PDF existir, acione \`workflow_dispatch\` novamente.
+
+_Gerado automaticamente pelo workflow sgb-semanal._"
+
+          n=$(gh issue list --repo "${REPO}" --label boletim-sgb --state open \
+                --json number -q '.[0].number // empty')
+          if [ -z "${n}" ]; then
+            gh issue create --repo "${REPO}" \
+              --title "🚨 Boletim SGB/CPRM não encontrado ($(date -u +%Y-%m-%d))" \
+              --label boletim-sgb \
+              --body "${BODY}"
+          else
+            gh issue comment "${n}" --repo "${REPO}" --body "${BODY}"
+          fi
+
+          echo "::error::Boletim SGB nao encontrado apos 2 tentativas. Issue criada/atualizada."
+          exit 1
