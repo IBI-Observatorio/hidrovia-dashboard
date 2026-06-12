@@ -90,7 +90,7 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
         <div className={`flex items-center gap-0.5 mb-1 ${trendColor}`}>
           <Trend size={14} />
           <span className="text-xs font-semibold">
-            {dados.variacao_24h > 0 ? "+" : ""}{dados.variacao_24h} cm/24h
+            {dados.variacao_24h > 0 ? "+" : ""}{dados.variacao_24h} cm vs D-1
           </span>
         </div>
       </div>
@@ -153,7 +153,7 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
       </div>
 
       <p className="text-gray-500 text-xs text-right">
-        {isoParaBR(dados.ultima_atualizacao)}
+        {isoParaBR(dados.ultima_atualizacao)}{dados.hora_medicao ? ` · ${dados.hora_medicao.slice(0, 5)}` : ""}
       </p>
     </div>
   );

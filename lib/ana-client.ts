@@ -307,38 +307,61 @@ export async function ultimasLeiturasBatch(
   return porEstacao;
 }
 
+/** Retorna a leitura mais próxima de 09:00 para uma dada data, ou null. */
+function leituraMaisProxima09h(leituras: LeituraANA[], data: string): LeituraANA | null {
+  const dodia = leituras.filter((l) => l.data === data);
+  if (dodia.length === 0) return null;
+  const alvo = 9 * 60;
+  return dodia.reduce((melhor, l) => {
+    const [lh, lm] = l.hora.split(":").map(Number);
+    const [mh, mm] = melhor.hora.split(":").map(Number);
+    return Math.abs(lh * 60 + lm - alvo) < Math.abs(mh * 60 + mm - alvo) ? l : melhor;
+  });
+}
+
 /**
  * Calcula resumo de uma série: cota atual (m), variação 24h (cm), chuva
  * acumulada 24h (mm) e vazão atual (m³/s). Retorna null se a série estiver
  * vazia. Os campos chuva/vazão são opcionais — pode vir undefined se a
  * estação não publica essas variáveis.
+ *
+ * Referência de horário: usa sempre a leitura mais próxima de 09:00 do dia
+ * mais recente e compara com a leitura mais próxima de 09:00 do dia anterior,
+ * garantindo comparação no mesmo horário.
  */
 export function resumeLeituras(leituras: LeituraANA[]): {
   cota_m:                 number;
   variacao_24h:           number;
   ultima_data:            string;
+  ultima_hora:            string;
   chuva_mm_acum_24h?:     number;
   vazao_m3s_atual?:       number | null;
 } | null {
   if (leituras.length === 0) return null;
 
-  const ultima = leituras[leituras.length - 1];
-  const cota_m = +(ultima.cota_cm / 100).toFixed(2);
+  const ultimaData = leituras[leituras.length - 1].data;
 
-  // Variação 24h: leitura mais próxima de 24h atrás (mesma hora idealmente)
-  const dataAnterior = new Date(`${ultima.data}T12:00:00`);
-  dataAnterior.setDate(dataAnterior.getDate() - 1);
-  const prefixo = dataAnterior.toISOString().split("T")[0];
+  // Leitura de referência: mais próxima de 09:00 no dia mais recente
+  const leitura9h = leituraMaisProxima09h(leituras, ultimaData);
+  if (!leitura9h) return null;
 
-  const leituraAntes = leituras.filter((l) => l.data === prefixo).pop()
-    ?? leituras[0];
-  const variacao_24h = +(ultima.cota_cm - leituraAntes.cota_cm).toFixed(0);
+  const cota_m = +(leitura9h.cota_cm / 100).toFixed(2);
 
-  // Chuva acumulada 24h: soma das leituras válidas com data === ultima.data
+  // Leitura de comparação: mais próxima de 09:00 no dia anterior
+  const dtAnterior = new Date(`${ultimaData}T12:00:00Z`);
+  dtAnterior.setUTCDate(dtAnterior.getUTCDate() - 1);
+  const prefixo = dtAnterior.toISOString().split("T")[0];
+
+  const leituraAntes = leituraMaisProxima09h(leituras, prefixo);
+  const variacao_24h = leituraAntes
+    ? +(leitura9h.cota_cm - leituraAntes.cota_cm).toFixed(0)
+    : 0;
+
+  // Chuva acumulada 24h: soma das leituras válidas com data === ultimaData
   // (cada item já é uma chuva instantânea/acumulada no intervalo de leitura)
   let chuva_mm_acum_24h: number | undefined;
   const chuvasUlt24 = leituras
-    .filter((l) => l.data === ultima.data && l.chuva_mm != null)
+    .filter((l) => l.data === ultimaData && l.chuva_mm != null)
     .map((l) => l.chuva_mm as number);
   if (chuvasUlt24.length > 0) {
     chuva_mm_acum_24h = +chuvasUlt24.reduce((s, x) => s + x, 0).toFixed(1);
@@ -350,7 +373,7 @@ export function resumeLeituras(leituras: LeituraANA[]): {
     if (leituras[i].vazao_m3s != null) { vazao_m3s_atual = leituras[i].vazao_m3s; break; }
   }
 
-  return { cota_m, variacao_24h, ultima_data: ultima.data, chuva_mm_acum_24h, vazao_m3s_atual };
+  return { cota_m, variacao_24h, ultima_data: ultimaData, ultima_hora: leitura9h.hora, chuva_mm_acum_24h, vazao_m3s_atual };
 }
 
 // ─── Funções públicas: inventário ────────────────────────────────────────────
