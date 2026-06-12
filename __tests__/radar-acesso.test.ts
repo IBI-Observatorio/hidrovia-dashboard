@@ -9,9 +9,9 @@ describe("acesso ao Radar", () => {
     else process.env.IBI_RADAR_CLIENTES = orig;
   });
 
-  it("allowlist default = Vale + Ibi", () => {
+  it("allowlist default = VLI + Ibi", () => {
     delete process.env.IBI_RADAR_CLIENTES;
-    expect(clientesRadar()).toEqual(["Vale", "Ibi"]);
+    expect(clientesRadar()).toEqual(["VLI", "Ibi"]);
   });
 
   it("allowlist vem do env quando setado", () => {

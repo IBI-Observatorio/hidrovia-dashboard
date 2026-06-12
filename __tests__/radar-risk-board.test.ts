@@ -33,20 +33,26 @@ describe("risco institucional", () => {
 });
 
 describe("tabuleiro (cliente configurável)", () => {
-  it("EF-170 tem papel da Vale mapeado (público)", () => {
-    const t = getTabuleiro(getRadarAsset("ef-170")!, "Vale");
+  it("EF-170 tem papel da VLI mapeado (público)", () => {
+    const t = getTabuleiro(getRadarAsset("ef-170")!, "VLI");
     expect(t.mapeado).toBe(true);
     expect(t.entry.papel).toContain("EFVM");
   });
 
-  it("EF-118 → Vale com exposição alta (desistiu da obra)", () => {
-    const t = getTabuleiro(getRadarAsset("ef-118")!, "Vale");
+  it("EF-118 → VLI mapeada com exposição baixa (sem papel documentado)", () => {
+    const t = getTabuleiro(getRadarAsset("ef-118")!, "VLI");
+    expect(t.mapeado).toBe(true);
+    expect(t.entry.exposicao).toBe("baixa");
+  });
+
+  it("FICO-FIOL → VLI mapeada com exposição alta (concorrente direto da FCA)", () => {
+    const t = getTabuleiro(getRadarAsset("fico-fiol")!, "VLI");
     expect(t.mapeado).toBe(true);
     expect(t.entry.exposicao).toBe("alta");
   });
 
-  it("FICO-FIOL sem papel mapeado → fallback neutro, sem invenção", () => {
-    const t = getTabuleiro(getRadarAsset("fico-fiol")!, "Vale");
+  it("FICO-FIOL sem papel mapeado → fallback neutro para cliente não listado", () => {
+    const t = getTabuleiro(getRadarAsset("fico-fiol")!, "OutroCliente");
     expect(t.mapeado).toBe(false);
     expect(t.entry.exposicao).toBe("nenhuma");
   });
@@ -84,6 +90,6 @@ describe("normalização defensiva (boundary, estilo F2)", () => {
   it("o EF-170 expõe risk/tabuleiro normalizados no entry", () => {
     const e = getRadarAsset("ef-170")!;
     expect(e.risk?.ambiental).toBe("risco");
-    expect(e.tabuleiro?.Vale.exposicao).toBe("media");
+    expect(e.tabuleiro?.VLI.exposicao).toBe("media");
   });
 });
