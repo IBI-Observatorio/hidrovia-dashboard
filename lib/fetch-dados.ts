@@ -35,7 +35,7 @@ const ESTACOES_PAINEL: EstacaoKey[] = [
 export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>> {
   let porEstacao: Map<EstacaoKey, LeituraANA[]>;
   try {
-    porEstacao = await ultimasLeiturasBatch(ESTACOES_PAINEL, 2);
+    porEstacao = await ultimasLeiturasBatch(ESTACOES_PAINEL, 7);
   } catch {
     // Toda a chamada falhou → devolve só os estáticos
     return { ...DADOS_ATUAIS };

@@ -99,10 +99,15 @@ export async function obterDadosDiariosANA(): Promise<DadosDiariosANA> {
   const hoje  = hojeManaus();
   const cache = await carregaCache();
   if (cache && cache.data === hoje) {
-    // Mesmo servindo do cache, mantém a série diária acumulada em dia
-    // (idempotente: só grava se ainda não tiver o ponto de hoje).
-    anexaCotasSerie(cache.dados);
-    return snapshotDe(cache);
+    // Rejeita cache se todos os deltas forem zero — snapshot ruim gravado
+    // quando a ANA não retornou dados do dia anterior. Re-tenta buscar ao vivo.
+    const todosZero = Object.values(cache.dados).every((d) => d.variacao_24h === 0);
+    if (!todosZero) {
+      // Mesmo servindo do cache, mantém a série diária acumulada em dia
+      // (idempotente: só grava se ainda não tiver o ponto de hoje).
+      anexaCotasSerie(cache.dados);
+      return snapshotDe(cache);
+    }
   }
 
   let dados:          Record<string, DadosEstacao>             = {};
@@ -139,7 +144,13 @@ export async function obterDadosDiariosANA(): Promise<DadosDiariosANA> {
   const algumaViva = Object.values(dados).some(
     (d) => d.ultima_atualizacao >= hoje
   );
-  if (algumaViva) {
+  // Não grava cache se todos os deltas forem zero — indica que a ANA não
+  // retornou dados do dia anterior (janela DIAS_7 insuficiente ou API instável).
+  // Sem esse guard o snapshot "zero" congelaria por 24h.
+  const algumDeltaValido = Object.values(dados).some(
+    (d) => d.variacao_24h !== 0
+  );
+  if (algumaViva && algumDeltaValido) {
     await gravaCache({
       data:           hoje,
       fetched_em:     new Date().toISOString(),
