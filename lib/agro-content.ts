@@ -132,6 +132,10 @@ export interface SerieComponenteAgro {
   calibracaoEmConstrucao?: boolean;
   /** decomposição do custo (só pilar T modelado), R$/t */
   decomposicaoCusto?: DecomposicaoCusto;
+  /** só H: dias até o CMR cruzar 11 m (passthrough do cache; 0 = já abaixo) */
+  diasAteCalado?: number;
+  /** só H: urgência 0–100 do cache — define se a contagem regressiva está ativa */
+  urgenciaCalado?: number;
   /** legado: true quando status === "ilustrativo" */
   ilustrativo: boolean;
   /** fonte-alvo (TODO) p/ pilares ilustrativos */
@@ -599,6 +603,8 @@ function montaHReal(corredor: Corredor): SerieComponenteAgro | null {
     percentis: det.map((d) => d.percentil),
     valorAtual: jan[n - 1].ph, percentilAtual: det[n - 1].percentil,
     deltaSemanal: round(jan[n - 1].ph - jan[n - 2].ph, 1),
+    diasAteCalado: jan[n - 1].dias,
+    urgenciaCalado: jan[n - 1].urgencia,
     status: "modelado", ilustrativo: false,
     fonte: `hidrologia: modelo IBI (IRC-Tabocal v3.6 + recessão Itacoatiara) · CMR: Capitania dos Portos/AM · cota ITA de ${fmtBR(jan[n - 1].d)}`,
     calibracaoEmConstrucao: det[n - 1].calibracaoEmConstrucao,
