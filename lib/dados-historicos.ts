@@ -102,6 +102,7 @@ export interface DadosEstacao {
   delta_2024:    number; // cm
   ultima_atualizacao: string;
   hora_medicao?:      string; // HH:MM da leitura de referência (≈09:00)
+  hora_medicao_d1?:   string; // HH:MM da leitura de referência do dia anterior
   // Sprint Dados v1 (21/05/2026): campos novos vindos da REST v2.
   // Opcionais — populados quando a API retorna QC=0 nessas variáveis.
   chuva_mm_24h?: number;        // chuva acumulada nas últimas 24h (mm)

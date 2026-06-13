@@ -334,6 +334,7 @@ export function resumeLeituras(leituras: LeituraANA[]): {
   variacao_24h:           number;
   ultima_data:            string;
   ultima_hora:            string;
+  hora_anterior?:         string; // HH:MM da leitura ≈09:00 do dia anterior
   chuva_mm_acum_24h?:     number;
   vazao_m3s_atual?:       number | null;
 } | null {
@@ -373,7 +374,7 @@ export function resumeLeituras(leituras: LeituraANA[]): {
     if (leituras[i].vazao_m3s != null) { vazao_m3s_atual = leituras[i].vazao_m3s; break; }
   }
 
-  return { cota_m, variacao_24h, ultima_data: ultimaData, ultima_hora: leitura9h.hora, chuva_mm_acum_24h, vazao_m3s_atual };
+  return { cota_m, variacao_24h, ultima_data: ultimaData, ultima_hora: leitura9h.hora, hora_anterior: leituraAntes?.hora, chuva_mm_acum_24h, vazao_m3s_atual };
 }
 
 // ─── Funções públicas: inventário ────────────────────────────────────────────
