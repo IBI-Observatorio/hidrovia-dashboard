@@ -95,6 +95,12 @@ export const agroCopy = {
     labelEstavel: "estável",
     unidadeDeltaSaturacao: "p.p.",
     labelCalibracao: "calibração em construção",
+    // barra de faixa (substitui o numerão 100/100)
+    labelBarraPercentil: "percentil",
+    // tooltip e expand
+    labelInfo: "o que este pilar mede",
+    labelVerDecomposicao: "ver decomposição",
+    labelOcultarDecomposicao: "ocultar decomposição",
     statusPilar: {
       real: "dado real",
       modelado: "modelado IBI",
@@ -112,24 +118,55 @@ export const agroCopy = {
       F: {
         nome: "Fila no porto",
         unidade: "semanas de fila",
+        // valor bruto em destaque: ex. "2,5 sem"
+        valorPrefixo: "",
+        valorSufixo: "sem",
+        valorDescricao: "semanas de fila",
+        deltaPrefixo: "",
+        deltaSufixo: " sem",
+        // uma linha de interpretação
+        leituraCurta: "navio parado, custo correndo",
+        // texto longo → tooltip (hover/tap)
         leitura: "DWT graneleiro aguardando ao largo, esperado ou programado no line-up, medido em semanas de capacidade de embarque do porto. Subir = navio parado, custo correndo.",
       },
       T: {
-        nome: "Custo rodoviário",
+        nome: "Custo de frete",
         unidade: "R$/t",
+        valorPrefixo: "R$ ",
+        valorSufixo: "/t",
+        valorDescricao: "custo da rota",
+        deltaPrefixo: "R$ ",
+        deltaSufixo: "/t",
+        leituraCurta: "combustível domina o custo da rota",
         leitura: "Custo operacional modelado de rodar a rota (engine IBI; insumo diesel ANP). NÃO é frete de mercado: é a componente de custo do aperto logístico.",
       },
       S: {
         nome: "Pressão de safra",
         unidade: "semanas de capacidade",
+        valorPrefixo: "",
+        valorSufixo: "sem",
+        valorDescricao: "semanas de excedente",
+        deltaPrefixo: "",
+        deltaSufixo: " sem",
+        leituraCurta: "excedente de campo ainda no aguardo de embarque",
         leitura: "Excedente de campo: o que já foi colhido na hinterlândia e ainda não embarcou, medido em semanas de capacidade do porto. É o pilar forward do IEE.",
       },
       H: {
-        nome: "Hidrologia",
+        nome: "Risco de calado",
         unidade: "índice 0–100",
+        valorPrefixo: "",
+        valorSufixo: "dias",
+        valorDescricao: "até CMR < 11 m",
+        deltaPrefixo: "",
+        deltaSufixo: " pts",
+        // duas leituras: calha cheia (urgência baixa) × contagem ativa (urgência alta)
+        leituraCurta: "calha cheia, risco no piso",
+        leituraCurtaContagem: "contagem regressiva do calado ativa",
+        // estado exibido quando o CMR já cruzou 11 m (dias = 0)
+        valorEstadoCritico: "abaixo de 11 m",
         leitura: "Risco hidrológico do canal Tabocal: 60% IRC-Tabocal (v3.6, risco direto) + 40% urgência de calado (dias até o CMR cair abaixo de 11 m). Alto = pior.",
       },
-    } satisfies Record<ComponenteIEE, { nome: string; unidade: string; leitura: string }>,
+    },
   },
 
   // ===================================================================
