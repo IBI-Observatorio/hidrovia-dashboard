@@ -63,13 +63,13 @@
   },
   "referenceClass": [],
   "risk": {
-    "stf": "atencao",
+    "stf": "resolvido",
     "tcu": "atencao",
     "ambiental": "risco",
     "concessionaria": "na",
     "modelagem": "atencao",
     "notes": {
-      "stf": "ADI 6553 (PSOL) questiona a Lei 13.452/2017, que reduziu ~862 ha do Parque Nacional do Jamanxim para o leito da EF-170. Em mai/2026 o STF manteve a redução (6 votos). Fonte: STF/Mattos Filho.",
+      "stf": "RESOLVIDO: em mai/2026 o STF concluiu (6 votos) pela constitucionalidade da Lei 13.452/2017, que reduziu ~862 ha do Parque Nacional do Jamanxim para o leito da EF-170 — base legal do traçado destravada (ADI 6553 do PSOL afastada). Fonte: STF/Mattos Filho.",
       "tcu": "TCU manteve suspensa a análise da concessão por falta de maturidade e riscos; apontou furo de funding no aporte cruzado (demanda R$ 3,66 bi vs R$ 2,25 bi projetado). Fonte: TCU/MPF.",
       "ambiental": "Licenciamento (EIA) e custos socioambientais em aberto; o próprio governo admite que parte sobra ao erário. Fonte: ISA/IHU.",
       "modelagem": "Custo oficial (R$ 11,45 bi de capital, 9 anos) é contestado por Frischtak: com parâmetros da FICO 1, CAPEX vai a R$ 36,86 bi e TIR cai a 1,6%. Fonte: AMZ2030."
@@ -92,14 +92,14 @@
   },
   "maturacao": {
     "estagioAtual": 2,
-    "leilaoAnunciado": null,
+    "leilaoAnunciado": 2026,
     "gateRisk": "alto",
     "drivers": [
       "Estudos técnicos aprovados pelo Min. dos Transportes (dez/2025).",
       "TCU manteve SUSPENSA a análise da concessão (falta de maturidade + furo de funding).",
-      "STF: ADI 6553 (Jamanxim) pendente; leilão empurrado para além de 2026."
+      "STF destravou a base legal (mai/2026: constitucionalidade da redução do Jamanxim confirmada); leilão reprogramado p/ dez/2026, mas o gargalo agora é o TCU — análise suspensa, alto risco de escorregar p/ 2027."
     ],
-    "fonte": { "label": "ANTT / TCU / STF / Neofeed", "url": "https://neofeed.com.br/economia/concessao-da-ferrograo-sai-de-novo-dos-trilhos-e-empurra-o-leilao-para-alem-de-2026/en/", "date": "2026" }
+    "fonte": { "label": "ANTT / TCU / STF / Neofeed · Min. Transportes / imprensa (jun/2026)", "url": "https://neofeed.com.br/economia/concessao-da-ferrograo-sai-de-novo-dos-trilhos-e-empurra-o-leilao-para-alem-de-2026/en/", "date": "2026-06" }
   },
   "tabuleiro": {
     "VLI": {
