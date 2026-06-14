@@ -92,7 +92,7 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
           <span className="text-xs font-semibold flex items-center gap-1">
             {dados.variacao_24h > 0 ? "+" : ""}{dados.variacao_24h} cm vs D-1
             {dados.hora_medicao_d1 && (
-              <Tooltip conteudo={`Referência de ontem: leitura às ${dados.hora_medicao_d1} (mais próxima de 09:00)`} />
+              <Tooltip conteudo={`Referência de ontem: leitura às ${dados.hora_medicao_d1} BRT (mais próxima de 09:00 Brasília)`} />
             )}
           </span>
         </div>

@@ -148,7 +148,7 @@ interface ItemTelemetrico {
   Vazao_Adotada_Status:string;
   Chuva_Adotada:       string;   // mm acumulada no intervalo
   Chuva_Adotada_Status:string;
-  Data_Hora_Medicao:   string;   // "YYYY-MM-DD HH:mm:ss.S"
+  Data_Hora_Medicao:   string;   // "YYYY-MM-DD HH:mm:ss.S" — em BRT (UTC-3, sem DST desde 2019)
   Data_Atualizacao:    string;
   codigoestacao:       string;
 }
@@ -307,11 +307,15 @@ export async function ultimasLeiturasBatch(
   return porEstacao;
 }
 
-/** Retorna a leitura mais próxima de 09:00 para uma dada data, ou null. */
+// Horário de referência diário: 09:00 BRT (Brasília, UTC-3, sem DST desde 2019).
+// A ANA retorna Data_Hora_Medicao em BRT, portanto 9*60 min = 09:00 BRT direto.
+const HORA_REF_BRT_MIN = 9 * 60;
+
+/** Retorna a leitura mais próxima de 09:00 BRT para uma dada data, ou null. */
 function leituraMaisProxima09h(leituras: LeituraANA[], data: string): LeituraANA | null {
   const dodia = leituras.filter((l) => l.data === data);
   if (dodia.length === 0) return null;
-  const alvo = 9 * 60;
+  const alvo = HORA_REF_BRT_MIN;
   return dodia.reduce((melhor, l) => {
     const [lh, lm] = l.hora.split(":").map(Number);
     const [mh, mm] = melhor.hora.split(":").map(Number);
