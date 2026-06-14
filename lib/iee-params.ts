@@ -233,16 +233,27 @@ export interface ParametrosCusteio {
   custoRelativoKmVazio: number;
 }
 
+// Calibração v1 (jun/2026) — ver docs/calibracao-T-frete.md (dossiê com fontes
+// primárias ANTT/ANP/SIFRECA e triangulação: modelo IBI ≈ piso ANTT < frete de
+// mercado). Só os coeficientes com fonte dura foram alterados; o resto segue
+// premissa declarada IBI (julgamento), dentro da faixa validada no dossiê.
 export const PARAMETROS_CUSTEIO_V0: ParametrosCusteio = {
-  precoDieselRS: 6.1, // default; substituído pelo último dado ANP em runtime
+  // default usado só se data/anp/diesel.json faltar — runtime usa ANP ao vivo.
+  // Atualizado 6,10 → 7,00: o 6,10 era o nível de jan/2026 (defasado); ANP
+  // revenda S10 nacional rodava ~R$ 7,1/L em jun/2026 (Síntese Semanal Ed. 24).
+  precoDieselRS: 7.0,
+  // validado contra ANP: distribuição/revenda S10 = 6,29/7,11 ≈ 0,885 (jun/2026).
   descontoDieselFrota: 0.88,
   custoPneuRS: 3400,
   vidaUtilPneuKm: 160_000,
   lubrificanteRSporKm: 0.06,
-  manutencaoRSporKm: 0.75,
+  manutencaoRSporKm: 0.75, // método NTC (PM≈1% do ativo/mês ÷ km/mês) ⇒ ~0,67–0,75
   custoFixoMensalRS: 32_000,
   kmRodadoMes: 12_000,
-  pedagioRSporKmPorEixo: 0.07,
+  // 0,07 → 0,05: o 0,07 é o teto BR-163/MT (praça a cada ~100 km × ~R$7/eixo);
+  // aplicado uniformemente a TODA a distância superestima (há trechos sem
+  // pedágio). 0,05 = média de rede declarada. Fonte: Nova Rota do Oeste 2026.
+  pedagioRSporKmPorEixo: 0.05,
   fracaoRetornoVazio: 0.35,
   custoRelativoKmVazio: 0.7,
 };
