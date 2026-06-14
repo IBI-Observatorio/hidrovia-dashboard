@@ -82,17 +82,17 @@ jobs:
 
           BODY="🚨 **Boletim SGB não encontrado** — $(date -u +%FT%TZ)
 
-O cron rodou às 17:00 UTC e às 18:00 UTC (terça) mas não encontrou boletim novo. O /monitor ainda exibe o boletim anterior.
+          O cron rodou às 17:00 UTC e às 18:00 UTC (terça) mas não encontrou boletim novo. O /monitor ainda exibe o boletim anterior.
 
-Última resposta da API:
-\`\`\`json
-$(cat /tmp/resp.json)
-\`\`\`
+          Última resposta da API:
+          \`\`\`json
+          $(cat /tmp/resp.json)
+          \`\`\`
 
-**Possíveis causas:** SGB atrasou a publicação, PDF com nome inesperado, ou problema no parser.
-**Ação sugerida:** acesse a [listagem do SACE Amazonas](https://www.sgb.gov.br/sace/amazonas_boletins.php) e, se o PDF existir, acione \`workflow_dispatch\` novamente.
+          **Possíveis causas:** SGB atrasou a publicação, PDF com nome inesperado, ou problema no parser.
+          **Ação sugerida:** acesse a [listagem do SACE Amazonas](https://www.sgb.gov.br/sace/amazonas_boletins.php) e, se o PDF existir, acione \`workflow_dispatch\` novamente.
 
-_Gerado automaticamente pelo workflow sgb-semanal._"
+          _Gerado automaticamente pelo workflow sgb-semanal._"
 
           n=$(gh issue list --repo "${REPO}" --label boletim-sgb --state open \
                 --json number -q '.[0].number // empty')
