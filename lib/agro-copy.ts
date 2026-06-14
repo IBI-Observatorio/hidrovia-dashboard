@@ -130,11 +130,11 @@ export const agroCopy = {
         leitura: "DWT graneleiro aguardando ao largo, esperado ou programado no line-up, medido em semanas de capacidade de embarque do porto. Subir = navio parado, custo correndo.",
       },
       T: {
-        nome: "Custo de frete",
+        nome: "Custo da rota",
         unidade: "R$/t",
         valorPrefixo: "R$ ",
         valorSufixo: "/t",
-        valorDescricao: "custo da rota",
+        valorDescricao: "custo operacional",
         deltaPrefixo: "R$ ",
         deltaSufixo: "/t",
         leituraCurta: "combustível domina o custo da rota",
