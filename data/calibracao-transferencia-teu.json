@@ -1,0 +1,188 @@
+{
+  "gerado_em_nota": "rode scripts/calibra-transferencia-teu.mjs para regenerar",
+  "fonte_cota": "ANA/HidroWeb — Manaus (MAO), mínimas anuais reais de data/4estacoes_2016_2025.csv (2016–2024); 2025≈18,0 m (aprox., CSV trunca em jul)",
+  "fonte_teu": "ANTAQ Estatística Aquaviária (antaq-api) · UF=AM · cabotagem · conteinerizada · TEU",
+  "ultimo_mes_antaq": "2026-02",
+  "base_2025_teu": 544871,
+  "base_2026_demanda": 544871,
+  "g_demanda_2026": 0,
+  "nota_base": "2025 (544.871) é nível estrutural (vs 2021 = +2,5%/ano), não spike → base 2026 = 2025 × (1+g), g=0.",
+  "tendencia": {
+    "cagr": 0.02058746144247703,
+    "trend_2026": 487202,
+    "nota": "CAGR log-linear 2018→2025 — DEPRIMIDO pelas secas 2023/24; usado só como referência, NÃO como base."
+  },
+  "regime_normal": {
+    "criterio_min_m": ">=16",
+    "n": 6,
+    "residuo_medio": 0.0454747196228256,
+    "residuo_sd": 0.07565166451241191,
+    "outnov_ratio_medio": 0.019259564477700875,
+    "outnov_nivel_normal": 85569
+  },
+  "regime_severo": {
+    "criterio_min_m": "<=13",
+    "n": 2,
+    "anos": [
+      2023,
+      2024
+    ],
+    "penalidade_anual_anc": -0.1600693358923083,
+    "min_anc": 12.405
+  },
+  "vao_sem_dados_m": "13–16 (interpolado entre normal e severo; alta incerteza)",
+  "sensibilidade_reversao": {
+    "nota": "Se 2025 for spike e a demanda reverter à tendência deprimida (487k), subtraia ~10–12pp de todos os Δ%.",
+    "base_alt": 487202,
+    "delta_alt_central": -0.10584071612555745
+  },
+  "tabela_pareada": [
+    {
+      "ano": 2018,
+      "min": 17.05,
+      "min_aprox": false,
+      "teu": 385722,
+      "trend": 413911,
+      "residuo": -0.06810398547914842,
+      "outnov": null,
+      "onRatio": null
+    },
+    {
+      "ano": 2019,
+      "min": 18.06,
+      "min_aprox": false,
+      "teu": 448362,
+      "trend": 422432,
+      "residuo": 0.06138056117317858,
+      "outnov": 79252,
+      "onRatio": 0.06055493167901349
+    },
+    {
+      "ano": 2020,
+      "min": 16.6,
+      "min_aprox": false,
+      "teu": 452104,
+      "trend": 431129,
+      "residuo": 0.0486514873386128,
+      "outnov": 82605,
+      "onRatio": 0.09627370235957744
+    },
+    {
+      "ano": 2021,
+      "min": 19.44,
+      "min_aprox": false,
+      "teu": 493748,
+      "trend": 440005,
+      "residuo": 0.12214058178907838,
+      "outnov": 85164,
+      "onRatio": 0.03490954384579159
+    },
+    {
+      "ano": 2022,
+      "min": 16.19,
+      "min_aprox": false,
+      "teu": 434418,
+      "trend": 449064,
+      "residuo": -0.03261367818907546,
+      "outnov": 69350,
+      "onRatio": -0.04216676104581307
+    },
+    {
+      "ano": 2023,
+      "min": 12.7,
+      "min_aprox": false,
+      "teu": 370823,
+      "trend": 458309,
+      "residuo": -0.19088814348698546,
+      "outnov": 12505,
+      "onRatio": -0.797666272048929
+    },
+    {
+      "ano": 2024,
+      "min": 12.11,
+      "min_aprox": false,
+      "teu": 449829,
+      "trend": 467744,
+      "residuo": -0.03830108905197993,
+      "outnov": 48751,
+      "onRatio": -0.34973956770239356
+    },
+    {
+      "ano": 2025,
+      "min": 18.4,
+      "min_aprox": true,
+      "teu": 544871,
+      "trend": 477374,
+      "residuo": 0.14139335110430773,
+      "outnov": 85974,
+      "onRatio": -0.053273594450065076
+    }
+  ],
+  "cenarios_2026": [
+    {
+      "nome": "Otimista",
+      "desc": "cheia segura o ano / El Niño fraco",
+      "min": 19.6,
+      "prob": 0.25,
+      "penalidade_anual": 0,
+      "teu_central": 544871,
+      "teu_lo": 503651,
+      "teu_hi": 586092,
+      "delta_pct_2025": 0,
+      "delta_lo": -0.0756516645124119,
+      "delta_hi": 0.0756516645124119,
+      "outnov_penalidade": 0,
+      "outnov_abs": 85569
+    },
+    {
+      "nome": "Central",
+      "desc": "El Niño moderado; rio em regime normal (≥16 m)",
+      "min": 17.12,
+      "prob": 0.5,
+      "penalidade_anual": 0,
+      "teu_central": 544871,
+      "teu_lo": 503651,
+      "teu_hi": 586092,
+      "delta_pct_2025": 0,
+      "delta_lo": -0.0756516645124119,
+      "delta_hi": 0.0756516645124119,
+      "outnov_penalidade": 0,
+      "outnov_abs": 85569
+    },
+    {
+      "nome": "Pessimista",
+      "desc": "El Niño forte — banda IC80 baixa do modelo",
+      "min": 14.68,
+      "prob": 0.25,
+      "penalidade_anual": -0.05877371999383782,
+      "teu_central": 512847,
+      "teu_lo": 471627,
+      "teu_hi": 554068,
+      "delta_pct_2025": -0.05877371999383785,
+      "delta_lo": -0.13442538450624975,
+      "delta_hi": 0.01687794451857405,
+      "outnov_penalidade": -0.2177219692201497,
+      "outnov_abs": 66939
+    },
+    {
+      "nome": "Cauda — repete 2023",
+      "desc": "seca extrema, além do IC80",
+      "min": 12.7,
+      "prob": null,
+      "usa2023": true,
+      "penalidade_anual": -0.23636286310981106,
+      "teu_central": 416084,
+      "teu_lo": 374864,
+      "teu_hi": 457304,
+      "delta_pct_2025": -0.23636286310981103,
+      "delta_lo": -0.3120145276222229,
+      "delta_hi": -0.16071119859739913,
+      "outnov_penalidade": -0.8169258365266299,
+      "outnov_abs": 15665
+    }
+  ],
+  "esperanca_ponderada": {
+    "delta_pct_2025": -0.014693429998459462,
+    "teu": 536865
+  }
+}

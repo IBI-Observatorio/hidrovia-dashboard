@@ -1,0 +1,96 @@
+name: Boletim Cabotagem (gerador semanal)
+
+# Roda a cadeia do boletim de cabotagem (modelo multi-driver -> calibracao CMR
+# -> relatorio HTML -> PDF), arquiva o snapshot semanal em
+# data/boletim-cabotagem-series.json (memoria do supervisor) e envia o PDF por
+# e-mail. O modelo busca as cotas AO VIVO na API de producao em tempo de
+# execucao, entao nao depende dos caches do dia.
+#
+# Cadencia: QUARTA 12:00 UTC (08:00 Manaus, UTC-4) — DEPOIS do refresh do SGB de
+# quarta 11:00 UTC, para o boletim sair com o boletim SGB quentinho da terca.
+# Tambem roda sob demanda (workflow_dispatch).
+#
+# PDF em CI: o orquestrador ja honra CHROME_BIN; apontamos para o Chrome
+# instalado por browser-actions/setup-chrome — zero mudanca de codigo.
+
+on:
+  schedule:
+    - cron: "0 12 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write   # para disparar o deploy.yml apos commitar a serie
+
+concurrency:
+  group: boletim-cabotagem-semanal
+  cancel-in-progress: false
+
+jobs:
+  boletim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instala dependencias
+        run: npm ci
+
+      - name: Instala Chrome (headless p/ o PDF)
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Gera o boletim (modelo -> calibracao -> HTML -> snapshot -> PDF)
+        env:
+          CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
+          DASH_API: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+        run: node scripts/gera-boletim-cabotagem.mjs
+
+      - name: Confere que o PDF saiu
+        run: |
+          if [ ! -f out/relatorio-cabotagem.pdf ] || [ ! -s out/relatorio-cabotagem.pdf ]; then
+            echo "::error::PDF nao gerado ou vazio (out/relatorio-cabotagem.pdf)."
+            exit 1
+          fi
+          echo "PDF OK: $(du -h out/relatorio-cabotagem.pdf | cut -f1)"
+
+      - name: Commita o snapshot semanal e dispara deploy se houver mudanca
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- data/boletim-cabotagem-series.json; then
+            echo "Sem mudanca no snapshot semanal — nada a commitar."
+            exit 0
+          fi
+          REF=$(node -e "try{const s=require('./data/boletim-cabotagem-series.json').serie;console.log(s.at(-1).data_referencia)}catch{console.log('?')}")
+          git add data/boletim-cabotagem-series.json
+          git commit \
+            -m "chore(dados): snapshot semanal do boletim cabotagem (${REF})" \
+            -m "Gerado pelo pipeline do boletim via GitHub Actions." \
+            -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
+          git push
+          # Push via GITHUB_TOKEN nao aciona o gatilho push do deploy.yml;
+          # disparamos explicitamente para o supervisor ler a serie fresca.
+          gh workflow run deploy.yml --ref main && echo "deploy disparado" || echo "::warning::falha ao disparar deploy"
+
+      - name: Envia o boletim por e-mail (Resend)
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM: ${{ vars.RESEND_FROM }}
+          BOLETIM_RECIPIENTS: ${{ vars.BOLETIM_RECIPIENTS }}
+        run: node scripts/envia-boletim-email.mjs out/relatorio-cabotagem.pdf
+
+      - name: Sobe o PDF como artefato (e-mail falho nunca perde o boletim)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boletim-cabotagem-pdf
+          path: out/relatorio-cabotagem.pdf
+          if-no-files-found: warn

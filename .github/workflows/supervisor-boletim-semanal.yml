@@ -1,0 +1,126 @@
+name: Supervisor do modelo (boletim cabotagem)
+
+# Toda quarta, DEPOIS do gerador, pergunta: o modelo da semana passada ainda se
+# sustenta, ou houve uma guinada? Le as duas ultimas entradas da serie semanal,
+# manda para a rota /api/cron/supervisor-boletim (diff deterministico + veredito
+# da IA; so chama a IA se algum threshold disparar), e:
+#   - "sustains" -> nada a fazer (o boletim ja saiu pelo gerador).
+#   - "guinada"/"diverges" -> abre/atualiza uma Issue (label supervisor-boletim)
+#     PROPONDO a mudanca. A rota NUNCA muda o modelo; o Bruno aprova.
+#
+# Cadencia: QUARTA 12:30 UTC (08:30 Manaus), 30 min apos o gerador (12:00).
+#
+# As duas entradas vao no CORPO do POST (lidas do repo apos checkout) para nao
+# depender de o Railway ja ter feito deploy da serie commitada pelo gerador.
+
+on:
+  schedule:
+    - cron: "30 12 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: supervisor-boletim
+  cancel-in-progress: false
+
+jobs:
+  supervisiona:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+      CRON_SECRET: ${{ secrets.CRON_SECRET }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+
+      - name: Monta o payload com as 2 ultimas semanas
+        id: payload
+        run: |
+          node -e "
+            const fs=require('fs');
+            let s=[];
+            try{ s=JSON.parse(fs.readFileSync('data/boletim-cabotagem-series.json','utf8')).serie||[] }catch{}
+            if(s.length<2){ fs.writeFileSync('payload.json','{}'); console.log('serie<2'); process.exit(0); }
+            fs.writeFileSync('payload.json', JSON.stringify({prev:s.at(-2),cur:s.at(-1)}));
+            console.log('ok '+s.at(-2).data_referencia+' -> '+s.at(-1).data_referencia);
+          "
+          if [ "$(cat payload.json)" = "{}" ]; then
+            echo "suficiente=nao" >> "$GITHUB_OUTPUT"
+          else
+            echo "suficiente=sim" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Consulta o supervisor
+        if: steps.payload.outputs.suficiente == 'sim'
+        run: |
+          set -uo pipefail
+          CODE=$(curl -sS --retry 3 --retry-all-errors --retry-delay 15 --max-time 120 \
+            -o verdict.json -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            -H "Content-Type: application/json" \
+            --data @payload.json \
+            "${BASE_URL}/api/cron/supervisor-boletim")
+          echo "HTTP ${CODE}"
+          cat verdict.json; echo
+          if [ "$CODE" != "200" ]; then
+            echo "::warning::Supervisor respondeu ${CODE} — pulando (boletim ja saiu pelo gerador)."
+            echo "VERDICT=erro" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          echo "VERDICT=$(jq -r '.verdict // "erro"' verdict.json)" >> "$GITHUB_ENV"
+
+      - name: Garante a label supervisor-boletim
+        if: steps.payload.outputs.suficiente == 'sim' && env.VERDICT != 'sustains' && env.VERDICT != 'erro'
+        run: gh label create supervisor-boletim --repo "$REPO" --color 1D76DB --description "Supervisor do modelo do boletim propos uma revisao" --force || true
+
+      - name: Abre/atualiza Issue propondo revisao do modelo
+        if: steps.payload.outputs.suficiente == 'sim' && env.VERDICT != 'sustains' && env.VERDICT != 'erro'
+        run: |
+          set -uo pipefail
+          DE=$(jq -r '.sinais.de // "?"' verdict.json)
+          PARA=$(jq -r '.sinais.para // "?"' verdict.json)
+          {
+            echo "## Supervisor do modelo — possivel **${VERDICT}** ($(date -u +%FT%TZ))"
+            echo ""
+            echo "Comparando a leitura de **${DE}** -> **${PARA}**."
+            echo ""
+            echo "**Veredito:** \`$(jq -r '.verdict' verdict.json)\`  ·  **IA:** $(jq -r '.ai' verdict.json)  ·  **revisar:** $(jq -r '.human_review' verdict.json)"
+            echo ""
+            echo "**Porque:** $(jq -r '.because' verdict.json)"
+            echo ""
+            echo "**Tom sugerido:** $(jq -r '.narrative_tone // "—"' verdict.json)"
+            echo ""
+            echo "**Proposta:** $(jq -r '.proposed_change // "—"' verdict.json)"
+            echo ""
+            echo "<details><summary>Sinais determinísticos</summary>"
+            echo ""
+            echo '```json'
+            jq '.sinais' verdict.json
+            echo '```'
+            echo "</details>"
+            echo ""
+            echo "> A rota do supervisor **nao altera o modelo**. Esta Issue e uma proposta — revise e, se concordar, ajuste o modelo manualmente (ou abra o PR)."
+            echo "> _Gerado pelo workflow supervisor-boletim-semanal._"
+          } > body.md
+
+          n=$(gh issue list --repo "$REPO" --label supervisor-boletim --state open --json number -q '.[0].number // empty')
+          if [ -z "$n" ]; then
+            gh issue create --repo "$REPO" --title "🔁 Supervisor: possivel guinada no modelo (${PARA})" --label supervisor-boletim --body-file body.md
+          else
+            gh issue comment "$n" --repo "$REPO" --body-file body.md
+          fi
+
+      - name: Resumo
+        if: steps.payload.outputs.suficiente == 'sim'
+        run: echo "Veredito do supervisor: ${VERDICT:-erro}"
