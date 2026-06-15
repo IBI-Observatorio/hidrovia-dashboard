@@ -103,10 +103,21 @@ export async function obterDadosDiariosANA(): Promise<DadosDiariosANA> {
     // quando a ANA não retornou dados do dia anterior. Re-tenta buscar ao vivo.
     const todosZero = Object.values(cache.dados).every((d) => d.variacao_24h === 0);
     if (!todosZero) {
-      // Mesmo servindo do cache, mantém a série diária acumulada em dia
-      // (idempotente: só grava se ainda não tiver o ponto de hoje).
-      anexaCotasSerie(cache.dados);
-      return snapshotDe(cache);
+      // Se alguma estação ainda mostra data de ontem E o cache tem >2h,
+      // tenta re-buscar: ANA pode ter publicado os dados atrasados.
+      // O novo fetch grava `fetched_em` atualizado, então não re-busca por +2h.
+      const JANELA_RE_FETCH_MS = 2 * 60 * 60 * 1000;
+      const algumaDesatualizada = Object.values(cache.dados).some(
+        (d) => d.ultima_atualizacao < hoje
+      );
+      const cacheIdadeMs = Date.now() - new Date(cache.fetched_em).getTime();
+      if (!algumaDesatualizada || cacheIdadeMs < JANELA_RE_FETCH_MS) {
+        // Mesmo servindo do cache, mantém a série diária acumulada em dia
+        // (idempotente: só grava se ainda não tiver o ponto de hoje).
+        anexaCotasSerie(cache.dados);
+        return snapshotDe(cache);
+      }
+      // Cai no fetch ao vivo: estações defasadas + cache com >2h
     }
   }
 
