@@ -15,7 +15,7 @@ import { calculaIEE, semanaISODeData, type ComponenteIEE, type Corredor } from "
 import { __backtest } from "../../lib/agro-content";
 import hCache from "../../data/agro/h-arco-norte.json";
 import esperaEA from "../../data/antaq/espera-semanal.json";
-import preRegistro from "../../data/agro/pre-registro-iee-v2.json";
+import preRegistro from "../../data/agro/pre-registro-iee-v3.json";
 
 const { serieSReal, serieTModelada, percentisWalkForward } = __backtest;
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
