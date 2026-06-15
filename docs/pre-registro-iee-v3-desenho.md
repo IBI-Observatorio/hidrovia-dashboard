@@ -63,9 +63,35 @@ construção") — não altera o IEE publicado.
 - Qualquer promoção a peso > 0 exige **novo pré-registro de parâmetro** (hash,
   v3) com o resultado anexado.
 
+## Resultado — H1 Basis (2026-06-15) · ❌ REPROVADO
+
+Dado obtido (CEPEA Soja Paranaguá + IMEA Soja MT "disponível compra"), basis
+semanal 2023-01→2026-06 (170 semanas, médio ~R$ 23/sc). Gerador:
+`scripts/cepea/gera-basis.py`. Teste: `scripts/backtest/iee-v3-basis-aperto.ts`.
+
+| Métrica | Basis (percentil sazonal WF) | Baseline v2 | Critério H1 |
+|---|---|---|---|
+| Spearman vs espera t+2 | **−0,16** | 0,23 | ≥ 0,35 |
+| MAE | **42,9 p.p.** | 27,3 | < 27,3 |
+| Pares | 153 | — | — |
+
+**Veredito: H1 rejeitado.** O Basis **não** é promovido — permanece peso 0
+(diagnóstico), nunca forçado (regra do pré-registro).
+
+**Por que falhou (achado real):** no *nível bruto*, basis(t) vs espera(t+2) dá
+Spearman **+0,33** — mas isso é o **co-movimento sazonal** que a normalização do
+IEE remove de propósito (um valor alto só conta se for alto *para aquela época*).
+O resíduo sazonal do basis — ainda por cima com só 3 safras (regime z-robusto,
+frágil) — **não** prevê a fila, e o sinal chega a inverter. Lição: o basis pode
+ter valor como *nível*, não como percentil sazonal na régua atual do IEE.
+Reavaliar quando houver ≥5 safras de série, ou testar o basis em nível (fora da
+normalização sazonal) como exceção declarada.
+
 ## Estado (2026-06-15)
 
-- Pré-registro de desenho: **congelado** (este documento).
-- Backtest exploratório: **implementado** (`iee-v3-basis-aperto.ts`), roda contra
-  o alvo real; **aguardando** os caches CEPEA/SIFRECA (gerador documentado).
-- Impacto no IEE publicado: **nenhum** — pilares a peso 0 até o gate.
+- Pré-registro de desenho: **congelado**; H1 (Basis) **testado e rejeitado** (acima).
+- H2 (Aperto): **aguardando** frete SIFRECA (`data/sifreca/frete-semanal.json`).
+  Nota informativa do mesmo backtest: o **T-custo isolado** prevê a espera t+2 com
+  Spearman **0,33 · MAE 26,3** (58 pares) — acima do IEE composto (0,23), sugerindo
+  que o blend F/T/S dilui o T (candidato a revisão de pesos, sob pré-registro).
+- Impacto no IEE publicado: **nenhum** — nada promovido a peso > 0.
