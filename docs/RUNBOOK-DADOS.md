@@ -327,3 +327,46 @@ O motor (`lib/dcf/*`) calibra em runtime: tarifa → TIR ≈ WACC (oficial) e up
 CAPEX implícito → TIR ≈ 11,04% (realista). Para editar um número, mexa no seed e
 mantenha a tag de fonte. Próximas fases podem adicionar adaptadores
 `lib/sources/{antt,ppi,tcu,ibama}.ts` — aí este runbook ganha as linhas de cron.
+
+---
+
+## Boletim "Cabotagem conteinerizada na Amazônia" (PDF)
+
+Boletim de antecipação que projeta o **calado disponível (CMR oficial da Capitania)**
+em Itacoatiara e o traduz em **cabotagem conteinerizada (ANTAQ)**. Roda em um comando
+(ponto de entrada do agente semanal):
+
+```
+node scripts/gera-boletim-cabotagem.mjs   ->  out/relatorio-cabotagem.pdf
+```
+
+Cadeia (cada etapa também roda sozinha):
+
+| Etapa | Script | Saída | Fonte / método |
+|---|---|---|---|
+| 1. Projeção do calado | `scripts/modelo-multidriver-itacoatiara.mts` | `data/projecao-multidriver-itacoatiara.json` | **AO VIVO**: cota dos formadores (Manaus/Negro, Manacapuru/Solimões, Humaitá+PV/Madeira, Itacoatiara) via `GET /api/ana` de produção → ensemble de análogos (10 anos, `4estacoes_2016_2025.csv`) ponderado por z-score → curva oficial cota→CMR (`lib/cmr-itacoatiara.ts`). Fallback: snapshot 8/jun/2026. |
+| 2. Calado → carga | `scripts/calibra-cmr-cabotagem.mts` | `data/calibracao-cmr-cabotagem.json` | Função de transferência CMR mínimo × cabotagem conteinerizada do AM (antaq-api), 2018–2025; base = recorde real 2025 (544.871 TEU). Lê o passo 1. |
+| (aux) Transferência base | `scripts/calibra-transferencia-teu.mjs` | `data/calibracao-transferencia-teu.json` | Série ANTAQ + mínimas reais de Manaus; consumida pelo passo 2 para os resíduos/regime. |
+| 3. HTML | `scripts/gera-relatorio-cabotagem.mjs` | `out/relatorio-cabotagem.html` | Identidade IBI; cota de Manaus ao vivo (`/api/ana`); lê o passo 2. |
+| 4. Snapshot semanal | `scripts/atualiza-boletim-series.mjs` | `data/boletim-cabotagem-series.json` | **Memória do supervisor**: 1 entrada compacta/semana (z, análogos, CMR projetado, restrição, ENSO/SGB). Merge idempotente por `data_referencia` (não reescreve se a série não mudou → `git diff --quiet`). Lê passos 1 e 2. |
+| 5. PDF | (Chrome headless, no orquestrador) | `out/relatorio-cabotagem.pdf` | `--print-to-pdf`. `CHROME_BIN` se o autodetect falhar. |
+| 6. E-mail | `scripts/envia-boletim-email.mjs` | (envio) | Resend. SKIP se `RESEND_API_KEY`/`BOLETIM_RECIPIENTS` ausentes. |
+
+### Automático (agente semanal) — QUARTA, depois do SGB
+
+| Cron (UTC) | Workflow | O que faz |
+|---|---|---|
+| **qua 12:00** | `boletim-cabotagem-semanal.yml` | Roda o orquestrador (passos 1→5) com Chrome via `browser-actions/setup-chrome` (`CHROME_BIN`); confere o PDF; commita o snapshot (passo 4) + dispara deploy; envia o e-mail (passo 6); sobe o PDF como artefato. **Roda depois do refresh SGB de quarta 11:00** → boletim com a notícia do SGB da terça fresca. |
+| **qua 12:30** | `supervisor-boletim-semanal.yml` | Lê as 2 últimas semanas da série, manda no corpo para `POST /api/cron/supervisor-boletim` (diff determinístico + veredito; **só chama a IA se algum threshold disparar** → custo ~zero). Se `guinada`/`diverges`, abre/atualiza uma **Issue** (label `supervisor-boletim`) PROPONDO a revisão. A rota **nunca** altera o modelo — o Bruno aprova. |
+
+**Supervisor** (`app/api/cron/supervisor-boletim/route.ts`): mesma proteção do insights
+(`Bearer CRON_SECRET`), reusa `ANTHROPIC_API_KEY` do Railway. Thresholds de guinada
+(rascunho): |Δcalado central| ≥ 0,75 m · |Δdata de restrição| ≥ 10 dias · ≥ 2 trocas
+de ano-análogo (top-3) · |Δprob| ≥ 0,25 · troca de fase ENSO. Cache de auditoria:
+`data/supervisor-boletim-cache.json`.
+
+**Secrets/vars (GitHub):** `RESEND_API_KEY` (secret), `RESEND_FROM`+`BOLETIM_RECIPIENTS`
+(vars), `CRON_SECRET` (já existe). Railway: `ANTHROPIC_API_KEY`+`CRON_SECRET` (já existem).
+
+> Madeira: se Borba/Manicoré estiverem offline na telemetria, o z usa Humaitá+PV.
+> `DASH_API` aponta a API; `BOLETIM_OUT` redireciona o PDF.
