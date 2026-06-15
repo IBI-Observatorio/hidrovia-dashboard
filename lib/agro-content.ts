@@ -193,11 +193,14 @@ export function capacidadeSemanal(corredor: Corredor): number {
   return real ?? CAPACIDADE_SEMANAL_MIL_T[corredor];
 }
 
-/** Rótulo da fonte do denominador (UI/metodologia). */
+/** Rótulo da fonte do denominador (UI/metodologia).
+ *  "vazão média", não "capacidade": o número é o embarque REALIZADO médio
+ *  (ANTAQ EA, média móvel 12m), não a capacidade nominal/de pico do porto.
+ *  Throughput é limitado pela demanda — nomear como vazão é mais honesto. */
 export function fonteCapacidade(corredor: Corredor): string {
   const c = (capacidadeAntaq as CapAntaq);
   const e = c.status === "ok" ? c.corredores?.[corredor] : undefined;
-  return e ? `capacidade: ANTAQ EA (média 12m até ${e.dadosAte})` : "capacidade: parâmetro IBI declarado";
+  return e ? `vazão média de embarque: ANTAQ EA (média 12m até ${e.dadosAte})` : "vazão de embarque: parâmetro IBI declarado";
 }
 
 // ---------------------------------------------------------------------------

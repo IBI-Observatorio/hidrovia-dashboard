@@ -153,10 +153,16 @@ export const CAPACIDADE_SEMANAL_MIL_T: Record<Corredor, number> = {
 export const CAPACIDADE_SEMANAL_SANTOS_MIL_T = CAPACIDADE_SEMANAL_MIL_T.santos;
 
 /**
- * Fator de utilização médio do proxy de embarque acumulado (adimensional).
- * Usado SÓ enquanto não há o embarcado acumulado real da ANTAQ (PASSO 2):
+ * Fator de utilização do NOWCAST de embarque acumulado (adimensional).
  * embarcadoProxy = capacidade × semanas desde o início do escoamento × FATOR.
- * Valor declarado como julgamento; documentado em /agro/metodologia.
+ *
+ * Por que NOWCAST e não o embarcado real: a Estatística Aquaviária da ANTAQ
+ * (data/antaq/capacidade-semanal.json → serieMensalMilT) traz o embarcado de
+ * fato, mas com defasagem de ~3–4 meses (dadosAte fev/2026 enquanto a leitura
+ * é de jun/2026). Por isso o S precisa estimar o embarcado da safra corrente.
+ * O 0,7 é julgamento declarado (lacuna conhecida do pré-registro). A v1 do S
+ * deve calibrar este fator contra o realizado histórico da própria EA, e/ou
+ * usar o embarcado real onde a EA já cobre as semanas.
  */
 export const FATOR_UTILIZACAO_EMBARQUE_V0 = 0.7;
 
@@ -187,9 +193,11 @@ export interface PerfilVeiculo {
 
 export const PERFIS_VEICULO: Record<string, PerfilVeiculo> = {
   // Conjunto dominante no eixo Sorriso→Santos (CVC 9 eixos, ~74 t PBTC).
-  rodotrem: { nome: "Rodotrem graneleiro 9 eixos", capacidadeT: 50, consumoKmL: 2.0, eixos: 9, pneus: 34 },
-  // Alternativa comum no Sul (7 eixos, ~57 t PBTC).
-  bitrem: { nome: "Bitrem graneleiro 7 eixos", capacidadeT: 37, consumoKmL: 2.2, eixos: 7, pneus: 26 },
+  // Carga útil 48 t (não 50): grão líquido real fica em 45–48 t descontada a
+  // tara; 50 era o teto otimista (calibração v2, jun/2026 — ver dossiê).
+  rodotrem: { nome: "Rodotrem graneleiro 9 eixos", capacidadeT: 48, consumoKmL: 2.0, eixos: 9, pneus: 34 },
+  // Alternativa comum no Sul (7 eixos, ~57 t PBTC). Carga útil 36 t (era 37).
+  bitrem: { nome: "Bitrem graneleiro 7 eixos", capacidadeT: 36, consumoKmL: 2.2, eixos: 7, pneus: 26 },
   carreta: { nome: "Carreta graneleira 6 eixos", capacidadeT: 32, consumoKmL: 2.4, eixos: 6, pneus: 22 },
 };
 

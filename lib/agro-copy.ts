@@ -95,6 +95,9 @@ export const agroCopy = {
     labelEstavel: "estável",
     unidadeDeltaSaturacao: "p.p.",
     labelCalibracao: "calibração em construção",
+    // faixa exibida no lugar de "Crítico" enquanto o histórico tem <3 safras
+    // (percentil frágil — topo de amostra pequena, não alarme estatístico)
+    labelLeituraInicial: "leitura inicial",
     // barra de faixa (substitui o numerão 100/100)
     labelBarraPercentil: "percentil",
     // tooltip e expand

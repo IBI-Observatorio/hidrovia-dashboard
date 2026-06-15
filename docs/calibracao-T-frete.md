@@ -116,3 +116,39 @@ mercado fica acima. O número do pilar T é defensável.
 Portaria SUROC 4/2026), NTC&Logística (Manual Decope), SIFRECA/ESALQ-USP, IMEA,
 concessionária Nova Rota do Oeste (BR-163/MT). Método: deep research +
 verificação adversarial 3× + dois passes dirigidos a fonte primária.*
+
+---
+
+# Anexo — Revisão do pilar S e calibração v2 (jun/2026)
+
+Revisão por painel sênior (5 lentes) do que está implementado. O T saiu validado;
+o S tem limitações **já declaradas no pré-registro** (não são bugs escondidos).
+Os 7 achados e o que foi feito:
+
+| # | Achado | Pilar | Ação v2 |
+|---|---|---|---|
+| 1 | `colhido` (hinterlândia inteira) ÷ 1 porto → "semanas" infladas | S | **Pendente (lacuna):** exige matriz origem→porto. Fonte certa = **Comex Stat/MDIC** (UF origem × URF embarque, SH 1201/1005) — a ANTAQ EA NÃO tem a UF agrícola de origem. |
+| 2 | Dupla contagem de MT (Santos E Arco Norte) | S | Resolve junto com #1 (mesma matriz). Declarado na lacuna. |
+| 3 | "Capacidade" é throughput, não capacidade | S, F | **Feito:** rótulo → "vazão média de embarque (EA)". |
+| 4 | Embarcado proxy ×0,7 | S | **Documentado:** é NOWCAST (EA tem defasagem ~3-4 m); 0,7 a calibrar contra realizado da EA. Mantido. |
+| 5 | "Crítico" com <3 safras | todos | **Feito:** card mostra "leitura inicial" enquanto calibração em construção. |
+| 6 | T herda volatilidade do diesel | T | **Decisão registrada mantida:** diesel é insumo legítimo do custo; não deflacionar. Documentado. |
+| 7 | Carga útil/pesos declarados | T | **Feito:** rodotrem 50→48 t, bitrem 37→36 t. Pesos de rota seguem declarados (refinar por volume na v2). |
+
+**Cross-check de magnitude do S:** mesmo trocando o proxy pelo embarcado real, o
+"semanas de excedente" continua grande, porque o numerador é a produção de uma
+hinterlândia inteira (MT incluso) e o denominador é um porto. **O S é honesto como
+percentil; o valor bruto só fica intuitivo com a matriz origem→porto (#1/#2).**
+
+## Governança (pré-registro v2)
+
+Toda mudança de parâmetro do IEE passa pelo hash do pré-registro
+(`scripts/agro/gera-pre-registro.ts`). A calibração do T (diesel 7,0 / pedágio 0,05)
+do PR anterior **driftou o hash sem regenerar** — corrigido aqui:
+
+- **Pré-registro v2 congelado** (`data/agro/pre-registro-iee-v2.json`), com
+  `changelogV1paraV2` (diesel, pedágio, carga útil, rótulo de vazão, leitura inicial).
+- **Backtest re-rodado** (`scripts/backtest/iee-final.ts`): todos os episódios-âncora
+  verificáveis seguem ✓ ACUSADOS — as mudanças são percentil-invariantes (reescala
+  constante por corredor não altera ranking). Veredito: publicável.
+- Importadores (metodologia, backtest) re-apontados para v2; v0/v1 mantidos como histórico.
