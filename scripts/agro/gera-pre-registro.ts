@@ -31,7 +31,7 @@ import {
 } from "../../lib/iee-params";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v2.json");
+const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v3.json");
 
 function snapshotParametros() {
   // capacidades REAIS (ANTAQ EA) entram no snapshot congelado: são parte da
@@ -103,7 +103,7 @@ function main() {
 
   const registro = {
     indice: "IEE — Índice de Estresse de Escoamento",
-    versao: "v2",
+    versao: "v3",
     changelogV0paraV1: [
       "Capacidades semanais: parâmetros declarados (1300/450/1000) SUBSTITUÍDOS pela agregação real da Estatística Aquaviária ANTAQ (1567/597/883 mil t/sem, média 12m até 2026-02) — leitura 'cache ok → cache; senão declarado'.",
       "Métrica-alvo torna-se COMPUTÁVEL: TEsperaAtracacao (EA) por semana, 2016→2026; baseline Spearman/MAE registrado no backtest final.",
@@ -116,6 +116,12 @@ function main() {
       "Validação externa registrada: custo modelo IBI (~R$ 410/t Sorriso→Santos) ≈ piso regulado ANTT (~R$ 407/t) < frete de mercado SIFRECA (~R$ 480–530/t).",
       "Rótulo do denominador: 'capacidade' → 'vazão média de embarque' (é throughput EA realizado, não capacidade nominal). Sem mudança de valor.",
       "Faixa do card suavizada para 'leitura inicial' (não 'Crítico') enquanto a série tem <3 safras.",
+    ],
+    changelogV2paraV3: [
+      "Pesos do IEE-SANTOS recalibrados contra a métrica-alvo (espera EA t+2): F/T/S de 0,40/0,35/0,25 → 0,25/0,60/0,15. Evidência: scripts/backtest/iee-v3-pesos.ts — no sweep T×S, mais peso no T melhora monotonicamente o Spearman do composto (0,23 nos pesos antigos → ~0,5 com T dominante); o S entra com sinal fraco/negativo na previsão da fila. F mantido em 0,25 (é a própria fila; deve prever bem quando o histórico acumular).",
+      "CAVEAT registrado: seleção de peso IN-SAMPLE, n≈46 (SE do Spearman ≈ ±0,15) — o sentido (mais T) é firme; o número exato é sugestivo. Filosofia adotada: ainda é radar amplo (F/T/S compostos), só com T protagonista; S permanece residual, não eliminado.",
+      "Escopo: SÓ Santos. Paranaguá e Arco Norte mantêm pesos v0 (sem dado de validação próprio).",
+      "Pilares F/T/S/H seguem percentil walk-forward; reponderar não altera os percentis dos pilares, logo os episódios-âncora (P_S, P_T, P_H) seguem verificáveis.",
     ],
     congeladoEm: new Date().toISOString().slice(0, 10),
     hashParametros: hash,

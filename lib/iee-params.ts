@@ -33,14 +33,22 @@ export const COMPONENTES_POR_CORREDOR: Record<Corredor, ComponenteIEE[]> = {
 };
 
 /**
- * PESOS v0 por corredor (julgamento declarado, Σ = 1 por corredor).
+ * PESOS por corredor (Σ = 1 por corredor).
  * No arco-norte a hidrologia entra com 0,20 porque a janela de calado
  * condiciona toda a logística de barcaças da calha.
+ *
+ * SANTOS (v3, jun/2026): T dominante (0,60). O backtest de pesos
+ * (scripts/backtest/iee-v3-pesos.ts) mostrou que, contra a espera EA em t+2,
+ * mais peso no T melhora monotonicamente a previsão (Spearman do composto sobe
+ * de 0,23 nos pesos antigos para ~0,5 com T dominante) e o S entra com sinal
+ * fraco/negativo — então S é residual (0,15). F mantém 0,25 (é a própria fila;
+ * deve prever bem quando acumular histórico). Paranaguá/Arco Norte seguem v0
+ * (sem validação própria ainda). Ver pré-registro v3.
  */
 export const PESOS_IEE: Record<Corredor, Partial<Record<ComponenteIEE, number>>> = {
-  santos: { F: 0.4, T: 0.35, S: 0.25 },
-  // v0: pesos de paranagua IDÊNTICOS a Santos por julgamento declarado;
-  // serão diferenciados na calibração v1 se o backtest indicar.
+  santos: { F: 0.25, T: 0.6, S: 0.15 },
+  // v0: pesos de paranagua mantidos (sem validação própria — só Santos tem
+  // dado de espera EA suficiente); diferenciar quando o backtest indicar.
   paranagua: { F: 0.4, T: 0.35, S: 0.25 },
   "arco-norte": { F: 0.35, T: 0.25, S: 0.2, H: 0.2 },
 };
