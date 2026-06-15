@@ -17,7 +17,7 @@ jobs:
       RAILWAY_PROJECT_ID: afec5058-fcde-4c0d-8b8b-67943fa80fc4
       RAILWAY_SERVICE_ID: 85b66087-3d29-4ff6-80ef-2ecd0f217b84
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Deploy to Railway
         run: railway up --service hidrovia-dashboard --detach

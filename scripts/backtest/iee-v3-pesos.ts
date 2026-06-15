@@ -39,7 +39,7 @@ function main() {
   const pS = pctlMap((__backtest.serieSReal(CORR as never) as { d: string; semanaISO: number; bruto: number }[])
     .map((p) => ({ d: p.d, semanaISO: p.semanaISO, bruto: p.bruto })));
 
-  const espera = (esperaEA.corredores as Record<string, [string, number, number][]>)[CORR];
+  const espera = (esperaEA.corredores as unknown as Record<string, [string, number, number][]>)[CORR];
   const detE = __backtest.percentisWalkForward(espera.map(([d, h]) => ({ d, semanaISO: semanaISODeData(d), bruto: h })));
   const alvo = new Map(espera.map(([d], i) => [segunda(d), detE[i].percentil]));
 
