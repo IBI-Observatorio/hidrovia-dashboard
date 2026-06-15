@@ -1,0 +1,27 @@
+{
+ "fonte": "Comex Stat / MDIC — exportação 2023-2024, NCM 12019000 (soja) + 10059010 (milho), state × urf, FOB",
+ "metodo": "participacao[corredor][UF] = FOB do grão da UF que sai pelos portos do corredor ÷ FOB total do grão da UF (todos os portos). Portos: Santos; Paranaguá; Arco Norte = São Luís/Itaqui + Belém/Barcarena + Santarém + Manaus + Santana.",
+ "geradoEm": "2026-06-15",
+ "status": "ok",
+ "participacao": {
+  "santos": {
+   "SP": 0.81,
+   "MG": 0.76,
+   "GO": 0.73,
+   "MS": 0.14,
+   "MT": 0.43
+  },
+  "paranagua": {
+   "PR": 0.68,
+   "SC": 0.17
+  },
+  "arco-norte": {
+   "MT": 0.52,
+   "PA": 1.0,
+   "TO": 0.97,
+   "MA": 1.0,
+   "PI": 0.96,
+   "RO": 1.0
+  }
+ }
+}

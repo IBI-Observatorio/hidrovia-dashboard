@@ -23,7 +23,7 @@ import { fileURLToPath } from "node:url";
 import capacidadeAntaq from "../../data/antaq/capacidade-semanal.json";
 import {
   CAPACIDADE_SEMANAL_MIL_T, COMPONENTES_POR_CORREDOR, CUSTO_DEMURRAGE_DIA_USD,
-  FAIXAS_IEE, FATOR_UTILIZACAO_EMBARQUE_V0, HINTERLANDIA,
+  FAIXAS_IEE, FATOR_UTILIZACAO_EMBARQUE_V0, HINTERLANDIA, PARTICIPACAO_PORTO,
   JANELA_SAZONAL_SEMANAS, MIN_OBS_PERCENTIL, MIN_SAFRAS_PERCENTIL,
   PARAMETROS_CUSTEIO_V0, PERFIL_VEICULO_PADRAO, PERFIS_VEICULO,
   PESOS_H_INTERNO, PESOS_IEE, PORTOS_ARCO_NORTE, ROTAS_T,
@@ -31,7 +31,7 @@ import {
 } from "../../lib/iee-params";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v3.json");
+const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v4.json");
 
 function snapshotParametros() {
   // capacidades REAIS (ANTAQ EA) entram no snapshot congelado: são parte da
@@ -46,6 +46,7 @@ function snapshotParametros() {
     componentesPorCorredor: COMPONENTES_POR_CORREDOR,
     pesosHInterno: PESOS_H_INTERNO,
     hinterlandia: HINTERLANDIA,
+    participacaoPorto: PARTICIPACAO_PORTO,
     capacidadeSemanalMilT: CAPACIDADE_SEMANAL_MIL_T,
     portosArcoNorte: PORTOS_ARCO_NORTE,
     rotasT: ROTAS_T,
@@ -103,7 +104,7 @@ function main() {
 
   const registro = {
     indice: "IEE — Índice de Estresse de Escoamento",
-    versao: "v3",
+    versao: "v4",
     changelogV0paraV1: [
       "Capacidades semanais: parâmetros declarados (1300/450/1000) SUBSTITUÍDOS pela agregação real da Estatística Aquaviária ANTAQ (1567/597/883 mil t/sem, média 12m até 2026-02) — leitura 'cache ok → cache; senão declarado'.",
       "Métrica-alvo torna-se COMPUTÁVEL: TEsperaAtracacao (EA) por semana, 2016→2026; baseline Spearman/MAE registrado no backtest final.",
@@ -122,6 +123,12 @@ function main() {
       "CAVEAT registrado: seleção de peso IN-SAMPLE, n≈46 (SE do Spearman ≈ ±0,15) — o sentido (mais T) é firme; o número exato é sugestivo. Filosofia adotada: ainda é radar amplo (F/T/S compostos), só com T protagonista; S permanece residual, não eliminado.",
       "Escopo: SÓ Santos. Paranaguá e Arco Norte mantêm pesos v0 (sem dado de validação próprio).",
       "Pilares F/T/S/H seguem percentil walk-forward; reponderar não altera os percentis dos pilares, logo os episódios-âncora (P_S, P_T, P_H) seguem verificáveis.",
+    ],
+    changelogV3paraV4: [
+      "Pilar S — RESOLVIDA a dupla contagem de MT (estrutural). Nova matriz PARTICIPACAO_PORTO (origem→porto) escala a produção de cada UF pela fração que de fato sai por cada corredor. Fonte PRIMÁRIA: Comex Stat/MDIC, exportação 2023-2024, NCM soja+milho, state × URF (gerador scripts/comex/gera-participacao.py; dados brutos em data/comex/).",
+      "MT deixa de ser contado 100% em Santos E 100% no Arco Norte: agora 43% Santos / 52% Arco Norte (≈ split IMEA soja~41%/milho~61% AN). Demais frações declaradas na matriz (SP 0,81; GO 0,73; MG 0,76; MS 0,14 Santos; PR 0,68; SC 0,17 Pgua; PA/MA/RO ~1,0; TO 0,97; PI 0,96 AN).",
+      "Efeito: o 'semanas de excedente' do S deixa de ser inflado pela hinterlândia inteira ÷ um porto. Resolve a lacuna 'MT inteiro nas duas hinterlândias' declarada no v1.",
+      "Continua aberto (lacuna): o NOWCAST de embarcado (proxy ×0,7) do S — independente desta correção.",
     ],
     congeladoEm: new Date().toISOString().slice(0, 10),
     hashParametros: hash,
@@ -148,7 +155,7 @@ function main() {
       "F sem retroativo em todos os corredores: histórico nasce em 10/06/2026.",
       "Nowcast de embarque do S: capacidade × utilização (0,7) — a EA traz o embarcado real mas com defasagem ~3-4 meses, então a safra corrente é estimada. v1 do S deve calibrar o 0,7 contra o realizado da EA.",
       "Denominador do S/F é VAZÃO MÉDIA de embarque (ANTAQ EA, média 12m até 2026-02), não capacidade nominal/de pico — throughput é limitado pela demanda (denominador parcialmente endógeno); rotulado como 'vazão' na interface.",
-      "S não pondera pela participação porto×UF: o colhido é a hinterlândia inteira ÷ um porto, e MT entra em Santos E Arco Norte (dupla contagem) — por isso 'semanas de excedente' é grande no absoluto, honesto só como percentil. Correção v2 exige matriz origem→porto do COMEX STAT/MDIC (UF de origem × URF de embarque, SH 1201/1005) — a ANTAQ EA NÃO tem a UF agrícola de origem.",
+      "S: dupla contagem de MT RESOLVIDA no v4 (matriz PARTICIPACAO_PORTO do Comex Stat). Resta a granularidade municipal (a alocação é por UF×porto, não por microrregião) — refinamento futuro.",
       "Coeficientes internos de custeio do T (custo fixo, manutenção/km, pneu): premissas IBI, sem fonte pública livre; validados no AGREGADO pela triangulação ANTT/SIFRECA (dossiê).",
     ],
     invalidaPublicacao: [

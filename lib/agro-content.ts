@@ -56,6 +56,7 @@ import {
   COMPONENTES_POR_CORREDOR,
   CUSTO_DEMURRAGE_DIA_USD,
   HINTERLANDIA,
+  PARTICIPACAO_PORTO,
   PARAMETROS_CUSTEIO_V0,
   PERFIS_VEICULO,
   PERFIL_VEICULO_PADRAO,
@@ -299,12 +300,20 @@ function serieSReal(corredor: Corredor = "santos"): PontoS[] {
     const w = timeline[i];
     const producaoUF: ProducaoUF = {};
     let producaoTotal = 0;
+    const share = PARTICIPACAO_PORTO[corredor] ?? {};
     for (const cultura of Object.keys(w.progresso) as CulturaS[]) {
       const ano = w.safraDe[cultura];
       const porUF = ano ? producao[ano]?.[cultura] : undefined;
       if (!porUF) continue;
-      producaoUF[cultura] = porUF;
-      for (const uf of hinterlandia) producaoTotal += porUF[uf] ?? 0;
+      // v4: escala a produção de cada UF pela fração que sai por este corredor
+      // (Comex Stat) — elimina a dupla contagem de MT (Santos × Arco Norte).
+      const escalada: Record<string, number> = {};
+      for (const uf of hinterlandia) {
+        const p = (porUF[uf] ?? 0) * (share[uf] ?? 1);
+        escalada[uf] = p;
+        producaoTotal += p;
+      }
+      producaoUF[cultura] = escalada;
     }
 
     const safraSoja = w.safraDe.SOJA ?? cicloSafra;
