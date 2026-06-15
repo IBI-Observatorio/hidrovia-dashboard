@@ -56,6 +56,7 @@ export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>
       variacao_24h:       resumo.variacao_24h,
       ultima_atualizacao: resumo.ultima_data,
       hora_medicao:       resumo.ultima_hora,
+      hora_medicao_d1:    resumo.hora_anterior,
       // Campos novos (opcionais em DadosEstacao) — só populados se vierem
       chuva_mm_24h:       resumo.chuva_mm_acum_24h,
       vazao_m3s:          resumo.vazao_m3s_atual ?? undefined,

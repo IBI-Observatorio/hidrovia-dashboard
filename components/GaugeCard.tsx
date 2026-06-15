@@ -89,8 +89,11 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
         <span className="text-gray-400 text-sm mb-1">m</span>
         <div className={`flex items-center gap-0.5 mb-1 ${trendColor}`}>
           <Trend size={14} />
-          <span className="text-xs font-semibold">
+          <span className="text-xs font-semibold flex items-center gap-1">
             {dados.variacao_24h > 0 ? "+" : ""}{dados.variacao_24h} cm vs D-1
+            {dados.hora_medicao_d1 && (
+              <Tooltip conteudo={`Referência de ontem: leitura às ${dados.hora_medicao_d1} BRT (mais próxima de 09:00 Brasília)`} />
+            )}
           </span>
         </div>
       </div>
