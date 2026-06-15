@@ -90,10 +90,14 @@ function DeltaPill({ serie }: { serie: SerieComponenteAgro }) {
 
 // Barra de faixa 0–100 (substitui o numerão 100/100): trilha fina, preenchida
 // até o percentil na COR da faixa do IEE, com marcador e rótulo pequeno.
-function FaixaBar({ percentil }: { percentil: number }) {
+function FaixaBar({ percentil, emCalibracao }: { percentil: number; emCalibracao?: boolean }) {
   const copy = agroCopy.breakdown;
   const faixa = faixaIEE(percentil);
   const pct = Math.max(0, Math.min(100, percentil));
+  // Com <3 safras, o percentil é frágil (topo de amostra minúscula). Não
+  // gritar "Crítico" — mostrar "leitura inicial" até acumular histórico.
+  const rotuloFaixa = emCalibracao ? copy.labelLeituraInicial : faixa.label;
+  const corFaixa = emCalibracao ? "text-gray-400" : FAIXA_TEXTO[faixa.token];
   return (
     <div>
       <div className="relative h-1.5 w-full rounded-full bg-white/10">
@@ -110,8 +114,8 @@ function FaixaBar({ percentil }: { percentil: number }) {
         <span className="text-[0.66rem] text-gray-500">
           {copy.labelBarraPercentil} {Math.round(percentil)}
         </span>
-        <span className={`text-[0.62rem] font-semibold ${FAIXA_TEXTO[faixa.token]}`}>
-          {faixa.label}
+        <span className={`text-[0.62rem] font-semibold ${corFaixa}`}>
+          {rotuloFaixa}
         </span>
       </div>
     </div>
@@ -239,7 +243,7 @@ function MetricCard({ serie }: { serie: SerieComponenteAgro }) {
       </div>
 
       {/* d. BARRA DE FAIXA colorida (substitui o numerão) */}
-      <FaixaBar percentil={serie.percentilAtual} />
+      <FaixaBar percentil={serie.percentilAtual} emCalibracao={serie.calibracaoEmConstrucao} />
 
       {/* e. UMA LINHA de interpretação */}
       <p className="text-[0.78rem] leading-snug text-gray-400">{leituraCurta}</p>

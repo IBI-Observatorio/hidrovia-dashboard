@@ -15,7 +15,7 @@ import { calculaIEE, semanaISODeData, type ComponenteIEE, type Corredor } from "
 import { __backtest } from "../../lib/agro-content";
 import hCache from "../../data/agro/h-arco-norte.json";
 import esperaEA from "../../data/antaq/espera-semanal.json";
-import preRegistro from "../../data/agro/pre-registro-iee-v1.json";
+import preRegistro from "../../data/agro/pre-registro-iee-v2.json";
 
 const { serieSReal, serieTModelada, percentisWalkForward } = __backtest;
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -27,7 +27,7 @@ function main() {
   // ── 0) integridade do pré-registro (drift bloqueia o backtest) ─────────
   try {
     execSync("npx tsx scripts/agro/gera-pre-registro.ts", { cwd: RAIZ, stdio: "pipe" });
-    console.log(`Pré-registro v1 íntegro (sha256 ${preRegistro.hashParametros.slice(0, 12)}… · ${preRegistro.congeladoEm})\n`);
+    console.log(`Pré-registro ${preRegistro.versao} íntegro (sha256 ${preRegistro.hashParametros.slice(0, 12)}… · ${preRegistro.congeladoEm})\n`);
   } catch {
     console.error("DRIFT de parâmetros vs pré-registro — backtest abortado. Gere novo pré-registro versionado.");
     process.exitCode = 1;
@@ -124,7 +124,7 @@ function main() {
   const metricaAlvo = `IEE-Santos(t) vs percentil da espera EA em t+2 (${pares.length} semanas, abr/2025→fev/2026): Spearman ${spearman.toFixed(2)} · MAE ${mae.toFixed(1)} p.p. — baseline v1 registrado; F entra na composição quando o histórico de fila acumular.`;
 
   // ── 4) saída: console + README ──────────────────────────────────────────
-  console.log("================ EPISÓDIOS-ÂNCORA (pré-registro v1) ================");
+  console.log(`================ EPISÓDIOS-ÂNCORA (pré-registro ${preRegistro.versao}) ================`);
   let falhou = false;
   for (const v of vereditos) {
     const flag = v.ok === null ? "◌ registrado" : v.ok ? "✓ ACUSOU" : "✗ FALHOU";
@@ -141,7 +141,7 @@ function main() {
   const md = `# Backtest do IEE — vereditos consolidados
 
 > Gerado por \`scripts/backtest/iee-final.ts\` em ${hoje}. NÃO editar à mão.
-> Pré-registro v1: sha256 \`${preRegistro.hashParametros.slice(0, 16)}…\` congelado em ${preRegistro.congeladoEm}.
+> Pré-registro ${preRegistro.versao}: sha256 \`${preRegistro.hashParametros.slice(0, 16)}…\` congelado em ${preRegistro.congeladoEm}.
 
 ## Episódios-âncora
 

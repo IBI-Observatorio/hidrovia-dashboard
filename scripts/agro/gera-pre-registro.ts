@@ -31,7 +31,7 @@ import {
 } from "../../lib/iee-params";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v1.json");
+const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v2.json");
 
 function snapshotParametros() {
   // capacidades REAIS (ANTAQ EA) entram no snapshot congelado: são parte da
@@ -103,12 +103,19 @@ function main() {
 
   const registro = {
     indice: "IEE — Índice de Estresse de Escoamento",
-    versao: "v1",
+    versao: "v2",
     changelogV0paraV1: [
       "Capacidades semanais: parâmetros declarados (1300/450/1000) SUBSTITUÍDOS pela agregação real da Estatística Aquaviária ANTAQ (1567/597/883 mil t/sem, média 12m até 2026-02) — leitura 'cache ok → cache; senão declarado'.",
       "Métrica-alvo torna-se COMPUTÁVEL: TEsperaAtracacao (EA) por semana, 2016→2026; baseline Spearman/MAE registrado no backtest final.",
       "Episódio-âncora dez/2025 (fila 100+) verificado contra a EA e NÃO CONFIRMADO como excepcional (espera ≈ média de 2025); substituído pela referência out/2023 (espera recorde ~397 h) — diff documentado, sem ajuste de pesos.",
       "F de Santos sai de ilustrativo para REAL (line-up APS/DIOPE, PASSO 2).",
+    ],
+    changelogV1paraV2: [
+      "Calibração do T contra fonte primária (dossiê docs/calibracao-T-frete.md): diesel default 6,10→7,00 R$/L (ANP revenda S10 jun/2026; runtime já usa ANP ao vivo) e pedágio 0,07→0,05 R$/km/eixo (0,07 era teto BR-163/MT; 0,05 = média de rede). RECONCILIA o drift introduzido sem novo pré-registro na calibração anterior.",
+      "Carga útil dos perfis: rodotrem 50→48 t e bitrem 37→36 t (grão líquido real descontada a tara; 50/37 eram teto otimista). Reescala constante por corredor → percentil INVARIANTE (não altera vereditos do backtest).",
+      "Validação externa registrada: custo modelo IBI (~R$ 410/t Sorriso→Santos) ≈ piso regulado ANTT (~R$ 407/t) < frete de mercado SIFRECA (~R$ 480–530/t).",
+      "Rótulo do denominador: 'capacidade' → 'vazão média de embarque' (é throughput EA realizado, não capacidade nominal). Sem mudança de valor.",
+      "Faixa do card suavizada para 'leitura inicial' (não 'Crítico') enquanto a série tem <3 safras.",
     ],
     congeladoEm: new Date().toISOString().slice(0, 10),
     hashParametros: hash,
@@ -133,10 +140,10 @@ function main() {
       "F de Santos: REAL (esperados-carga APS/DIOPE) — fundeados/atracados sem mercadoria pública ficam fora da fila v1 (documentado).",
       "F do Arco Norte: PARCIAL — EMAP + CDP; Miritituba/Santarém sem line-up público.",
       "F sem retroativo em todos os corredores: histórico nasce em 10/06/2026.",
-      "Proxy de embarque do S: capacidade × utilização declarada até o acumulado ANTAQ real.",
-      "Denominadores de capacidade: ANTAQ EA real (média 12m até 2026-02); cadência de atualização manual junto do refresh do espelho parquet (dadosAte exposto no JSON).",
-      "MT inteiro nas hinterlândias de Santos E Arco Norte (proxy declarado; split municipal na v1).",
-      "Coeficientes de custeio do T: premissas IBI v0, sem validação contra frete praticado (aguarda convênio).",
+      "Nowcast de embarque do S: capacidade × utilização (0,7) — a EA traz o embarcado real mas com defasagem ~3-4 meses, então a safra corrente é estimada. v1 do S deve calibrar o 0,7 contra o realizado da EA.",
+      "Denominador do S/F é VAZÃO MÉDIA de embarque (ANTAQ EA, média 12m até 2026-02), não capacidade nominal/de pico — throughput é limitado pela demanda (denominador parcialmente endógeno); rotulado como 'vazão' na interface.",
+      "S não pondera pela participação porto×UF: o colhido é a hinterlândia inteira ÷ um porto, e MT entra em Santos E Arco Norte (dupla contagem) — por isso 'semanas de excedente' é grande no absoluto, honesto só como percentil. Correção v2 exige matriz origem→porto do COMEX STAT/MDIC (UF de origem × URF de embarque, SH 1201/1005) — a ANTAQ EA NÃO tem a UF agrícola de origem.",
+      "Coeficientes internos de custeio do T (custo fixo, manutenção/km, pneu): premissas IBI, sem fonte pública livre; validados no AGREGADO pela triangulação ANTT/SIFRECA (dossiê).",
     ],
     invalidaPublicacao: [
       "Episódio-âncora verificável não acusado no backtest.",
