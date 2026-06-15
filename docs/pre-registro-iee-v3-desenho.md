@@ -87,11 +87,35 @@ ter valor como *nível*, não como percentil sazonal na régua atual do IEE.
 Reavaliar quando houver ≥5 safras de série, ou testar o basis em nível (fora da
 normalização sazonal) como exceção declarada.
 
+## Resultado — H2 Aperto (2026-06-15) · ❌ REPROVADO
+
+Frete obtido do **IMEA** (não SIFRECA, que é pago): "Preço disponível do Frete de
+Grãos" Sorriso→Santos, soja, R$/t, 2023→2026 (gerador `scripts/imea/gera-frete.py`;
+fonte em `data/imea/frete-sorriso-santos.xls`). Aperto = (frete − custo_engine)/custo.
+
+| Métrica (percentil sazonal WF) | Aperto | T-custo | Critério H2 |
+|---|---|---|---|
+| Spearman vs espera t+2 | **−0,21** | 0,33 | Aperto > T-custo |
+| MAE | 42,7 p.p. | 26,3 | — |
+| Pares | 56 | 58 | — |
+
+**Veredito: H2 rejeitado.** O Aperto não supera o T-custo (e fica negativo) — mesmo
+padrão do Basis: a normalização sazonal mata o sinal, e a amostra é curta (~56
+semanas, cap pela série de diesel/custo da ANP, 2025→2026). Caveat: o custo usado
+é o do corredor (ponderado Sorriso+Rio Verde); o frete é só Sorriso — mas −0,21 não
+vira >0,33 refinando isso. Nada promovido.
+
+## Conclusão da v3 (desenho) — 2026-06-15
+
+Ambos os pilares candidatos (Basis, Aperto) **reprovados** na régua do IEE
+(percentil sazonal walk-forward). O pré-registro fez seu trabalho: barrou duas
+adições tentadoras-mas-erradas. **Achado robusto e acionável:** o **T-custo isolado
+prevê a espera t+2 melhor (Spearman 0,33) que o IEE composto F/T/S (0,23)** → o blend
+dilui o pilar mais preditivo. Próximo passo recomendado (sem dado novo): **reotimizar
+os pesos F/T/S** contra a métrica-alvo, sob novo pré-registro de parâmetro.
+
 ## Estado (2026-06-15)
 
-- Pré-registro de desenho: **congelado**; H1 (Basis) **testado e rejeitado** (acima).
-- H2 (Aperto): **aguardando** frete SIFRECA (`data/sifreca/frete-semanal.json`).
-  Nota informativa do mesmo backtest: o **T-custo isolado** prevê a espera t+2 com
-  Spearman **0,33 · MAE 26,3** (58 pares) — acima do IEE composto (0,23), sugerindo
-  que o blend F/T/S dilui o T (candidato a revisão de pesos, sob pré-registro).
-- Impacto no IEE publicado: **nenhum** — nada promovido a peso > 0.
+- H1 (Basis) e H2 (Aperto): **testados e rejeitados** (peso 0, nunca forçados).
+- Impacto no IEE publicado: **nenhum**.
+- Aberto: reotimização de pesos F/T/S (não precisa de dado externo).

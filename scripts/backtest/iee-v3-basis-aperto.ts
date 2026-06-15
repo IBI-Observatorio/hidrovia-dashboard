@@ -102,15 +102,16 @@ function main() {
 
   // --- H2: APERTO (frete − custo) vs T-custo ---
   console.log("\nH2 · APERTO (frete − custo) vs T-custo:");
-  const frete = lerCache("data/sifreca/frete-semanal.json");
+  const frete = lerCache("data/imea/frete-semanal.json");
   const custo = __backtest.serieTModelada(CORREDOR as never).map((p) => ({ d: p.d, custo: p.custoPorT }));
   const sCusto = avalia("T-custo", custo.map((c) => ({ d: c.d, v: c.custo })), alvo);
   if (!frete || frete.status !== "ok" || !frete.corredores?.[CORREDOR]?.length) {
-    console.log("   ⏳ APERTO aguardando frete SIFRECA — data/sifreca/frete-semanal.json.");
+    console.log("   ⏳ APERTO aguardando frete IMEA — data/imea/frete-semanal.json.");
   } else {
-    const custoPorData = new Map(custo.map((c) => [c.d, c.custo]));
+    // custo (datas ANP) e frete (segundas ISO) casam por semana ISO (segunda).
+    const custoPorSemana = new Map(custo.map((c) => [segundaISO(c.d).toISOString().slice(0, 10), c.custo]));
     const aperto = frete.corredores[CORREDOR]
-      .map(([d, f]) => { const c = custoPorData.get(d); return c ? { d, v: (f - c) / c } : null; })
+      .map(([d, f]) => { const k = segundaISO(d).toISOString().slice(0, 10); const c = custoPorSemana.get(k); return c ? { d: k, v: (f - c) / c } : null; })
       .filter((x): x is { d: string; v: number } => x != null);
     const sAperto = avalia("aperto", aperto, alvo);
     if (sAperto != null && sCusto != null) {
