@@ -26,7 +26,7 @@ import {
   SISTEMA_NARRADOR,
 } from "@/lib/radar/copilot";
 
-const MODELO = "claude-sonnet-4-20250514";
+const MODELO = "claude-sonnet-4-6";
 const MAX_TOKENS = 1000;
 const MAX_PERGUNTA = 600;
 

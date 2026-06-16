@@ -31,7 +31,6 @@
 const BASE_URL      = "https://www.ana.gov.br/hidrowebservice/EstacoesTelemetricas";
 const TOKEN_TTL_MS  = 55 * 60 * 1000;        // 55min (token expira em 60)
 const INVENT_TTL_S  = 86_400;                // 24h de cache no fetch da Next.js
-const TELEM_TTL_S   = 21_600;                // 6h
 const BATCH_LIMIT   = 10;                    // v2 aceita no máximo 10 códigos por chamada
 
 export const ESTACOES = {
@@ -231,7 +230,11 @@ export async function buscaSerieBatch(
         "Authorization": `Bearer ${token}`,
         "Accept":        "application/json",
       },
-      next: { revalidate: TELEM_TTL_S },
+      // Sem data cache do Next: a série DIAS_14 (ex.: IDN/Caracaraí 9 estações)
+      // passa de 2MB e o Next falha ao gravar ("items over 2MB can not be cached").
+      // A persistência já é feita pela camada de disco (obterDadosDiariosANA,
+      // data/ana-diario-cache.json, renova 1×/dia). Ver docs/monitor-cache-ana.md.
+      cache: "no-store",
     });
 
     if (resp.status === 401) {
