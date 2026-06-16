@@ -15,9 +15,9 @@ import { calculaIEE, semanaISODeData, type ComponenteIEE, type Corredor } from "
 import { __backtest } from "../../lib/agro-content";
 import hCache from "../../data/agro/h-arco-norte.json";
 import esperaEA from "../../data/antaq/espera-semanal.json";
-import preRegistro from "../../data/agro/pre-registro-iee-v5.json";
+import preRegistro from "../../data/agro/pre-registro-iee-v6.json";
 
-const { serieSReal, serieTModelada, percentisWalkForward } = __backtest;
+const { serieSReal, serieTModelada, serieFChegadasAntaq, percentisWalkForward } = __backtest;
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const fmt = (v: number | null | undefined, w = 6) => (v == null ? "—" : v.toFixed(1)).padStart(w);
 
@@ -47,6 +47,11 @@ function main() {
   const hB = hCache.semanas.map((w) => ({ d: w.d, semanaISO: semanaISODeData(w.d), bruto: w.ph }));
   const hDet = percentisWalkForward(hB);
   const H = new Map(hB.map((p, i) => [p.d, { perc: hDet[i].percentil, bruto: p.bruto }]));
+
+  // F de Santos (v6): pressão de chegadas ANTAQ, percentil walk-forward.
+  // Datas já são as segundas da EA → casam com segunda(d) do alvo.
+  const fB = serieFChegadasAntaq("santos");
+  const F = new Map(percentisWalkForward(fB).map((det, i) => [fB[i].d, det.percentil]));
 
   // ── 2) episódios-âncora verificáveis (recomputados, nunca hardcoded) ───
   const vereditos: Veredito[] = [];
@@ -110,7 +115,8 @@ function main() {
   const espPercWF = percentisWalkForward(espSantos.map(([sem, h]) => ({ d: sem, semanaISO: semanaISODeData(sem), bruto: h })));
   const espPercMap = new Map(espSantos.map(([sem], i) => [sem, espPercWF[i].percentil]));
   for (const d of [...sSantos.keys()].sort()) {
-    const perc: Partial<Record<ComponenteIEE, number>> = { S: sSantos.get(d), T: tSantos.get(d) };
+    // F casa pela segunda da semana (datas da EA são segundas); ausente → calculaIEE renormaliza
+    const perc: Partial<Record<ComponenteIEE, number>> = { F: F.get(segunda(d)), S: sSantos.get(d), T: tSantos.get(d) };
     const iee = calculaIEE(perc, "santos").valor;
     const sem2 = new Date(segunda(d) + "T00:00:00Z");
     sem2.setUTCDate(sem2.getUTCDate() + 14); // t+2 semanas
@@ -121,7 +127,7 @@ function main() {
   const corrP = (a: number[], b: number[]) => { const n = a.length, ma = med(a), mb = med(b); let num = 0, da = 0, db = 0; for (let i = 0; i < n; i++) { num += (a[i] - ma) * (b[i] - mb); da += (a[i] - ma) ** 2; db += (b[i] - mb) ** 2; } return num / Math.sqrt(da * db || 1); };
   const spearman = corrP(rank(pares.map((p) => p.iee)), rank(pares.map((p) => p.espPerc)));
   const mae = med(pares.map((p) => Math.abs(p.iee - p.espPerc)));
-  const metricaAlvo = `IEE-Santos(t) vs percentil da espera EA em t+2 (${pares.length} semanas, abr/2025→fev/2026): Spearman ${spearman.toFixed(2)} · MAE ${mae.toFixed(1)} p.p. — baseline v1 registrado; F entra na composição quando o histórico de fila acumular.`;
+  const metricaAlvo = `IEE-Santos(t) = F·0,50 + T·0,40 + S·0,10 (v6) vs percentil da espera EA em t+2 (${pares.length} semanas, abr/2025→fev/2026): Spearman ${spearman.toFixed(2)} · MAE ${mae.toFixed(1)} p.p. F (pressão de chegadas ANTAQ) ENTRA na composição — saltou de 0,43 (v3, sem F) para o valor atual. CAVEAT: in-sample, n≈46, SE±0,15.`;
 
   // ── 4) saída: console + README ──────────────────────────────────────────
   console.log(`================ EPISÓDIOS-ÂNCORA (pré-registro ${preRegistro.versao}) ================`);

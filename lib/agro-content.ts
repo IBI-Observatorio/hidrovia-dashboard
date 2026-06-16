@@ -58,6 +58,7 @@ import {
   HINTERLANDIA,
   PARTICIPACAO_PORTO,
   FATOR_UTILIZACAO_EMBARQUE,
+  JANELA_CHEGADAS_F,
   PARAMETROS_CUSTEIO_V0,
   PERFIS_VEICULO,
   PERFIL_VEICULO_PADRAO,
@@ -78,6 +79,7 @@ import lineupArcoNorte from "../data/lineup/arco-norte.json";
 import lineupSantos from "../data/lineup/santos.json";
 import hArcoNorte from "../data/agro/h-arco-norte.json";
 import capacidadeAntaq from "../data/antaq/capacidade-semanal.json";
+import esperaAntaq from "../data/antaq/espera-semanal.json";
 
 // ---------------------------------------------------------------------------
 // Calendário
@@ -142,6 +144,17 @@ export interface SerieComponenteAgro {
   ilustrativo: boolean;
   /** fonte-alvo (TODO) p/ pilares ilustrativos */
   fonteAlvo: string;
+  /** override de rótulos do card por-corredor (quando a fonte de um pilar
+   *  difere do padrão global de agro-copy — ex.: F de Santos = pressão de
+   *  chegadas, não fila de line-up). O card prefere estes quando presentes. */
+  rotulo?: {
+    nome?: string;
+    valorPrefixo?: string;
+    valorSufixo?: string;
+    valorDescricao?: string;
+    leitura?: string;
+    leituraCurta?: string;
+  };
 }
 
 export interface CorredorAgroData {
@@ -598,6 +611,79 @@ function montaFLineup(corredor: Corredor): SerieComponenteAgro | null {
   };
 }
 
+// ---------------------------------------------------------------------------
+// SANTOS · pilar F — PRESSÃO DE CHEGADAS (ANTAQ EA), nowcast · v6
+// ---------------------------------------------------------------------------
+// O F de Santos deixa o line-up ao vivo (sem histórico → percentil em
+// calibração) e passa a ser a pressão de chegadas da ANTAQ: nº de graneleiros
+// de grão que chegam por semana (espera-semanal.json, campo `n`), em soma móvel
+// de JANELA_CHEGADAS_F semanas. Chegada é FLUXO (não usa a espera = alvo →
+// sem leakage), sinal antecedente da fila, com 10 anos de série. NOWCAST: a EA
+// defasa ~3-4 meses. O line-up ao vivo segue como cor ("navios hoje").
+
+interface PontoFChegadas { d: string; semanaISO: number; bruto: number }
+
+/** Série semanal da pressão de chegadas (soma móvel JANELA_CHEGADAS_F) do
+ *  corredor, a partir da ANTAQ EA. bruto = nº de graneleiros chegados na
+ *  janela. Sem percentil (cru). */
+function serieFChegadasAntaq(corredor: Corredor): PontoFChegadas[] {
+  const corr = (esperaAntaq.corredores as unknown as Record<string, [string, number, number][]>)[corredor];
+  if (!corr?.length) return [];
+  const linhas = corr.slice().sort((a, b) => (a[0] < b[0] ? -1 : 1));
+  const k = JANELA_CHEGADAS_F;
+  const out: PontoFChegadas[] = [];
+  for (let i = 0; i < linhas.length; i++) {
+    if (i + 1 < k) continue; // só janelas cheias
+    let soma = 0;
+    for (let j = i - k + 1; j <= i; j++) soma += linhas[j][2];
+    out.push({ d: linhas[i][0], semanaISO: semanaISODeData(linhas[i][0]), bruto: soma });
+  }
+  return out;
+}
+
+/** Pilar F de SANTOS via pressão de chegadas ANTAQ (nowcast), walk-forward.
+ *  Espelha montaSReal. O line-up entra só como cor de "navios hoje". */
+function montaFAntaq(corredor: Corredor): SerieComponenteAgro | null {
+  const serie = serieFChegadasAntaq(corredor);
+  if (serie.length < 2) return null;
+  const dets = percentisWalkForward(serie.map((p) => ({ d: p.d, semanaISO: p.semanaISO, bruto: p.bruto })));
+  const jan = serie.slice(-N_SEMANAS); const det = dets.slice(-N_SEMANAS);
+  const n = jan.length;
+  const ultimaSemana = jan[n - 1].d;
+
+  // line-up ao vivo só para a cor "X navios hoje" (não alimenta o percentil)
+  const cacheLineup = corredor === "santos" ? (lineupSantos as unknown as typeof lineupParanagua) : null;
+  const naviosHoje =
+    cacheLineup && cacheLineup.status === "ok" && cacheLineup.snapshots?.length
+      ? (cacheLineup.snapshots[cacheLineup.snapshots.length - 1].navios as NavioLineup[])
+          .filter((nv) => ["ao_largo", "esperado", "programado"].includes(nv.status) && /exp/i.test(nv.sentido)).length
+      : null;
+
+  return {
+    componente: "F", corredor,
+    semanas: jan.map((p) => p.semanaISO),
+    valores: jan.map((p) => p.bruto),
+    percentis: det.map((d) => d.percentil),
+    valorAtual: jan[n - 1].bruto, percentilAtual: det[n - 1].percentil,
+    deltaSemanal: round(jan[n - 1].bruto - jan[n - 2].bruto, 0),
+    status: esperaAntaq.status === "ok" ? "real" : "indisponivel",
+    ilustrativo: false,
+    fonte:
+      `Fonte: ANTAQ — Estatística Aquaviária (TemposAtracacao): nº de graneleiros de grão chegando, soma móvel ${JANELA_CHEGADAS_F} sem · última semana com dado: ${fmtBR(ultimaSemana)} (EA defasa ~3-4 m — nowcast)` +
+      (naviosHoje != null ? ` · line-up APS/DIOPE hoje: ${naviosHoje} navios aguardando` : ""),
+    calibracaoEmConstrucao: det[n - 1].calibracaoEmConstrucao,
+    fonteAlvo: FONTE_ALVO.F,
+    rotulo: {
+      nome: "Pressão de chegadas",
+      valorPrefixo: "",
+      valorSufixo: "navios",
+      valorDescricao: `graneleiros chegando (soma ${JANELA_CHEGADAS_F} sem)`,
+      leituraCurta: "navios convergindo — fila se formando",
+      leitura: `Pressão de chegadas: nº de graneleiros de grão que chegam ao porto, somado em ${JANELA_CHEGADAS_F} semanas (ANTAQ EA). É o FLUXO de demanda sobre os berços — sinal antecedente da fila, que prevê o tempo de espera em t+2. Não usa o tempo de espera em si (sem leakage). Subir = mais navios convergindo, fila tende a crescer.`,
+    },
+  };
+}
+
 /** Pilar H — risco hidrológico do Tabocal (modelo IBI sobre dados reais).
  *  Série reconstruída por scripts/agro/gera-h-arco-norte.ts via lib/iee.ts
  *  (IRC-Tabocal v3.6 + urgência de calado). Percentis walk-forward. */
@@ -650,7 +736,8 @@ function montaCorredor(corredor: Corredor): CorredorAgroData {
     let r: SerieComponenteAgro | null = null;
     if (real && c === "S") r = montaSReal(corredor);
     else if (real && c === "T") r = montaTModelado(corredor);
-    else if (real && c === "F") r = montaFLineup(corredor); // santos incluso (PASSO 2)
+    // F: Santos = pressão de chegadas ANTAQ (v6, série longa); demais = line-up.
+    else if (real && c === "F") r = corredor === "santos" ? montaFAntaq(corredor) : montaFLineup(corredor);
     else if (real && c === "H") r = montaHReal(corredor);
     comps.push(r ?? montaComponenteIlustrativo(corredor, c));
   }
@@ -758,4 +845,4 @@ export function getAgroData(): AgroData {
 }
 
 /** Séries completas reais — consumidas pelo backtest (scripts/backtest). */
-export const __backtest = { serieSReal, serieTModelada, percentisWalkForward };
+export const __backtest = { serieSReal, serieTModelada, serieFChegadasAntaq, percentisWalkForward };
