@@ -133,6 +133,24 @@ export const HINTERLANDIA: Record<Corredor, readonly string[]> = {
 /** @deprecated alias de compatibilidade — usar HINTERLANDIA.santos */
 export const HINTERLANDIA_SANTOS = HINTERLANDIA.santos;
 
+/**
+ * Participação origem→porto (v4): fração do grão de cada UF que de fato sai
+ * por cada corredor. RESOLVE a dupla contagem de MT (estava 100% em Santos E
+ * 100% no Arco Norte). O componente S escala a produção de cada UF por esta
+ * fração antes de somar — assim cada corredor leva só a parte que escoa por ele.
+ *
+ * FONTE: Comex Stat/MDIC, exportação 2023-2024, NCM soja (12019000) + milho
+ * (10059010), state × URF (porto de despacho). Gerado por
+ * scripts/comex/gera-participacao.py (dados brutos em data/comex/). Declarado
+ * e versionado (pré-registro). UF ausente → 1,0 (sem escala).
+ *   MT: 43% Santos / 52% Arco Norte (≈ split IMEA soja~41% / milho~61% AN).
+ */
+export const PARTICIPACAO_PORTO: Record<Corredor, Partial<Record<string, number>>> = {
+  santos: { SP: 0.81, MG: 0.76, GO: 0.73, MS: 0.14, MT: 0.43 },
+  paranagua: { PR: 0.68, SC: 0.17 },
+  "arco-norte": { MT: 0.52, PA: 1.0, TO: 0.97, MA: 1.0, PI: 0.96, RO: 1.0 },
+};
+
 /** Culturas que entram no componente S (grãos que disputam o line-up). */
 export type CulturaS = "SOJA" | "MILHO1" | "MILHO2";
 
