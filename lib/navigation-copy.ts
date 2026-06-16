@@ -18,7 +18,9 @@ export const navigationCopy = {
       { label: "Início",   href: "/" },
       { label: "Portos",   href: "/portos" },
       { label: "Hidrovia", href: "/hidrovia" },
-      { label: "Agro",     href: "/agro" },
+      // Agro escondido do menu por ora (a pedido) — a rota /agro segue ATIVA,
+      // acessível por URL direta. Reativar quando o IEE sair de calibração.
+      // { label: "Agro",     href: "/agro" },
       { label: "Análises", href: "/analises" },
       { label: "Sobrecusto Rodoviário", href: "/sobrecusto-rodoviario" },
       { label: "Receber dados", href: "/#receber" },
