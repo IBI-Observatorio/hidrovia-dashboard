@@ -1,10 +1,10 @@
 // Cache em disco (1 chamada por dia) para os 4 fetchs ANA do /monitor.
 //
 // Motivação (mai/2026): a página estava renderizando lenta porque cada hit
-// disparava 4 chamadas em paralelo à API ANA (HidroWebService). O Next.js já
-// cacheia o fetch interno (TELEM_TTL_S = 6h), mas no boot do dev / após
-// revalidação a chamada acontece síncrona ao primeiro request, e o ANA
-// responde devagar.
+// disparava 4 chamadas em paralelo à API ANA (HidroWebService). O fetch da
+// telemetria roda com `cache: "no-store"` (a série DIAS_14 passa de 2MB, que o
+// data cache do Next não aceita), então a persistência fica toda por conta
+// deste snapshot diário.
 //
 // Solução: gravamos um snapshot diário em `data/ana-diario-cache.json`. A
 // chave de dia é o calendário em America/Manaus (fuso da bacia), então o
