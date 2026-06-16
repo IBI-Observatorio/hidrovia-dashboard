@@ -37,16 +37,19 @@ export const COMPONENTES_POR_CORREDOR: Record<Corredor, ComponenteIEE[]> = {
  * No arco-norte a hidrologia entra com 0,20 porque a janela de calado
  * condiciona toda a logística de barcaças da calha.
  *
- * SANTOS (v3, jun/2026): T dominante (0,60). O backtest de pesos
- * (scripts/backtest/iee-v3-pesos.ts) mostrou que, contra a espera EA em t+2,
- * mais peso no T melhora monotonicamente a previsão (Spearman do composto sobe
- * de 0,23 nos pesos antigos para ~0,5 com T dominante) e o S entra com sinal
- * fraco/negativo — então S é residual (0,15). F mantém 0,25 (é a própria fila;
- * deve prever bem quando acumular histórico). Paranaguá/Arco Norte seguem v0
- * (sem validação própria ainda). Ver pré-registro v3.
+ * SANTOS (v6, jun/2026): F protagonista (0,50). Com o F finalmente dotado de
+ * série longa — PRESSÃO DE CHEGADAS da ANTAQ (espera-semanal.json, nº de
+ * graneleiros que chegam, soma móvel de JANELA_CHEGADAS_F semanas; NÃO usa a
+ * espera, logo sem leakage), 2016→2026 — o sweep F×T×S contra a espera EA t+2
+ * (scripts/backtest/iee-v4-pesos-f.ts) mostra: F sozinho é o MELHOR preditor
+ * isolado da fila (Spearman 0,62 na janela recente / 0,37 na série cheia, vs T
+ * 0,50), e o composto sobe de 0,43 (v3, sem F) para 0,58. T (0,40) ancora o
+ * NÍVEL (melhor MAE isolado); S (0,10) segue residual (sinal ~nulo na previsão
+ * da fila), mantido simbólico por amplitude narrativa. Paranaguá/Arco Norte
+ * seguem v0 (sem validação própria; F deles continua no line-up). Ver v6.
  */
 export const PESOS_IEE: Record<Corredor, Partial<Record<ComponenteIEE, number>>> = {
-  santos: { F: 0.25, T: 0.6, S: 0.15 },
+  santos: { F: 0.5, T: 0.4, S: 0.1 },
   // v0: pesos de paranagua mantidos (sem validação própria — só Santos tem
   // dado de espera EA suficiente); diferenciar quando o backtest indicar.
   paranagua: { F: 0.4, T: 0.35, S: 0.25 },
@@ -200,6 +203,24 @@ export const FATOR_UTILIZACAO_EMBARQUE: Record<Corredor, number> = {
   paranagua: 0.92,
   "arco-norte": 0.87,
 };
+
+/**
+ * Pilar F de SANTOS (v6) — janela da soma móvel da PRESSÃO DE CHEGADAS.
+ *
+ * O F de Santos deixa de ser o line-up ao vivo (sem histórico → percentil em
+ * calibração, peso baixo) e passa a ser a pressão de chegadas da ANTAQ: o nº de
+ * graneleiros de grão que CHEGAM por semana (data/antaq/espera-semanal.json, o
+ * campo `n`), agregado numa SOMA MÓVEL desta janela. Chegada é FLUXO de demanda
+ * sobre os berços — sinal antecedente da fila — e NÃO usa a TEsperaAtracacao
+ * (o alvo), então a previsão F(t)→espera(t+2) é honesta (sem leakage).
+ *
+ * Janela = 4 semanas: melhor lead vs espera t+2 no backtest
+ * (scripts/backtest/iee-f-chegadas.ts — soma-4sem dá Spearman 0,37 na série
+ * cheia de 525 sem; a chegada de 1 semana isolada é ruidosa, o backlog se forma
+ * ao longo de ~1 mês). É NOWCAST: a EA defasa ~3-4 meses (como o S).
+ * Paranaguá/Arco Norte mantêm o F do line-up (não usam esta janela).
+ */
+export const JANELA_CHEGADAS_F = 4;
 
 // ===========================================================================
 // PASSO 4 — Componente T (custo rodoviário MODELADO) · parâmetros de custeio

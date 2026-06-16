@@ -23,7 +23,7 @@ import { fileURLToPath } from "node:url";
 import capacidadeAntaq from "../../data/antaq/capacidade-semanal.json";
 import {
   CAPACIDADE_SEMANAL_MIL_T, COMPONENTES_POR_CORREDOR, CUSTO_DEMURRAGE_DIA_USD,
-  FAIXAS_IEE, FATOR_UTILIZACAO_EMBARQUE, HINTERLANDIA, PARTICIPACAO_PORTO,
+  FAIXAS_IEE, FATOR_UTILIZACAO_EMBARQUE, JANELA_CHEGADAS_F, HINTERLANDIA, PARTICIPACAO_PORTO,
   JANELA_SAZONAL_SEMANAS, MIN_OBS_PERCENTIL, MIN_SAFRAS_PERCENTIL,
   PARAMETROS_CUSTEIO_V0, PERFIL_VEICULO_PADRAO, PERFIS_VEICULO,
   PESOS_H_INTERNO, PESOS_IEE, PORTOS_ARCO_NORTE, ROTAS_T,
@@ -31,7 +31,7 @@ import {
 } from "../../lib/iee-params";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v5.json");
+const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v6.json");
 
 function snapshotParametros() {
   // capacidades REAIS (ANTAQ EA) entram no snapshot congelado: são parte da
@@ -55,6 +55,7 @@ function snapshotParametros() {
     parametrosCusteioV0: PARAMETROS_CUSTEIO_V0,
     custoDemurrageDiaUSD: CUSTO_DEMURRAGE_DIA_USD,
     fatorUtilizacaoEmbarque: FATOR_UTILIZACAO_EMBARQUE,
+    janelaChegadasF: JANELA_CHEGADAS_F,
     urgenciaCaladoDiasMax: URGENCIA_CALADO_DIAS_MAX,
     thresholdColisaoPct: THRESHOLD_COLISAO_PCT,
     faixasIEE: FAIXAS_IEE,
@@ -104,7 +105,7 @@ function main() {
 
   const registro = {
     indice: "IEE — Índice de Estresse de Escoamento",
-    versao: "v5",
+    versao: "v6",
     changelogV0paraV1: [
       "Capacidades semanais: parâmetros declarados (1300/450/1000) SUBSTITUÍDOS pela agregação real da Estatística Aquaviária ANTAQ (1567/597/883 mil t/sem, média 12m até 2026-02) — leitura 'cache ok → cache; senão declarado'.",
       "Métrica-alvo torna-se COMPUTÁVEL: TEsperaAtracacao (EA) por semana, 2016→2026; baseline Spearman/MAE registrado no backtest final.",
@@ -135,6 +136,12 @@ function main() {
       "O 0,70 subestimava o embarcado → inflava o excedente. Com a calibração, o S de Santos cai de ~44 para ~40 'semanas de excedente'. Fecha a última lacuna de parâmetro chutado do S.",
       "SIMPLIFICAÇÃO declarada que permanece: fator plano por corredor (a utilização real varia ~0,7→0,99 ao longo da safra; perfil sazonal e o embarcado real onde a EA já cobre ficam para refinamento). E a defasagem ~3-4m da EA mantém o caráter de nowcast.",
     ],
+    changelogV5paraV6: [
+      "Pilar F de SANTOS reconstruído: deixa o line-up ao vivo (APS/DIOPE — sem histórico longo, percentil em calibração, peso subaproveitado) e passa a ser a PRESSÃO DE CHEGADAS da ANTAQ — nº de graneleiros de grão que chegam por semana (data/antaq/espera-semanal.json, campo `n`), em soma móvel de JANELA_CHEGADAS_F=4 semanas. Série 2016→2026. O line-up segue exibido como cor ('navios hoje'), sem alimentar o percentil. Paranaguá/Arco Norte mantêm o F do line-up.",
+      "Por que é honesto (sem leakage): a chegada é FLUXO de demanda e NÃO usa a TEsperaAtracacao (o alvo). A previsão F(t)→espera(t+2) é, portanto, fora-de-amostra na variável-alvo. Evidência: scripts/backtest/iee-f-chegadas.ts — soma-4sem dá Spearman 0,37 vs espera t+2 na série cheia (525 sem); o estoque-de-fila reconstruído (que usaria a espera) seria parcialmente autoregressivo e foi descartado.",
+      "Pesos do IEE-SANTOS recalibrados COM o F validado (sweep F×T×S, scripts/backtest/iee-v4-pesos-f.ts): F/T/S de 0,25/0,60/0,15 (efetivo v3 sem F) → 0,50/0,40/0,10. F sozinho é o melhor preditor isolado da fila (Spearman 0,62 recente / 0,37 cheio, vs T 0,50); composto sobe de 0,43 (v3) para 0,58 (MAE 24,2→21,9). T (0,40) ancora o NÍVEL (melhor MAE isolado); S (0,10) residual (sinal ~nulo), mantido simbólico por amplitude narrativa.",
+      "CAVEAT registrado: sweep de pesos IN-SAMPLE, n≈46 na janela onde os 3 pilares coexistem (limitada pela série curta do diesel ANP), SE±0,15. O número conservador do F é o da série cheia (0,37), não o recente (0,62). NOWCAST: a EA defasa ~3-4 meses, então a leitura corrente do F é a última semana com dado da EA (como o S). Refinamento futuro: reconstruir a pressão de chegadas em TONELAGEM e estendê-la com dado mais fresco.",
+    ],
     congeladoEm: new Date().toISOString().slice(0, 10),
     hashParametros: hash,
     algoritmoHash: "sha256 do JSON canônico (chaves ordenadas) do bloco `parametros`",
@@ -155,9 +162,8 @@ function main() {
       { id: "jan-2025-salto-frete", janela: "2025-01", pilar: "T(mercado)", criterio: "fora do alvo: T é CUSTO modelado, não frete negociado", status: "fora de escopo declarado" },
     ],
     lacunasConhecidas: [
-      "F de Santos: REAL (esperados-carga APS/DIOPE) — fundeados/atracados sem mercadoria pública ficam fora da fila v1 (documentado).",
-      "F do Arco Norte: PARCIAL — EMAP + CDP; Miritituba/Santarém sem line-up público.",
-      "F sem retroativo em todos os corredores: histórico nasce em 10/06/2026.",
+      "F de Santos (v6): PRESSÃO DE CHEGADAS da ANTAQ (soma móvel 4 sem de graneleiros chegando), série 2016→2026, percentil sazonal walk-forward. É FLUXO antecedente da fila (sem leakage com o alvo), não o estoque de navios parados. NOWCAST: a EA defasa ~3-4 m, então a leitura corrente é a última semana com dado. O line-up APS/DIOPE entra só como cor ('navios hoje'). Refinamento: versão em TONELAGEM + dado mais fresco.",
+      "F de Paranaguá/Arco Norte: ainda no line-up ao vivo (APPA; EMAP+CDP, Miritituba/Santarém sem line-up público → parcial) — sem histórico longo. Migrar para a pressão de chegadas ANTAQ (a EA já cobre os 3 corredores) é o próximo passo para unificar o F.",
       "Nowcast de embarque do S: fator de utilização CALIBRADO contra a EA (Santos 0,89 · Pgua 0,92 · AN 0,87, v5). Resta o caráter de nowcast (a EA defasa ~3-4 meses, então a safra corrente é estimada) e a simplificação de fator plano (utilização real varia ao longo da safra).",
       "Denominador do S/F é VAZÃO MÉDIA de embarque (ANTAQ EA, média 12m até 2026-02), não capacidade nominal/de pico — throughput é limitado pela demanda (denominador parcialmente endógeno); rotulado como 'vazão' na interface.",
       "S: dupla contagem de MT RESOLVIDA no v4 (matriz PARTICIPACAO_PORTO do Comex Stat). Resta a granularidade municipal (a alocação é por UF×porto, não por microrregião) — refinamento futuro.",

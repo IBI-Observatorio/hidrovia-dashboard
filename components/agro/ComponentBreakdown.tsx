@@ -165,7 +165,9 @@ function DecomposicaoT({ serie }: { serie: SerieComponenteAgro }) {
 
 function MetricCard({ serie }: { serie: SerieComponenteAgro }) {
   const copy = agroCopy.breakdown;
-  const comp = copy.componentes[serie.componente];
+  const compBase = copy.componentes[serie.componente];
+  // override por-corredor (ex.: F de Santos = pressão de chegadas, não fila)
+  const comp = { ...compBase, ...serie.rotulo };
   const Icone = ICONE[serie.componente];
   const [showInfo, setShowInfo] = useState(false);
 
