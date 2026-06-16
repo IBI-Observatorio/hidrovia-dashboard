@@ -23,7 +23,7 @@ import { fileURLToPath } from "node:url";
 import capacidadeAntaq from "../../data/antaq/capacidade-semanal.json";
 import {
   CAPACIDADE_SEMANAL_MIL_T, COMPONENTES_POR_CORREDOR, CUSTO_DEMURRAGE_DIA_USD,
-  FAIXAS_IEE, FATOR_UTILIZACAO_EMBARQUE_V0, HINTERLANDIA, PARTICIPACAO_PORTO,
+  FAIXAS_IEE, FATOR_UTILIZACAO_EMBARQUE, HINTERLANDIA, PARTICIPACAO_PORTO,
   JANELA_SAZONAL_SEMANAS, MIN_OBS_PERCENTIL, MIN_SAFRAS_PERCENTIL,
   PARAMETROS_CUSTEIO_V0, PERFIL_VEICULO_PADRAO, PERFIS_VEICULO,
   PESOS_H_INTERNO, PESOS_IEE, PORTOS_ARCO_NORTE, ROTAS_T,
@@ -31,7 +31,7 @@ import {
 } from "../../lib/iee-params";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v4.json");
+const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v5.json");
 
 function snapshotParametros() {
   // capacidades REAIS (ANTAQ EA) entram no snapshot congelado: são parte da
@@ -54,7 +54,7 @@ function snapshotParametros() {
     perfisVeiculo: PERFIS_VEICULO,
     parametrosCusteioV0: PARAMETROS_CUSTEIO_V0,
     custoDemurrageDiaUSD: CUSTO_DEMURRAGE_DIA_USD,
-    fatorUtilizacaoEmbarqueV0: FATOR_UTILIZACAO_EMBARQUE_V0,
+    fatorUtilizacaoEmbarque: FATOR_UTILIZACAO_EMBARQUE,
     urgenciaCaladoDiasMax: URGENCIA_CALADO_DIAS_MAX,
     thresholdColisaoPct: THRESHOLD_COLISAO_PCT,
     faixasIEE: FAIXAS_IEE,
@@ -104,7 +104,7 @@ function main() {
 
   const registro = {
     indice: "IEE — Índice de Estresse de Escoamento",
-    versao: "v4",
+    versao: "v5",
     changelogV0paraV1: [
       "Capacidades semanais: parâmetros declarados (1300/450/1000) SUBSTITUÍDOS pela agregação real da Estatística Aquaviária ANTAQ (1567/597/883 mil t/sem, média 12m até 2026-02) — leitura 'cache ok → cache; senão declarado'.",
       "Métrica-alvo torna-se COMPUTÁVEL: TEsperaAtracacao (EA) por semana, 2016→2026; baseline Spearman/MAE registrado no backtest final.",
@@ -128,7 +128,12 @@ function main() {
       "Pilar S — RESOLVIDA a dupla contagem de MT (estrutural). Nova matriz PARTICIPACAO_PORTO (origem→porto) escala a produção de cada UF pela fração que de fato sai por cada corredor. Fonte PRIMÁRIA: Comex Stat/MDIC, exportação 2023-2024, NCM soja+milho, state × URF (gerador scripts/comex/gera-participacao.py; dados brutos em data/comex/).",
       "MT deixa de ser contado 100% em Santos E 100% no Arco Norte: agora 43% Santos / 52% Arco Norte (≈ split IMEA soja~41%/milho~61% AN). Demais frações declaradas na matriz (SP 0,81; GO 0,73; MG 0,76; MS 0,14 Santos; PR 0,68; SC 0,17 Pgua; PA/MA/RO ~1,0; TO 0,97; PI 0,96 AN).",
       "Efeito: o 'semanas de excedente' do S deixa de ser inflado pela hinterlândia inteira ÷ um porto. Resolve a lacuna 'MT inteiro nas duas hinterlândias' declarada no v1.",
-      "Continua aberto (lacuna): o NOWCAST de embarcado (proxy ×0,7) do S — independente desta correção.",
+      "Continua aberto (lacuna, tratado no v5): o NOWCAST de embarcado (fator ×0,7) do S.",
+    ],
+    changelogV4paraV5: [
+      "Pilar S — fator de utilização do NOWCAST de embarque CALIBRADO contra o realizado da ANTAQ. Sai o 0,70 chutado, entra a utilização média dos portos na janela de escoamento (fev–jul): Santos 0,89 · Paranaguá 0,92 · Arco Norte 0,87 (FATOR_UTILIZACAO_EMBARQUE, por corredor). Fonte: Estatística Aquaviária (data/antaq/capacidade-semanal.json → serieMensalMilT); gerador scripts/agro/calibra-utilizacao-embarque.py.",
+      "O 0,70 subestimava o embarcado → inflava o excedente. Com a calibração, o S de Santos cai de ~44 para ~40 'semanas de excedente'. Fecha a última lacuna de parâmetro chutado do S.",
+      "SIMPLIFICAÇÃO declarada que permanece: fator plano por corredor (a utilização real varia ~0,7→0,99 ao longo da safra; perfil sazonal e o embarcado real onde a EA já cobre ficam para refinamento). E a defasagem ~3-4m da EA mantém o caráter de nowcast.",
     ],
     congeladoEm: new Date().toISOString().slice(0, 10),
     hashParametros: hash,
@@ -153,7 +158,7 @@ function main() {
       "F de Santos: REAL (esperados-carga APS/DIOPE) — fundeados/atracados sem mercadoria pública ficam fora da fila v1 (documentado).",
       "F do Arco Norte: PARCIAL — EMAP + CDP; Miritituba/Santarém sem line-up público.",
       "F sem retroativo em todos os corredores: histórico nasce em 10/06/2026.",
-      "Nowcast de embarque do S: capacidade × utilização (0,7) — a EA traz o embarcado real mas com defasagem ~3-4 meses, então a safra corrente é estimada. v1 do S deve calibrar o 0,7 contra o realizado da EA.",
+      "Nowcast de embarque do S: fator de utilização CALIBRADO contra a EA (Santos 0,89 · Pgua 0,92 · AN 0,87, v5). Resta o caráter de nowcast (a EA defasa ~3-4 meses, então a safra corrente é estimada) e a simplificação de fator plano (utilização real varia ao longo da safra).",
       "Denominador do S/F é VAZÃO MÉDIA de embarque (ANTAQ EA, média 12m até 2026-02), não capacidade nominal/de pico — throughput é limitado pela demanda (denominador parcialmente endógeno); rotulado como 'vazão' na interface.",
       "S: dupla contagem de MT RESOLVIDA no v4 (matriz PARTICIPACAO_PORTO do Comex Stat). Resta a granularidade municipal (a alocação é por UF×porto, não por microrregião) — refinamento futuro.",
       "Coeficientes internos de custeio do T (custo fixo, manutenção/km, pneu): premissas IBI, sem fonte pública livre; validados no AGREGADO pela triangulação ANTT/SIFRECA (dossiê).",

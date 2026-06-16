@@ -1,0 +1,11 @@
+{
+ "fonte": "ANTAQ — Estatística Aquaviária (espelho parquet IBI), via data/antaq/capacidade-semanal.json",
+ "metodo": "FATOR = média (meses fev..jul, 2017→) de embarcado_mensal / média móvel 12m, por corredor. Utilização realizada dos portos na janela de escoamento.",
+ "geradoEm": "2026-06-16",
+ "status": "ok",
+ "fatorUtilizacaoEmbarque": {
+  "arco-norte": 0.87,
+  "paranagua": 0.92,
+  "santos": 0.89
+ }
+}
