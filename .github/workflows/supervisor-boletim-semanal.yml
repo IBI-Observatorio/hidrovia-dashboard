@@ -123,4 +123,5 @@ jobs:
 
       - name: Resumo
         if: steps.payload.outputs.suficiente == 'sim'
-        run: echo "Veredito do supervisor: ${VERDICT:-erro}"
+        run: |
+          echo "Veredito do supervisor: ${VERDICT:-erro}"

@@ -82,7 +82,7 @@ function avalia(nome: string, serie: { d: string; v: number }[], alvo: Map<strin
 }
 
 function main() {
-  const espera = (esperaEA.corredores as Record<string, SemanaEA[]>)[CORREDOR] ?? [];
+  const espera = (esperaEA.corredores as unknown as Record<string, SemanaEA[]>)[CORREDOR] ?? [];
   if (!espera.length) { console.error("[v3] alvo (espera EA) ausente — abortando."); process.exitCode = 1; return; }
   const alvo = new Map(pctlWF(espera.map(([d, h]) => ({ d, v: h }))).map((p) => [p.d, p.pctl]));
 
