@@ -57,6 +57,7 @@ import {
   CUSTO_DEMURRAGE_DIA_USD,
   HINTERLANDIA,
   PARTICIPACAO_PORTO,
+  FATOR_UTILIZACAO_EMBARQUE,
   PARAMETROS_CUSTEIO_V0,
   PERFIS_VEICULO,
   PERFIL_VEICULO_PADRAO,
@@ -331,7 +332,7 @@ function serieSReal(corredor: Corredor = "santos"): PontoS[] {
     const r = calculaComponenteS(
       {
         progresso: w.progresso, producaoUF,
-        embarcadoAcumMilT: estimaEmbarcadoProxyV0(semanasEscoando, capacidadeSemanal(corredor)),
+        embarcadoAcumMilT: estimaEmbarcadoProxyV0(semanasEscoando, capacidadeSemanal(corredor), FATOR_UTILIZACAO_EMBARQUE[corredor]),
         denominadorMilTSemana: capacidadeSemanal(corredor),
       },
       [], w.semanaISO, corredor,

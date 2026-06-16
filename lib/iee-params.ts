@@ -179,18 +179,27 @@ export const CAPACIDADE_SEMANAL_MIL_T: Record<Corredor, number> = {
 export const CAPACIDADE_SEMANAL_SANTOS_MIL_T = CAPACIDADE_SEMANAL_MIL_T.santos;
 
 /**
- * Fator de utilização do NOWCAST de embarque acumulado (adimensional).
- * embarcadoProxy = capacidade × semanas desde o início do escoamento × FATOR.
+ * Fator de utilização do NOWCAST de embarque acumulado, por corredor.
+ * embarcadoProxy = vazão semanal × semanas desde o início do escoamento × FATOR.
  *
  * Por que NOWCAST e não o embarcado real: a Estatística Aquaviária da ANTAQ
  * (data/antaq/capacidade-semanal.json → serieMensalMilT) traz o embarcado de
  * fato, mas com defasagem de ~3–4 meses (dadosAte fev/2026 enquanto a leitura
- * é de jun/2026). Por isso o S precisa estimar o embarcado da safra corrente.
- * O 0,7 é julgamento declarado (lacuna conhecida do pré-registro). A v1 do S
- * deve calibrar este fator contra o realizado histórico da própria EA, e/ou
- * usar o embarcado real onde a EA já cobre as semanas.
+ * é de jun/2026). Por isso o S estima o embarcado da safra corrente.
+ *
+ * v5 (jun/2026): o fator deixa de ser 0,70 chutado e passa a ser a UTILIZAÇÃO
+ * REALIZADA dos portos na janela de escoamento (fev–jul), medida na própria EA:
+ * média de (embarcado_mensal ÷ média móvel 12m). Gerado por
+ * scripts/agro/calibra-utilizacao-embarque.py (saída em utilizacao-embarque.json).
+ * O 0,70 subestimava o embarcado → inflava o excedente. SIMPLIFICAÇÃO declarada:
+ * fator é plano por corredor (a utilização real varia ~0,7→0,99 ao longo da
+ * safra; o perfil sazonal fica para um refinamento futuro).
  */
-export const FATOR_UTILIZACAO_EMBARQUE_V0 = 0.7;
+export const FATOR_UTILIZACAO_EMBARQUE: Record<Corredor, number> = {
+  santos: 0.89,
+  paranagua: 0.92,
+  "arco-norte": 0.87,
+};
 
 // ===========================================================================
 // PASSO 4 — Componente T (custo rodoviário MODELADO) · parâmetros de custeio

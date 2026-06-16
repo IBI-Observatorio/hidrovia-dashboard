@@ -1,7 +1,7 @@
 # Backtest do IEE — vereditos consolidados
 
-> Gerado por `scripts/backtest/iee-final.ts` em 2026-06-15. NÃO editar à mão.
-> Pré-registro v4: sha256 `bdece231958609a5…` congelado em 2026-06-15.
+> Gerado por `scripts/backtest/iee-final.ts` em 2026-06-16. NÃO editar à mão.
+> Pré-registro v5: sha256 `fa290d619ff4855d…` congelado em 2026-06-16.
 
 ## Episódios-âncora
 
@@ -16,7 +16,7 @@
 
 ## Métrica-alvo
 
-IEE-Santos(t) vs percentil da espera EA em t+2 (46 semanas, abr/2025→fev/2026): Spearman 0.41 · MAE 24.8 p.p. — baseline v1 registrado; F entra na composição quando o histórico de fila acumular.
+IEE-Santos(t) vs percentil da espera EA em t+2 (46 semanas, abr/2025→fev/2026): Spearman 0.43 · MAE 24.2 p.p. — baseline v1 registrado; F entra na composição quando o histórico de fila acumular.
 
 ## Regras (do pré-registro)
 

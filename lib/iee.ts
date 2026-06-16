@@ -273,7 +273,7 @@ export function faixaIEE(valor: number): FaixaIEE {
 
 import {
   CAPACIDADE_SEMANAL_MIL_T,
-  FATOR_UTILIZACAO_EMBARQUE_V0,
+  FATOR_UTILIZACAO_EMBARQUE,
   HINTERLANDIA,
   type CulturaS,
 } from "./iee-params";
@@ -336,17 +336,19 @@ export interface ResultadoComponenteS {
 }
 
 /**
- * Proxy v0 do embarcado acumulado (mil t) ENQUANTO não há o acumulado real
- * da ANTAQ (PASSO 2): capacidade semanal × semanas decorridas de escoamento
- * × fator de utilização declarado (FATOR_UTILIZACAO_EMBARQUE_V0).
- * SIMPLIFICAÇÃO DOCUMENTADA: assume embarque a ritmo constante desde o
- * início do escoamento da safra; o dado ANTAQ substitui isto na v1.
+ * Nowcast do embarcado acumulado (mil t) ENQUANTO o acumulado real da ANTAQ
+ * tem defasagem: vazão semanal × semanas decorridas de escoamento × fator de
+ * utilização. O `fator` (v5) é a utilização REALIZADA do corredor na janela de
+ * escoamento (FATOR_UTILIZACAO_EMBARQUE[corredor]; default santos).
+ * SIMPLIFICAÇÃO DOCUMENTADA: assume embarque a ritmo ~constante desde o início
+ * do escoamento (utilização plana; perfil sazonal fica para refinamento).
  */
 export function estimaEmbarcadoProxyV0(
   semanasDesdeInicioEscoamento: number,
   capacidadeSemanalMilT: number = CAPACIDADE_SEMANAL_MIL_T.santos,
+  fator: number = FATOR_UTILIZACAO_EMBARQUE.santos,
 ): number {
-  return Math.max(0, semanasDesdeInicioEscoamento) * capacidadeSemanalMilT * FATOR_UTILIZACAO_EMBARQUE_V0;
+  return Math.max(0, semanasDesdeInicioEscoamento) * capacidadeSemanalMilT * fator;
 }
 
 /**
