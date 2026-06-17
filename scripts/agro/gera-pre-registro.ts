@@ -31,7 +31,7 @@ import {
 } from "../../lib/iee-params";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v6.json");
+const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v7.json");
 
 function snapshotParametros() {
   // capacidades REAIS (ANTAQ EA) entram no snapshot congelado: são parte da
@@ -105,7 +105,7 @@ function main() {
 
   const registro = {
     indice: "IEE — Índice de Estresse de Escoamento",
-    versao: "v6",
+    versao: "v7",
     changelogV0paraV1: [
       "Capacidades semanais: parâmetros declarados (1300/450/1000) SUBSTITUÍDOS pela agregação real da Estatística Aquaviária ANTAQ (1567/597/883 mil t/sem, média 12m até 2026-02) — leitura 'cache ok → cache; senão declarado'.",
       "Métrica-alvo torna-se COMPUTÁVEL: TEsperaAtracacao (EA) por semana, 2016→2026; baseline Spearman/MAE registrado no backtest final.",
@@ -144,6 +144,12 @@ function main() {
       "F de PARANAGUÁ também migrado para a pressão de chegadas ANTAQ (mesmo método de Santos): sinal fraco mas positivo na previsão da fila (Spearman 0,17 em t+2; 0,22 em t+0/t+1, evidência scripts/backtest/iee-f-chegadas.ts) e com 10 anos de história, melhor que o line-up APPA sem histórico. Pesos de Paranaguá NÃO recalibrados (seguem v0, não-validados) — calibração própria é tarefa à parte. Mudança de FONTE do pilar, não de parâmetro hasheado → hash do pré-registro inalterado.",
       "F de ARCO NORTE NÃO migrado, por decisão guiada pelo dado: a pressão de chegadas NÃO prevê a fila do Arco Norte (Spearman 0,06 em t+2 ≈ ruído), pois o gargalo do corredor é HIDROLÓGICO (calado do Tabocal, pilar H), não congestão de berço por chegadas. Mantém o F do line-up (EMAP+CDP; Miritituba/Santarém sem line-up público → parcial).",
     ],
+    changelogV6paraV7: [
+      "Pesos do IEE-PARANAGUÁ CALIBRADOS contra a espera EA de Paranaguá em t+2 (sweep F×T×S, scripts/backtest/iee-pesos-paranagua.ts) — antes eram v0 chutados e nunca validados. F/T/S 0,40/0,35/0,25 → 0,50/0,40/0,10 (alinhado ao Santos). Mesmo padrão: F é o melhor preditor isolado (Spearman 0,28), T ancora o nível, S tem sinal NEGATIVO na fila (−0,23) → residual, mantido simbólico por amplitude narrativa.",
+      "CAVEAT CENTRAL declarado: a validade preditiva do IEE-Paranaguá é FRACA — composto Spearman ~0,23 (MAE 19,0), vs 0,58 do Santos. Todos os combos de peso ficam dentro de 1 SE entre si (n≈45). A fila de Paranaguá é sabidamente dirigida também por chuva/parada operacional e alocação de berço (fatores fora do F/T/S agrícola). Os pesos refletem a evidência (S desce, F lidera), mas a leitura de Paranaguá deve ser comunicada como RADAR de baixa validade preditiva, não previsão forte.",
+      "Estrutura de Paranaguá já estava sólida e fica MANTIDA: rotas T (Cascavel/Maringá/Ponta Grossa/Londrina × bitrem), hinterlândia PR/SC × participação Comex (PR 0,68 / SC 0,17), capacidade ANTAQ, fator de embarque 0,92. A correção do corredor é de PESOS + declaração de validade, não estrutural.",
+      "Métrica-alvo de Paranaguá agora PUBLICADA no backtest final (antes só Santos). Arco Norte segue sem métrica-alvo própria publicada (F no line-up, sem composição validada).",
+    ],
     congeladoEm: new Date().toISOString().slice(0, 10),
     hashParametros: hash,
     algoritmoHash: "sha256 do JSON canônico (chaves ordenadas) do bloco `parametros`",
@@ -164,7 +170,7 @@ function main() {
       { id: "jan-2025-salto-frete", janela: "2025-01", pilar: "T(mercado)", criterio: "fora do alvo: T é CUSTO modelado, não frete negociado", status: "fora de escopo declarado" },
     ],
     lacunasConhecidas: [
-      "F de Santos e Paranaguá (v6): PRESSÃO DE CHEGADAS da ANTAQ (soma móvel 4 sem de graneleiros chegando), série 2016→2026, percentil sazonal walk-forward. É FLUXO antecedente da fila (sem leakage com o alvo), não o estoque de navios parados. Sinal em t+2: Santos 0,37 (forte) · Paranaguá 0,17 (fraco mas positivo). NOWCAST: a EA defasa ~3-4 m, então a leitura corrente é a última semana com dado. O line-up (APS/DIOPE; APPA) entra só como cor ('navios hoje'). Pesos de Paranaguá seguem v0 não-validados. Refinamento: versão em TONELAGEM + dado mais fresco.",
+      "F de Santos e Paranaguá (v6): PRESSÃO DE CHEGADAS da ANTAQ (soma móvel 4 sem de graneleiros chegando), série 2016→2026, percentil sazonal walk-forward. É FLUXO antecedente da fila (sem leakage com o alvo), não o estoque de navios parados. Sinal em t+2: Santos 0,37 (forte) · Paranaguá 0,17 (fraco mas positivo). NOWCAST: a EA defasa ~3-4 m, então a leitura corrente é a última semana com dado. O line-up (APS/DIOPE; APPA) entra só como cor ('navios hoje'). Pesos de Paranaguá CALIBRADOS no v7 (F0,50/T0,40/S0,10), com validade preditiva FRACA declarada (~0,23). Refinamento: versão em TONELAGEM + dado mais fresco.",
       "F de Arco Norte: MANTIDO no line-up ao vivo (EMAP+CDP; Miritituba/Santarém sem line-up público → parcial). Não migrado para chegadas ANTAQ porque a pressão de chegadas não prevê a fila do corredor (Spearman 0,06) — seu gargalo é hidrológico (pilar H/Tabocal), não congestão de berço.",
       "Nowcast de embarque do S: fator de utilização CALIBRADO contra a EA (Santos 0,89 · Pgua 0,92 · AN 0,87, v5). Resta o caráter de nowcast (a EA defasa ~3-4 meses, então a safra corrente é estimada) e a simplificação de fator plano (utilização real varia ao longo da safra).",
       "Denominador do S/F é VAZÃO MÉDIA de embarque (ANTAQ EA, média 12m até 2026-02), não capacidade nominal/de pico — throughput é limitado pela demanda (denominador parcialmente endógeno); rotulado como 'vazão' na interface.",
