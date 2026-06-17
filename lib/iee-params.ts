@@ -50,9 +50,17 @@ export const COMPONENTES_POR_CORREDOR: Record<Corredor, ComponenteIEE[]> = {
  */
 export const PESOS_IEE: Record<Corredor, Partial<Record<ComponenteIEE, number>>> = {
   santos: { F: 0.5, T: 0.4, S: 0.1 },
-  // v0: pesos de paranagua mantidos (sem validação própria — só Santos tem
-  // dado de espera EA suficiente); diferenciar quando o backtest indicar.
-  paranagua: { F: 0.4, T: 0.35, S: 0.25 },
+  // PARANAGUÁ (v7, jun/2026): CALIBRADO contra a espera EA de Paranaguá em t+2
+  // (sweep F×T×S, scripts/backtest/iee-pesos-paranagua.ts). Mesmo padrão do
+  // Santos: F lidera (melhor preditor isolado, Spearman 0,28), T ancora o nível,
+  // S residual (sinal NEGATIVO na fila, −0,23 — a pressão de safra é forward, não
+  // prevê a fila de curto prazo; mantido simbólico por amplitude narrativa).
+  // F/T/S 0,40/0,35/0,25 → 0,50/0,40/0,10 (alinha ao Santos). CAVEAT IMPORTANTE:
+  // a validade preditiva do IEE-Paranaguá é FRACA — composto Spearman ~0,23
+  // (vs 0,58 do Santos), tudo dentro de 1 SE (n≈45). A fila de Paranaguá é
+  // sabidamente dirigida também por chuva/parada operacional e alocação de berço,
+  // que o F/T/S não capturam. Declarado no pré-registro v7.
+  paranagua: { F: 0.5, T: 0.4, S: 0.1 },
   "arco-norte": { F: 0.35, T: 0.25, S: 0.2, H: 0.2 },
 };
 

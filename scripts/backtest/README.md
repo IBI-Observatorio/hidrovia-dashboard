@@ -1,7 +1,7 @@
 # Backtest do IEE — vereditos consolidados
 
 > Gerado por `scripts/backtest/iee-final.ts` em 2026-06-17. NÃO editar à mão.
-> Pré-registro v6: sha256 `1fa32db7c7aa1b70…` congelado em 2026-06-17.
+> Pré-registro v7: sha256 `ff1c1467a2000a30…` congelado em 2026-06-17.
 
 ## Episódios-âncora
 
@@ -16,7 +16,7 @@
 
 ## Métrica-alvo
 
-IEE-Santos(t) = F·0,50 + T·0,40 + S·0,10 (v6) vs percentil da espera EA em t+2 (46 semanas, abr/2025→fev/2026): Spearman 0.58 · MAE 21.9 p.p. F (pressão de chegadas ANTAQ) ENTRA na composição — saltou de 0,43 (v3, sem F) para o valor atual. CAVEAT: in-sample, n≈46, SE±0,15.
+IEE-Santos(t) = F·0,50 + T·0,40 + S·0,10 (v6) vs espera EA t+2 (46 sem): Spearman 0.58 · MAE 21.9 p.p. (saltou de 0,43 sem F). IEE-Paranaguá(t) = F·0,50 + T·0,40 + S·0,10 (v7) vs espera EA t+2 (45 sem): Spearman 0.23 · MAE 19.0 p.p. — validade FRACA (era 0,21 nos pesos v0; F lidera, S é ruído na fila). CAVEAT: in-sample, n≈45–46, SE±0,15.
 
 ## Regras (do pré-registro)
 
