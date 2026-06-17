@@ -242,29 +242,59 @@ function render() {
     featNome.textContent = f.nome;
     document.body.classList.add("feature");
   } else {
+    pararScroll(); // saiu da feature → garante que o loop de scroll não continue
     document.body.classList.remove("feature");
     if (estado.mode !== "blackout") irParaSlide(estado.slide);
   }
 }
 
 /* ---- rolagem do iframe da feature ---- */
-/* Salto síncrono de ~80% da altura visível. Tenta o smooth nativo do navegador
-   (suave quando suportado); o salto instantâneo já garante o movimento. */
-function rolarFeature(sinal) {
+/* Deslize contínuo e devagar enquanto o botão fica pressionado no celular
+   (scrollStart → loop; scrollStop → para). Salto discreto fica de fallback. */
+let _scrollDir = 0, _scrollTimer = 0, _scrollUltimo = 0, _scrollGuard = 0;
+const SCROLL_VEL = 380; // px por segundo — deslize devagar (ajuste à vontade)
+
+function iniciarScroll(sinal) {
+  if (estado.mode !== "feature") return;
+  _scrollDir = sinal; _scrollUltimo = Date.now();
+  clearInterval(_scrollTimer);
+  clearTimeout(_scrollGuard);
+  _scrollGuard = setTimeout(pararScroll, 12000); // segurança se o "stop" se perder
+  _scrollTimer = setInterval(() => {
+    if (!_scrollDir) { clearInterval(_scrollTimer); return; }
+    let win;
+    try { win = frame.contentWindow; if (!win) { pararScroll(); return; } } catch (e) { pararScroll(); return; }
+    const agora = Date.now();
+    const dt = Math.min(0.1, (agora - _scrollUltimo) / 1000); // s, com teto p/ quando o timer atrasa
+    _scrollUltimo = agora;
+    try { win.scrollBy(0, _scrollDir * SCROLL_VEL * dt); } catch (e) {}
+  }, 20);
+}
+function pararScroll() {
+  _scrollDir = 0;
+  clearInterval(_scrollTimer);
+  clearTimeout(_scrollGuard);
+}
+function rolarFeature(sinal) { // salto discreto (fallback de toque rápido / teclado)
   if (estado.mode !== "feature") return;
   let win;
   try { win = frame.contentWindow; if (!win) return; } catch (e) { return; }
   const passo = (win.innerHeight || window.innerHeight) * 0.8 * sinal;
-  const alvo = Math.max(0, (win.scrollY || 0) + passo);
-  try { win.scrollTo(0, alvo); } catch (e) {}
+  try { win.scrollTo(0, Math.max(0, (win.scrollY || 0) + passo)); } catch (e) {}
 }
 
 /* ---- aplica um COMANDO recebido (do celular ou do teclado) ---- */
 function aplicarCmd(msg) {
   switch (msg.action) {
-    case "scroll": // rola o conteúdo da feature aberta (iframe same-origin)
+    case "scrollStart": // segura no celular → desliza devagar e contínuo
+      iniciarScroll(msg.dir === "up" ? -1 : 1);
+      return;
+    case "scrollStop": // soltou no celular → para
+      pararScroll();
+      return;
+    case "scroll": // salto discreto (fallback)
       rolarFeature(msg.dir === "up" ? -1 : 1);
-      return; // não altera estado nem republica
+      return;
     case "next":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.min(SLIDES.length - 1, estado.slide + 1); break;
     case "prev":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, estado.slide - 1); break;
     case "goto":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, Math.min(SLIDES.length - 1, msg.slide ?? 0)); break;
