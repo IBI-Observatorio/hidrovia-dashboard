@@ -47,5 +47,9 @@ if (!chrome) {
   console.log("\n⚠ Chrome/Edge não encontrado — HTML pronto em out/relatorio-cabotagem.html; defina CHROME_BIN para gerar o PDF.");
   process.exit(0);
 }
-run(`"${chrome}" --headless --disable-gpu --no-pdf-header-footer --print-to-pdf="${pdfOut}" "file:///${htmlAbs}"`);
+// --no-sandbox: o Chrome aborta no init do zygote ao rodar como root no CI
+//   (ZygoteHostImpl::Init → "Aborted"); sem sandbox o headless sobe normal.
+// --disable-dev-shm-usage: /dev/shm é minúsculo nos containers do Actions e
+//   estoura em páginas maiores. Ambas as flags são inócuas no Windows/local.
+run(`"${chrome}" --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --no-pdf-header-footer --print-to-pdf="${pdfOut}" "file:///${htmlAbs}"`);
 console.log(`\n✓ Boletim pronto: ${pdfOut}\n`);
