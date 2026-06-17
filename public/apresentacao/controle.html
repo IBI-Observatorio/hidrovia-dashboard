@@ -49,6 +49,16 @@
   .nav button:active { transform: scale(.96); background: var(--card2); }
   .nav button .arr { font-size: 30px; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
+  /* rolagem da feature */
+  .rolar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rolar button {
+    font-family: inherit; border: 0; border-radius: 16px; padding: 22px 0; font-size: 16px; font-weight: 700;
+    color: var(--texto); background: var(--card); display: flex; flex-direction: column; align-items: center; gap: 4px;
+    transition: transform .08s ease, background .15s;
+  }
+  .rolar button:active { transform: scale(.96); background: var(--card2); }
+  .rolar button .arr { font-size: 22px; line-height: 1; color: var(--azul); }
+
   .secao-tit { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--suave); margin: 8px 4px 2px; }
 
   /* grade de features */
@@ -92,6 +102,12 @@
 
   <div class="secao-tit">Abrir ao vivo · destaque</div>
   <div class="grid" id="grid-prio"></div>
+
+  <div class="secao-tit">Rolar a feature aberta</div>
+  <div class="rolar">
+    <button id="subir"><span class="arr">▲</span>Subir</button>
+    <button id="descer"><span class="arr">▼</span>Descer</button>
+  </div>
 
   <div class="secao-tit">Outras features</div>
   <div class="grid" id="grid-sec"></div>
@@ -197,6 +213,8 @@ function refletir(s) {
 
 document.getElementById("prox").onclick    = () => { buzz(); publicar("next"); };
 document.getElementById("ant").onclick     = () => { buzz(); publicar("prev"); };
+document.getElementById("subir").onclick   = () => { buzz(); publicar("scroll", { dir: "up" }); };
+document.getElementById("descer").onclick  = () => { buzz(); publicar("scroll", { dir: "down" }); };
 document.getElementById("voltar").onclick  = () => { buzz(); publicar("slides"); };
 document.getElementById("blackout").onclick= () => { buzz(); publicar("blackout"); };
 document.getElementById("reset").onclick   = () => { buzz(); publicar("reset"); };

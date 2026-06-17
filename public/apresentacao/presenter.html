@@ -247,9 +247,24 @@ function render() {
   }
 }
 
+/* ---- rolagem do iframe da feature ---- */
+/* Salto síncrono de ~80% da altura visível. Tenta o smooth nativo do navegador
+   (suave quando suportado); o salto instantâneo já garante o movimento. */
+function rolarFeature(sinal) {
+  if (estado.mode !== "feature") return;
+  let win;
+  try { win = frame.contentWindow; if (!win) return; } catch (e) { return; }
+  const passo = (win.innerHeight || window.innerHeight) * 0.8 * sinal;
+  const alvo = Math.max(0, (win.scrollY || 0) + passo);
+  try { win.scrollTo(0, alvo); } catch (e) {}
+}
+
 /* ---- aplica um COMANDO recebido (do celular ou do teclado) ---- */
 function aplicarCmd(msg) {
   switch (msg.action) {
+    case "scroll": // rola o conteúdo da feature aberta (iframe same-origin)
+      rolarFeature(msg.dir === "up" ? -1 : 1);
+      return; // não altera estado nem republica
     case "next":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.min(SLIDES.length - 1, estado.slide + 1); break;
     case "prev":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, estado.slide - 1); break;
     case "goto":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, Math.min(SLIDES.length - 1, msg.slide ?? 0)); break;
