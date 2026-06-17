@@ -652,7 +652,13 @@ function montaFAntaq(corredor: Corredor): SerieComponenteAgro | null {
   const ultimaSemana = jan[n - 1].d;
 
   // line-up ao vivo só para a cor "X navios hoje" (não alimenta o percentil)
-  const cacheLineup = corredor === "santos" ? (lineupSantos as unknown as typeof lineupParanagua) : null;
+  const cacheLineup =
+    corredor === "paranagua" ? lineupParanagua :
+    corredor === "arco-norte" ? (lineupArcoNorte as unknown as typeof lineupParanagua) :
+    corredor === "santos" ? (lineupSantos as unknown as typeof lineupParanagua) : null;
+  const fonteLineup =
+    corredor === "paranagua" ? "APPA" :
+    corredor === "arco-norte" ? "EMAP+CDP" : "APS/DIOPE";
   const naviosHoje =
     cacheLineup && cacheLineup.status === "ok" && cacheLineup.snapshots?.length
       ? (cacheLineup.snapshots[cacheLineup.snapshots.length - 1].navios as NavioLineup[])
@@ -670,7 +676,7 @@ function montaFAntaq(corredor: Corredor): SerieComponenteAgro | null {
     ilustrativo: false,
     fonte:
       `Fonte: ANTAQ — Estatística Aquaviária (TemposAtracacao): nº de graneleiros de grão chegando, soma móvel ${JANELA_CHEGADAS_F} sem · última semana com dado: ${fmtBR(ultimaSemana)} (EA defasa ~3-4 m — nowcast)` +
-      (naviosHoje != null ? ` · line-up APS/DIOPE hoje: ${naviosHoje} navios aguardando` : ""),
+      (naviosHoje != null ? ` · line-up ${fonteLineup} hoje: ${naviosHoje} navios aguardando` : ""),
     calibracaoEmConstrucao: det[n - 1].calibracaoEmConstrucao,
     fonteAlvo: FONTE_ALVO.F,
     rotulo: {
@@ -736,8 +742,14 @@ function montaCorredor(corredor: Corredor): CorredorAgroData {
     let r: SerieComponenteAgro | null = null;
     if (real && c === "S") r = montaSReal(corredor);
     else if (real && c === "T") r = montaTModelado(corredor);
-    // F: Santos = pressão de chegadas ANTAQ (v6, série longa); demais = line-up.
-    else if (real && c === "F") r = corredor === "santos" ? montaFAntaq(corredor) : montaFLineup(corredor);
+    // F: Santos e Paranaguá = pressão de chegadas ANTAQ (v6, série longa, sinal
+    // validado em t+2: 0,37 Santos / 0,17 Pgua). Arco Norte FICA no line-up: a
+    // chegada não prevê a fila dele (Spearman 0,06) — o gargalo é hidrológico
+    // (pilar H), não congestão de berço. Fallback line-up se a EA faltar.
+    else if (real && c === "F")
+      r = corredor === "santos" || corredor === "paranagua"
+        ? (montaFAntaq(corredor) ?? montaFLineup(corredor))
+        : montaFLineup(corredor);
     else if (real && c === "H") r = montaHReal(corredor);
     comps.push(r ?? montaComponenteIlustrativo(corredor, c));
   }
