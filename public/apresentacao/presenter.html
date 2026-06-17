@@ -182,7 +182,7 @@ const FEATURES = {
   home:      { url: "/",                          nome: "Home" },
 };
 
-/* canal do relay público ntfy.sh — o MESMO precisa estar no controle do celular */
+/* canal do relay interno — o MESMO precisa estar no controle do celular */
 const CANAL = new URLSearchParams(location.search).get("canal") || "obs-ibi-ctlog";
 /* ============================================================================= */
 
@@ -286,7 +286,7 @@ let rev = -1, falhas = 0;
 async function tick() {
   try {
     const e = await (await fetch(API, { cache: "no-store" })).json();
-    falhas = 0; conn.classList.add("ok"); connTxt.textContent = "conectado";
+    falhas = 0; conn.classList.add("ok"); connTxt.textContent = "conectado · canal: " + CANAL;
     reconcileScroll(e.scroll);
     if (e.rev !== rev) {
       rev = e.rev;

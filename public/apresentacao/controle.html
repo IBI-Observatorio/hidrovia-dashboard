@@ -180,7 +180,7 @@ function conectar() {
   const sync = async () => {
     try {
       const s = await (await fetch(API, { cache: "no-store" })).json();
-      status.classList.add("ok"); statusTxt.textContent = "conectado";
+      status.classList.add("ok"); statusTxt.textContent = "conectado · " + CANAL;
       refletir(s);
     } catch { status.classList.remove("ok"); statusTxt.textContent = "sem conexão"; }
   };
