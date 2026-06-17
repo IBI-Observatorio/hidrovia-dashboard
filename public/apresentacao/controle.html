@@ -169,7 +169,8 @@ function publicar(action, extra = {}) {
   fetch(API, {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ action, total: TOTAL, ...extra }),
-  }).then((r) => flash(r.ok)).catch(() => flash(false));
+  }).then((r) => { if (r.ok) flash(true); })   // erro HTTP não rebaixa status (segue conectado)
+    .catch(() => flash(false));                 // só rede caída mostra "sem conexão"
 }
 
 let _poll = 0;
