@@ -1,61 +1,61 @@
 {
-  "gerado_em": "2026-06-09T14:18:02.889Z",
+  "gerado_em": "2026-06-17T22:22:59.110Z",
   "serie": [
     {
       "data_referencia": "2026-06-08",
-      "ao_vivo": true,
+      "ao_vivo": false,
       "z_2026": {
-        "MAO": -0.28,
-        "BOR": -0.44,
-        "MNC": -0.41,
+        "MAO": -0.26,
+        "BOR": -0.37,
+        "MNC": -0.27,
         "ITA": -0.21
       },
       "analogos_top": [
         {
           "ano": 2020,
-          "peso": 0.163
-        },
-        {
-          "ano": 2023,
-          "peso": 0.162
-        },
-        {
-          "ano": 2018,
           "peso": 0.159
         },
         {
+          "ano": 2023,
+          "peso": 0.159
+        },
+        {
+          "ano": 2018,
+          "peso": 0.154
+        },
+        {
           "ano": 2017,
-          "peso": 0.116
+          "peso": 0.121
         }
       ],
       "projecao_cmr_2026": {
-        "central": 9.04,
-        "pessimista": 6.65,
+        "central": 9.14,
+        "pessimista": 6.67,
         "otimista": 10.38
       },
-      "ita_min_central": 3.2,
+      "ita_min_central": 3.25,
       "cruzamento_cmr11": {
         "central": "2026-09-29",
-        "cedo": "2026-09-12",
-        "tarde": "2026-10-15"
+        "cedo": "2026-09-13",
+        "tarde": "2026-10-16"
       },
       "restricao": {
-        "p10": "2026-09-12",
+        "p10": "2026-09-13",
         "p50": "2026-09-29",
-        "p90": "2026-10-15",
+        "p90": "2026-10-16",
         "prob": 1,
         "ano_analogo": 2020
       },
       "esperanca_ponderada": {
-        "delta_pct_2025": -0.0304,
-        "teu": 528315
+        "delta_pct_2025": -0.0301,
+        "teu": 528456
       },
-      "cmr_atual": 17.15,
+      "cmr_atual": 17.2,
       "cota_ita_atual": 13.62,
       "contexto": {
-        "sgb_numero": 21,
-        "enso_status": "El Niño Watch",
-        "enso_data_emissao": "2026-05-14"
+        "sgb_numero": null,
+        "enso_status": null,
+        "enso_data_emissao": null
       }
     },
     {
