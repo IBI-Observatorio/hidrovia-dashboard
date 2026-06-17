@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Observatório IBI — Apresentação CTLOG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --azul: #0099d8;
+    --verde: #00a652;
+    --escuro: #2c2c2c;
+    --fundo: #0b1220;
+    --fundo2: #111827;
+    --texto: #f8fafc;
+    --suave: #94a3b8;
+    --grad: linear-gradient(90deg, var(--verde) 0%, var(--azul) 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: "Geist", "Inter", system-ui, sans-serif;
+    background: radial-gradient(1200px 800px at 70% -10%, #16233b 0%, var(--fundo) 60%);
+    color: var(--texto);
+    cursor: none;
+  }
+  body.mostra-cursor { cursor: default; }
+
+  /* ----- camada de slides ----- */
+  #deck { position: fixed; inset: 0; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(40px, 7vw, 120px);
+    opacity: 0; transform: translateY(24px) scale(.99);
+    transition: opacity .5s ease, transform .5s ease;
+    pointer-events: none;
+  }
+  .slide.ativo { opacity: 1; transform: none; pointer-events: auto; }
+
+  .kicker {
+    font-size: clamp(13px, 1.2vw, 18px); font-weight: 700; letter-spacing: .28em;
+    text-transform: uppercase; color: var(--azul); margin-bottom: 28px;
+  }
+  .slide h1 {
+    font-size: clamp(40px, 6.4vw, 104px); font-weight: 800; line-height: 1.02;
+    letter-spacing: -.02em; max-width: 16ch;
+  }
+  .slide h1 .grad {
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .slide .sub {
+    margin-top: 28px; font-size: clamp(18px, 2.1vw, 34px); font-weight: 500;
+    color: var(--suave); max-width: 30ch; line-height: 1.35;
+  }
+  .slide .corpo {
+    margin-top: 32px; font-size: clamp(20px, 2.4vw, 40px); font-weight: 500;
+    line-height: 1.4; max-width: 26ch;
+  }
+  .barra-top { height: 6px; width: 0; background: var(--grad); border-radius: 999px; margin-bottom: 40px; }
+  .ativo .barra-top { width: clamp(120px, 16vw, 280px); transition: width .7s ease .15s; }
+
+  /* verticais */
+  .verticais { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 2vw, 28px); margin-top: 44px; max-width: 1100px; }
+  .vert {
+    border: 1px solid rgba(255,255,255,.10); border-left: 5px solid var(--azul);
+    background: rgba(255,255,255,.03); border-radius: 14px;
+    padding: clamp(20px, 2.4vw, 38px); font-size: clamp(22px, 2.6vw, 44px); font-weight: 700;
+  }
+  .vert small { display: block; font-size: clamp(13px, 1.1vw, 18px); font-weight: 500; color: var(--suave); margin-top: 6px; letter-spacing: .04em; }
+  .vert:nth-child(1){ border-left-color: var(--azul);}
+  .vert:nth-child(2){ border-left-color: var(--verde);}
+  .vert:nth-child(3){ border-left-color: #38bdf8;}
+  .vert:nth-child(4){ border-left-color: #a78bfa;}
+
+  /* capa + qr */
+  .capa-wrap { display: flex; align-items: center; justify-content: space-between; gap: 60px; width: 100%; }
+  .qr-box { text-align: center; flex-shrink: 0; }
+  .qr-box img { width: clamp(180px, 18vw, 300px); height: auto; border-radius: 16px; background: #fff; padding: 14px; display: block; }
+  .qr-box .qr-cap { margin-top: 16px; font-size: 15px; color: var(--suave); font-weight: 600; letter-spacing: .04em; }
+  .qr-box .qr-url { margin-top: 6px; font-size: 13px; color: var(--azul); word-break: break-all; max-width: 320px; }
+
+  .demo-pulse { margin-top: 40px; display: inline-flex; align-items: center; gap: 14px; font-size: clamp(16px, 1.6vw, 24px); color: var(--verde); font-weight: 700; }
+  .demo-pulse .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 0 rgba(0,166,82,.6); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(0,166,82,.6)} 70%{box-shadow:0 0 0 22px rgba(0,166,82,0)} 100%{box-shadow:0 0 0 0 rgba(0,166,82,0)} }
+
+  /* rodapé fixo: progresso + contador */
+  .rodape { position: fixed; left: 0; right: 0; bottom: 0; height: 5px; background: rgba(255,255,255,.06); z-index: 5; }
+  .rodape .fill { height: 100%; background: var(--grad); width: 0; transition: width .4s ease; }
+  .contador { position: fixed; bottom: 22px; right: 30px; font-size: 14px; color: var(--suave); font-weight: 600; letter-spacing: .08em; z-index: 6; }
+
+  /* ----- camada de feature (iframe) ----- */
+  #palco-feature {
+    position: fixed; inset: 0; z-index: 20; background: #000;
+    opacity: 0; pointer-events: none; transition: opacity .35s ease;
+  }
+  body.feature #palco-feature { opacity: 1; pointer-events: auto; }
+  #palco-feature iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--fundo2); }
+  .feat-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: 0; overflow: hidden;
+    background: rgba(11,18,32,.92); backdrop-filter: blur(6px);
+    display: flex; align-items: center; gap: 12px; padding: 0 18px; z-index: 2;
+    transition: height .25s ease; font-size: 14px; color: var(--suave);
+  }
+  #palco-feature.show-bar .feat-bar { height: 42px; }
+  .feat-bar .live { display: inline-flex; align-items: center; gap: 8px; color: var(--verde); font-weight: 700; }
+  .feat-bar .live .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--verde); animation: pulse 1.6s infinite; }
+
+  /* blackout */
+  body.blackout #deck, body.blackout #palco-feature { opacity: 0 !important; transition: opacity .3s; }
+  #blackout-layer { position: fixed; inset: 0; background: #000; z-index: 40; opacity: 0; pointer-events: none; transition: opacity .3s; }
+  body.blackout #blackout-layer { opacity: 1; }
+
+  /* status de conexão (canto) */
+  .conn { position: fixed; top: 18px; right: 22px; z-index: 50; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--suave); font-weight: 600; opacity: .55; }
+  .conn .dot { width: 9px; height: 9px; border-radius: 50%; background: #ef4444; }
+  .conn.ok .dot { background: var(--verde); }
+</style>
+</head>
+<body>
+  <div class="conn" id="conn"><span class="dot"></span><span id="conn-txt">conectando…</span></div>
+
+  <div id="deck"></div>
+
+  <div id="palco-feature">
+    <div class="feat-bar"><span class="live"><span class="dot"></span>AO VIVO</span><span id="feat-nome"></span><span style="margin-left:auto">controle no celular ← voltar aos slides</span></div>
+    <iframe id="frame" referrerpolicy="no-referrer"></iframe>
+  </div>
+
+  <div id="blackout-layer"></div>
+  <div class="rodape"><div class="fill" id="fill"></div></div>
+  <div class="contador" id="contador"></div>
+
+<script>
+/* ===================== CONTEÚDO DO DECK (edite à vontade) ===================== */
+const SLIDES = [
+  { kind: "capa",
+    titulo: ["Observatório de", "<span class='grad'>Infraestrutura</span> de Transporte"],
+    sub: "Dados, em tempo quase real, sobre a logística brasileira.",
+    kicker: "IBI · Instituto Brasileiro de Infraestrutura" },
+
+  { kind: "texto", kicker: "O que é",
+    titulo: ["Um painel <span class='grad'>vivo</span>."],
+    corpo: "Transforma dados públicos dispersos — ANA, ANTAQ, Comex, SGB — em uma leitura de banco central sobre a infraestrutura brasileira." },
+
+  { kind: "verticais", kicker: "Cobertura",
+    titulo: ["Quatro verticais", "<span class='grad'>+ ferrovia</span> emergindo"],
+    itens: [
+      ["Porto", "movimentação · PortGDP"],
+      ["Navegação", "rotas · rentabilidade"],
+      ["Hidrologia", "réguas · IRC · IDN"],
+      ["Aéreo", "tarifa · demanda"],
+    ] },
+
+  { kind: "texto", kicker: "Indicadores próprios",
+    titulo: ["Métricas que <span class='grad'>não existem</span> em outro lugar."],
+    corpo: "PortGDP · IRC · IDN · Calendário LWS · modelo de recessão da hidrovia — construídos do dado bruto." },
+
+  { kind: "texto", kicker: "A pegada",
+    titulo: ["Não o número.", "O <span class='grad'>porquê.</span>"],
+    corpo: "Tom sóbrio, data-driven, separando sempre o dado oficial da estimativa do IBI." },
+
+  { kind: "demo", kicker: "Demonstração",
+    titulo: ["Agora, <span class='grad'>ao vivo.</span>"],
+    sub: "Pegue o celular — vamos abrir o Observatório de verdade." },
+];
+
+/* rotas que o controle pode abrir (iframe = mesma origem → X-Frame-Options SAMEORIGIN ok) */
+const FEATURES = {
+  monitor:   { url: "/monitor",                 nome: "Monitor Hidrológico" },
+  caso2024:  { url: "/caso-2024",               nome: "Caso 2024 — a seca" },
+  agro:      { url: "/agro",                     nome: "Agro Radar" },
+  lws:       { url: "/calendario-lws-2026",      nome: "Calendário LWS 2026" },
+  portos:    { url: "/portos/movimentacao",      nome: "Portos — movimentação" },
+  navegacao: { url: "/navegacao",                nome: "Navegação" },
+  sobrecusto:{ url: "/sobrecusto-rodoviario",    nome: "Sobrecusto rodoviário" },
+  radar:     { url: "/radar",                    nome: "Radar ferroviário" },
+  antaq:     { url: "/relatorio-antaq",          nome: "Relatório ANTAQ" },
+  briefing:  { url: "/briefing-semanal",         nome: "Briefing semanal" },
+  home:      { url: "/",                          nome: "Home" },
+};
+
+/* canal do relay público ntfy.sh — o MESMO precisa estar no controle do celular */
+const CANAL = new URLSearchParams(location.search).get("canal") || "obs-ibi-ctlog";
+/* ============================================================================= */
+
+const deck = document.getElementById("deck");
+const frame = document.getElementById("frame");
+const palco = document.getElementById("palco-feature");
+const featNome = document.getElementById("feat-nome");
+const fill = document.getElementById("fill");
+const contador = document.getElementById("contador");
+const conn = document.getElementById("conn");
+const connTxt = document.getElementById("conn-txt");
+
+/* estado autoritativo (vive no telão) */
+const estado = { slide: 0, mode: "slides", feature: null };
+
+/* ---- monta os slides uma vez ---- */
+const controleUrl = location.origin + "/apresentacao/controle.html?canal=" + encodeURIComponent(CANAL);
+function montar() {
+  SLIDES.forEach((s) => {
+    const el = document.createElement("section");
+    el.className = "slide";
+    const tit = (s.titulo || []).map((l) => `<span>${l}</span>`).join("<br/>");
+    let extra = "";
+    if (s.kind === "verticais") {
+      extra = `<div class="verticais">` + s.itens.map((i) =>
+        `<div class="vert">${i[0]}<small>${i[1]}</small></div>`).join("") + `</div>`;
+    }
+    if (s.corpo) extra += `<p class="corpo">${s.corpo}</p>`;
+    if (s.sub && s.kind !== "capa") extra += `<p class="sub">${s.sub}</p>`;
+    if (s.kind === "demo") extra += `<div class="demo-pulse"><span class="dot"></span>controle ativo no celular</div>`;
+
+    if (s.kind === "capa") {
+      const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=0&data=" + encodeURIComponent(controleUrl);
+      el.innerHTML = `
+        <div class="capa-wrap">
+          <div>
+            <div class="barra-top"></div>
+            <div class="kicker">${s.kicker || ""}</div>
+            <h1>${tit}</h1>
+            <p class="sub">${s.sub || ""}</p>
+          </div>
+          <div class="qr-box">
+            <img src="${qrSrc}" alt="QR do controle" onerror="this.style.display='none'" />
+            <div class="qr-cap">aponte a câmera para controlar</div>
+            <div class="qr-url">${controleUrl}</div>
+          </div>
+        </div>`;
+    } else {
+      el.innerHTML = `<div class="barra-top"></div><div class="kicker">${s.kicker || ""}</div><h1>${tit}</h1>${extra}`;
+    }
+    deck.appendChild(el);
+  });
+}
+montar();
+const slides = [...deck.querySelectorAll(".slide")];
+
+let slideAtual = -1;
+function irParaSlide(i) {
+  i = Math.max(0, Math.min(slides.length - 1, i));
+  slideAtual = i;
+  slides.forEach((el, idx) => el.classList.toggle("ativo", idx === i));
+  fill.style.width = ((i + 1) / slides.length * 100) + "%";
+  contador.textContent = (i + 1) + " / " + slides.length;
+}
+
+/* ---- aplica o estado atual na tela ---- */
+function render() {
+  document.body.classList.toggle("blackout", estado.mode === "blackout");
+  if (estado.mode === "feature" && estado.feature) {
+    const f = FEATURES[estado.feature] || { url: estado.feature, nome: estado.feature };
+    if (frame.dataset.src !== f.url) { frame.dataset.src = f.url; frame.src = f.url; }
+    featNome.textContent = f.nome;
+    document.body.classList.add("feature");
+  } else {
+    document.body.classList.remove("feature");
+    if (estado.mode !== "blackout") irParaSlide(estado.slide);
+  }
+}
+
+/* ---- aplica um COMANDO recebido (do celular ou do teclado) ---- */
+function aplicarCmd(msg) {
+  switch (msg.action) {
+    case "next":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.min(SLIDES.length - 1, estado.slide + 1); break;
+    case "prev":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, estado.slide - 1); break;
+    case "goto":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, Math.min(SLIDES.length - 1, msg.slide ?? 0)); break;
+    case "feature": estado.mode = "feature"; estado.feature = msg.feature ?? null; break;
+    case "slides":  estado.mode = "slides"; estado.feature = null; break;
+    case "blackout":estado.mode = estado.mode === "blackout" ? "slides" : "blackout"; break;
+    case "reset":   estado.slide = 0; estado.mode = "slides"; estado.feature = null; break;
+    default: return;
+  }
+  render();
+  publicarEstado(); // devolve o estado para o celular refletir
+}
+
+/* ===================== TRANSPORTE via ntfy.sh ===================== */
+function publicarEstado() {
+  fetch("https://ntfy.sh/" + CANAL, {
+    method: "POST",
+    body: JSON.stringify({ kind: "state", slide: estado.slide, mode: estado.mode, feature: estado.feature, total: SLIDES.length }),
+  }).catch(() => {});
+}
+
+let source;
+function conectar() {
+  if (source) source.close();
+  connTxt.textContent = "conectando…"; conn.classList.remove("ok");
+  source = new EventSource("https://ntfy.sh/" + CANAL + "/sse");
+  source.onopen = () => { conn.classList.add("ok"); connTxt.textContent = "conectado"; publicarEstado(); };
+  source.onerror = () => { conn.classList.remove("ok"); connTxt.textContent = "reconectando…"; };
+  source.onmessage = (e) => {
+    try {
+      const outer = JSON.parse(e.data);
+      if (outer.event !== "message" || !outer.message) return;
+      const msg = JSON.parse(outer.message);
+      if (msg.kind !== "cmd") return; // ignora os próprios 'state'
+      aplicarCmd(msg);
+    } catch {}
+  };
+}
+conectar();
+render();
+
+/* ---- atalhos de teclado (plano B se o celular cair) ---- */
+addEventListener("keydown", (ev) => {
+  switch (ev.key) {
+    case "ArrowRight": case "PageDown": case " ": aplicarCmd({ action: "next" }); break;
+    case "ArrowLeft": case "PageUp": aplicarCmd({ action: "prev" }); break;
+    case "Home": aplicarCmd({ action: "goto", slide: 0 }); break;
+    case "b": case "B": aplicarCmd({ action: "blackout" }); break;
+    case "Escape": aplicarCmd({ action: "slides" }); break;
+    case "f": case "F":
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+      break;
+  }
+});
+
+/* mostra a barrinha "AO VIVO" e o cursor quando o mouse mexe */
+let mt;
+addEventListener("mousemove", () => {
+  document.body.classList.add("mostra-cursor");
+  palco.classList.add("show-bar");
+  clearTimeout(mt);
+  mt = setTimeout(() => { document.body.classList.remove("mostra-cursor"); palco.classList.remove("show-bar"); }, 2500);
+});
+</script>
+</body>
+</html>

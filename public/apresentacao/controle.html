@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Controle · Observatório IBI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --azul: #0099d8; --verde: #00a652; --fundo: #0b1220; --card: #16223a;
+    --card2: #1d2c49; --texto: #f8fafc; --suave: #94a3b8;
+    --grad: linear-gradient(90deg, var(--verde) 0%, var(--azul) 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Geist", system-ui, sans-serif; background: var(--fundo); color: var(--texto);
+    padding: env(safe-area-inset-top) 14px env(safe-area-inset-bottom);
+    display: flex; flex-direction: column; gap: 12px; user-select: none;
+    overflow-x: hidden;
+  }
+
+  /* barra de status */
+  .top {
+    display: flex; align-items: center; gap: 10px; padding: 14px 4px 6px;
+    position: sticky; top: 0; background: var(--fundo); z-index: 10;
+  }
+  .status { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--suave); }
+  .status .dot { width: 9px; height: 9px; border-radius: 50%; background: #ef4444; transition: background .2s; }
+  .status.ok .dot { background: var(--verde); }
+  .top .estado { margin-left: auto; font-size: 13px; font-weight: 700; color: var(--texto); text-align: right; line-height: 1.25; }
+  .top .estado small { display: block; font-weight: 500; color: var(--azul); font-size: 12px; }
+
+  /* canal */
+  .canal-row { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--suave); padding: 0 4px; }
+  .canal-row input { flex: 1; background: var(--card); border: 1px solid #2a3a57; border-radius: 8px; color: var(--texto); padding: 8px 10px; font-size: 13px; outline: none; }
+  .canal-row input:focus { border-color: var(--azul); }
+  .canal-row button { background: var(--card2); border: 1px solid #2a3a57; color: var(--texto); border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 600; }
+
+  /* navegação de slides */
+  .nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .nav button {
+    font-family: inherit; border: 0; border-radius: 18px; padding: 30px 0; font-size: 19px; font-weight: 700;
+    color: var(--texto); background: var(--card); display: flex; flex-direction: column; align-items: center; gap: 6px;
+    transition: transform .08s ease, background .15s;
+  }
+  .nav button:active { transform: scale(.96); background: var(--card2); }
+  .nav button .arr { font-size: 30px; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .secao-tit { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--suave); margin: 8px 4px 2px; }
+
+  /* grade de features */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .feat {
+    font-family: inherit; text-align: left; border: 0; border-radius: 16px; padding: 16px 14px;
+    background: var(--card); color: var(--texto); font-size: 15px; font-weight: 700; line-height: 1.2;
+    border-left: 4px solid var(--azul); transition: transform .08s ease, background .15s;
+    min-height: 64px; display: flex; align-items: center;
+  }
+  .feat.prio { border-left-color: var(--verde); background: #15263c; }
+  .feat:active { transform: scale(.96); background: var(--card2); }
+  .feat.ativa { outline: 2px solid var(--verde); background: #14331f; }
+  .feat small { display: block; font-weight: 500; color: var(--suave); font-size: 12px; margin-top: 3px; }
+
+  /* ações de baixo */
+  .acoes { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-top: 4px; }
+  .acoes button { font-family: inherit; border: 0; border-radius: 16px; padding: 18px 0; font-size: 15px; font-weight: 700; color: var(--texto); transition: transform .08s; }
+  .acoes button:active { transform: scale(.96); }
+  #voltar { background: var(--grad); }
+  #blackout { background: #2c2c2c; }
+  #reset { background: transparent; color: var(--suave); border: 1px solid rgba(255,255,255,.12); font-size: 13px; padding: 10px 0; margin: 4px 0 14px; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="status" id="status"><span class="dot"></span><span id="status-txt">conectando</span></div>
+    <div class="estado"><span id="est-modo">Slide 1</span><small id="est-extra">deck</small></div>
+  </div>
+
+  <div class="canal-row">
+    <span>canal</span>
+    <input id="canal" value="obs-ibi-ctlog" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
+    <button id="reconectar">reconectar</button>
+  </div>
+
+  <div class="nav">
+    <button id="ant"><span class="arr">‹</span>Anterior</button>
+    <button id="prox"><span class="arr">›</span>Próximo</button>
+  </div>
+
+  <div class="secao-tit">Abrir ao vivo · destaque</div>
+  <div class="grid" id="grid-prio"></div>
+
+  <div class="secao-tit">Outras features</div>
+  <div class="grid" id="grid-sec"></div>
+
+  <div class="acoes">
+    <button id="voltar">◀ Voltar aos slides</button>
+    <button id="blackout">Blackout</button>
+  </div>
+  <button id="reset">⟲ Reiniciar do começo</button>
+
+<script>
+/* canal padrão = mesmo do presenter; pode vir por ?canal= */
+let CANAL = new URLSearchParams(location.search).get("canal") || "obs-ibi-ctlog";
+document.getElementById("canal").value = CANAL;
+
+/* mesmas chaves do presenter; "prio" = botões em destaque */
+const FEATURES = [
+  { key: "monitor",   nome: "Monitor",        desc: "réguas · IRC", prio: true },
+  { key: "caso2024",  nome: "Caso 2024",      desc: "a grande seca", prio: true },
+  { key: "agro",      nome: "Agro Radar",     desc: "escoamento · IEE", prio: true },
+  { key: "lws",       nome: "Calendário LWS", desc: "recessão hidrovia", prio: true },
+  { key: "portos",    nome: "Portos",         desc: "movimentação" },
+  { key: "navegacao", nome: "Navegação",      desc: "rotas" },
+  { key: "sobrecusto",nome: "Sobrecusto",     desc: "rodoviário" },
+  { key: "radar",     nome: "Radar",          desc: "ferroviário" },
+  { key: "antaq",     nome: "Rel. ANTAQ",     desc: "white paper" },
+  { key: "briefing",  nome: "Briefing",       desc: "semanal" },
+  { key: "home",      nome: "Home",           desc: "visão geral" },
+];
+
+const status = document.getElementById("status");
+const statusTxt = document.getElementById("status-txt");
+const estModo = document.getElementById("est-modo");
+const estExtra = document.getElementById("est-extra");
+let TOTAL = 6;
+
+/* monta os botões de feature */
+function montarGrid(alvo, lista) {
+  lista.forEach((f) => {
+    const b = document.createElement("button");
+    b.className = "feat" + (f.prio ? " prio" : "");
+    b.dataset.key = f.key;
+    b.innerHTML = `${f.nome}<small>${f.desc}</small>`;
+    b.onclick = () => { buzz(); publicar("feature", { feature: f.key }); };
+    alvo.appendChild(b);
+  });
+}
+montarGrid(document.getElementById("grid-prio"), FEATURES.filter((f) => f.prio));
+montarGrid(document.getElementById("grid-sec"), FEATURES.filter((f) => !f.prio));
+
+function buzz() { if (navigator.vibrate) navigator.vibrate(12); }
+
+/* ===================== TRANSPORTE via ntfy.sh ===================== */
+function publicar(action, extra = {}) {
+  fetch("https://ntfy.sh/" + CANAL, {
+    method: "POST",
+    body: JSON.stringify({ kind: "cmd", action, total: TOTAL, ...extra }),
+  }).then(() => flash(true)).catch(() => flash(false));
+}
+
+let source;
+function conectar() {
+  if (source) source.close();
+  statusTxt.textContent = "conectando"; status.classList.remove("ok");
+  source = new EventSource("https://ntfy.sh/" + CANAL + "/sse");
+  source.onopen = () => { status.classList.add("ok"); statusTxt.textContent = "conectado"; };
+  source.onerror = () => { status.classList.remove("ok"); statusTxt.textContent = "reconectando"; };
+  source.onmessage = (e) => {
+    try {
+      const outer = JSON.parse(e.data);
+      if (outer.event !== "message" || !outer.message) return;
+      const msg = JSON.parse(outer.message);
+      if (msg.kind !== "state") return; // só reage ao estado devolvido pelo telão
+      refletir(msg);
+    } catch {}
+  };
+}
+
+function flash(ok) {
+  // confirma envio mesmo antes do telão devolver estado
+  status.classList.toggle("ok", ok);
+  statusTxt.textContent = ok ? "conectado" : "sem conexão";
+}
+
+/* reflete o estado atual (vindo do telão) */
+function refletir(s) {
+  if (typeof s.total === "number") TOTAL = s.total;
+  const feats = [...document.querySelectorAll(".feat")];
+  if (s.mode === "feature") {
+    const f = FEATURES.find((x) => x.key === s.feature);
+    estModo.textContent = "Ao vivo";
+    estExtra.textContent = f ? f.nome : s.feature;
+    feats.forEach((b) => b.classList.toggle("ativa", b.dataset.key === s.feature));
+  } else if (s.mode === "blackout") {
+    estModo.textContent = "Blackout"; estExtra.textContent = "tela preta";
+    feats.forEach((b) => b.classList.remove("ativa"));
+  } else {
+    estModo.textContent = "Slide " + (s.slide + 1) + " / " + TOTAL;
+    estExtra.textContent = "deck";
+    feats.forEach((b) => b.classList.remove("ativa"));
+  }
+}
+
+document.getElementById("prox").onclick    = () => { buzz(); publicar("next"); };
+document.getElementById("ant").onclick     = () => { buzz(); publicar("prev"); };
+document.getElementById("voltar").onclick  = () => { buzz(); publicar("slides"); };
+document.getElementById("blackout").onclick= () => { buzz(); publicar("blackout"); };
+document.getElementById("reset").onclick   = () => { buzz(); publicar("reset"); };
+document.getElementById("reconectar").onclick = () => {
+  CANAL = document.getElementById("canal").value.trim().toLowerCase().replace(/\s+/g, "-") || "obs-ibi-ctlog";
+  conectar();
+};
+
+conectar();
+
+/* evita scroll-bounce atrapalhar os toques */
+document.addEventListener("touchmove", (e) => { if (e.target === document.body) e.preventDefault(); }, { passive: false });
+</script>
+</body>
+</html>

@@ -40,6 +40,14 @@ const nextConfig: NextConfig = {
           { key: "Cache-Control", value: "public, max-age=0, s-maxage=60, stale-while-revalidate=60" },
         ],
       },
+      // Deck da apresentação (HTML estático): nunca cachear no edge, para o ensaio
+      // sempre puxar a versão recém-deployada.
+      {
+        source: "/apresentacao/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, max-age=0" },
+        ],
+      },
     ];
   },
 };
