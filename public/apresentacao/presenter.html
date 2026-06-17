@@ -199,7 +199,6 @@ const connTxt = document.getElementById("conn-txt");
 const estado = { slide: 0, mode: "slides", feature: null };
 
 /* ---- monta os slides uma vez ---- */
-const controleUrl = location.origin + "/apresentacao/controle.html?canal=" + encodeURIComponent(CANAL);
 function montar() {
   SLIDES.forEach((s) => {
     const el = document.createElement("section");
@@ -215,21 +214,7 @@ function montar() {
     if (s.kind === "demo") extra += `<div class="demo-pulse"><span class="dot"></span>controle ativo no celular</div>`;
 
     if (s.kind === "capa") {
-      const qrSrc = "https://api.qrserver.com/v1/create-qr-code/?size=600x600&margin=0&data=" + encodeURIComponent(controleUrl);
-      el.innerHTML = `
-        <div class="capa-wrap">
-          <div>
-            <div class="barra-top"></div>
-            <div class="kicker">${s.kicker || ""}</div>
-            <h1>${tit}</h1>
-            <p class="sub">${s.sub || ""}</p>
-          </div>
-          <div class="qr-box">
-            <img src="${qrSrc}" alt="QR do controle" onerror="this.style.display='none'" />
-            <div class="qr-cap">aponte a câmera para controlar</div>
-            <div class="qr-url">${controleUrl}</div>
-          </div>
-        </div>`;
+      el.innerHTML = `<div class="barra-top"></div><div class="kicker">${s.kicker || ""}</div><h1>${tit}</h1><p class="sub">${s.sub || ""}</p>`;
     } else {
       el.innerHTML = `<div class="barra-top"></div><div class="kicker">${s.kicker || ""}</div><h1>${tit}</h1>${extra}`;
     }
