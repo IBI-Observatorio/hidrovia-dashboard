@@ -59,6 +59,12 @@
     margin-top: 32px; font-size: clamp(20px, 2.4vw, 40px); font-weight: 500;
     line-height: 1.4; max-width: 26ch;
   }
+  /* slide denso: cabe mais texto — padding vertical menor (por altura) e fontes menores */
+  .slide.denso { padding-top: clamp(18px, 3.5vh, 50px); padding-bottom: clamp(18px, 3.5vh, 50px); }
+  .slide.denso .barra-top { margin-bottom: clamp(12px, 2.4vh, 28px); }
+  .slide.denso .kicker { margin-bottom: clamp(10px, 2vh, 20px); }
+  .slide.denso h1 { font-size: clamp(26px, 3.6vw, 52px); max-width: 28ch; line-height: 1.05; }
+  .slide.denso .corpo { margin-top: clamp(14px, 2.2vh, 22px); font-size: clamp(15px, 1.55vw, 24px); max-width: 46ch; }
   .barra-top { height: 6px; width: 0; background: var(--grad); border-radius: 999px; margin-bottom: 40px; }
   .ativo .barra-top { width: clamp(120px, 16vw, 280px); transition: width .7s ease .15s; }
 
@@ -162,9 +168,9 @@ const SLIDES = [
     titulo: ["Não o número.", "O <span class='grad'>porquê.</span>"],
     corpo: "Tom sóbrio, data-driven, separando sempre o dado oficial da estimativa do IBI." },
 
-  { kind: "texto", kicker: "Projeto em desenvolvimento",
-    titulo: ["Agendamento <span class='grad'>automático</span>", "de caminhões em Santos"],
-    corpo: "Janela inteligente de entrada nos terminais de contêiner molhados de Santos: sincroniza a chegada do caminhão à operação do berço — menos fila no entorno, menos demurrage, gate mais previsível." },
+  { kind: "texto", denso: true, kicker: "Projeto em desenvolvimento · Porto de Santos",
+    titulo: ["Agendamento <span class='grad'>automático</span> de caminhões"],
+    corpo: "Entrada agendada nos terminais molhados: caminhão sincronizado à operação do berço — menos fila, menos demurrage, gate previsível." },
 
   { kind: "demo", kicker: "Demonstração",
     titulo: ["Agora, <span class='grad'>ao vivo.</span>"],
@@ -207,6 +213,7 @@ function montar() {
   SLIDES.forEach((s) => {
     const el = document.createElement("section");
     el.className = "slide";
+    if (s.denso) el.classList.add("denso");
     const tit = (s.titulo || []).map((l) => `<span>${l}</span>`).join("<br/>");
     let extra = "";
     if (s.kind === "verticais") {
