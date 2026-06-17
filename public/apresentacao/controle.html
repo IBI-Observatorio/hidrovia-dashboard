@@ -105,7 +105,7 @@
   <div class="secao-tit">Abrir ao vivo · destaque</div>
   <div class="grid" id="grid-prio"></div>
 
-  <div class="secao-tit">Rolar a feature · segure para deslizar</div>
+  <div class="secao-tit">Rolar a feature · toque para deslizar</div>
   <div class="rolar">
     <button id="subir"><span class="arr">▲</span>Subir</button>
     <button id="descer"><span class="arr">▼</span>Descer</button>
@@ -215,18 +215,9 @@ function refletir(s) {
 
 document.getElementById("prox").onclick    = () => { buzz(); publicar("next"); };
 document.getElementById("ant").onclick     = () => { buzz(); publicar("prev"); };
-/* segure para rolar devagar; solte para parar */
-function holdScroll(id, dir) {
-  const btn = document.getElementById(id);
-  let ativo = false;
-  const start = (e) => { if (e.cancelable) e.preventDefault(); if (ativo) return; ativo = true; buzz(); publicar("scrollStart", { dir }); };
-  const stop = () => { if (!ativo) return; ativo = false; publicar("scrollStop"); };
-  btn.addEventListener("pointerdown", start);
-  ["pointerup", "pointercancel", "pointerleave"].forEach((ev) => btn.addEventListener(ev, stop));
-  window.addEventListener("pointerup", stop); // garante stop mesmo soltando fora do botão
-}
-holdScroll("subir", "up");
-holdScroll("descer", "down");
+/* toque para deslizar ~85% da tela (toque de novo para continuar) */
+document.getElementById("subir").onclick  = () => { buzz(); publicar("scroll", { dir: "up" }); };
+document.getElementById("descer").onclick = () => { buzz(); publicar("scroll", { dir: "down" }); };
 document.getElementById("voltar").onclick  = () => { buzz(); publicar("slides"); };
 document.getElementById("blackout").onclick= () => { buzz(); publicar("blackout"); };
 document.getElementById("reset").onclick   = () => { buzz(); publicar("reset"); };

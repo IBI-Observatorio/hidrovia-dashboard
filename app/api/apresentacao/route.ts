@@ -13,11 +13,12 @@ type Estado = {
   mode: Modo;
   slide: number;
   feature: string | null;
-  scroll: { active: boolean; dir: number };
+  scrollSeq: number; // contador de passos de rolagem (idempotente)
+  scrollDir: number; // direção do último passo (1 desce, -1 sobe)
 };
 
 function inicial(): Estado {
-  return { rev: 0, mode: "slides", slide: 0, feature: null, scroll: { active: false, dir: 1 } };
+  return { rev: 0, mode: "slides", slide: 0, feature: null, scrollSeq: 0, scrollDir: 1 };
 }
 
 // estado por sala (canal). Sobrevive entre requests no mesmo processo.
@@ -42,31 +43,28 @@ export async function POST(req: NextRequest) {
 
   switch (action) {
     case "next":
-      e.mode = "slides"; e.feature = null; e.scroll.active = false;
+      e.mode = "slides"; e.feature = null;
       e.slide = Math.min((total ?? 99) - 1, e.slide + 1);
       break;
     case "prev":
-      e.mode = "slides"; e.feature = null; e.scroll.active = false;
+      e.mode = "slides"; e.feature = null;
       e.slide = Math.max(0, e.slide - 1);
       break;
     case "goto":
-      e.mode = "slides"; e.feature = null; e.scroll.active = false;
+      e.mode = "slides"; e.feature = null;
       e.slide = Math.max(0, slide ?? 0);
       break;
     case "feature":
-      e.mode = "feature"; e.feature = feature ?? null; e.scroll.active = false;
+      e.mode = "feature"; e.feature = feature ?? null;
       break;
     case "slides":
-      e.mode = "slides"; e.feature = null; e.scroll.active = false;
+      e.mode = "slides"; e.feature = null;
       break;
     case "blackout":
-      e.mode = e.mode === "blackout" ? "slides" : "blackout"; e.scroll.active = false;
+      e.mode = e.mode === "blackout" ? "slides" : "blackout";
       break;
-    case "scrollStart":
-      e.scroll = { active: true, dir: dir === "up" ? -1 : 1 };
-      break;
-    case "scrollStop":
-      e.scroll.active = false;
+    case "scroll": // um passo de rolagem (toque no controle)
+      e.scrollSeq++; e.scrollDir = dir === "up" ? -1 : 1;
       break;
     case "reset":
       Object.assign(e, inicial());

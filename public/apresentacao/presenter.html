@@ -248,56 +248,66 @@ function render() {
   }
 }
 
-/* ---- rolagem contínua do iframe (dirigida pelo estado scroll do servidor) ---- */
-let _scrollDir = 0, _scrollTimer = 0, _scrollUltimo = 0;
-const SCROLL_VEL = 380; // px por segundo — deslize devagar (ajuste à vontade)
+/* ---- rolagem por toque: desliza ~85% da tela a ritmo fixo e PARA no alvo ---- */
+let _animTimer = 0, _alvoScroll = null, _animUltimo = 0;
+const SCROLL_PASSO = 0.85; // fração da altura visível por toque
+const SCROLL_VEL = 1600;   // px/s do deslize até o alvo (suave, mas não devagar)
 
-function iniciarScroll(sinal) {
+function animarScroll(dir, n) {
   if (estado.mode !== "feature") return;
-  if (_scrollDir === sinal && _scrollTimer) return; // já rolando nessa direção
-  _scrollDir = sinal; _scrollUltimo = Date.now();
-  clearInterval(_scrollTimer);
-  _scrollTimer = setInterval(() => {
-    if (!_scrollDir) { clearInterval(_scrollTimer); _scrollTimer = 0; return; }
-    let win;
-    try { win = frame.contentWindow; if (!win) { pararScroll(); return; } } catch (e) { pararScroll(); return; }
+  let win;
+  try { win = frame.contentWindow; if (!win) return; } catch (e) { return; }
+  const sentido = dir < 0 ? -1 : 1;
+  const atual = win.scrollY || 0;
+  // mesma direção e ainda animando → acumula a partir do alvo (aceleração);
+  // direção nova/parado → ancora na posição real (inversão sempre correta).
+  const base = (_alvoScroll != null && Math.sign(_alvoScroll - atual) === sentido) ? _alvoScroll : atual;
+  _alvoScroll = Math.max(0, base + (win.innerHeight || window.innerHeight) * SCROLL_PASSO * sentido * n);
+  if (_animTimer) return; // já animando — alvo atualizado (toques acumulam)
+  _animUltimo = Date.now();
+  _animTimer = setInterval(() => {
+    let w;
+    try { w = frame.contentWindow; if (!w) throw 0; } catch (e) { pararScroll(); return; }
     const agora = Date.now();
-    const dt = Math.min(0.1, (agora - _scrollUltimo) / 1000); // s, com teto p/ quando o timer atrasa
-    _scrollUltimo = agora;
-    try { win.scrollBy(0, _scrollDir * SCROLL_VEL * dt); } catch (e) {}
-  }, 20);
+    const dt = Math.min(0.1, (agora - _animUltimo) / 1000); _animUltimo = agora;
+    const cur = w.scrollY || 0;
+    const dif = _alvoScroll - cur;
+    const passo = SCROLL_VEL * dt;
+    if (Math.abs(dif) <= passo + 1) { try { w.scrollTo(0, _alvoScroll); } catch (e) {} pararScroll(); return; }
+    try { w.scrollBy(0, Math.sign(dif) * passo); } catch (e) {}
+  }, 16);
 }
 function pararScroll() {
-  _scrollDir = 0;
-  clearInterval(_scrollTimer);
-  _scrollTimer = 0;
-}
-/* reconcilia a rolagem com o estado vindo do servidor (a cada poll) */
-function reconcileScroll(s) {
-  if (estado.mode !== "feature" || !s || !s.active) { if (_scrollDir) pararScroll(); return; }
-  iniciarScroll(s.dir < 0 ? -1 : 1);
+  clearInterval(_animTimer);
+  _animTimer = 0; _alvoScroll = null;
 }
 
 /* ===================== TRANSPORTE: polling do relay interno ===================== */
 const API = "/api/apresentacao?canal=" + encodeURIComponent(CANAL);
 
 /* o telão espelha o estado do servidor (autoritativo) */
-let rev = -1, falhas = 0;
+let rev = -1, falhas = 0, _scrollSeqVisto = null;
 async function tick() {
   try {
     const e = await (await fetch(API, { cache: "no-store" })).json();
     falhas = 0; conn.classList.add("ok"); connTxt.textContent = "conectado · canal: " + CANAL;
-    reconcileScroll(e.scroll);
     if (e.rev !== rev) {
       rev = e.rev;
       estado.mode = e.mode; estado.slide = e.slide; estado.feature = e.feature;
       render();
     }
+    // rolagem por contador idempotente (atraso de rede não dispara nem acumula sozinho)
+    if (_scrollSeqVisto === null) _scrollSeqVisto = e.scrollSeq;
+    else if (e.scrollSeq !== _scrollSeqVisto) {
+      const n = e.scrollSeq - _scrollSeqVisto;
+      _scrollSeqVisto = e.scrollSeq;
+      if (n > 0 && estado.mode === "feature") animarScroll(e.scrollDir, n);
+    }
   } catch (err) {
     if (++falhas > 2) { conn.classList.remove("ok"); connTxt.textContent = "reconectando…"; }
   }
 }
-setInterval(tick, 300);
+setInterval(tick, 200);
 tick();
 render();
 
