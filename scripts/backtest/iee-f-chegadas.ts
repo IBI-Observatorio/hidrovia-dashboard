@@ -43,8 +43,8 @@ function spearman(x: number[], y: number[]): number {
 
 type Linha = [string, number, number]; // [semana, espera_h, n]
 
-function main() {
-  const serie = (esperaEA.corredores as unknown as Record<string, Linha[]>)[CORR];
+function corredor(CORR: string) {
+  const serie = (esperaEA.corredores as unknown as Record<string, Linha[]>)[CORR].slice();
   serie.sort((a, b) => (a[0] < b[0] ? -1 : 1));
 
   // alvo: percentil sazonal walk-forward da espera (mesmo do pré-registro)
@@ -96,5 +96,9 @@ function main() {
     }
     console.log("");
   }
+}
+
+function main() {
+  for (const c of [CORR, "paranagua", "arco-norte"]) corredor(c);
 }
 main();
