@@ -15,10 +15,11 @@ type Estado = {
   feature: string | null;
   scrollSeq: number; // contador de passos de rolagem (idempotente)
   scrollDir: number; // direção do último passo (1 desce, -1 sobe)
+  total: number;     // nº de slides — informado pelo telão (sync), autoritativo p/ clamp
 };
 
 function inicial(): Estado {
-  return { rev: 0, mode: "slides", slide: 0, feature: null, scrollSeq: 0, scrollDir: 1 };
+  return { rev: 0, mode: "slides", slide: 0, feature: null, scrollSeq: 0, scrollDir: 1, total: 99 };
 }
 
 // estado por sala (canal). Sobrevive entre requests no mesmo processo.
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
   switch (action) {
     case "next":
       e.mode = "slides"; e.feature = null;
-      e.slide = Math.min((total ?? 99) - 1, e.slide + 1);
+      e.slide = Math.min((e.total || 99) - 1, e.slide + 1); // clamp pelo total do telão
       break;
     case "prev":
       e.mode = "slides"; e.feature = null;
@@ -52,7 +53,10 @@ export async function POST(req: NextRequest) {
       break;
     case "goto":
       e.mode = "slides"; e.feature = null;
-      e.slide = Math.max(0, slide ?? 0);
+      e.slide = Math.max(0, Math.min((e.total || 99) - 1, slide ?? 0));
+      break;
+    case "sync": // o telão informa quantos slides existem (autoritativo p/ o clamp)
+      if (typeof total === "number" && total > 0) e.total = total;
       break;
     case "feature":
       e.mode = "feature"; e.feature = feature ?? null;
