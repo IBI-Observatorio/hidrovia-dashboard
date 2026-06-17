@@ -162,30 +162,30 @@ montarGrid(document.getElementById("grid-sec"), FEATURES.filter((f) => !f.prio))
 
 function buzz() { if (navigator.vibrate) navigator.vibrate(12); }
 
-/* ===================== TRANSPORTE via ntfy.sh ===================== */
+/* ===================== TRANSPORTE: relay interno (mesma origem) ===================== */
+let API = "/api/apresentacao?canal=" + encodeURIComponent(CANAL);
+
 function publicar(action, extra = {}) {
-  fetch("https://ntfy.sh/" + CANAL, {
-    method: "POST",
-    body: JSON.stringify({ kind: "cmd", action, total: TOTAL, ...extra }),
-  }).then(() => flash(true)).catch(() => flash(false));
+  fetch(API, {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action, total: TOTAL, ...extra }),
+  }).then((r) => flash(r.ok)).catch(() => flash(false));
 }
 
-let source;
+let _poll = 0;
 function conectar() {
-  if (source) source.close();
+  API = "/api/apresentacao?canal=" + encodeURIComponent(CANAL);
+  clearInterval(_poll);
   statusTxt.textContent = "conectando"; status.classList.remove("ok");
-  source = new EventSource("https://ntfy.sh/" + CANAL + "/sse");
-  source.onopen = () => { status.classList.add("ok"); statusTxt.textContent = "conectado"; };
-  source.onerror = () => { status.classList.remove("ok"); statusTxt.textContent = "reconectando"; };
-  source.onmessage = (e) => {
+  const sync = async () => {
     try {
-      const outer = JSON.parse(e.data);
-      if (outer.event !== "message" || !outer.message) return;
-      const msg = JSON.parse(outer.message);
-      if (msg.kind !== "state") return; // só reage ao estado devolvido pelo telão
-      refletir(msg);
-    } catch {}
+      const s = await (await fetch(API, { cache: "no-store" })).json();
+      status.classList.add("ok"); statusTxt.textContent = "conectado";
+      refletir(s);
+    } catch { status.classList.remove("ok"); statusTxt.textContent = "sem conexão"; }
   };
+  _poll = setInterval(sync, 1000);
+  sync();
 }
 
 function flash(ok) {

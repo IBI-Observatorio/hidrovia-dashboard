@@ -248,20 +248,17 @@ function render() {
   }
 }
 
-/* ---- rolagem do iframe da feature ---- */
-/* Deslize contínuo e devagar enquanto o botão fica pressionado no celular
-   (scrollStart → loop; scrollStop → para). Salto discreto fica de fallback. */
-let _scrollDir = 0, _scrollTimer = 0, _scrollUltimo = 0, _scrollGuard = 0;
+/* ---- rolagem contínua do iframe (dirigida pelo estado scroll do servidor) ---- */
+let _scrollDir = 0, _scrollTimer = 0, _scrollUltimo = 0;
 const SCROLL_VEL = 380; // px por segundo — deslize devagar (ajuste à vontade)
 
 function iniciarScroll(sinal) {
   if (estado.mode !== "feature") return;
+  if (_scrollDir === sinal && _scrollTimer) return; // já rolando nessa direção
   _scrollDir = sinal; _scrollUltimo = Date.now();
   clearInterval(_scrollTimer);
-  clearTimeout(_scrollGuard);
-  _scrollGuard = setTimeout(pararScroll, 12000); // segurança se o "stop" se perder
   _scrollTimer = setInterval(() => {
-    if (!_scrollDir) { clearInterval(_scrollTimer); return; }
+    if (!_scrollDir) { clearInterval(_scrollTimer); _scrollTimer = 0; return; }
     let win;
     try { win = frame.contentWindow; if (!win) { pararScroll(); return; } } catch (e) { pararScroll(); return; }
     const agora = Date.now();
@@ -273,77 +270,53 @@ function iniciarScroll(sinal) {
 function pararScroll() {
   _scrollDir = 0;
   clearInterval(_scrollTimer);
-  clearTimeout(_scrollGuard);
+  _scrollTimer = 0;
 }
-function rolarFeature(sinal) { // salto discreto (fallback de toque rápido / teclado)
-  if (estado.mode !== "feature") return;
-  let win;
-  try { win = frame.contentWindow; if (!win) return; } catch (e) { return; }
-  const passo = (win.innerHeight || window.innerHeight) * 0.8 * sinal;
-  try { win.scrollTo(0, Math.max(0, (win.scrollY || 0) + passo)); } catch (e) {}
+/* reconcilia a rolagem com o estado vindo do servidor (a cada poll) */
+function reconcileScroll(s) {
+  if (estado.mode !== "feature" || !s || !s.active) { if (_scrollDir) pararScroll(); return; }
+  iniciarScroll(s.dir < 0 ? -1 : 1);
 }
 
-/* ---- aplica um COMANDO recebido (do celular ou do teclado) ---- */
-function aplicarCmd(msg) {
-  switch (msg.action) {
-    case "scrollStart": // segura no celular → desliza devagar e contínuo
-      iniciarScroll(msg.dir === "up" ? -1 : 1);
-      return;
-    case "scrollStop": // soltou no celular → para
-      pararScroll();
-      return;
-    case "scroll": // salto discreto (fallback)
-      rolarFeature(msg.dir === "up" ? -1 : 1);
-      return;
-    case "next":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.min(SLIDES.length - 1, estado.slide + 1); break;
-    case "prev":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, estado.slide - 1); break;
-    case "goto":    estado.mode = "slides"; estado.feature = null; estado.slide = Math.max(0, Math.min(SLIDES.length - 1, msg.slide ?? 0)); break;
-    case "feature": estado.mode = "feature"; estado.feature = msg.feature ?? null; break;
-    case "slides":  estado.mode = "slides"; estado.feature = null; break;
-    case "blackout":estado.mode = estado.mode === "blackout" ? "slides" : "blackout"; break;
-    case "reset":   estado.slide = 0; estado.mode = "slides"; estado.feature = null; break;
-    default: return;
+/* ===================== TRANSPORTE: polling do relay interno ===================== */
+const API = "/api/apresentacao?canal=" + encodeURIComponent(CANAL);
+
+/* o telão espelha o estado do servidor (autoritativo) */
+let rev = -1, falhas = 0;
+async function tick() {
+  try {
+    const e = await (await fetch(API, { cache: "no-store" })).json();
+    falhas = 0; conn.classList.add("ok"); connTxt.textContent = "conectado";
+    reconcileScroll(e.scroll);
+    if (e.rev !== rev) {
+      rev = e.rev;
+      estado.mode = e.mode; estado.slide = e.slide; estado.feature = e.feature;
+      render();
+    }
+  } catch (err) {
+    if (++falhas > 2) { conn.classList.remove("ok"); connTxt.textContent = "reconectando…"; }
   }
-  render();
-  publicarEstado(); // devolve o estado para o celular refletir
 }
-
-/* ===================== TRANSPORTE via ntfy.sh ===================== */
-function publicarEstado() {
-  fetch("https://ntfy.sh/" + CANAL, {
-    method: "POST",
-    body: JSON.stringify({ kind: "state", slide: estado.slide, mode: estado.mode, feature: estado.feature, total: SLIDES.length }),
-  }).catch(() => {});
-}
-
-let source;
-function conectar() {
-  if (source) source.close();
-  connTxt.textContent = "conectando…"; conn.classList.remove("ok");
-  source = new EventSource("https://ntfy.sh/" + CANAL + "/sse");
-  source.onopen = () => { conn.classList.add("ok"); connTxt.textContent = "conectado"; publicarEstado(); };
-  source.onerror = () => { conn.classList.remove("ok"); connTxt.textContent = "reconectando…"; };
-  source.onmessage = (e) => {
-    try {
-      const outer = JSON.parse(e.data);
-      if (outer.event !== "message" || !outer.message) return;
-      const msg = JSON.parse(outer.message);
-      if (msg.kind !== "cmd") return; // ignora os próprios 'state'
-      aplicarCmd(msg);
-    } catch {}
-  };
-}
-conectar();
+setInterval(tick, 300);
+tick();
 render();
+
+/* envia um comando para o servidor (teclado = plano B) */
+function enviar(action, extra = {}) {
+  fetch(API, {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action, total: SLIDES.length, ...extra }),
+  }).then(() => tick()).catch(() => {});
+}
 
 /* ---- atalhos de teclado (plano B se o celular cair) ---- */
 addEventListener("keydown", (ev) => {
   switch (ev.key) {
-    case "ArrowRight": case "PageDown": case " ": aplicarCmd({ action: "next" }); break;
-    case "ArrowLeft": case "PageUp": aplicarCmd({ action: "prev" }); break;
-    case "Home": aplicarCmd({ action: "goto", slide: 0 }); break;
-    case "b": case "B": aplicarCmd({ action: "blackout" }); break;
-    case "Escape": aplicarCmd({ action: "slides" }); break;
+    case "ArrowRight": case "PageDown": case " ": enviar("next"); break;
+    case "ArrowLeft": case "PageUp": enviar("prev"); break;
+    case "Home": enviar("goto", { slide: 0 }); break;
+    case "b": case "B": enviar("blackout"); break;
+    case "Escape": enviar("slides"); break;
     case "f": case "F":
       if (!document.fullscreenElement) document.documentElement.requestFullscreen();
       else document.exitFullscreen();
