@@ -27,11 +27,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 const r = (p) => join(ROOT, p);
 const lerJSON = (p) => JSON.parse(readFileSync(r(p), "utf8"));
+const lerJSONsafe = (p) => { try { return lerJSON(p); } catch { return null; } };
 
 // --- 1. Dados reais do projeto --------------------------------------------
 const API_PROD = "https://hidrovia-dashboard-production.up.railway.app";
-const ana = lerJSON("data/ana-diario-cache.json");
-const enso = lerJSON("data/enso_cpc_cache.json");
+// ana-diario-cache.json e enso_cpc_cache.json são caches de runtime
+// (gitignored): só existem na máquina/volume que os gera. No CI o relatório
+// busca esses dados AO VIVO na API de produção; o load local abaixo é apenas
+// fallback e pode não existir num checkout limpo — por isso lerJSONsafe.
+const ana = lerJSONsafe("data/ana-diario-cache.json");
 
 // Cota de Manaus AO VIVO (telemetria adotada ANA via API de produção). Mantém o
 // relatório fresco mesmo com o cache local defasado. Fallback: cache diário.
@@ -43,8 +47,9 @@ async function cotaManausAoVivo() {
       return { cota_m: j.resumo.cota_m, variacao_24h: j.resumo.variacao_24h ?? 0, data: j.resumo.ultima_data, fonte: "ANA/HidroWeb (telemetria adotada, ao vivo)" };
     }
   } catch (e) { console.warn("[cota ao vivo] falhou, usando cache local:", e.message); }
-  const m = ana.dados.Manaus;
-  return { cota_m: m.cota_m, variacao_24h: m.variacao_24h, data: ana.data, fonte: "ANA/HidroWeb (cache diário)" };
+  const m = ana?.dados?.Manaus;
+  if (m) return { cota_m: m.cota_m, variacao_24h: m.variacao_24h, data: ana.data, fonte: "ANA/HidroWeb (cache diário)" };
+  throw new Error("cota de Manaus indisponível: a API ao vivo falhou e não há cache local (data/ana-diario-cache.json).");
 }
 const nav = lerJSON("public/data/antaq/dashboard/navegacao-series.json");
 let idn = null;
@@ -94,6 +99,26 @@ async function fetchSGB() {
   } catch (e) { console.warn("[SGB] indisponível:", e.message); return null; }
 }
 const sgb = await fetchSGB();
+
+// Advisory ENSO AO VIVO (CPC/NOAA) — via API de produção, que lê o cache do
+// volume (mensal, alimentado por /api/cron/refresh-enso). No CI o cache local
+// é gitignored e não existe; aqui buscamos ao vivo, com fallback para o cache
+// local (quando presente) e, em último caso, um placeholder honesto que NÃO
+// inventa status climático — só evita quebrar o relatório.
+async function ensoAoVivo() {
+  try {
+    const res = await fetch(`${API_PROD}/api/enso`, { signal: AbortSignal.timeout(30000) });
+    if (res.ok) {
+      const j = await res.json();
+      if (j?.status) return j;
+    }
+  } catch (e) { console.warn("[ENSO ao vivo] falhou, usando cache local:", e.message); }
+  const local = lerJSONsafe("data/enso_cpc_cache.json");
+  if (local?.status) return local;
+  console.warn("[ENSO] indisponível (API e cache local) — relatório sai sem o advisory.");
+  return { status: "Monitoramento ENSO", data_emissao: null, sintese_pt: "advisory CPC/NOAA indisponível nesta edição", proxima_atualizacao: null };
+}
+const enso = await ensoAoVivo();
 const diasEntre = (aISO, bISO) => Math.round((Date.UTC(...aISO.split("-").map((x, i) => i === 1 ? +x - 1 : +x)) - Date.UTC(...bISO.split("-").map((x, i) => i === 1 ? +x - 1 : +x))) / 864e5);
 
 // RECESSAO_CALIBRADA — constantes do bloco auto-gerado
@@ -148,6 +173,9 @@ const proj = projetaRecessao(PICO_COTA, PICO_ISO, 199, GATILHO);
 // --- 3. Helpers de formatação ---------------------------------------------
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
 const fmtData = (iso) => { if (!iso) return "não cruza"; const [, m, d] = iso.split("-"); return `${d}/${MESES[+m - 1]}`; };
+// Datas do advisory ENSO: "não cruza" (de fmtData) não faz sentido como data
+// de emissão. No fallback sem advisory, renderiza "—" em vez de uma data falsa.
+const fmtDataEnso = (iso) => iso ? fmtData(iso) : "—";
 const m1 = (x) => x == null ? "—" : x.toFixed(1).replace(".", ",");
 const m2 = (x) => x == null ? "—" : x.toFixed(2).replace(".", ",");
 const man = await cotaManausAoVivo();
@@ -425,7 +453,7 @@ ul.sinais li{margin-bottom:5px;}
 
 <section class="avoid">
   <h2 class="sec"><span class="n">2.</span> O driver climático do segundo semestre</h2>
-  <p><strong>${enso.status} (CPC/NOAA, ${fmtData(enso.data_emissao)}):</strong> ${enso.sintese_pt}. A janela de emergência do El Niño coincide exatamente com a vazante — set/out/nov.</p>
+  <p><strong>${enso.status} (CPC/NOAA, ${fmtDataEnso(enso.data_emissao)}):</strong> ${enso.sintese_pt}. A janela de emergência do El Niño coincide exatamente com a vazante — set/out/nov.</p>
   <p>El Niño no norte da Amazônia significa <strong>menos chuva nas cabeceiras, vazante mais rápida e mínima mais profunda</strong>. Foi o motor do colapso de 2023. O sinal já aparece nos instrumentos do Observatório: o <strong>IDN</strong> (Índice de Dessincronização Norte–Sul) está em <strong>${idn ? "+" + m2(idn.idn) : "+0,29"}</strong>, em regime <em>Driver Norte</em> — Negro e Branco mais depletados que a bacia sul, o padrão típico de anos de El Niño.</p>
 </section>
 
@@ -473,7 +501,7 @@ ul.sinais li{margin-bottom:5px;}
 <section class="avoid">
   <h2 class="sec"><span class="n">6.</span> O que pode mover a data — e para onde olhamos</h2>
   <ul class="sinais">
-    <li><strong>ENSO update CPC (próx. ${fmtData(enso.proxima_atualizacao)})</strong> — se o El Niño firmar antes de set, a restrição antecipa e o piso aprofunda.</li>
+    <li><strong>ENSO update CPC (próx. ${fmtDataEnso(enso.proxima_atualizacao)})</strong> — se o El Niño firmar antes de set, a restrição antecipa e o piso aprofunda.</li>
     <li><strong>Velocidade da vazante de Itacoatiara em jul–ago</strong> — descida rápida puxa o cruzamento dos ${m1(ALVO)} m para a borda inicial da faixa (${fmtISO(REST.p10)}).</li>
     <li><strong>Próximo pico real da cheia</strong> — acima de ${m2(PICO_COTA)} m abre folga; abaixo, encurta a janela até a restrição.</li>
   </ul>
@@ -486,7 +514,7 @@ ul.sinais li{margin-bottom:5px;}
 </div>
 
 <div class="fontes avoid">
-  <b>Fontes oficiais.</b> Capitania dos Portos da Amazônia Ocidental — CMR (Calado Máximo Recomendado) diário no canal de Tabocal/Itacoatiara. &nbsp; ANA/HidroWeb — cotas de Itacoatiara e Manaus, leitura de ${fmtData(hoje)}. &nbsp; SGB/CPRM — ${sgb ? `${sgb.numero}º Boletim de Alerta Hidrológico da Bacia do Amazonas (${fmtData(sgb.data)})` : prev.fonte}. &nbsp; NOAA/CPC — ENSO Diagnostic Discussion (${fmtData(enso.data_emissao)}). &nbsp; ANTAQ — Estatística Aquaviária: cabotagem conteinerizada do AM em TEU.
+  <b>Fontes oficiais.</b> Capitania dos Portos da Amazônia Ocidental — CMR (Calado Máximo Recomendado) diário no canal de Tabocal/Itacoatiara. &nbsp; ANA/HidroWeb — cotas de Itacoatiara e Manaus, leitura de ${fmtData(hoje)}. &nbsp; SGB/CPRM — ${sgb ? `${sgb.numero}º Boletim de Alerta Hidrológico da Bacia do Amazonas (${fmtData(sgb.data)})` : prev.fonte}. &nbsp; NOAA/CPC — ENSO Diagnostic Discussion (${fmtDataEnso(enso.data_emissao)}). &nbsp; ANTAQ — Estatística Aquaviária: cabotagem conteinerizada do AM em TEU.
   <div class="metod"><b style="font-style:normal">Nota metodológica.</b> <u>Calado:</u> a projeção de Itacoatiara é <strong>multi-driver</strong> — um ensemble de análogos (10 anos) ponderado pela semelhança do estado conjunto dos formadores (Solimões/Manacapuru, Negro/Manaus, Madeira/Humaitá), via z-score do dia de referência; a cota projetada é passada pela curva oficial cota→CMR da Capitania (187 obs). O CMR oficial é publicado na faixa de águas baixas (até ~12,5 m); na cheia o canal não restringe — por isso o calado de hoje aparece como "folgado", não como um número de CMR. Pesos dos drivers: Madeira 0,30 · Solimões 0,30 · Negro 0,20 · Itacoatiara 0,20. <u>Carga:</u> a função de transferência pareia o calado mínimo do ano (CMR) com a cabotagem conteinerizada real do AM (proxy de Manaus; os contêineres entram pelos terminais privados de Itacoatiara/Manaus, não sob o rótulo "Porto de Manaus"), 2018–2025. Efeito-seca medido relativo ao regime de calado folgado; base = recorde realizado de 2025 (${milTEU(cmr.base_2025_teu)} TEU). Amostra curta (n≈8–10) e regional, com poucas observações na faixa de calado 6–9 m — ordem de grandeza, não precisão. Boletim de antecipação, revisto a cada novo dado.</div>
 </div>
 
