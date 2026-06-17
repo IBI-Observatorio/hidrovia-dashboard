@@ -20,6 +20,8 @@
     padding: env(safe-area-inset-top) 14px env(safe-area-inset-bottom);
     display: flex; flex-direction: column; gap: 12px; user-select: none;
     overflow-x: hidden;
+    touch-action: manipulation;     /* remove o zoom de duplo-toque sem quebrar os toques */
+    overscroll-behavior: none;      /* sem bounce / pull-to-refresh */
   }
 
   /* barra de status */
@@ -235,8 +237,13 @@ document.getElementById("reconectar").onclick = () => {
 
 conectar();
 
-/* evita scroll-bounce atrapalhar os toques */
-document.addEventListener("touchmove", (e) => { if (e.target === document.body) e.preventDefault(); }, { passive: false });
+/* trava o zoom no celular (pinça + gesto do Safari) e evita bounce do scroll */
+document.addEventListener("touchmove", (e) => {
+  if (e.touches.length > 1) { e.preventDefault(); return; } // pinça (2 dedos)
+  if (e.target === document.body) e.preventDefault();        // bounce do scroll
+}, { passive: false });
+["gesturestart", "gesturechange", "gestureend"].forEach((ev) =>
+  document.addEventListener(ev, (e) => e.preventDefault(), { passive: false }));
 </script>
 </body>
 </html>
