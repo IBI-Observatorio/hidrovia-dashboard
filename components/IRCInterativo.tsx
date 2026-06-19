@@ -383,15 +383,21 @@ function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPa
     );
   }
 
-  const data_headline = eta_an.data_p50;
-  // dias contados de HOJE até a data do cruzamento (não da data do último dado, que tem lag)
-  const dias_headline = (() => {
-    if (!data_headline) return eta_an.dias_p50;
+  // dias contados de HOJE até uma data ISO (não da data do último dado, que tem lag).
+  // Usado tanto no headline quanto na banda P10/P50/P90 — senão a contagem "trava".
+  const diasDeHoje = (dataISO: string | null, fallback: number | null): number | null => {
+    if (!dataISO) return fallback;
     const ymd = (y: number, m: number, d: number) => Math.floor(Date.UTC(y, m - 1, d) / 86400000);
     const n = new Date();
-    const [ay, am, ad] = data_headline.split("-").map(Number);
+    const [ay, am, ad] = dataISO.split("-").map(Number);
     return ymd(ay, am, ad) - ymd(n.getFullYear(), n.getMonth() + 1, n.getDate());
-  })();
+  };
+
+  const data_headline = eta_an.data_p50;
+  const dias_headline = diasDeHoje(data_headline, eta_an.dias_p50) ?? eta_an.dias_p50;
+  const dias_p10 = diasDeHoje(eta_an.data_p10, eta_an.dias_p10);
+  const dias_p50 = diasDeHoje(eta_an.data_p50, eta_an.dias_p50);
+  const dias_p90 = diasDeHoje(eta_an.data_p90, eta_an.dias_p90);
 
   const urgencia = dias_headline <= 30 ? "vermelho"
                  : dias_headline <= 90 ? "ouro"
@@ -441,21 +447,21 @@ function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPa
             <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P10 precoce</p>
             <p className="text-white font-semibold">
               {formataDataLonga(eta_an.data_p10)}
-              {eta_an.dias_p10 != null && <span className="text-gray-400 ml-1">· {eta_an.dias_p10}d</span>}
+              {dias_p10 != null && <span className="text-gray-400 ml-1">· {dias_p10}d</span>}
             </p>
           </div>
           <div className="bg-verde/15 rounded p-2 border border-verde/30">
             <p className="text-verde uppercase tracking-wider text-[10px] mb-0.5">P50 mediana</p>
             <p className="text-white font-bold">
               {formataDataLonga(eta_an.data_p50)}
-              {eta_an.dias_p50 != null && <span className="text-gray-300 ml-1">· {eta_an.dias_p50}d</span>}
+              {dias_p50 != null && <span className="text-gray-300 ml-1">· {dias_p50}d</span>}
             </p>
           </div>
           <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
             <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P90 tardia</p>
             <p className="text-white font-semibold">
               {formataDataLonga(eta_an.data_p90)}
-              {eta_an.dias_p90 != null && <span className="text-gray-400 ml-1">· {eta_an.dias_p90}d</span>}
+              {dias_p90 != null && <span className="text-gray-400 ml-1">· {dias_p90}d</span>}
             </p>
           </div>
         </div>
