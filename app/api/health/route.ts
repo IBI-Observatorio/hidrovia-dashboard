@@ -86,12 +86,29 @@ export async function GET() {
     };
   }
 
-  // ── SGB/SACE: informativo (cadência irregular do boletim; tem fallback) ─────
+  // ── SGB/SACE: semanal (boletim publica terça, às vezes só à noite/quarta) ────
+  // O refresh roda de hora em hora terça-tarde → quarta. Toleramos até 8 dias de
+  // idade (cobre uma terça + a janela de atraso até quarta). Acima disso, uma
+  // terça foi perdida de verdade → marca ok:false para o watchdog avisar.
   const sgb = lerJSON(join(DATA_DIR, "boletins_sgb_cache.json"));
   const ultimoSgb = sgb?.boletins?.[sgb.boletins.length - 1];
-  checks.sgb = ultimoSgb
-    ? { ok: true, numero: ultimoSgb.numero ?? null, data: ultimoSgb.data ?? null, total: sgb.total ?? sgb.boletins.length, detalhe: `boletim ${ultimoSgb.numero ?? "?"} de ${ultimoSgb.data}` }
-    : { ok: true, presente: false, detalhe: "sem cache SGB — previsão usando fallback" };
+  if (!ultimoSgb?.data) {
+    checks.sgb = { ok: false, presente: false, detalhe: "sem cache SGB — previsão usando fallback" };
+  } else {
+    const dias = diasDesde(ultimoSgb.data + "T00:00:00Z");
+    const ok = dias <= 8;
+    checks.sgb = {
+      ok,
+      numero: ultimoSgb.numero ?? null,
+      data: ultimoSgb.data,
+      total: sgb.total ?? sgb.boletins.length,
+      dias,
+      limite_dias: 8,
+      detalhe: ok
+        ? `boletim ${ultimoSgb.numero ?? "?"} de ${ultimoSgb.data} (há ${dias} dia(s))`
+        : `boletim ${ultimoSgb.numero ?? "?"} de ${ultimoSgb.data} ATRASADO — há ${dias} dias (limite 8); refresh terça→quarta não achou boletim novo`,
+    };
+  }
 
   // ── Portos: informativo (mensal, com lag ANTAQ — não derruba o ok) ──────────
   const portos = lerJSON(join(process.cwd(), "public", "data", "antaq", "dashboard", "portos-series.json"));

@@ -25,7 +25,7 @@ O schedule só vale a partir da branch `main`. Todos têm botão **Run workflow*
 | **Réguas / níveis** | diário 13:00 | `reguas-diario.yml` | `POST /api/cron/refresh-reguas` → busca ANA ao vivo, grava `ana-diario-cache.json` no volume. Atualiza os cards de cota do `/monitor` |
 | **Série IDN** | terça 10:00 | `idn-semanal.yml` | Roda `atualiza-idn-series.mjs` (API ANA), **commita** `data/ana-idn-series.json` e dispara o deploy. Gráfico IDN histórico |
 | **Série Itacoatiara** | terça 10:20 | `itacoatiara-semanal.yml` | Roda `atualiza-itacoatiara-series.mjs` (API ANA, estação 16030000), faz merge em `data/itacoatiara_hidroweb.csv`, regenera `lib/itacoatiara-historico-diario.ts`, **commita** e dispara o deploy. Alimenta o **ETA por análogos** do topo do `/monitor` (IRC) |
-| **SACE/SGB** | terça 12:00 | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia |
+| **SACE/SGB** | **de hora em hora** terça 17–23h UTC + quarta 0–21h UTC | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia. SGB publica em horário irregular (já saiu só às 22h UTC) → tenta de hora em hora até quarta; passadas sem boletim novo saem verdes (dedup). **Quem avisa se a terça foi perdida é o watchdog** (via `/api/health`, não mais o próprio workflow) |
 | **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + Claude **Haiku 4.5**, grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
 | **ENSO** | quinta 17:00 | `enso-mensal.yml` | `POST /api/cron/refresh-enso` → Railway raspa CPC/NOAA, grava `enso_cpc_cache.json`. (Roda toda quinta; idempotente — CPC publica na 2ª quinta) |
 | **Briefing** | quarta 13:00 | `briefing-semanal.yml` | `POST /api/cron/briefing` → regenera o briefing editorial da semana, grava `briefings/YYYY-WW.json` no volume |
@@ -65,7 +65,10 @@ cache sumiria a cada deploy. Caches no volume: `ana-diario-cache.json`,
    sucesso (réguas ≤30h; insights/IDN/Itacoatiara/ENSO/SGB/briefing ≤8d; portos ≤40d — pega
    falha e parada silenciosa; deploy só falha-na-última, por ser gatilho de push).
 2. **"Dado fresco?"** — bate em **`GET /api/health`**, que reporta a idade real dos
-   caches no volume (pega a falha silenciosa: job verde, dado velho).
+   caches no volume (pega a falha silenciosa: job verde, dado velho). **O check
+   `sgb` é gated por idade** (`ok:false` se o último boletim tem > 8 dias): como o
+   refresh roda de hora em hora e sai verde mesmo sem boletim novo, é por aqui (e
+   não pelo job) que o watchdog detecta uma terça perdida.
 
 Se algo falha: **abre/atualiza uma issue** (label `healthcheck`) **e falha o run**
 (o GitHub manda e-mail). Quando normaliza, **fecha a issue sozinho**.
@@ -246,6 +249,15 @@ boletins do Amazonas em `sgb.gov.br`, baixa o PDF mais recente do mês, parseia 
 `parseBoletimSGB` (`lib/sgb-parser.ts`) e grava `boletins_sgb_cache.json` no volume
 (dedup por número+data, mantém 30). Consumido por `fetchPrevisao2026()` (previsão
 de cheia da home/`/monitor`/briefing); fallback: `PREVISAO_2026` hardcoded.
+
+> **Cadência (revisto jun/2026):** o SGB publica na terça, mas em horário
+> irregular — em 16/jun/2026 só saiu às ~22h UTC, **depois** das 2 tentativas do
+> cron antigo (17h+18h UTC), que então falhou e abriu issue à toa. Agora o refresh
+> roda **de hora em hora** (terça 17–23h UTC + quarta 0–21h UTC). Passadas sem
+> boletim novo retornam `mudou:false` e **saem verdes** (dedup). O workflow **não
+> abre mais issue** quando não acha; quem avisa de uma terça perdida é o **watchdog**
+> (o `/api/health` marca `checks.sgb.ok:false` quando o último boletim passa de 8
+> dias → o watchdog abre issue `healthcheck` + e-mail, tipicamente na quinta).
 
 Upload manual de um PDF avulso ainda funciona: `POST /api/sgb` (header
 `x-admin-password`). Script CLI (raspa as 5 bacias + gera `public/data/sace/...`):
