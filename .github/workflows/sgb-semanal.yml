@@ -4,17 +4,22 @@ name: Refresh boletim SGB (SACE)
 # Amazonas no sgb.gov.br, baixa o PDF mais recente, parseia (parseBoletimSGB) e
 # grava boletins_sgb_cache.json no volume DATA_DIR — de onde fetchPrevisao2026 le
 # a previsao de cheia (home, /monitor, briefing). O Railway faz o fetch do SGB;
-# este workflow so dispara. Substitui o pipeline-sace.py do run-pipeline-sace.bat.
+# este workflow so dispara.
 #
-# Cadencia: terca 17:00 UTC (13:00 Manaus) — SGB costuma publicar ~16h UTC.
-# Se nao houver boletim novo, aguarda 1h e tenta de novo (total: ate 18:00 UTC).
-# Sem boletim apos 2 tentativas: cria issue de alerta (label boletim-sgb).
-# Dedup por numero+data, entao re-runs sem boletim novo sao inofensivos.
+# Cadencia: o SGB publica na terca, mas com horario IRREGULAR — ja saiu de 14h a
+# 19h de Manaus (18:00–23:00 UTC) e, em jun/2026, so a noite (22h UTC), depois da
+# janela do cron antigo. Por isso roda DE HORA EM HORA da terca-tarde ate quarta:
+#   - terca  17:00–23:00 UTC (13h–19h Manaus) — janela tipica de publicacao
+#   - quarta 00:00–21:00 UTC                  — rede de seguranca ate quarta
+# Dedup por numero+data: passadas sem boletim novo retornam mudou=false e saem
+# VERDES (inofensivas). Quem AVISA se a terca foi perdida e' o sistema imunologico
+# (watchdog), via /api/health (checks.sgb fica ok:false acima de 8 dias de idade).
 # Tambem roda sob demanda (workflow_dispatch).
 
 on:
   schedule:
-    - cron: "0 17 * * 2"   # terca 17:00 UTC (13:00 Manaus)
+    - cron: "0 17-23 * * 2"   # terca 17:00–23:00 UTC (13h–19h Manaus)
+    - cron: "0 0-21 * * 3"    # quarta 00:00–21:00 UTC (rede de seguranca)
   workflow_dispatch:
 
 concurrency:
@@ -29,7 +34,7 @@ jobs:
   dispara:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispara /api/cron/refresh-sgb (com retry 1h)
+      - name: Dispara /api/cron/refresh-sgb
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
@@ -42,68 +47,36 @@ jobs:
             exit 1
           fi
 
-          chamar_cron() {
-            echo "POST ${BASE_URL}/api/cron/refresh-sgb"
-            http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
-              --retry 3 --retry-all-errors --retry-delay 20 --max-time 120 \
-              -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
-              "${BASE_URL}/api/cron/refresh-sgb")
-            echo "HTTP ${http}"
-            cat /tmp/resp.json || true
-            echo
-            if [ "${http}" != "200" ]; then
-              echo "::error::Esperado HTTP 200, recebido ${http}."
-              exit 1
+          echo "POST ${BASE_URL}/api/cron/refresh-sgb"
+          http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+            --retry 3 --retry-all-errors --retry-delay 20 --max-time 120 \
+            -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${BASE_URL}/api/cron/refresh-sgb")
+          echo "HTTP ${http}"
+          cat /tmp/resp.json || true
+          echo
+
+          # HTTP != 200 = falha real do raspador/parser (SGB fora do ar, PDF
+          # corrompido). Falha o run; se for a ultima passada da janela, o
+          # watchdog tambem pega pela frescura do dado.
+          if [ "${http}" != "200" ]; then
+            echo "::error::Esperado HTTP 200, recebido ${http}."
+            exit 1
+          fi
+
+          if [ "$(jq -r '.mudou' /tmp/resp.json)" = "true" ]; then
+            echo "✅ Boletim novo carregado: $(jq -r '.mensagem' /tmp/resp.json)"
+            # Fecha o alerta anterior (label boletim-sgb), se houver algum aberto.
+            n=$(gh issue list --repo "${REPO}" --label boletim-sgb --state open \
+                  --json number -q '.[0].number // empty')
+            if [ -n "${n}" ]; then
+              gh issue close "${n}" --repo "${REPO}" \
+                --comment "✅ Boletim carregado em $(date -u +%FT%TZ): $(jq -r '.mensagem' /tmp/resp.json)"
             fi
-          }
-
-          # 1a tentativa (17:00 UTC)
-          chamar_cron
-          if [ "$(jq -r '.mudou' /tmp/resp.json)" = "true" ]; then
-            echo "✅ Boletim novo encontrado na 1ª tentativa."
             exit 0
           fi
 
-          # Boletim ainda nao publicado — aguarda 1h e tenta de novo
-          echo "⏳ Nenhum boletim novo. Aguardando 1h para 2ª tentativa..."
-          sleep 3600
-
-          # 2a tentativa (~18:00 UTC)
-          chamar_cron
-          if [ "$(jq -r '.mudou' /tmp/resp.json)" = "true" ]; then
-            echo "✅ Boletim novo encontrado na 2ª tentativa."
-            exit 0
-          fi
-
-          # Ainda sem boletim — cria/atualiza issue de alerta
-          echo "🚨 Boletim SGB nao encontrado apos 2 tentativas (17h e 18h UTC)."
-          gh label create boletim-sgb --repo "${REPO}" \
-            --color FF8C00 --description "Boletim SGB/CPRM nao encontrado" --force || true
-
-          BODY="🚨 **Boletim SGB não encontrado** — $(date -u +%FT%TZ)
-
-          O cron rodou às 17:00 UTC e às 18:00 UTC (terça) mas não encontrou boletim novo. O /monitor ainda exibe o boletim anterior.
-
-          Última resposta da API:
-          \`\`\`json
-          $(cat /tmp/resp.json)
-          \`\`\`
-
-          **Possíveis causas:** SGB atrasou a publicação, PDF com nome inesperado, ou problema no parser.
-          **Ação sugerida:** acesse a [listagem do SACE Amazonas](https://www.sgb.gov.br/sace/amazonas_boletins.php) e, se o PDF existir, acione \`workflow_dispatch\` novamente.
-
-          _Gerado automaticamente pelo workflow sgb-semanal._"
-
-          n=$(gh issue list --repo "${REPO}" --label boletim-sgb --state open \
-                --json number -q '.[0].number // empty')
-          if [ -z "${n}" ]; then
-            gh issue create --repo "${REPO}" \
-              --title "🚨 Boletim SGB/CPRM não encontrado ($(date -u +%Y-%m-%d))" \
-              --label boletim-sgb \
-              --body "${BODY}"
-          else
-            gh issue comment "${n}" --repo "${REPO}" --body "${BODY}"
-          fi
-
-          echo "::error::Boletim SGB nao encontrado apos 2 tentativas. Issue criada/atualizada."
-          exit 1
+          # Sem boletim novo nesta passada (dedup) — esperado nas rodadas antes da
+          # publicacao do SGB. Sai verde; a proxima rodada horaria tenta de novo.
+          echo "ℹ️ Nenhum boletim novo nesta passada. Próxima tentativa no próximo horário agendado (de hora em hora até quarta)."
+          exit 0
