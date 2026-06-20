@@ -8,21 +8,15 @@
 
 import { useState, useEffect, useMemo } from "react";
 import {
-  calculaIRCTabocal,
-  divergenciaIRC,
-  COR_FAIXA_TABOCAL,
   type SnapshotIRCTabocal,
 } from "@/lib/irc-tabocal";
 import {
-  cmrDeItacoatiara,
   cotaItaParaCMR,
-  deficitCalado,
-  reducaoCargaToneladas,
 } from "@/lib/cmr-itacoatiara";
 import { projetaETAporAnalogos } from "@/lib/recessao-analogos";
 import { ITACOATIARA_HISTORICO_DIARIO } from "@/lib/itacoatiara-historico-diario";
 import type { ResultadoIRC_Estendido } from "@/lib/irc";
-import { Anchor, AlertTriangle, CheckCircle2, Calendar } from "lucide-react";
+import { Anchor, Calendar } from "lucide-react";
 
 interface Props {
   snapshotBase: Omit<SnapshotIRCTabocal, "calado_alvo_m">;
@@ -40,20 +34,6 @@ interface Props {
 const STORAGE_KEY = "irc:caladoAlvo";
 const DEFAULT_CALADO = 11.0;
 
-const CORES_DIV = {
-  alinhado:               { bg: "bg-verde/10 border-verde/40",     texto: "text-verde",     icone: CheckCircle2 },
-  subestimacao_leve:      { bg: "bg-ouro/10 border-ouro/40",       texto: "text-ouro",      icone: AlertTriangle },
-  subestimacao_alta:      { bg: "bg-orange-500/10 border-orange-500/40", texto: "text-orange-400", icone: AlertTriangle },
-  subestimacao_critica:   { bg: "bg-vermelho/10 border-vermelho/40", texto: "text-vermelho",  icone: AlertTriangle },
-} as const;
-
-const LABEL_SINAL = {
-  alinhado:             "Parâmetro alinhado",
-  subestimacao_leve:    "ANTAQ subestima leve",
-  subestimacao_alta:    "ANTAQ subestima ALTO",
-  subestimacao_critica: "ANTAQ subestima CRÍTICO",
-} as const;
-
 const PRESETS: { label: string; valor: number; descricao: string }[] = [
   { label: "Conservador",  valor:  8.0, descricao: "Comboios pequenos / regime de estiagem" },
   { label: "Moderado",     valor:  9.5, descricao: "Operação típica em vazante" },
@@ -62,9 +42,6 @@ const PRESETS: { label: string; valor: number; descricao: string }[] = [
 ];
 
 export default function IRCInterativo({
-  snapshotBase,
-  irc_manaus,
-  irc_manaus_faixa,
   isAssinante,
   nomeAssinante,
   calado_min = 7.0,
@@ -100,14 +77,8 @@ export default function IRCInterativo({
     localStorage.setItem(STORAGE_KEY, calado.toString());
   }, [calado, carregouInicial, isAssinante]);
 
-  // Recálculo do IRC + ETA via análogos
-  const { r, divergencia, cmr, deficit, ton_perdidas, cotaItaAlvo_m, eta_an } = useMemo(() => {
-    const snap: SnapshotIRCTabocal = { ...snapshotBase, calado_alvo_m: calado };
-    const r = calculaIRCTabocal(snap);
-    const divergencia = divergenciaIRC(irc_manaus, r.irc);
-    const cmr = cmrDeItacoatiara(snapshotBase.cotaItacoatiara_m);
-    const deficit = deficitCalado(snapshotBase.cotaItacoatiara_m, calado);
-    const ton_perdidas = reducaoCargaToneladas(snapshotBase.cotaItacoatiara_m, calado);
+  // ETA via análogos (calado-alvo → cruzamento projetado)
+  const { cotaItaAlvo_m, eta_an } = useMemo(() => {
     // Cota ITA que produz CMR = calado (referência operacional)
     const cotaItaAlvo_m = cotaItaParaCMR(calado);
     // ETA via ANÁLOGOS HISTÓRICOS — empirical forecasting baseado em 2016-2025.
@@ -117,13 +88,8 @@ export default function IRCInterativo({
     const eta_an = serie2026.length >= 30
       ? projetaETAporAnalogos(serie2026, calado, 60, 0.5, 300)
       : null;
-    return { r, divergencia, cmr, deficit, ton_perdidas, cotaItaAlvo_m, eta_an };
-  }, [snapshotBase, irc_manaus, calado]);
-
-  const corT = COR_FAIXA_TABOCAL[r.faixa];
-  const corM = COR_FAIXA_TABOCAL[irc_manaus_faixa];
-  const corD = CORES_DIV[divergencia.sinal_regulatorio];
-  const Icone = corD.icone;
+    return { cotaItaAlvo_m, eta_an };
+  }, [calado]);
 
   const copiarLink = () => {
     if (typeof window === "undefined") return;
@@ -232,115 +198,6 @@ export default function IRCInterativo({
       {/* ── PAINEL ETA ── */}
       <DataETAPainel eta_an={eta_an} cotaItaAlvo_m={cotaItaAlvo_m} calado={calado} isAssinante={isAssinante} />
 
-      {/* ── 3 PAINÉIS ── */}
-      <div className="grid md:grid-cols-3 gap-4">
-        {/* IRC-Tabocal */}
-        <div className={`rounded-lg p-4 border ${corT.border} ${corT.bg}`}>
-          <p className="text-[10px] uppercase tracking-widest font-bold mb-1 text-gray-300">
-            IRC-Tabocal · operacional
-          </p>
-          <div className="flex items-baseline gap-2">
-            <span className={`text-5xl font-extrabold tabular-nums ${corT.texto}`}>
-              {r.irc.toFixed(0)}
-            </span>
-            <span className="text-gray-500 text-sm">/100</span>
-          </div>
-          <p className={`text-xs font-semibold uppercase tracking-wider mt-1 ${corT.texto}`}>
-            Faixa {r.faixa}
-          </p>
-          <p className="text-gray-400 text-[10px] mt-2">
-            Itacoatiara: <strong className="text-gray-300">{snapshotBase.cotaItacoatiara_m.toFixed(2)} m</strong>
-          </p>
-          <p className="text-gray-400 text-[10px]">
-            <strong className="text-white">CMR oficial</strong>: <strong className="text-verde">{cmr.toFixed(2)} m</strong>
-            {" · seu alvo: "}<strong className="text-gray-300">{calado.toFixed(1)} m</strong>
-          </p>
-          <p className="text-gray-400 text-[10px]">
-            Déficit calado: <strong className={deficit > 2 ? "text-vermelho" : deficit > 0 ? "text-ouro" : "text-verde"}>
-              {deficit.toFixed(2)} m
-            </strong>
-          </p>
-          {ton_perdidas > 0 && (
-            <p className="text-vermelho text-[11px] mt-2 font-semibold">
-              ≈ {(ton_perdidas / 1000).toFixed(0)} mil ton perdidas por comboio
-            </p>
-          )}
-        </div>
-
-        {/* IRC-Manaus (referência regulatória — fixo em SSR) */}
-        <div className={`rounded-lg p-4 border ${corM.border} ${corM.bg} opacity-90`}>
-          <p className="text-[10px] uppercase tracking-widest font-bold mb-1 text-gray-400">
-            IRC-Manaus · parâmetro ANTAQ
-          </p>
-          <div className="flex items-baseline gap-2">
-            <span className={`text-4xl font-bold tabular-nums ${corM.texto}`}>
-              {irc_manaus.toFixed(0)}
-            </span>
-            <span className="text-gray-500 text-sm">/100</span>
-          </div>
-          <p className={`text-xs font-semibold uppercase tracking-wider mt-1 ${corM.texto}`}>
-            Faixa {irc_manaus_faixa}
-          </p>
-          <p className="text-gray-400 text-[10px] mt-2">
-            Manaus: <strong className="text-gray-300">{snapshotBase.cotaManaus_m.toFixed(2)} m</strong>
-          </p>
-          <p className="text-gray-400 text-[10px]">
-            Gatilho LWS: <strong className="text-gray-300">17,7 m</strong>
-          </p>
-          <p className="text-gray-500 text-[10px] mt-2">
-            Mantido para referência ao parâmetro regulatório formal — não depende do calado-alvo.
-          </p>
-        </div>
-
-        {/* Divergência regulatória */}
-        <div className={`rounded-lg p-4 border ${corD.bg}`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Icone size={14} className={corD.texto} />
-            <p className={`text-[10px] uppercase tracking-widest font-bold ${corD.texto}`}>
-              Sinal regulatório
-            </p>
-          </div>
-          <p className={`text-2xl font-bold ${corD.texto}`}>
-            {divergencia.diferenca >= 0 ? "+" : ""}{divergencia.diferenca.toFixed(0)} pts
-          </p>
-          <p className={`text-xs font-semibold uppercase tracking-wider mt-1 ${corD.texto}`}>
-            {LABEL_SINAL[divergencia.sinal_regulatorio]}
-          </p>
-          <p className="text-gray-300 text-[11px] mt-2 leading-relaxed">
-            {divergencia.interpretacao}
-          </p>
-        </div>
-      </div>
-
-      {/* ── Decomposição IRC-Tabocal ── */}
-      <div className="mt-4 pt-4 border-t border-white/5">
-        <p className="text-gray-500 text-[10px] uppercase tracking-widest font-bold mb-2">
-          Decomposição IRC-Tabocal (peso × valor)
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-[11px]">
-          {[
-            { rotulo: "Calado",  valor: r.componentes.calado_tabocal,  peso: r.pesos_efetivos.calado_tabocal },
-            { rotulo: "HMM",     valor: r.componentes.hmm_extremo,     peso: r.pesos_efetivos.hmm_extremo },
-            { rotulo: "Onda",    valor: r.componentes.onda_branco,     peso: r.pesos_efetivos.onda_branco },
-            { rotulo: "Anom PP", valor: r.componentes.anomalia_pp,     peso: r.pesos_efetivos.anomalia_pp },
-            { rotulo: "Lag op.", valor: r.componentes.lag_operacional, peso: r.pesos_efetivos.lag_operacional },
-          ].map((c) => (
-            <div key={c.rotulo} className="bg-azul-marinho rounded p-2" title={`${(c.peso*100).toFixed(0)}% × ${c.valor.toFixed(0)} = ${(c.peso*c.valor).toFixed(1)} pts`}>
-              <p className="text-gray-500 text-[10px]">{c.rotulo}</p>
-              <p className="text-white font-semibold tabular-nums">{c.valor.toFixed(0)}<span className="text-gray-600 text-[9px]">×{(c.peso*100).toFixed(0)}%</span></p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <p className="text-gray-500 text-[11px] mt-4 leading-relaxed">
-        <strong className="text-gray-400">v3.3:</strong> componente principal usa a curva oficial do CMR (Capitania
-        dos Portos da Amazônia Ocidental, 187 observações). Pesos calibrados contra 21 eventos rotulados
-        (ρ Spearman 0,85 · AUC 1,00 perfeita).
-        {isAssinante
-          ? " Como assinante, você pode parametrizar o calado-alvo da sua operação — escolha lembrada entre visitas."
-          : " A versão gratuita usa calado-alvo padrão de 11m. Assinantes parametrizam para refletir o calado dos seus comboios."}
-      </p>
     </div>
   );
 }
