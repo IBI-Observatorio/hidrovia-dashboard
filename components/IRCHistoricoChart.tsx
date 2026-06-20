@@ -52,7 +52,7 @@ export default function IRCHistoricoChart() {
           <Tooltip
             contentStyle={{ background: "#0A1A4A", border: "1px solid #1B3A6B", fontSize: 12 }}
             labelStyle={{ color: "#94a3b8" }}
-            labelFormatter={fmtDataBR}
+            labelFormatter={(l) => fmtDataBR(String(l))}
           />
           <Line
             type="monotone"
