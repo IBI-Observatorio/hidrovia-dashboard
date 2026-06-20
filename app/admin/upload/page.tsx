@@ -237,7 +237,7 @@ export default function AdminUploadPage() {
                   {historico.slice().reverse().map((b, i) => (
                     <div key={i} className="flex items-center justify-between text-sm border-b border-white/5 pb-1">
                       <span className="text-white">
-                        {b.numero ?? "?"}° Boletim SAH — {b.data}
+                        {b.numero ?? "?"}° Boletim SAH — {b.data.split("-").reverse().join("/")}
                       </span>
                       <span className="text-gray-400 text-xs">
                         {b.previsoes.length}/4 previsões · {b.estacoes.length} estações

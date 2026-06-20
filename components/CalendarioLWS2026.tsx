@@ -87,7 +87,7 @@ export default function CalendarioLWS2026({ calendario }: { calendario: Calendar
                 {dias.map((d) => (
                   <div
                     key={d.data}
-                    title={`${d.data}: ${d.cota_central.toFixed(2)} m (IC80: ${d.cota_ic80_min.toFixed(2)}–${d.cota_ic80_max.toFixed(2)})`}
+                    title={`${d.data.split("-").reverse().join("/")}: ${d.cota_central.toFixed(2)} m (IC80: ${d.cota_ic80_min.toFixed(2)}–${d.cota_ic80_max.toFixed(2)})`}
                     className={`w-3 h-5 rounded-sm border ${COR_BANDA[d.banda_central]} ${
                       d.cruzou_central ? "ring-2 ring-white" : ""
                     } ${d.pico ? "ring-2 ring-verde" : ""}`}
