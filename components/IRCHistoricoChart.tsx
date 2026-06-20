@@ -6,6 +6,12 @@ import {
 } from "recharts";
 import { IRC_HISTORICO_CALCULADO } from "@/lib/irc-historico-calculado";
 
+const MESES_ABREV = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+// "YYYY-MM-DD" → "mês/AA" (eixo) — padrão brasileiro.
+const fmtEixoMes = (iso: string) => { const [a, m] = iso.split("-"); return `${MESES_ABREV[parseInt(m, 10) - 1] ?? "?"}/${a.slice(2)}`; };
+// "YYYY-MM-DD" → "DD/MM/AAAA" (tooltip) — padrão brasileiro.
+const fmtDataBR = (iso: string) => { const [a, m, d] = String(iso).split("-"); return `${d}/${m}/${a}`; };
+
 // Gráfico de linha do IRC histórico com bandas de faixa.
 export default function IRCHistoricoChart() {
   // Decima para no máximo ~200 pontos para legibilidade
@@ -25,7 +31,7 @@ export default function IRCHistoricoChart() {
             dataKey="data"
             stroke="#94a3b8"
             tick={{ fontSize: 10 }}
-            tickFormatter={(d) => d.slice(0, 7)}
+            tickFormatter={fmtEixoMes}
             minTickGap={40}
           />
           <YAxis
@@ -46,6 +52,7 @@ export default function IRCHistoricoChart() {
           <Tooltip
             contentStyle={{ background: "#0A1A4A", border: "1px solid #1B3A6B", fontSize: 12 }}
             labelStyle={{ color: "#94a3b8" }}
+            labelFormatter={fmtDataBR}
           />
           <Line
             type="monotone"

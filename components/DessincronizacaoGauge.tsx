@@ -168,7 +168,7 @@ export default function DessincronizacaoGauge({
               <Tooltip
                 contentStyle={{ backgroundColor: "#111827", border: "1px solid #2c2c2c", color: "#fff", fontSize: 12 }}
                 formatter={(v: unknown) => [String(v), "IDN"]}
-                labelFormatter={(l) => String(l)}
+                labelFormatter={(l) => { const [a, m, d] = String(l).split("-"); return d ? `${d}/${m}/${a}` : String(l); }}
               />
               <ReferenceArea y1={CALIBRACAO_IDN.fronteiras[1]} y2={1.2} fill="#D4922A" fillOpacity={0.15} />
               <ReferenceArea y1={CALIBRACAO_IDN.fronteiras[0]} y2={CALIBRACAO_IDN.fronteiras[1]} fill="#00C04B" fillOpacity={0.10} />

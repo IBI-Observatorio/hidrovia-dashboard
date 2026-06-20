@@ -13,7 +13,13 @@ const fmtBR = (v, casas = 1) => {
   return v.toFixed(casas);
 };
 
-const fmtData = (v) => (v ? String(v).slice(0, 7) : '');
+const MESES_ABREV = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+// "YYYY-MM(-DD)" → "mês/AA" (padrão brasileiro).
+const fmtData = (v) => {
+  if (!v) return '';
+  const [a, m] = String(v).split('-');
+  return m ? `${MESES_ABREV[parseInt(m, 10) - 1] ?? '?'}/${a.slice(2)}` : a;
+};
 
 /**
  * Linhas mensais com eixo X temporal (ex: #30 PortGDP × PIM-PF).
