@@ -40,7 +40,7 @@ export default function IDNGrafico90Dias({ serieIDN }: { serieIDN: PontoIDN[] })
           <XAxis
             dataKey="data"
             tick={{ fill: "#9CA3AF", fontSize: 10 }}
-            tickFormatter={(v: string) => v.slice(5)}
+            tickFormatter={(v: string) => { const [, m, d] = v.split("-"); return `${d}/${m}`; }}
             interval={10}
           />
           <YAxis
@@ -54,7 +54,7 @@ export default function IDNGrafico90Dias({ serieIDN }: { serieIDN: PontoIDN[] })
               if (name === "IDN") return [Number(v).toFixed(2), "IDN"];
               return null as unknown as [string, string];
             }}
-            labelFormatter={(l) => `Data: ${l}`}
+            labelFormatter={(l) => { const [a, m, d] = String(l).split("-"); return `Data: ${d}/${m}/${a}`; }}
           />
 
           {/* Faixas de regime calibradas */}

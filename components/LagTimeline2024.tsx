@@ -48,6 +48,13 @@ function mescla() {
 
 const dados = mescla();
 
+// "YYYY-MM-DD" → "DD/MM/AAAA" (padrão brasileiro).
+const fmtDataBR = (iso?: string) => {
+  if (!iso) return "";
+  const [a, m, d] = String(iso).split("-");
+  return d ? `${d}/${m}/${a}` : iso;
+};
+
 const CustomTooltip = ({ active, payload, label }: {
   active?: boolean;
   payload?: { name: string; value: number; color: string }[];
@@ -56,7 +63,7 @@ const CustomTooltip = ({ active, payload, label }: {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-azul-marinho border border-white/10 rounded p-2 text-xs">
-      <p className="text-gray-300 mb-1">{label}</p>
+      <p className="text-gray-300 mb-1">{fmtDataBR(label)}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }}>
           {p.name}: <strong>{p.value?.toFixed(2)} m</strong>
@@ -111,7 +118,7 @@ export default function LagTimeline2024() {
           <XAxis
             dataKey="data"
             tick={{ fill: "#9CA3AF", fontSize: 10 }}
-            tickFormatter={(v: string) => v.slice(5)}
+            tickFormatter={(v: string) => { const [, m, d] = v.split("-"); return `${d}/${m}`; }}
             interval={1}
           />
           <YAxis
