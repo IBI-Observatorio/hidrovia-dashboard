@@ -292,7 +292,8 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
     // Precisa pelo menos da previsão de Manaus para considerar dinâmico
     if (!manaus) throw new Error("previsão Manaus ausente no boletim");
 
-    const fonteLabel = `SGB/CPRM — ${ultimo.numero ?? "?"}° Boletim SAH Amazonas (${ultimo.data})`;
+    const dataBR = /^\d{4}-\d{2}-\d{2}$/.test(ultimo.data) ? ultimo.data.split("-").reverse().join("/") : ultimo.data;
+    const fonteLabel = `SGB/CPRM — ${ultimo.numero ?? "?"}° Boletim SAH Amazonas (${dataBR})`;
 
     // Extrai anomalias de PP por bacia (Sprint v2)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

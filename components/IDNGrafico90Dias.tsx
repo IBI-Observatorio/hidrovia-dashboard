@@ -12,6 +12,13 @@ import type { PontoIDN } from "@/lib/ana-idn-series";
 // Mostra os últimos 90 pontos do IDN com banda ±2σ de incerteza.
 // Dados vêm via prop serieIDN (série gerada pelo pipeline ANA).
 
+// "YYYY-MM-DD" → "DD/MM/AAAA" (padrão brasileiro).
+const fmtDataBR = (iso: string) => {
+  if (!iso) return "—";
+  const [a, m, d] = iso.split("-");
+  return d ? `${d}/${m}/${a}` : iso;
+};
+
 export default function IDNGrafico90Dias({ serieIDN }: { serieIDN: PontoIDN[] }) {
   const banda = INCERTEZA_IDN.banda_idn_2sigma;
 
@@ -30,7 +37,7 @@ export default function IDNGrafico90Dias({ serieIDN }: { serieIDN: PontoIDN[] })
       <div className="mb-4">
         <h2 className="text-white font-bold text-lg">Trajetória recente do IDN (90 dias)</h2>
         <p className="text-gray-400 text-sm">
-          Evolução consolidada · {primeira} → {ultima}
+          Evolução consolidada · {fmtDataBR(primeira)} → {fmtDataBR(ultima)}
         </p>
       </div>
 

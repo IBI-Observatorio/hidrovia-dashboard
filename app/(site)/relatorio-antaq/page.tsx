@@ -207,7 +207,7 @@ export default async function RelatorioANTAQPage() {
               {eventosComIRC.map((e) => (
                 <tr key={e.data} className="border-b border-white/5">
                   <td className="py-2 px-1 text-white">{e.rotulo}</td>
-                  <td className="py-2 px-1 text-gray-300">{e.data}</td>
+                  <td className="py-2 px-1 text-gray-300">{formataData(e.data)}</td>
                   <td className="py-2 px-1 text-right font-bold tabular-nums text-white">{e.irc?.toFixed(0) ?? "—"}</td>
                   <td className="py-2 px-1 text-gray-300">{e.faixa}</td>
                   <td className="py-2 px-1 text-gray-400 max-w-md">{e.contexto}</td>
