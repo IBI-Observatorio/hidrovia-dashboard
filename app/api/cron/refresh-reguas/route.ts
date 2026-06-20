@@ -11,6 +11,7 @@
 // Protegido por Authorization: Bearer ${CRON_SECRET} (mesma chave dos outros crons).
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 
 export const dynamic = "force-dynamic";
@@ -34,6 +35,11 @@ async function handler(request: NextRequest) {
     const vivas = estacoes.filter((e) => e.ultima_atualizacao >= hoje).length;
     const ultima = estacoes.map((e) => e.ultima_atualizacao).sort().reverse()[0] ?? "—";
 
+    // Invalida o HTML ISR do /monitor (revalidate 6h). Sem isto, o cache de
+    // rota persiste no volume e sobrevive a deploys — servindo dados e código
+    // antigos até a janela de 6h. Faz o refresh diário de fato aparecer.
+    revalidatePath("/monitor");
+
     return NextResponse.json({
       ok: true,
       mensagem: `Réguas atualizadas: ${vivas}/${estacoes.length} estações com leitura de hoje`,
@@ -42,6 +48,7 @@ async function handler(request: NextRequest) {
       estacoes_vivas: vivas,
       ultima_atualizacao: ultima,
       idn_atual: d.idn_atual ?? null,
+      revalidated: "/monitor",
     });
   } catch (e) {
     const erro = e instanceof Error ? e.message : String(e);
