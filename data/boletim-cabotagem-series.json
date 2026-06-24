@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-06-17T22:22:59.110Z",
+  "gerado_em": "2026-06-24T14:20:58.721Z",
   "serie": [
     {
       "data_referencia": "2026-06-08",
@@ -113,6 +113,63 @@
         "sgb_numero": 21,
         "enso_status": "El Niño Watch",
         "enso_data_emissao": "2026-05-14"
+      }
+    },
+    {
+      "data_referencia": "2026-06-24",
+      "ao_vivo": true,
+      "z_2026": {
+        "MAO": -0.09,
+        "BOR": 0.24,
+        "MNC": -0.29,
+        "ITA": -0.04
+      },
+      "analogos_top": [
+        {
+          "ano": 2018,
+          "peso": 0.169
+        },
+        {
+          "ano": 2020,
+          "peso": 0.165
+        },
+        {
+          "ano": 2023,
+          "peso": 0.165
+        },
+        {
+          "ano": 2017,
+          "peso": 0.157
+        }
+      ],
+      "projecao_cmr_2026": {
+        "central": 9.26,
+        "pessimista": 6.8,
+        "otimista": 10.38
+      },
+      "ita_min_central": 3.4,
+      "cruzamento_cmr11": {
+        "central": "2026-09-30",
+        "cedo": "2026-09-14",
+        "tarde": "2026-10-16"
+      },
+      "restricao": {
+        "p10": "2026-09-14",
+        "p50": "2026-09-30",
+        "p90": "2026-10-16",
+        "prob": 1,
+        "ano_analogo": 2018
+      },
+      "esperanca_ponderada": {
+        "delta_pct_2025": -0.0284,
+        "teu": 529372
+      },
+      "cmr_atual": 17.2,
+      "cota_ita_atual": 13.62,
+      "contexto": {
+        "sgb_numero": null,
+        "enso_status": null,
+        "enso_data_emissao": null
       }
     }
   ]
