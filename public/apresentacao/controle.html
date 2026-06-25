@@ -111,6 +111,12 @@
     <button id="descer"><span class="arr">▼</span>Descer</button>
   </div>
 
+  <div class="secao-tit">Cenário · Corredor Paranaguá</div>
+  <div class="rolar">
+    <button id="cen-hoje"><span class="arr">●</span>Hoje (80/20)</button>
+    <button id="cen-int"><span class="arr">●</span>Integração (50/50)</button>
+  </div>
+
   <div class="secao-tit">Outras features</div>
   <div class="grid" id="grid-sec"></div>
 
@@ -220,6 +226,9 @@ document.getElementById("ant").onclick     = () => { buzz(); publicar("prev"); }
 /* toque para deslizar ~85% da tela (toque de novo para continuar) */
 document.getElementById("subir").onclick  = () => { buzz(); publicar("scroll", { dir: "up" }); };
 document.getElementById("descer").onclick = () => { buzz(); publicar("scroll", { dir: "down" }); };
+/* cenário do painel Corredor Paranaguá (telão clica o botão dentro do iframe) */
+document.getElementById("cen-hoje").onclick = () => { buzz(); publicar("cmd", { cmd: "cenario:hoje" }); };
+document.getElementById("cen-int").onclick  = () => { buzz(); publicar("cmd", { cmd: "cenario:integracao" }); };
 document.getElementById("voltar").onclick  = () => { buzz(); publicar("slides"); };
 document.getElementById("blackout").onclick= () => { buzz(); publicar("blackout"); };
 document.getElementById("reset").onclick   = () => { buzz(); publicar("reset"); };

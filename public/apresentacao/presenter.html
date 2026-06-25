@@ -1189,11 +1189,34 @@ function pararScroll() {
   _animTimer = 0; _alvoScroll = null;
 }
 
+/* ---- comando para o iframe da feature (ex.: trocar o cenário do painel) ----
+   iframe é mesma origem → clicamos no botão real, e o React reage ao clique.
+   Procura por data-cenario primeiro; cai para match por texto (página em prod). */
+function executarCmd(cmd) {
+  if (!cmd) return;
+  let doc;
+  try { doc = frame.contentDocument; if (!doc) return; } catch (e) { return; }
+  const m = /^cenario:(\w+)/.exec(cmd);
+  if (!m) return;
+  const alvo = m[1]; // "hoje" | "integracao"
+  let btn = doc.querySelector('[data-cenario="' + alvo + '"]');
+  if (!btn) {
+    const termos = alvo === "hoje"
+      ? ["hoje (80/20)", "hoje"]
+      : ["integração ferro", "50/50", "integração"];
+    btn = [...doc.querySelectorAll("button")].find((b) => {
+      const t = (b.textContent || "").toLowerCase();
+      return termos.some((s) => t.includes(s));
+    });
+  }
+  if (btn) btn.click();
+}
+
 /* ===================== TRANSPORTE: polling do relay interno ===================== */
 const API = "/api/apresentacao?canal=" + encodeURIComponent(CANAL);
 
 /* o telão espelha o estado do servidor (autoritativo) */
-let rev = -1, falhas = 0, _scrollSeqVisto = null;
+let rev = -1, falhas = 0, _scrollSeqVisto = null, _cmdSeqVisto = null;
 async function tick() {
   try {
     const e = await (await fetch(API, { cache: "no-store" })).json();
@@ -1210,6 +1233,14 @@ async function tick() {
       const n = e.scrollSeq - _scrollSeqVisto;
       _scrollSeqVisto = e.scrollSeq;
       if (n > 0 && estado.mode === "feature") animarScroll(e.scrollDir, n);
+    }
+    // comando para o iframe (contador idempotente, mesma lógica do scroll)
+    if (typeof e.cmdSeq === "number") {
+      if (_cmdSeqVisto === null) _cmdSeqVisto = e.cmdSeq;
+      else if (e.cmdSeq !== _cmdSeqVisto) {
+        _cmdSeqVisto = e.cmdSeq;
+        if (estado.mode === "feature") executarCmd(e.cmd);
+      }
     }
   } catch (err) {
     if (++falhas > 2) { conn.classList.remove("ok"); connTxt.textContent = "reconectando…"; }
