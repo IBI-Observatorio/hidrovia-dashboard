@@ -233,6 +233,11 @@
   #palco-feature.show-bar .feat-bar { height: 44px; }
   .feat-bar .live { display: inline-flex; align-items: center; gap: 8px; color: var(--verde); font-weight: 600; }
   .feat-bar .live .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 8px rgba(0,166,82,.8); animation: pulse 1.6s infinite; }
+  /* dashboard ao vivo no iframe: esconde a moldura do telão (HUD, contador e
+     barra de progresso) para não sobrepor o cabeçalho do próprio dashboard */
+  body.feature .hud,
+  body.feature .contador,
+  body.feature .rodape { opacity: 0 !important; pointer-events: none; transition: opacity .3s ease; }
 
   /* blackout */
   body.blackout #deck, body.blackout #palco-feature, body.blackout #bg { opacity: 0 !important; transition: opacity .3s; }
