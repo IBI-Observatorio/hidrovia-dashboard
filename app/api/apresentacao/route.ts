@@ -16,10 +16,12 @@ type Estado = {
   scrollSeq: number; // contador de passos de rolagem (idempotente)
   scrollDir: number; // direção do último passo (1 desce, -1 sobe)
   total: number;     // nº de slides — informado pelo telão (sync), autoritativo p/ clamp
+  cmdSeq: number;    // contador de comandos para o iframe (idempotente, ex.: trocar cenário)
+  cmd: string | null;// último comando (ex.: "cenario:hoje")
 };
 
 function inicial(): Estado {
-  return { rev: 0, mode: "slides", slide: 0, feature: null, scrollSeq: 0, scrollDir: 1, total: 99 };
+  return { rev: 0, mode: "slides", slide: 0, feature: null, scrollSeq: 0, scrollDir: 1, total: 99, cmdSeq: 0, cmd: null };
 }
 
 // estado por sala (canal). Sobrevive entre requests no mesmo processo.
@@ -40,7 +42,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const canal = req.nextUrl.searchParams.get("canal") || "default";
   const e = getSala(canal);
-  const { action, slide, feature, total, dir } = await req.json().catch(() => ({}));
+  const { action, slide, feature, total, dir, cmd } = await req.json().catch(() => ({}));
 
   switch (action) {
     case "next":
@@ -69,6 +71,9 @@ export async function POST(req: NextRequest) {
       break;
     case "scroll": // um passo de rolagem (toque no controle)
       e.scrollSeq++; e.scrollDir = dir === "up" ? -1 : 1;
+      break;
+    case "cmd": // comando para o iframe da feature (ex.: trocar cenário), idempotente
+      e.cmd = typeof cmd === "string" ? cmd : null; e.cmdSeq++;
       break;
     case "reset":
       Object.assign(e, inicial());
