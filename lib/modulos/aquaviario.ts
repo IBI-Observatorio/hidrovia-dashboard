@@ -21,6 +21,8 @@ import { obterDadosDiariosANA } from "../cache-ana-diario";
 import { detectaOndaBranco } from "../onda-branco";
 import { calculaIDNSimples, classificaIDN } from "../calcula-idn";
 import { projetaCruzamentoTabocal } from "../recessao-itacoatiara";
+import { projetaETAporAnalogos } from "../recessao-analogos";
+import { ITACOATIARA_HISTORICO_DIARIO } from "../itacoatiara-historico-diario";
 import {
   calculaIRCTabocal,
   divergenciaIRC,
@@ -43,6 +45,10 @@ import type { EstacaoVazao } from "../sub-bacias-vazao";
 import type { DadosEstacao } from "../dados-historicos";
 import type { PontoIDN } from "../ana-idn-series";
 
+// Calado-alvo de referência da versão pública (comboio carregado em cheia
+// normal) — mesmo default do IRCInterativo gratuito. Assinantes parametrizam.
+const CALADO_ALVO_M = 11.0;
+
 // ─── Contrato do snapshot ────────────────────────────────────────────────────
 
 export interface TriadeAquaviario {
@@ -59,11 +65,14 @@ export interface TriadeAquaviario {
     cor: string;                   // hex (classificaIDN)
   };
   eta: {
-    dias: number | null;           // dias de HOJE até o cruzamento central
-    datas: {                       // tríade do modelo de recessão de Itacoatiara
-      central: string | null;
-      min: string | null;          // descida lenta (cenário otimista)
-      max: string | null;          // descida rápida (cenário pessimista)
+    dias: number | null;            // dias de HOJE até a data central (P50)
+    alvo_calado_m: number;          // calado-alvo de referência (CMR)
+    prob: number;                   // 0–1 — prob. ponderada de cruzamento (análogos)
+    ano_gemeo: number | null;       // ano histórico mais similar (menor RMSE)
+    datas: {                        // quantis empíricos dos análogos 2016–2025
+      central: string | null;       // P50 (mediana)
+      precoce: string | null;       // P10 (restrição mais cedo)
+      tardia:  string | null;       // P90 (restrição mais tarde)
     };
   };
   // Inputs serializáveis para os GAUGES reaproveitados (render puro da fonte —
@@ -111,7 +120,9 @@ export async function getAquaviarioSnapshot(): Promise<TriadeAquaviario> {
   const ondaBranco =
     serieCaracarai.length >= 8 ? detectaOndaBranco(serieCaracarai, 7, idnValor) : null;
 
-  // ── ETA até o gatilho operacional de Tabocal (cruzamento de cota) ──────────
+  // ── Cruzamento do gatilho operacional de Tabocal (cota) — alimenta o IRC ────
+  // Mantido idêntico ao /monitor: é a entrada eta_dias_cruzamento_tabocal do IRC,
+  // NÃO o indicador ETA exibido (este usa análogos, mais abaixo).
   const ano = new Date().getUTCFullYear();
   const picoData = `${ano}-06-15`;
   const cruzTabocal = previsao.itacoatiara_pico
@@ -120,6 +131,21 @@ export async function getAquaviarioSnapshot(): Promise<TriadeAquaviario> {
   const etaDiasTabocal = cruzTabocal.central
     ? Math.round((new Date(cruzTabocal.central).getTime() - Date.now()) / 86400000)
     : null;
+
+  // ── ETA EXIBIDA — análogos históricos até CMR < calado-alvo ─────────────────
+  // Mesmo modelo do painel ETA do /monitor (projetaETAporAnalogos): produz data
+  // P50 + banda P10/P90 + ano gêmeo. O gatilho de cota acima não cruza em anos
+  // de driver Norte (Itacoatiara fica alto) e daria null — por isso o indicador
+  // mostrado é este, que mede a restrição de calado real.
+  const serieIta2026 = Object.entries(
+    (ITACOATIARA_HISTORICO_DIARIO as Record<number, Record<string, number>>)[ano] ?? {},
+  )
+    .map(([data, cota]) => ({ data, cota: cota as number }))
+    .sort((a, b) => a.data.localeCompare(b.data));
+  const etaAn =
+    serieIta2026.length >= 30 ? projetaETAporAnalogos(serieIta2026, CALADO_ALVO_M) : null;
+  // dias contados de HOJE (a série tem lag; a data P50 é fixa, a contagem decresce).
+  const etaDias = diasDeHojeAte(etaAn?.data_p50 ?? null) ?? etaAn?.dias_p50 ?? null;
 
   // ── IRC-Tabocal v3.6 (índice operacional, ancorado em Itacoatiara) ─────────
   const snapTabocal: SnapshotIRCTabocal = {
@@ -169,8 +195,15 @@ export async function getAquaviarioSnapshot(): Promise<TriadeAquaviario> {
       cor:       idnClass.cor,
     },
     eta: {
-      dias:  etaDiasTabocal,
-      datas: { central: cruzTabocal.central, min: cruzTabocal.min, max: cruzTabocal.max },
+      dias:          etaDias,
+      alvo_calado_m: CALADO_ALVO_M,
+      prob:          etaAn?.prob_cruzamento ?? 0,
+      ano_gemeo:     etaAn?.ano_top ?? null,
+      datas: {
+        central: etaAn?.data_p50 ?? null,
+        precoce: etaAn?.data_p10 ?? null,
+        tardia:  etaAn?.data_p90 ?? null,
+      },
     },
     gauges: { rTabocal, rManaus, divergencia, dados, cotasIDN, vazoesIDN, serieIDN },
     meta: {
@@ -180,6 +213,16 @@ export async function getAquaviarioSnapshot(): Promise<TriadeAquaviario> {
       previsaoDinamica: previsao.fonte_dinamica,
     },
   };
+}
+
+/** Dias inteiros de HOJE (data local) até a data ISO alvo. null se sem alvo. */
+function diasDeHojeAte(isoAlvo: string | null): number | null {
+  if (!isoAlvo) return null;
+  const ymd = (y: number, m: number, d: number) => Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+  const now = new Date();
+  const hoje = ymd(now.getFullYear(), now.getMonth() + 1, now.getDate());
+  const [ay, am, ad] = isoAlvo.split("-").map(Number);
+  return ymd(ay, am, ad) - hoje;
 }
 
 // ─── COPY e rótulos (preditivo-first, registro "banco central") ──────────────
@@ -206,10 +249,10 @@ export const AQUAVIARIO_COPY = {
         "Mede para qual lado as bacias estão fora de fase: Driver Norte (Negro/Branco depletados, padrão 2026) vs Driver Sul (Madeira/Purus, padrão 2024). O ponteiro fora do verde antecede descasamentos entre o parâmetro regulatório e a operação.",
     },
     eta: {
-      titulo: "ETA até o gatilho",
-      rotulo: "Prazo projetado até o cruzamento operacional de Tabocal",
+      titulo: "ETA · restrição de calado",
+      rotulo: "Prazo projetado até o CMR cair abaixo do calado-alvo (11 m)",
       ajuda:
-        "Data projetada (com banda otimista/pessimista) em que a cota de Itacoatiara cruza o gatilho operacional, pelo modelo de recessão pós-pico calibrado em histórico. Não é certeza: a faixa cobre descida lenta e rápida.",
+        "Data projetada (P50) e banda empírica (P10 precoce / P90 tardia) em que o Calado Máximo Recomendado de Itacoatiara cai abaixo do calado-alvo de referência, por análogos históricos 2016–2025 (ano gêmeo ponderado por similaridade). Não é certeza: a faixa cobre cruzamento mais cedo e mais tarde.",
     },
   },
 
@@ -219,8 +262,9 @@ export const AQUAVIARIO_COPY = {
     "(curva da Capitania dos Portos da Amazônia Ocidental), combinando déficit de calado, " +
     "regime HMM, Onda Branco, anomalia de precipitação e lag operacional Manaus×Itacoatiara, " +
     "com banda de incerteza propagada. IDN: posição relativa das sub-bacias Norte e Sul vs " +
-    "climatologia (fronteiras GMM calibradas em 2016–2023). ETA: modelo de recessão pós-pico " +
-    "de Itacoatiara projeta a data central e a banda IC80 de cruzamento do gatilho operacional. " +
+    "climatologia (fronteiras GMM calibradas em 2016–2023). ETA: análogos históricos (2016–2025) " +
+    "projetam a data P50 e a banda empírica P10/P90 em que o CMR de Itacoatiara cai abaixo do " +
+    "calado-alvo (11 m, comboio carregado) — mesmo modelo do painel ETA do Monitor. " +
     "Cotas via telemetria ANA/SNIRH (cache diário, fuso Manaus); previsão de pico via SGB/CPRM. " +
     "A API ANA é descontinuada em 30/jun/2026 — após isso o painel opera em fallback estático " +
     "até a migração para a nova API SGB.",

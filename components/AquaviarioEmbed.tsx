@@ -59,7 +59,8 @@ function ETABloco({ eta }: { eta: TriadeAquaviario["eta"] }) {
             <strong>Cruzamento não projetado no horizonte do modelo.</strong>
           </p>
           <p className="text-gray-500 text-[11px] mt-1">
-            A recessão pós-pico de Itacoatiara não cruza o gatilho operacional no período coberto.
+            O CMR de Itacoatiara permanece acima do calado-alvo ({eta.alvo_calado_m.toFixed(1)} m)
+            em todo o período coberto pelos análogos.
           </p>
         </div>
       ) : (
@@ -74,23 +75,27 @@ function ETABloco({ eta }: { eta: TriadeAquaviario["eta"] }) {
               </span>
             )}
             <span className="text-[10px] uppercase tracking-wider bg-verde/15 text-verde border border-verde/30 px-2 py-0.5 rounded-full font-bold">
-              central · banda IC80
+              via análogos{eta.ano_gemeo != null ? ` · ano gêmeo ${eta.ano_gemeo}` : ""}
             </span>
           </div>
+          <p className="text-gray-400 text-[11px] mt-1">
+            CMR &lt; {eta.alvo_calado_m.toFixed(1)} m · probabilidade de cruzamento:{" "}
+            <strong className="text-gray-300">{Math.round(eta.prob * 100)}%</strong>
+          </p>
 
-          {/* Banda de incerteza — sempre exibida (otimista / central / pessimista) */}
+          {/* Banda empírica dos análogos — sempre exibida (precoce / central / tardia) */}
           <div className="grid grid-cols-3 gap-3 text-[11px] mt-4">
             <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
-              <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">Otimista · lenta</p>
-              <p className="text-white font-semibold">{dataPtBR(eta.datas.min)}</p>
+              <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P10 precoce</p>
+              <p className="text-white font-semibold">{dataPtBR(eta.datas.precoce)}</p>
             </div>
             <div className="bg-verde/15 rounded p-2 border border-verde/30">
-              <p className="text-verde uppercase tracking-wider text-[10px] mb-0.5">Central</p>
+              <p className="text-verde uppercase tracking-wider text-[10px] mb-0.5">P50 mediana</p>
               <p className="text-white font-bold">{dataPtBR(eta.datas.central)}</p>
             </div>
             <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
-              <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">Pessimista · rápida</p>
-              <p className="text-white font-semibold">{dataPtBR(eta.datas.max)}</p>
+              <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P90 tardia</p>
+              <p className="text-white font-semibold">{dataPtBR(eta.datas.tardia)}</p>
             </div>
           </div>
         </div>
