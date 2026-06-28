@@ -1,36 +1,172 @@
 {
-  "fonte": "CDP — SCAP Line-Up público (Vila do Conde + terminais Hidrovias do Brasil, Ponta da Montanha, Rio Capim Caulim, Fronteira Norte)",
-  "url": "http://scap.cdp.com.br:8047/",
-  "porto": "vila-do-conde",
-  "filtro": "graneleiros: soja, milho, farelo, açúcar, trigo, cevada, sorgo · janela: atracados ≤12d, agendados/confirmados −5..+21d",
-  "coletadoEm": "2026-06-10",
-  "status": "ok",
-  "observacao": "Snapshot deduplica navios repetidos entre berços/terminais (agendamentos múltiplos do mesmo navio).",
-  "agendaSemanalMilT": [["S0", 5, 387], ["S1", 1, 65]],
-  "snapshots": [
-    {
-      "dataColeta": "2026-06-10",
-      "navios": [
-        { "navio": "DIAMOND ISLAND", "dwt": 65229, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-20", "status": "esperado" },
-        { "navio": "EVER BEST", "dwt": 81717, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-10", "status": "ao_largo" },
-        { "navio": "MV AKAKI", "dwt": 86235, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-05", "status": "ao_largo" },
-        { "navio": "SHARDANA", "dwt": 84497, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
-        { "navio": "STAR HELENA", "dwt": 15063, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
-        { "navio": "M/V AOM SVEVA", "dwt": 83577, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-09", "status": "ao_largo" },
-        { "navio": "JIYU ROSE", "dwt": 94134, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-10", "status": "ao_largo" },
-        { "navio": "ESPERITA", "dwt": 62049, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-10", "status": "ao_largo" },
-        { "navio": "MADOROSU", "dwt": 65380, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-08", "status": "ao_largo" },
-        { "navio": "SANTORINI", "dwt": 83199, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
-        { "navio": "BOYANG TAURUS", "dwt": 83795, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
-        { "navio": "DEFENDER", "dwt": 84780, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
-        { "navio": "MV WHEAT WEIFANG", "dwt": 83028, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-09", "status": "ao_largo" },
-        { "navio": "NEFELI", "dwt": 65194, "sentido": "Exp", "mercadoria": "SOJA", "eta": "2026-06-09", "status": "ao_largo" },
-        { "navio": "GENCO MAGIC", "dwt": 65138, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "eta": "2026-06-14", "status": "ao_largo" },
-        { "navio": "GH GLORY", "dwt": 76905, "sentido": "Exp", "mercadoria": "FARELO DE SOJA", "status": "atracado" },
-        { "navio": "STAR SOPHIA", "dwt": 84308, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
-        { "navio": "ISEACO GRACE", "dwt": 61680, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" },
-        { "navio": "LDC 032", "dwt": 3354, "sentido": "Exp", "mercadoria": "SOJA", "status": "atracado" }
-      ]
-    }
+ "fonte": "CDP — SCAP Line-Up público (Vila do Conde + terminais Hidrovias do Brasil, Ponta da Montanha, Rio Capim Caulim, Fronteira Norte)",
+ "url": "http://scap.cdp.com.br:8047/",
+ "porto": "vila-do-conde",
+ "filtro": "graneleiros: soja, milho, farelo, açúcar, trigo, cevada, sorgo · janela: atracados ≤12d, agendados/confirmados −5..+21d",
+ "coletadoEm": "2026-06-28",
+ "status": "indisponivel",
+ "observacao": "Snapshot deduplica navios repetidos entre berços/terminais (agendamentos múltiplos do mesmo navio).",
+ "agendaSemanalMilT": [
+  [
+   "S0",
+   5,
+   387
+  ],
+  [
+   "S1",
+   1,
+   65
   ]
+ ],
+ "snapshots": [
+  {
+   "dataColeta": "2026-06-10",
+   "navios": [
+    {
+     "navio": "DIAMOND ISLAND",
+     "dwt": 65229,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-20",
+     "status": "esperado"
+    },
+    {
+     "navio": "EVER BEST",
+     "dwt": 81717,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-10",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "MV AKAKI",
+     "dwt": 86235,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-05",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "SHARDANA",
+     "dwt": 84497,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "STAR HELENA",
+     "dwt": 15063,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "M/V AOM SVEVA",
+     "dwt": 83577,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-09",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "JIYU ROSE",
+     "dwt": 94134,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-10",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "ESPERITA",
+     "dwt": 62049,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-10",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "MADOROSU",
+     "dwt": 65380,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-08",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "SANTORINI",
+     "dwt": 83199,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "BOYANG TAURUS",
+     "dwt": 83795,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "DEFENDER",
+     "dwt": 84780,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "MV WHEAT WEIFANG",
+     "dwt": 83028,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-09",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "NEFELI",
+     "dwt": 65194,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "eta": "2026-06-09",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "GENCO MAGIC",
+     "dwt": 65138,
+     "sentido": "Exp",
+     "mercadoria": "FARELO DE SOJA",
+     "eta": "2026-06-14",
+     "status": "ao_largo"
+    },
+    {
+     "navio": "GH GLORY",
+     "dwt": 76905,
+     "sentido": "Exp",
+     "mercadoria": "FARELO DE SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "STAR SOPHIA",
+     "dwt": 84308,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "ISEACO GRACE",
+     "dwt": 61680,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    },
+    {
+     "navio": "LDC 032",
+     "dwt": 3354,
+     "sentido": "Exp",
+     "mercadoria": "SOJA",
+     "status": "atracado"
+    }
+   ]
+  }
+ ],
+ "erro": "0 graneleiros na janela — layout do SCAP mudou?"
 }

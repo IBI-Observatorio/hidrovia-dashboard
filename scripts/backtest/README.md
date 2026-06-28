@@ -8,16 +8,16 @@
 | Episódio | Veredito | Detalhe |
 |---|---|---|
 | out-2024-seca-tabocal | ✓ acusou | percentil médio 98.8 (critério ≥90) · P_H máx 83.2 (critério ≥80) |
-| mar-2026-choque-diesel | ✓ acusou | P_T Santos 13 semanas pós-choque, mín 100.0 (critério = 100 sustentado) |
+| mar-2026-choque-diesel | ✓ acusou | P_T Santos 16 semanas pós-choque, mín 100.0 (critério = 100 sustentado) |
 | pico-safra-2026 | ✓ acusou | P_S Santos máx abr–mai/26 100.0 (critério ≥95) |
-| pico-safra-2026-paranagua | ◌ registrado (não verificável) | P_S Paranaguá máx abr–mai/26 100.0 — registrado (percentil exige ≥3 safras; série ~1 ano) |
+| pico-safra-2026-paranagua | ◌ registrado (não verificável) | P_S Paranaguá máx abr–mai/26 50.0 — registrado (percentil exige ≥3 safras; série ~1 ano) |
 | dez-2025-fila-santos | ◌ registrado (não verificável) | VERIFICADO CONTRA A EA: espera média dez/2025 = 149 h ≈ média de 2025 (165 h) — episódio NÃO CONFIRMADO como excepcional; âncora SUBSTITUÍDO no v1 (ver out-2023) |
 | out-2023-espera-recorde | ✓ acusou | referência histórica da métrica-alvo: 5/5 maiores esperas da série 2016–2026 caem em ago–out/2023 (pico 397 h em 2023-10-09) |
 | jan-2025-salto-frete | ◌ registrado (não verificável) | FORA DE ESCOPO — T é custo modelado, não frete negociado (decisão registrada) |
 
 ## Métrica-alvo
 
-IEE-Santos(t) = F·0,50 + T·0,40 + S·0,10 (v6) vs espera EA t+2 (46 sem): Spearman 0.58 · MAE 21.9 p.p. (saltou de 0,43 sem F). IEE-Paranaguá(t) = F·0,50 + T·0,40 + S·0,10 (v7) vs espera EA t+2 (45 sem): Spearman 0.23 · MAE 19.0 p.p. — validade FRACA (era 0,21 nos pesos v0; F lidera, S é ruído na fila). CAVEAT: in-sample, n≈45–46, SE±0,15.
+IEE-Santos(t) = F·0,50 + T·0,40 + S·0,10 (v6) vs espera EA t+2 (46 sem): Spearman 0.58 · MAE 21.9 p.p. (saltou de 0,43 sem F). IEE-Paranaguá(t) = F·0,50 + T·0,40 + S·0,10 (v7) vs espera EA t+2 (45 sem): Spearman 0.31 · MAE 18.7 p.p. — validade FRACA (era 0,21 nos pesos v0; F lidera, S é ruído na fila). CAVEAT: in-sample, n≈45–46, SE±0,15.
 
 ## Regras (do pré-registro)
 
