@@ -18,16 +18,16 @@ import { getAquaviarioSnapshot, AQUAVIARIO_COPY } from "./modulos/aquaviario";
 
 export interface ModuloHidroConfig {
   titulo: string;
-  /** Altura sugerida do iframe (px) — tríade empilhada (IRC + IDN + ETA). */
+  /** Altura sugerida do iframe (px) — IDN (velocímetro + série) + ETA. */
   alturaEmbed: number;
-  /** Render server-only: carrega o snapshot e devolve o componente da tríade. */
+  /** Render server-only: carrega o snapshot e devolve o componente dos indicadores. */
   render: () => Promise<ReactNode>;
 }
 
 export const EMBED_REGISTRY_HIDRO: Record<string, ModuloHidroConfig> = {
   aquaviario: {
     titulo: AQUAVIARIO_COPY.titulo,
-    alturaEmbed: 1320,
+    alturaEmbed: 920,
     render: async () => {
       const snapshot = await getAquaviarioSnapshot();
       return <AquaviarioEmbed snapshot={snapshot} />;
