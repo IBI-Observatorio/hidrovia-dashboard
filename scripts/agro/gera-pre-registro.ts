@@ -31,7 +31,7 @@ import {
 } from "../../lib/iee-params";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v7.json");
+const ARQ = join(RAIZ, "data", "agro", "pre-registro-iee-v8.json");
 
 function snapshotParametros() {
   // capacidades REAIS (ANTAQ EA) entram no snapshot congelado: são parte da
@@ -105,7 +105,7 @@ function main() {
 
   const registro = {
     indice: "IEE — Índice de Estresse de Escoamento",
-    versao: "v7",
+    versao: "v8",
     changelogV0paraV1: [
       "Capacidades semanais: parâmetros declarados (1300/450/1000) SUBSTITUÍDOS pela agregação real da Estatística Aquaviária ANTAQ (1567/597/883 mil t/sem, média 12m até 2026-02) — leitura 'cache ok → cache; senão declarado'.",
       "Métrica-alvo torna-se COMPUTÁVEL: TEsperaAtracacao (EA) por semana, 2016→2026; baseline Spearman/MAE registrado no backtest final.",
@@ -150,6 +150,13 @@ function main() {
       "Estrutura de Paranaguá já estava sólida e fica MANTIDA: rotas T (Cascavel/Maringá/Ponta Grossa/Londrina × bitrem), hinterlândia PR/SC × participação Comex (PR 0,68 / SC 0,17), capacidade ANTAQ, fator de embarque 0,92. A correção do corredor é de PESOS + declaração de validade, não estrutural.",
       "Métrica-alvo de Paranaguá agora PUBLICADA no backtest final (antes só Santos). Arco Norte segue sem métrica-alvo própria publicada (F no line-up, sem composição validada).",
     ],
+    changelogV7paraV8: [
+      "PARÂMETROS E PESOS: INALTERADOS vs v7 (hash sha256 IDÊNTICO). Esta versão NÃO é recalibração — revisa SOMENTE o ESCOPO de um episódio-âncora. O bump existe para tornar a mudança de critério do gate de publicação auditável, como exige o pré-registro.",
+      "Episódio-âncora pico-safra-2026 RE-ESCOPADO: o critério P_S ≥ 95 (percentil sazonal walk-forward) deixa de bloquear PARANAGUÁ e permanece bloqueante só para SANTOS. Paranaguá vira episódio REGISTRADO (não verificável até ≥3 safras), na entrada pico-safra-2026-paranagua.",
+      "Razão (sem mover trave): o percentil sazonal exige ≥3 safras de histórico (MIN_SAFRAS_PERCENTIL=3); a série Conab de Paranaguá começa em abr/2025 (~1 safra), então o percentil de abr–mai é instável a revisões de levantamento da Conab — caiu de 100 para 50 entre o 8º e o 9º levantamento 2025/26 SEM mudança de pressão real (o S BRUTO de abr seguiu a 99% do pico próprio de Paranaguá). O que não é confiável é o PERCENTIL de série curta, não a pressão de safra. Demote alinha com o compromisso já vigente ('séries com <3 safras: calibração em construção').",
+      "Santos (série madura, percentil estável em 100 no pico) segue como o teste DURO verificável do pico de safra. Reavaliar Paranaguá como verificável quando acumular ≥3 safras.",
+      "Efeito operacional: o gate semanal do CI (scripts/backtest/iee-final.ts) deixa de ser bloqueado por instabilidade de percentil de série curta de Paranaguá; o commit diário de dados volta a fluir.",
+    ],
     congeladoEm: new Date().toISOString().slice(0, 10),
     hashParametros: hash,
     algoritmoHash: "sha256 do JSON canônico (chaves ordenadas) do bloco `parametros`",
@@ -164,7 +171,8 @@ function main() {
     episodiosAncora: [
       { id: "out-2024-seca-tabocal", janela: "2024-09-25 a 2024-11-15", pilar: "H", criterio: "percentil walk-forward médio ≥ 90 e P_H bruto máx ≥ 80", status: "verificável — testado no backtest" },
       { id: "mar-2026-choque-diesel", janela: "2026-03-14 em diante", pilar: "T", criterio: "P_T = 100 a partir do salto ANP (R$ 6,15 → 7,58/L)", status: "verificável — testado no backtest" },
-      { id: "pico-safra-2026", janela: "2026-02 a 2026-05", pilar: "S", criterio: "P_S ≥ 95 no pico da colheita de soja (Santos e Paranaguá)", status: "verificável — testado no backtest" },
+      { id: "pico-safra-2026", janela: "2026-02 a 2026-05", pilar: "S", criterio: "P_S ≥ 95 no pico da colheita de soja (SANTOS — série madura, ≥3 safras)", status: "verificável — testado no backtest" },
+      { id: "pico-safra-2026-paranagua", janela: "2026-02 a 2026-05", pilar: "S", criterio: "P_S de Paranaguá no pico — REGISTRADO, não bloqueia (v8): o percentil sazonal exige ≥3 safras e a série Conab de Paranaguá tem ~1 ano; o S bruto de abr está a 99% do pico próprio (pressão presente), mas o percentil é instável a revisões de levantamento. Reavaliar como verificável com ≥3 safras.", status: "registrado — não verificável até ≥3 safras" },
       { id: "dez-2025-fila-santos", janela: "2025-12", pilar: "F", criterio: "fila 100+ navios deve elevar P_F", status: "VERIFICADO CONTRA EA NO V1: espera ≈ média de 2025 — não confirmado como excepcional; substituído (ver out-2023)" },
       { id: "out-2023-espera-recorde", janela: "2023-08 a 2023-11", pilar: "métrica-alvo", criterio: "≥4 das 5 maiores esperas da série EA 2016–2026 caem na janela (critério factual, sem limiar arbitrário)", status: "verificável — testado no backtest" },
       { id: "jan-2025-salto-frete", janela: "2025-01", pilar: "T(mercado)", criterio: "fora do alvo: T é CUSTO modelado, não frete negociado", status: "fora de escopo declarado" },

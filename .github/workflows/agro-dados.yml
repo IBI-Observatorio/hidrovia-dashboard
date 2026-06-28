@@ -48,8 +48,9 @@ jobs:
         run: |
           ALVO="${{ github.event.inputs.alvo || 'auto' }}"
           if [ "$ALVO" = "auto" ]; then
-            # agenda diária (09:00) → lineups; agenda de sexta (21:00) → semanais
-            if [ "$(date -u +%H)" = "09" ]; then ALVO=lineups; else ALVO=semanais; fi
+            # Roteia pela AGENDA que disparou (robusto a atraso do GitHub), não
+            # pela hora corrente: sexta 21:00 UTC → semanais; demais → lineups.
+            if [ "${{ github.event.schedule }}" = "0 21 * * 5" ]; then ALVO=semanais; else ALVO=lineups; fi
           fi
           echo "alvo=$ALVO" >> "$GITHUB_OUTPUT"
           echo "Alvo: $ALVO"
@@ -86,7 +87,11 @@ jobs:
         run: npx tsx scripts/backtest/iee-final.ts
 
       # ---------- COMMIT dos dados ----------
+      # always(): o estado honesto (incl. "indisponível") commita mesmo se o
+      # backtest BLOQUEAR de verdade — o gate sinaliza no README/job vermelho,
+      # não descarta o refresh de dados. O job segue vermelho num FALHOU real.
       - name: Commita dados atualizados
+        if: always()
         run: |
           git config user.name  "ibi-observatorio-bot"
           git config user.email "observatorio@ibi.org.br"
