@@ -5,6 +5,8 @@
 // Por enquanto só 'teste' (placeholders) para validar a rota.
 
 import type { CustoInput, Premissa, Proveniencia } from "./custo-evitavel";
+import { taxaPorSegundo } from "./custo-evitavel";
+import { PAVIMENTO, PAVIMENTO_COPY } from "./modulos/pavimento";
 
 export type ModuloEmbedConfig = {
   titulo: string;
@@ -17,7 +19,36 @@ export type ModuloEmbedConfig = {
   alturaEmbed?: number;
 };
 
+// Input base do módulo Pavimento — valor anual de diesel distribuído desde 0h de hoje.
+const pavimentoInputBase: CustoInput = {
+  valorAnual: PAVIMENTO.valorAnualDiesel,
+  janela: { tipo: "meia-noite" },
+};
+
 export const EMBED_REGISTRY: Record<string, ModuloEmbedConfig> = {
+  pavimento: {
+    titulo: PAVIMENTO_COPY.titulo,
+    rotulo: PAVIMENTO_COPY.rotulo,
+    // Derivada do engine (não hardcoded) → ≈ "R$ 228 por segundo".
+    taxaLegenda: `≈ R$ ${Math.round(taxaPorSegundo(pavimentoInputBase)).toLocaleString("pt-BR")} por segundo`,
+    input: pavimentoInputBase,
+    premissa: {
+      label: PAVIMENTO_COPY.premissaLabel,
+      min: 10,
+      max: 50,
+      step: 0.1,
+      base: PAVIMENTO.sobrecustoBase,
+      formatar: (v) => v.toFixed(1).replace(".", ",") + "%",
+      // O sobrecusto medido (31,2%) gera o valor anual de diesel; mover o slider
+      // reescala linearmente esse valor anual e, com ele, a taxa por segundo.
+      calcular: (v) => ({
+        valorAnual: PAVIMENTO.valorAnualDiesel * (v / PAVIMENTO.sobrecustoBase),
+        janela: { tipo: "meia-noite" },
+      }),
+    },
+    proveniencia: { tipo: "estimativa-ibi", fonte: PAVIMENTO_COPY.fonte },
+    alturaEmbed: 560,
+  },
   teste: {
     titulo: "Módulo de teste",
     rotulo: "Contador de validação do Bloco A — números placeholder, sem significado de domínio.",
