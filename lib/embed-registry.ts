@@ -5,7 +5,6 @@
 // Por enquanto só 'teste' (placeholders) para validar a rota.
 
 import type { CustoInput, Premissa, Proveniencia } from "./custo-evitavel";
-import { taxaPorSegundo } from "./custo-evitavel";
 import { PAVIMENTO, PAVIMENTO_COPY } from "./modulos/pavimento";
 
 export type ModuloEmbedConfig = {
@@ -29,8 +28,8 @@ export const EMBED_REGISTRY: Record<string, ModuloEmbedConfig> = {
   pavimento: {
     titulo: PAVIMENTO_COPY.titulo,
     rotulo: PAVIMENTO_COPY.rotulo,
-    // Derivada do engine (não hardcoded) → ≈ "R$ 228 por segundo".
-    taxaLegenda: `≈ R$ ${Math.round(taxaPorSegundo(pavimentoInputBase)).toLocaleString("pt-BR")} por segundo`,
+    // Sem taxaLegenda fixa: o CustoMeter deriva a legenda ao vivo a partir da
+    // taxa do input ativo, então ela acompanha o slider (≈ R$ 228/s na base).
     input: pavimentoInputBase,
     premissa: {
       label: PAVIMENTO_COPY.premissaLabel,
