@@ -1,21 +1,19 @@
-// Módulo B2 "Aquaviário" — embed da tríade de risco hidrológico.
+// Módulo B2 "Aquaviário" — embed dos indicadores de risco hidrológico.
 //
 // Server component: recebe o snapshot já computado (getAquaviarioSnapshot) e
 // REUSA os gauges canônicos — não recria nenhuma visualização:
-//   • IRC-Tabocal  → IRCDuploWidget   (score 0–100 + parâmetro ANTAQ + divergência)
-//   • IDN          → DessincronizacaoGauge (velocímetro + série histórica)
-//   • ETA          → bloco numérico (sem componente próprio: central + banda min/máx)
+//   • IDN  → DessincronizacaoGauge (velocímetro + série histórica)
+//   • ETA  → bloco numérico (sem componente próprio: central + banda P10/P90)
 //
-// Sem header/footer de página (isso é da página pública). Aqui só a tríade + selo.
-// Layout: empilhado (cada gauge é um composto largo — IRCDuplo já é 3-col interno,
-// DessincronizacaoGauge embute série temporal); num iframe estreito o empilhamento
-// é a leitura correta. A banda de incerteza do ETA é exibida (nunca só o central).
+// Sem header/footer de página (isso é da página pública). Aqui só os indicadores
+// + selo. Layout empilhado: DessincronizacaoGauge embute série temporal e num
+// iframe estreito o empilhamento é a leitura correta. A banda de incerteza do
+// ETA é exibida (nunca só o central).
 
-import IRCDuploWidget from "@/components/IRCDuploWidget";
 import DessincronizacaoGauge from "@/components/DessincronizacaoGauge";
 import SeloProveniencia from "@/components/SeloProveniencia";
 import { Calendar } from "lucide-react";
-import { AQUAVIARIO_COPY, type TriadeAquaviario } from "@/lib/modulos/aquaviario";
+import { AQUAVIARIO_COPY, type AquaviarioSnapshot } from "@/lib/modulos/aquaviario";
 
 const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
 
@@ -37,7 +35,7 @@ function corETA(dias: number | null) {
   }[u];
 }
 
-function ETABloco({ eta }: { eta: TriadeAquaviario["eta"] }) {
+function ETABloco({ eta }: { eta: AquaviarioSnapshot["eta"] }) {
   const cor = corETA(eta.dias);
   const indefinido = eta.datas.central == null;
 
@@ -108,18 +106,11 @@ function ETABloco({ eta }: { eta: TriadeAquaviario["eta"] }) {
   );
 }
 
-export default function AquaviarioEmbed({ snapshot }: { snapshot: TriadeAquaviario }) {
+export default function AquaviarioEmbed({ snapshot }: { snapshot: AquaviarioSnapshot }) {
   const { gauges, eta, meta } = snapshot;
 
   return (
     <div className="flex flex-col gap-6">
-      {/* ── IRC-Tabocal (score operacional + parâmetro ANTAQ + divergência) ── */}
-      <IRCDuploWidget
-        rTabocal={gauges.rTabocal}
-        rManaus={gauges.rManaus}
-        divergencia={gauges.divergencia}
-      />
-
       {/* ── IDN (dessincronização Norte–Sul) ── */}
       <DessincronizacaoGauge
         dados={gauges.dados}
@@ -128,7 +119,7 @@ export default function AquaviarioEmbed({ snapshot }: { snapshot: TriadeAquaviar
         serieIDN={gauges.serieIDN}
       />
 
-      {/* ── ETA até o gatilho operacional de Tabocal ── */}
+      {/* ── ETA até a restrição de calado ── */}
       <ETABloco eta={eta} />
 
       {/* ── Proveniência ── */}
@@ -139,7 +130,7 @@ export default function AquaviarioEmbed({ snapshot }: { snapshot: TriadeAquaviar
         />
         <p className="text-gray-600 text-[10px] mt-2">
           {meta.fonteANA ? "Cotas ANA ao vivo" : "Cotas em fallback estático (ANA indisponível)"} ·
-          ref. {dataPtBR(meta.dataReferencia)} · previsão de pico: {meta.previsaoFonte}
+          ref. {dataPtBR(meta.dataReferencia)}
         </p>
       </div>
     </div>
