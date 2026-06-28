@@ -239,6 +239,21 @@
   body.feature .contador,
   body.feature .rodape { opacity: 0 !important; pointer-events: none; transition: opacity .3s ease; }
 
+  /* ===================== MODO WIDE (monitores / painéis LED ultralargos) =====================
+     Centraliza o palco (slides + feature) numa faixa 16:9 e deixa as laterais com o fundo
+     institucional (#bg já é full-bleed). Sem distorção. Liga por ?wide=1 ou pela tecla "w". */
+  body.wide { --wide-w: min(100vw, calc(100vh * 16 / 9)); --wing: calc((100vw - var(--wide-w)) / 2); }
+  body.wide #deck,
+  body.wide #palco-feature {
+    left: 50%; right: auto; width: var(--wide-w); transform: translateX(-50%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 0 90px rgba(0,0,0,.5);
+  }
+  /* chrome ancorada às bordas da faixa central, não às bordas do painel */
+  body.wide .hud-l    { left:  calc(var(--wing) + 24px); }
+  body.wide .hud-r    { right: calc(var(--wing) + 24px); }
+  body.wide .rodape   { left:  var(--wing); right: var(--wing); }
+  body.wide .contador { right: calc(var(--wing) + 28px); }
+
   /* blackout */
   body.blackout #deck, body.blackout #palco-feature, body.blackout #bg { opacity: 0 !important; transition: opacity .3s; }
   #blackout-layer { position: fixed; inset: 0; background: #000; z-index: 40; opacity: 0; pointer-events: none; transition: opacity .3s; }
@@ -926,6 +941,18 @@ const FEATURES = {
 
 /* canal do relay interno — o MESMO precisa estar no controle do celular */
 const CANAL = new URLSearchParams(location.search).get("canal") || "obs-ibi-ctlog";
+
+/* modo wide (monitores/painéis LED ultralargos): ?wide=1 na URL ou tecla "w".
+   URL manda quando presente; senão lembra a última escolha neste display. */
+const _qp = new URLSearchParams(location.search);
+let modoWide = _qp.has("wide")
+  ? !["0", "false", "nao", "não", "off"].includes((_qp.get("wide") || "").toLowerCase())
+  : localStorage.getItem("presenter-wide") === "1";
+function aplicarWide() {
+  document.body.classList.toggle("wide", modoWide);
+  try { localStorage.setItem("presenter-wide", modoWide ? "1" : "0"); } catch (e) {}
+  if (typeof escalarSincport === "function") escalarSincport();
+}
 /* ============================================================================= */
 
 const deck = document.getElementById("deck");
@@ -1252,6 +1279,7 @@ function escalarSincport(){
 }
 addEventListener("resize", escalarSincport);
 escalarSincport();
+aplicarWide();
 setInterval(tick, 200);
 tick();
 render();
@@ -1281,6 +1309,7 @@ addEventListener("keydown", (ev) => {
     case "ArrowLeft": case "PageUp": enviar("prev"); break;
     case "Home": enviar("goto", { slide: 0 }); break;
     case "b": case "B": enviar("blackout"); break;
+    case "w": case "W": modoWide = !modoWide; aplicarWide(); break;
     case "Escape": enviar("slides"); break;
     case "f": case "F":
       if (!document.fullscreenElement) document.documentElement.requestFullscreen();

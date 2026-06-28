@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useCountUp } from "@/components/home/HeroStat";
 import SeloProveniencia from "@/components/SeloProveniencia";
 import {
   acumuladoEm,
@@ -81,13 +80,11 @@ export default function CustoMeter({
     };
   }, [ativo, reduzido]);
 
-  // Legenda da taxa: usa a passada, ou deriva reusando o easing de useCountUp
-  // (com vírgula pt-BR). O número grande é o contador vivo acima — useCountUp não
-  // serve para ele (alvo é móvel e o formato é monetário).
-  const taxaAnimada = useCountUp(Math.round(taxa), 0);
+  // Legenda da taxa: usa a passada, ou deriva da taxa AO VIVO (pt-BR). Reflete o
+  // input ativo, então acompanha o slider na hora. (Não usa o easing de useCountUp:
+  // sob o re-render contínuo do contador grande, o count-up reinicia e trava em 0.)
   const legenda =
-    taxaLegenda ??
-    `≈ R$ ${reduzido ? Math.round(taxa).toLocaleString("pt-BR") : taxaAnimada} por segundo`;
+    taxaLegenda ?? `≈ R$ ${Math.round(taxa).toLocaleString("pt-BR")} por segundo`;
 
   return (
     <div className="rounded-2xl border border-white/10 bg-gradient-to-b from-azul-medio to-gray-900 p-6 shadow-2xl">
