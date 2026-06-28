@@ -11,11 +11,25 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)",
+        // Tudo EXCETO /embed/* — mantém X-Frame-Options p/ o resto do site.
+        // (Next aplica os blocos cumulativamente, então /embed precisa ficar de fora
+        //  daqui: qualquer valor de X-Frame-Options bloquearia o enquadramento.)
+        source: "/((?!embed).*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options",        value: "SAMEORIGIN" },
           { key: "Referrer-Policy",        value: "strict-origin-when-cross-origin" },
+        ],
+      },
+      {
+        // /embed/* é desenhado para ser embutido via <iframe> por terceiros (ex.: CNT Data).
+        // SEM X-Frame-Options (não há valor "permitir todos") + CSP frame-ancestors.
+        // TODO: restringir frame-ancestors aos domínios da CNT quando definidos.
+        source: "/embed/:path*",
+        headers: [
+          { key: "X-Content-Type-Options",   value: "nosniff" },
+          { key: "Content-Security-Policy",  value: "frame-ancestors *" },
+          { key: "Referrer-Policy",          value: "strict-origin-when-cross-origin" },
         ],
       },
       // Sobrescreve o Cache-Control padrão do prerender estático para HTML.
