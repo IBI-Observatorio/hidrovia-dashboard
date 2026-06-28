@@ -27,7 +27,9 @@ export interface ModuloHidroConfig {
 export const EMBED_REGISTRY_HIDRO: Record<string, ModuloHidroConfig> = {
   aquaviario: {
     titulo: AQUAVIARIO_COPY.titulo,
-    alturaEmbed: 920,
+    // ETA + IDN-compacto + selo + botão de embed cabem em ~657px na largura
+    // típica de embed (≥640px, IDN lado a lado). 680 dá folga mínima sem sobra.
+    alturaEmbed: 680,
     render: async () => {
       const snapshot = await getAquaviarioSnapshot();
       return <AquaviarioEmbed snapshot={snapshot} />;

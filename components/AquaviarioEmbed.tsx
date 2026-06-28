@@ -1,16 +1,16 @@
-// Módulo B2 "Aquaviário" — embed dos indicadores de risco hidrológico.
+// Módulo B2 "Aquaviário" — embed LEVE dos indicadores de risco hidrológico.
 //
-// Server component: recebe o snapshot já computado (getAquaviarioSnapshot) e
-// REUSA os gauges canônicos — não recria nenhuma visualização:
-//   • IDN  → DessincronizacaoGauge (velocímetro + série histórica)
-//   • ETA  → bloco numérico (sem componente próprio: central + banda P10/P90)
+// Server component: recebe o snapshot já computado (getAquaviarioSnapshot).
+// Ordem preditivo-first:
+//   1. ETA  → indicador líder (data de cruzamento + faixa P10/P50/P90)
+//   2. IDN  → contexto/regime, em versão COMPACTA (IDNCompacto: velocímetro +
+//             número + regime). NÃO usa o DessincronizacaoGauge completo do
+//             /monitor (~1770px) — esse fica só no /monitor.
 //
-// Sem header/footer de página (isso é da página pública). Aqui só os indicadores
-// + selo. Layout empilhado: DessincronizacaoGauge embute série temporal e num
-// iframe estreito o empilhamento é a leitura correta. A banda de incerteza do
-// ETA é exibida (nunca só o central).
+// Sem header/footer de página (isso é da página pública). A banda de incerteza
+// do ETA é sempre exibida (nunca só o central).
 
-import DessincronizacaoGauge from "@/components/DessincronizacaoGauge";
+import IDNCompacto from "@/components/IDNCompacto";
 import SeloProveniencia from "@/components/SeloProveniencia";
 import { Calendar } from "lucide-react";
 import { AQUAVIARIO_COPY, type AquaviarioSnapshot } from "@/lib/modulos/aquaviario";
@@ -107,20 +107,15 @@ function ETABloco({ eta }: { eta: AquaviarioSnapshot["eta"] }) {
 }
 
 export default function AquaviarioEmbed({ snapshot }: { snapshot: AquaviarioSnapshot }) {
-  const { gauges, eta, meta } = snapshot;
+  const { idn, eta, meta } = snapshot;
 
   return (
-    <div className="flex flex-col gap-6">
-      {/* ── IDN (dessincronização Norte–Sul) ── */}
-      <DessincronizacaoGauge
-        dados={gauges.dados}
-        cotasIDN={gauges.cotasIDN}
-        vazoesIDN={gauges.vazoesIDN}
-        serieIDN={gauges.serieIDN}
-      />
-
-      {/* ── ETA até a restrição de calado ── */}
+    <div className="flex flex-col gap-5">
+      {/* ── ETA até a restrição de calado (indicador líder) ── */}
       <ETABloco eta={eta} />
+
+      {/* ── IDN compacto (contexto/regime) ── */}
+      <IDNCompacto idn={idn} />
 
       {/* ── Proveniência ── */}
       <div className="pt-1">
