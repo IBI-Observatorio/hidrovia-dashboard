@@ -14,12 +14,6 @@ import { obterDadosDiariosANA } from "../cache-ana-diario";
 import { calculaIDNSimples, classificaIDN } from "../calcula-idn";
 import { projetaETAporAnalogos } from "../recessao-analogos";
 import { ITACOATIARA_HISTORICO_DIARIO } from "../itacoatiara-historico-diario";
-import { lerSerieIDN } from "../ana-idn-series";
-import type { CotaIDN, VazaoIDN } from "../fetch-dados";
-import type { EstacaoComDOY } from "../sub-bacias";
-import type { EstacaoVazao } from "../sub-bacias-vazao";
-import type { DadosEstacao } from "../dados-historicos";
-import type { PontoIDN } from "../ana-idn-series";
 
 // Calado-alvo de referência da versão pública (comboio carregado em cheia
 // normal) — mesmo default do IRCInterativo gratuito. Assinantes parametrizam.
@@ -45,14 +39,6 @@ export interface AquaviarioSnapshot {
       tardia:  string | null;       // P90 (restrição mais tarde)
     };
   };
-  // Inputs serializáveis para o GAUGE reaproveitado (DessincronizacaoGauge
-  // recalcula o IDN a partir daqui — não duplicamos número na UI).
-  gauges: {
-    dados:     Record<string, DadosEstacao>;
-    cotasIDN:  Partial<Record<EstacaoComDOY, CotaIDN>>;
-    vazoesIDN: Partial<Record<EstacaoVazao, VazaoIDN>>;
-    serieIDN:  PontoIDN[];
-  };
   meta: {
     dataReferencia: string;        // YYYY-MM-DD (cota mais recente do IDN)
     fonteANA:       boolean;       // true = leitura ao vivo; false = fallback estático
@@ -64,8 +50,7 @@ export interface AquaviarioSnapshot {
  * Server-only (async): lê o cache diário ANA.
  */
 export async function getAquaviarioSnapshot(): Promise<AquaviarioSnapshot> {
-  const { dados, cotasIDN, vazoesIDN } = await obterDadosDiariosANA();
-  const serieIDN = lerSerieIDN().serie;
+  const { dados, cotasIDN } = await obterDadosDiariosANA();
 
   // ── IDN — só cotasIDN (MA-7d); renormaliza pesos quando estação ausente ────
   const cotasIDNCompletas: Record<string, number> = {};
@@ -117,7 +102,6 @@ export async function getAquaviarioSnapshot(): Promise<AquaviarioSnapshot> {
         tardia:  etaAn?.data_p90 ?? null,
       },
     },
-    gauges: { dados, cotasIDN, vazoesIDN, serieIDN },
     meta: { dataReferencia: dataIDN, fonteANA },
   };
 }
