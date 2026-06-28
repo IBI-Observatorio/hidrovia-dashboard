@@ -18,6 +18,12 @@ export const PAVIMENTO_COPY = {
   rotulo: "em diesel desperdiçado por rodar sobre pavimento ruim — acumulado hoje",
   premissaLabel: "Sobrecusto médio por condição do pavimento",
   ancoraNota: "31,2% = média medida pela CNT (2025)",
+  // Faixa de stats de apoio da página pública (número + rótulo na mesma fonte única).
+  stats: [
+    "+31,2% no custo operacional",
+    "1,2 bi L de diesel/ano",
+    "R$ 101,1 bi para recuperar a malha",
+  ],
   metodologia:
     "Base: Pesquisa CNT de Rodovias 2025 — sobrecusto operacional médio de 31,2% atribuído à condição do pavimento e ~R$ 7,2 bi/ano em consumo adicional de diesel (1,2 bi de litros). O contador distribui o valor anual ao longo do tempo desde 0h de hoje. O escopo é o diesel, não o custo logístico total. Estimativa do Observatório/IBI a partir de dado CNT.",
   fonte: "Pesquisa CNT de Rodovias 2025",
