@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
@@ -184,7 +184,30 @@ function ComoLer() {
 
 export default function CadaRealClient({ dados }: { dados: CadaRealData }) {
   const [rotaId, setRotaId] = useState<string>(dados.rotas[0].id);
+  // Vitrine: avança sozinho a cada 6s até o usuário fixar uma rota (clique).
+  const [autoPlay, setAutoPlay] = useState(true);
   const rota: RotaAncora = dados.rotas.find((r) => r.id === rotaId)!;
+
+  function selecionaRota(id: string) {
+    setRotaId(id);
+    setAutoPlay(false); // interação do usuário para a rotação automática
+  }
+
+  useEffect(() => {
+    if (!autoPlay) return;
+    const prefereReduzido =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (prefereReduzido) return;
+    const timer = setInterval(() => {
+      setRotaId((cur) => {
+        const i = dados.rotas.findIndex((r) => r.id === cur);
+        return dados.rotas[(i + 1) % dados.rotas.length].id;
+      });
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [autoPlay, dados.rotas]);
+
   const camadas = useMemo(
     () => decomposicaoParaRota(dados.decomposicao, rota.regiao, dados.ajusteNorteCombustivelPP),
     [dados, rota.regiao]
@@ -242,14 +265,22 @@ export default function CadaRealClient({ dados }: { dados: CadaRealData }) {
 
       {/* ── seletor de rota ─────────────────────────────────────────────── */}
       <motion.div {...reveal} className="space-y-1.5 rounded-xl border border-white/10 bg-azul-medio p-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">
-          {paginaCopy.labelSeletor}
-        </p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-gray-500">
+            {paginaCopy.labelSeletor}
+          </p>
+          {autoPlay && (
+            <span className="flex items-center gap-1.5 text-[0.62rem] uppercase tracking-[0.1em] text-gray-600">
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-ibi-green" />
+              avança sozinho · clique p/ fixar
+            </span>
+          )}
+        </div>
         <div className="flex flex-wrap gap-2">
           {dados.rotas.map((r) => (
             <button
               key={r.id}
-              onClick={() => setRotaId(r.id)}
+              onClick={() => selecionaRota(r.id)}
               title={`${r.origem} → ${r.destino}`}
               className={[
                 "rounded-full border px-4 py-1.5 text-sm font-medium transition-all",
