@@ -59,61 +59,67 @@ const meses = Math.max(1, parseInt(opt("--meses", "3"), 10) || 3);
 const hoje = new Date().toISOString().slice(0, 10);
 
 // ── anatomia estrutural (curada, com fonte) ─────────────────────────────────────
-// Soma = 100. Combustível + tributos = 53% ("mais da metade" — headline da página).
-// FONTES: CNT/ABEAR (QAV ~36% dos custos em 2024, ~45% no pico de 2026, global ~31%);
-// ABEAR/IATA (estrutura de custos); resultado do setor estreito/negativo no Brasil.
+// Soma = 100. Calibrada na ESTRUTURA DE CUSTOS oficial da ABEAR (Panorama 2024,
+// dados 2023): combustível 36%, arrend.+seg.+manut. 14% + depreciação 7% = 21%,
+// pessoal 12% + handling/assist. 4% + despesas operacionais 16% + outros 5% = 37%,
+// tarifas de navegação 4% + aeroportuárias 2% = 6%. Sobre isso: a carga tributária
+// do bilhete doméstico é ~10% do preço (Maran Gehlen 2026), quase toda EMBUTIDA no
+// ICMS do QAV (regional: 3% Norte / 7% maioria / 10% SP — CONFAZ 188/17) — o STF
+// derrubou o ICMS sobre o bilhete (ADI 1600) e o PIS/Cofins da venda está zerado
+// (Lei 14.592/2023). Aqui os Tributos aparecem como fatia própria (retirada, sem
+// dupla contagem, sobretudo do combustível); o QAV fica líquido do ICMS.
 const AJUSTE_NORTE_COMBUSTIVEL_PP = 6;
 
 const DECOMPOSICAO = [
   {
     id: "combustivel",
     label: "Combustível (QAV)",
-    percentual: 38,
+    percentual: 32,
     cor: "#D4922A",
     descricaoCurta:
-      "Querosene de aviação — o maior item de custo da operação aérea no Brasil.",
+      "Querosene de aviação, já líquido do ICMS — o maior item isolado do preço.",
     insight:
-      "O QAV respondeu por ~36% dos custos operacionais do setor em 2024 (CNT/ABEAR) e chegou perto de 45% no pico de 2026 — contra ~31% da média global. Segue a paridade internacional do petróleo e o câmbio; em rotas amazônicas, a logística de distribuição eleva ainda mais esse peso, por isso a fatia é maior nas rotas do Norte.",
+      "O QAV é ~36% dos custos operacionais do setor (CNT/ABEAR, 2024) e passou de 45% no pico de 2026 — contra ~31% da média global. Aqui aparece líquido do ICMS (que está na fatia de Tributos). Segue a paridade internacional do petróleo e o câmbio; em rotas amazônicas, a logística de distribuição pesa mais, por isso a fatia é maior no Norte.",
   },
   {
     id: "tributos",
-    label: "Tributos",
-    percentual: 15,
+    label: "Tributos (embutidos)",
+    percentual: 10,
     cor: "#A0153E",
     descricaoCurta:
-      "PIS/Cofins, ISS e demais encargos — além do ICMS sobre o QAV, já embutido no combustível.",
+      "O imposto que você paga vem embutido nos insumos — quase todo ICMS sobre o querosene.",
     insight:
-      "Parte do peso tributário já vem dentro do preço do combustível (o ICMS estadual sobre o QAV, que varia de estado para estado). Esta camada capta os tributos que incidem sobre a operação e a venda, por cima disso. Reduções de alíquota de ICMS vêm sendo usadas como instrumento para atrair frequências e novas rotas.",
-  },
-  {
-    id: "tarifasAeroportuariasENavegacao",
-    label: "Tarifas aeroportuárias e navegação",
-    percentual: 12,
-    cor: "#0099D8",
-    descricaoCurta:
-      "Tarifas de embarque, pouso e permanência, além da navegação aérea (DECEA).",
-    insight:
-      "São tarifas reguladas, que remuneram a infraestrutura aeroportuária e o controle do espaço aéreo. A 'tarifa média' que a ANAC divulga NÃO inclui essas taxas — por isso elas aparecem aqui como camada à parte do preço total pago. Entram no bilhete de toda passagem, independentemente da companhia que opera o voo.",
+      "Não há ICMS sobre o bilhete doméstico (o STF derrubou — ADI 1600) nem PIS/Cofins sobre a venda (zerado até 2026). O tributo que resta — ~10% do preço — está embutido nos insumos, sobretudo o ICMS do QAV, que é regional: 3% no Norte, 7% na maioria dos estados, 10% em SP. A reforma tributária (IBS/CBS, ~26% a partir de 2027) muda esse quadro.",
   },
   {
     id: "pessoalEOperacao",
     label: "Pessoal, vendas e operação",
-    percentual: 16,
+    percentual: 28,
     cor: "#00A652",
     descricaoCurta:
-      "Tripulação, equipes de solo, distribuição/vendas e demais custos operacionais.",
+      "Tripulação, equipes de solo e handling, mais vendas, gestão e demais despesas operacionais.",
     insight:
-      "Inclui salários e treinamento de tripulações e equipes de aeroporto, além dos custos de distribuição e venda do bilhete. É a parcela mais sensível à escala: rotas mais densas diluem melhor esse custo por passageiro.",
+      "Somadas, pessoal e as despesas de operação, vendas e administração pesam quase tanto quanto o combustível (ABEAR). É a parcela mais sensível à escala: rotas mais densas diluem melhor esse custo por passageiro.",
   },
   {
     id: "leasingEManutencao",
-    label: "Leasing e manutenção",
-    percentual: 15,
+    label: "Leasing, manutenção e depreciação",
+    percentual: 20,
     cor: "#2c2c2c",
     descricaoCurta:
-      "Arrendamento das aeronaves e manutenção — custos majoritariamente dolarizados.",
+      "Arrendamento, manutenção e depreciação das aeronaves — custos majoritariamente dolarizados.",
     insight:
-      "A maior parte da frota comercial brasileira é arrendada e os contratos são em dólar, assim como peças e motores. O câmbio afeta a passagem mesmo sem o avião sair do país.",
+      "A maior parte da frota comercial brasileira é arrendada e os contratos são em dólar, assim como peças e motores. Cerca de 57% dos custos do setor são dolarizados (ABEAR) — o câmbio afeta a passagem mesmo sem o avião sair do país.",
+  },
+  {
+    id: "tarifasAeroportuariasENavegacao",
+    label: "Tarifas aeroportuárias e navegação",
+    percentual: 6,
+    cor: "#0099D8",
+    descricaoCurta:
+      "Tarifas de embarque, pouso e permanência, além da navegação aérea (DECEA).",
+    insight:
+      "Tarifas reguladas que remuneram a infraestrutura aeroportuária e o controle do espaço aéreo — cerca de 6% dos custos (ABEAR). A 'tarifa média' que a ANAC divulga NÃO inclui essas taxas — por isso elas aparecem aqui como camada à parte do preço total pago.",
   },
   {
     id: "margemCia",

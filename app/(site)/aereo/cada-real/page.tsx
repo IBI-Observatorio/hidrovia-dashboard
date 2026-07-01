@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Onde vai cada real da sua passagem — Observatório IBI",
     description:
-      "Combustível e tributos somam mais da metade do preço de voar no Brasil. Veja a composição, rota a rota.",
+      "O combustível é o maior item de uma passagem no Brasil — e o imposto vem quase todo embutido no querosene. Veja a composição, rota a rota.",
   },
 };
 
