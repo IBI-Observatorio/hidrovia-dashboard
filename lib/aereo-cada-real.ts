@@ -34,7 +34,7 @@ export interface CadaRealData {
   referencia: string;
   geradoEm: string;
   fonte: string;
-  tarifas: { origem: string; dadosIlustrativos: boolean; nota: string };
+  tarifas: { origem: string; periodo: string | null; dadosIlustrativos: boolean; nota: string };
   ajusteNorteCombustivelPP: number;
   rotas: RotaAncora[];
   decomposicao: CamadaCusto[];
@@ -87,11 +87,11 @@ export const comoLer = {
   ],
   fontes: [
     "CNT / ABEAR — participação do QAV nos custos operacionais (~36% em 2024; ~45% no pico de 2026).",
-    "ANAC — Tarifas Aéreas Domésticas (tarifa média R$ 632,53 em mai/2026; exclui taxas aeroportuárias). Integração por rota prevista via Microdados.",
+    "ANAC — Tarifas Aéreas Domésticas (microdados): tarifa média por rota, ponderada por assentos. A média doméstica foi R$ 632,53 em mai/2026 e a série exclui taxas aeroportuárias.",
     "ABEAR / IATA — estrutura de custos do transporte aéreo (referência para as demais camadas).",
   ],
   aviso:
-    "Os percentuais são uma anatomia estrutural calibrada em fontes públicas, não a planilha de uma companhia. A tarifa por rota será ligada aos Microdados da ANAC. A estrutura da página — rotas-âncora, camadas e leitura — já é a definitiva.",
+    "Os percentuais são uma anatomia estrutural calibrada em fontes públicas, não a planilha de uma companhia. A tarifa média de cada rota vem dos Microdados de Tarifas Aéreas Domésticas da ANAC (média ponderada por assentos).",
 } as const;
 
 export const insightFinal =

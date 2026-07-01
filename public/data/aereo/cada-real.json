@@ -1,10 +1,11 @@
 {
-  "referencia": "2026-05",
+  "referencia": "2026-04",
   "geradoEm": "2026-07-01",
   "fonte": "CNT/ABEAR (peso do QAV nos custos) · ANAC Tarifas Aéreas Domésticas (tarifa média por rota) · ABEAR/IATA (demais camadas)",
   "tarifas": {
-    "origem": "ilustrativo",
-    "dadosIlustrativos": true,
+    "origem": "ANAC — Tarifas Aéreas Domésticas (microdados)",
+    "periodo": "mar–abr/2026",
+    "dadosIlustrativos": false,
     "nota": "A 'tarifa média' da ANAC exclui taxas aeroportuárias — elas entram na página como camada à parte do preço total pago."
   },
   "ajusteNorteCombustivelPP": 6,
@@ -14,48 +15,54 @@
       "label": "GRU → SDU",
       "origem": "São Paulo (GRU)",
       "destino": "Rio de Janeiro (SDU)",
-      "tarifaMedia": 689,
-      "regiao": "sudeste"
+      "tarifaMedia": 581,
+      "regiao": "sudeste",
+      "amostra": 12670
     },
     {
       "id": "gru-mao",
       "label": "GRU → MAO",
       "origem": "São Paulo (GRU)",
       "destino": "Manaus (MAO)",
-      "tarifaMedia": 1420,
-      "regiao": "norte"
+      "tarifaMedia": 909,
+      "regiao": "norte",
+      "amostra": 38787
     },
     {
       "id": "bsb-bel",
       "label": "BSB → BEL",
       "origem": "Brasília (BSB)",
       "destino": "Belém (BEL)",
-      "tarifaMedia": 1180,
-      "regiao": "norte"
+      "tarifaMedia": 1120,
+      "regiao": "norte",
+      "amostra": 6293
     },
     {
       "id": "mao-tbt",
       "label": "MAO → TBT",
       "origem": "Manaus (MAO)",
       "destino": "Tabatinga (TBT)",
-      "tarifaMedia": 1690,
-      "regiao": "norte"
+      "tarifaMedia": 950,
+      "regiao": "norte",
+      "amostra": 3843
     },
     {
       "id": "gru-rec",
       "label": "GRU → REC",
       "origem": "São Paulo (GRU)",
       "destino": "Recife (REC)",
-      "tarifaMedia": 870,
-      "regiao": "nordeste"
+      "tarifaMedia": 574,
+      "regiao": "nordeste",
+      "amostra": 109552
     },
     {
       "id": "poa-gru",
       "label": "POA → GRU",
       "origem": "Porto Alegre (POA)",
       "destino": "São Paulo (GRU)",
-      "tarifaMedia": 640,
-      "regiao": "sul"
+      "tarifaMedia": 333,
+      "regiao": "sul",
+      "amostra": 82687
     }
   ],
   "decomposicao": [

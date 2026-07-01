@@ -55,3 +55,6 @@ next-env.d.ts
 
 # Log do pipeline
 /logs/
+
+# cache local de downloads (ANAC etc.) — não versionar
+.cache/

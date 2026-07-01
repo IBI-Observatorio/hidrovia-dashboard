@@ -285,7 +285,10 @@ export default function CadaRealClient({ dados }: { dados: CadaRealData }) {
             </div>
           </div>
           <div className="text-right text-[0.66rem] uppercase leading-[1.4] tracking-[0.04em] text-gray-500">
-            Tarifa doméstica · ida<br />ANAC (a integrar)
+            Tarifa doméstica · ida<br />
+            {ilustrativo
+              ? "ANAC (a integrar)"
+              : `ANAC · Tarifas Domésticas${dados.tarifas.periodo ? ` · ${dados.tarifas.periodo}` : ""}`}
           </div>
         </div>
 

@@ -10,38 +10,52 @@
  *     no Brasil. NÃO vem de feed: é calibrada em ordens de grandeza públicas
  *     (CNT/ABEAR para o QAV; ABEAR/IATA para as demais). Editada aqui, no script.
  *  2. ROTAS (tarifa média por OD) — pode vir dos Microdados da ANAC (Tarifas
- *     Aéreas Domésticas). Sem CSV, usa âncoras ILUSTRATIVAS (marcadas como tal).
+ *     Aéreas Domésticas). Sem dado real, usa âncoras ILUSTRATIVAS (marcadas).
  *
  * Uso:
- *   node scripts/gera-aereo-cada-real.mjs                 # seed ilustrativo
- *   node scripts/gera-aereo-cada-real.mjs --anac <csv>    # tarifa real da ANAC
- *   node scripts/gera-aereo-cada-real.mjs --ref 2026-05   # rótulo de referência
+ *   node scripts/gera-aereo-cada-real.mjs                       # seed ilustrativo
+ *   node scripts/gera-aereo-cada-real.mjs --baixar --ref 2026-05 --meses 3
+ *                                                # baixa da ANAC e agrega (real)
+ *   node scripts/gera-aereo-cada-real.mjs --anac <csv>          # CSV local
  *
- * CSV da ANAC (Tarifas Aéreas Domésticas, microdados): 1 linha por
- * empresa×origem×destino×faixa, separador ';', decimal com vírgula, colunas
- * ANO;MES;EMPRESA;ORIGEM;DESTINO;TARIFA;ASSENTOS. A tarifa média por rota é a
- * média PONDERADA por assentos: Σ(TARIFA·ASSENTOS)/Σ(ASSENTOS). Baixe o arquivo do
- * ano/mês em https://sas.anac.gov.br/sas/downloads (tema Tarifas Aéreas
- * Domésticas) — a rotina de download fica em scripts/tarifa_antecipada_eda.py.
+ * Flags:
+ *   --baixar        baixa os microdados da ANAC sozinho (portal SAS, ASP.NET)
+ *   --ref YYYY-MM   mês de referência / rótulo (default 2026-05)
+ *   --meses N       nº de meses (terminando em --ref) a agrupar na média (default 3)
+ *   --anac <csv>    usa um CSV local em vez de baixar
+ *
+ * FONTE ANAC (--baixar): portal SAS, formulário ASP.NET, tema=14 (doméstico) —
+ *   https://sas.anac.gov.br/sas/downloads/view/frmDownload.aspx?tema=14
+ *   Arquivos YYYYMM.CSV (sep ';', latin-1; colunas nr_ano_referencia;
+ *   nr_mes_referencia;sg_empresa_icao;sg_icao_origem;sg_icao_destino;nr_tarifa;
+ *   nr_assentos — códigos ICAO). Download = 2 postbacks ("Buscar Arquivos" + "Baixar
+ *   Marcados") na mesma sessão; resposta CSV ou ZIP. Cache em .cache/anac/
+ *   (compartilhado com scripts/tarifa_antecipada_eda.py). Tarifa média por rota =
+ *   Σ(TARIFA·ASSENTOS)/Σ(ASSENTOS), par OD não-direcionado.
  *
  * Idempotente. Ver docs/RUNBOOK-DADOS.md (seção Aéreo).
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from "fs";
 import { fileURLToPath } from "url";
+import zlib from "zlib";
 import path from "path";
 
 const aqui = path.dirname(fileURLToPath(import.meta.url));
-const outPath = path.resolve(aqui, "../public/data/aereo/cada-real.json");
+const raiz = path.resolve(aqui, "..");
+const outPath = path.resolve(raiz, "public/data/aereo/cada-real.json");
 
 // ── args ──────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
-const opt = (flag) => {
+const has = (flag) => args.includes(flag);
+const opt = (flag, def) => {
   const i = args.indexOf(flag);
-  return i >= 0 ? args[i + 1] : undefined;
+  return i >= 0 ? args[i + 1] : def;
 };
+const baixar = has("--baixar");
 const csvAnac = opt("--anac");
-const referencia = opt("--ref") ?? "2026-05";
+const referencia = opt("--ref", "2026-05");
+const meses = Math.max(1, parseInt(opt("--meses", "3"), 10) || 3);
 const hoje = new Date().toISOString().slice(0, 10);
 
 // ── anatomia estrutural (curada, com fonte) ─────────────────────────────────────
@@ -126,41 +140,46 @@ const ROTAS_ILUSTRATIVAS = [
   { id: "poa-gru", label: "POA → GRU", origem: "Porto Alegre (POA)", destino: "São Paulo (GRU)", tarifaMedia: 640, regiao: "sul" },
 ];
 
-// Código IATA por rota → par de aeroportos ANAC (para casar com o CSV).
+// Par ICAO por rota (a ANAC usa sg_icao_origem/sg_icao_destino, não IATA):
+//   GRU=SBGR · SDU=SBRJ · MAO=SBEG · BSB=SBBR · BEL=SBBE · TBT=SBTT · REC=SBRF · POA=SBPA
 const OD_POR_ROTA = {
-  "gru-sdu": ["GRU", "SDU"],
-  "gru-mao": ["GRU", "MAO"],
-  "bsb-bel": ["BSB", "BEL"],
-  "mao-tbt": ["MAO", "TBT"],
-  "gru-rec": ["GRU", "REC"],
-  "poa-gru": ["POA", "GRU"],
+  "gru-sdu": ["SBGR", "SBRJ"],
+  "gru-mao": ["SBGR", "SBEG"],
+  "bsb-bel": ["SBBR", "SBBE"],
+  "mao-tbt": ["SBEG", "SBTT"],
+  "gru-rec": ["SBGR", "SBRF"],
+  "poa-gru": ["SBPA", "SBGR"],
 };
 
-// ── agregação ANAC (média ponderada por assentos, ida+volta do par) ─────────────
-function mediaPorRotaANAC(csvPath) {
-  const txt = readFileSync(csvPath, "latin1").replace(/^﻿/, "");
-  const linhas = txt.split(/\r?\n/).filter((l) => l.trim());
-  const header = linhas.shift().split(";").map((h) => h.trim().toUpperCase());
-  const idx = (nome) => header.findIndex((h) => h === nome);
-  const iOri = idx("ORIGEM"), iDes = idx("DESTINO"), iTar = idx("TARIFA"), iAss = idx("ASSENTOS");
+// ── agregação (média ponderada por assentos, par OD não-direcionado) ─────────────
+// Acumula sobre um ou mais CSVs (vários meses → média mais estável em rotas finas).
+function acumulaCsv(buf, acc) {
+  const txt = buf.toString("latin1").replace(/^﻿/, "");
+  const linhas = txt.split(/\r?\n/);
+  const header = (linhas.shift() ?? "").split(";").map((h) => h.trim().toUpperCase());
+  const col = (sub) => header.findIndex((h) => h.includes(sub));
+  const iOri = col("ORIGEM"), iDes = col("DESTINO"), iTar = col("TARIFA"), iAss = col("ASSENTO");
   if (iOri < 0 || iDes < 0 || iTar < 0) {
     throw new Error(`CSV da ANAC sem colunas esperadas (ORIGEM;DESTINO;TARIFA;ASSENTOS). Header: ${header.join(";")}`);
   }
   const num = (s) => Number(String(s ?? "").replace(/\./g, "").replace(",", "."));
-  // acumula soma(tarifa*assentos) e soma(assentos) por par não-direcionado
-  const acc = {}; // "GRU|SDU" (ordenado) → { sw, w }
   for (const linha of linhas) {
+    if (!linha) continue;
     const c = linha.split(";");
     const o = (c[iOri] ?? "").trim().toUpperCase();
     const d = (c[iDes] ?? "").trim().toUpperCase();
     const tarifa = num(c[iTar]);
     const assentos = iAss >= 0 ? num(c[iAss]) : 1;
-    if (!o || !d || !isFinite(tarifa) || tarifa <= 0 || !isFinite(assentos) || assentos <= 0) continue;
+    if (!o || !d || !(tarifa > 0) || !(assentos > 0)) continue;
     const par = [o, d].sort().join("|");
     (acc[par] ??= { sw: 0, w: 0 });
     acc[par].sw += tarifa * assentos;
     acc[par].w += assentos;
   }
+  return acc;
+}
+
+function mediaPorRota(acc) {
   const media = {}; // rotaId → { tarifaMedia, amostra }
   for (const [rotaId, [a, b]] of Object.entries(OD_POR_ROTA)) {
     const par = [a.toUpperCase(), b.toUpperCase()].sort().join("|");
@@ -170,26 +189,181 @@ function mediaPorRotaANAC(csvPath) {
   return media;
 }
 
-// ── monta e grava ───────────────────────────────────────────────────────────────
+// ── download ANAC (portal SAS, ASP.NET) — só com --baixar ───────────────────────
+const ANAC_SAS_URL = "https://sas.anac.gov.br/sas/downloads/view/frmDownload.aspx?tema=14";
+const CACHE_DIR = path.resolve(raiz, ".cache/anac");
+const UA = "ObservatorioIBI/1.0 (+dashboard aereo cada-real)";
+const jar = {}; // cookie jar mínimo (sessão ASP.NET)
+
+function guardaCookies(res) {
+  const sc = res.headers.getSetCookie?.() ?? [];
+  for (const c of sc) {
+    const kv = c.split(";")[0];
+    const i = kv.indexOf("=");
+    if (i > 0) jar[kv.slice(0, i).trim()] = kv.slice(i + 1).trim();
+  }
+}
+function headers(extra = {}) {
+  const h = { "User-Agent": UA, ...extra };
+  const cookie = Object.entries(jar).map(([k, v]) => `${k}=${v}`).join("; ");
+  if (cookie) h.Cookie = cookie;
+  return h;
+}
+async function httpGet(url) {
+  const res = await fetch(url, { headers: headers() });
+  guardaCookies(res);
+  if (!res.ok) throw new Error(`HTTP ${res.status} em GET`);
+  return res.text();
+}
+async function httpPost(url, campos) {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: headers({ "Content-Type": "application/x-www-form-urlencoded" }),
+    body: new URLSearchParams(campos).toString(),
+  });
+  guardaCookies(res);
+  if (!res.ok) throw new Error(`HTTP ${res.status} em POST`);
+  return res;
+}
+function camposOcultos(html) {
+  const campos = { __EVENTTARGET: "", __EVENTARGUMENT: "" };
+  for (const nome of ["__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION"]) {
+    const m = html.match(new RegExp(`id="${nome}" value="([^"]*)"`));
+    if (m) campos[nome] = m[1];
+  }
+  return campos;
+}
+async function buscaAno(ano) {
+  const html0 = await httpGet(ANAC_SAS_URL);
+  const campos = camposOcultos(html0);
+  campos["ctl00$MainContent$listAno"] = String(ano);
+  campos["ctl00$MainContent$btnListaArquivos"] = "Buscar Arquivos";
+  const r1 = await httpPost(ANAC_SAS_URL, campos);
+  const html1 = await r1.text();
+  const arquivos = {};
+  const pat = /name="(ctl00\$MainContent\$gridArquivos\$ctl\d+\$chkDownload)"[^>]*\/?>\s*<\/td><td[^>]*>([^<]+?\.CSV)<\/td>/gi;
+  let m;
+  while ((m = pat.exec(html1))) arquivos[m[2].trim().toUpperCase()] = m[1];
+  return { campos: camposOcultos(html1), arquivos };
+}
+function unzipPrimeiroCsv(buf) {
+  let off = 0;
+  while (off + 30 <= buf.length && buf.readUInt32LE(off) === 0x04034b50) {
+    const metodo = buf.readUInt16LE(off + 8);
+    const compSize = buf.readUInt32LE(off + 18);
+    const nameLen = buf.readUInt16LE(off + 26);
+    const extraLen = buf.readUInt16LE(off + 28);
+    const nameStart = off + 30;
+    const nome = buf.toString("latin1", nameStart, nameStart + nameLen);
+    const dataStart = nameStart + nameLen + extraLen;
+    if (compSize === 0) throw new Error("ZIP com data-descriptor (streaming) — use --anac <csv>");
+    const comp = buf.subarray(dataStart, dataStart + compSize);
+    if (nome.toUpperCase().endsWith(".CSV")) {
+      return metodo === 0 ? comp : zlib.inflateRawSync(comp);
+    }
+    off = dataStart + compSize;
+  }
+  throw new Error("ZIP sem CSV / formato inesperado");
+}
+async function baixaArquivo(campos, ano, chkName) {
+  const body = { ...campos, "ctl00$MainContent$listAno": String(ano), [chkName]: "on", "ctl00$MainContent$btnBaixar": "Baixar Marcados" };
+  const res = await httpPost(ANAC_SAS_URL, body);
+  const buf = Buffer.from(await res.arrayBuffer());
+  if (buf[0] === 0x50 && buf[1] === 0x4b) return unzipPrimeiroCsv(buf); // "PK" → ZIP
+  if (buf.subarray(0, 64).toString("latin1").trimStart().startsWith("<")) {
+    throw new Error("portal devolveu HTML em vez de CSV");
+  }
+  return buf;
+}
+async function baixaMes(ano, mes, listagens) {
+  const nome = `${ano}${String(mes).padStart(2, "0")}.CSV`;
+  const cache = path.join(CACHE_DIR, nome);
+  if (existsSync(cache) && statSync(cache).size > 0) return readFileSync(cache);
+  for (const tentativa of [1, 2]) {
+    try {
+      if (!listagens[ano] || tentativa === 2) listagens[ano] = await buscaAno(ano);
+      const { campos, arquivos } = listagens[ano];
+      if (!(nome in arquivos)) {
+        console.warn(`  [aviso] ${nome} não listado no portal — pulando`);
+        return null;
+      }
+      const buf = await baixaArquivo(campos, ano, arquivos[nome]);
+      mkdirSync(CACHE_DIR, { recursive: true });
+      writeFileSync(cache, buf);
+      console.log(`  ✓ baixado ${nome} (${(buf.length / 1e6).toFixed(1)} MB)`);
+      return buf;
+    } catch (e) {
+      if (tentativa === 2) {
+        console.warn(`  [aviso] falha ao baixar ${nome}: ${e.message}`);
+        return null;
+      }
+    }
+  }
+  return null;
+}
+function ultimosMeses(refYYYYMM, n) {
+  const [y, m] = refYYYYMM.split("-").map(Number);
+  const out = [];
+  for (let k = 0; k < n; k++) {
+    const d = new Date(Date.UTC(y, m - 1 - k, 1));
+    out.push({ ano: d.getUTCFullYear(), mes: d.getUTCMonth() + 1 });
+  }
+  return out.reverse();
+}
+
+// ── monta rotas (ilustrativo → real, se houver dado) ────────────────────────────
+const MESES_ABREV = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+function labelPeriodo(usados) {
+  // usados: [{ano,mes}] ordenado asc; devolve "abr/2026" ou "mar–abr/2026".
+  if (usados.length === 0) return null;
+  const f = (u) => `${MESES_ABREV[u.mes - 1]}/${u.ano}`;
+  const a = usados[0], b = usados[usados.length - 1];
+  if (usados.length === 1) return f(a);
+  return a.ano === b.ano ? `${MESES_ABREV[a.mes - 1]}–${f(b)}` : `${f(a)}–${f(b)}`;
+}
+
 let rotas = ROTAS_ILUSTRATIVAS.map((r) => ({ ...r }));
 let tarifasOrigem = "ilustrativo";
+let tarifasPeriodo = null;
 let dadosIlustrativos = true;
 
-if (csvAnac) {
-  const media = mediaPorRotaANAC(csvAnac);
+function aplicaMedia(media, origem) {
   let casadas = 0;
   rotas = rotas.map((r) => {
     const m = media[r.id];
     if (m) { casadas++; return { ...r, tarifaMedia: m.tarifaMedia, amostra: m.amostra }; }
-    console.warn(`⚠ rota ${r.id} (${r.label}) sem par no CSV — mantém tarifa ilustrativa`);
+    console.warn(`⚠ rota ${r.id} (${r.label}) sem par no dado — mantém tarifa ilustrativa`);
     return r;
   });
-  if (casadas === 0) throw new Error("Nenhuma rota casou com o CSV da ANAC — confira o arquivo/mês.");
-  tarifasOrigem = "ANAC — Tarifas Aéreas Domésticas (microdados)";
+  if (casadas === 0) { console.warn("⚠ nenhuma rota casou com o dado — mantém tudo ilustrativo"); return; }
+  tarifasOrigem = origem;
   dadosIlustrativos = casadas < rotas.length; // ainda ilustrativo se sobrou rota sem dado
-  console.log(`✓ ${casadas}/${rotas.length} rotas com tarifa real da ANAC`);
+  console.log(`✓ ${casadas}/${rotas.length} rotas com tarifa real`);
 }
 
+if (csvAnac) {
+  const acc = acumulaCsv(readFileSync(csvAnac), {});
+  aplicaMedia(mediaPorRota(acc), "ANAC — Tarifas Aéreas Domésticas (microdados)");
+} else if (baixar) {
+  const periodos = ultimosMeses(referencia, meses);
+  console.log(`↓ ANAC: baixando ${periodos.length} mês(es) até ${referencia}…`);
+  const acc = {};
+  const listagens = {};
+  const usados = [];
+  for (const { ano, mes } of periodos) {
+    const buf = await baixaMes(ano, mes, listagens);
+    if (!buf) continue;
+    try { acumulaCsv(buf, acc); usados.push({ ano, mes }); }
+    catch (e) { console.warn(`  [aviso] parsing ${ano}${String(mes).padStart(2, "0")}: ${e.message}`); }
+  }
+  if (usados.length === 0) console.warn("⚠ nenhum mês da ANAC utilizável — mantém tarifas ilustrativas");
+  else {
+    tarifasPeriodo = labelPeriodo(usados);
+    aplicaMedia(mediaPorRota(acc), "ANAC — Tarifas Aéreas Domésticas (microdados)");
+  }
+}
+
+// ── grava ───────────────────────────────────────────────────────────────────────
 const soma = DECOMPOSICAO.reduce((s, c) => s + c.percentual, 0);
 if (soma !== 100) throw new Error(`Decomposição soma ${soma}, deveria ser 100.`);
 
@@ -200,6 +374,7 @@ const out = {
     "CNT/ABEAR (peso do QAV nos custos) · ANAC Tarifas Aéreas Domésticas (tarifa média por rota) · ABEAR/IATA (demais camadas)",
   tarifas: {
     origem: tarifasOrigem,
+    periodo: tarifasPeriodo,
     dadosIlustrativos,
     nota: "A 'tarifa média' da ANAC exclui taxas aeroportuárias — elas entram na página como camada à parte do preço total pago.",
   },
@@ -210,4 +385,4 @@ const out = {
 
 mkdirSync(path.dirname(outPath), { recursive: true });
 writeFileSync(outPath, JSON.stringify(out, null, 2) + "\n", "utf8");
-console.log(`✓ ${path.relative(path.resolve(aqui, ".."), outPath)} — ref ${referencia}, tarifas: ${tarifasOrigem}${dadosIlustrativos ? " (ilustrativo)" : ""}`);
+console.log(`✓ ${path.relative(raiz, outPath)} — ref ${referencia}, tarifas: ${tarifasOrigem}${dadosIlustrativos ? " (ilustrativo)" : ""}`);
