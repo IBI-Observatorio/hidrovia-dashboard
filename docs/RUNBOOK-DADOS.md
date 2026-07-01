@@ -306,7 +306,7 @@ npm run update-calendar          # → public/data/severity-calendar.json + lib/
 | **Diário** | réguas (13h), watchdog (14h) | — |
 | **Semanal** | IDN (ter), Itacoatiara (ter), SGB (ter), Insights (ter), ENSO (qui), Briefing (qua) | — |
 | **Mensal** | portos (dia 16) | `update-navegacao-series.py` |
-| **Eventual** | — | `atualiza-dados.mjs` (metodologia), `forecast_conteiner.py`, `panel_horserace.py` |
+| **Eventual** | — | `atualiza-dados.mjs` (metodologia), `forecast_conteiner.py`, `panel_horserace.py`, `gera-aereo-cada-real.mjs` (aéreo) |
 
 > **Tudo roda na nuvem** — a máquina local não tem mais nenhuma tarefa agendada, e
 > não há pendências de automação. Só sobra trabalho manual para metodologia/backfill.
@@ -339,6 +339,50 @@ O motor (`lib/dcf/*`) calibra em runtime: tarifa → TIR ≈ WACC (oficial) e up
 CAPEX implícito → TIR ≈ 11,04% (realista). Para editar um número, mexa no seed e
 mantenha a tag de fonte. Próximas fases podem adicionar adaptadores
 `lib/sources/{antt,ppi,tcu,ibama}.ts` — aí este runbook ganha as linhas de cron.
+
+---
+
+## ✈️ AÉREO — "Onde vai cada real da sua passagem" (`/aereo/cada-real`)
+
+Estreia da vertical Setor Aéreo. A página decompõe o preço de uma passagem
+doméstica em 6 camadas de custo. **Sem gerador automático (manual)** — é um JSON
+versionado, no espírito dos seeds do Radar.
+
+| Página | Script | Saída |
+|--------|--------|-------|
+| `/aereo/cada-real` | `gera-aereo-cada-real.mjs` (manual) | `public/data/aereo/cada-real.json` |
+
+```bash
+node scripts/gera-aereo-cada-real.mjs                 # seed ilustrativo (tarifas)
+node scripts/gera-aereo-cada-real.mjs --anac <csv>    # tarifa real por rota (ANAC)
+node scripts/gera-aereo-cada-real.mjs --ref 2026-05   # rótulo de referência
+```
+
+O JSON tem **duas metades**, com naturezas diferentes:
+1. **`decomposicao[]` — anatomia estrutural CURADA (com fonte).** Os percentuais
+   (QAV 38%, tributos 15%, tarifas aeroportuárias 12%, pessoal/vendas 16%, leasing
+   15%, resultado 4% — soma 100) **não vêm de feed**: são calibrados em ordens de
+   grandeza públicas (CNT/ABEAR: QAV ~36% dos custos em 2024, ~45% no pico de 2026;
+   ABEAR/IATA para as demais). Para revisar, edite as constantes **no script** e
+   re-rode. O script valida que a soma é 100.
+2. **`rotas[]` — tarifa média por rota.** Sem `--anac`, usa âncoras **ILUSTRATIVAS**
+   (`tarifas.dadosIlustrativos:true`; a página mostra o aviso). Com
+   `--anac <csv>`, agrega a média **ponderada por assentos** por par OD dos
+   Microdados de Tarifas Aéreas Domésticas da ANAC.
+
+> ⚠️ Duas ressalvas de leitura embutidas na copy (não são bug): a "tarifa média"
+> da ANAC **exclui** taxas aeroportuárias (por isso entram como camada à parte); e
+> o ICMS do QAV **já está** no preço do combustível (a camada "Tributos" capta os
+> encargos por cima, sem dupla contagem).
+
+**CSV da ANAC:** baixe o ano/mês em `sas.anac.gov.br/sas/downloads` (tema Tarifas
+Aéreas Domésticas). A rotina de download (fluxo ASP.NET + cache) está em
+`scripts/tarifa_antecipada_eda.py`. Layout esperado: `ANO;MES;EMPRESA;ORIGEM;
+DESTINO;TARIFA;ASSENTOS` (separador `;`, decimal com vírgula, latin1).
+
+A página (`app/(site)/aereo/cada-real/page.tsx`, **server**) lê o JSON via
+`fs.readFile` e passa por props ao client `CadaRealClient`. Copy/tipos ficam em
+`lib/aereo-cada-real.ts` (sem números).
 
 ---
 
