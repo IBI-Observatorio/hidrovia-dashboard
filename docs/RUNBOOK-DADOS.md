@@ -306,7 +306,7 @@ npm run update-calendar          # → public/data/severity-calendar.json + lib/
 | **Diário** | réguas (13h), watchdog (14h) | — |
 | **Semanal** | IDN (ter), Itacoatiara (ter), SGB (ter), Insights (ter), ENSO (qui), Briefing (qua) | — |
 | **Mensal** | portos (dia 16) | `update-navegacao-series.py` |
-| **Eventual** | — | `atualiza-dados.mjs` (metodologia), `forecast_conteiner.py`, `panel_horserace.py` |
+| **Eventual** | — | `atualiza-dados.mjs` (metodologia), `forecast_conteiner.py`, `panel_horserace.py`, `gera-aereo-cada-real.mjs` (aéreo) |
 
 > **Tudo roda na nuvem** — a máquina local não tem mais nenhuma tarefa agendada, e
 > não há pendências de automação. Só sobra trabalho manual para metodologia/backfill.
@@ -339,6 +339,57 @@ O motor (`lib/dcf/*`) calibra em runtime: tarifa → TIR ≈ WACC (oficial) e up
 CAPEX implícito → TIR ≈ 11,04% (realista). Para editar um número, mexa no seed e
 mantenha a tag de fonte. Próximas fases podem adicionar adaptadores
 `lib/sources/{antt,ppi,tcu,ibama}.ts` — aí este runbook ganha as linhas de cron.
+
+---
+
+## ✈️ AÉREO — "Onde vai cada real da sua passagem" (`/aereo/cada-real`)
+
+Estreia da vertical Setor Aéreo. A página decompõe o preço de uma passagem
+doméstica em 6 camadas de custo. **Sem gerador automático (manual)** — é um JSON
+versionado, no espírito dos seeds do Radar.
+
+| Página | Script | Saída |
+|--------|--------|-------|
+| `/aereo/cada-real` | `gera-aereo-cada-real.mjs` (manual) | `public/data/aereo/cada-real.json` |
+
+```bash
+node scripts/gera-aereo-cada-real.mjs                              # seed ilustrativo
+node scripts/gera-aereo-cada-real.mjs --baixar --ref 2026-04 --meses 3  # baixa da ANAC
+node scripts/gera-aereo-cada-real.mjs --anac <csv>                 # CSV local (fallback)
+```
+
+O JSON tem **duas metades**, com naturezas diferentes:
+1. **`decomposicao[]` — anatomia estrutural CURADA (com fonte).** Os percentuais
+   (QAV 38%, tributos 15%, tarifas aeroportuárias 12%, pessoal/vendas 16%, leasing
+   15%, resultado 4% — soma 100) **não vêm de feed**: são calibrados em ordens de
+   grandeza públicas (CNT/ABEAR: QAV ~36% dos custos em 2024, ~45% no pico de 2026;
+   ABEAR/IATA para as demais). Para revisar, edite as constantes **no script** e
+   re-rode. O script valida que a soma é 100.
+2. **`rotas[]` — tarifa média por rota (REAL, ANAC).** Com `--baixar`, o script
+   baixa sozinho os Microdados de Tarifas Aéreas Domésticas da ANAC e agrega a
+   média **ponderada por assentos** por par OD (`--meses N` agrupa N meses até
+   `--ref` para estabilizar rotas finas; janela real gravada em `tarifas.periodo`).
+   Sem dado, cai em âncoras **ILUSTRATIVAS** (`tarifas.dadosIlustrativos:true` → a
+   página mostra o aviso). Estado atual: **real, mar–abr/2026** (2026-05 ainda não
+   publicado — lag da ANAC).
+
+> ⚠️ Duas ressalvas de leitura embutidas na copy (não são bug): a "tarifa média"
+> da ANAC **exclui** taxas aeroportuárias (por isso entram como camada à parte); e
+> o ICMS do QAV **já está** no preço do combustível (a camada "Tributos" capta os
+> encargos por cima, sem dupla contagem).
+
+**Download ANAC (`--baixar`):** portal SAS, formulário ASP.NET, tema=14
+(`sas.anac.gov.br/sas/downloads/view/frmDownload.aspx?tema=14`). O gerador faz os
+2 postbacks ("Buscar Arquivos" + "Baixar Marcados") numa sessão com cookie, aceita
+resposta CSV ou ZIP (unzip nativo) e cacheia em **`.cache/anac/YYYYMM.CSV`**
+(gitignored; ~25 MB/mês; compartilhado com `scripts/tarifa_antecipada_eda.py`).
+Colunas reais: `nr_ano_referencia;nr_mes_referencia;sg_empresa_icao;sg_icao_origem;
+sg_icao_destino;nr_tarifa;nr_assentos` — **códigos ICAO** (GRU=SBGR, SDU=SBRJ,
+MAO=SBEG…; mapa em `OD_POR_ROTA` no script). Fallback offline: `--anac <csv>`.
+
+A página (`app/(site)/aereo/cada-real/page.tsx`, **server**) lê o JSON via
+`fs.readFile` e passa por props ao client `CadaRealClient`. Copy/tipos ficam em
+`lib/aereo-cada-real.ts` (sem números).
 
 ---
 
