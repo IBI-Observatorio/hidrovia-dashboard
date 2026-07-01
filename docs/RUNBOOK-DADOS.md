@@ -360,11 +360,14 @@ node scripts/gera-aereo-cada-real.mjs --anac <csv>                 # CSV local (
 
 O JSON tem **duas metades**, com naturezas diferentes:
 1. **`decomposicao[]` — anatomia estrutural CURADA (com fonte).** Os percentuais
-   (QAV 38%, tributos 15%, tarifas aeroportuárias 12%, pessoal/vendas 16%, leasing
-   15%, resultado 4% — soma 100) **não vêm de feed**: são calibrados em ordens de
-   grandeza públicas (CNT/ABEAR: QAV ~36% dos custos em 2024, ~45% no pico de 2026;
-   ABEAR/IATA para as demais). Para revisar, edite as constantes **no script** e
-   re-rode. O script valida que a soma é 100.
+   (QAV 32%, tributos embutidos 10%, pessoal/vendas/operação 28%, leasing/manut./
+   deprec. 20%, tarifas aeroportuárias e navegação 6%, resultado 4% — soma 100)
+   **não vêm de feed**: são calibrados na **estrutura de custos oficial da ABEAR**
+   (Panorama 2024, dados 2023: combustível ~36%, capital ~21%, pessoal/operação
+   ~37%, tarifas ~6%) mais a **carga tributária ~10%** do bilhete (Maran Gehlen
+   2026), que é quase toda ICMS embutido no QAV — por isso o QAV entra líquido do
+   ICMS e o imposto vira fatia à parte. Para revisar, edite as constantes **no
+   script** e re-rode. O script valida que a soma é 100.
 2. **`rotas[]` — tarifa média por rota (REAL, ANAC).** Com `--baixar`, o script
    baixa sozinho os Microdados de Tarifas Aéreas Domésticas da ANAC e agrega a
    média **ponderada por assentos** por par OD (`--meses N` agrupa N meses até
@@ -373,10 +376,12 @@ O JSON tem **duas metades**, com naturezas diferentes:
    página mostra o aviso). Estado atual: **real, mar–abr/2026** (2026-05 ainda não
    publicado — lag da ANAC).
 
-> ⚠️ Duas ressalvas de leitura embutidas na copy (não são bug): a "tarifa média"
-> da ANAC **exclui** taxas aeroportuárias (por isso entram como camada à parte); e
-> o ICMS do QAV **já está** no preço do combustível (a camada "Tributos" capta os
-> encargos por cima, sem dupla contagem).
+> ⚠️ Ressalvas de leitura embutidas na copy (não são bug): a "tarifa média" da
+> ANAC **exclui** taxas aeroportuárias (por isso entram como camada à parte); e o
+> passageiro doméstico **não paga ICMS sobre o bilhete** (STF, ADI 1600) **nem
+> PIS/Cofins sobre a venda** (zerado até 2026) — o tributo (~10%) está **embutido
+> no QAV** (ICMS regional 3%/7%/10%), então o QAV aparece líquido do ICMS e o
+> imposto é fatia própria, sem dupla contagem.
 
 **Download ANAC (`--baixar`):** portal SAS, formulário ASP.NET, tema=14
 (`sas.anac.gov.br/sas/downloads/view/frmDownload.aspx?tema=14`). O gerador faz os
