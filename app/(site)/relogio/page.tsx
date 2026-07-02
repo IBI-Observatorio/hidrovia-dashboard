@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import AquaviarioEmbed from "@/components/AquaviarioEmbed";
 import RelogioVivo from "@/components/RelogioVivo";
 import SeloProveniencia from "@/components/SeloProveniencia";
@@ -126,6 +127,12 @@ export default async function RelogioPage() {
             fonte={RELOGIO_COPY.proveniencia.fonte}
           />
         </div>
+        <Link
+          href="/metodologia"
+          className="mt-5 inline-block text-ibi-blue text-sm font-semibold hover:underline underline-offset-2"
+        >
+          Como o Observatório mede — metodologia completa →
+        </Link>
       </section>
     </main>
   );

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import FichaCard from "@/components/livro-razao/FichaCard";
 import { FICHAS, contagemFichasAtivas, fichasOrdenadas } from "@/lib/livro-razao/registry";
 import { LIVRO_RAZAO_COPY } from "@/lib/livro-razao/copy";
@@ -61,6 +62,12 @@ export default function LivroRazaoPage() {
           As fontes de cada projeto aparecem na ficha correspondente, com selo de
           proveniência linha a linha.
         </p>
+        <Link
+          href="/metodologia"
+          className="mt-5 inline-block text-ibi-blue text-sm font-semibold hover:underline underline-offset-2"
+        >
+          Como o Observatório mede — metodologia completa →
+        </Link>
       </section>
     </main>
   );
