@@ -14,6 +14,8 @@
 
 import { SEGUNDOS_ANO, type CustoInput, type Proveniencia } from "./custo-evitavel";
 import { EMBED_REGISTRY, type ModuloCusto } from "./embed-registry";
+// Livro-Razão: registry puro/client-safe (sem server/async) — pode entrar aqui.
+import { componenteLivroRazao, taxaLivroRazao } from "./livro-razao/registry";
 
 const SEGUNDOS_DIA = 86_400;
 
@@ -45,9 +47,14 @@ export function modulosElegiveis(): Array<{ slug: string; tipoProveniencia: Prov
     }));
 }
 
-/** Soma nacional: R$/segundo de todos os módulos elegíveis. */
+/**
+ * Soma nacional: R$/segundo dos módulos elegíveis do registry + fichas ativas do
+ * Livro-Razão (pelo PISO). Com 0 fichas ativas, taxaLivroRazao() = 0 → o Relógio
+ * segue exatamente igual (só pavimento), sem exceção.
+ */
 export function taxaNacional(): number {
-  return modulosElegiveis().reduce((soma, m) => soma + m.taxaPorSegundo(), 0);
+  const modulos = modulosElegiveis().reduce((soma, m) => soma + m.taxaPorSegundo(), 0);
+  return modulos + taxaLivroRazao();
 }
 
 /** Equivalente diário da soma nacional: taxa × 86.400 s. */
@@ -55,23 +62,32 @@ export function equivalenteDiario(): number {
   return taxaNacional() * SEGUNDOS_DIA;
 }
 
-/** Decomposição por módulo — o "clique e veja de onde vem cada real". */
+/**
+ * Decomposição por componente — o "clique e veja de onde vem cada real".
+ * Os módulos do registry entram um a um; o Livro-Razão entra como UMA linha
+ * agregada ("N projetos ativos"), ocultada quando não há ficha ativa.
+ */
 export function decomposicao(): ComponenteRelogio[] {
   const mods = modulosElegiveis();
-  const total = mods.reduce((soma, m) => soma + m.taxaPorSegundo(), 0);
-  return mods.map((m) => {
-    const taxa = m.taxaPorSegundo();
-    return {
-      modulo: m.slug,
-      nome: m.nome,
-      rota: m.rota,
-      taxa,
-      participacao: total > 0 ? (taxa / total) * 100 : 0,
-      fonte: m.fonte,
-      metodologia: m.metodologia,
-      tipoProveniencia: m.tipoProveniencia,
-    };
-  });
+  const componentes: ComponenteRelogio[] = mods.map((m) => ({
+    modulo: m.slug,
+    nome: m.nome,
+    rota: m.rota,
+    taxa: m.taxaPorSegundo(),
+    participacao: 0, // preenchido abaixo, contra o total já com Livro-Razão
+    fonte: m.fonte,
+    metodologia: m.metodologia,
+    tipoProveniencia: m.tipoProveniencia,
+  }));
+
+  const livroRazao = componenteLivroRazao();
+  if (livroRazao) componentes.push({ ...livroRazao, participacao: 0 });
+
+  const total = componentes.reduce((soma, c) => soma + c.taxa, 0);
+  return componentes.map((c) => ({
+    ...c,
+    participacao: total > 0 ? (c.taxa / total) * 100 : 0,
+  }));
 }
 
 /** Input do CustoMeter do Relógio: valor anual = soma × segundos do ano; zera às 00h de Brasília. */
