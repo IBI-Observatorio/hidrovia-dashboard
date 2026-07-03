@@ -3,7 +3,7 @@
  "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
  "porto": "santos",
  "filtro": "graneleiros EMB: soja, milho, açúcar, farelo, trigo, cevada, sorgo · campo dwt = PESO DA CARGA programada (proxy declarado, melhor que porte bruto)",
- "coletadoEm": "2026-07-02",
+ "coletadoEm": "2026-07-03",
  "status": "indisponivel",
  "observacao": "Fundeados/atracados da APS não expõem mercadoria — fila v0 usa só os esperados de carga (documentado). Servidor da APS monta a lista em ~20 s e falha intermitentemente: o scraper usa retry.",
  "snapshots": [
