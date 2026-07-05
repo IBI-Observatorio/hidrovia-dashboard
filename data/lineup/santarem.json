@@ -2,7 +2,7 @@
  "fonte": "Santarém / Miritituba — terminais privados (Cargill, Hidrovias do Brasil)",
  "url": null,
  "porto": "santarem",
- "coletadoEm": "2026-07-04",
+ "coletadoEm": "2026-07-05",
  "status": "indisponivel",
  "erro": "Sem programação de navios pública confiável: os terminais privados de Santarém (Cargill) e Miritituba não publicam line-up aberto. NÃO inventar dado.",
  "todo": "Avaliar: (1) line-up consolidado de praticagem da ZP-01/Fazendinha; (2) pedido formal de acesso à Cargill/HBSA; (3) AIS comercial como proxy (licença). Até lá, F do Arco Norte agrega só EMAP + CDP, rotulado parcial na UI.",
