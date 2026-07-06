@@ -3,7 +3,7 @@
  "url": "http://scap.cdp.com.br:8047/",
  "porto": "vila-do-conde",
  "filtro": "graneleiros: soja, milho, farelo, açúcar, trigo, cevada, sorgo · janela: atracados ≤12d, agendados/confirmados −5..+21d",
- "coletadoEm": "2026-07-05",
+ "coletadoEm": "2026-07-06",
  "status": "indisponivel",
  "observacao": "Snapshot deduplica navios repetidos entre berços/terminais (agendamentos múltiplos do mesmo navio).",
  "agendaSemanalMilT": [
