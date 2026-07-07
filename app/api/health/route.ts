@@ -70,6 +70,24 @@ export async function GET() {
     };
   }
 
+  // ── Notícias da home: semanal (esperado: ≤ 9 dias). Ausência não derruba o ok
+  // (janela antes do 1º run / fallback hardcoded); só marca ok:false se o cache
+  // EXISTE mas está velho — que é exatamente o "deck congelado com notícia velha".
+  const noticias = lerJSON(join(DATA_DIR, "noticias_home_cache.json"));
+  if (!noticias?.gerado_em) {
+    checks.noticias = { ok: true, presente: false, detalhe: "sem cache — deck usa seed hardcoded" };
+  } else {
+    const dias = diasDesde(noticias.gerado_em);
+    checks.noticias = {
+      ok: dias <= 9,
+      gerado_em: noticias.gerado_em,
+      total: Array.isArray(noticias.noticias) ? noticias.noticias.length : null,
+      dias,
+      limite_dias: 9,
+      detalhe: dias <= 9 ? `gerado há ${dias} dia(s)` : `deck congelado — ${dias} dias sem atualizar (limite 9)`,
+    };
+  }
+
   // ── ENSO: mensal (CPC publica na 2a quinta; tolera ate ~40 dias) ────────────
   const enso = lerJSON(join(DATA_DIR, "enso_cpc_cache.json"));
   if (!enso?.data_emissao) {

@@ -1,6 +1,8 @@
-import { antecipacoes } from "@/lib/home-content";
+import { lerNoticiasHome } from "@/lib/noticias-home";
 
 export default function AnticipationRibbon() {
+  const noticias = lerNoticiasHome();
+
   return (
     <div
       className="overflow-hidden rounded-2xl border border-white/10"
@@ -14,22 +16,35 @@ export default function AnticipationRibbon() {
         Últimas notícias
       </div>
       <div className="grid md:grid-cols-3">
-        {antecipacoes.map((a, i) => (
+        {noticias.map((n, i) => (
           <div
-            key={a.tag}
+            key={`${n.tag}-${i}`}
             className={`flex items-start gap-2.5 px-5 py-4 ${
-              i < antecipacoes.length - 1
+              i < noticias.length - 1
                 ? "border-b border-white/[0.08] md:border-b-0 md:border-r"
                 : ""
             }`}
           >
             <span className="mt-px shrink-0 rounded-md border border-ibi-blue/35 px-1.5 py-0.5 text-[0.62rem] font-extrabold uppercase tracking-[0.06em] text-ibi-blue">
-              {a.tag}
+              {n.tag}
             </span>
-            <p
-              className="text-[0.84rem] leading-[1.45] text-[#cdd3da] [&_b]:font-semibold [&_b]:text-white [&_a]:underline [&_a]:decoration-white/20 [&_a]:underline-offset-2 [&_a]:transition-colors [&_a]:hover:text-white [&_a]:hover:decoration-white/60"
-              dangerouslySetInnerHTML={{ __html: a.texto }}
-            />
+            <p className="text-[0.84rem] leading-[1.45] text-[#cdd3da] [&_b]:font-semibold [&_b]:text-white [&_a]:underline [&_a]:decoration-white/20 [&_a]:underline-offset-2 [&_a]:transition-colors [&_a]:hover:text-white [&_a]:hover:decoration-white/60">
+              {/* texto pode conter <b> (e, no seed de fallback, <a>) */}
+              <span dangerouslySetInnerHTML={{ __html: n.texto }} />
+              {n.url && (
+                <>
+                  {" "}
+                  <a
+                    href={n.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="whitespace-nowrap text-white/70"
+                  >
+                    — {n.fonte || "fonte"} ↗
+                  </a>
+                </>
+              )}
+            </p>
           </div>
         ))}
       </div>
