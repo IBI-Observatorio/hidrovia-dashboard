@@ -751,7 +751,13 @@ function montaCorredor(corredor: Corredor): CorredorAgroData {
         ? (montaFAntaq(corredor) ?? montaFLineup(corredor))
         : montaFLineup(corredor);
     else if (real && c === "H") r = montaHReal(corredor);
-    comps.push(r ?? montaComponenteIlustrativo(corredor, c));
+    // Fallback ilustrativo só quando há params para o componente (H não usa PARAMS).
+    // Sem dado real E sem params, PULA o pilar — o IEE renormaliza com os pilares
+    // que têm dado (ver abaixo). Evita crash de prerender quando uma fonte real
+    // fica indisponível num corredor que não tem série ilustrativa daquele pilar
+    // (ex.: Santos T/S quando o dado real volta null).
+    const comp = r ?? (c === "H" || PARAMS[corredor][c] ? montaComponenteIlustrativo(corredor, c) : null);
+    if (comp) comps.push(comp);
   }
 
   // IEE-Agora e série — sempre via lib/iee.ts. Séries têm comprimentos
