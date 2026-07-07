@@ -1,0 +1,56 @@
+name: Notícias da home semanal
+
+# Gatilho agendado do deck "Últimas notícias" da home (AnticipationRibbon). A
+# geração roda no servidor (rota /api/cron/refresh-noticias no Railway): o Claude
+# usa web search para achar 3 notícias recentes do setor, valida os links contra
+# os resultados de busca e grava o cache no volume DATA_DIR. Este workflow só
+# DISPARA a rota — não gera nada por conta própria. Ver docs/RUNBOOK-DADOS.md.
+#
+# Cadência: segunda 12:00 UTC (09:00 em Brasília UTC-3). Também roda sob demanda
+# pelo botão "Run workflow" (workflow_dispatch).
+#
+# Pré-requisitos:
+#   - Secret do repositório CRON_SECRET (mesmo valor da var CRON_SECRET no Railway)
+#   - Vars no service web do Railway: CRON_SECRET e ANTHROPIC_API_KEY
+#   - ⚠️ O agendamento (schedule) só dispara quando este arquivo está na branch
+#     padrão (main). Em outras branches só funciona o "Run workflow" manual.
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+
+# Uma execução por vez.
+concurrency:
+  group: noticias-semanal
+  cancel-in-progress: false
+
+jobs:
+  dispara:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispara /api/cron/refresh-noticias
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          # Domínio público do dashboard no Railway. Pode ser sobrescrito por uma
+          # repo variable RAILWAY_PUBLIC_URL se o domínio mudar.
+          BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET}" ]; then
+            echo "::error::Secret CRON_SECRET não configurado no repositório."
+            exit 1
+          fi
+          echo "POST ${BASE_URL}/api/cron/refresh-noticias"
+          # web search + opus pode levar ~1-2 min; --max-time generoso.
+          http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
+            --retry 3 --retry-all-errors --retry-delay 15 --max-time 290 \
+            -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${BASE_URL}/api/cron/refresh-noticias")
+          echo "HTTP ${http}"
+          cat /tmp/resp.json || true
+          echo
+          if [ "${http}" != "200" ]; then
+            echo "::error::Esperado HTTP 200, recebido ${http}."
+            exit 1
+          fi
