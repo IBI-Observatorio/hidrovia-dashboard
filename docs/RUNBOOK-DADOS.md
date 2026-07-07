@@ -27,6 +27,7 @@ O schedule só vale a partir da branch `main`. Todos têm botão **Run workflow*
 | **Série Itacoatiara** | terça 10:20 | `itacoatiara-semanal.yml` | Roda `atualiza-itacoatiara-series.mjs` (API ANA, estação 16030000), faz merge em `data/itacoatiara_hidroweb.csv`, regenera `lib/itacoatiara-historico-diario.ts`, **commita** e dispara o deploy. Alimenta o **ETA por análogos** do topo do `/monitor` (IRC) |
 | **SACE/SGB** | **de hora em hora** terça 17–23h UTC + quarta 0–21h UTC | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia. SGB publica em horário irregular (já saiu só às 22h UTC) → tenta de hora em hora até quarta; passadas sem boletim novo saem verdes (dedup). **Quem avisa se a terça foi perdida é o watchdog** (via `/api/health`, não mais o próprio workflow) |
 | **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + Claude **Haiku 4.5**, grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
+| **Notícias da home** | segunda 12:00 | `noticias-semanal.yml` | `POST /api/cron/refresh-noticias` → Claude **Opus 4.8** + **web search**, valida URLs contra os resultados de busca, grava `noticias_home_cache.json`. Deck "Últimas notícias" da home (`AnticipationRibbon`) |
 | **ENSO** | quinta 17:00 | `enso-mensal.yml` | `POST /api/cron/refresh-enso` → Railway raspa CPC/NOAA, grava `enso_cpc_cache.json`. (Roda toda quinta; idempotente — CPC publica na 2ª quinta) |
 | **Briefing** | quarta 13:00 | `briefing-semanal.yml` | `POST /api/cron/briefing` → regenera o briefing editorial da semana, grava `briefings/YYYY-WW.json` no volume |
 | **Portos / ANTAQ** | dia 16, 11:00 | `atualiza-portos.yml` | Roda `gera-portos-series.mjs` + `gera-series-tendencia.mjs`, **commita** os JSONs |
@@ -275,6 +276,27 @@ Script CLI (uso manual/dev, lê caches locais): `node scripts/gera-insights-ai.m
 
 ---
 
+## 📰 NOTÍCIAS DA HOME — automático (segunda)
+
+O deck **"Últimas notícias"** da home (`components/home/AnticipationRibbon.tsx`) lê
+`noticias_home_cache.json` (volume) via `lerNoticiasHome()` (`lib/noticias-home.ts`).
+`noticias-semanal.yml` (segunda 12:00 UTC) dispara `/api/cron/refresh-noticias`: o
+Railway chama o Claude **Opus 4.8** com a ferramenta de **web search**, que acha 3
+notícias recentes do setor (porto/navegação/hidrologia/agro/minério) e devolve JSON.
+
+> **Anti-alucinação de link:** cada `url` do JSON é validada contra o conjunto de
+> URLs que a busca realmente retornou — item com link inventado é descartado. Se
+> sobrarem < 2 itens válidos, a rota **não sobrescreve** o cache (mantém o último
+> bom) e retorna erro → o workflow falha e o watchdog avisa. Fallback quando não há
+> cache: o seed hardcoded `antecipacoes` em `lib/home-content.ts` (com links inline).
+
+`GET /api/health` expõe `checks.noticias` (frescor ≤ 9 dias). Ausência do cache **não**
+derruba o `ok` (janela antes do 1º run / uso do seed); só marca `ok:false` quando o
+cache EXISTE mas está velho — o caso "deck congelado com notícia velha". Protegido por
+`CRON_SECRET`. Precisa de `ANTHROPIC_API_KEY` no Railway (já existe).
+
+---
+
 ## 📰 BRIEFING SEMANAL — automático (quarta)
 
 `briefing-semanal.yml` (quarta 13:00 UTC) dispara `/api/cron/briefing`, que
@@ -304,7 +326,7 @@ npm run update-calendar          # → public/data/severity-calendar.json + lib/
 | Frequência | Automático (nuvem) | Manual (metodologia/backfill) |
 |-----------|---------------------|-------------------------------|
 | **Diário** | réguas (13h), watchdog (14h) | — |
-| **Semanal** | IDN (ter), Itacoatiara (ter), SGB (ter), Insights (ter), ENSO (qui), Briefing (qua) | — |
+| **Semanal** | Notícias home (seg), IDN (ter), Itacoatiara (ter), SGB (ter), Insights (ter), ENSO (qui), Briefing (qua) | — |
 | **Mensal** | portos (dia 16) | `update-navegacao-series.py` |
 | **Eventual** | — | `atualiza-dados.mjs` (metodologia), `forecast_conteiner.py`, `panel_horserace.py`, `gera-aereo-cada-real.mjs` (aéreo) |
 
