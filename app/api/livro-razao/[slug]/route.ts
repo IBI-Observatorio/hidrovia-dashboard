@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   _req: Request,
-  ctx: RouteContext<"/api/livro-razao/[slug]">,
+  ctx: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await ctx.params;
   const f = getFicha(slug);
