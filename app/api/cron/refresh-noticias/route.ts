@@ -13,6 +13,7 @@
 // Configuração no Railway: ANTHROPIC_API_KEY e CRON_SECRET no service web.
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import Anthropic from "@anthropic-ai/sdk";
@@ -184,6 +185,10 @@ async function handler(request: NextRequest) {
     };
     if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
     writeFileSync(CACHE_OUT, JSON.stringify(cache, null, 2), "utf-8");
+
+    // A home é ISR (revalidate=3600). Sem isto, o deck só trocaria até 1h após o
+    // cron. Força a regeneração da home agora, para refletir as notícias na hora.
+    revalidatePath("/");
 
     return NextResponse.json({
       ok: true,
