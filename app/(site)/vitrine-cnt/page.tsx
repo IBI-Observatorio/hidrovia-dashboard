@@ -66,7 +66,7 @@ const MAPA: {
 
 // Código ilustrativo (estático) — exemplo de como um indicador é embutido.
 const EXEMPLO_IFRAME = `<iframe
-  src="https://ibi-observatorio.org/embed/pavimento"
+  src="https://hidrovia-dashboard-production.up.railway.app/embed/pavimento"
   width="100%" height="${ALTURA_PAVIMENTO}" frameborder="0"
   style="border:0;border-radius:12px"></iframe>`;
 
