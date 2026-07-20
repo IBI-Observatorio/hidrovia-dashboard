@@ -37,6 +37,14 @@ type Dataset = {
 
 type NcmEntry = { ncm: string; descricao: string; portos: string[] };
 
+// Desagrega volumes para criar gráfico de barras empilhadas
+type VolumesPorNatureza = {
+  granel_solido: number;
+  granel_liquido: number;
+  carga_geral: number;
+  conteinerizada: number;
+};
+
 type PortoDisplay = {
   porto: string;
   uf: string | null;
@@ -45,7 +53,24 @@ type PortoDisplay = {
   _label: string;
   _color: string;
   _naturezaKey: NaturezaKey | 'mix';
+  _volumes?: VolumesPorNatureza;// apenas preenchido no modo "todos";
+  _topFlags?: Record<NaturezaKey, boolean>; //qual a ultima natureza deste porto - auxilia no shape das celulas barra empilhada
 };
+
+// ========== E1 — CONCENTRAÇÃO POR CARGA ==========
+
+interface ConcentracaoCarga {
+  natureza: string;
+  naturezaKey: NaturezaKey | 'todos';
+  portos: {
+    nome: string;
+    participacao: number;  // 0–100
+    volume: number;        // Mt
+  }[];
+  cr4: number;      // soma das 4 maiores (%)
+  hhi: number;      // índice HHI (0–10000)
+  demais: number;   // participação do restante (%)
+}
 
 // ── constants ──────────────────────────────────────────────────────────────────
 
@@ -150,6 +175,42 @@ function TooltipVolume({ active, payload, mes, ctnTeu }: any) {
         </div>
         {d.delta_yoy != null && (
           <div className="flex justify-between gap-4">
+            <span className="text-gray-400">vs ano anterior</span>
+            <span className={d.delta_yoy >= 0 ? 'text-[#00a652]' : 'text-[#A0153E]'}>
+              {fmtPct(d.delta_yoy)}
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TooltipEmpilhado({ active, payload, mes }: any) {
+  if (!active || !payload?.length) return null;
+  const d = payload[0].payload as PortoDisplay;
+  const total = d.volume_display;
+  const vols = d._volumes;
+  return (
+    <div className="bg-[#111827] border border-white/10 rounded-xl p-3 shadow-xl text-sm min-w-[220px]">
+      <p className="font-semibold text-white text-sm leading-snug">{d.porto}</p>
+      <span className="text-xs text-gray-500">{d.uf ?? ''}</span>
+      <div className="mt-2 space-y-1 text-xs">
+        {vols && NATUREZAS.map(n => (
+          <div key={n.key} className="flex justify-between gap-4">
+            <span className="flex items-center gap-1.5 text-gray-400">
+              <span className="size-2 rounded-full inline-block" style={{ background: n.color }} />
+              {n.label}
+            </span>
+            <span className="text-white font-medium tabular-nums">{fmtVol(vols[n.key], mes)}</span>
+          </div>
+        ))}
+        <div className="border-t border-white/10 pt-1 mt-1 flex justify-between gap-4">
+          <span className="text-gray-400 font-medium">Total</span>
+          <span className="text-white font-bold tabular-nums">{fmtVol(total, mes)}</span>
+        </div>
+        {d.delta_yoy != null && (
+          <div className="flex justify-between gap-4 pt-0.5">
             <span className="text-gray-400">vs ano anterior</span>
             <span className={d.delta_yoy >= 0 ? 'text-[#00a652]' : 'text-[#A0153E]'}>
               {fmtPct(d.delta_yoy)}
@@ -337,11 +398,17 @@ export default function MovimentacaoPage() {
         let vol = 0, prev = 0;
         let dom: NaturezaKey = 'granel_solido', domVal = -1;
         let temAlgum = false, temPrev = false;
+        const volumes: VolumesPorNatureza = { granel_solido: 0, granel_liquido: 0, carga_geral: 0, conteinerizada: 0 };
         for (const n of NATUREZAS) {
           const v = somaMeses(p.naturezas[n.key], anoEfetivo, mesesAlvo);
           const vp = somaMeses(p.naturezas[n.key], prevAno, mesesAlvo);
-          if (v != null) { vol += v; temAlgum = true; if (v > domVal) { domVal = v; dom = n.key; } }
+          if (v != null) { vol += v; temAlgum = true; volumes[n.key] = v/*guarda natureza separada*/; if (v > domVal) { domVal = v; dom = n.key; } }
           if (vp != null) { prev += vp; temPrev = true; }
+        }
+        // determina qual natureza é o topo visível da pilha (última com valor > 0)
+        const topFlags: Record<NaturezaKey, boolean> = { granel_solido: false, granel_liquido: false, carga_geral: false, conteinerizada: false };
+        for (let i = NATUREZAS.length - 1; i >= 0; i--) {
+          if (volumes[NATUREZAS[i].key] > 0) { topFlags[NATUREZAS[i].key] = true; break; }
         }
         if (!temAlgum || vol <= 0) continue;
         linhas.push({
@@ -351,6 +418,8 @@ export default function MovimentacaoPage() {
           _color: NAT_COLOR[dom],
           _naturezaKey: 'mix',
           _label: `${truncate(p.porto, 30)} (${p.uf ?? '—'})`,
+          _volumes: volumes, //inclui objeto do porto
+          _topFlags: topFlags,
         });
       } else if (ctnTeu) {
         // contêiner em TEU: usa a série por porto (teu_conteiner)
@@ -497,6 +566,98 @@ export default function MovimentacaoPage() {
       unidade: teuMode ? 'TEU' : 'Mt',
     };
   }, [data, natureza, isTodos, ctnTeu]);
+
+  const concentracao = useMemo<ConcentracaoCarga[]>(() => {
+    if (!data) return [];
+    const portos = (data.portos || []).filter(
+      (p): p is PortoSerie => typeof p === 'object' && p !== null && 'porto' in p
+    );
+
+    const cargas: { key: NaturezaKey; label: string }[] = [
+      { key: 'granel_solido', label: 'Granel Sólido' },
+      { key: 'granel_liquido', label: 'Granel Líquido' },
+      { key: 'carga_geral', label: 'Carga Geral' },
+      { key: 'conteinerizada', label: 'Conteinerizada' },
+    ];
+
+    const resultado: ConcentracaoCarga[] = [];
+
+    for (const c of cargas) {
+      // Usa somaMeses com anoEfetivo e mesesAlvo — responde aos filtros
+      const totaisPorPorto = portos
+        .map(p => {
+          const serie = p.naturezas?.[c.key];
+          const total = somaMeses(serie, anoEfetivo, mesesAlvo);
+          return { nome: p.porto, total: total ?? 0 };
+        })
+        .filter(p => p.total > 0)
+        .sort((a, b) => b.total - a.total);
+
+      const totalCarga = totaisPorPorto.reduce((s, p) => s + p.total, 0);
+      if (totalCarga <= 0) continue;
+
+      const participacoes = totaisPorPorto.map(p => ({
+        nome: p.nome,
+        participacao: (p.total / totalCarga) * 100,
+        volume: p.total,
+      }));
+
+      const top4 = participacoes.slice(0, 4);
+      const demais = participacoes.slice(4).reduce((s, p) => s + p.participacao, 0);
+      const cr4 = top4.reduce((s, p) => s + p.participacao, 0);
+      const hhi = participacoes.reduce((s, p) => s + Math.pow(p.participacao, 2), 0);
+
+      resultado.push({
+        natureza: c.label,
+        naturezaKey: c.key,
+        portos: top4,
+        cr4,
+        hhi,
+        demais,
+      });
+    }
+
+    // Agregado (todos os portos, todas as cargas)
+    const volPorPorto = new Map<string, number>();
+    for (const c of cargas) {
+      for (const p of portos) {
+        const total = somaMeses(p.naturezas?.[c.key], anoEfetivo, mesesAlvo);
+        if (total != null) {
+          volPorPorto.set(p.porto, (volPorPorto.get(p.porto) || 0) + total);
+        }
+      }
+    }
+
+    const agregado = [...volPorPorto.entries()]
+      .map(([nome, total]) => ({ nome, total }))
+      .filter(p => p.total > 0)
+      .sort((a, b) => b.total - a.total);
+
+    const totalAgregado = agregado.reduce((s, p) => s + p.total, 0);
+    if (totalAgregado > 0) {
+      const partAgregado = agregado.map(p => ({
+        nome: p.nome,
+        participacao: (p.total / totalAgregado) * 100,
+        volume: p.total,
+      }));
+      const top4Agg = partAgregado.slice(0, 4);
+      const demaisAgg = partAgregado.slice(4).reduce((s, p) => s + p.participacao, 0);
+      const cr4Agg = top4Agg.reduce((s, p) => s + p.participacao, 0);
+      const hhiAgg = partAgregado.reduce((s, p) => s + Math.pow(p.participacao, 2), 0);
+
+      resultado.push({
+        natureza: 'Total (todas as cargas)',
+        naturezaKey: 'todos',
+        portos: top4Agg,
+        cr4: cr4Agg,
+        hhi: hhiAgg,
+        demais: demaisAgg,
+      });
+    }
+
+    // Ordenar por CR4 decrescente (mais concentrada no topo)
+    return resultado.sort((a, b) => b.cr4 - a.cr4);
+  }, [data, anoEfetivo, mesesAlvo]);  // ← reage a ano e mês
 
   const sectorLabel = isTodos ? 'Todos os tipos' : NAT_LABEL[natureza as NaturezaKey];
   const topPort = ranking[0];
@@ -813,6 +974,14 @@ export default function MovimentacaoPage() {
         />
       </div>
 
+      {/* ========== E1 — CONCENTRAÇÃO POR CARGA ========== */}
+      {concentracao.length > 0 && (
+        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
+          <ConcentracaoChart data={concentracao} mes={mes} />
+        </section>
+      )}
+      {/* =================================================== */}
+
       {/* ── volume ranking chart ─────────────────────────────────────────────── */}
       <div className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
         <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -850,9 +1019,9 @@ export default function MovimentacaoPage() {
         ) : (
           <VolumeChart data={ranking} mes={mes} ctnTeu={ctnTeu} />
         )}
-        {isTodos && (
+        {/*isTodos && (
           <p className="text-[11px] text-gray-600">Em &quot;Todos os tipos&quot;, a barra soma as 4 naturezas; a cor indica a carga predominante no porto.</p>
-        )}
+        )*/}
       </div>
 
       {/* ── acumulado 12 meses (recorde) ────────────────────────────────────── */}
@@ -1048,6 +1217,9 @@ function VolumeChart({ data, mes, ctnTeu }: { data: PortoDisplay[]; mes: string;
   const fmtEixo = (v: number) => ctnTeu
     ? (v >= 1e6 ? `${(v / 1e6).toFixed(1)} mi` : `${Math.round(v / 1e3)} mil`)
     : (v >= 1 ? `${v.toFixed(0)} Mt` : `${(v * 1000).toFixed(0)} kt`);
+  
+  // detecta modo empilhado: primeiro item tem _volumes desagregados
+  const isEmpilhado = data.length > 0 && data[0]._volumes != null;
 
   return (
     <div className="w-full" style={{ height: altura }}>
@@ -1070,15 +1242,226 @@ function VolumeChart({ data, mes, ctnTeu }: { data: PortoDisplay[]; mes: string;
             tickLine={false}
             interval={0}
           />
-          <Tooltip content={<TooltipVolume mes={mes} ctnTeu={ctnTeu} />} cursor={{ fill: '#ffffff06' }} />
+          <Tooltip content={isEmpilhado ? <TooltipEmpilhado mes={mes} /> :<TooltipVolume mes={mes} ctnTeu={ctnTeu} />} cursor={{ fill: '#ffffff06' }} />
+          {isEmpilhado ? (
+            // barras empilhadas: uma barra por natureza
+            <>
+              {NATUREZAS.map(n => (
+                <Bar
+                  key={n.key}
+                  dataKey={`_volumes.${n.key}`}
+                  name={n.label}
+                  stackId="naturezas"
+                  fill={n.color}
+                  fillOpacity={0.85}
+                  maxBarSize={20}
+                  //radius={[0, 4, 4, 0]}
+                  shape={(props: any) => {
+                    const { x, y, width, height, fill, payload, dataKey } = props;
+                    const natKey = dataKey.split('.').pop() as NaturezaKey;
+                    const isTop = payload._topFlags?.[natKey] ?? false;
+                    const r = isTop ? 4 : 0;
+                    if (!width || !height || width <= 0 || height <= 0) return null;
+                    const path = r > 0
+                      ? `M${x},${y} L${x + width - r},${y} Q${x + width},${y} ${x + width},${y + r} L${x + width},${y + height - r} Q${x + width},${y + height} ${x + width - r},${y + height} L${x},${y + height} Z`
+                      : `M${x},${y} L${x + width},${y} L${x + width},${y + height} L${x},${y + height} Z`;
+                    return (
+                      <path
+                        d={path}
+                        fill={fill}
+                        fillOpacity={0.85}
+                      />
+                    )
+                  }}
+                />
+              ))}
+              <LabelList dataKey="delta_yoy" content={DeltaLabel} />
+            </>
+          ) : (
           <Bar dataKey="volume_display" radius={[0, 4, 4, 0]} maxBarSize={20}>
             {data.map((entry, i) => (
               <Cell key={i} fill={entry._color} fillOpacity={0.85} />
             ))}
             <LabelList dataKey="delta_yoy" content={DeltaLabel} />
           </Bar>
+          )}
         </BarChart>
       </ResponsiveContainer>
+    </div>
+  );
+}
+
+function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: string }) {
+  const cores = ['#1E88E5', '#42A5F5', '#90CAF9', '#BBDEFB'];
+  const corDemais = '#424242';
+
+  const [tooltip, setTooltip] = useState<{
+    visible: boolean;
+    x: number;
+    y: number;
+    nome: string;
+    posicao: string;
+    participacao: number;
+    volume: number;
+  }>({ visible: false, x: 0, y: 0, nome: '', posicao: '', participacao: 0, volume: 0 });
+
+  const showTooltip = (
+    e: React.MouseEvent,
+    nome: string,
+    posicao: string,
+    participacao: number,
+    volume: number,
+  ) => {
+    setTooltip({
+      visible: true,
+      x: e.clientX + 12,
+      y: e.clientY + 12,
+      nome,
+      posicao,
+      participacao,
+      volume,
+    });
+  };
+
+  const moveTooltip = (e: React.MouseEvent) => {
+    setTooltip(prev => ({ ...prev, x: e.clientX + 12, y: e.clientY + 12 }));
+  };
+
+  const hideTooltip = () => {
+    setTooltip(prev => ({ ...prev, visible: false }));
+  };
+
+  return (
+    <div className="w-full">
+      {/* Título e contexto */}
+      <h2 className="text-base font-semibold text-white">
+        Concentração da Movimentação por Tipo de Carga
+      </h2>
+      <p className="text-sm text-[var(--muted)] mb-1 opacity-80">
+        Participação das 4 maiores instalações (CR4) em cada natureza de carga
+      </p>
+      <p className="text-xs text-[var(--muted)] mb-6 opacity-50">
+        A concentração é setorial, não sistêmica: o granel líquido (petróleo) depende de poucos terminais,
+        enquanto o agregado de todas as cargas é menos concentrado que qualquer segmento isolado.
+        Barras ordenadas do mais concentrado (topo) ao mais pulverizado.
+      </p>
+
+      <div className="space-y-3">
+        {data.map((item) => {
+          const isTotal = item.naturezaKey === 'todos';
+          return (
+            <div
+              key={item.naturezaKey}
+              className={`flex items-center gap-3 ${isTotal ? 'pt-3 border-t border-white/10' : ''}`}
+            >
+              {/* Label */}
+              <div className={`text-right shrink-0 ${isTotal ? 'w-44 text-sm font-semibold text-[var(--accent)]' : 'w-44 text-sm text-[var(--fg)]'}`}>
+                {item.natureza}
+              </div>
+
+              {/* Barra empilhada */}
+              <div className="flex-1 h-7 bg-white/5 rounded overflow-hidden flex">
+                {item.portos.map((p, i) => (
+                  <div
+                    key={i}
+                    className="h-full flex items-center justify-center text-[10px] font-semibold transition-all"
+                    style={{
+                      width: `${p.participacao}%`,
+                      backgroundColor: cores[i],
+                      color: i < 2 ? '#fff' : '#1a1a2e',
+                      minWidth: p.participacao > 3 ? undefined : '0',
+                    }}
+                    onMouseEnter={(e) => showTooltip(e, p.nome, `${i + 1}ª maior`, p.participacao, p.volume)}
+                    onMouseMove={moveTooltip}
+                    onMouseLeave={hideTooltip}
+                  >
+                    {p.participacao > 8 ? `${p.participacao.toFixed(1)}%` : ''}
+                  </div>
+                ))}
+                <div
+                  className="h-full flex items-center justify-center text-[10px] text-[var(--muted)]"
+                  style={{
+                    width: `${item.demais}%`,
+                    backgroundColor: corDemais,
+                    minWidth: item.demais > 3 ? undefined : '0',
+                  }}
+                  onMouseEnter={(e) => showTooltip(e, 'Demais portos', 'Demais', item.demais, 0)}
+                  onMouseMove={moveTooltip}
+                  onMouseLeave={hideTooltip}
+                >
+                  {item.demais > 15 ? `Demais ${item.demais.toFixed(0)}%` : item.demais > 8 ? 'Demais' : ''}
+                </div>
+              </div>
+
+              {/* CR4 */}
+              <div className="w-16 text-right shrink-0">
+                <span className={`text-sm font-bold tabular-nums ${isTotal ? 'text-[var(--accent)]' : 'text-[var(--fg)]'}`}>
+                  {item.cr4.toFixed(1)}%
+                </span>
+                <span className="text-[10px] text-[var(--muted)] block">CR4</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* HHI e legenda */}
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-[var(--muted)]">
+        <span className="font-medium text-[var(--fg)]">HHI:</span>
+        {data.map((c, i) => (
+          <span key={c.naturezaKey}>
+            {c.natureza.split(' ').slice(0, 2).join(' ')}: <strong className="text-[var(--fg)]">{c.hhi.toFixed(0)}</strong>
+            {c.hhi > 2500 ? ' (alta)' : c.hhi > 1500 ? ' (moderada)' : ' (baixa)'}
+            {i < data.length - 1 ? ' · ' : ''}
+          </span>
+        ))}
+      </div>
+
+      {/* Legenda visual */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] text-[var(--muted)]">
+        {['1ª maior', '2ª maior', '3ª maior', '4ª maior'].map((label, i) => (
+          <span key={i} className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: cores[i] }} />
+            {label}
+          </span>
+        ))}
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: corDemais }} />
+          Demais portos
+        </span>
+      </div>
+
+      {/* Nota metodológica */}
+      <p className="mt-4 text-[10px] text-[var(--muted)] opacity-60 leading-relaxed">
+        <strong>CR4</strong> = soma das participações das 4 maiores instalações.
+        <strong> HHI</strong> = soma dos quadrados das participações (escala 0–10.000).
+        Limiares: &lt;1.500 baixa concentração, 1.500–2.500 moderada, &gt;2.500 alta.
+        Base: top-50 ANTAQ (~91% da movimentação nacional). Referência: fev/2026.
+      </p>
+
+      {/* Tooltip customizado segue o mouse */}
+      {tooltip.visible && (
+        <div
+          className="fixed z-50 bg-[#111827] border border-white/10 rounded-xl p-3 shadow-xl text-sm min-w-[180px] pointer-events-none"
+          style={{ left: tooltip.x, top: tooltip.y }}
+        >
+          <p className="font-semibold text-white text-sm leading-snug">{tooltip.nome}</p>
+          <div className="mt-2 space-y-0.5 text-xs">
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-400">Posição</span>
+              <span className="text-white font-medium">{tooltip.posicao}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-400">Participação</span>
+              <span className="text-white font-medium tabular-nums">{tooltip.participacao.toFixed(1)}%</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-400">Volume</span>
+              <span className="text-white font-medium tabular-nums">{fmtVol(tooltip.volume, mes)}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
