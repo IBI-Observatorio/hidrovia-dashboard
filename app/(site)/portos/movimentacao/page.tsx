@@ -1065,22 +1065,6 @@ export default function MovimentacaoPage() {
         />
       </div>
 
-      {/* ========== E1 — CONCENTRAÇÃO POR CARGA ========== */}
-      {concentracao.length > 0 && (
-        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
-          <ConcentracaoChart data={concentracao} mes={mes} />
-        </section>
-      )}
-      {/* =================================================== */}
-
-      {/* ========== E2 — DESLOCAMENTO REGIONAL ========== */}
-      {serieRegional.length > 0 && (
-        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
-          <DeslocamentoRegionalChart data={serieRegional} />
-        </section>
-      )}
-      {/* ================================================== */}
-
       {/* ── volume ranking chart ─────────────────────────────────────────────── */}
       <div className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
         <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -1192,6 +1176,22 @@ export default function MovimentacaoPage() {
           </div>
         );
       })()}
+
+      {/* ========== E1 — CONCENTRAÇÃO POR CARGA ========== */}
+      {concentracao.length > 0 && (
+        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
+          <ConcentracaoChart data={concentracao} mes={mes} />
+        </section>
+      )}
+      {/* =================================================== */}
+
+      {/* ========== E2 — DESLOCAMENTO REGIONAL ========== */}
+      {serieRegional.length > 0 && (
+        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
+          <DeslocamentoRegionalChart data={serieRegional} />
+        </section>
+      )}
+      {/* ================================================== */}
 
       {/* ── info footer ─────────────────────────────────────────────────────── */}
       <div className="flex items-start gap-3 bg-azul-medio/50 border border-white/5 rounded-xl p-4 text-xs text-gray-500">
@@ -1430,20 +1430,50 @@ function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: stri
     setTooltip(prev => ({ ...prev, visible: false }));
   };
 
+  const totalItem = data.find(d => d.naturezaKey === 'todos');
+  const glItem = data.find(d => d.naturezaKey === 'granel_liquido');
+  const cr4Total = totalItem?.cr4.toFixed(1) ?? '--';
+  const hhiTotal = totalItem?.hhi.toFixed(0) ?? '--';
+  const cr4GL = glItem?.cr4.toFixed(1) ?? '--';
+  const top3GL = glItem ? glItem.portos.slice(0, 3).reduce((s, p) => s + p.participacao, 0).toFixed(0) : '--';
+
   return (
     <div className="w-full">
       {/* Título e contexto */}
       <h2 className="text-base font-semibold text-white">
         Concentração da Movimentação por Tipo de Carga
       </h2>
-      <p className="text-sm text-[var(--muted)] mb-1 opacity-80">
+      <p className="text-sm text-gray-500 mb-1">
         Participação das 4 maiores instalações (CR4) em cada natureza de carga
       </p>
-      <p className="text-xs text-[var(--muted)] mb-6 opacity-50">
-        A concentração é setorial, não sistêmica: o granel líquido (petróleo) depende de poucos terminais,
-        enquanto o agregado de todas as cargas é menos concentrado que qualquer segmento isolado.
-        Barras ordenadas do mais concentrado (topo) ao mais pulverizado.
-      </p>
+
+      {/* Cards de insight — análise estrutural */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#0099d8] font-medium uppercase tracking-wider mb-1.5">
+            Tese Central
+          </p>
+          <p className="text-sm text-gray-500 leading-snug">
+            A concentração é <strong className="text-[#0099d8]">setorial, não sistêmica</strong>. O risco mora no petróleo e, em menor grau, no contêiner — não na tonelagem total.
+          </p>
+        </div>
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#d4922a] font-medium uppercase tracking-wider mb-1.5">
+            Granel Líquido — Concentrado HHI
+          </p>
+          <p className="text-sm text-gray-500 leading-snug">
+            Três terminais de petróleo (Angra dos Reis, Açu e São Sebastião) somam cerca de <strong className="text-[#d4922a]">{top3GL}%</strong>. CR4 de <strong className="text-[#d4922a]">{cr4GL}%</strong> — único segmento de fato concentrado.
+          </p>
+        </div>
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#0099d8] font-medium uppercase tracking-wider mb-1.5">
+            O Paradoxo
+          </p>
+          <p className="text-sm text-gray-500 leading-snug">
+            O agregado (<strong className="text-[#0099d8]">CR4 {cr4Total}%</strong>, HHI <strong className="text-[#0099d8]">{hhiTotal}</strong>) é <strong className="text-[#0099d8]">menos concentrado</strong> que qualquer carga isolada. Cada carga se concentra em portos diferentes — que se compensam mutuamente.
+          </p>
+        </div>
+      </div>
 
       <div className="space-y-3">
         {data.map((item) => {
@@ -1495,7 +1525,7 @@ function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: stri
               {/* CR4 */}
               <div className="w-16 text-right shrink-0">
                 <span className={`text-sm font-bold tabular-nums ${isTotal ? 'text-[var(--accent)]' : 'text-[var(--fg)]'}`}>
-                  {item.cr4.toFixed(1)}%
+                  {item.cr4.toFixed(1)}% HHI
                 </span>
                 <span className="text-[10px] text-[var(--muted)] block">CR4</span>
               </div>
@@ -1505,8 +1535,8 @@ function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: stri
       </div>
 
       {/* HHI e legenda */}
-      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-[var(--muted)]">
-        <span className="font-medium text-[var(--fg)]">HHI:</span>
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-gray-400">
+        <span className="font-medium text-gray-400">HHI:</span>
         {data.map((c, i) => (
           <span key={c.naturezaKey}>
             {c.natureza.split(' ').slice(0, 2).join(' ')}: <strong className="text-[var(--fg)]">{c.hhi.toFixed(0)}</strong>
@@ -1517,7 +1547,7 @@ function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: stri
       </div>
 
       {/* Legenda visual */}
-      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] text-[var(--muted)]">
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] text-gray-500">
         {['1ª maior', '2ª maior', '3ª maior', '4ª maior'].map((label, i) => (
           <span key={i} className="flex items-center gap-1">
             <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: cores[i] }} />
@@ -1531,7 +1561,7 @@ function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: stri
       </div>
 
       {/* Nota metodológica */}
-      <p className="mt-4 text-[10px] text-[var(--muted)] opacity-60 leading-relaxed">
+      <p className=" mt-4 text-[11px] text-gray-600 leading-relaxed">
         <strong>CR4</strong> = soma das participações das 4 maiores instalações.
         <strong> HHI</strong> = soma dos quadrados das participações (escala 0–10.000).
         Limiares: &lt;1.500 baixa concentração, 1.500–2.500 moderada, &gt;2.500 alta.
@@ -1613,7 +1643,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
               tick={{ fill: '#6b7280', fontSize: 11 }}
               axisLine={false}
               tickLine={false}
-              width={40}
+              width={40}  
             />
 
             <Tooltip
@@ -1690,7 +1720,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
       </div>
 
       {/* Nota metodológica */}
-      <p className="mt-4 text-[10px] text-[var(--muted)] opacity-60 leading-relaxed">
+      <p className=" mt-4 text-[11px] text-gray-600 leading-relaxed ">  
         <strong>Arco Norte</strong> = recorte logístico (AP, PA, AM, RO, RR, MA, TO), não a região Norte do IBGE.
         <strong> Paranaguá</strong> corrigido para PR/Sul. Base: top-50 ANTAQ (~91% do nacional).
         O gráfico mede <em>participação</em> (share), não volume absoluto.
