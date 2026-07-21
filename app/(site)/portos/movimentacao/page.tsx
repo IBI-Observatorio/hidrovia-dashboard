@@ -4,7 +4,7 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell, LabelList,
-  ComposedChart, Area, ReferenceLine, ReferenceDot,
+  ComposedChart, Area, AreaChart, ReferenceLine, ReferenceDot, ReferenceArea,
 } from 'recharts';
 import { useDashboardData } from '@/components/antaq/useDashboardData';
 import { fonteAntaqIbi, listaMesesIBI } from '@/lib/fonte-portos';
@@ -70,6 +70,34 @@ interface ConcentracaoCarga {
   cr4: number;      // soma das 4 maiores (%)
   hhi: number;      // índice HHI (0–10000)
   demais: number;   // participação do restante (%)
+}
+
+// ========== E2 — DESLOCAMENTO REGIONAL ==========
+
+interface PontoRegional {
+  ano: string;
+  sudeste: number;       // participação %
+  arcoNorte: number;     // participação %
+  sul: number;           // participação %
+  nordeste: number;      // participação %
+  centroOeste: number;   // participação %
+  semRegiao: number;     // portos sem UF/região (para debug)
+}
+
+const UF_ARCO_NORTE = new Set(['AP', 'PA', 'AM', 'RO', 'RR', 'MA', 'TO']);
+const UF_SUDESTE = new Set(['ES', 'MG', 'RJ', 'SP']);
+const UF_SUL = new Set(['PR', 'RS', 'SC']);
+const UF_NORDESTE = new Set(['AL', 'BA', 'CE', 'PB', 'PE', 'PI', 'RN', 'SE']); // sem MA
+const UF_CENTRO_OESTE = new Set(['DF', 'GO', 'MS', 'MT']); // sem TO
+
+function classificarRegiao(uf: string | null): keyof Omit<PontoRegional, 'ano' | 'semRegiao'> {
+  if (!uf) return 'semRegiao' as any;
+  if (UF_ARCO_NORTE.has(uf)) return 'arcoNorte';
+  if (UF_SUDESTE.has(uf)) return 'sudeste';
+  if (UF_SUL.has(uf)) return 'sul';
+  if (UF_NORDESTE.has(uf)) return 'nordeste';
+  if (UF_CENTRO_OESTE.has(uf)) return 'centroOeste';
+  return 'semRegiao' as any; // fallback
 }
 
 // ── constants ──────────────────────────────────────────────────────────────────
@@ -659,6 +687,69 @@ export default function MovimentacaoPage() {
     return resultado.sort((a, b) => b.cr4 - a.cr4);
   }, [data, anoEfetivo, mesesAlvo]);  // ← reage a ano e mês
 
+  const serieRegional = useMemo<PontoRegional[]>(() => {
+    if (!data) return [];
+    const portos = (data.portos || []).filter(
+      (p): p is PortoSerie => typeof p === 'object' && p !== null && 'porto' in p
+    );
+
+    // Agregar volume anual por porto (todas as naturezas, todos os anos 2010-2025)
+    const anos = Array.from({ length: 16 }, (_, i) => String(2010 + i)); // 2010–2025
+    const resultado: PontoRegional[] = [];
+
+    for (const ano of anos) {
+      const totaisPorRegiao = {
+        sudeste: 0,
+        arcoNorte: 0,
+        sul: 0,
+        nordeste: 0,
+        centroOeste: 0,
+        semRegiao: 0,
+      };
+
+      for (const p of portos) {
+        // Soma todas as naturezas do porto no ano
+        let totalPortoAno = 0;
+        for (const nat of NATUREZAS) {
+          const serie = p.naturezas?.[nat.key];
+          if (serie) {
+            for (const pt of serie) {
+              if (pt.data.slice(0, 4) === ano) {
+                totalPortoAno += pt.mt;
+              }
+            }
+          }
+        }
+
+        if (totalPortoAno <= 0) continue;
+
+        // Classificar por região (com correção para Paranaguá)
+        let uf = p.uf;
+        if (!uf && p.porto.toLowerCase().includes('paranaguá')) {
+          uf = 'PR'; // correção manual
+        }
+
+        const regiao = classificarRegiao(uf);
+        totaisPorRegiao[regiao] += totalPortoAno;
+      }
+
+      const totalNacional = Object.values(totaisPorRegiao).reduce((s, v) => s + v, 0);
+      if (totalNacional <= 0) continue;
+
+      resultado.push({
+        ano,
+        sudeste: (totaisPorRegiao.sudeste / totalNacional) * 100,
+        arcoNorte: (totaisPorRegiao.arcoNorte / totalNacional) * 100,
+        sul: (totaisPorRegiao.sul / totalNacional) * 100,
+        nordeste: (totaisPorRegiao.nordeste / totalNacional) * 100,
+        centroOeste: (totaisPorRegiao.centroOeste / totalNacional) * 100,
+        semRegiao: (totaisPorRegiao.semRegiao / totalNacional) * 100,
+      });
+    }
+
+    return resultado;
+  }, [data]);
+
   const sectorLabel = isTodos ? 'Todos os tipos' : NAT_LABEL[natureza as NaturezaKey];
   const topPort = ranking[0];
 
@@ -981,6 +1072,14 @@ export default function MovimentacaoPage() {
         </section>
       )}
       {/* =================================================== */}
+
+      {/* ========== E2 — DESLOCAMENTO REGIONAL ========== */}
+      {serieRegional.length > 0 && (
+        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
+          <DeslocamentoRegionalChart data={serieRegional} />
+        </section>
+      )}
+      {/* ================================================== */}
 
       {/* ── volume ranking chart ─────────────────────────────────────────────── */}
       <div className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
@@ -1462,6 +1561,140 @@ function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: stri
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
+  const regioes = [
+    { key: 'sudeste' as const, label: 'Sudeste', color: '#3B82F6', strokeWidth: 3, fillOpacity: 0.30 },
+    { key: 'arcoNorte' as const, label: 'Arco Norte', color: '#F59E0B', strokeWidth: 3, fillOpacity: 0.28 },
+    { key: 'sul' as const, label: 'Sul', color: '#6B7280', strokeWidth: 1.5, fillOpacity: 0.18 },
+    { key: 'nordeste' as const, label: 'Nordeste', color: '#9CA3AF', strokeWidth: 1.5, fillOpacity: 0.14 },
+    { key: 'centroOeste' as const, label: 'Centro-Oeste', color: '#D1D5DB', strokeWidth: 1.5, fillOpacity: 0.10 },
+  ];
+
+  return (
+    <div className="w-full">
+      <h2 className="text-base font-semibold text-white">
+        Deslocamento Regional da Movimentação Portuária
+      </h2>
+      <p className="text-sm text-[var(--muted)] mb-1 opacity-80">
+        Participação de cada região no total nacional movimentado — 2010 a 2025
+      </p>
+      <p className="text-xs text-[var(--muted)] mb-6 opacity-50">
+        O Sudeste perdeu share para o Arco Norte entre 2010–2019, mas o avanço estagnou desde então.
+        A faixa sombreada marca o período de platô.
+      </p>
+
+      <div style={{ height: 340 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data} margin={{ top: 8, right: 24, bottom: 4, left: 4 }}>
+            <defs>
+              {regioes.map(r => (
+                <linearGradient key={r.key} id={`fill-${r.key}`} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={r.color} stopOpacity={r.fillOpacity} />
+                  <stop offset="100%" stopColor={r.color} stopOpacity={0.02} />
+                </linearGradient>
+              ))}
+            </defs>
+
+            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" vertical={false} />
+
+            <XAxis
+              dataKey="ano"
+              tick={{ fill: '#6b7280', fontSize: 11 }}
+              axisLine={{ stroke: '#ffffff10' }}
+              tickLine={false}
+            />
+            <YAxis
+              domain={[0, 80]}
+              tickFormatter={(v: number) => `${v}%`}
+              tick={{ fill: '#6b7280', fontSize: 11 }}
+              axisLine={false}
+              tickLine={false}
+              width={40}
+            />
+
+            <Tooltip
+              cursor={{ stroke: '#ffffff20' }}
+              contentStyle={{ background: '#111827', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }}
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null;
+                return (
+                  <div className="bg-[#111827] border border-white/10 rounded-xl p-3 shadow-xl text-sm min-w-[180px]">
+                    <p className="font-semibold text-white text-sm">{label}</p>
+                    <div className="mt-2 space-y-1 text-xs">
+                      {regioes.map(r => {
+                        const p = payload.find(item => item.dataKey === r.key);
+                        const valor = p?.value as number | undefined;
+                        if (valor == null) return null;
+                        return (
+                          <div key={r.key} className="flex items-center gap-2">
+                            <span
+                              className="w-2.5 h-2.5 rounded-full inline-block"
+                              style={{ backgroundColor: r.color }}
+                            />
+                            <span className="text-gray-400">{r.label}</span>
+                            <span className="text-white font-medium ml-auto tabular-nums">{valor.toFixed(1)}%</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }}
+            />
+
+            <ReferenceArea
+              x1="2019"
+              x2={data[data.length - 1]?.ano}
+              fill="#ffffff"
+              fillOpacity={0.03}
+              label={{ value: 'Platô (2019+)', position: 'insideTopLeft', fill: '#6b7280', fontSize: 10, dy: 4, dx: 6 }}
+            />
+
+            {regioes.map(r => (
+              <Area
+                key={r.key}
+                type="monotone"
+                dataKey={r.key}
+                name={r.label}
+                stroke={r.color}
+                strokeWidth={r.strokeWidth}
+                fill={`url(#fill-${r.key})`}
+                dot={{ r: r.strokeWidth >= 3 ? 3 : 2, strokeWidth: 0, fill: r.color, fillOpacity: 0.8 }}
+                activeDot={{ r: r.strokeWidth >= 3 ? 5 : 3, stroke: '#111827', strokeWidth: 2, fill: r.color }}
+              />
+            ))}
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Legenda */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[var(--muted)]">
+        {regioes.map(r => (
+          <span key={r.key} className="flex items-center gap-1.5">
+            <span
+              className="w-3 rounded-full inline-block"
+              style={{
+                backgroundColor: r.color,
+                height: r.strokeWidth >= 3 ? '3px' : '2px',
+                opacity: r.strokeWidth >= 3 ? 1 : 0.6,
+              }}
+            />
+            {r.label}
+            {r.strokeWidth >= 3 && <span className="text-[10px] opacity-60">(destaque)</span>}
+          </span>
+        ))}
+      </div>
+
+      {/* Nota metodológica */}
+      <p className="mt-4 text-[10px] text-[var(--muted)] opacity-60 leading-relaxed">
+        <strong>Arco Norte</strong> = recorte logístico (AP, PA, AM, RO, RR, MA, TO), não a região Norte do IBGE.
+        <strong> Paranaguá</strong> corrigido para PR/Sul. Base: top-50 ANTAQ (~91% do nacional).
+        O gráfico mede <em>participação</em> (share), não volume absoluto.
+      </p>
     </div>
   );
 }
