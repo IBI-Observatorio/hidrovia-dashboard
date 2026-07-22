@@ -4,7 +4,8 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell, LabelList,
-  ComposedChart, Area, AreaChart, ReferenceLine, ReferenceDot, ReferenceArea,
+  ComposedChart, Area, AreaChart, LineChart, Line,
+  ReferenceLine, ReferenceDot, ReferenceArea,
 } from 'recharts';
 import { useDashboardData } from '@/components/antaq/useDashboardData';
 import { fonteAntaqIbi, listaMesesIBI } from '@/lib/fonte-portos';
@@ -98,6 +99,26 @@ function classificarRegiao(uf: string | null): keyof Omit<PontoRegional, 'ano' |
   if (UF_NORDESTE.has(uf)) return 'nordeste';
   if (UF_CENTRO_OESTE.has(uf)) return 'centroOeste';
   return 'semRegiao' as any; // fallback
+}
+
+// ========== E3 — ASSINATURA SAZONAL ==========
+
+interface STLPoint {
+  data: string;       // "YYYY-MM"
+  natureza: string;   // "granel_solido" | ...
+  observado: number;
+  trend: number;
+  seasonal: number;
+  resid: number;
+}
+
+interface SazonalPonto {
+  mes: string;        // "Jan", "Fev", ...
+  mesNum: number;     // 1-12
+  granel_solido: number;     // desvio %
+  granel_liquido: number;
+  carga_geral: number;
+  conteinerizada: number;
 }
 
 // ── constants ──────────────────────────────────────────────────────────────────
@@ -340,6 +361,17 @@ export default function MovimentacaoPage() {
   const bag = raw as Record<string, unknown> | null;
   const data = (bag?.['portos-series'] ?? null) as Dataset | null;
   const ncmData = (bag?.ncm_sh4 ?? null) as Record<NaturezaKey, NcmEntry[]> | null;
+
+  // ========== E3 — CARREGAMENTO STL ==========
+  const [stlData, setStlData] = useState<STLPoint[] | null>(null);
+
+  useEffect(() => {
+    fetch('/data/antaq/dashboard/stl.json')
+      .then(r => r.json())
+      .then(setStlData)
+      .catch(() => setStlData(null));
+  }, []);
+  // ==========================================
 
   // referência e anos derivados dos dados reais
   const refYear = data ? parseInt(data.referencia.slice(0, 4)) : 2026;
@@ -749,6 +781,52 @@ export default function MovimentacaoPage() {
 
     return resultado;
   }, [data]);
+
+  // ========== E3 — CÁLCULO DA ASSINATURA SAZONAL ==========
+  const assinaturaSazonal = useMemo<SazonalPonto[]>(() => {
+    if (!stlData || stlData.length === 0) return [];
+
+    const mesesLabels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const naturezas = ['granel_solido', 'granel_liquido', 'carga_geral', 'conteinerizada'];
+
+    const porNatureza: Record<string, STLPoint[]> = {};
+    for (const nat of naturezas) {
+      porNatureza[nat] = stlData.filter(r => r.natureza === nat);
+    }
+
+    const resultado: SazonalPonto[] = [];
+
+    for (let mes = 1; mes <= 12; mes++) {
+      const ponto: any = {
+        mes: mesesLabels[mes - 1],
+        mesNum: mes,
+      };
+
+      for (const nat of naturezas) {
+        const registros = porNatureza[nat];
+        if (!registros || registros.length === 0) {
+          ponto[nat] = 0;
+          continue;
+        }
+
+        const doMes = registros.filter(r => parseInt(r.data.slice(5, 7)) === mes);
+        if (doMes.length === 0) {
+          ponto[nat] = 0;
+          continue;
+        }
+
+        const seasonalMedio = doMes.reduce((s, r) => s + r.seasonal, 0) / doMes.length;
+        const mediaObs = registros.reduce((s, r) => s + r.observado, 0) / registros.length;
+
+        ponto[nat] = mediaObs > 0 ? (seasonalMedio / mediaObs) * 100 : 0;
+      }
+
+      resultado.push(ponto as SazonalPonto);
+    }
+
+    return resultado;
+  }, [stlData]);
+  // ========================================================
 
   const sectorLabel = isTodos ? 'Todos os tipos' : NAT_LABEL[natureza as NaturezaKey];
   const topPort = ranking[0];
@@ -1193,6 +1271,14 @@ export default function MovimentacaoPage() {
       )}
       {/* ================================================== */}
 
+      {/* ========== E3 — ASSINATURA SAZONAL ========== */}
+      {assinaturaSazonal.length > 0 && (
+        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
+          <AssinaturaSazonalChart data={assinaturaSazonal} />
+        </section>
+      )}
+      {/* ============================================== */}
+
       {/* ── info footer ─────────────────────────────────────────────────────── */}
       <div className="flex items-start gap-3 bg-azul-medio/50 border border-white/5 rounded-xl p-4 text-xs text-gray-500">
         <span className="text-base mt-0.5 shrink-0">ℹ️</span>
@@ -1443,18 +1529,18 @@ function ConcentracaoChart({ data, mes }: { data: ConcentracaoCarga[]; mes: stri
       <h2 className="text-base font-semibold text-white">
         Concentração da Movimentação por Tipo de Carga
       </h2>
-      <p className="text-sm text-gray-500 mb-1">
+      <p className="text-xs text-gray-500 mt-0.5 mb-1">
         Participação das 4 maiores instalações (CR4) em cada natureza de carga
       </p>
 
       {/* Cards de insight — análise estrutural */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
         <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
-          <p className="text-[10px] text-[#0099d8] font-medium uppercase tracking-wider mb-1.5">
+          <p className="text-[10px] text-[#00a652] font-medium uppercase tracking-wider mb-1.5">
             Tese Central
           </p>
           <p className="text-sm text-gray-500 leading-snug">
-            A concentração é <strong className="text-[#0099d8]">setorial, não sistêmica</strong>. O risco mora no petróleo e, em menor grau, no contêiner — não na tonelagem total.
+            A concentração é <strong className="text-[#00a652]">setorial, não sistêmica</strong>. O risco mora no petróleo e, em menor grau, no contêiner — não na tonelagem total.
           </p>
         </div>
         <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
@@ -1604,18 +1690,74 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
     { key: 'centroOeste' as const, label: 'Centro-Oeste', color: '#D1D5DB', strokeWidth: 1.5, fillOpacity: 0.10 },
   ];
 
+  // ========== EXTRAIR VALORES DINÂMICOS ==========
+  const pt2010 = data.find(d => d.ano === '2010');
+  const pt2019 = data.find(d => d.ano === '2019');
+  const ptAtual = data[data.length - 1];
+
+  const shareSudeste2010 = pt2010?.sudeste.toFixed(0) ?? '—';
+  const shareSudeste2019 = pt2019?.sudeste.toFixed(0) ?? '—';
+  const shareArcoNorte2010 = pt2010?.arcoNorte.toFixed(1) ?? '—';
+  const shareArcoNorte2019 = pt2019?.arcoNorte.toFixed(1) ?? '—';
+  const shareSudesteAtual = ptAtual?.sudeste.toFixed(0) ?? '—';
+  const shareArcoNorteAtual = ptAtual?.arcoNorte.toFixed(1) ?? '—';
+  // ================================================
+
   return (
     <div className="w-full">
       <h2 className="text-base font-semibold text-white">
         Deslocamento Regional da Movimentação Portuária
       </h2>
-      <p className="text-sm text-[var(--muted)] mb-1 opacity-80">
+      <p className="text-xs text-gray-500 mt-0.5 mb-1">
         Participação de cada região no total nacional movimentado — 2010 a 2025
       </p>
-      <p className="text-xs text-[var(--muted)] mb-6 opacity-50">
-        O Sudeste perdeu share para o Arco Norte entre 2010–2019, mas o avanço estagnou desde então.
-        A faixa sombreada marca o período de platô.
-      </p>
+
+      {/* Cards de insight — análise estrutural */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+        {/* Card 1 — A Migração Real */}
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#3B82F6] font-medium uppercase tracking-wider mb-1.5">
+            A Migração Real
+          </p>
+          <p className="text-sm text-gray-200 leading-snug">
+            O deslocamento é <strong className="text-[#3B82F6]">factual, não retórico</strong>.
+            Entre 2010 e 2019, o Sudeste caiu de{' '}
+            <strong className="text-[#3B82F6]">~{shareSudeste2010}% para ~{shareSudeste2019}%</strong>,
+            enquanto o Arco Norte subiu de{' '}
+            <strong className="text-[#3B82F6]">~{shareArcoNorte2010}% para ~{shareArcoNorte2019}%</strong>.
+            A mudança do eixo logístico está nos dados.
+          </p>
+        </div>
+
+        {/* Card 2 — O Platô */}
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#d4922a] font-medium uppercase tracking-wider mb-1.5">
+            O Platô — 6 Anos de Estagnação
+          </p>
+          <p className="text-sm text-gray-200 leading-snug">
+            Desde <strong className="text-[#d4922a]">~2019, o avanço estagnou</strong>.
+            O Sudeste estabilizou em torno de{' '}
+            <strong className="text-[#d4922a]">~{shareSudesteAtual}%</strong> e o Arco Norte oscila em{' '}
+            <strong className="text-[#d4922a]">~{shareArcoNorteAtual}%</strong> sem novo salto.
+            São seis anos de platô — a leitura menos óbvia e a mais valiosa:{' '}
+            <strong className="text-[#d4922a]">o deslocamento perdeu fôlego</strong>.
+          </p>
+        </div>
+
+        {/* Card 3 — O Gargalo (vermelho: alerta crítico) */}
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#A0153E] font-medium uppercase tracking-wider mb-1.5">
+            A Inferência do IBI — Infraestrutura de Acesso
+          </p>
+          <p className="text-sm text-gray-200 leading-snug">
+            O platô <strong className="text-white">não é saturação de demanda</strong> — é{' '}
+            <strong className="text-[#A0153E]">falta de infraestrutura de acesso</strong>.
+            Gargalos concretos (hidrovias não concedidas, calado insuficiente na Barra Norte,
+            acesso rodoviário precário) travaram o avanço.{' '}
+            <strong className="text-[#A0153E]">Destravá-los é o que reativaria a curva</strong>.
+          </p>
+        </div>
+      </div>
 
       <div style={{ height: 340 }}>
         <ResponsiveContainer width="100%" height="100%">
@@ -1724,6 +1866,201 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
         <strong>Arco Norte</strong> = recorte logístico (AP, PA, AM, RO, RR, MA, TO), não a região Norte do IBGE.
         <strong> Paranaguá</strong> corrigido para PR/Sul. Base: top-50 ANTAQ (~91% do nacional).
         O gráfico mede <em>participação</em> (share), não volume absoluto.
+      </p>
+    </div>
+  );
+}
+
+function TooltipSazonal({ active, payload, label }: any) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-[#111827] border border-white/10 rounded-xl p-3 shadow-xl text-sm min-w-[200px]">
+      <p className="font-semibold text-white text-sm mb-2">{label}</p>
+      <div className="space-y-1">
+        {payload.map((p: any, i: number) => (
+          <div key={i} className="flex items-center gap-2 text-xs">
+            <span
+              className="w-2.5 h-2.5 rounded-full shrink-0"
+              style={{ backgroundColor: p.color }}
+            />
+            <span className="text-gray-400">{p.name}</span>
+            <span className="text-white font-medium ml-auto">
+              {p.value > 0 ? '+' : ''}{p.value?.toFixed(1)}%
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
+  const cores: Record<string, { cor: string; largura: number; destaque?: boolean }> = {
+    granel_solido:    { cor: '#F59E0B', largura: 3, destaque: true },  // âmbar — mais sazonal
+    conteinerizada:   { cor: '#3B82F6', largura: 1.5 },
+    granel_liquido:   { cor: '#6B7280', largura: 1.5 },
+    carga_geral:      { cor: '#9CA3AF', largura: 1.5 },
+  };
+
+  const naturezas = [
+    { key: 'granel_solido' as const, label: 'Granel Sólido' },
+    { key: 'conteinerizada' as const, label: 'Conteinerizada' },
+    { key: 'granel_liquido' as const, label: 'Granel Líquido' },
+    { key: 'carga_geral' as const, label: 'Carga Geral' },
+  ];
+
+  // ========== VALORES DINÂMICOS DOS CARDS ==========
+  const gsPontos = data.map(d => ({ mes: d.mes, val: d.granel_solido }));
+  const picoGS = gsPontos.reduce((a, b) => a.val > b.val ? a : b);
+  const valeGS = gsPontos.reduce((a, b) => a.val < b.val ? a : b);
+  const amplitudeGS = (picoGS.val - valeGS.val).toFixed(1);
+
+  const ctzPontos = data.map(d => ({ mes: d.mes, val: d.conteinerizada }));
+  const picoCTZ = ctzPontos.reduce((a, b) => a.val > b.val ? a : b);
+
+  const cgPontos = data.map(d => ({ mes: d.mes, val: d.carga_geral }));
+  const picoCG = cgPontos.reduce((a, b) => a.val > b.val ? a : b);
+  // ==================================================
+
+  return (
+    <div className="w-full">
+      {/* Título e subtítulo */}
+      <div>
+        <h2 className="text-base font-semibold text-white">
+          Assinatura Sazonal da Movimentação por Tipo de Carga
+        </h2>
+        <p className="text-xs text-gray-500 mt-0.5 mb-1">
+          Desvio de cada mês em relação à média anual — componente sazonal isolado
+        </p>
+      </div>
+
+      {/* ========== CARDS DE INSIGHT — E3 ========== */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+        {/* Card 1 — A Janela de Safra (âmbar: atenção) */}
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#d4922a] font-medium uppercase tracking-wider mb-1.5">
+            A Janela de Safra — Granel Sólido
+          </p>
+          <p className="text-sm text-gray-200 leading-snug">
+            O granel sólido é a carga mais sazonal com amplitude de{' '}
+            <strong className="text-[#d4922a]">{amplitudeGS}%</strong>.
+            Pico em <strong className="text-[#d4922a]">{picoGS.mes} ({picoGS.val > 0 ? '+' : ''}{picoGS.val.toFixed(1)}%)</strong>,
+            vale em <strong className="text-[#d4922a]">{valeGS.mes} ({valeGS.val.toFixed(1)}%)</strong>.
+            O platô de safra <strong className="text-[#d4922a]">maio–outubro</strong> concentra a
+            movimentação — planejamento de infraestrutura deve antecipar esse ciclo.
+          </p>
+        </div>
+
+        {/* Card 2 — Picos Escalonados (azul: neutro/informativo) */}
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#0099d8] font-medium uppercase tracking-wider mb-1.5">
+            Picos Escalonados
+          </p>
+          <p className="text-sm text-gray-200 leading-snug">
+            As cargas não competem pelo mesmo mês: granel sólido em{' '}
+            <strong className="text-[#0099d8]">{picoGS.mes}</strong>,
+            contêiner em <strong className="text-[#0099d8]">{picoCTZ.mes}</strong>,
+            carga geral em <strong className="text-[#0099d8]">{picoCG.mes}</strong>.
+            Fevereiro é o vale comum de todas. Isso{' '}
+            <strong className="text-[#0099d8]">distribui a pressão</strong> sobre a infraestrutura
+            de acesso ao longo do ano.
+          </p>
+        </div>
+
+        {/* Card 3 — O Calendário de Investimento (verde: favorável) */}
+        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] text-[#00a652] font-medium uppercase tracking-wider mb-1.5">
+            O Calendário de Investimento do IBI
+          </p>
+          <p className="text-sm text-gray-200 leading-snug">
+            <strong className="text-[#00a652]">Antecipar a infraestrutura à carga</strong> é o que evita
+            gargalo. O calendário de investimento em hidrovias, calado e acesso rodoviário deve mirar{' '}
+            <strong className="text-[#00a652]">janeiro–março</strong> (antes da safra de grãos) e{' '}
+            <strong className="text-[#00a652]">agosto–setembro</strong> (antes do pico de contêiner).
+            A sazonalidade é previsível — o investimento deve ser também.
+          </p>
+        </div>
+      </div>
+      {/* ============================================= */}
+
+      <div className="h-[340px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data} margin={{ top: 10, right: 30, bottom: 10, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" />
+
+            <XAxis
+              dataKey="mes"
+              tick={{ fill: '#6b7280', fontSize: 11 }}
+              axisLine={{ stroke: '#ffffff10' }}
+              tickLine={false}
+            />
+            <YAxis
+              tick={{ fill: '#6b7280', fontSize: 11 }}
+              axisLine={{ stroke: '#ffffff10' }}
+              tickLine={false}
+              tickFormatter={(v: number) => `${v > 0 ? '+' : ''}${v}%`}
+            />
+
+            {/* Linha de referência: média (0%) */}
+            <ReferenceLine y={0} stroke="#ffffff" strokeOpacity={0.2} strokeDasharray="6 3" />
+
+            {/* Faixa sombreada: safra de grãos (maio-outubro) */}
+            <ReferenceArea
+              x1="Mai"
+              x2="Out"
+              fill="#F59E0B"
+              fillOpacity={0.05}
+            />
+            <ReferenceLine
+              x="Jul"
+              stroke="#F59E0B"
+              strokeOpacity={0.15}
+              strokeDasharray="4 4"
+              label={{ value: 'Janela de safra', fill: '#d4922a', fontSize: 10, position: 'insideTopRight' }}
+            />
+
+            <Tooltip content={<TooltipSazonal />} />
+
+            {/* Linhas por natureza */}
+            {naturezas.map(n => (
+              <Line
+                key={n.key}
+                type="monotone"
+                dataKey={n.key}
+                name={n.label}
+                stroke={cores[n.key].cor}
+                strokeWidth={cores[n.key].largura}
+                dot={{ r: cores[n.key].destaque ? 4 : 2.5, fill: cores[n.key].cor, stroke: '#111827', strokeWidth: 1.5 }}
+                activeDot={{ r: cores[n.key].destaque ? 6 : 4, strokeWidth: 2 }}
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Legenda */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-gray-500">
+        {naturezas.map(n => (
+          <span key={n.key} className="flex items-center gap-1.5">
+            <span
+              className="w-3 rounded-full inline-block"
+              style={{
+                backgroundColor: cores[n.key].cor,
+                height: cores[n.key].largura > 2 ? '3px' : '2px',
+              }}
+            />
+            {n.label}
+            {cores[n.key].destaque && <span className="text-[10px] opacity-60">(mais sazonal)</span>}
+          </span>
+        ))}
+      </div>
+
+      {/* Nota metodológica */}
+      <p className="mt-4 text-[10px] text-gray-600 leading-relaxed">
+        <strong>Decomposição STL</strong> (Seasonal-Trend decomposition using Loess) separa tendência,
+        sazonalidade e ruído. O desvio é relativo à média de cada natureza — não compara magnitudes
+        absolutas. Granel sólido = minério + soja + milho + fertilizantes (mistura, não commodity isolada).
+        Amplitude: GS 32% · CTZ 21% · GL 16% · CG 14%. Fonte: ANTAQ (2010–2026). Elaboração: Observatório IBI.
       </p>
     </div>
   );
