@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BackLink from "@/components/BackLink";
+import { title } from "process";
 
 export const metadata: Metadata = {
   title: "Portos — Observatório IBI",
@@ -27,6 +28,15 @@ const cards = [
     cta: "Ver a tendência",
     href: "/portos/ineditas/tendencia-cargas",
   },
+  {
+    eyebrow: "Análise inédita",
+    title: "Nova análise",
+    description:
+      "Uma nova visão sobre a movimentação dos portos",
+    meta: "Mensal · 2010–2026",
+    cta: "Ver análise",
+    href: "/portos/analises",
+  }
 ];
 
 export default function PortosLandingPage() {
