@@ -1,6 +1,6 @@
 # Backtest do IEE — vereditos consolidados
 
-> Gerado por `scripts/backtest/iee-final.ts` em 2026-07-31. NÃO editar à mão.
+> Gerado por `scripts/backtest/iee-final.ts` em 2026-08-07. NÃO editar à mão.
 > Pré-registro v8: sha256 `ff1c1467a2000a30…` congelado em 2026-06-27.
 
 ## Episódios-âncora
