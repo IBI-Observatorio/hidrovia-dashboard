@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-08-05T13:56:26.619Z",
+  "gerado_em": "2026-08-12T12:57:18.435Z",
   "serie": [
     {
       "data_referencia": "2026-06-08",
@@ -508,6 +508,63 @@
       },
       "cmr_atual": 16.13,
       "cota_ita_atual": 12.88,
+      "contexto": {
+        "sgb_numero": null,
+        "enso_status": null,
+        "enso_data_emissao": null
+      }
+    },
+    {
+      "data_referencia": "2026-08-12",
+      "ao_vivo": true,
+      "z_2026": {
+        "MAO": -0.23,
+        "BOR": 1.64,
+        "MNC": 0.02,
+        "ITA": -0.07
+      },
+      "analogos_top": [
+        {
+          "ano": 2020,
+          "peso": 0.15
+        },
+        {
+          "ano": 2018,
+          "peso": 0.149
+        },
+        {
+          "ano": 2019,
+          "peso": 0.144
+        },
+        {
+          "ano": 2017,
+          "peso": 0.135
+        }
+      ],
+      "projecao_cmr_2026": {
+        "central": 9.57,
+        "pessimista": 8.07,
+        "otimista": 10.49
+      },
+      "ita_min_central": 3.83,
+      "cruzamento_cmr11": {
+        "central": "2026-10-03",
+        "cedo": "2026-09-18",
+        "tarde": "2026-10-19"
+      },
+      "restricao": {
+        "p10": "2026-09-18",
+        "p50": "2026-10-03",
+        "p90": "2026-10-19",
+        "prob": 1,
+        "ano_analogo": 2020
+      },
+      "esperanca_ponderada": {
+        "delta_pct_2025": -0.012,
+        "teu": 538319
+      },
+      "cmr_atual": 15.73,
+      "cota_ita_atual": 12.03,
       "contexto": {
         "sgb_numero": null,
         "enso_status": null,
