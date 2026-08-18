@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import {
-  ResponsiveContainer, AreaChart, Area, LineChart, Line,
+  ResponsiveContainer, AreaChart, Area, LineChart, Line, Label,
   XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ReferenceArea,
 } from 'recharts';
 import { useDashboardData } from '@/components/antaq/useDashboardData';
@@ -38,6 +38,7 @@ interface PontoRegional {
   arcoNorte: number;
   sul: number;
   nordeste: number;
+  norte: number;
   centroOeste: number;
   semRegiao: number;
 }
@@ -69,21 +70,50 @@ const NATUREZAS: { key: NaturezaKey; label: string; short: string; color: string
   { key: 'conteinerizada', label: 'Conteinerizada', short: 'CTZ', color: '#8B5CF6' },
 ];
 
-const UF_ARCO_NORTE = new Set(['AP', 'PA', 'AM', 'RO', 'RR', 'MA', 'TO']);
+const FALLBACK_UF: Record<string, string> = {
+  'Paranaguá': 'PR',
+  'Rio Grande': 'RS',
+};
+
+const UF_NORTE = new Set(['AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO']);
+const UF_NORDESTE = new Set(['AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE']);
 const UF_SUDESTE = new Set(['ES', 'MG', 'RJ', 'SP']);
 const UF_SUL = new Set(['PR', 'RS', 'SC']);
-const UF_NORDESTE = new Set(['AL', 'BA', 'CE', 'PB', 'PE', 'PI', 'RN', 'SE']);
 const UF_CENTRO_OESTE = new Set(['DF', 'GO', 'MS', 'MT']);
 
-function classificarRegiao(uf: string | null): keyof Omit<PontoRegional, 'ano' | 'semRegiao'> {
+function classificarRegiao(uf: string | null): keyof Omit<PontoRegional, 'ano' | 'arcoNorte' | 'semRegiao'> {
   if (!uf) return 'semRegiao' as any;
-  if (UF_ARCO_NORTE.has(uf)) return 'arcoNorte';
+  if (UF_NORTE.has(uf)) return 'norte';
+  if (UF_NORDESTE.has(uf)) return 'nordeste';
   if (UF_SUDESTE.has(uf)) return 'sudeste';
   if (UF_SUL.has(uf)) return 'sul';
-  if (UF_NORDESTE.has(uf)) return 'nordeste';
   if (UF_CENTRO_OESTE.has(uf)) return 'centroOeste';
   return 'semRegiao' as any;
 }
+
+const PORTOS_ARCO_NORTE = new Set<string>([
+  'Terminal Marítimo de Ponta da Madeira',
+  'Itaqui',
+  'Suape',
+  'Terminal Aquaviário de Madre de Deus',
+  'Terminal Portuário do Pecém',
+  'Terminal Portuário Privativo da Alumar',
+  'Terminal Portuário Cotegipe',
+  'Salvador',
+  'Aratu',
+  'Fortaleza',
+  'Santarém',
+  'Terminal Vila do Conde',
+  'Terminal Trombetas',
+  'Terminal Graneleiro Hermasa',
+  'Terminal Portuário Graneleiro de Barcarena',
+  'Vila do Conde',
+  'Porto Chibatão',
+  'Terminal Fluvial de Juruti',
+  'Hidrovias do Brasil Miritituba',
+  'Terminal Portuário Novo Remanso',
+  'Itacal- Itacoatiara Calcários Ltda',
+]);
 
 // ── main component ─────────────────────────────────────────────────────────────
 
@@ -111,12 +141,13 @@ export default function NovaAnalisePage() {
     for (const ano of anos) {
       const totaisPorRegiao = {
         sudeste: 0,
-        arcoNorte: 0,
         sul: 0,
+        norte: 0,
         nordeste: 0,
         centroOeste: 0,
         semRegiao: 0,
       };
+      let arcoNorte = 0;
 
       for (const p of portos) {
         let totalPortoAno = 0;
@@ -132,12 +163,18 @@ export default function NovaAnalisePage() {
         if (totalPortoAno <= 0) continue;
 
         let uf = p.uf;
-        if (!uf && p.porto.toLowerCase().includes('paranaguá')) {
-          uf = 'PR';
+        if (!uf) {
+          const nome = p.porto.toLowerCase();
+          if (nome.includes('paranaguá')) uf = 'PR';
+          else if (nome.includes('rio grande')) uf = 'RS';
         }
 
         const regiao = classificarRegiao(uf);
         totaisPorRegiao[regiao] += totalPortoAno;
+
+        if (PORTOS_ARCO_NORTE.has(p.porto)) {
+          arcoNorte += totalPortoAno;
+        }
       }
 
       const totalNacional = Object.values(totaisPorRegiao).reduce((s, v) => s + v, 0);
@@ -145,8 +182,9 @@ export default function NovaAnalisePage() {
 
       resultado.push({
         ano,
+        norte: (totaisPorRegiao.norte / totalNacional) * 100,
         sudeste: (totaisPorRegiao.sudeste / totalNacional) * 100,
-        arcoNorte: (totaisPorRegiao.arcoNorte / totalNacional) * 100,
+        arcoNorte: (arcoNorte / totalNacional) * 100,
         sul: (totaisPorRegiao.sul / totalNacional) * 100,
         nordeste: (totaisPorRegiao.nordeste / totalNacional) * 100,
         centroOeste: (totaisPorRegiao.centroOeste / totalNacional) * 100,
@@ -220,34 +258,73 @@ export default function NovaAnalisePage() {
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-gray-500 flex-wrap">
           <span>Portos</span>
           <span className="text-gray-700">/</span>
-          <span className="text-gray-400">Análises</span>
+          <span className="text-gray-400">Estrutura, Sazonalidade e Vulnerabilidade</span>
         </div>
         <h1 className="text-[clamp(1.5rem,2.8vw,2.1rem)] font-bold leading-tight">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-ibi-green to-ibi-blue">
-            Nova Análise
+            Movimentação no Arco Norte — Estrutura, Sazonalidade e Vulnerabilidade
           </span>
         </h1>
-      </div>
-
-      <div className="flex items-start gap-3 bg-orange-400 border border-white/5 rounded-xl justify-center p-4 ">
-        <span className="text-base ">🚧</span>
-        <div className="space-y-1">
-          <h3>Nova análise está em construção</h3>
+        <p className="text-gray-400 text-sm max-w-2xl">
+          Deslocamento regional, assinatura sazonal e efeito da seca sobre a navegação interior — 2010–2025
+        </p>
+        <div className="max-w-[1300px] space-y-3">
+          <p className="text-[15px] leading-relaxed text-gray-400">
+            O eixo logístico do Brasil mudou. Entre 2010 e 2019, o Arco Norte ganhou 11 pontos percentuais de participação — e depois <strong className="text-white font-semibold">parou</strong>. Seis anos de platô sem novo salto.
+          </p>
+          <p className="text-[15px] leading-relaxed text-gray-400">
+            O que travou o avanço? A sazonalidade da carga que define o eixo piorou de patamar. E em 2024, a seca expôs a vulnerabilidade: o corredor de grãos do Tapajós colapsou, enquanto a bauxita resiliu e a ferrovia manteve o fluxo. A diferença não é a carga — é a <strong className="text-white font-semibold">infraestrutura de acesso</strong>.
+          </p>
+          <p className="text-[15px] leading-relaxed text-gray-400">
+            As análises abaixo contam essa história em dados. <strong className="text-white font-semibold">Navegue pelos gráficos</strong>, compare os padrões e tire suas próprias conclusões sobre onde o deslocamento regional perdeu fôlego — e o que seria preciso para reativá-lo.
+          </p>
         </div>
-        <span className="text-base ">🚧</span>
       </div>
 
-      {serieRegional.length > 0 && (
-        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
-          <DeslocamentoRegionalChart data={serieRegional} />
-        </section>
-      )}
+      {/* ── Hero cards (2 primeiros) ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <a href="#sec-e2" className="group bg-azul-medio border border-white/[0.08] rounded-xl p-5 hover:border-white/15 hover:bg-[#151520] transition-all cursor-pointer">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-[#3B82F6] mb-2.5">Análise 1</div>
+          <h3 className="text-base font-semibold text-white mb-2">Deslocamento Regional</h3>
+          <p className="text-xs leading-relaxed text-gray-500">
+            O Sudeste caiu de <span className="text-[#3B82F6] font-semibold">~58% para ~52%</span>, enquanto o Arco Norte subiu de <span className="text-[#3B82F6] font-semibold">~28% para ~39%</span>. Mas desde 2019 o avanço estagnou. O deslocamento perdeu fôlego.
+          </p>
+          <div className="mt-3 text-[10px] text-gray-600 flex items-center gap-1">Ver análise <span className="group-hover:translate-y-0.5 transition-transform">↓</span></div>
+        </a>
+        <a href="#sec-v1" className="group bg-azul-medio border border-white/[0.08] rounded-xl p-5 hover:border-white/15 hover:bg-[#151520] transition-all cursor-pointer">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-[#00a652] mb-2.5">Análise 2</div>
+          <h3 className="text-base font-semibold text-white mb-2">Assinatura Sazonal</h3>
+          <p className="text-xs leading-relaxed text-gray-500">
+            O granel sólido pica em <span className="text-[#00a652] font-semibold">agosto (+13.2%)</span>, vale em janeiro. A amplitude saltou de <span className="text-[#00a652] font-semibold">25% para 38%</span> em 2019 — a pressão de capacidade no pico está piorando.
+          </p>
+          <div className="mt-3 text-[10px] text-gray-600 flex items-center gap-1">Ver análise <span className="group-hover:translate-y-0.5 transition-transform">↓</span></div>
+        </a>
+      </div>
 
-      {assinaturaSazonal.length > 0 && (
-        <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
-          <AssinaturaSazonalChart data={assinaturaSazonal} />
-        </section>
-      )}
+      <section id="sec-e2" className="... scroll-mt-5">
+        {serieRegional.length > 0 && (  
+            <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
+              <DeslocamentoRegionalChart data={serieRegional} />
+            </section>
+        )}
+      </section>
+      <section id="sec-v1" className="... scroll-mt-5">
+        {assinaturaSazonal.length > 0 && (  
+          <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
+            <AssinaturaSazonalChart data={assinaturaSazonal} />  
+          </section>
+        )}
+      </section>
+      {/* ── Fechamento: Conclusões do IBI ── */}
+      <section className="bg-azul-medio border border-white/10 rounded-xl p-5">
+        <h5 className="text-base font-semibold text-white mb-2">
+          Conclusões do IBI
+        </h5>
+        <p className="text-sm text-gray-300 leading-snug">
+          O Arco Norte cresceu até <strong className="text-white">2019</strong>, mas desde então estagnou. A sazonalidade da carga que define o eixo piorou de patamar no mesmo período. Em 2024, o corredor de grãos do Tapajós colapsou na seca (<strong className="text-white">−87% em Miritituba</strong>), enquanto a bauxita resiliu e a ferrovia manteve o fluxo. A conexão é clara: <strong className="text-white">a infraestrutura de acesso</strong> (hidrovias não concedidas, calado insuficiente, acesso rodoviário precário) travou o avanço. O deslocamento regional perdeu fôlego não porque a demanda caiu, mas porque a <strong className="text-white">capacidade</strong> não acompanhou. Destravá-los é o que reativaria a curva.
+        </p>
+      </section>
+
     </main>
   );
 }
@@ -256,11 +333,12 @@ export default function NovaAnalisePage() {
 
 function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
   const regioes = [
-    { key: 'sudeste' as const, label: 'Sudeste', color: '#3B82F6', strokeWidth: 3, fillOpacity: 0.30 },
-    { key: 'arcoNorte' as const, label: 'Arco Norte', color: '#F59E0B', strokeWidth: 3, fillOpacity: 0.28 },
-    { key: 'sul' as const, label: 'Sul', color: '#6B7280', strokeWidth: 1.5, fillOpacity: 0.18 },
-    { key: 'nordeste' as const, label: 'Nordeste', color: '#9CA3AF', strokeWidth: 1.5, fillOpacity: 0.14 },
-    { key: 'centroOeste' as const, label: 'Centro-Oeste', color: '#D1D5DB', strokeWidth: 1.5, fillOpacity: 0.10 },
+    { key: 'sudeste' as const,     label: 'Sudeste',     color: '#2A78D6', strokeWidth: 3,   fillOpacity: 0.28, tracejado: false }, // COR_SUDESTE
+    { key: 'nordeste' as const,    label: 'Nordeste',    color: '#E39A00', strokeWidth: 2.6, fillOpacity: 0.22, tracejado: false }, // COR_NORDESTE
+    { key: 'norte' as const,       label: 'Norte',       color: '#12A594', strokeWidth: 2.4, fillOpacity: 0.20, tracejado: false }, // COR_NORTE
+    { key: 'sul' as const,         label: 'Sul',         color: '#A78BFA', strokeWidth: 2.2, fillOpacity: 0.16, tracejado: false }, // COR_SUL
+    { key: 'centroOeste' as const, label: 'Centro-Oeste',color: '#8A8880', strokeWidth: 1.6, fillOpacity: 0.10, tracejado: false }, // COR_CO
+    { key: 'arcoNorte' as const,   label: 'Arco Norte (Norte + Nordeste)', color: '#CBD5E1', strokeWidth: 2.4, fillOpacity: 0.06, tracejado: true }, // COR_ARCO — overlay
   ];
 
   const pt2010 = data.find(d => d.ano === '2010');
@@ -274,6 +352,29 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
   const shareSudesteAtual = ptAtual?.sudeste.toFixed(0) ?? '—';
   const shareArcoNorteAtual = ptAtual?.arcoNorte.toFixed(1) ?? '—';
 
+  // New
+  const fmtPct = (v: number, casas = 1) =>
+    `${v.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas })}%`;
+
+  // ── cores dos KPIs — mesmas que já usamos no array `regioes` ──
+  const COR_SUDESTE = '#2A78D6';
+  const COR_ARCO = '#CBD5E1';
+  const COR_NORDESTE = '#E39A00';
+
+  // ── cálculos ──
+  const primeiro = data[0];
+  const ultimo = data[data.length - 1];
+  const pico = data.reduce((mx, d) => (d.arcoNorte > mx.arcoNorte ? d : mx), data[0]);
+
+  const deltaSudeste = ultimo.sudeste - primeiro.sudeste;
+  const deltaArco = ultimo.arcoNorte - primeiro.arcoNorte;
+  const recuoDoPico = ultimo.arcoNorte - pico.arcoNorte;
+  const pctNordesteNoArco = ultimo.norte + ultimo.nordeste > 0
+    ? (ultimo.nordeste / (ultimo.norte + ultimo.nordeste)) * 100
+    : 0;
+
+  const pp = (v: number) => `${v > 0 ? '+' : '−'}${Math.abs(v).toFixed(1).replace('.', ',')} p.p.`;
+  const ppAbs = (v: number) => `${Math.abs(v).toFixed(1).replace('.', ',')} p.p.`;
   return (
     <div className="w-full">
       <h2 className="text-base font-semibold text-white">
@@ -282,48 +383,27 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
       <p className="text-xs text-gray-500 mt-0.5 mb-1">
         Participação de cada região no total nacional movimentado — 2010 a 2025
       </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
-        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
-          <p className="text-[10px] text-[#3B82F6] font-medium uppercase tracking-wider mb-1.5">
-            A Migração Real
-          </p>
-          <p className="text-sm text-gray-200 leading-snug">
-            O deslocamento é <strong className="text-[#3B82F6]">factual, não retórico</strong>.
-            Entre 2010 e 2019, o Sudeste caiu de{' '}
-            <strong className="text-[#3B82F6]">~{shareSudeste2010}% para ~{shareSudeste2019}%</strong>,
-            enquanto o Arco Norte subiu de{' '}
-            <strong className="text-[#3B82F6]">~{shareArcoNorte2010}% para ~{shareArcoNorte2019}%</strong>.
-            A mudança do eixo logístico está nos dados.
-          </p>
-        </div>
-
-        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
-          <p className="text-[10px] text-[#d4922a] font-medium uppercase tracking-wider mb-1.5">
-            O Platô — 6 Anos de Estagnação
-          </p>
-          <p className="text-sm text-gray-200 leading-snug">
-            Desde <strong className="text-[#d4922a]">~2019, o avanço estagnou</strong>.
-            O Sudeste estabilizou em torno de{' '}
-            <strong className="text-[#d4922a]">~{shareSudesteAtual}%</strong> e o Arco Norte oscila em{' '}
-            <strong className="text-[#d4922a]">~{shareArcoNorteAtual}%</strong> sem novo salto.
-            São seis anos de platô — a leitura menos óbvia e a mais valiosa:{' '}
-            <strong className="text-[#d4922a]">o deslocamento perdeu fôlego</strong>.
-          </p>
-        </div>
-
-        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
-          <p className="text-[10px] text-[#A0153E] font-medium uppercase tracking-wider mb-1.5">
-            A Inferência do IBI — Infraestrutura de Acesso
-          </p>
-          <p className="text-sm text-gray-200 leading-snug">
-            O platô <strong className="text-white">não é saturação de demanda</strong> — é{' '}
-            <strong className="text-[#A0153E]">falta de infraestrutura de acesso</strong>.
-            Gargalos concretos (hidrovias não concedidas, calado insuficiente na Barra Norte,
-            acesso rodoviário precário) travaram o avanço.{' '}
-            <strong className="text-[#A0153E]">Destravá-los é o que reativaria a curva</strong>.
-          </p>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <KpiCard
+            label={`Sudeste em ${ultimo.ano}`}
+            value={fmtPct(ultimo.sudeste, 0)}
+            sub={`${fmtPct(primeiro.sudeste, 0)} em ${primeiro.ano} · ${pp(deltaSudeste)}`}
+            positive={deltaSudeste >= 0}
+            color={COR_SUDESTE}
+          />
+          <KpiCard
+            label={`Arco Norte em ${ultimo.ano}`}
+            value={fmtPct(ultimo.arcoNorte, 0)}
+            sub={`avançou ${ppAbs(deltaArco)} desde ${primeiro.ano}, mas recuou ${ppAbs(recuoDoPico)} do pico de ${fmtPct(pico.arcoNorte, 0)} em ${pico.ano}`}
+            positive={recuoDoPico >= 0}
+            color={COR_SUDESTE}
+          />
+          <KpiCard
+            label="Composição do Arco Norte"
+            value={`${Math.round(pctNordesteNoArco)}% Nordeste · ${Math.round(100 - pctNordesteNoArco)}% Norte`}
+            sub={`o arco é minério do Maranhão por ferrovia, não grão amazônico por barcaça`}
+            color={COR_SUDESTE}
+          />
       </div>
 
       <div style={{ height: 340 }}>
@@ -375,7 +455,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
                               style={{ backgroundColor: r.color }}
                             />
                             <span className="text-gray-400">{r.label}</span>
-                            <span className="text-white font-medium ml-auto tabular-nums">{valor.toFixed(1)}%</span>
+                            <span className="text-white font-medium ml-auto tabular-nums">{valor.toFixed(0)}%</span>
                           </div>
                         );
                       })}
@@ -401,6 +481,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
                 name={r.label}
                 stroke={r.color}
                 strokeWidth={r.strokeWidth}
+                strokeDasharray={r.tracejado ? '7 4' : undefined}
                 fill={`url(#fill-${r.key})`}
                 dot={{ r: r.strokeWidth >= 3 ? 3 : 2, strokeWidth: 0, fill: r.color, fillOpacity: 0.8 }}
                 activeDot={{ r: r.strokeWidth >= 3 ? 5 : 3, stroke: '#111827', strokeWidth: 2, fill: r.color }}
@@ -426,12 +507,65 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
           </span>
         ))}
       </div>
-
       <p className="mt-4 text-[11px] text-gray-600 leading-relaxed">
         <strong>Arco Norte</strong> = recorte logístico (AP, PA, AM, RO, RR, MA, TO), não a região Norte do IBGE.
         <strong> Paranaguá</strong> corrigido para PR/Sul. Base: top-50 ANTAQ (~91% do nacional).
         O gráfico mede <em>participação</em> (share), não volume absoluto.
       </p>
+      {/* Insight cards — neutros (branco) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            A Migração Real
+          </p>
+          <p className="text-sm text-gray-300 leading-snug">
+            O deslocamento é <strong className="text-white">factual, não retórico</strong>.
+            Entre 2010 e 2019, o Sudeste caiu de{' '}
+            <strong className="text-white">~{shareSudeste2010}% para ~{shareSudeste2019}%</strong>,
+            enquanto o Arco Norte subiu de{' '}
+            <strong className="text-white">~{shareArcoNorte2010}% para ~{shareArcoNorte2019}%</strong>.
+            A mudança do eixo logístico está nos dados.
+          </p>
+        </div>
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            O Platô — 6 Anos de Estagnação
+          </p>
+          <p className="text-sm text-gray-300 leading-snug">
+            Desde <strong className="text-white">~2019, o avanço estagnou</strong>.
+            O Sudeste estabilizou em torno de{' '}
+            <strong className="text-white">~{shareSudesteAtual}%</strong> e o Arco Norte oscila em{' '}
+            <strong className="text-white">~{shareArcoNorteAtual}%</strong> sem novo salto.
+            São seis anos de platô — a leitura menos óbvia e a mais valiosa:{' '}
+            <strong className="text-white">o deslocamento perdeu fôlego</strong>.
+          </p>
+        </div>
+      </div>
+      {/* Nota metodológica E2 */}
+      <Accordion title={<><span className="text-sm">📐</span> Nota metodológica: o denominador, e por que ele é confiável</>}>
+        <p><strong className="text-gray-400">Por que não usar o total nacional diretamente.</strong> O arquivo traz o total do país apenas <strong>por natureza de carga</strong> (nacional_por_natureza), sem quebra regional. Dividir o volume regional da base pelo total nacional produz um número exato, mas que responde a outra pergunta: &quot;quanto do país vem dos portos <strong>desta região que estão na base</strong>&quot;. Como cada região também tem terminais fora do top-50, esse valor é um <strong>piso</strong>, não a fatia da região. Para o Arco Norte em 2025, o piso é 29,53% — afirmação rigorosa e auditável, útil quando o texto precisar de um número conservador.</p>
+        <p><strong className="text-gray-400">E há um efeito temporal.</strong> A cobertura da base não é constante: era 83,97% em 2010 e é 88,44% em 2025. Usar o total nacional como denominador injetaria essa deriva dentro da tendência regional — a queda do Sudeste apareceria como 3,0 p.p. em vez de 6,3 p.p., não porque o Sudeste caiu menos, mas porque a base passou a cobrir mais.</p>
+        <p><strong className="text-gray-400">A validação.</strong> Calcular sobre a base equivale a supor que o volume ausente se distribui entre as regiões proporcionalmente ao observado. Essa suposição foi <strong>testada</strong>, e não apenas assumida. A cobertura da base é conhecida <strong>por natureza de carga</strong> e é bastante desigual — 87,7% no granel sólido, 91,7% no granel líquido, 95,6% no contêiner e apenas 64,4% na carga geral. Como cada região tem um mix de cargas próprio (o Norte é 85,6% granel sólido; o Sul, 30,2% contêiner), recalculou-se a participação de cada região escalando o volume de cada carga pelo fator de cobertura daquela carga.</p>
+        <p>O resultado:</p>
+        <ul className="list-disc ml-5 space-y-1">
+          <li>Sudeste: 52,04% (base) contra 51,93% (ajustado) — diferença de <strong>0,10 p.p.</strong></li>
+          <li>Nordeste: 25,08% contra 25,14% — 0,06 p.p.</li>
+          <li>Norte: 8,31% contra 8,35% — 0,04 p.p.</li>
+          <li>Sul: 14,12% contra 14,13% — praticamente nula.</li>
+          <li>Arco Norte: 33,39% (base) contra 33,49% (ajustado) — <strong>0,10 p.p.</strong></li>
+        </ul>
+        <p>A participação lida no gráfico é, na prática, <strong>uma boa estimativa da fatia nacional de cada região</strong>, e não apenas uma proporção interna da amostra. O desvio máximo é de 0,10 ponto percentual. O valor desse cálculo não foi trocar os números, e sim demonstrar que o método simples é seguro — o que transforma &quot;assumimos que dá na mesma&quot; em &quot;testamos, e dá na mesma dentro de 0,1 p.p.&quot;.</p>
+        <p><strong className="text-gray-400">O que o ajuste não resolve.</strong> Ele corrige o <strong>mix de cargas</strong>, não a <strong>geografia</strong>. Tanto o cálculo do gráfico quanto o ajustado supõem que os 162,3 Mt ausentes se dividem entre as regiões proporcionalmente ao observado. Se os terminais fora da base estivessem concentrados numa região — todos os pequenos terminais fluviais do Norte, por exemplo — os dois métodos errariam na mesma direção. O limite superior é conhecido: se <strong>todo</strong> o volume ausente fosse do Arco Norte, o arco chegaria a 41,1%. A faixa defensável, portanto, vai de 29,5% (piso exato) a 41,1% (teto), com 33,5% como melhor estimativa.</p>
+        <p><strong className="text-gray-400">Outras limitações:</strong></p>
+        <ul className="list-disc ml-5 space-y-1">
+          <li><strong>Composição da amostra muda ao longo do tempo:</strong> 38 portos reportavam em 2010 e 48 em 2024. Dez terminais entram na série depois de 2010 (Açu, Porto Sudeste, DP World Santos, Itapoá, Terminal Vila do Conde, Barcarena, Miritituba, Novo Remanso e Itacal). São aberturas reais de capacidade, não lacunas de reporte.</li>
+          <li><strong>Campos uf/regiao nulos:</strong> Paranaguá e Rio Grande vêm sem esses campos (juntos, ~6% da tonelagem). Corrigidos por fallback no código; sem ele o Sul ficaria subestimado em ~2,5 p.p.</li>
+          <li><strong>Campo vol12m_mt descartado:</strong> vinha desalinhado da série em 6 dos 48 portos (erro de junção); o módulo soma sempre a série.</li>
+          <li><strong>Cobertura do arco:</strong> a base contém instalações para 21 dos complexos que a ANTAQ classifica como Arco Norte. Complexos sem representação (Manaus, Porto Velho, Macapá, entre outros) não entram — o recorte é o arco <strong>presente na base</strong>.</li>
+          <li><strong>Participação, não volume:</strong> a queda do Sudeste é relativa; em toneladas absolutas o Sudeste seguiu crescendo no período.</li>
+          <li><strong>Ano incompleto:</strong> 2026 (jan–fev na base) é omitido das agregações anuais.</li>
+        </ul>
+      </Accordion>
     </div>
   );
 }
@@ -461,10 +595,10 @@ function TooltipSazonal({ active, payload, label }: any) {
 
 function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
   const cores: Record<string, { cor: string; largura: number; destaque?: boolean }> = {
-    granel_solido:    { cor: '#F59E0B', largura: 3, destaque: true },
-    conteinerizada:   { cor: '#3B82F6', largura: 1.5 },
-    granel_liquido:   { cor: '#6B7280', largura: 1.5 },
-    carga_geral:      { cor: '#9CA3AF', largura: 1.5 },
+    granel_solido:    { cor: '#0099d8', largura: 3, destaque: true },
+    conteinerizada:   { cor: '#D4922A', largura: 1.5 },
+    granel_liquido:   { cor: '#00a652', largura: 1.5 },
+    carga_geral:      { cor: '#8B5CF6', largura: 1.5 },
   };
 
   const naturezas = [
@@ -474,16 +608,27 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
     { key: 'carga_geral' as const, label: 'Carga Geral' },
   ];
 
-  const gsPontos = data.map(d => ({ mes: d.mes, val: d.granel_solido }));
-  const picoGS = gsPontos.reduce((a, b) => a.val > b.val ? a : b);
-  const valeGS = gsPontos.reduce((a, b) => a.val < b.val ? a : b);
-  const amplitudeGS = (picoGS.val - valeGS.val).toFixed(1);
+  function calcAmplitude(data: SazonalPonto[], key: NaturezaKey) {
+    const pontos = data.map(d => ({ mes: d.mes, val: d[key] }));
+    const pico = pontos.reduce((a, b) => (a.val > b.val ? a : b));
+    const vale = pontos.reduce((a, b) => (a.val < b.val ? a : b));
+    return { pico, vale, amplitude: pico.val - vale.val };
+  }
 
-  const ctzPontos = data.map(d => ({ mes: d.mes, val: d.conteinerizada }));
-  const picoCTZ = ctzPontos.reduce((a, b) => a.val > b.val ? a : b);
+  // dentro do componente:
+  const amp = {
+    granel_solido:  calcAmplitude(data, 'granel_solido'),
+    conteinerizada: calcAmplitude(data, 'conteinerizada'),
+    granel_liquido: calcAmplitude(data, 'granel_liquido'),
+    carga_geral:    calcAmplitude(data, 'carga_geral'),
+  };
 
-  const cgPontos = data.map(d => ({ mes: d.mes, val: d.carga_geral }));
-  const picoCG = cgPontos.reduce((a, b) => a.val > b.val ? a : b);
+  // mantém os nomes usados no resto do componente, agora vindos do helper
+  const picoGS = amp.granel_solido.pico;
+  const valeGS = amp.granel_solido.vale;
+  const amplitudeGS = amp.granel_solido.amplitude.toFixed(1);
+  const picoCTZ = amp.conteinerizada.pico;
+  const picoCG = amp.carga_geral.pico;
 
   return (
     <div className="w-full">
@@ -496,46 +641,44 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
         </p>
       </div>
 
+      {/* Insight cards — neutros (branco) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
-        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
-          <p className="text-[10px] text-[#d4922a] font-medium uppercase tracking-wider mb-1.5">
-            A Janela de Safra — Granel Sólido
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            O Pico da Safra
           </p>
-          <p className="text-sm text-gray-200 leading-snug">
-            O granel sólido é a carga mais sazonal com amplitude de{' '}
-            <strong className="text-[#d4922a]">{amplitudeGS}%</strong>.
-            Pico em <strong className="text-[#d4922a]">{picoGS.mes} ({picoGS.val > 0 ? '+' : ''}{picoGS.val.toFixed(1)}%)</strong>,
-            vale em <strong className="text-[#d4922a]">{valeGS.mes} ({valeGS.val.toFixed(1)}%)</strong>.
-            O platô de safra <strong className="text-[#d4922a]">maio–outubro</strong> concentra a
-            movimentação — planejamento de infraestrutura deve antecipar esse ciclo.
-          </p>
-        </div>
-
-        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
-          <p className="text-[10px] text-[#0099d8] font-medium uppercase tracking-wider mb-1.5">
-            Picos Escalonados
-          </p>
-          <p className="text-sm text-gray-200 leading-snug">
-            As cargas não competem pelo mesmo mês: granel sólido em{' '}
-            <strong className="text-[#0099d8]">{picoGS.mes}</strong>,
-            contêiner em <strong className="text-[#0099d8]">{picoCTZ.mes}</strong>,
-            carga geral em <strong className="text-[#0099d8]">{picoCG.mes}</strong>.
-            Fevereiro é o vale comum de todas. Isso{' '}
-            <strong className="text-[#0099d8]">distribui a pressão</strong> sobre a infraestrutura
-            de acesso ao longo do ano.
+          <p className="text-sm text-gray-300 leading-snug">
+            O granel sólido é o mais sazonal: pico em{' '}
+            <strong className="text-white">{picoGS.mes} ({picoGS.val > 0 ? '+' : ''}{picoGS.val.toFixed(1)}%)</strong>,
+            vale em <strong className="text-white">{valeGS.mes} ({valeGS.val.toFixed(1)}%)</strong>.
+            A assinatura da safra aparece, mas não como a literatura resume:
+            o pico agregado é em agosto, não em abril–maio, porque o minério
+            pouco sazonal compete com o milho safrinha no segundo semestre.
           </p>
         </div>
-
-        <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
-          <p className="text-[10px] text-[#00a652] font-medium uppercase tracking-wider mb-1.5">
-            O Calendário de Investimento do IBI
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            A Mudança de Patamar
           </p>
-          <p className="text-sm text-gray-200 leading-snug">
-            <strong className="text-[#00a652]">Antecipar a infraestrutura à carga</strong> é o que evita
-            gargalo. O calendário de investimento em hidrovias, calado e acesso rodoviário deve mirar{' '}
-            <strong className="text-[#00a652]">janeiro–março</strong> (antes da safra de grãos) e{' '}
-            <strong className="text-[#00a652]">agosto–setembro</strong> (antes do pico de contêiner).
-            A sazonalidade é previsível — o investimento deve ser também.
+          <p className="text-sm text-gray-300 leading-snug">
+            A amplitude sazonal do granel sólido saltou de{' '}
+            <strong className="text-white">25% para 38% em 2019</strong> —
+            um aumento de 50%. Sustentado por sete anos, é um degrau, não
+            subida gradual. O pior: a pressão de capacidade no pico{' '}
+            <strong className="text-white">está piorando</strong>.
+          </p>
+        </div>
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            A Pressão Escalonada
+          </p>
+          <p className="text-sm text-gray-300 leading-snug">
+            Os picos não coincidem: granel sólido em{' '}
+            <strong className="text-white">{picoGS.mes}</strong>,
+            contêiner em <strong className="text-white">{picoCTZ.mes}</strong>,
+            carga geral em <strong className="text-white">{picoCG.mes}</strong>.
+            O granel líquido é o menos sazonal (amplitude {amp.granel_liquido.amplitude.toFixed(1)}%).
+            A pressão sobre a infraestrutura se concentra no segundo semestre.
           </p>
         </div>
       </div>
@@ -558,21 +701,13 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
               tickFormatter={(v: number) => `${v > 0 ? '+' : ''}${v}%`}
             />
 
-            <ReferenceLine y={0} stroke="#ffffff" strokeOpacity={0.2} strokeDasharray="6 3" />
+            <ReferenceLine y={0} stroke="#ffffff" strokeOpacity={0.2} strokeDasharray="6 3">
+              <Label value=" " position="right" fill="#6b7280" fontSize={10} />
+            </ReferenceLine>
 
-            <ReferenceArea
-              x1="Mai"
-              x2="Out"
-              fill="#F59E0B"
-              fillOpacity={0.05}
-            />
-            <ReferenceLine
-              x="Jul"
-              stroke="#F59E0B"
-              strokeOpacity={0.15}
-              strokeDasharray="4 4"
-              label={{ value: 'Janela de safra', fill: '#d4922a', fontSize: 10, position: 'insideTopRight' }}
-            />
+            <ReferenceArea x1="Mai" x2="Out" fill="#0099d8" fillOpacity={0.05}>
+              <Label value="janela de safra (grãos)" position="insideBottom" fill="#6b7280" fontSize={10} dy={-4} />
+            </ReferenceArea>
 
             <Tooltip content={<TooltipSazonal />} />
 
@@ -612,12 +747,81 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
         <strong>Decomposição STL</strong> (Seasonal-Trend decomposition using Loess) separa tendência,
         sazonalidade e ruído. O desvio é relativo à média de cada natureza — não compara magnitudes
         absolutas. Granel sólido = minério + soja + milho + fertilizantes (mistura, não commodity isolada).
-        Amplitude: GS 32% · CTZ 21% · GL 16% · CG 14%. Fonte: ANTAQ (2010–2026). Elaboração: Observatório IBI.
+        Amplitude: GS {amp.granel_solido.amplitude.toFixed(1)}% ·{' '}
+        CTZ {amp.conteinerizada.amplitude.toFixed(1)}% ·{' '}
+        GL {amp.granel_liquido.amplitude.toFixed(1)}% ·{' '}
+        CG {amp.carga_geral.amplitude.toFixed(1)}%.
+        Fonte: ANTAQ (2010–2026). Elaboração: Observatório IBI.
       </p>
+      {/* Nota metodológica V1 */}
+      <Accordion title={<><span className="text-sm">📐</span> Nota metodológica e limitações</>}>
+        <p><strong className="text-gray-400">Série nacional — o V1 é imune aos problemas de amostra dos módulos E1 e E2.</strong> Verificou-se que o stl.json é construído sobre <strong>nacional_por_natureza</strong> (o país inteiro): o campo observado bate com a série nacional com desvio médio entre <strong>0,005% e 0,058%</strong> nas quatro naturezas. Portanto o V1 não é afetado pela deriva de cobertura da base de portos (que vai de 84,0% em 2010 a 88,4% em 2025) nem pela mudança de composição da amostra. Não há ressalva de &quot;top-50&quot; aplicável a este módulo.</p>
+        <p><strong className="text-gray-400">Somente anos completos.</strong> O ano parcial do snapshot (2026, com jan–fev) é <strong>excluído</strong> do cálculo. Se incluído, contribuiria com observações extras apenas para janeiro e fevereiro, enviesando esses meses em até 0,8 p.p. O componente detecta e descarta automaticamente qualquer ano sem doze meses.</p>
+        <p><strong className="text-gray-400">Agregação por natureza, não por produto.</strong> O granel sólido soma minério de ferro, soja, milho e fertilizantes. A assinatura reflete a <strong>mistura</strong>, não uma commodity isolada — a soja não pode ser separada do milho nesta série. Um recorte por produto exigiria dado adicional.</p>
+        <p><strong className="text-gray-400">Decomposição STL.</strong> O componente sazonal pode variar entre anos (ver a seção de insight acima); a figura usa a <strong>média por mês-do-ano</strong> para uma assinatura estável. Anos atípicos entram como <strong>resíduo</strong>, não como sazonalidade.</p>
+        <p><strong className="text-gray-400">Interpretação percentual.</strong> O desvio é <strong>relativo à média de cada natureza</strong>; o gráfico não compara magnitudes absolutas entre naturezas. Granel sólido move cerca de 55 Mt/mês; carga geral, cerca de 4,5 Mt/mês — a métrica percentual torna as quatro naturezas comparáveis apesar de volumes muito diferentes.</p>
+      </Accordion>
     </div>
   );
 }
 
+// ── Kpi component ────────────────────────────────────────────────────────
+export function KpiCard({
+  label,
+  value,
+  sub,
+  positive,
+  color,
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  positive?: boolean;
+  color: string;
+}) {
+  return (
+    <div className="bg-[#1a1a1a] border border-white/8 rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+      <p className="text-xs text-gray-500 leading-snug">{label}</p>
+      <p className="text-xl font-bold tracking-tight leading-tight" style={{ color }}>
+        {value}
+      </p>
+      {sub && (
+        <p
+          className={[
+            'text-xs leading-snug',
+            positive === true ? 'text-[#00a652]' : positive === false ? 'text-[#A0153E]' : 'text-gray-500',
+          ].join(' ')}
+        >
+          {sub}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ── Accordion component ────────────────────────────────────────────────────────
+
+function Accordion({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-4">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`w-full flex items-center justify-between bg-[#1a1a1a] border border-white/[0.06] rounded-lg px-4 py-3 text-[13px] text-gray-400 hover:bg-[#222] transition-all ${open ? 'rounded-b-none' : ''}`}
+      >
+        <span className="flex items-center gap-2">{title}</span>
+        <span className={`text-xs transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>▼</span>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 bg-[#1a1a1a] border border-t-0 border-white/[0.06] rounded-b-lg ${open ? 'max-h-[800px] p-4' : 'max-h-0 p-0'}`}
+      >
+        <div className="text-xs text-gray-500 leading-relaxed space-y-2">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+// ── loading and error component states ────────────────────────────────────────────────────────
 function LoadingState() {
   return (
     <div className="max-w-screen-xl mx-auto px-6 py-24 flex flex-col items-center gap-4">
