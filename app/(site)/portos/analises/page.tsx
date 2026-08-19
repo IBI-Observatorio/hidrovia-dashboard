@@ -966,7 +966,7 @@ function VulnerabilidadeCorredor({ data }: { data: Dataset }) {
                   <Tooltip
                     contentStyle={{ background: '#111827', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 11 }}
                     itemStyle={{ fontSize: 11 }}
-                    formatter={(value: number) => value?.toFixed(2) + ' Mt'}
+                    formatter={(value: any) => `${Number(value).toFixed(2)} Mt`}
                     labelFormatter={(label) => label}
                   />
                   {/* Águas baixas: Set-Dez */}
