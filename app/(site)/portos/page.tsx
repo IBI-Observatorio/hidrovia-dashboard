@@ -30,9 +30,9 @@ const cards = [
   },
   {
     eyebrow: "Análise inédita",
-    title: "Nova análise",
+    title: "Movimentação no Arco Norte — Estrutura, Sazonalidade e Vulnerabilidade",
     description:
-      "Uma nova visão sobre a movimentação dos portos",
+      "Deslocamento regional, assinatura sazonal e efeito da seca sobre a navegação interior",
     meta: "Mensal · 2010–2026",
     cta: "Ver análise",
     href: "/portos/analises",

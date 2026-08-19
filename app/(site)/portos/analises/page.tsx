@@ -282,7 +282,7 @@ export default function NovaAnalisePage() {
       </div>
 
       {/* ── Hero cards (2 primeiros) ── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <a href="#sec-e2" className="group bg-azul-medio border border-white/[0.08] rounded-xl p-5 hover:border-white/15 hover:bg-[#151520] transition-all cursor-pointer">
           <div className="text-[10px] font-semibold uppercase tracking-wider text-[#3B82F6] mb-2.5">Análise 1</div>
           <h3 className="text-base font-semibold text-white mb-2">Deslocamento Regional</h3>
@@ -299,8 +299,16 @@ export default function NovaAnalisePage() {
           </p>
           <div className="mt-3 text-[10px] text-gray-600 flex items-center gap-1">Ver análise <span className="group-hover:translate-y-0.5 transition-transform">↓</span></div>
         </a>
+        <a href="#sec-v2" className="group bg-azul-medio border border-white/[0.08] rounded-xl p-5 hover:border-white/15 hover:bg-[#151520] transition-all cursor-pointer">
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-[#E39A00] mb-2.5">Análise 3</div>
+          <h3 className="text-base font-semibold text-white mb-2">Vulnerabilidade do Corredor</h3>
+          <p className="text-xs leading-relaxed text-gray-500">
+            A seca de 2024 colapsou o corredor de grãos: <span className="text-[#E39A00] font-semibold">−87% em Miritituba</span>. Mas bauxita (Trombetas) e ferrovia (Itaqui) não colapsaram. A redundância multimodal sustenta.
+          </p>
+          <div className="mt-3 text-[10px] text-gray-600 flex items-center gap-1">Ver análise <span className="group-hover:translate-y-0.5 transition-transform">↓</span></div>
+        </a>
       </div>
-
+      {/* ── Seção e2: Deslocamento Regional ── */}
       <section id="sec-e2" className="... scroll-mt-5">
         {serieRegional.length > 0 && (  
             <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
@@ -308,12 +316,17 @@ export default function NovaAnalisePage() {
             </section>
         )}
       </section>
+      {/* ── Seção V1: Assinatura Sazonal ── */}
       <section id="sec-v1" className="... scroll-mt-5">
         {assinaturaSazonal.length > 0 && (  
           <section className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4">
             <AssinaturaSazonalChart data={assinaturaSazonal} />  
           </section>
         )}
+      </section>
+      {/* ── Seção V2: Vulnerabilidade do Corredor ── */}
+      <section id="sec-v2" className="bg-azul-medio border border-white/10 rounded-xl p-5 space-y-4 scroll-mt-5">
+        {data && <VulnerabilidadeCorredor data={data} />}
       </section>
       {/* ── Fechamento: Conclusões do IBI ── */}
       <section className="bg-azul-medio border border-white/10 rounded-xl p-5">
@@ -760,6 +773,248 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
         <p><strong className="text-gray-400">Agregação por natureza, não por produto.</strong> O granel sólido soma minério de ferro, soja, milho e fertilizantes. A assinatura reflete a <strong>mistura</strong>, não uma commodity isolada — a soja não pode ser separada do milho nesta série. Um recorte por produto exigiria dado adicional.</p>
         <p><strong className="text-gray-400">Decomposição STL.</strong> O componente sazonal pode variar entre anos (ver a seção de insight acima); a figura usa a <strong>média por mês-do-ano</strong> para uma assinatura estável. Anos atípicos entram como <strong>resíduo</strong>, não como sazonalidade.</p>
         <p><strong className="text-gray-400">Interpretação percentual.</strong> O desvio é <strong>relativo à média de cada natureza</strong>; o gráfico não compara magnitudes absolutas entre naturezas. Granel sólido move cerca de 55 Mt/mês; carga geral, cerca de 4,5 Mt/mês — a métrica percentual torna as quatro naturezas comparáveis apesar de volumes muito diferentes.</p>
+      </Accordion>
+    </div>
+  );
+}
+
+// ── V2: Vulnerabilidade do Corredor de Grãos Fluvial ─────────────────────────────
+
+interface V2TerminalConfig {
+  nome: string;           // nome no JSON
+  display: string;        // nome no card
+  subtitulo: string;      // linha 2
+  selo: 'colapso' | 'resiliu' | 'afetado';
+  piorMesEsperado: string;
+  piorValorEsperado: string;
+}
+
+const TERMinaIS_V2: V2TerminalConfig[] = [
+  { nome: 'Hidrovias do Brasil Miritituba',          display: 'Miritituba',          subtitulo: 'Tapajós · origem do corredor',         selo: 'colapso',  piorMesEsperado: 'Out',  piorValorEsperado: '−87%' },
+  { nome: 'Terminal Vila do Conde',                 display: 'Terminal Vila do Conde', subtitulo: 'Tapajós · 13,3 Mt/ano',              selo: 'colapso',  piorMesEsperado: 'Out',  piorValorEsperado: '−64%' },
+  { nome: 'Terminal Portuário Graneleiro de Barcarena', display: 'Barcarena',        subtitulo: 'Tapajós · recebe barcaças',            selo: 'colapso',  piorMesEsperado: 'Out',  piorValorEsperado: '−59%' },
+  { nome: 'Terminal Graneleiro Hermasa',              display: 'Hermasa (Itacoatiara)', subtitulo: 'Madeira · corredor alternativo',    selo: 'colapso',  piorMesEsperado: 'Set',  piorValorEsperado: '−53%' },
+  { nome: 'Terminal Trombetas',                     display: 'Trombetas',           subtitulo: 'Trombetas · bauxita',                 selo: 'resiliu',  piorMesEsperado: 'Out',  piorValorEsperado: '−28%' },
+  { nome: 'Itaqui',                                 display: 'Itaqui',              subtitulo: 'Oceânico · ferrovia',                 selo: 'resiliu',  piorMesEsperado: 'Out',  piorValorEsperado: '−2%' },
+];
+
+function VulnerabilidadeCorredor({ data }: { data: Dataset }) {
+  const mesesLabels = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+  // ── Processar dados para cada terminal ──
+  const dadosTerminais = useMemo(() => {
+    return TERMinaIS_V2.map(cfg => {
+      const porto = data.portos.find(p => p.porto === cfg.nome);
+      if (!porto) return null;
+
+      const serie = porto.naturezas?.granel_solido;
+      if (!serie || serie.length === 0) return null;
+
+      // Agrupar por ano e mês
+      const porAno: Record<string, Record<number, number>> = {};
+      for (const p of serie) {
+        const ano = p.data.slice(0, 4);
+        const mes = parseInt(p.data.slice(5, 7));
+        if (!porAno[ano]) porAno[ano] = {};
+        porAno[ano][mes] = (porAno[ano][mes] || 0) + p.mt;
+      }
+
+      // Janela: 2019-2024 (anos completos)
+      const anosCompletos = ['2019','2020','2021','2022','2023','2024'];
+      const dadosGrafico: Record<string, number[]> = {};
+      
+      for (const ano of anosCompletos) {
+        if (!porAno[ano]) continue;
+        const arr: number[] = [];
+        for (let m = 1; m <= 12; m++) {
+          arr.push(porAno[ano][m] || 0);
+        }
+        dadosGrafico[ano] = arr;
+      }
+
+      // Calcular mediana por mês (2019-2023)
+      const medianaPorMes: number[] = [];
+      for (let m = 0; m < 12; m++) {
+        const valores: number[] = [];
+        for (const ano of ['2019','2020','2021','2022','2023']) {
+          if (dadosGrafico[ano]) valores.push(dadosGrafico[ano][m]);
+        }
+        if (valores.length >= 3) {
+          valores.sort((a, b) => a - b);
+          const mid = Math.floor(valores.length / 2);
+          medianaPorMes[m] = valores.length % 2 === 0 ? (valores[mid-1] + valores[mid]) / 2 : valores[mid];
+        } else {
+          medianaPorMes[m] = 0;
+        }
+      }
+
+      // Calcular pior mês de 2024 na janela de águas baixas (Set-Dez)
+      let piorDesvio = 0;
+      let piorMesIdx = -1;
+      for (let m = 8; m <= 11; m++) { // Set=8, Out=9, Nov=10, Dez=11
+        if (dadosGrafico['2024'] && medianaPorMes[m] > 0) {
+          const desvio = ((dadosGrafico['2024'][m] - medianaPorMes[m]) / medianaPorMes[m]) * 100;
+          if (desvio < piorDesvio) {
+            piorDesvio = desvio;
+            piorMesIdx = m;
+            
+          }
+        }
+      }
+      const corDestaque = cfg.selo === 'colapso' ? '#E39A00' : '#00a652';
+
+      return {
+        ...cfg,
+        dadosGrafico,
+        medianaPorMes,
+        piorDesvio,
+        corDestaque,
+        piorMes: piorMesIdx >= 0 ? mesesLabels[piorMesIdx] : null,
+        
+      };
+    }).filter(Boolean);
+  }, [data]);
+
+  // Dados para gráficos (formato recharts)
+  const chartData = useMemo(() => {
+    return dadosTerminais.map(dt => {
+      const data = [];
+      for (let m = 0; m < 12; m++) {
+        const point: any = { mes: mesesLabels[m] };
+        for (const ano of ['2019','2020','2021','2022','2023','2024']) {
+          if (dt!.dadosGrafico[ano]) {
+            point[`ano${ano}`] = dt!.dadosGrafico[ano][m];
+          }
+        }
+        data.push(point);
+      }
+      return { ...dt!, data };
+    });
+  }, [dadosTerminais]);
+
+  const COR_ANOS_COMUNS = ['#555','#666','#777','#888','#999'];
+  const COR_SECA = '#ef4444';
+
+  return (
+    <div className="w-full">
+      <h2 className="text-base font-semibold text-white">Vulnerabilidade do Corredor de Grãos Fluvial</h2>
+      <p className="text-xs text-gray-500 mt-0.5 mb-4">
+        Efeito da seca de 2024 sobre terminais do Norte — sobreposição de 2019–2024
+      </p>
+
+      {/* Insight cards — neutros (branco) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            O Colapso
+          </p>
+          <p className="text-sm text-gray-300 leading-snug">
+            A seca de 2024 <strong className="text-white">colapsou o corredor de grãos</strong>.
+            Nos quatro terminais, 2024 fura o envelope entre setembro e novembro,
+            com quedas de <strong className="text-white">53% a 87%</strong> no pior mês.
+            Miritituba, na origem do Tapajós, foi o mais atingido.
+            A assinatura de um <strong className="text-white">corredor inteiro parando</strong>.
+          </p>
+        </div>
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            A Contraprova
+          </p>
+          <p className="text-sm text-gray-300 leading-snug">
+            Mas não é &quot;todo fluvial sofre&quot;. Trombetas, igualmente fluvial,
+            <strong className="text-white"> não colapsou</strong>: o pior mês ficou em
+            <strong className="text-white"> −28%</strong>, dentro da variação normal.
+            A diferença não é ser fluvial — é <strong className="text-white">a bacia e a carga</strong>.
+            Bauxita em fluxo constante vs. grãos em surto de safra.
+          </p>
+        </div>
+        <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
+            A Redundância
+          </p>
+          <p className="text-sm text-gray-300 leading-snug">
+            Itaqui, oceânico e alimentado por ferrovia, praticamente não registrou
+            desvio (<strong className="text-white">−2%</strong>). O trilho não
+            compartilha a vulnerabilidade do rio. Sustenta o caso da
+            <strong className="text-white"> redundância multimodal</strong>:
+            quando o rio trava, a ferrovia mantém.
+          </p>
+        </div>
+      </div>
+
+      {/* Mini charts grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {chartData.map((terminal, idx) => (
+          <div key={terminal.nome} className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-3">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-semibold text-white">{terminal.display}</span>
+              <span className={`text-[9px] font-semibold px-2 py-0.5 rounded uppercase ${
+                terminal.selo === 'colapso' ? 'bg-[#A0153E]/20 text-[#A0153E]' :
+                terminal.selo === 'afetado' ? 'bg-[#D4922A]/20 text-[#D4922A]' :
+                'bg-[#00a652]/15 text-[#00a652]'
+              }`}>
+                {terminal.selo === 'colapso' ? 'Colapso' : terminal.selo === 'afetado' ? 'Afetado' : 'Resiliu'}
+              </span>
+            </div>
+            <p className="text-[10px] text-gray-500 mb-2">{terminal.subtitulo}</p>
+            <div className="h-[180px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={terminal.data} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" vertical={false} />
+                  <XAxis dataKey="mes" tick={{ fill: '#6b7280', fontSize: 9 }} axisLine={false} tickLine={false} />
+                  <YAxis hide domain={['auto', 'auto']} />
+                  <Tooltip
+                    contentStyle={{ background: '#111827', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 11 }}
+                    itemStyle={{ fontSize: 11 }}
+                    formatter={(value: any) => `${Number(value).toFixed(2)} Mt`}
+                    labelFormatter={(label) => label}
+                  />
+                  {/* Águas baixas: Set-Dez */}
+                  <ReferenceArea x1="Set" x2="Dez" fill="#D4922A" fillOpacity={0.06} />
+                  {/* Anos comuns */}
+                  {['2019','2020','2021','2022','2023'].map((ano, i) => (
+                    <Line
+                      key={ano}
+                      type="monotone"
+                      dataKey={`ano${ano}`}
+                      stroke={COR_ANOS_COMUNS[i]}
+                      strokeWidth={1.5}
+                      dot={false}
+                      activeDot={{ r: 3 }}
+                    />
+                  ))}
+                  {/* 2024 seca */}
+                  <Line
+                    type="monotone"
+                    dataKey="ano2024"
+                    stroke={terminal.corDestaque}
+                    strokeWidth={2.5}
+                    dot={{ r: 3, fill: COR_SECA, stroke: '#111827', strokeWidth: 1 }}
+                    activeDot={{ r: 5, strokeWidth: 2 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="text-[10px] text-gray-500 mt-2 text-center">
+              Pior mês: <span className="font-semibold text-white">{terminal.piorMes || '—'}</span>
+              {' '}{terminal.piorDesvio < 0 ? (
+                <span className="font-semibold text-[#A0153E]">{terminal.piorDesvio.toFixed(0)}%</span>
+              ) : (
+                <span className="font-semibold text-[#00a652]">+{terminal.piorDesvio.toFixed(0)}%</span>
+              )} vs. mediana
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Nota metodológica V2 */}
+      <Accordion title={<><span className="text-sm">📐</span> Como identificamos o efeito da seca</>}>
+        <p><strong className="text-gray-400">Comparar mês com mês:</strong> 2024 é comparado com os mesmos meses de 2019–2023, nunca contra a média do ano. Isso separa a sazonalidade normal da anomalia climática.</p>
+        <p><strong className="text-gray-400">Janela de águas baixas:</strong> a avaliação é restrita a <strong>setembro–dezembro</strong>. Fora dessa janela, um vale pode ser apenas sazonalidade normal. O Terminal Fluvial de Juruti, por exemplo, tem pior mês em março — que não é seca.</p>
+        <p><strong className="text-gray-400">Mínimo de 3 anos:</strong> terminais com menos de 3 anos de histórico exibem &quot;dados insuficientes&quot;. O Terminal Portuário Novo Remanso (série desde 2023) foi excluído por este critério.</p>
+        <p><strong className="text-gray-400">Janela de 6 anos:</strong> usam-se 2019–2024, não a série toda. A amplitude sazonal do granel sólido mudou de patamar em 2019 (de ~25% para ~38%). Ampliar para trás compararia 2024 contra anos de regime sazonal estruturalmente diferente.</p>
+        <p><strong className="text-gray-400">Selo automático:</strong> &quot;colapso&quot; (−50% ou mais), &quot;afetado&quot; (−35% ou mais), &quot;normal&quot; (acima de −35%). O selo é calculado, não escrito à mão — se a seca de outro ano for mais severa, o selo acompanha.</p>
+        <p><strong className="text-gray-400">Exclusão de Santarém:</strong> o maior terminal fluvial do Norte (18,1 Mt/ano) foi excluído. Setembro de 2024 ficou <strong>61% acima</strong> da mediana — aparentemente absorveu o choque. Mantê-lo como &quot;afetado&quot; seria enganoso.</p>
       </Accordion>
     </div>
   );
