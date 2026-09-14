@@ -268,42 +268,36 @@ export default function NovaAnalisePage() {
         <p className="text-gray-400 text-sm max-w-2xl">
           Deslocamento regional, assinatura sazonal e efeito da seca sobre a navegação interior — 2010–2025
         </p>
-        <div className="max-w-[1300px] space-y-3">
-          <p className="text-[15px] leading-relaxed text-gray-400">
-            O eixo logístico do Brasil mudou. Entre 2010 e 2019, o Arco Norte ganhou 11 pontos percentuais de participação — e depois <strong className="text-white font-semibold">parou</strong>. Seis anos de platô sem novo salto.
-          </p>
-          <p className="text-[15px] leading-relaxed text-gray-400">
-            O que travou o avanço? A sazonalidade da carga que define o eixo piorou de patamar. E em 2024, a seca expôs a vulnerabilidade: o corredor de grãos do Tapajós colapsou, enquanto a bauxita resiliu e a ferrovia manteve o fluxo. A diferença não é a carga — é a <strong className="text-white font-semibold">infraestrutura de acesso</strong>.
-          </p>
-          <p className="text-[15px] leading-relaxed text-gray-400">
-            As análises abaixo contam essa história em dados. <strong className="text-white font-semibold">Navegue pelos gráficos</strong>, compare os padrões e tire suas próprias conclusões sobre onde o deslocamento regional perdeu fôlego — e o que seria preciso para reativá-lo.
-          </p>
-        </div>
+              <div className="max-w-[1200px] space-y-3">
+        <p className="text-[15px] leading-relaxed text-gray-400">
+          O eixo logístico de exportação brasileiro está em transformação. Historicamente concentrado no Sul e Sudeste, o escoamento de cargas tem se deslocado para os portos do Norte e Nordeste (Arco Norte). Este painel analisa a evolução desse deslocamento, os gargalos gerados pela sazonalidade das safras e a vulnerabilidade da navegação interior frente a eventos climáticos. Para garantir a precisão da análise, adotamos as referências de volume e produtividade da base de dados da ANTAQ como alicerce de todos os indicadores apresentados a seguir.
+        </p>
+      </div>
       </div>
 
-      {/* ── Hero cards (2 primeiros) ── */}
+           {/* ── Hero cards (3) ── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <a href="#sec-e2" className="group bg-azul-medio border border-white/[0.08] rounded-xl p-5 hover:border-white/15 hover:bg-[#151520] transition-all cursor-pointer">
           <div className="text-[10px] font-semibold uppercase tracking-wider text-[#3B82F6] mb-2.5">Análise 1</div>
-          <h3 className="text-base font-semibold text-white mb-2">Deslocamento Regional</h3>
+          <h3 className="text-base font-semibold text-white mb-2">A Migração de Cargas e o Platô Atual</h3>
           <p className="text-xs leading-relaxed text-gray-500">
-            O Sudeste caiu de <span className="text-[#3B82F6] font-semibold">~58% para ~52%</span>, enquanto o Arco Norte subiu de <span className="text-[#3B82F6] font-semibold">~28% para ~39%</span>. Mas desde 2019 o avanço estagnou. O deslocamento perdeu fôlego.
+            A participação do Sudeste no total de cargas movimentadas no país caiu de <span className="text-[#3B82F6] font-semibold">~58% para ~52%</span>, enquanto o Arco Norte subiu de <span className="text-[#3B82F6] font-semibold">~28% para ~39%</span>. Mas desde 2019 o avanço estagnou. O deslocamento perdeu fôlego.
           </p>
           <div className="mt-3 text-[10px] text-gray-600 flex items-center gap-1">Ver análise <span className="group-hover:translate-y-0.5 transition-transform">↓</span></div>
         </a>
         <a href="#sec-v1" className="group bg-azul-medio border border-white/[0.08] rounded-xl p-5 hover:border-white/15 hover:bg-[#151520] transition-all cursor-pointer">
           <div className="text-[10px] font-semibold uppercase tracking-wider text-[#00a652] mb-2.5">Análise 2</div>
-          <h3 className="text-base font-semibold text-white mb-2">Assinatura Sazonal</h3>
+          <h3 className="text-base font-semibold text-white mb-2">O Gargalo Sazonal no Segundo Semestre</h3>
           <p className="text-xs leading-relaxed text-gray-500">
-            O granel sólido pica em <span className="text-[#00a652] font-semibold">agosto (+13.2%)</span>, vale em janeiro. A amplitude saltou de <span className="text-[#00a652] font-semibold">25% para 38%</span> em 2019 — a pressão de capacidade no pico está piorando.
+            A movimentação de granel sólido atinge seu pico em <span className="text-[#00a652] font-semibold">agosto</span>, operando <span className="text-[#00a652] font-semibold">13,2% acima da média mensal do ano</span>. A amplitude da sazonalidade saltou de 25% para 38% em 2019 — a pressão de capacidade no pico está piorando.
           </p>
           <div className="mt-3 text-[10px] text-gray-600 flex items-center gap-1">Ver análise <span className="group-hover:translate-y-0.5 transition-transform">↓</span></div>
         </a>
         <a href="#sec-v2" className="group bg-azul-medio border border-white/[0.08] rounded-xl p-5 hover:border-white/15 hover:bg-[#151520] transition-all cursor-pointer">
           <div className="text-[10px] font-semibold uppercase tracking-wider text-[#E39A00] mb-2.5">Análise 3</div>
-          <h3 className="text-base font-semibold text-white mb-2">Vulnerabilidade do Corredor</h3>
+          <h3 className="text-base font-semibold text-white mb-2">O Impacto da Seca e a Resiliência Multimodal</h3>
           <p className="text-xs leading-relaxed text-gray-500">
-            A seca de 2024 colapsou o corredor de grãos: <span className="text-[#E39A00] font-semibold">−87% em Miritituba</span>. Mas bauxita (Trombetas) e ferrovia (Itaqui) não colapsaram. A redundância multimodal sustenta.
+            A seca de 2024 provocou uma <span className="text-[#E39A00] font-semibold">redução de 87%</span> no volume movimentado em Miritituba em comparação à mediana histórica do mesmo mês. Mas bauxita (Trombetas) e ferrovia (Itaqui) se mantiveram resilientes. A redundância multimodal sustenta.
           </p>
           <div className="mt-3 text-[10px] text-gray-600 flex items-center gap-1">Ver análise <span className="group-hover:translate-y-0.5 transition-transform">↓</span></div>
         </a>
@@ -330,11 +324,11 @@ export default function NovaAnalisePage() {
       </section>
       {/* ── Fechamento: Conclusões do IBI ── */}
       <section className="bg-azul-medio border border-white/10 rounded-xl p-5">
-        <h5 className="text-base font-semibold text-white mb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
           Conclusões do IBI
-        </h5>
+        </p>
         <p className="text-sm text-gray-300 leading-snug">
-          O Arco Norte cresceu até <strong className="text-white">2019</strong>, mas desde então estagnou. A sazonalidade da carga que define o eixo piorou de patamar no mesmo período. Em 2024, o corredor de grãos do Tapajós colapsou na seca (<strong className="text-white">−87% em Miritituba</strong>), enquanto a bauxita resiliu e a ferrovia manteve o fluxo. A conexão é clara: <strong className="text-white">a infraestrutura de acesso</strong> (hidrovias não concedidas, calado insuficiente, acesso rodoviário precário) travou o avanço. O deslocamento regional perdeu fôlego não porque a demanda caiu, mas porque a <strong className="text-white">capacidade</strong> não acompanhou. Destravá-los é o que reativaria a curva.
+          O Arco Norte cresceu até <strong className="text-white">2019</strong>, mas desde então estagnou. A sazonalidade da carga que define o eixo piorou de patamar no mesmo período. Em 2024, o corredor de grãos do Tapajós colapsou na seca (<strong className="text-white">−87% em Miritituba</strong>), enquanto o fluxo de bauxita se manteve resiliente e a ferrovia preservou o fluxo. A conexão é clara: <strong className="text-white">a infraestrutura de acesso</strong> (hidrovias não concedidas, calado insuficiente, acesso rodoviário precário) travou o avanço. O deslocamento regional perdeu fôlego não porque a demanda caiu, mas porque a <strong className="text-white">capacidade</strong> não acompanhou. Destravá-los é o que reativaria a curva.
         </p>
       </section>
 
@@ -391,7 +385,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
   return (
     <div className="w-full">
       <h2 className="text-base font-semibold text-white">
-        Deslocamento Regional da Movimentação Portuária
+        A Migração de Cargas e o Platô Atual
       </h2>
       <p className="text-xs text-gray-500 mt-0.5 mb-1">
         Participação de cada região no total nacional movimentado — 2010 a 2025
@@ -525,7 +519,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
         <strong> Paranaguá</strong> corrigido para PR/Sul. Base: top-50 ANTAQ (~91% do nacional).
         O gráfico mede <em>participação</em> (share), não volume absoluto.
       </p>
-      {/* Insight cards — neutros (branco) */}
+            {/* Insight cards — E2 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
         <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
           <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
@@ -533,7 +527,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
           </p>
           <p className="text-sm text-gray-300 leading-snug">
             O deslocamento é <strong className="text-white">factual, não retórico</strong>.
-            Entre 2010 e 2019, o Sudeste caiu de{' '}
+            Entre 2010 e 2019, a participação do Sudeste no total nacional caiu de{' '}
             <strong className="text-white">~{shareSudeste2010}% para ~{shareSudeste2019}%</strong>,
             enquanto o Arco Norte subiu de{' '}
             <strong className="text-white">~{shareArcoNorte2010}% para ~{shareArcoNorte2019}%</strong>.
@@ -554,7 +548,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
           </p>
         </div>
       </div>
-      {/* Nota metodológica E2 */}
+      {/* Nota metodológica E2 
       <Accordion title={<><span className="text-sm">📐</span> Nota metodológica: o denominador, e por que ele é confiável</>}>
         <p><strong className="text-gray-400">Por que não usar o total nacional diretamente.</strong> O arquivo traz o total do país apenas <strong>por natureza de carga</strong> (nacional_por_natureza), sem quebra regional. Dividir o volume regional da base pelo total nacional produz um número exato, mas que responde a outra pergunta: &quot;quanto do país vem dos portos <strong>desta região que estão na base</strong>&quot;. Como cada região também tem terminais fora do top-50, esse valor é um <strong>piso</strong>, não a fatia da região. Para o Arco Norte em 2025, o piso é 29,53% — afirmação rigorosa e auditável, útil quando o texto precisar de um número conservador.</p>
         <p><strong className="text-gray-400">E há um efeito temporal.</strong> A cobertura da base não é constante: era 83,97% em 2010 e é 88,44% em 2025. Usar o total nacional como denominador injetaria essa deriva dentro da tendência regional — a queda do Sudeste apareceria como 3,0 p.p. em vez de 6,3 p.p., não porque o Sudeste caiu menos, mas porque a base passou a cobrir mais.</p>
@@ -579,6 +573,7 @@ function DeslocamentoRegionalChart({ data }: { data: PontoRegional[] }) {
           <li><strong>Ano incompleto:</strong> 2026 (jan–fev na base) é omitido das agregações anuais.</li>
         </ul>
       </Accordion>
+      */}
     </div>
   );
 }
@@ -647,25 +642,24 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
     <div className="w-full">
       <div>
         <h2 className="text-base font-semibold text-white">
-          Assinatura Sazonal da Movimentação por Tipo de Carga
+          O Gargalo Sazonal no Segundo Semestre
         </h2>
         <p className="text-xs text-gray-500 mt-0.5 mb-1">
           Desvio de cada mês em relação à média anual — componente sazonal isolado
         </p>
       </div>
 
-      {/* Insight cards — neutros (branco) */}
+            {/* Insight cards — V1 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
         <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
           <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
             O Pico da Safra
           </p>
           <p className="text-sm text-gray-300 leading-snug">
-            O granel sólido é o mais sazonal: pico em{' '}
+            A movimentação de granel sólido atinge seu pico em{' '}
             <strong className="text-white">{picoGS.mes} ({picoGS.val > 0 ? '+' : ''}{picoGS.val.toFixed(1)}%)</strong>,
-            vale em <strong className="text-white">{valeGS.mes} ({valeGS.val.toFixed(1)}%)</strong>.
-            A assinatura da safra aparece, mas não como a literatura resume:
-            o pico agregado é em agosto, não em abril–maio, porque o minério
+            operando <strong className="text-white">{valeGS.val.toFixed(1)}%</strong> abaixo da média em {valeGS.mes}.
+            O pico agregado é em agosto, não em abril–maio, porque o minério
             pouco sazonal compete com o milho safrinha no segundo semestre.
           </p>
         </div>
@@ -766,7 +760,7 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
         CG {amp.carga_geral.amplitude.toFixed(1)}%.
         Fonte: ANTAQ (2010–2026). Elaboração: Observatório IBI.
       </p>
-      {/* Nota metodológica V1 */}
+      {/* Nota metodológica V1 
       <Accordion title={<><span className="text-sm">📐</span> Nota metodológica e limitações</>}>
         <p><strong className="text-gray-400">Série nacional — o V1 é imune aos problemas de amostra dos módulos E1 e E2.</strong> Verificou-se que o stl.json é construído sobre <strong>nacional_por_natureza</strong> (o país inteiro): o campo observado bate com a série nacional com desvio médio entre <strong>0,005% e 0,058%</strong> nas quatro naturezas. Portanto o V1 não é afetado pela deriva de cobertura da base de portos (que vai de 84,0% em 2010 a 88,4% em 2025) nem pela mudança de composição da amostra. Não há ressalva de &quot;top-50&quot; aplicável a este módulo.</p>
         <p><strong className="text-gray-400">Somente anos completos.</strong> O ano parcial do snapshot (2026, com jan–fev) é <strong>excluído</strong> do cálculo. Se incluído, contribuiria com observações extras apenas para janeiro e fevereiro, enviesando esses meses em até 0,8 p.p. O componente detecta e descarta automaticamente qualquer ano sem doze meses.</p>
@@ -774,6 +768,7 @@ function AssinaturaSazonalChart({ data }: { data: SazonalPonto[] }) {
         <p><strong className="text-gray-400">Decomposição STL.</strong> O componente sazonal pode variar entre anos (ver a seção de insight acima); a figura usa a <strong>média por mês-do-ano</strong> para uma assinatura estável. Anos atípicos entram como <strong>resíduo</strong>, não como sazonalidade.</p>
         <p><strong className="text-gray-400">Interpretação percentual.</strong> O desvio é <strong>relativo à média de cada natureza</strong>; o gráfico não compara magnitudes absolutas entre naturezas. Granel sólido move cerca de 55 Mt/mês; carga geral, cerca de 4,5 Mt/mês — a métrica percentual torna as quatro naturezas comparáveis apesar de volumes muito diferentes.</p>
       </Accordion>
+      */}
     </div>
   );
 }
@@ -897,12 +892,12 @@ function VulnerabilidadeCorredor({ data }: { data: Dataset }) {
 
   return (
     <div className="w-full">
-      <h2 className="text-base font-semibold text-white">Vulnerabilidade do Corredor de Grãos Fluvial</h2>
+      <h2 className="text-base font-semibold text-white">O Impacto da Seca e a Resiliência Multimodal</h2>
       <p className="text-xs text-gray-500 mt-0.5 mb-4">
         Efeito da seca de 2024 sobre terminais do Norte — sobreposição de 2019–2024
       </p>
 
-      {/* Insight cards — neutros (branco) */}
+            {/* Insight cards — V2 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
         <div className="bg-[#1a1a1a] border border-white/[0.06] rounded-xl p-4 space-y-2 hover:border-white/15 transition-colors">
           <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1.5">
@@ -910,7 +905,7 @@ function VulnerabilidadeCorredor({ data }: { data: Dataset }) {
           </p>
           <p className="text-sm text-gray-300 leading-snug">
             A seca de 2024 <strong className="text-white">colapsou o corredor de grãos</strong>.
-            Nos quatro terminais, 2024 fura o envelope entre setembro e novembro,
+            Nos quatro terminais, 2024 ultrapassa o limite da variação histórica normal entre setembro e novembro,
             com quedas de <strong className="text-white">53% a 87%</strong> no pior mês.
             Miritituba, na origem do Tapajós, foi o mais atingido.
             A assinatura de um <strong className="text-white">corredor inteiro parando</strong>.
@@ -934,7 +929,9 @@ function VulnerabilidadeCorredor({ data }: { data: Dataset }) {
           </p>
           <p className="text-sm text-gray-300 leading-snug">
             Itaqui, oceânico e alimentado por ferrovia, praticamente não registrou
-            desvio (<strong className="text-white">−2%</strong>). O trilho não
+            desvio (<strong className="text-white">−2%</strong>).  A soja chega por
+            <strong className="text-white"> ferrovia</strong> (Ferrovia Norte-Sul e Corredor
+            Leste-Oeste). O trilho não
             compartilha a vulnerabilidade do rio. Sustenta o caso da
             <strong className="text-white"> redundância multimodal</strong>:
             quando o rio trava, a ferrovia mantém.
@@ -1007,7 +1004,7 @@ function VulnerabilidadeCorredor({ data }: { data: Dataset }) {
         ))}
       </div>
 
-      {/* Nota metodológica V2 */}
+      {/* Nota metodológica V2 
       <Accordion title={<><span className="text-sm">📐</span> Como identificamos o efeito da seca</>}>
         <p><strong className="text-gray-400">Comparar mês com mês:</strong> 2024 é comparado com os mesmos meses de 2019–2023, nunca contra a média do ano. Isso separa a sazonalidade normal da anomalia climática.</p>
         <p><strong className="text-gray-400">Janela de águas baixas:</strong> a avaliação é restrita a <strong>setembro–dezembro</strong>. Fora dessa janela, um vale pode ser apenas sazonalidade normal. O Terminal Fluvial de Juruti, por exemplo, tem pior mês em março — que não é seca.</p>
@@ -1016,6 +1013,7 @@ function VulnerabilidadeCorredor({ data }: { data: Dataset }) {
         <p><strong className="text-gray-400">Selo automático:</strong> &quot;colapso&quot; (−50% ou mais), &quot;afetado&quot; (−35% ou mais), &quot;normal&quot; (acima de −35%). O selo é calculado, não escrito à mão — se a seca de outro ano for mais severa, o selo acompanha.</p>
         <p><strong className="text-gray-400">Exclusão de Santarém:</strong> o maior terminal fluvial do Norte (18,1 Mt/ano) foi excluído. Setembro de 2024 ficou <strong>61% acima</strong> da mediana — aparentemente absorveu o choque. Mantê-lo como &quot;afetado&quot; seria enganoso.</p>
       </Accordion>
+      */}
     </div>
   );
 }
