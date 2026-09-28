@@ -6,7 +6,7 @@
   "arquivo": "Plano-Nacional-de-Logistica-2050-Relatorio-Completo-1a-Edicao-Agosto-2026.pdf",
   "sha256": "012874e077c59629705f5215a9370f41d625f9d1cb9430246f1812baf9d40558"
  },
- "gerado_em": "2026-09-27",
+ "gerado_em": "2026-09-28",
  "categorias": {
   "EXP": {
    "rotulo": "Problemas de cargas para exportação",
@@ -4765,6 +4765,16 @@
      "chave": "OPP-8",
      "nivel": "Alto",
      "descricao": "Contribui para o desenvolvimento da exploração de lítio no Vale do Jequitinhonha"
+    },
+    {
+     "chave": "PSAT-1",
+     "nivel": "Alto",
+     "descricao": "Alivia a saturação rodoviária nos trajetos de curta distância"
+    },
+    {
+     "chave": "PSAT-2",
+     "nivel": "Muito alto",
+     "descricao": "Alivia a saturação rodoviária nos trajetos de média distância"
     }
    ],
    "qtd_extraida": 14
@@ -9792,6 +9802,21 @@
      "chave": "OPR-6",
      "nivel": "Alto",
      "descricao": "Contribui para o crescimento econômico do Amazonas devido à redução de custos na conexão com o Pará"
+    },
+    {
+     "chave": "PEXC-1",
+     "nivel": "Muito alto",
+     "descricao": "Reduz o isolamento de comunidades na região norte"
+    },
+    {
+     "chave": "PEXC-4",
+     "nivel": "Muito alto",
+     "descricao": "Aumenta a integração regional hidroviária"
+    },
+    {
+     "chave": "PEXC-5",
+     "nivel": "Muito alto",
+     "descricao": "Aumenta a conexão entre cidades menores e centralidades regionais"
     }
    ],
    "qtd_extraida": 10

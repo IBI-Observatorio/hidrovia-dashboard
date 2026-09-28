@@ -87,12 +87,12 @@ export const PNL_COPY = {
       {
         rotulo: "Checagem contra o próprio plano",
         texto:
-          "A extração só é aceita se reproduz os totais que o plano declara: 112 objetivos por categoria e a quantidade de intervenções de cada ficha. A única divergência (eixo R007) é do próprio documento e está registrada.",
+          "A extração só é aceita se reproduz os totais que o plano declara: 112 objetivos por categoria e a quantidade de intervenções de cada ficha. Duas inconsistências do próprio documento estão registradas: o eixo R007 lista 25 intervenções e declara 24; e a ficha A004 põe dois objetivos abrangentes (acesso aos portos e custo logístico da sociobiodiversidade) sob o bloco de oportunidades — aqui contados como abrangentes.",
       },
       {
         rotulo: "Sem número inventado",
         texto:
-          "O PNL 2050 não traz valores em reais. O Observatório não estima custos de eixos: degraus e órfãos são contagens do que o plano e os registros públicos publicaram.",
+          "O texto do PNL 2050 não traz valores de investimento em reais. O Observatório não estima custos de eixos: degraus e órfãos são contagens do que o plano e os registros públicos publicaram.",
       },
     ],
   },

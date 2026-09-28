@@ -45,8 +45,8 @@ CATEGORIAS = {
 
 # Cabeçalhos de categoria como aparecem nas fichas de eixo (ordem importa: mais longo antes).
 CABECALHOS = [
-    (r"Problemas (?:específicos|abrangentes) do transporte de passageiros: saturação", "PSAT"),
-    (r"Problemas específicos do transporte de passageiros: exclusão e acessibilidade", "PEXC"),
+    (r"Problemas (?:(?:específicos|abrangentes) )?do transporte de passageiros: saturação", "PSAT"),
+    (r"Problemas (?:específicos )?do transporte de passageiros: exclusão e acessibilidade", "PEXC"),
     (r"Problemas específicos do transporte de cargas para exportação", "EXP"),
     (r"Problemas específicos do transporte de cargas para o mercado doméstico", "DOM"),
     (r"Problemas específicos do transporte de cargas para abastecimento interno", "ABA"),
@@ -247,8 +247,10 @@ def extrai_contribuicoes(txt: str) -> list[dict]:
     for padrao, cat in CABECALHOS:
         for m in re.finditer(padrao, txt):
             marcas.append((m.start(), m.end(), cat))
-    marcas.sort()
-    # remove cabeçalhos contidos em outro (ex.: 'Problemas abrangentes do transporte' dentro de '... de passageiros: saturação')
+    # no mesmo início, o cabeçalho mais longo vence: 'Problemas abrangentes do transporte'
+    # é prefixo de 'Problemas abrangentes do transporte de passageiros: saturação'
+    # (grafia do próprio PDF em uma ficha).
+    marcas.sort(key=lambda mk: (mk[0], -mk[1]))
     filtradas = []
     for mk in marcas:
         if filtradas and mk[0] < filtradas[-1][1]:
@@ -295,8 +297,10 @@ def main() -> None:
             "intervencoes": intervencoes, "objetivos": [],
         })
 
-    # A extração de texto do PDF às vezes intercala colunas: um item pode cair sob o
-    # cabeçalho errado. A descrição de cada objetivo é padronizada entre fichas, então
+    # Um item pode cair sob o cabeçalho errado — por intercalação na extração de texto
+    # ou por erro do próprio PDF (ficha A004, pág. 369: "13 Melhora o acesso aos
+    # portos" e "15 Reduz o custo logístico para a sociobiodiversidade" aparecem no
+    # bloco de Oportunidades, que só vai até 8; são ABR-13 e ABR-15). A descrição de cada objetivo é padronizada entre fichas, então
     # a atribuição (categoria, id) mais frequente por descrição prevalece.
     votos: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
     for c in todas_contrib:

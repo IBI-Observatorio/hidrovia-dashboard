@@ -36,8 +36,9 @@ Categorias de objetivo (chave usada no código):
 
 IDs de empreendimento: `1xxx` rodovia · `2xxx` ferrovia · `3xxx` hidrovia · `4xxx` porto.
 
-Fato editorial conferido: **o relatório não contém nenhum valor em R$** (busca
-por "R$" no texto integral: 0 ocorrências).
+Fato editorial: **o texto do relatório não contém nenhum valor em R$** (busca por
+"R$" no texto extraído do PDF: 0 ocorrências). Gráficos e mapas em imagem não
+foram varridos.
 
 ## 3. Escada de aderência (unidade = empreendimento, ID do PNL)
 
@@ -88,10 +89,11 @@ Se não passar, não vai ao ar.
 | **2** | Escada preenchida: aquaviário + Arco Norte (A001–A004, I001, I003, I004) + 15 fichas do Livro-Razão | PPA/LOA, licenciamento, PPI |
 | **3** | Escore de risco de travar (pré-registrado + backtest) | fase 2 |
 
-## 8. Achados preliminares (a conferir à mão antes de publicar)
+## 8. Achados (conferidos em 28/09/2026)
 
-Objetivos sem nenhum eixo — nem no cenário-meta, nem no banco de projetos
-(extração automática de 27/09/2026):
+Objetivos sem nenhum eixo — nem no cenário-meta, nem no banco de projetos.
+Conferência: extração estruturada + busca textual das descrições nas 42 fichas +
+fichas A002 e A004 comparadas com a imagem do PDF.
 
 - EXP 9 / DOM 15 — óleo bruto do RJ (provável escolha deliberada: duto/offshore; o plano não explicita)
 - EXP 18 — madeira e carvão do Amapá

@@ -60,3 +60,30 @@ describe("PNL 2050 — órfãos (conferidos à mão contra o PDF em 27/09/2026)"
     );
   });
 });
+
+// Fichas conferidas item a item contra a imagem do PDF (28/09/2026).
+describe("PNL 2050 — fichas conferidas contra o PDF", () => {
+  const niveis = (codigo: string) =>
+    Object.fromEntries(basePNL().eixos.find((e) => e.codigo === codigo)!.objetivos.map((o) => [o.chave, o.nivel]));
+
+  it("A002 (págs. 358–359): 16 contribuições com os níveis da ficha", () => {
+    expect(niveis("A002")).toEqual({
+      "EXP-1": "Muito alto", "EXP-2": "Muito alto", "EXP-5": "Muito alto", "EXP-14": "Muito alto",
+      "ABA-1": "Muito alto", "ABA-4": "Muito alto",
+      "DEM-8": "Médio", "DEM-11": "Médio", "DEM-12": "Médio",
+      "ABR-1": "Muito alto", "ABR-2": "Alto", "ABR-3": "Alto", "ABR-6": "Muito alto",
+      "ABR-10": "Alto", "ABR-11": "Alto", "ABR-16": "Muito alto",
+    });
+  });
+
+  it("A004: itens 13 e 15 do bloco de oportunidades (erro do PDF) contam como ABR-13 e ABR-15", () => {
+    const a004 = niveis("A004");
+    expect(a004["ABR-13"]).toBe("Muito alto");
+    expect(a004["ABR-15"]).toBe("Muito alto");
+  });
+
+  it("cabeçalhos de passageiros com grafia variante não perdem itens (F005, I001)", () => {
+    expect(niveis("F005")).toMatchObject({ "PSAT-1": "Alto", "PSAT-2": "Muito alto" });
+    expect(niveis("I001")).toMatchObject({ "PEXC-1": "Muito alto", "PEXC-4": "Muito alto", "PEXC-5": "Muito alto" });
+  });
+});
