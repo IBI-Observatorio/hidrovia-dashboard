@@ -61,6 +61,11 @@ jobs:
         env:
           ANTAQ_API_URL: ${{ vars.ANTAQ_API_URL || 'https://antaq-api-production.up.railway.app' }}
 
+      - name: Gera cabotagem-offshore.json (indicador 32)
+        run: node scripts/gera-cabotagem-offshore.mjs
+        env:
+          ANTAQ_API_URL: ${{ vars.ANTAQ_API_URL || 'https://antaq-api-production.up.railway.app' }}
+
       - name: Commita se houver mudança
         run: |
           git config user.name  "github-actions[bot]"

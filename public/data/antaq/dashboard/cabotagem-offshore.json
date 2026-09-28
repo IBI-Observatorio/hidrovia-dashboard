@@ -1,0 +1,986 @@
+{
+  "gerado_em": "2026-09-28T22:03:01.747Z",
+  "unidade": "Mt (soma móvel 12m)",
+  "serie": [
+    {
+      "data": "2006-09",
+      "domestica": 0.0029,
+      "offshore": 0
+    },
+    {
+      "data": "2009-12",
+      "domestica": 0.2156,
+      "offshore": 0
+    },
+    {
+      "data": "2010-01",
+      "domestica": 14.7693,
+      "offshore": 0
+    },
+    {
+      "data": "2010-02",
+      "domestica": 27.613,
+      "offshore": 0
+    },
+    {
+      "data": "2010-03",
+      "domestica": 41.8201,
+      "offshore": 0
+    },
+    {
+      "data": "2010-04",
+      "domestica": 55.7973,
+      "offshore": 0
+    },
+    {
+      "data": "2010-05",
+      "domestica": 71.9429,
+      "offshore": 0
+    },
+    {
+      "data": "2010-06",
+      "domestica": 86.133,
+      "offshore": 0
+    },
+    {
+      "data": "2010-07",
+      "domestica": 102.3478,
+      "offshore": 0
+    },
+    {
+      "data": "2010-08",
+      "domestica": 118.1218,
+      "offshore": 0
+    },
+    {
+      "data": "2010-09",
+      "domestica": 133.5728,
+      "offshore": 0.015
+    },
+    {
+      "data": "2010-10",
+      "domestica": 149.6924,
+      "offshore": 0.015
+    },
+    {
+      "data": "2010-11",
+      "domestica": 165.6672,
+      "offshore": 0.015
+    },
+    {
+      "data": "2010-12",
+      "domestica": 183.1185,
+      "offshore": 0.015
+    },
+    {
+      "data": "2011-01",
+      "domestica": 185.8849,
+      "offshore": 0.015
+    },
+    {
+      "data": "2011-02",
+      "domestica": 188.3253,
+      "offshore": 0.015
+    },
+    {
+      "data": "2011-03",
+      "domestica": 190.5615,
+      "offshore": 0.015
+    },
+    {
+      "data": "2011-04",
+      "domestica": 189.8928,
+      "offshore": 2.0077
+    },
+    {
+      "data": "2011-05",
+      "domestica": 184.6159,
+      "offshore": 6.647
+    },
+    {
+      "data": "2011-06",
+      "domestica": 181.4653,
+      "offshore": 11.8975
+    },
+    {
+      "data": "2011-07",
+      "domestica": 175.7047,
+      "offshore": 17.4974
+    },
+    {
+      "data": "2011-08",
+      "domestica": 171.1553,
+      "offshore": 22.0062
+    },
+    {
+      "data": "2011-09",
+      "domestica": 166.4235,
+      "offshore": 26.5375
+    },
+    {
+      "data": "2011-10",
+      "domestica": 161.9616,
+      "offshore": 31.2735
+    },
+    {
+      "data": "2011-11",
+      "domestica": 156.5289,
+      "offshore": 36.3613
+    },
+    {
+      "data": "2011-12",
+      "domestica": 150.8682,
+      "offshore": 41.3926
+    },
+    {
+      "data": "2012-01",
+      "domestica": 145.6603,
+      "offshore": 47.0343
+    },
+    {
+      "data": "2012-02",
+      "domestica": 141.0616,
+      "offshore": 51.9638
+    },
+    {
+      "data": "2012-03",
+      "domestica": 135.3918,
+      "offshore": 57.8876
+    },
+    {
+      "data": "2012-04",
+      "domestica": 132.4124,
+      "offshore": 60.6822
+    },
+    {
+      "data": "2012-05",
+      "domestica": 132.2024,
+      "offshore": 61.273
+    },
+    {
+      "data": "2012-06",
+      "domestica": 132.5717,
+      "offshore": 61.1547
+    },
+    {
+      "data": "2012-07",
+      "domestica": 134.0753,
+      "offshore": 60.6829
+    },
+    {
+      "data": "2012-08",
+      "domestica": 134.5989,
+      "offshore": 60.6449
+    },
+    {
+      "data": "2012-09",
+      "domestica": 135.0912,
+      "offshore": 60.9421
+    },
+    {
+      "data": "2012-10",
+      "domestica": 135.0752,
+      "offshore": 61.9879
+    },
+    {
+      "data": "2012-11",
+      "domestica": 135.2521,
+      "offshore": 61.7865
+    },
+    {
+      "data": "2012-12",
+      "domestica": 134.7019,
+      "offshore": 62.7775
+    },
+    {
+      "data": "2013-01",
+      "domestica": 134.9352,
+      "offshore": 61.2426
+    },
+    {
+      "data": "2013-02",
+      "domestica": 137.1458,
+      "offshore": 59.017
+    },
+    {
+      "data": "2013-03",
+      "domestica": 138.5402,
+      "offshore": 58.0354
+    },
+    {
+      "data": "2013-04",
+      "domestica": 139.3506,
+      "offshore": 58.0824
+    },
+    {
+      "data": "2013-05",
+      "domestica": 141.7788,
+      "offshore": 57.0331
+    },
+    {
+      "data": "2013-06",
+      "domestica": 142.0566,
+      "offshore": 57.2094
+    },
+    {
+      "data": "2013-07",
+      "domestica": 143.0348,
+      "offshore": 57.08
+    },
+    {
+      "data": "2013-08",
+      "domestica": 143.7507,
+      "offshore": 56.9838
+    },
+    {
+      "data": "2013-09",
+      "domestica": 145.1884,
+      "offshore": 57.1625
+    },
+    {
+      "data": "2013-10",
+      "domestica": 147.4424,
+      "offshore": 56.2612
+    },
+    {
+      "data": "2013-11",
+      "domestica": 148.9038,
+      "offshore": 56.5602
+    },
+    {
+      "data": "2013-12",
+      "domestica": 149.3077,
+      "offshore": 56.3865
+    },
+    {
+      "data": "2014-01",
+      "domestica": 149.5143,
+      "offshore": 57.6192
+    },
+    {
+      "data": "2014-02",
+      "domestica": 148.9074,
+      "offshore": 58.962
+    },
+    {
+      "data": "2014-03",
+      "domestica": 147.8168,
+      "offshore": 59.2491
+    },
+    {
+      "data": "2014-04",
+      "domestica": 148.9086,
+      "offshore": 59.3024
+    },
+    {
+      "data": "2014-05",
+      "domestica": 148.2174,
+      "offshore": 60.2995
+    },
+    {
+      "data": "2014-06",
+      "domestica": 148.629,
+      "offshore": 60.2117
+    },
+    {
+      "data": "2014-07",
+      "domestica": 147.5229,
+      "offshore": 61.8401
+    },
+    {
+      "data": "2014-08",
+      "domestica": 147.6758,
+      "offshore": 62.286
+    },
+    {
+      "data": "2014-09",
+      "domestica": 147.0864,
+      "offshore": 63.4586
+    },
+    {
+      "data": "2014-10",
+      "domestica": 145.8705,
+      "offshore": 64.5195
+    },
+    {
+      "data": "2014-11",
+      "domestica": 145.3289,
+      "offshore": 65.041
+    },
+    {
+      "data": "2014-12",
+      "domestica": 146.0678,
+      "offshore": 65.5603
+    },
+    {
+      "data": "2015-01",
+      "domestica": 145.3004,
+      "offshore": 65.8296
+    },
+    {
+      "data": "2015-02",
+      "domestica": 143.4852,
+      "offshore": 67.2482
+    },
+    {
+      "data": "2015-03",
+      "domestica": 144.646,
+      "offshore": 68.3331
+    },
+    {
+      "data": "2015-04",
+      "domestica": 143.3188,
+      "offshore": 70.1872
+    },
+    {
+      "data": "2015-05",
+      "domestica": 141.1748,
+      "offshore": 72.0224
+    },
+    {
+      "data": "2015-06",
+      "domestica": 140.0341,
+      "offshore": 72.8278
+    },
+    {
+      "data": "2015-07",
+      "domestica": 140.3364,
+      "offshore": 72.8215
+    },
+    {
+      "data": "2015-08",
+      "domestica": 138.7339,
+      "offshore": 74.9042
+    },
+    {
+      "data": "2015-09",
+      "domestica": 137.0065,
+      "offshore": 75.6912
+    },
+    {
+      "data": "2015-10",
+      "domestica": 135.1139,
+      "offshore": 76.2136
+    },
+    {
+      "data": "2015-11",
+      "domestica": 134.0479,
+      "offshore": 77.3933
+    },
+    {
+      "data": "2015-12",
+      "domestica": 132.393,
+      "offshore": 78.4946
+    },
+    {
+      "data": "2016-01",
+      "domestica": 130.8914,
+      "offshore": 79.9164
+    },
+    {
+      "data": "2016-02",
+      "domestica": 129.684,
+      "offshore": 80.3755
+    },
+    {
+      "data": "2016-03",
+      "domestica": 129.0742,
+      "offshore": 80.8159
+    },
+    {
+      "data": "2016-04",
+      "domestica": 127.7889,
+      "offshore": 80.6219
+    },
+    {
+      "data": "2016-05",
+      "domestica": 128.0387,
+      "offshore": 81.3252
+    },
+    {
+      "data": "2016-06",
+      "domestica": 127.7675,
+      "offshore": 82.3982
+    },
+    {
+      "data": "2016-07",
+      "domestica": 126.9103,
+      "offshore": 82.5499
+    },
+    {
+      "data": "2016-08",
+      "domestica": 127.6558,
+      "offshore": 83.1516
+    },
+    {
+      "data": "2016-09",
+      "domestica": 128.7684,
+      "offshore": 83.0259
+    },
+    {
+      "data": "2016-10",
+      "domestica": 128.7353,
+      "offshore": 84.6828
+    },
+    {
+      "data": "2016-11",
+      "domestica": 128.5363,
+      "offshore": 84.7856
+    },
+    {
+      "data": "2016-12",
+      "domestica": 129.0326,
+      "offshore": 84.8122
+    },
+    {
+      "data": "2017-01",
+      "domestica": 130.165,
+      "offshore": 85.5239
+    },
+    {
+      "data": "2017-02",
+      "domestica": 131.5282,
+      "offshore": 86.0108
+    },
+    {
+      "data": "2017-03",
+      "domestica": 130.6477,
+      "offshore": 86.7804
+    },
+    {
+      "data": "2017-04",
+      "domestica": 131.826,
+      "offshore": 87.0087
+    },
+    {
+      "data": "2017-05",
+      "domestica": 131.926,
+      "offshore": 86.6411
+    },
+    {
+      "data": "2017-06",
+      "domestica": 132.9423,
+      "offshore": 86.5308
+    },
+    {
+      "data": "2017-07",
+      "domestica": 132.8007,
+      "offshore": 86.6576
+    },
+    {
+      "data": "2017-08",
+      "domestica": 133.7868,
+      "offshore": 85.3843
+    },
+    {
+      "data": "2017-09",
+      "domestica": 134.1492,
+      "offshore": 86.0312
+    },
+    {
+      "data": "2017-10",
+      "domestica": 135.4762,
+      "offshore": 85.2719
+    },
+    {
+      "data": "2017-11",
+      "domestica": 136.5134,
+      "offshore": 85.7753
+    },
+    {
+      "data": "2017-12",
+      "domestica": 137.3249,
+      "offshore": 85.694
+    },
+    {
+      "data": "2018-01",
+      "domestica": 137.1841,
+      "offshore": 85.1232
+    },
+    {
+      "data": "2018-02",
+      "domestica": 137.7335,
+      "offshore": 85.6156
+    },
+    {
+      "data": "2018-03",
+      "domestica": 139.6188,
+      "offshore": 84.6988
+    },
+    {
+      "data": "2018-04",
+      "domestica": 140.0403,
+      "offshore": 85.6232
+    },
+    {
+      "data": "2018-05",
+      "domestica": 141.557,
+      "offshore": 85.2079
+    },
+    {
+      "data": "2018-06",
+      "domestica": 141.6751,
+      "offshore": 85.2217
+    },
+    {
+      "data": "2018-07",
+      "domestica": 143.6365,
+      "offshore": 85.0775
+    },
+    {
+      "data": "2018-08",
+      "domestica": 144.96,
+      "offshore": 85.555
+    },
+    {
+      "data": "2018-09",
+      "domestica": 145.847,
+      "offshore": 84.2031
+    },
+    {
+      "data": "2018-10",
+      "domestica": 146.0687,
+      "offshore": 84.2463
+    },
+    {
+      "data": "2018-11",
+      "domestica": 146.5412,
+      "offshore": 84.1614
+    },
+    {
+      "data": "2018-12",
+      "domestica": 146.4114,
+      "offshore": 84.9896
+    },
+    {
+      "data": "2019-01",
+      "domestica": 146.8778,
+      "offshore": 85.6852
+    },
+    {
+      "data": "2019-02",
+      "domestica": 146.1139,
+      "offshore": 85.2733
+    },
+    {
+      "data": "2019-03",
+      "domestica": 144.9501,
+      "offshore": 85.6469
+    },
+    {
+      "data": "2019-04",
+      "domestica": 146.4742,
+      "offshore": 85.1699
+    },
+    {
+      "data": "2019-05",
+      "domestica": 146.7431,
+      "offshore": 85.9323
+    },
+    {
+      "data": "2019-06",
+      "domestica": 146.4888,
+      "offshore": 86.3057
+    },
+    {
+      "data": "2019-07",
+      "domestica": 145.406,
+      "offshore": 87.9318
+    },
+    {
+      "data": "2019-08",
+      "domestica": 143.1533,
+      "offshore": 90.5768
+    },
+    {
+      "data": "2019-09",
+      "domestica": 142.0774,
+      "offshore": 93.4402
+    },
+    {
+      "data": "2019-10",
+      "domestica": 142.2242,
+      "offshore": 95.0384
+    },
+    {
+      "data": "2019-11",
+      "domestica": 142.7213,
+      "offshore": 97.0163
+    },
+    {
+      "data": "2019-12",
+      "domestica": 142.4856,
+      "offshore": 98.6505
+    },
+    {
+      "data": "2020-01",
+      "domestica": 142.4674,
+      "offshore": 100.4447
+    },
+    {
+      "data": "2020-02",
+      "domestica": 144.2493,
+      "offshore": 103.145
+    },
+    {
+      "data": "2020-03",
+      "domestica": 145.4781,
+      "offshore": 105.007
+    },
+    {
+      "data": "2020-04",
+      "domestica": 143.3458,
+      "offshore": 106.9388
+    },
+    {
+      "data": "2020-05",
+      "domestica": 142.8149,
+      "offshore": 108.7327
+    },
+    {
+      "data": "2020-06",
+      "domestica": 142.756,
+      "offshore": 111.0907
+    },
+    {
+      "data": "2020-07",
+      "domestica": 143.5624,
+      "offshore": 113.1748
+    },
+    {
+      "data": "2020-08",
+      "domestica": 145.6019,
+      "offshore": 114.8014
+    },
+    {
+      "data": "2020-09",
+      "domestica": 147.585,
+      "offshore": 116.2265
+    },
+    {
+      "data": "2020-10",
+      "domestica": 149.2128,
+      "offshore": 118.0223
+    },
+    {
+      "data": "2020-11",
+      "domestica": 149.9315,
+      "offshore": 119.3226
+    },
+    {
+      "data": "2020-12",
+      "domestica": 152.1398,
+      "offshore": 119.6816
+    },
+    {
+      "data": "2021-01",
+      "domestica": 153.5532,
+      "offshore": 121.2306
+    },
+    {
+      "data": "2021-02",
+      "domestica": 153.9549,
+      "offshore": 121.0546
+    },
+    {
+      "data": "2021-03",
+      "domestica": 155.583,
+      "offshore": 122.0279
+    },
+    {
+      "data": "2021-04",
+      "domestica": 158.1863,
+      "offshore": 122.5277
+    },
+    {
+      "data": "2021-05",
+      "domestica": 159.4893,
+      "offshore": 123.6371
+    },
+    {
+      "data": "2021-06",
+      "domestica": 161.2513,
+      "offshore": 122.8969
+    },
+    {
+      "data": "2021-07",
+      "domestica": 160.8241,
+      "offshore": 123.9648
+    },
+    {
+      "data": "2021-08",
+      "domestica": 159.4114,
+      "offshore": 124.7135
+    },
+    {
+      "data": "2021-09",
+      "domestica": 158.8069,
+      "offshore": 123.7591
+    },
+    {
+      "data": "2021-10",
+      "domestica": 158.938,
+      "offshore": 123.2502
+    },
+    {
+      "data": "2021-11",
+      "domestica": 159.6422,
+      "offshore": 122.6419
+    },
+    {
+      "data": "2021-12",
+      "domestica": 159.2691,
+      "offshore": 122.0456
+    },
+    {
+      "data": "2022-01",
+      "domestica": 159.7748,
+      "offshore": 121.5159
+    },
+    {
+      "data": "2022-02",
+      "domestica": 160.0359,
+      "offshore": 121.1584
+    },
+    {
+      "data": "2022-03",
+      "domestica": 159.5358,
+      "offshore": 121.4985
+    },
+    {
+      "data": "2022-04",
+      "domestica": 159.468,
+      "offshore": 122.6136
+    },
+    {
+      "data": "2022-05",
+      "domestica": 159.257,
+      "offshore": 123.3967
+    },
+    {
+      "data": "2022-06",
+      "domestica": 159.7663,
+      "offshore": 125.1366
+    },
+    {
+      "data": "2022-07",
+      "domestica": 161.8752,
+      "offshore": 124.1739
+    },
+    {
+      "data": "2022-08",
+      "domestica": 162.4534,
+      "offshore": 122.1726
+    },
+    {
+      "data": "2022-09",
+      "domestica": 162.9452,
+      "offshore": 123.5051
+    },
+    {
+      "data": "2022-10",
+      "domestica": 161.7325,
+      "offshore": 124.4679
+    },
+    {
+      "data": "2022-11",
+      "domestica": 160.6811,
+      "offshore": 124.5253
+    },
+    {
+      "data": "2022-12",
+      "domestica": 160.4695,
+      "offshore": 125.3066
+    },
+    {
+      "data": "2023-01",
+      "domestica": 159.6575,
+      "offshore": 126.205
+    },
+    {
+      "data": "2023-02",
+      "domestica": 158.9016,
+      "offshore": 127.5464
+    },
+    {
+      "data": "2023-03",
+      "domestica": 158.4409,
+      "offshore": 128.1104
+    },
+    {
+      "data": "2023-04",
+      "domestica": 158.0545,
+      "offshore": 127.9767
+    },
+    {
+      "data": "2023-05",
+      "domestica": 158.753,
+      "offshore": 126.8254
+    },
+    {
+      "data": "2023-06",
+      "domestica": 158.7662,
+      "offshore": 126.9364
+    },
+    {
+      "data": "2023-07",
+      "domestica": 158.0443,
+      "offshore": 128.4416
+    },
+    {
+      "data": "2023-08",
+      "domestica": 157.9591,
+      "offshore": 130.379
+    },
+    {
+      "data": "2023-09",
+      "domestica": 156.9476,
+      "offshore": 131.1589
+    },
+    {
+      "data": "2023-10",
+      "domestica": 156.4037,
+      "offshore": 131.6793
+    },
+    {
+      "data": "2023-11",
+      "domestica": 158.7297,
+      "offshore": 131.3793
+    },
+    {
+      "data": "2023-12",
+      "domestica": 159.2503,
+      "offshore": 131.5701
+    },
+    {
+      "data": "2024-01",
+      "domestica": 160.3604,
+      "offshore": 131.6518
+    },
+    {
+      "data": "2024-02",
+      "domestica": 162.1451,
+      "offshore": 132.221
+    },
+    {
+      "data": "2024-03",
+      "domestica": 163.1285,
+      "offshore": 131.835
+    },
+    {
+      "data": "2024-04",
+      "domestica": 164.1124,
+      "offshore": 130.9166
+    },
+    {
+      "data": "2024-05",
+      "domestica": 164.9013,
+      "offshore": 130.0391
+    },
+    {
+      "data": "2024-06",
+      "domestica": 165.5757,
+      "offshore": 130.5925
+    },
+    {
+      "data": "2024-07",
+      "domestica": 166.8064,
+      "offshore": 129.2573
+    },
+    {
+      "data": "2024-08",
+      "domestica": 168.5697,
+      "offshore": 127.8601
+    },
+    {
+      "data": "2024-09",
+      "domestica": 169.8032,
+      "offshore": 126.7469
+    },
+    {
+      "data": "2024-10",
+      "domestica": 170.3724,
+      "offshore": 125.0291
+    },
+    {
+      "data": "2024-11",
+      "domestica": 168.4803,
+      "offshore": 125.4469
+    },
+    {
+      "data": "2024-12",
+      "domestica": 168.7364,
+      "offshore": 125.2474
+    },
+    {
+      "data": "2025-01",
+      "domestica": 168.0688,
+      "offshore": 124.9282
+    },
+    {
+      "data": "2025-02",
+      "domestica": 166.8124,
+      "offshore": 123.9
+    },
+    {
+      "data": "2025-03",
+      "domestica": 165.1277,
+      "offshore": 125.7066
+    },
+    {
+      "data": "2025-04",
+      "domestica": 164.0119,
+      "offshore": 126.7432
+    },
+    {
+      "data": "2025-05",
+      "domestica": 162.5773,
+      "offshore": 129.6935
+    },
+    {
+      "data": "2025-06",
+      "domestica": 161.335,
+      "offshore": 130.2711
+    },
+    {
+      "data": "2025-07",
+      "domestica": 160.7486,
+      "offshore": 131.3448
+    },
+    {
+      "data": "2025-08",
+      "domestica": 160.6076,
+      "offshore": 134.6929
+    },
+    {
+      "data": "2025-09",
+      "domestica": 160.159,
+      "offshore": 136.7038
+    },
+    {
+      "data": "2025-10",
+      "domestica": 161.1073,
+      "offshore": 138.274
+    },
+    {
+      "data": "2025-11",
+      "domestica": 162.1249,
+      "offshore": 140.0038
+    },
+    {
+      "data": "2025-12",
+      "domestica": 162.7127,
+      "offshore": 141.435
+    },
+    {
+      "data": "2026-01",
+      "domestica": 164.0521,
+      "offshore": 142.7939
+    },
+    {
+      "data": "2026-02",
+      "domestica": 163.3967,
+      "offshore": 144.2081
+    }
+  ]
+}

@@ -29,7 +29,7 @@ O schedule só vale a partir da branch `main`. Todos têm botão **Run workflow*
 | **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + Claude **Haiku 4.5**, grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
 | **ENSO** | quinta 17:00 | `enso-mensal.yml` | `POST /api/cron/refresh-enso` → Railway raspa CPC/NOAA, grava `enso_cpc_cache.json`. (Roda toda quinta; idempotente — CPC publica na 2ª quinta) |
 | **Briefing** | quarta 13:00 | `briefing-semanal.yml` | `POST /api/cron/briefing` → regenera o briefing editorial da semana, grava `briefings/YYYY-WW.json` no volume |
-| **Portos / ANTAQ** | dia 16, 11:00 | `atualiza-portos.yml` | Roda `gera-portos-series.mjs` + `gera-series-tendencia.mjs`, **commita** os JSONs |
+| **Portos / ANTAQ** | dia 16, 11:00 | `atualiza-portos.yml` | Roda `gera-portos-series.mjs` + `gera-series-tendencia.mjs` + `gera-cabotagem-offshore.mjs`, **commita** os JSONs |
 | **Deploy** | push na `main` + manual | `deploy.yml` | `railway up`. Tem `workflow_dispatch` (crons que commitam dados disparam ele) |
 | **Sistema imunológico** | diário 14:00 | `watchdog.yml` | Ver seção abaixo |
 
@@ -83,7 +83,8 @@ retorna `ok` geral + `reguas`, `insights`, `enso`, `sgb`, `portos`.
 ## 📦 PORTOS / ANTAQ — automático dia 16 (+ manual)
 
 `atualiza-portos.yml` (dia 16) já roda `gera-portos-series.mjs` +
-`gera-series-tendencia.mjs` e commita. **Pré-requisito:** API ANTAQ no ar —
+`gera-series-tendencia.mjs` + `gera-cabotagem-offshore.mjs` e commita. Nenhuma página
+chama a API em runtime (desde 28/09/2026) — ela só precisa estar no ar no dia 16. **Pré-requisito:** API ANTAQ no ar —
 `curl https://antaq-api-production.up.railway.app/api/v1/saude`.
 
 Ficam **fora** do workflow (rode à mão quando precisar):
@@ -96,6 +97,7 @@ python scripts/forecast_conteiner.py --payload <antaq.json> --out lib/forecast-c
 |--------|--------|-------|
 | `/portos/movimentacao` | `gera-portos-series.mjs` (auto) | `public/data/antaq/dashboard/portos-series.json` |
 | `/portos/ineditas/tendencia-cargas` (séries) | `gera-series-tendencia.mjs` (auto) | `public/data/antaq/dashboard/series-tendencia.json` |
+| `/portos/cabotagem-hidrovias/cabotagem-offshore` (indicador 32) | `gera-cabotagem-offshore.mjs` (auto) | `public/data/antaq/dashboard/cabotagem-offshore.json` |
 | `/portos/ineditas/tendencia-cargas` (forecast) | `forecast_conteiner.py` (manual) | `lib/forecast-conteiner.json` |
 | cabotagem / longo curso | `update-navegacao-series.py` (manual) | `public/data/antaq/dashboard/navegacao-series.json` |
 
