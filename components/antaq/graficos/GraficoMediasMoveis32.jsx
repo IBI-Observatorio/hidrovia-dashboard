@@ -5,17 +5,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { useAntaqSeries } from '../useAntaqApi';
 import { useDashboardData } from '../useDashboardData';
-
-// ── Queries ──────────────────────────────────────────────────────────────────
-
-// 0 = cabotagem total (doméstica + offshore)
-// 1 = cabotagem doméstica pura (offshore expurgado)
-const QUERIES = [
-  { navegacao: 'Cabotagem', metrica: 'toneladas', freq: 'mensal', suavizacao: 'sum12', expurgar_offshore: false, apenas_movimentacao: true },
-  { navegacao: 'Cabotagem', metrica: 'toneladas', freq: 'mensal', suavizacao: 'sum12', expurgar_offshore: true,  apenas_movimentacao: true },
-];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -43,28 +33,14 @@ const tooltipStyle = { backgroundColor: '#111827', border: '1px solid #4b5563', 
 // ── Componente ───────────────────────────────────────────────────────────────
 
 export default function GraficoMediasMoveis32() {
-  const { data: apiData,    loading: loadingApi, erro: erroApi, retry } = useAntaqSeries(QUERIES);
-  const { data: staticData, loading: loadingRt,  erro: erroRt  } = useDashboardData(['rotas.json']);
+  // cabotagem-offshore.json: gerado por scripts/gera-cabotagem-offshore.mjs (dia 16)
+  const { data: staticData, loading, erro } = useDashboardData(['cabotagem-offshore.json', 'rotas.json']);
   const [topN, setTopN] = useState(10);
 
   const { stackData, cabDom, cabOff, cabPct } = useMemo(() => {
-    if (!apiData) return {};
+    if (!staticData) return {};
 
-    const totalSerie   = apiData[0]?.serie || [];  // doméstica + offshore
-    const domSerie     = apiData[1]?.serie || [];  // doméstica pura
-
-    // Índice por data para merge
-    const domByDate = Object.fromEntries(domSerie.map(pt => [pt.data, pt.sum12]));
-
-    const stackData = totalSerie
-      .map(pt => {
-        const total     = pt.sum12 != null ? pt.sum12 / 1e6 : null;
-        const dom       = domByDate[pt.data] != null ? domByDate[pt.data] / 1e6 : null;
-        const offshore  = total != null && dom != null ? Math.max(0, total - dom) : null;
-        return { data: pt.data, domestica: dom, offshore };
-      })
-      .filter(pt => pt.domestica != null)
-      .sort((a, b) => a.data.localeCompare(b.data));
+    const stackData = staticData['cabotagem-offshore']?.serie || [];
 
     // KPIs: último ponto disponível
     const ult = stackData[stackData.length - 1] || {};
@@ -74,21 +50,10 @@ export default function GraficoMediasMoveis32() {
     const cabPct = total > 0 ? (cabOff / total * 100) : 0;
 
     return { stackData, cabDom, cabOff, cabPct };
-  }, [apiData]);
-
-  const loading = loadingApi || loadingRt;
-  const erro    = erroApi    || erroRt;
+  }, [staticData]);
 
   if (loading) return <div className="h-80 flex items-center justify-center text-gray-400 text-sm">Carregando…</div>;
-  if (erro)    return (
-    <div className="h-80 flex flex-col items-center justify-center gap-3">
-      <p className="text-red-400 text-sm">Erro ao carregar dados da API: {erro}</p>
-      <button onClick={retry}
-              className="px-4 py-1.5 text-xs rounded-md bg-gray-700 text-gray-200 hover:bg-gray-600 border border-gray-600">
-        Tentar novamente
-      </button>
-    </div>
-  );
+  if (erro)    return <div className="h-80 flex items-center justify-center text-red-400 text-sm">Erro ao carregar dados: {erro}</div>;
   if (!stackData) return null;
 
   const rotasData  = staticData?.['rotas'] || [];
@@ -134,7 +99,7 @@ export default function GraficoMediasMoveis32() {
         </ResponsiveContainer>
         <p className="text-xs text-gray-500 mt-1">
           Soma móvel de 12 meses · offshore = FlagOffshore=1 expurgado da cabotagem total ·
-          Dados: ANTAQ Estatística Aquaviária · API ao vivo.
+          Dados: ANTAQ Estatística Aquaviária · atualizado mensalmente.
         </p>
       </div>
 
