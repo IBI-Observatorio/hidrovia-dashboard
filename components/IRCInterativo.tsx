@@ -13,7 +13,7 @@ import {
 import {
   cotaItaParaCMR,
 } from "@/lib/cmr-itacoatiara";
-import { projetaETAporAnalogos } from "@/lib/recessao-analogos";
+import { projetaETAporAnalogos, dataCruzamentoObservado } from "@/lib/recessao-analogos";
 import { ITACOATIARA_HISTORICO_DIARIO } from "@/lib/itacoatiara-historico-diario";
 import type { ResultadoIRC_Estendido } from "@/lib/irc";
 import { Anchor, Calendar } from "lucide-react";
@@ -78,7 +78,7 @@ export default function IRCInterativo({
   }, [calado, carregouInicial, isAssinante]);
 
   // ETA via análogos (calado-alvo → cruzamento projetado)
-  const { cotaItaAlvo_m, eta_an } = useMemo(() => {
+  const { cotaItaAlvo_m, eta_an, cruzado } = useMemo(() => {
     // Cota ITA que produz CMR = calado (referência operacional)
     const cotaItaAlvo_m = cotaItaParaCMR(calado);
     // ETA via ANÁLOGOS HISTÓRICOS — empirical forecasting baseado em 2016-2025.
@@ -88,7 +88,11 @@ export default function IRCInterativo({
     const eta_an = serie2026.length >= 30
       ? projetaETAporAnalogos(serie2026, calado, 60, 0.5, 300)
       : null;
-    return { cotaItaAlvo_m, eta_an };
+    // Limiar já atingido na série observada → o card mostra o fato, não um ETA.
+    const desde = dataCruzamentoObservado(serie2026, cotaItaAlvo_m);
+    const ultimo = serie2026.at(-1);
+    const cruzado = desde && ultimo ? { desde, data_atual: ultimo.data, cota_atual_m: ultimo.cota } : null;
+    return { cotaItaAlvo_m, eta_an, cruzado };
   }, [calado]);
 
   const copiarLink = () => {
@@ -196,7 +200,7 @@ export default function IRCInterativo({
       )}
 
       {/* ── PAINEL ETA ── */}
-      <DataETAPainel eta_an={eta_an} cotaItaAlvo_m={cotaItaAlvo_m} calado={calado} isAssinante={isAssinante} />
+      <DataETAPainel eta_an={eta_an} cruzado={cruzado} cotaItaAlvo_m={cotaItaAlvo_m} calado={calado} isAssinante={isAssinante} />
 
     </div>
   );
@@ -205,6 +209,7 @@ export default function IRCInterativo({
 // ─── Painel de ETA do calado-alvo ───────────────────────────────────────────
 interface DataETAPainelProps {
   eta_an: ReturnType<typeof projetaETAporAnalogos> | null;
+  cruzado: { desde: string; data_atual: string; cota_atual_m: number } | null;
   cotaItaAlvo_m: number;
   calado: number;
   isAssinante: boolean;
@@ -217,7 +222,43 @@ function formataDataLonga(iso: string | null): string {
   return `${d}/${meses[parseInt(m, 10) - 1] ?? "?"}/${a}`;
 }
 
-function DataETAPainel({ eta_an, cotaItaAlvo_m, calado, isAssinante }: DataETAPainelProps) {
+function DataETAPainel({ eta_an, cruzado, cotaItaAlvo_m, calado, isAssinante }: DataETAPainelProps) {
+  if (cruzado) {
+    const dias = Math.round(
+      (Date.parse(cruzado.data_atual) - Date.parse(cruzado.desde)) / 86400000,
+    );
+    return (
+      <div className="rounded-lg p-4 border mb-5 bg-vermelho/10 border-vermelho/40">
+        <div className="flex items-start gap-3">
+          <Calendar size={18} className="text-vermelho mt-0.5 shrink-0" />
+          <div className="flex-1">
+            <p className="text-vermelho text-[11px] font-bold uppercase tracking-wider mb-1">
+              CMR &lt; {calado.toFixed(1)} m (seu calado-alvo) · limiar atingido
+            </p>
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <span className="text-vermelho font-extrabold text-2xl">
+                desde {formataDataLonga(cruzado.desde)}
+              </span>
+              <span className="text-gray-300 text-sm">
+                há <strong>{dias} {dias === 1 ? "dia" : "dias"}</strong>
+              </span>
+            </div>
+            <p className="text-gray-400 text-[11px] mt-1">
+              Itacoatiara abaixo de <strong className="text-gray-300">{cotaItaAlvo_m.toFixed(2)} m</strong>{" "}
+              (média diária, ANA) desde essa data. Última leitura:{" "}
+              <strong className="text-gray-300">{cruzado.cota_atual_m.toFixed(2)} m</strong> em{" "}
+              {formataDataLonga(cruzado.data_atual)}.
+            </p>
+          </div>
+        </div>
+        {!isAssinante && (
+          <p className="text-gray-500 text-[10px] mt-3 leading-relaxed">
+            Calado-alvo fixo em 11m (versão gratuita) — assinantes recalculam dinamicamente.
+          </p>
+        )}
+      </div>
+    );
+  }
   if (eta_an == null || eta_an.dias_p50 == null) {
     return (
       <div className="bg-azul-marinho rounded-lg p-4 border border-verde/20 mb-5">
