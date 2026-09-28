@@ -90,6 +90,7 @@ export const navigationCopy = {
           { label: "Início",                    href: "/" },
           { label: "Relógio da Infraestrutura", href: "/relogio" },
           { label: "Livro-Razão",               href: "/livro-razao" },
+          { label: "PNL 2050: do papel à obra", href: "/pnl-2050" },
           { label: "Portos",                    href: "/portos" },
           { label: "Hidrovia Amazônica",        href: "/hidrovia" },
           { label: "Análises",                  href: "/analises" },
