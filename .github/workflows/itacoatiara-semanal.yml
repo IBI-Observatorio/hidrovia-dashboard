@@ -11,10 +11,14 @@ name: Atualiza serie Itacoatiara (ANA)
 #
 # Cadencia: terca 10:20 UTC (06:20 Manaus) - 20 min apos o IDN, para nao
 # coincidir o commit/deploy. Tambem roda sob demanda.
+# Segunda rodada terca 16:20 UTC: rede de seguranca se a ANA ficar fora por
+# horas (o script ja repete por ~7 min). Se a primeira atualizou, a segunda
+# encontra a serie em dia e nao commita nada.
 
 on:
   schedule:
     - cron: "20 10 * * 2"
+    - cron: "20 16 * * 2"
   workflow_dispatch:
 
 permissions:
