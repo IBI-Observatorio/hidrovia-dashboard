@@ -83,6 +83,25 @@ function diasEntre(a: string, b: string): number {
 }
 
 /**
+ * Data em que a série OBSERVADA desceu abaixo de `cota_alvo_m` na descida atual:
+ * primeiro dia do trecho final contínuo abaixo do limiar. null se o último
+ * ponto ainda está acima (ETA segue futuro) ou se não há cruzamento na série.
+ *
+ * Existe porque, depois do cruzamento, o ETA por análogos colapsa para "hoje"
+ * (P10=P50=hoje) e o card passaria a exibir uma previsão para a data corrente
+ * em vez de dizer que o limiar já foi atingido — caso de 26/09/2026.
+ */
+export function dataCruzamentoObservado(
+  serieAtual: PontoSerie[],
+  cota_alvo_m: number,
+): string | null {
+  let i = serieAtual.length - 1;
+  if (i < 0 || serieAtual[i].cota >= cota_alvo_m) return null;
+  while (i > 0 && serieAtual[i - 1].cota < cota_alvo_m) i--;
+  return i === 0 ? null : serieAtual[i].data;
+}
+
+/**
  * Projeta ETA via análogos históricos.
  *
  * @param serieAtual    Série diária 2026 (jan até hoje). Cada {data, cota}.
