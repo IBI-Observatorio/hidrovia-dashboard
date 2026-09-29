@@ -276,24 +276,31 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
     if (!existsSync(caminho)) throw new Error("sem cache SGB");
 
     const cache = JSON.parse(readFileSync(caminho, "utf-8"));
-    const ultimo = cache.boletins?.[cache.boletins.length - 1];
-    if (!ultimo || !ultimo.previsoes?.length) throw new Error("cache vazio");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const boletins: any[] = cache.boletins ?? [];
+    const ultimo = boletins[boletins.length - 1];
+    if (!ultimo) throw new Error("cache vazio");
+
+    // O SGB só publica a previsão de pico de cheia na temporada (~mar–jun); fora
+    // dela os boletins vêm com `previsoes: []`. Usa o boletim MAIS RECENTE que
+    // tenha previsão de Manaus (a última previsão emitida), e não o último boletim.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const temManaus = (b: any) => b.previsoes?.some((p: any) => p.estacao === "Manaus");
+    const comPrevisao = [...boletins].reverse().find(temManaus);
+    if (!comPrevisao) throw new Error("nenhum boletim com previsão de Manaus no cache");
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const find = (chave: string): any =>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ultimo.previsoes.find((p: any) => p.estacao === chave);
+      comPrevisao.previsoes.find((p: any) => p.estacao === chave);
 
     const manaus      = find("Manaus");
     const manacapuru  = find("Manacapuru");
     const itacoatiara = find("Itacoatiara");
     const parintins   = find("Parintins");
 
-    // Precisa pelo menos da previsão de Manaus para considerar dinâmico
-    if (!manaus) throw new Error("previsão Manaus ausente no boletim");
-
-    const dataBR = /^\d{4}-\d{2}-\d{2}$/.test(ultimo.data) ? ultimo.data.split("-").reverse().join("/") : ultimo.data;
-    const fonteLabel = `SGB/CPRM — ${ultimo.numero ?? "?"}° Boletim SAH Amazonas (${dataBR})`;
+    const dataBR = /^\d{4}-\d{2}-\d{2}$/.test(comPrevisao.data) ? comPrevisao.data.split("-").reverse().join("/") : comPrevisao.data;
+    const fonteLabel = `SGB/CPRM — ${comPrevisao.numero ?? "?"}° Boletim SAH Amazonas (${dataBR})`;
 
     // Extrai anomalias de PP por bacia (Sprint v2)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -308,8 +315,8 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
     return {
       fonte:           fonteLabel,
       fonte_dinamica:  true,
-      numero_boletim:  typeof ultimo.numero === "number" ? ultimo.numero : undefined,
-      data_boletim:    typeof ultimo.data === "string" ? ultimo.data : undefined,
+      numero_boletim:  typeof comPrevisao.numero === "number" ? comPrevisao.numero : undefined,
+      data_boletim:    typeof comPrevisao.data === "string" ? comPrevisao.data : undefined,
       manaus_pico_cheia: {
         media:     manaus.cota_prevista_m,
         ic80_min:  manaus.ic80_min_m,
