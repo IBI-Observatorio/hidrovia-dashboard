@@ -145,10 +145,13 @@ const MANAUS_PROXIMO_GATILHO_M = 19.0;
 export function riscoDescasamento(
   manaus_m: number,
   itacoatiara_m: number,
-  delta_mao_cm: number,
-  delta_ita_cm: number
+  delta_mao_cm: number | null,
+  delta_ita_cm: number | null
 ): { nivel: RiscoDescasamento; cor: string } {
-  const divergencia = Math.abs(delta_mao_cm - delta_ita_cm);
+  // Sem delta do mesmo dia (null) a divergência é desconhecida → o semáforo
+  // decide só pelo nível de Manaus.
+  const divergencia =
+    delta_mao_cm === null || delta_ita_cm === null ? 0 : Math.abs(delta_mao_cm - delta_ita_cm);
   if (manaus_m < GATILHO_LWS_MANAUS_M || divergencia > DIVERGENCIA_ELEVADA_CM)
     return { nivel: "ELEVADO", cor: "#A0153E" };
   if (divergencia > DIVERGENCIA_MODERADA_CM || manaus_m < MANAUS_PROXIMO_GATILHO_M)

@@ -27,6 +27,7 @@ import { dessincronizacaoExcedeP85, type ResultadoDessincronizacao } from "./des
 import { projetaDataCruzamento17_7 } from "./recessao-modelo";
 import { calculaIDNSimples } from "./calcula-idn";
 import { geraInsights, type InsightData } from "./gera-insights";
+import { fmtDeltaCm } from "./fmt-delta";
 
 export interface ManscheteBriefing {
   eyebrow: string;       // pequeno rótulo acima do título (ex: "ALERTA DA SEMANA")
@@ -187,10 +188,12 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
       rotulo: "Negro alto",
       titulo: sgc.cota_m < 7.96
         ? `SGC em ${sgc.cota_m.toFixed(2)} m — abaixo do P10 histórico`
-        : `SGC em ${sgc.cota_m.toFixed(2)} m (${delta >= 0 ? "+" : ""}${delta} cm vs 2025)`,
+        : `SGC em ${sgc.cota_m.toFixed(2)} m (${fmtDeltaCm(delta)} vs 2025)`,
       texto: sgc.cota_m < 7.96
         ? `São Gabriel da Cachoeira sob a marca de 796 cm (P10 da série completa). Em 17/mar/2026 atingiu 620 cm — 927 cm abaixo de 2024 na mesma data. Padrão sem precedente.`
-        : `São Gabriel da Cachoeira segue o ciclo de enchente do Negro alto. Comparação com 2025 mostra ${Math.abs(delta)} cm ${delta >= 0 ? "acima" : "abaixo"} — o sinal de driver Norte ${delta < -50 ? "se mantém" : "perde intensidade"}.`,
+        : delta === null
+          ? `São Gabriel da Cachoeira segue o ciclo do Negro alto (sem leitura do mesmo dia de 2025 para comparar).`
+          : `São Gabriel da Cachoeira segue o ciclo de enchente do Negro alto. Comparação com 2025 mostra ${Math.abs(delta)} cm ${delta >= 0 ? "acima" : "abaixo"} — o sinal de driver Norte ${delta < -50 ? "se mantém" : "perde intensidade"}.`,
     });
   }
 
@@ -201,9 +204,9 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
     sublinhas.push({
       rotulo: "Madeira",
       titulo: `Humaitá em ${hum.cota_m.toFixed(2)} m${pvo ? `; Porto Velho ${pvo.cota_m.toFixed(2)} m` : ""}`,
-      texto: `Humaitá ${delta >= 0 ? "+" : ""}${delta} cm vs 2025. ${
-        pvo
-          ? `Porto Velho ${pvo.delta_2025 >= 0 ? "+" : ""}${pvo.delta_2025} cm — Madeira ${
+      texto: `Humaitá ${fmtDeltaCm(delta)} vs 2025. ${
+        pvo && pvo.delta_2025 !== null
+          ? `Porto Velho ${fmtDeltaCm(pvo.delta_2025)} — Madeira ${
               pvo.delta_2025 > 0 ? "acima" : "abaixo"
             } da referência do ano anterior.`
           : ""
@@ -217,7 +220,7 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
     sublinhas.push({
       rotulo: "Tabocal / Itacoatiara",
       titulo: `Itacoatiara em ${ita.cota_m.toFixed(2)} m (pico previsto ${s.previsao.itacoatiara_pico.toFixed(2)} m)`,
-      texto: `Atual ${delta >= 0 ? "+" : ""}${delta} cm vs 2025. Pico SGB ${s.previsao.itacoatiara_pico.toFixed(2)} m sugere janela de calado ${
+      texto: `Atual ${fmtDeltaCm(delta)} vs 2025. Pico SGB ${s.previsao.itacoatiara_pico.toFixed(2)} m sugere janela de calado ${
         s.previsao.itacoatiara_pico >= 13.0 ? "favorável" : "apertada"
       } no Tabocal. Em 2024 a mínima veio 22 dias após a de Manaus — relação a monitorar quando a descida começar.`,
     });

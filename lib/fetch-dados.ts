@@ -8,6 +8,7 @@
 // - Chuva 24h também é puxada no batch (campo Chuva_Adotada) — usada nos
 //   novos painéis "Chuva × Cota" (Sprint Dados v2)
 import { DADOS_ATUAIS, type DadosEstacao } from "./dados-historicos";
+import { aplicaDeltasAnuais } from "./deltas-anuais";
 import {
   ultimasLeiturasBatch,
   resumeLeituras,
@@ -62,7 +63,8 @@ export async function fetchTodasEstacoes(): Promise<Record<string, DadosEstacao>
       vazao_m3s:          resumo.vazao_m3s_atual ?? undefined,
     };
   }
-  return merged;
+  // Deltas vs 2025/2024 recalculados para a data da leitura (não os de DADOS_ATUAIS).
+  return aplicaDeltasAnuais(merged);
 }
 
 // ─── IDN: cotas em 11 estações ──────────────────────────────────────────────
