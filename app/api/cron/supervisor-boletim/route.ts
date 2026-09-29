@@ -13,17 +13,17 @@
 // checkout, matando a corrida de timing com o deploy). Fallback: lê do disco.
 //
 // Proteção: header Authorization: Bearer ${CRON_SECRET} (mesma chave do insights).
-// Requer ANTHROPIC_API_KEY no Railway (já existe, usada pelo insights).
+// Requer DEEPSEEK_API_KEY no Railway (a mesma do insights — lib/llm.ts).
 
 import { NextRequest, NextResponse } from "next/server";
 import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { join } from "path";
-import Anthropic from "@anthropic-ai/sdk";
+import { chatLLM, llmDisponivel, LLM_MODELO } from "@/lib/llm";
 
 const DATA_DIR = process.env.DATA_DIR ?? join(process.cwd(), "data");
 const SERIE_REPO = join(process.cwd(), "data", "boletim-cabotagem-series.json");
 const CACHE_OUT = join(DATA_DIR, "supervisor-boletim-cache.json");
-const MODELO = "claude-haiku-4-5-20251001";
+const MODELO = LLM_MODELO;
 
 // Thresholds que caracterizam candidato a guinada (rascunho — calibrar com o tempo).
 const TH = { proj_min_m: 0.75, crossing_dias: 10, churn: 2, prob: 0.25 };
@@ -165,21 +165,14 @@ async function handler(request: NextRequest) {
   }
 
   // 3) Só aqui chama a IA (algum threshold disparou).
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!llmDisponivel()) {
     // Sem chave: devolve candidato a guinada pelos sinais, marca p/ revisão humana.
-    const out = { ok: true, verdict: "guinada" as const, because: "thresholds dispararam; IA indisponível (sem ANTHROPIC_API_KEY) — revisar manualmente", narrative_tone: "rever", human_review: true, proposed_change: "revisar diff manualmente", sinais, ai: false };
+    const out = { ok: true, verdict: "guinada" as const, because: "thresholds dispararam; IA indisponível (sem DEEPSEEK_API_KEY) — revisar manualmente", narrative_tone: "rever", human_review: true, proposed_change: "revisar diff manualmente", sinais, ai: false };
     persiste(out);
     return NextResponse.json(out);
   }
   try {
-    const client = new Anthropic();
-    const msg = await client.messages.create({
-      model: MODELO,
-      max_tokens: 1024,
-      system: SISTEMA,
-      messages: [{ role: "user", content: montaPrompt(sinais, prev, cur) }],
-    });
-    const raw = msg.content[0]?.type === "text" ? msg.content[0].text : "";
+    const raw = await chatLLM({ system: SISTEMA, user: montaPrompt(sinais, prev, cur), maxTokens: 1024 });
     const m = raw.match(/```json\s*([\s\S]*?)\s*```/) ?? raw.match(/(\{[\s\S]*\})/);
     const parsed = JSON.parse(m ? m[1] : raw.trim());
     const verdict = ["sustains", "guinada", "diverges"].includes(parsed.verdict) ? parsed.verdict : "guinada";

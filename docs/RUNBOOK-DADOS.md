@@ -26,8 +26,8 @@ O schedule só vale a partir da branch `main`. Todos têm botão **Run workflow*
 | **Série IDN** | terça 10:00 | `idn-semanal.yml` | Roda `atualiza-idn-series.mjs` (API ANA), **commita** `data/ana-idn-series.json` e dispara o deploy. Gráfico IDN histórico |
 | **Série Itacoatiara** | terça 10:20 | `itacoatiara-semanal.yml` | Roda `atualiza-itacoatiara-series.mjs` (API ANA, estação 16030000), faz merge em `data/itacoatiara_hidroweb.csv`, regenera `lib/itacoatiara-historico-diario.ts`, **commita** e dispara o deploy. Alimenta o **ETA por análogos** do topo do `/monitor` (IRC) |
 | **SACE/SGB** | **de hora em hora** terça 17–23h UTC + quarta 0–21h UTC | `sgb-semanal.yml` | `POST /api/cron/refresh-sgb` → Railway raspa `sgb.gov.br`, baixa o PDF do Amazonas, parseia (`parseBoletimSGB`), grava `boletins_sgb_cache.json`. Previsão de cheia. SGB publica em horário irregular (já saiu só às 22h UTC) → tenta de hora em hora até quarta; passadas sem boletim novo saem verdes (dedup). **Quem avisa se a terça foi perdida é o watchdog** (via `/api/health`, não mais o próprio workflow) |
-| **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + Claude **Haiku 4.5**, grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
-| **Notícias da home** | segunda 12:00 | `noticias-semanal.yml` | `POST /api/cron/refresh-noticias` → Claude **Opus 4.8** + **web search**, valida URLs contra os resultados de busca, grava `noticias_home_cache.json`. Deck "Últimas notícias" da home (`AnticipationRibbon`) |
+| **Insights AI** | terça 11:00 | `insights-semanal.yml` | `POST /api/cron/insights` → dados ao vivo + **DeepSeek** (`deepseek-chat`), grava `insights_ai_cache.json`. Painel de Insights do `/monitor` |
+| **Notícias da home** | segunda 12:00 | `noticias-semanal.yml` | `POST /api/cron/refresh-noticias` → manchetes dos **RSS das fontes** + **DeepSeek** escolhe/redige (URL vem do RSS), grava `noticias_home_cache.json`. Deck "Últimas notícias" da home (`AnticipationRibbon`) |
 | **ENSO** | quinta 17:00 | `enso-mensal.yml` | `POST /api/cron/refresh-enso` → Railway raspa CPC/NOAA, grava `enso_cpc_cache.json`. (Roda toda quinta; idempotente — CPC publica na 2ª quinta) |
 | **Briefing** | quarta 13:00 | `briefing-semanal.yml` | `POST /api/cron/briefing` → regenera o briefing editorial da semana, grava `briefings/YYYY-WW.json` no volume |
 | **Portos / ANTAQ** | dia 16, 11:00 | `atualiza-portos.yml` | Roda `gera-portos-series.mjs` + `gera-series-tendencia.mjs` + `gera-cabotagem-offshore.mjs`, **commita** os JSONs |
@@ -49,8 +49,9 @@ cache sumiria a cada deploy. Caches no volume: `ana-diario-cache.json`,
 
 ### Secrets / variáveis necessárias
 - **GitHub (repo secrets):** `CRON_SECRET`, `RAILWAY_TOKEN` (escopo de deploy),
-  `ANTHROPIC_API_KEY`, `HIDRO_IDENTIFICADOR`, `HIDRO_SENHA`.
-- **Railway (service web):** `CRON_SECRET`, `ANTHROPIC_API_KEY`,
+  `HIDRO_IDENTIFICADOR`, `HIDRO_SENHA`.
+- **Railway (service web):** `CRON_SECRET`, `DEEPSEEK_API_KEY` (IA: insights, notícias,
+  supervisor, copiloto — `lib/llm.ts`; migrado da Anthropic em 29/09/2026),
   `HIDRO_IDENTIFICADOR`, `HIDRO_SENHA`, `ADMIN_PASSWORD`, `DATA_DIR=/data` (+ volume).
 - `CRON_SECRET` precisa ser **o mesmo valor** no GitHub e no Railway (as rotas
   validam `Authorization: Bearer $CRON_SECRET`).
@@ -283,11 +284,14 @@ Script CLI (uso manual/dev, lê caches locais): `node scripts/gera-insights-ai.m
 O deck **"Últimas notícias"** da home (`components/home/AnticipationRibbon.tsx`) lê
 `noticias_home_cache.json` (volume) via `lerNoticiasHome()` (`lib/noticias-home.ts`).
 `noticias-semanal.yml` (segunda 12:00 UTC) dispara `/api/cron/refresh-noticias`: o
-Railway chama o Claude **Opus 4.8** com a ferramenta de **web search**, que acha 3
-notícias recentes do setor (porto/navegação/hidrologia/agro/minério) e devolve JSON.
+Railway lê as manchetes dos últimos 14 dias nos **RSS públicos das fontes** (Portos e
+Navios, Agência Brasil, Canal Rural, Brasil Mineral — lista `FEEDS` na rota) e a
+**DeepSeek** escolhe 3 do setor (porto/navegação/hidrologia/agro/minério), devolvendo
+índice + frase. (Até set/2026 era Claude Opus + web search; o Google News RSS foi
+descartado porque os termos restringem a uso pessoal/não comercial.)
 
-> **Anti-alucinação de link:** cada `url` do JSON é validada contra o conjunto de
-> URLs que a busca realmente retornou — item com link inventado é descartado. Se
+> **Anti-alucinação de link:** a IA só devolve o **índice** da manchete; `url`, `fonte`
+> e `data` saem do RSS — a IA nunca escreve link. Índice inválido/repetido é descartado. Se
 > sobrarem < 2 itens válidos, a rota **não sobrescreve** o cache (mantém o último
 > bom) e retorna erro → o workflow falha e o watchdog avisa. Fallback quando não há
 > cache: o seed hardcoded `antecipacoes` em `lib/home-content.ts` (com links inline).
@@ -295,7 +299,7 @@ notícias recentes do setor (porto/navegação/hidrologia/agro/minério) e devol
 `GET /api/health` expõe `checks.noticias` (frescor ≤ 9 dias). Ausência do cache **não**
 derruba o `ok` (janela antes do 1º run / uso do seed); só marca `ok:false` quando o
 cache EXISTE mas está velho — o caso "deck congelado com notícia velha". Protegido por
-`CRON_SECRET`. Precisa de `ANTHROPIC_API_KEY` no Railway (já existe).
+`CRON_SECRET`. Precisa de `DEEPSEEK_API_KEY` no Railway.
 
 ---
 
@@ -452,13 +456,13 @@ Cadeia (cada etapa também roda sozinha):
 | **qua 12:30** | `supervisor-boletim-semanal.yml` | Lê as 2 últimas semanas da série, manda no corpo para `POST /api/cron/supervisor-boletim` (diff determinístico + veredito; **só chama a IA se algum threshold disparar** → custo ~zero). Se `guinada`/`diverges`, abre/atualiza uma **Issue** (label `supervisor-boletim`) PROPONDO a revisão. A rota **nunca** altera o modelo — o Bruno aprova. |
 
 **Supervisor** (`app/api/cron/supervisor-boletim/route.ts`): mesma proteção do insights
-(`Bearer CRON_SECRET`), reusa `ANTHROPIC_API_KEY` do Railway. Thresholds de guinada
+(`Bearer CRON_SECRET`), reusa `DEEPSEEK_API_KEY` do Railway. Thresholds de guinada
 (rascunho): |Δcalado central| ≥ 0,75 m · |Δdata de restrição| ≥ 10 dias · ≥ 2 trocas
 de ano-análogo (top-3) · |Δprob| ≥ 0,25 · troca de fase ENSO. Cache de auditoria:
 `data/supervisor-boletim-cache.json`.
 
 **Secrets/vars (GitHub):** `RESEND_API_KEY` (secret), `RESEND_FROM`+`BOLETIM_RECIPIENTS`
-(vars), `CRON_SECRET` (já existe). Railway: `ANTHROPIC_API_KEY`+`CRON_SECRET` (já existem).
+(vars), `CRON_SECRET` (já existe). Railway: `DEEPSEEK_API_KEY`+`CRON_SECRET`.
 
 > Madeira: se Borba/Manicoré estiverem offline na telemetria, o z usa Humaitá+PV.
 > `DASH_API` aponta a API; `BOLETIM_OUT` redireciona o PDF.
