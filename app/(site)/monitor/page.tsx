@@ -10,6 +10,7 @@ import InsightsPanel from "@/components/InsightsPanel";
 import SidebarNav from "@/components/SidebarNav";
 import Tooltip from "@/components/Tooltip";
 import { fetchPrevisao2026 } from "@/lib/fetch-dados";
+import { lerCicloObservado } from "@/lib/ciclo-observado";
 import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import AlertaOndaBranco from "@/components/AlertaOndaBranco";
 import IRCWidget from "@/components/IRCWidget";
@@ -53,6 +54,11 @@ const ESTACOES_ORDEM: Estacao[] = [
   "Labrea",
 ];
 
+const fmtM = (n: number) => n.toFixed(2).replace(".", ",");
+const MESES_ABREV = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+// "2026-06-30" → "30/jun"
+const fmtDiaMes = (iso: string) => `${parseInt(iso.slice(8, 10), 10)}/${MESES_ABREV[parseInt(iso.slice(5, 7), 10) - 1]}`;
+
 export default async function MonitorPage() {
   // ANA: chamada 1x por dia, cache em disco (data/ana-diario-cache.json).
   // O cache "vira" à meia-noite de Manaus, não UTC. Detalhe e fallbacks em
@@ -60,8 +66,11 @@ export default async function MonitorPage() {
   // Previsão 2026 é lida do cache SGB (fonte dinâmica) ou cai para hardcoded.
   const previsao = await fetchPrevisao2026();
   const serieIDN = lerSerieIDN();
+  // Extremos observados do ciclo (pico Manaus, mínima Itacoatiara) — lidos
+  // DEPOIS de obterDadosDiariosANA, que anexa a leitura de hoje à série.
   const diario = await obterDadosDiariosANA();
   let { dados } = diario;
+  const observado = lerCicloObservado();
   const { cotasIDN, vazoesIDN, serieCaracarai } = diario;
   if (Object.keys(dados).length === 0) {
     const { DADOS_ATUAIS } = await import("@/lib/dados-historicos");
@@ -322,7 +331,7 @@ export default async function MonitorPage() {
               <h2 className="text-white font-bold text-lg">{dashboardCopy.panel3.title}</h2>
               <p className="text-gray-400 text-sm mt-0.5 max-w-2xl">{dashboardCopy.panel3.subtitle}</p>
             </div>
-            <AlertaManausIta dados={dados} idn={idnAtual} previsao={previsao} />
+            <AlertaManausIta dados={dados} idn={idnAtual} previsao={previsao} observado={observado} />
 
             {/* Cross-link → /caso-2024 */}
             <div className="mt-3 bg-azul-medio/50 border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between gap-4">
@@ -389,6 +398,19 @@ export default async function MonitorPage() {
                       IC80: {previsao.manaus_pico_cheia.ic80_min}–{previsao.manaus_pico_cheia.ic80_max} m
                       &nbsp;·&nbsp; P(≥ 27,5 m) = {(previsao.manaus_pico_cheia.prob_27_5 * 100).toFixed(0)}%
                     </p>
+                    {observado.picoManaus?.consolidado && (() => {
+                      const p = observado.picoManaus;
+                      const { ic80_min, ic80_max } = previsao.manaus_pico_cheia;
+                      const dentro = p.cota_m >= ic80_min && p.cota_m <= ic80_max;
+                      return (
+                        <p className="text-white text-sm mt-1.5 pt-1.5 border-t border-white/10">
+                          Observado: <strong className="text-verde">{fmtM(p.cota_m)} m</strong> em {fmtDiaMes(p.data)}
+                          <span className="text-gray-400 text-xs">
+                            {" "}— {dentro ? "dentro" : "fora"} do IC80 da previsão (ANA)
+                          </span>
+                        </p>
+                      );
+                    })()}
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
@@ -399,6 +421,11 @@ export default async function MonitorPage() {
                     <div className="bg-azul-marinho rounded-lg p-3">
                       <p className="text-gray-400 text-xs">Pico Itacoatiara</p>
                       <p className="text-white font-bold text-xl">{previsao.itacoatiara_pico} m</p>
+                      {observado.picoItacoatiara?.consolidado && (
+                        <p className="text-gray-400 text-xs">
+                          observado {fmtM(observado.picoItacoatiara.cota_m)} m ({fmtDiaMes(observado.picoItacoatiara.data)})
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -422,10 +449,27 @@ export default async function MonitorPage() {
                         posicao="top"
                       />
                     </p>
-                    <p className="text-white font-bold">4,10 – 5,15 m</p>
-                    <p className="text-gray-500 text-xs mt-0.5">
-                      Muito acima de 2024 (−0,17 m). Driver Norte atenua a estiagem em Itacoatiara.
-                    </p>
+                    {observado.minimaItacoatiara ? (() => {
+                      const m = observado.minimaItacoatiara;
+                      return (
+                        <>
+                          <p className="text-white font-bold">
+                            {fmtM(m.cota_m)} m em {fmtDiaMes(m.data)}
+                            {!m.consolidado && (
+                              <span className="text-ouro text-xs font-normal">
+                                {" "}— até agora{m.taxa_cm_dia !== null && m.taxa_cm_dia < 0 ? `, caindo ${-m.taxa_cm_dia} cm/dia` : ""}
+                              </span>
+                            )}
+                          </p>
+                          <p className="text-gray-500 text-xs mt-0.5">
+                            {m.referencias.map((r) => `${r.ano}: ${fmtM(r.cota_m)} m (${fmtDiaMes(r.data)})`).join(" · ")}
+                            {" "}— observado ANA
+                          </p>
+                        </>
+                      );
+                    })() : (
+                      <p className="text-gray-500 text-xs">Estiagem ainda não começou.</p>
+                    )}
                   </div>
                 </div>
                 <p className="text-gray-600 text-xs mt-3">{dashboardCopy.panel5.forecast.source}</p>

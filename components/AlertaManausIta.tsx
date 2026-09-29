@@ -4,6 +4,7 @@ import { AlertTriangle, CheckCircle, XCircle, Info } from "lucide-react";
 import { DADOS_ATUAIS, PREVISAO_2026, type DadosEstacao } from "@/lib/dados-historicos";
 import { riscoDescasamento } from "@/lib/calcula-idn";
 import type { Previsao2026 } from "@/lib/fetch-dados";
+import type { CicloObservado } from "@/lib/ciclo-observado";
 
 const MESES_PT = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 
@@ -20,6 +21,8 @@ function formataDataBoletim(data: string | undefined): string {
 }
 
 const fmt = (n: number) => n.toFixed(2).replace(".", ",");
+// "2026-06-30" → "30/jun"
+const diaMes = (iso: string) => `${parseInt(iso.slice(8, 10), 10)}/${MESES_PT[parseInt(iso.slice(5, 7), 10) - 1]}`;
 const pct = (p: number) => `${Math.round(p * 100)}%`;
 
 const ICONE_RISCO = {
@@ -64,10 +67,12 @@ export default function AlertaManausIta({
   dados = DADOS_ATUAIS,
   idn,
   previsao,
+  observado = {},
 }: {
   dados?: Record<string, DadosEstacao>;
   idn?: number;
   previsao?: Previsao2026;
+  observado?: CicloObservado;
 }) {
   const mao = dados.Manaus;
   const ita = dados.Itacoatiara;
@@ -78,6 +83,9 @@ export default function AlertaManausIta({
     ...PREVISAO_2026,
     fonte_dinamica: false,
   };
+  const pico   = observado.picoManaus;
+  const minIta = observado.minimaItacoatiara;
+  const ano    = (pico?.data ?? minIta?.data ?? "").slice(0, 4) || String(new Date().getUTCFullYear());
   const risco    = riscoDescasamento(mao.cota_m, ita.cota_m, mao.delta_2025, ita.delta_2025);
 
   const abaixoGatilho = mao.cota_m < 17.7;
@@ -177,23 +185,41 @@ export default function AlertaManausIta({
             </p>
             <div className="space-y-1 text-xs">
               <div className="flex justify-between">
-                <span className="text-gray-400">Pico cheia Manaus</span>
-                <span className="text-verde font-bold">
+                <span className="text-gray-400">Pico cheia Manaus{pico?.consolidado ? " (previsto)" : ""}</span>
+                <span className={`font-bold ${pico?.consolidado ? "text-gray-300" : "text-verde"}`}>
                   {fmt(prev.manaus_pico_cheia.media)} m (IC80: {fmt(prev.manaus_pico_cheia.ic80_min)}–{fmt(prev.manaus_pico_cheia.ic80_max)})
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">Prob. acima de 27,5 m</span>
-                <span className="text-verde font-bold">{pct(prev.manaus_pico_cheia.prob_27_5)}</span>
-              </div>
+              {pico?.consolidado ? (
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Pico cheia Manaus (observado)</span>
+                  <span className="text-verde font-bold">
+                    {fmt(pico.cota_m)} m em {diaMes(pico.data)}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Prob. acima de 27,5 m</span>
+                  <span className="text-verde font-bold">{pct(prev.manaus_pico_cheia.prob_27_5)}</span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-gray-400">ENSO</span>
                 <span className="text-ouro font-bold">{prev.enso}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-400">Mínima Itacoatiara 2026</span>
-                <span className="text-white font-bold">4,10–5,15 m</span>
-              </div>
+              {minIta && (
+                <div className="flex justify-between gap-3">
+                  <span className="text-gray-400">
+                    Mínima Itacoatiara {ano}{minIta.consolidado ? "" : " (até agora)"}
+                  </span>
+                  <span className="text-white font-bold text-right">
+                    {fmt(minIta.cota_m)} m em {diaMes(minIta.data)}
+                    {!minIta.consolidado && minIta.taxa_cm_dia !== null && minIta.taxa_cm_dia < 0 && (
+                      <span className="text-ouro font-normal"> · caindo {-minIta.taxa_cm_dia} cm/dia</span>
+                    )}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 

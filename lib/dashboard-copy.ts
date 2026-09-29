@@ -203,9 +203,9 @@ export const dashboardCopy = {
           context: "Pico previsto para o ciclo de 2026.",
         },
         {
-          label: "Estiagem esperada em Itacoatiara",
+          label: "Mínima da estiagem em Itacoatiara",
           context:
-            "Faixa de mínima projetada — abaixo do limite operacional típico para comboios graneleiros de maior calado.",
+            "Menor cota observada (ANA) desde o pico da cheia. Enquanto o rio ainda desce, é a mínima até agora; comparada às mínimas dos dois anos anteriores.",
         },
       ],
       source: "Fonte: SGB/CPRM — Boletins de Monitoramento Hidrológico.",
