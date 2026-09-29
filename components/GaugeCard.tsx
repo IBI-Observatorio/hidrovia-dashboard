@@ -4,6 +4,10 @@ import { LIMIARES, posicaoRelativa, semaforo, type Estacao } from "@/lib/limiare
 import { DadosEstacao } from "@/lib/dados-historicos";
 import { TrendingDown, TrendingUp, Minus } from "lucide-react";
 import Tooltip from "./Tooltip";
+import { fmtDeltaCm } from "@/lib/fmt-delta";
+
+const corDelta = (v: number | null) =>
+  v === null ? "text-gray-500 font-bold" : v >= 0 ? "text-verde font-bold" : "text-vermelho font-bold";
 
 interface GaugeCardProps {
   estacao: Estacao;
@@ -140,8 +144,8 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
             vs 2025
             <Tooltip conteudo="Diferença de cota no mesmo dia de 2025. Positivo = melhor que 2025." posicao="bottom" />
           </span>
-          <span className={dados.delta_2025 >= 0 ? "text-verde font-bold" : "text-vermelho font-bold"}>
-            {dados.delta_2025 >= 0 ? "+" : ""}{dados.delta_2025} cm
+          <span className={corDelta(dados.delta_2025)}>
+            {fmtDeltaCm(dados.delta_2025)}
           </span>
         </div>
         <div className="bg-azul-marinho rounded px-2 py-1">
@@ -149,8 +153,8 @@ export default function GaugeCard({ estacao, dados }: GaugeCardProps) {
             vs 2024
             <Tooltip conteudo="Diferença de cota no mesmo dia de 2024 (mega-seca). Positivo = melhor que a seca histórica." posicao="bottom" />
           </span>
-          <span className={dados.delta_2024 >= 0 ? "text-verde font-bold" : "text-vermelho font-bold"}>
-            {dados.delta_2024 >= 0 ? "+" : ""}{dados.delta_2024} cm
+          <span className={corDelta(dados.delta_2024)}>
+            {fmtDeltaCm(dados.delta_2024)}
           </span>
         </div>
       </div>

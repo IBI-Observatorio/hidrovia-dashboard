@@ -94,6 +94,8 @@ async function handler(request: NextRequest) {
 
     // ── Linhas por estação — usa o mesmo cache dos cards do /monitor ───────────
     const sinal = (v: number) => (v >= 0 ? `+${v}` : `${v}`);
+    // Delta anual null = sem dado do mesmo dia → "n/d" (a IA não deve inventar)
+    const sinalCm = (v: number | null) => (v === null ? "n/d" : `${sinal(v)} cm`);
     const linhasEstacoes = [
       "Manaus", "Itacoatiara", "Manacapuru",
       "PortoVelho", "Humaita", "Manicore",
@@ -102,7 +104,7 @@ async function handler(request: NextRequest) {
       .map((nome) => {
         const d = dados[nome];
         if (!d) return null;
-        return `${nome}: ${d.cota_m.toFixed(2)} m (Δ24h ${sinal(d.variacao_24h)} cm | vs 2025: ${sinal(d.delta_2025)} cm | vs 2024: ${sinal(d.delta_2024)} cm)`;
+        return `${nome}: ${d.cota_m.toFixed(2)} m (Δ24h ${sinal(d.variacao_24h)} cm | vs 2025: ${sinalCm(d.delta_2025)} | vs 2024: ${sinalCm(d.delta_2024)})`;
       })
       .filter(Boolean)
       .join("\n");
