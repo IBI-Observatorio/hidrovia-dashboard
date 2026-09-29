@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import EmbedModulo from "@/components/EmbedModulo";
 import EmbedButton from "@/components/EmbedButton";
-import RelogioVivo from "@/components/RelogioVivo";
 import { EMBED_REGISTRY } from "@/lib/embed-registry";
 import { EMBED_REGISTRY_HIDRO } from "@/lib/embed-registry-hidro";
 
@@ -9,7 +8,6 @@ export function generateStaticParams() {
   return [
     ...Object.keys(EMBED_REGISTRY),
     ...Object.keys(EMBED_REGISTRY_HIDRO),
-    "relogio",
   ].map((modulo) => ({ modulo }));
 }
 
@@ -25,16 +23,6 @@ export default async function EmbedPage({
     return (
       <main className="p-4">
         <EmbedModulo modulo={modulo} />
-      </main>
-    );
-  }
-
-  // ── Caminho RELÓGIO — agregador nacional (client, soma registry-driven) ─────
-  // Vitrine: SÓ o número vivo + equivalente diário + selo + link p/ /relogio.
-  if (modulo === "relogio") {
-    return (
-      <main className="p-4">
-        <RelogioVivo variante="embed" />
       </main>
     );
   }

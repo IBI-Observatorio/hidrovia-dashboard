@@ -462,17 +462,3 @@ de ano-análogo (top-3) · |Δprob| ≥ 0,25 · troca de fase ENSO. Cache de aud
 
 > Madeira: se Borba/Manicoré estiverem offline na telemetria, o z usa Humaitá+PV.
 > `DASH_API` aponta a API; `BOLETIM_OUT` redireciona o PDF.
-
----
-
-## 🗺️ PNL 2050 (`/pnl-2050`) — manual, só quando sair nova edição do plano
-
-| Página | Script | Saída |
-|--------|--------|-------|
-| `/pnl-2050` e `/pnl-2050/eixo/[codigo]` | `scripts/pnl2050/extrai_pnl2050.py` (manual) | `public/data/pnl2050/pnl2050.json` |
-
-- **Fonte:** PDF do *Plano Nacional de Logística 2050 — Relatório Completo, 1ª edição (ago/2026)*. Caminho padrão no OneDrive do Bruno (`IBI/Observatório/PNL2050/`); passe outro caminho como argumento.
-- **Rodar:** `python scripts/pnl2050/extrai_pnl2050.py [pdf]` (precisa de `pypdf`).
-- **Gate:** o script falha se não reproduzir 112 objetivos por categoria, 31+11 eixos e a "Qtd. de intervenções" de cada ficha. Divergência do próprio PDF entra em `EXCECOES_QTD` com justificativa (hoje só o R007: tabelas listam 25, ficha declara 24). `__tests__/pnl2050.test.ts` repete as checagens no build de testes.
-- **Nova edição do PNL:** números de página dos índices estão fixos no script (`extrai_objetivos`) — conferir antes de rodar.
-- A escada de aderência (degraus 1–6) é fase 2 e virá de `lib/pnl2050/aderencia/` — ver `docs/pnl2050-spec.md`.
