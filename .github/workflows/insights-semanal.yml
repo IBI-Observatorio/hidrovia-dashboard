@@ -19,6 +19,18 @@ on:
   schedule:
     - cron: "0 11 * * 2"
   workflow_dispatch:
+    inputs:
+      modelo:
+        description: "Modelo DeepSeek (vazio = padrão da rota)"
+        required: false
+        default: ""
+        type: choice
+        options: ["", "deepseek-chat", "deepseek-reasoner"]
+      dry:
+        description: "Só gerar e mostrar no log, sem gravar (teste)"
+        required: false
+        default: false
+        type: boolean
 
 # Uma execução por vez.
 concurrency:
@@ -35,18 +47,26 @@ jobs:
           # Domínio público do dashboard no Railway. Pode ser sobrescrito por uma
           # repo variable RAILWAY_PUBLIC_URL se o domínio mudar.
           BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+          # Só no disparo manual (vazios no schedule): teste A/B de modelo.
+          MODELO: ${{ inputs.modelo }}
+          DRY: ${{ inputs.dry }}
         run: |
           set -euo pipefail
           if [ -z "${CRON_SECRET}" ]; then
             echo "::error::Secret CRON_SECRET não configurado no repositório."
             exit 1
           fi
-          echo "POST ${BASE_URL}/api/cron/insights"
+          QS=""
+          if [ -n "${MODELO:-}" ]; then QS="modelo=${MODELO}"; fi
+          if [ "${DRY:-false}" = "true" ]; then QS="${QS:+${QS}&}dry=1"; fi
+          URL="${BASE_URL}/api/cron/insights${QS:+?${QS}}"
+          echo "POST ${URL}"
           # --retry-all-errors cobre cold start e o HTTP 500 ocasional do backend.
+          # --max-time 320: o deepseek-reasoner pode levar alguns minutos.
           http=$(curl -sS -o /tmp/resp.json -w "%{http_code}" \
-            --retry 3 --retry-all-errors --retry-delay 15 --max-time 200 \
+            --retry 3 --retry-all-errors --retry-delay 15 --max-time 320 \
             -X POST -H "Authorization: Bearer ${CRON_SECRET}" \
-            "${BASE_URL}/api/cron/insights")
+            "${URL}")
           echo "HTTP ${http}"
           cat /tmp/resp.json || true
           echo
