@@ -18,7 +18,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { chatLLM, llmDisponivel, LLM_MODELO, LLM_MODELOS } from "@/lib/llm";
+import { chatLLM, llmDisponivel, LLM_MODELOS } from "@/lib/llm";
 import { fetchPrevisao2026 } from "@/lib/fetch-dados";
 import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import { IDN_RECENTE_DIARIO } from "@/lib/idn-historico-calculado";
@@ -26,7 +26,9 @@ import type { InsightData } from "@/lib/gera-insights";
 
 const DATA_DIR  = process.env.DATA_DIR ?? join(process.cwd(), "data");
 const CACHE_OUT = join(DATA_DIR, "insights_ai_cache.json");
-const MODELO    = LLM_MODELO;
+// deepseek-reasoner: no teste A/B de 29/09/2026 (PR #93) errou menos a
+// interpretação que o deepseek-chat (anos de referência, sentido do IDN).
+const MODELO    = "deepseek-reasoner";
 
 const TIPOS_VALIDOS: InsightData["tipo"][] = ["critico", "alerta", "info", "positivo"];
 
@@ -42,7 +44,9 @@ Sua missão é produzir insights analíticos semanais sobre a situação das hid
 Diretrizes editoriais:
 - Linguagem direta, técnica e calibrada. Sem alarmismo, sem eufemismo.
 - Cite sempre os números concretos. Compare com 2024 e 2025 quando relevante.
-- O IDN (Índice de Dessincronização Norte-Sul) mede a divergência entre sub-bacias Norte (Negro/Branco) e Sul (Madeira/Purus). IDN > +0,56 = Driver Norte; IDN < −0,15 = Driver Sul; entre = Sincronizado.
+- O IDN (Índice de Dessincronização Norte-Sul) mede a divergência entre sub-bacias Norte (Negro/Branco) e Sul (Madeira/Purus). SENTIDO: IDN > 0 significa que a sub-bacia NORTE está MAIS SECA (mais depletada, em termos relativos à sua própria faixa histórica) que a Sul; IDN < 0, que a SUL está mais seca. IDN > +0,56 = Driver Norte (padrão de 2026); IDN < −0,15 = Driver Sul (padrão da seca de 2024); entre = Sincronizado.
+- Estações por rio: Curicuriari = Negro alto; Manaus = Negro (foz, integra a bacia); Manacapuru = Solimões; Itacoatiara = Amazonas (calha principal, após a confluência); Porto Velho, Humaitá e Manicoré = Madeira; Lábrea = Purus. Não atribua uma estação a uma sub-bacia diferente.
+- 2024 foi a seca extrema de referência; 2025 foi um ano de níveis mais altos. Ao citar "ano passado", isso é 2025.
 - Fronteiras GMM calibradas (2016–2023): Sul ≤ −0,15; Norte ≥ +0,56.
 - Nível 17,7 m em Manaus é a referência regulatória de Baixas Águas (ANTAQ/LWS).
 - Priorize o que é acionável para o setor de transporte fluvial.
@@ -50,7 +54,8 @@ Diretrizes editoriais:
 Integridade dos dados (regra dura):
 - Use SOMENTE os números e fatos fornecidos no prompt. Não invente valores, datas, projeções ou comparações.
 - "n/d" significa que NÃO há dado de comparação daquela estação com aquele ano: não afirme nada sobre essa comparação (nem "acima", nem "abaixo", nem "também").
-- Toda afirmação sobre uma estação deve se apoiar na linha dela no prompt.`;
+- Toda afirmação sobre uma estação deve se apoiar na linha dela no prompt.
+- Ao generalizar ("todas", "o mesmo sinal", "as demais"), confira o sinal de CADA estação citada; se houver exceção, diga qual.`;
 
 function montaPromptUsuario(opts: {
   dataRef: string;
