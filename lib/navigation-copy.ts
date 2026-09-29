@@ -16,10 +16,6 @@ export const navigationCopy = {
     },
     links: [
       { label: "Início",   href: "/" },
-      // Página pública flagship — agregador nacional de custo evitável.
-      { label: "Relógio",  href: "/relogio" },
-      // Carteira de projetos estruturantes — fichas com relógio de inação.
-      { label: "Livro-Razão", href: "/livro-razao" },
       { label: "Portos",   href: "/portos" },
       { label: "Hidrovia", href: "/hidrovia" },
       // Agro escondido do menu por ora (a pedido) — a rota /agro segue ATIVA,
@@ -87,13 +83,10 @@ export const navigationCopy = {
       {
         title: "Navegar",
         links: [
-          { label: "Início",                    href: "/" },
-          { label: "Relógio da Infraestrutura", href: "/relogio" },
-          { label: "Livro-Razão",               href: "/livro-razao" },
-          { label: "PNL 2050: do papel à obra", href: "/pnl-2050" },
-          { label: "Portos",                    href: "/portos" },
-          { label: "Hidrovia Amazônica",        href: "/hidrovia" },
-          { label: "Análises",                  href: "/analises" },
+          { label: "Início",                href: "/" },
+          { label: "Portos",                href: "/portos" },
+          { label: "Hidrovia Amazônica",    href: "/hidrovia" },
+          { label: "Análises",              href: "/analises" },
         ],
       },
       {
