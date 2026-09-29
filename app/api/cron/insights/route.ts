@@ -126,8 +126,16 @@ async function handler(request: NextRequest) {
     const idnMax   = Math.max(...idnsArr).toFixed(3);
 
     // ── Contexto SGB + ENSO (via fetchPrevisao2026, DATA_DIR-aware) ────────────
-    const boletimStr = previsao.numero_boletim
-      ? `Último boletim SGB: nº ${previsao.numero_boletim}${previsao.data_boletim ? ` de ${previsao.data_boletim}` : ""}.`
+    // Distingue o último boletim PUBLICADO do último que trouxe previsão de cheia
+    // (fora da temporada, jul–fev, os boletins saem sem previsão de pico).
+    const ub = previsao.ultimo_boletim;
+    const prevStr = previsao.numero_boletim
+      ? `Última previsão de pico de cheia do SGB: boletim nº ${previsao.numero_boletim}${previsao.data_boletim ? ` de ${previsao.data_boletim}` : ""} (Manaus ${previsao.manaus_pico_cheia.media} m).`
+      : "";
+    const boletimStr = ub?.numero
+      ? `Último boletim SGB publicado: nº ${ub.numero}${ub.data ? ` de ${ub.data}` : ""}${ub.numero !== previsao.numero_boletim ? " (sem previsão de pico — fora da temporada de cheia)" : ""}. ${prevStr}`.trim()
+      : previsao.numero_boletim
+      ? prevStr
       : "";
     const ensoStr = previsao.enso
       ? `ENSO — ${previsao.enso_status ?? ""} (CPC/NOAA${previsao.enso_data_emissao ? `, ${previsao.enso_data_emissao}` : ""}): ${previsao.enso}`.replace(/\s+\(/, " (")

@@ -246,6 +246,9 @@ export interface Previsao2026 {
   fonte_dinamica:      boolean;            // true se veio do parser SGB
   numero_boletim?:     number;             // ex: 21 (do parser SGB)
   data_boletim?:       string;             // ex: "2026-05-26" (ISO, do parser SGB)
+  // numero/data_boletim acima = boletim da PREVISÃO de cheia (fora da temporada,
+  // o último que a trouxe). Este é o último boletim PUBLICADO, com ou sem previsão.
+  ultimo_boletim?:     { numero?: number; data?: string };
   manaus_pico_cheia:   {
     media:     number;
     ic80_min:  number;
@@ -319,6 +322,10 @@ export async function fetchPrevisao2026(): Promise<Previsao2026> {
       fonte_dinamica:  true,
       numero_boletim:  typeof comPrevisao.numero === "number" ? comPrevisao.numero : undefined,
       data_boletim:    typeof comPrevisao.data === "string" ? comPrevisao.data : undefined,
+      ultimo_boletim: {
+        numero: typeof ultimo.numero === "number" ? ultimo.numero : undefined,
+        data:   typeof ultimo.data === "string" ? ultimo.data : undefined,
+      },
       manaus_pico_cheia: {
         media:     manaus.cota_prevista_m,
         ic80_min:  manaus.ic80_min_m,
