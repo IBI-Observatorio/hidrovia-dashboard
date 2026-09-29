@@ -45,7 +45,12 @@ Diretrizes editoriais:
 - O IDN (Índice de Dessincronização Norte-Sul) mede a divergência entre sub-bacias Norte (Negro/Branco) e Sul (Madeira/Purus). IDN > +0,56 = Driver Norte; IDN < −0,15 = Driver Sul; entre = Sincronizado.
 - Fronteiras GMM calibradas (2016–2023): Sul ≤ −0,15; Norte ≥ +0,56.
 - Nível 17,7 m em Manaus é a referência regulatória de Baixas Águas (ANTAQ/LWS).
-- Priorize o que é acionável para o setor de transporte fluvial.`;
+- Priorize o que é acionável para o setor de transporte fluvial.
+
+Integridade dos dados (regra dura):
+- Use SOMENTE os números e fatos fornecidos no prompt. Não invente valores, datas, projeções ou comparações.
+- "n/d" significa que NÃO há dado de comparação daquela estação com aquele ano: não afirme nada sobre essa comparação (nem "acima", nem "abaixo", nem "também").
+- Toda afirmação sobre uma estação deve se apoiar na linha dela no prompt.`;
 
 function montaPromptUsuario(opts: {
   dataRef: string;
