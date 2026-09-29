@@ -1,5 +1,5 @@
 // Endpoint chamado pelo cron do Railway (mesmo service da terça) para regenerar
-// os Insights Automáticos via Claude e gravar o cache no volume persistente.
+// os Insights Automáticos via IA (DeepSeek, lib/llm.ts) e gravar o cache no volume persistente.
 // Substitui o passo `gera-insights-ai.mjs` do run-pipeline-sace.bat — que rodava
 // só na máquina do Bruno e nunca chegava à produção (ver docs/RUNBOOK-DADOS.md).
 //
@@ -10,7 +10,7 @@
 // Proteção: header Authorization: Bearer ${CRON_SECRET} (mesma chave do briefing).
 //
 // Configuração no Railway:
-//   - Variáveis ANTHROPIC_API_KEY e CRON_SECRET no service web
+//   - Variáveis DEEPSEEK_API_KEY e CRON_SECRET no service web
 //   - Cron service com schedule "0 11 * * 2" (terça 08:00 Manaus = 11:00 UTC)
 //   - Comando: curl -fsS -X POST -H "Authorization: Bearer $CRON_SECRET" \
 //              "https://$RAILWAY_PUBLIC_DOMAIN/api/cron/insights"
@@ -18,7 +18,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import Anthropic from "@anthropic-ai/sdk";
+import { chatLLM, llmDisponivel, LLM_MODELO } from "@/lib/llm";
 import { fetchPrevisao2026 } from "@/lib/fetch-dados";
 import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import { IDN_RECENTE_DIARIO } from "@/lib/idn-historico-calculado";
@@ -26,7 +26,7 @@ import type { InsightData } from "@/lib/gera-insights";
 
 const DATA_DIR  = process.env.DATA_DIR ?? join(process.cwd(), "data");
 const CACHE_OUT = join(DATA_DIR, "insights_ai_cache.json");
-const MODELO    = "claude-haiku-4-5-20251001";
+const MODELO    = LLM_MODELO;
 
 const TIPOS_VALIDOS: InsightData["tipo"][] = ["critico", "alerta", "info", "positivo"];
 
@@ -82,8 +82,8 @@ async function handler(request: NextRequest) {
   if (!autorizado(request)) {
     return NextResponse.json({ erro: "Não autorizado" }, { status: 401 });
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ ok: false, erro: "ANTHROPIC_API_KEY ausente" }, { status: 500 });
+  if (!llmDisponivel()) {
+    return NextResponse.json({ ok: false, erro: "DEEPSEEK_API_KEY ausente" }, { status: 500 });
   }
 
   const dataRef = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
@@ -129,15 +129,7 @@ async function handler(request: NextRequest) {
     const USUARIO = montaPromptUsuario({ dataRef, linhasEstacoes, idnAtual, tendIDN, idnMin, idnMax, boletimStr, ensoStr });
 
     // ── Chamada à API ──────────────────────────────────────────────────────────
-    const client = new Anthropic();
-    const msg = await client.messages.create({
-      model: MODELO,
-      max_tokens: 2048,
-      system: SISTEMA,
-      messages: [{ role: "user", content: USUARIO }],
-    });
-
-    const raw = msg.content[0]?.type === "text" ? msg.content[0].text : "";
+    const raw = await chatLLM({ system: SISTEMA, user: USUARIO, maxTokens: 2048 });
     const jsonMatch = raw.match(/```json\s*([\s\S]*?)\s*```/) ?? raw.match(/(\[[\s\S]*\])/);
     const jsonStr = jsonMatch ? jsonMatch[1] : raw.trim();
 

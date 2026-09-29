@@ -11,7 +11,7 @@ name: Insights AI semanal
 #
 # Pré-requisitos:
 #   - Secret do repositório CRON_SECRET (mesmo valor da var CRON_SECRET no Railway)
-#   - Vars no service web do Railway: CRON_SECRET e ANTHROPIC_API_KEY
+#   - Vars no service web do Railway: CRON_SECRET e DEEPSEEK_API_KEY
 #   - ⚠️ O agendamento (schedule) só dispara quando este arquivo está na branch
 #     padrão (main). Em outras branches só funciona o "Run workflow" manual.
 

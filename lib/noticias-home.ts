@@ -3,8 +3,8 @@
 // Antes: o array `antecipacoes` era hardcoded em lib/home-content.ts e congelava
 // (notícia velha) porque não tinha nenhum mecanismo de atualização. Agora as
 // notícias vêm de um cache no volume DATA_DIR, gerado 1×/semana pela rota
-// /api/cron/refresh-noticias (Claude + web search, com URLs REAIS validadas
-// contra os resultados de busca). Mesmo padrão do insights_ai_cache.
+// /api/cron/refresh-noticias (manchetes dos RSS das fontes + DeepSeek; a URL
+// vem sempre do RSS, nunca da IA). Mesmo padrão do insights_ai_cache.
 //
 // Uso exclusivo em Server Components / route handlers (usa `fs`). Se o cache não
 // existir ou estiver corrompido, cai para as `antecipacoes` hardcoded (seed).
@@ -27,7 +27,7 @@ export interface NoticiaHome {
 
 export interface NoticiasHomeCache {
   gerado_em: string;      // ISO 8601
-  modelo:    string;      // ex: "claude-opus-4-8"
+  modelo:    string;      // ex: "deepseek-chat"
   noticias:  NoticiaHome[];
 }
 

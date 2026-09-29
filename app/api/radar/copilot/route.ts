@@ -5,10 +5,10 @@
 // e resolve as fontes é este código. A IA nunca emite um número econômico exibido:
 // os números de cenário vêm do ScenarioResult do motor; os do explicador, dos dados.
 //
-// Chave: ANTHROPIC_API_KEY é injetada pelo ambiente (Railway); nunca vai ao client.
+// Chave: DEEPSEEK_API_KEY (lib/llm.ts) é injetada pelo ambiente (Railway); nunca vai ao client.
 
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { chatLLM, llmDisponivel } from "@/lib/llm";
 import { avaliarCenario, analisarAtivo, paramsFromAsset, type Levers, type Asset } from "@/lib/dcf";
 import { getRadarAsset, fullAsset, type RadarAssetEntry } from "@/lib/radar/assets";
 import { alertasDoAtivo } from "@/lib/radar/alerts";
@@ -26,7 +26,6 @@ import {
   SISTEMA_NARRADOR,
 } from "@/lib/radar/copilot";
 
-const MODELO = "claude-sonnet-4-6";
 const MAX_TOKENS = 1000;
 const MAX_PERGUNTA = 600;
 
@@ -40,18 +39,12 @@ type Parte =
   | { tipo: "cenario-indisponivel"; texto: string }
   | { tipo: "erro"; texto: string };
 
-async function chamarIA(client: Anthropic, system: string, user: string): Promise<string> {
-  const msg = await client.messages.create({
-    model: MODELO,
-    max_tokens: MAX_TOKENS,
-    system,
-    messages: [{ role: "user", content: user }],
-  });
-  return msg.content[0]?.type === "text" ? msg.content[0].text : "";
+async function chamarIA(system: string, user: string): Promise<string> {
+  return chatLLM({ system, user, maxTokens: MAX_TOKENS });
 }
 
 export async function POST(request: NextRequest) {
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!llmDisponivel()) {
     return NextResponse.json({ partes: [{ tipo: "erro", texto: "Copiloto indisponível (sem credencial de IA configurada)." }] });
   }
 
@@ -70,12 +63,10 @@ export async function POST(request: NextRequest) {
   if (!entry) return NextResponse.json({ erro: "Ativo não encontrado" }, { status: 404 });
   const full = fullAsset(entry);
 
-  const client = new Anthropic();
-
   // ── Caminho de CONFIRMAÇÃO: o usuário confirmou uma interpretação ambígua.
   // Pula a tradução (determinismo) e vai direto ao motor com as levers propostas.
   if (body.leversConfirmadas !== undefined) {
-    const parte = await rodarCenario(client, full, body.leversConfirmadas, pergunta || rotuloCenario(validarLevers(body.leversConfirmadas).levers));
+    const parte = await rodarCenario(full, body.leversConfirmadas, pergunta || rotuloCenario(validarLevers(body.leversConfirmadas).levers));
     return NextResponse.json({ partes: [parte] });
   }
 
@@ -90,7 +81,7 @@ export async function POST(request: NextRequest) {
   let ambiguo = false;
   let interpretacao: string | null = null;
   try {
-    const raw = await chamarIA(client, SISTEMA_ROTEADOR, pergunta);
+    const raw = await chamarIA(SISTEMA_ROTEADOR, pergunta);
     const j = extrairJSON(raw) as Record<string, unknown> | null;
     if (!j) {
       return NextResponse.json({ partes: [{ tipo: "reformular", texto: "Não entendi a pergunta. Pode reformular?" }] });
@@ -108,7 +99,7 @@ export async function POST(request: NextRequest) {
 
   // 3) Parte EXPLICADOR (read-only sobre os dados do ativo).
   if (rota === "explicador" || rota === "ambos") {
-    partes.push(await rodarExplicador(client, entry, full, pergunta));
+    partes.push(await rodarExplicador(entry, full, pergunta));
   }
 
   // 4) Parte CENÁRIO (tradução → validação em código → motor → narração).
@@ -122,7 +113,7 @@ export async function POST(request: NextRequest) {
     } else if (ambiguo) {
       partes.push({ tipo: "confirmar", interpretacao: interpretacao ?? rotuloCenario(v.levers), leversPropostas: v.levers, clamps: v.clamps });
     } else {
-      partes.push(await rodarCenario(client, full, leversBrutas, pergunta));
+      partes.push(await rodarCenario(full, leversBrutas, pergunta));
     }
   }
 
@@ -131,7 +122,6 @@ export async function POST(request: NextRequest) {
 
 // ───────────────────────── modo explicador ─────────────────────────
 async function rodarExplicador(
-  client: Anthropic,
   entry: RadarAssetEntry,
   full: Asset | null,
   pergunta: string,
@@ -144,7 +134,6 @@ async function rodarExplicador(
 
   try {
     const raw = await chamarIA(
-      client,
       SISTEMA_EXPLICADOR,
       `DADOS DO ATIVO:\n${contexto}\n\n────────\nPERGUNTA: ${pergunta}`,
     );
@@ -167,7 +156,6 @@ async function rodarExplicador(
 
 // ───────────────────────── modo cenário ─────────────────────────
 async function rodarCenario(
-  client: Anthropic,
   full: Asset | null,
   leversBrutas: unknown,
   pergunta: string,
@@ -196,7 +184,6 @@ async function rodarCenario(
     : `Spread ${spreadFinito && r.spread >= 0 ? "positivo (TIR ≥ WACC)" : "negativo (TIR < WACC)"}.`;
   try {
     const raw = await chamarIA(
-      client,
       SISTEMA_NARRADOR,
       `${sinal} Alavancas aplicadas: ${rotulo}. Pergunta original: "${pergunta}".`,
     );

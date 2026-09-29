@@ -1,30 +1,46 @@
 // Regenera o deck "Últimas notícias" da home (AnticipationRibbon) e grava o cache
 // no volume DATA_DIR. Disparada 1×/semana pelo GitHub Actions (noticias-semanal.yml).
 //
-// Como funciona: o Claude (opus-4-8) usa a ferramenta de WEB SEARCH server-side
-// para achar 3 notícias recentes das verticais do Observatório (porto, navegação,
-// hidrologia, agro-escoamento, minério) e devolve um JSON. As URLs de cada item
-// são VALIDADAS contra os resultados reais de busca — item cujo link não bate com
-// nenhuma fonte encontrada é descartado (anti-alucinação de link; ver memória
-// "NÃO inventar número/link"). Se sobrarem <2 itens válidos, NÃO sobrescreve o
-// cache (mantém o último bom) e retorna erro para o watchdog avisar.
+// Como funciona (desde 29/09/2026, DeepSeek — lib/llm.ts):
+//   1. Busca as manchetes recentes nos RSS PÚBLICOS das próprias fontes do setor
+//      (Portos e Navios, Agência Brasil, Canal Rural, Brasil Mineral) — ver FEEDS.
+//   2. Passa a lista NUMERADA à IA, que só ESCOLHE 3 itens e redige a frase.
+//   3. URL, fonte e data saem do RSS pelo índice escolhido — a IA nunca escreve
+//      link (anti-alucinação de link; ver memória "NÃO inventar número/link").
+// Se sobrarem <2 itens válidos, NÃO sobrescreve o cache (mantém o último bom) e
+// retorna erro para o watchdog avisar.
 //
 // Proteção: header Authorization: Bearer ${CRON_SECRET} (mesma chave do insights).
-// Configuração no Railway: ANTHROPIC_API_KEY e CRON_SECRET no service web.
+// Configuração no Railway: DEEPSEEK_API_KEY e CRON_SECRET no service web.
 
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import Anthropic from "@anthropic-ai/sdk";
+import { chatLLM, llmDisponivel, LLM_MODELO } from "@/lib/llm";
 import type { NoticiaHome } from "@/lib/noticias-home";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
-const DATA_DIR  = process.env.DATA_DIR ?? join(process.cwd(), "data");
-const CACHE_OUT = join(DATA_DIR, "noticias_home_cache.json");
-const MODELO    = "claude-opus-4-8";
+const DATA_DIR    = process.env.DATA_DIR ?? join(process.cwd(), "data");
+const CACHE_OUT   = join(DATA_DIR, "noticias_home_cache.json");
+const MODELO      = LLM_MODELO;
+const UA          = "Mozilla/5.0 (compatible; IBI-Observatorio/1.0)";
+const JANELA_DIAS = 14;
+const POR_FEED    = 10;
+
+// RSS públicos das fontes (conferidos em 29/09/2026). `fonte` é o nome exibido.
+const FEEDS: { url: string; fonte: string }[] = [
+  { url: "https://www.portosenavios.com.br/noticias/portos-e-logistica?format=feed&type=rss",  fonte: "Portos e Navios" },
+  { url: "https://www.portosenavios.com.br/noticias/navegacao-e-marinha?format=feed&type=rss", fonte: "Portos e Navios" },
+  { url: "https://www.portosenavios.com.br/noticias/geral?format=feed&type=rss",               fonte: "Portos e Navios" },
+  { url: "https://agenciabrasil.ebc.com.br/rss/economia/feed.xml",                              fonte: "Agência Brasil" },
+  { url: "https://www.canalrural.com.br/feed/",                                                 fonte: "Canal Rural" },
+  { url: "https://www.brasilmineral.com.br/feed",                                               fonte: "Brasil Mineral" },
+];
+
+interface Manchete { titulo: string; resumo: string; url: string; fonte: string; data?: string }
 
 function autorizado(request: NextRequest): boolean {
   const secret = process.env.CRON_SECRET;
@@ -32,14 +48,49 @@ function autorizado(request: NextRequest): boolean {
   return request.headers.get("authorization") === `Bearer ${secret}`;
 }
 
-// Normaliza uma URL para comparação (origin + path, sem query/hash/barra final).
-function normalizaURL(u: string): string | null {
+function limpa(t: string): string {
+  return t
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&nbsp;/g, " ").replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'")
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function campo(item: string, nome: string): string {
+  const m = item.match(new RegExp(`<${nome}[^>]*>([\\s\\S]*?)</${nome}>`, "i"));
+  // 2 passadas: alguns feeds (Agência Brasil) mandam o HTML do resumo escapado
+  // (&lt;p&gt;…), que só vira tag — e é removido — depois da 1ª decodificação.
+  return m ? limpa(limpa(m[1])) : "";
+}
+
+async function lerFeed(f: { url: string; fonte: string }, desde: number): Promise<Manchete[]> {
   try {
-    const x = new URL(u);
-    if (x.protocol !== "http:" && x.protocol !== "https:") return null;
-    return (x.origin + x.pathname).replace(/\/+$/, "").toLowerCase();
+    const resp = await fetch(f.url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20_000) });
+    if (!resp.ok) return [];
+    const xml = await resp.text();
+    const itens = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) ?? [];
+    const out: Manchete[] = [];
+    for (const it of itens) {
+      const titulo = campo(it, "title");
+      const url = campo(it, "link");
+      const pub = Date.parse(campo(it, "pubDate"));
+      if (!titulo || !/^https?:\/\//.test(url)) continue;
+      if (!isNaN(pub) && pub < desde) continue;
+      out.push({
+        titulo,
+        resumo: campo(it, "description").slice(0, 280),
+        url,
+        fonte: f.fonte,
+        data: isNaN(pub) ? undefined : new Date(pub).toISOString().slice(0, 10),
+      });
+    }
+    // Teto por feed: sem isso um feed volumoso (Brasil Mineral, 40 itens) domina a lista.
+    return out.slice(0, POR_FEED);
   } catch {
-    return null;
+    return []; // feed fora do ar não derruba os demais
   }
 }
 
@@ -53,21 +104,20 @@ Verticais de interesse (escolha 3 fatos, de preferência de verticais diferentes
 - Agro-escoamento (safra de soja/milho, exportação, corredores logísticos)
 - Minério / mineração (produção, exportação, ferrovias e portos associados)
 
-Como trabalhar:
-- Faça algumas buscas (web_search) para encontrar fatos reais e recentes (idealmente dos últimos 14 dias). Você tem buscas suficientes; assim que tiver 3 boas notícias, PARE de buscar e escreva o array.
-- Prefira fontes reputadas (Reuters, Valor, Broadcast/Estadão, ANTAQ, agências setoriais, imprensa econômica).
-- Cite números concretos quando houver (volume, %, US$, cotas). Um único número-chave por notícia pode vir entre <b></b>.
-- Use como 'url' a URL exata de um dos resultados de busca que você recebeu. Não invente números, fontes nem URLs.
-- Se alguma busca falhar ou o limite for atingido, trabalhe com os resultados que JÁ obteve — eles são suficientes. Não recuse a tarefa por causa de uma busca que falhou.`;
+Regras:
+- Você recebe uma lista NUMERADA de manchetes reais (título + resumo). Escolha SOMENTE entre elas, pelo número.
+- Ignore itens fora do tema (política, crime, clima sem efeito logístico, eventos sociais, agenda institucional sem fato).
+- A frase deve se apoiar APENAS no título e no resumo do item escolhido. Não invente números, nomes nem datas; se citar um número, ele precisa estar no título ou no resumo.`;
 
-const USUARIO_BASE = (dataRef: string) => `Data de referência: ${dataRef}.
+const USUARIO_BASE = (dataRef: string, lista: string) => `Data de referência: ${dataRef}.
 
-Busque e selecione 3 notícias recentes conforme as regras. Depois responda EXCLUSIVAMENTE com um array JSON (sem markdown, sem comentários), onde cada elemento tem exatamente:
+Manchetes disponíveis:
+${lista}
+
+Escolha 3 itens conforme as regras e responda EXCLUSIVAMENTE com um array JSON (sem markdown, sem comentários), onde cada elemento tem exatamente:
+- "idx": o número do item escolhido na lista
 - "tag": rótulo curto de 1 palavra em português (ex: "Contêiner", "Soja", "Minério", "Porto", "Hidrovia")
 - "texto": UMA frase em português do Brasil, factual e direta, com no máximo um trecho entre <b></b>. NÃO use links, markdown ou aspas dentro do texto.
-- "url": a URL exata do resultado de busca que embasa a notícia
-- "fonte": nome curto da publicação (ex: "Reuters", "Valor", "ANTAQ")
-- "data": data de publicação no formato AAAA-MM-DD, se souber (senão omita)
 
 Responda apenas com o array JSON.`;
 
@@ -75,105 +125,61 @@ async function handler(request: NextRequest) {
   if (!autorizado(request)) {
     return NextResponse.json({ erro: "Não autorizado" }, { status: 401 });
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ ok: false, erro: "ANTHROPIC_API_KEY ausente" }, { status: 500 });
+  if (!llmDisponivel()) {
+    return NextResponse.json({ ok: false, erro: "DEEPSEEK_API_KEY ausente" }, { status: 500 });
   }
 
   const dataRef = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" });
 
   try {
-    const client = new Anthropic();
-
-    // Acumula o conjunto de URLs reais retornadas pela busca ao longo das rodadas.
-    const urlsReais = new Set<string>();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const messages: any[] = [{ role: "user", content: USUARIO_BASE(dataRef) }];
-    let parsed: unknown[] | null = null;
-
-    // O web_search_20260209 usa dynamic filtering (várias buscas + code exec),
-    // intercalando vários blocos de texto. A resposta final costuma estar no
-    // ÚLTIMO bloco de texto. Se o turno acabar sem JSON, cutuca pedindo só o array.
-    for (let i = 0; i < 6 && !parsed; i++) {
-      const msg = await client.messages.create({
-        model: MODELO,
-        max_tokens: 4096,
-        system: SISTEMA,
-        tools: [
-          {
-            type: "web_search_20260209",
-            name: "web_search",
-            max_uses: 12,
-            user_location: { type: "approximate", country: "BR", timezone: "America/Sao_Paulo" },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any,
-        ],
-        messages,
-      });
-
-      // Coleta URLs reais dos blocos de resultado de busca desta resposta.
-      const textBlocks: string[] = [];
-      for (const b of msg.content) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const bloco = b as any;
-        if (bloco.type === "text") textBlocks.push(bloco.text as string);
-        if (bloco.type === "web_search_tool_result" && Array.isArray(bloco.content)) {
-          for (const r of bloco.content) {
-            if (r?.type === "web_search_result" && typeof r.url === "string") {
-              const n = normalizaURL(r.url);
-              if (n) urlsReais.add(n);
-            }
-          }
-        }
-      }
-
-      messages.push({ role: "assistant", content: msg.content });
-
-      // Tenta extrair o array do fim para o começo (a resposta final vem por último).
-      for (const t of [...textBlocks].reverse()) {
-        const m = t.match(/```json\s*([\s\S]*?)\s*```/) ?? t.match(/(\[[\s\S]*\])/);
-        if (!m) continue;
-        try {
-          const p = JSON.parse(m[1]);
-          if (Array.isArray(p) && p.length) { parsed = p; break; }
-        } catch { /* tenta o próximo bloco */ }
-      }
-      if (parsed) break;
-
-      if (msg.stop_reason === "pause_turn") continue; // busca server-side ainda rodando
-      // Encerrou o turno sem JSON: cutuca pedindo só o array.
-      messages.push({ role: "user", content: "Agora responda APENAS com o array JSON pedido, sem mais buscas nem texto." });
+    // 1. Manchetes dos RSS (dedup por URL), mais recentes primeiro, até 60.
+    const desde = Date.now() - JANELA_DIAS * 86_400_000;
+    const porUrl = new Map<string, Manchete>();
+    for (const lote of await Promise.all(FEEDS.map((f) => lerFeed(f, desde)))) {
+      for (const m of lote) if (!porUrl.has(m.url)) porUrl.set(m.url, m);
+    }
+    const manchetes = [...porUrl.values()]
+      .sort((a, b) => (b.data ?? "").localeCompare(a.data ?? ""))
+      .slice(0, 60);
+    if (manchetes.length < 3) {
+      return NextResponse.json({ ok: false, erro: `Só ${manchetes.length} manchete(s) nos RSS. Cache preservado.` }, { status: 502 });
     }
 
-    if (!parsed) {
-      return NextResponse.json({ ok: false, erro: "IA não retornou um array JSON após várias rodadas", urls_busca: urlsReais.size }, { status: 502 });
+    const lista = manchetes
+      .map((m, i) => `${i + 1}. [${m.fonte}${m.data ? `, ${m.data}` : ""}] ${m.titulo}${m.resumo ? ` — ${m.resumo}` : ""}`)
+      .join("\n");
+
+    // 2. IA escolhe e redige.
+    const raw = await chatLLM({ system: SISTEMA, user: USUARIO_BASE(dataRef, lista), maxTokens: 1500 });
+    const jm = raw.match(/```json\s*([\s\S]*?)\s*```/) ?? raw.match(/(\[[\s\S]*\])/);
+    let parsed: unknown;
+    try { parsed = JSON.parse(jm ? jm[1] : raw.trim()); } catch { parsed = null; }
+    if (!Array.isArray(parsed)) {
+      return NextResponse.json({ ok: false, erro: "IA não retornou um array JSON", manchetes: manchetes.length }, { status: 502 });
     }
 
-    // Valida cada item: campos obrigatórios + URL bate com um resultado real de busca.
+    // 3. Valida: índice existe, sem repetição; URL/fonte/data vêm do RSS.
     const noticias: NoticiaHome[] = [];
+    const usados = new Set<number>();
     let descartadas = 0;
     for (const item of parsed as Record<string, unknown>[]) {
+      const idx = Number(item.idx);
       const tag = typeof item.tag === "string" ? item.tag.trim() : "";
       const texto = typeof item.texto === "string" ? item.texto.trim() : "";
-      const url = typeof item.url === "string" ? item.url.trim() : "";
-      const fonte = typeof item.fonte === "string" ? item.fonte.trim() : undefined;
-      const data = typeof item.data === "string" ? item.data.trim() : undefined;
-      const norm = normalizaURL(url);
-      if (!tag || !texto || !norm || !urlsReais.has(norm)) {
+      const m = Number.isInteger(idx) ? manchetes[idx - 1] : undefined;
+      if (!m || usados.has(idx) || !tag || !texto) {
         descartadas++;
         continue;
       }
-      noticias.push({ tag, texto, url, fonte, data });
+      usados.add(idx);
+      noticias.push({ tag, texto, url: m.url, fonte: m.fonte, data: m.data });
     }
 
     // Anti-alucinação: se sobrou pouca coisa confiável, NÃO sobrescreve o cache
     // (mantém o último bom). O workflow falha e o watchdog avisa.
     if (noticias.length < 2) {
       return NextResponse.json(
-        {
-          ok: false,
-          erro: `Só ${noticias.length} notícia(s) com URL validada (${descartadas} descartadas). Cache preservado.`,
-          urls_busca: urlsReais.size,
-        },
+        { ok: false, erro: `Só ${noticias.length} notícia(s) válida(s) (${descartadas} descartadas). Cache preservado.` },
         { status: 502 },
       );
     }
@@ -192,7 +198,7 @@ async function handler(request: NextRequest) {
 
     return NextResponse.json({
       ok: true,
-      mensagem: `${cache.noticias.length} notícia(s) regeneradas (${MODELO}); ${descartadas} descartadas por URL não validada`,
+      mensagem: `${cache.noticias.length} notícia(s) regeneradas (${MODELO}) de ${manchetes.length} manchetes; ${descartadas} descartadas`,
       data_ref: dataRef,
       total: cache.noticias.length,
     });
