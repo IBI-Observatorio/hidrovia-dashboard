@@ -18,7 +18,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { chatLLM, llmDisponivel, LLM_MODELO } from "@/lib/llm";
+import { chatLLM, llmDisponivel, LLM_MODELO, LLM_MODELOS } from "@/lib/llm";
 import { fetchPrevisao2026 } from "@/lib/fetch-dados";
 import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import { IDN_RECENTE_DIARIO } from "@/lib/idn-historico-calculado";
@@ -93,6 +93,14 @@ async function handler(request: NextRequest) {
 
   const dataRef = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
 
+  // Modo de teste (A/B de modelo): ?modelo=deepseek-reasoner&dry=1 gera e
+  // DEVOLVE os insights sem gravar o cache — o painel não muda.
+  const qs = new URL(request.url).searchParams;
+  const modeloQs = qs.get("modelo") ?? "";
+  const modelo = (LLM_MODELOS as readonly string[]).includes(modeloQs) ? modeloQs : MODELO;
+  const dry = qs.get("dry") === "1";
+  const reasoner = modelo === "deepseek-reasoner";
+
   try {
     const [dadosDiarios, previsao] = await Promise.all([obterDadosDiariosANA(), fetchPrevisao2026()]);
     const dados = dadosDiarios.dados;
@@ -144,7 +152,16 @@ async function handler(request: NextRequest) {
     const USUARIO = montaPromptUsuario({ dataRef, linhasEstacoes, idnAtual, tendIDN, idnMin, idnMax, boletimStr, ensoStr });
 
     // ── Chamada à API ──────────────────────────────────────────────────────────
-    const raw = await chatLLM({ system: SISTEMA, user: USUARIO, maxTokens: 2048 });
+    const t0 = Date.now();
+    const raw = await chatLLM({
+      system: SISTEMA,
+      user: USUARIO,
+      modelo,
+      // reasoner: o max_tokens conta o raciocínio; precisa de folga e de mais tempo
+      maxTokens: reasoner ? 16_000 : 2048,
+      timeoutMs: reasoner ? 280_000 : 120_000,
+    });
+    const tempoMs = Date.now() - t0;
     const jsonMatch = raw.match(/```json\s*([\s\S]*?)\s*```/) ?? raw.match(/(\[[\s\S]*\])/);
     const jsonStr = jsonMatch ? jsonMatch[1] : raw.trim();
 
@@ -169,11 +186,15 @@ async function handler(request: NextRequest) {
       return NextResponse.json({ ok: false, erro: "Nenhum insight válido retornado pela IA" }, { status: 502 });
     }
 
+    if (dry) {
+      return NextResponse.json({ ok: true, dry: true, modelo, tempo_ms: tempoMs, data_ref: dataRef, prompt_usuario: USUARIO, insights });
+    }
+
     // ── Persiste no volume (mesmo formato que lerInsightsAI espera) ─────────────
     if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
     const cache = {
       gerado_em: new Date().toISOString(),
-      modelo: MODELO,
+      modelo,
       data_ref: dataRef,
       insights,
     };
@@ -181,8 +202,9 @@ async function handler(request: NextRequest) {
 
     return NextResponse.json({
       ok: true,
-      mensagem: `${insights.length} insights regenerados (${MODELO}) para ${dataRef}`,
-      modelo: MODELO,
+      mensagem: `${insights.length} insights regenerados (${modelo}) para ${dataRef}`,
+      modelo,
+      tempo_ms: tempoMs,
       data_ref: dataRef,
       total: insights.length,
     });

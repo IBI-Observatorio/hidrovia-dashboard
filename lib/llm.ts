@@ -8,6 +8,8 @@
 // Sem SDK: um POST em /chat/completions basta.
 
 export const LLM_MODELO = "deepseek-chat";
+// Modelos aceitos no override por chamada (ex.: teste A/B do insights).
+export const LLM_MODELOS = ["deepseek-chat", "deepseek-reasoner"] as const;
 const ENDPOINT = "https://api.deepseek.com/chat/completions";
 
 export function llmDisponivel(): boolean {
@@ -20,12 +22,15 @@ export async function chatLLM({
   maxTokens = 2048,
   temperature = 0.3,
   timeoutMs = 120_000,
+  modelo = LLM_MODELO,
 }: {
   system: string;
   user: string;
   maxTokens?: number;
   temperature?: number;
   timeoutMs?: number;
+  // deepseek-reasoner: ignora temperature; max_tokens inclui o raciocínio (CoT).
+  modelo?: string;
 }): Promise<string> {
   const key = process.env.DEEPSEEK_API_KEY;
   if (!key) throw new Error("DEEPSEEK_API_KEY ausente");
@@ -34,7 +39,7 @@ export async function chatLLM({
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
     body: JSON.stringify({
-      model: LLM_MODELO,
+      model: modelo,
       max_tokens: maxTokens,
       temperature,
       messages: [
