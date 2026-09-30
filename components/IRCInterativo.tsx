@@ -6,15 +6,11 @@
 //   - localStorage: lembra entre visitas
 //   - URL param `?calado=10.5`: deep link / citação em contratos
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import {
   type SnapshotIRCTabocal,
 } from "@/lib/irc-tabocal";
-import {
-  cotaItaParaCMR,
-} from "@/lib/cmr-itacoatiara";
-import { projetaETAporAnalogos, dataCruzamentoObservado } from "@/lib/recessao-analogos";
-import { ITACOATIARA_HISTORICO_DIARIO } from "@/lib/itacoatiara-historico-diario";
+import caladoCapitania from "@/public/data/calado-capitania.json";
 import type { ResultadoIRC_Estendido } from "@/lib/irc";
 import { Anchor, Calendar } from "lucide-react";
 
@@ -77,24 +73,6 @@ export default function IRCInterativo({
     localStorage.setItem(STORAGE_KEY, calado.toString());
   }, [calado, carregouInicial, isAssinante]);
 
-  // ETA via análogos (calado-alvo → cruzamento projetado)
-  const { cotaItaAlvo_m, eta_an, cruzado } = useMemo(() => {
-    // Cota ITA que produz CMR = calado (referência operacional)
-    const cotaItaAlvo_m = cotaItaParaCMR(calado);
-    // ETA via ANÁLOGOS HISTÓRICOS — empirical forecasting baseado em 2016-2025.
-    const serie2026 = Object.entries(ITACOATIARA_HISTORICO_DIARIO[2026] ?? {})
-      .map(([data, cota]) => ({ data, cota: cota as number }))
-      .sort((a, b) => a.data.localeCompare(b.data));
-    const eta_an = serie2026.length >= 30
-      ? projetaETAporAnalogos(serie2026, calado, 60, 0.5, 300)
-      : null;
-    // Limiar já atingido na série observada → o card mostra o fato, não um ETA.
-    const desde = dataCruzamentoObservado(serie2026, cotaItaAlvo_m);
-    const ultimo = serie2026.at(-1);
-    const cruzado = desde && ultimo ? { desde, data_atual: ultimo.data, cota_atual_m: ultimo.cota } : null;
-    return { cotaItaAlvo_m, eta_an, cruzado };
-  }, [calado]);
-
   const copiarLink = () => {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
@@ -139,7 +117,7 @@ export default function IRCInterativo({
                 Calado-alvo da sua operação
               </p>
               <p className="text-gray-500 text-[10px] mt-0.5">
-                Ajuste para refletir o calado máximo dos seus comboios. O IRC se ajusta em tempo real.
+                Ajuste para refletir o calado máximo dos seus comboios e compare com o calado oficial.
               </p>
             </div>
             <div className="text-right">
@@ -199,169 +177,61 @@ export default function IRCInterativo({
         </div>
       )}
 
-      {/* ── PAINEL ETA ── */}
-      <DataETAPainel eta_an={eta_an} cruzado={cruzado} cotaItaAlvo_m={cotaItaAlvo_m} calado={calado} isAssinante={isAssinante} />
+      {/* ── Calado-alvo × calado oficial da Capitania (sem projeção própria) ── */}
+      <CaladoAlvoPainel calado={calado} isAssinante={isAssinante} />
 
     </div>
   );
 }
 
-// ─── Painel de ETA do calado-alvo ───────────────────────────────────────────
-interface DataETAPainelProps {
-  eta_an: ReturnType<typeof projetaETAporAnalogos> | null;
-  cruzado: { desde: string; data_atual: string; cota_atual_m: number } | null;
-  cotaItaAlvo_m: number;
-  calado: number;
-  isAssinante: boolean;
-}
+// ─── Calado-alvo × calado oficial da Capitania ──────────────────────────────
+// Só números publicados pela Capitania (CFAOC): o calado de hoje e a previsão
+// de poucos dias que ela mesma divulga. Nenhuma projeção de modelo do IBI.
 
-function formataDataLonga(iso: string | null): string {
-  if (!iso) return "—";
-  const meses = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
-  const [a, m, d] = iso.split("-");
-  return `${d}/${meses[parseInt(m, 10) - 1] ?? "?"}/${a}`;
-}
+const fmtM = (v: number) => v.toFixed(2).replace(".", ",");
+const fmtDM = (iso: string) => { const [, m, d] = iso.split("-"); return `${d}/${m}`; };
 
-function DataETAPainel({ eta_an, cruzado, cotaItaAlvo_m, calado, isAssinante }: DataETAPainelProps) {
-  if (cruzado) {
-    const dias = Math.round(
-      (Date.parse(cruzado.data_atual) - Date.parse(cruzado.desde)) / 86400000,
-    );
-    return (
-      <div className="rounded-lg p-4 border mb-5 bg-vermelho/10 border-vermelho/40">
-        <div className="flex items-start gap-3">
-          <Calendar size={18} className="text-vermelho mt-0.5 shrink-0" />
-          <div className="flex-1">
-            <p className="text-vermelho text-[11px] font-bold uppercase tracking-wider mb-1">
-              CMR &lt; {calado.toFixed(1)} m (seu calado-alvo) · limiar atingido
-            </p>
-            <div className="flex items-baseline gap-3 flex-wrap">
-              <span className="text-vermelho font-extrabold text-2xl">
-                desde {formataDataLonga(cruzado.desde)}
-              </span>
-              <span className="text-gray-300 text-sm">
-                há <strong>{dias} {dias === 1 ? "dia" : "dias"}</strong>
-              </span>
-            </div>
-            <p className="text-gray-400 text-[11px] mt-1">
-              Itacoatiara abaixo de <strong className="text-gray-300">{cotaItaAlvo_m.toFixed(2)} m</strong>{" "}
-              (média diária, ANA) desde essa data. Última leitura:{" "}
-              <strong className="text-gray-300">{cruzado.cota_atual_m.toFixed(2)} m</strong> em{" "}
-              {formataDataLonga(cruzado.data_atual)}.
-            </p>
-          </div>
-        </div>
-        {!isAssinante && (
-          <p className="text-gray-500 text-[10px] mt-3 leading-relaxed">
-            Calado-alvo fixo em 11m (versão gratuita) — assinantes recalculam dinamicamente.
-          </p>
-        )}
-      </div>
-    );
-  }
-  if (eta_an == null || eta_an.dias_p50 == null) {
-    return (
-      <div className="bg-azul-marinho rounded-lg p-4 border border-verde/20 mb-5">
-        <div className="flex items-start gap-3">
-          <Calendar size={18} className="text-verde mt-0.5 shrink-0" />
-          <div>
-            <p className="text-verde text-[11px] font-bold uppercase tracking-wider mb-1">
-              ETA · Quando o CMR cai abaixo do seu calado-alvo ({calado.toFixed(1)} m)
-            </p>
-            <p className="text-white text-sm">
-              <strong>Não previsto no horizonte de 300 dias.</strong> Seu calado-alvo permanece atendido
-              em todo o ciclo projetado.
-            </p>
-            <p className="text-gray-500 text-[11px] mt-1">
-              Cota Itacoatiara permaneceria acima de {cotaItaAlvo_m.toFixed(2)} m durante todo o período.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+function CaladoAlvoPainel({ calado, isAssinante }: { calado: number; isAssinante: boolean }) {
+  const u = caladoCapitania.ultimo;
+  const prev = caladoCapitania.previsao_capitania;
+  const margem = u.demais - calado;
+  const abaixo = margem < 0;
+  const cruza = abaixo ? null : prev.find((p) => p.demais < calado) ?? null;
+  const fimPrevisao = prev.at(-1)?.data ?? null;
 
-  // dias contados de HOJE até uma data ISO (não da data do último dado, que tem lag).
-  // Usado tanto no headline quanto na banda P10/P50/P90 — senão a contagem "trava".
-  const diasDeHoje = (dataISO: string | null, fallback: number | null): number | null => {
-    if (!dataISO) return fallback;
-    const ymd = (y: number, m: number, d: number) => Math.floor(Date.UTC(y, m - 1, d) / 86400000);
-    const n = new Date();
-    const [ay, am, ad] = dataISO.split("-").map(Number);
-    return ymd(ay, am, ad) - ymd(n.getFullYear(), n.getMonth() + 1, n.getDate());
-  };
-
-  const data_headline = eta_an.data_p50;
-  const dias_headline = diasDeHoje(data_headline, eta_an.dias_p50) ?? eta_an.dias_p50;
-  const dias_p10 = diasDeHoje(eta_an.data_p10, eta_an.dias_p10);
-  const dias_p50 = diasDeHoje(eta_an.data_p50, eta_an.dias_p50);
-  const dias_p90 = diasDeHoje(eta_an.data_p90, eta_an.dias_p90);
-
-  const urgencia = dias_headline <= 30 ? "vermelho"
-                 : dias_headline <= 90 ? "ouro"
-                 : dias_headline <= 180 ? "verde"
-                 : "white";
+  const cor = abaixo ? "vermelho" : cruza ? "ouro" : "verde";
   const corMap = {
     vermelho: { bg: "bg-vermelho/10 border-vermelho/40", texto: "text-vermelho" },
     ouro:     { bg: "bg-ouro/10 border-ouro/40",         texto: "text-ouro" },
     verde:    { bg: "bg-verde/10 border-verde/40",       texto: "text-verde" },
-    white:    { bg: "bg-azul-marinho border-white/20",   texto: "text-white" },
-  }[urgencia];
+  }[cor];
 
   return (
     <div className={`rounded-lg p-4 border mb-5 ${corMap.bg}`}>
-      <div className="flex items-start gap-3 mb-3">
+      <div className="flex items-start gap-3">
         <Calendar size={18} className={`${corMap.texto} mt-0.5 shrink-0`} />
         <div className="flex-1">
           <p className={`${corMap.texto} text-[11px] font-bold uppercase tracking-wider mb-1`}>
-            ETA · CMR &lt; {calado.toFixed(1)} m (seu calado-alvo)
+            Seu calado-alvo ({calado.toFixed(1)} m) × calado oficial da Capitania
           </p>
           <div className="flex items-baseline gap-3 flex-wrap">
             <span className={`${corMap.texto} font-extrabold text-2xl`}>
-              {formataDataLonga(data_headline)}
+              {margem > 0 ? "+" : ""}{fmtM(margem)} m
             </span>
             <span className="text-gray-300 text-sm">
-              em <strong>{dias_headline} dias</strong>
-            </span>
-            <span className="text-[10px] uppercase tracking-wider bg-verde/15 text-verde border border-verde/30 px-2 py-0.5 rounded-full font-bold">
-              via análogos · ano gêmeo {eta_an.ano_top}
+              de margem · oficial em {fmtDM(u.data)}: <strong>{fmtM(u.demais)} m</strong> (demais cargas)
             </span>
           </div>
           <p className="text-gray-400 text-[11px] mt-1">
-            Itacoatiara projetada em <strong className="text-gray-300">{cotaItaAlvo_m.toFixed(2)} m</strong> nessa data.
+            {abaixo
+              ? "O calado oficial já está abaixo do seu alvo."
+              : cruza
+              ? <>Pela previsão da própria Capitania, cai abaixo do seu alvo em <strong className="text-gray-200">{fmtDM(cruza.data)}</strong> ({fmtM(cruza.demais)} m).</>
+              : fimPrevisao
+              ? <>A previsão da Capitania não mostra o calado abaixo do seu alvo até {fmtDM(fimPrevisao)}.</>
+              : "A Capitania não publicou previsão para os próximos dias."}
+            {" "}Petróleo e gás: {fmtM(u.petroleo)} m.
           </p>
-        </div>
-      </div>
-
-      {/* ── Banda empírica análogos ── */}
-      <div className="bg-verde/5 border border-verde/20 rounded p-3 mb-3">
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-verde text-[10px] font-bold uppercase tracking-wider">
-            Análogos históricos · banda empírica
-          </p>
-        </div>
-        <div className="grid grid-cols-3 gap-3 text-[11px] mb-2">
-          <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
-            <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P10 precoce</p>
-            <p className="text-white font-semibold">
-              {formataDataLonga(eta_an.data_p10)}
-              {dias_p10 != null && <span className="text-gray-400 ml-1">· {dias_p10}d</span>}
-            </p>
-          </div>
-          <div className="bg-verde/15 rounded p-2 border border-verde/30">
-            <p className="text-verde uppercase tracking-wider text-[10px] mb-0.5">P50 mediana</p>
-            <p className="text-white font-bold">
-              {formataDataLonga(eta_an.data_p50)}
-              {dias_p50 != null && <span className="text-gray-300 ml-1">· {dias_p50}d</span>}
-            </p>
-          </div>
-          <div className="bg-azul-medio/40 rounded p-2 border border-white/5">
-            <p className="text-gray-500 uppercase tracking-wider text-[10px] mb-0.5">P90 tardia</p>
-            <p className="text-white font-semibold">
-              {formataDataLonga(eta_an.data_p90)}
-              {dias_p90 != null && <span className="text-gray-400 ml-1">· {dias_p90}d</span>}
-            </p>
-          </div>
         </div>
       </div>
 

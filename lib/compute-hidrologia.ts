@@ -1,13 +1,11 @@
 // Computa os dados do card Monitor de Hidrologia para a home page.
 //
 // Fontes de dados:
-//   • Cota ITA: série HidroWeb (ITACOATIARA_HISTORICO_DIARIO), lag ~14 dias.
-//     Para tempo real, substituir por: buscaCotaANA(ESTACOES.Itacoatiara, hoje, hoje)
-//   • Modelo: projetaETAporAnalogos — mesma engine do /monitor (analogos 2016–2025)
-//   • IRC: calculaIRCTabocal v3.6 (onda + pp renormalizados quando ausentes)
+//   • Calado: número OFICIAL da Capitania (CFAOC), public/data/calado-capitania.json
+//     (scripts/gera-calado-capitania.py). Sem modelo cota→calado e sem projeção.
+//   • IRC: calculaIRCTabocal v3.6 (inalterado — ainda usa cota ITA + análogos)
 
 import { ITACOATIARA_HISTORICO_DIARIO } from "./itacoatiara-historico-diario";
-import { cmrDeItacoatiara, CMR_OBSERVADO } from "./cmr-itacoatiara";
 import { projetaETAporAnalogos, type PontoSerie } from "./recessao-analogos";
 import {
   CURICURIARI_2026,
@@ -16,18 +14,16 @@ import {
 } from "./dados-historicos";
 import { calculaIDNFallback } from "./calcula-idn";
 import { calculaIRCTabocal } from "./irc-tabocal";
+import caladoCapitania from "@/public/data/calado-capitania.json";
 
 export interface HidrologiaDashboard {
-  cotaItaAtual_m:    number;       // última cota HidroWeb disponível
-  dataUltimaLeitura: string;       // YYYY-MM-DD
-  cmrAtual_m:        number;       // CMR oficial (curva isotônica Capitania)
-  cmrExtrapolado:    boolean;      // true quando ITA > topo do dataset observado
-  diasParaLimiar:    number;       // Análogos P50 — ETA para CMR < 11 m
-  dataLimiar:        string | null;// data ISO do P50 (ex: "2026-10-13")
-  janelaIC80:        string;       // e.g. "18 set – 13 out 2026"
+  caladoOficial_m:   number;       // CMR demais cargas — Capitania (CFAOC)
+  caladoPetroleo_m:  number;       // CMR petróleo e gás — Capitania (CFAOC)
+  dataBoletim:       string;       // YYYY-MM-DD do último dia publicado
+  variacao24h_m:     number | null;
+  previsaoCapitania: { data: string; demais: number } | null; // último dia previsto pela Capitania
   irc:               number;       // IRC-Tabocal v3.6
   ircFaixa:          string;       // "verde" | "amarelo" | "laranja" | "vermelho"
-  probCruzamento:    number;       // 0–1 — probabilidade de CMR cruzar 11 m
   insight:           string;       // HTML para o card
 }
 
@@ -40,23 +36,16 @@ export function computeHidrologiaDashboard(): HidrologiaDashboard {
   const dataRecente = datas[datas.length - 1];
   const cotaIta     = s2026[dataRecente];
 
-  // ── 2. CMR atual (Calado Máximo Recomendado — curva isotônica Capitania) ─
-  const cmrAtual = cmrDeItacoatiara(cotaIta);
-
-  // ── 3. Análogos históricos: ETA para CMR < 11 m ─────────────────────────
+  // ── 2. Análogos: só alimentam o IRC (não são exibidos no card) ───────────
   const serieAtual: PontoSerie[] = datas.map((d) => ({ data: d, cota: s2026[d] }));
   const analogos = projetaETAporAnalogos(serieAtual, 11.0);
 
-  // Dias até o cruzamento contados de HOJE (não da data do último dado, que tem lag):
-  // a data absoluta do ETA (data_p50) é fixa; a contagem decresce conforme o tempo passa.
-  const diasAteLimiar = diasDeHojeAte(analogos.data_p50) ?? analogos.dias_p50 ?? 0;
-
-  // ── 4. IDN — fallback anual (SGC + Humaitá, últimas entradas disponíveis) ─
+  // ── 3. IDN — fallback anual (SGC + Humaitá, últimas entradas disponíveis) ─
   const sgcCm     = lastValue(CURICURIARI_2026) ?? 550;
   const humaitaCm = lastValue(HUMAITA_2026) ?? 1411;
   const idn       = calculaIDNFallback(sgcCm / 100, humaitaCm / 100);
 
-  // ── 5. IRC-Tabocal v3.6 ──────────────────────────────────────────────────
+  // ── 4. IRC-Tabocal v3.6 ──────────────────────────────────────────────────
   const ircResult = calculaIRCTabocal({
     cotaItacoatiara_m:           cotaIta,
     cotaManaus_m:                DADOS_ATUAIS.Manaus.cota_m,
@@ -67,59 +56,39 @@ export function computeHidrologiaDashboard(): HidrologiaDashboard {
     calado_alvo_m:               11.0,
   });
 
-  // ── 6. Montagem do insight ───────────────────────────────────────────────
-  const cmrFmt  = cmrAtual.toFixed(1).replace(".", ",");
-  const cotaFmt = cotaIta.toFixed(2).replace(".", ",");
-  const dataFmt = formatarDataCurta(dataRecente);
-  const probPct = Math.round(analogos.prob_cruzamento * 100);
-  const janelaIC80 = formatarJanela(analogos.data_p10, analogos.data_p90);
-
-  // CMR extrapolado? ITA acima do topo do dataset observado da Capitania (7,90 m)
-  const cmrExtrapolado = cotaIta > CMR_OBSERVADO.ita_max;
+  // ── 5. Calado oficial da Capitania + insight ─────────────────────────────
+  const u = caladoCapitania.ultimo;
+  const prev = caladoCapitania.previsao_capitania.at(-1) ?? null;
   const calado_alvo = 11.0;
-  const margem = cmrAtual - calado_alvo;
+  const m = (v: number) => v.toFixed(2).replace(".", ",");
 
-  // Status dinâmico baseado na margem real
-  const statusCmr = cmrAtual < calado_alvo
-    ? `<b>restrições ativas</b> — CMR abaixo de ${calado_alvo} m`
-    : margem < 1.5
-    ? `margem operacional estreita (${margem.toFixed(1).replace(".", ",")} m acima do limiar)`
-    : `sem restrições operacionais`;
+  const status = u.demais < calado_alvo
+    ? `<b>abaixo de ${calado_alvo} m</b> — navios maiores já operam com restrição de carga`
+    : `acima de ${calado_alvo} m`;
+  const ritmo = u.variacao_24h_m != null
+    ? ` Variação em 24h: <b>${u.variacao_24h_m > 0 ? "+" : ""}${m(u.variacao_24h_m)} m</b>.`
+    : "";
+  const previsao = prev
+    ? ` A Capitania prevê <b>${m(prev.demais)} m</b> em ${formatarDataCurta(prev.data)}.`
+    : "";
 
   const insight =
-    `Nível de Itacoatiara: <b>${cotaFmt} m</b> (HidroWeb · ${dataFmt}). ` +
-    `Calado ${cmrExtrapolado ? "estimado" : "disponível"}: <b>~${cmrFmt} m</b>` +
-    (cmrExtrapolado ? ` (extrapolação — ITA acima do dataset da Capitania)` : ``) +
-    ` — ${statusCmr}. ` +
-    `Modelo por análogos projeta CMR < <b>${calado_alvo} m</b> em <b>~${analogos.data_p50 ? diasAteLimiar : "?"} dias</b> ` +
-    `(IC80: ${janelaIC80}), probabilidade de cruzamento: ${probPct}%.`;
+    `Calado oficial em Itacoatiara/Tabocal (Capitania, ${formatarDataCurta(u.data)}): ` +
+    `<b>${m(u.demais)} m</b> para demais cargas, ${status}.` + ritmo + previsao;
 
   return {
-    cotaItaAtual_m:    cotaIta,
-    dataUltimaLeitura: dataRecente,
-    cmrAtual_m:        +cmrAtual.toFixed(1),
-    cmrExtrapolado,
-    diasParaLimiar:    diasAteLimiar,
-    dataLimiar:        analogos.data_p50,
-    janelaIC80,
+    caladoOficial_m:   u.demais,
+    caladoPetroleo_m:  u.petroleo,
+    dataBoletim:       u.data,
+    variacao24h_m:     u.variacao_24h_m,
+    previsaoCapitania: prev ? { data: prev.data, demais: prev.demais } : null,
     irc:               Math.round(ircResult.irc),
     ircFaixa:          ircResult.faixa,
-    probCruzamento:    analogos.prob_cruzamento,
     insight,
   };
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────
-
-/** Dias inteiros de HOJE (data local) até a data ISO `YYYY-MM-DD` do alvo. null se sem alvo. */
-function diasDeHojeAte(isoAlvo: string | null): number | null {
-  if (!isoAlvo) return null;
-  const ymd = (y: number, m: number, d: number) => Math.floor(Date.UTC(y, m - 1, d) / 86400000);
-  const now = new Date();
-  const hoje = ymd(now.getFullYear(), now.getMonth() + 1, now.getDate());
-  const [ay, am, ad] = isoAlvo.split("-").map(Number);
-  return ymd(ay, am, ad) - hoje;
-}
 
 function lastValue(obj: Record<string, number>): number | undefined {
   const keys = Object.keys(obj).sort();
@@ -131,18 +100,4 @@ function formatarDataCurta(isoDate: string): string {
   const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
   const [, m, d] = isoDate.split("-");
   return `${parseInt(d)}/${MESES[parseInt(m) - 1]}`;
-}
-
-function formatarJanela(p10: string | null, p90: string | null): string {
-  if (!p10 || !p90) return "indeterminado";
-  const M = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
-  const parse = (iso: string) => {
-    const [ano, m, d] = iso.split("-");
-    return { ano, mes: parseInt(m), dia: parseInt(d) };
-  };
-  const a = parse(p10), b = parse(p90);
-  const fmt = (x: typeof a) => `${x.dia} ${M[x.mes - 1]}`;
-  if (a.mes === b.mes && a.ano === b.ano) return `${a.dia}–${b.dia} ${M[a.mes - 1]} ${a.ano}`;
-  if (a.ano === b.ano)                    return `${fmt(a)} – ${fmt(b)} ${a.ano}`;
-  return `${fmt(a)} ${a.ano} – ${fmt(b)} ${b.ano}`;
 }

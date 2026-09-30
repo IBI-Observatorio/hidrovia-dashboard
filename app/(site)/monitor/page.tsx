@@ -16,6 +16,7 @@ import AlertaOndaBranco from "@/components/AlertaOndaBranco";
 import IRCWidget from "@/components/IRCWidget";
 import IRCDuploWidget from "@/components/IRCDuploWidget";
 import IRCInterativo from "@/components/IRCInterativo";
+import CaladoCapitania from "@/components/CaladoCapitania";
 import { tokenAssinanteAtual, nomeClienteDoToken } from "@/lib/auth-assinante";
 import { detectaOndaBranco } from "@/lib/onda-branco";
 import { calculaIDNSimples, classificaIDN, descreveIntensidadeIDN } from "@/lib/calcula-idn";
@@ -277,6 +278,13 @@ export default async function MonitorPage() {
                 />
               );
             })()}
+          </section>
+
+          {/* ── CALADO OFICIAL — número da Capitania (CFAOC), sem modelo ── */}
+          <section id="calado-oficial" className="scroll-mt-20">
+            <ErrorBoundary titulo="O calado oficial da Capitania">
+              <CaladoCapitania />
+            </ErrorBoundary>
           </section>
 
           {/* ── PAINEL 1: RÉGUAS ATUAIS ── */}

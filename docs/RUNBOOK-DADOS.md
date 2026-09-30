@@ -466,3 +466,18 @@ de ano-análogo (top-3) · |Δprob| ≥ 0,25 · troca de fase ENSO. Cache de aud
 
 > Madeira: se Borba/Manicoré estiverem offline na telemetria, o z usa Humaitá+PV.
 > `DASH_API` aponta a API; `BOLETIM_OUT` redireciona o PDF.
+
+---
+
+## ⚓ Calado oficial da Capitania (`/monitor#calado-oficial`) — manual, a cada boletim
+
+| Painel | Script | Entrada | Saídas |
+|--------|--------|---------|--------|
+| Card "Calado oficial — Itacoatiara / Tabocal" | `scripts/gera-calado-capitania.py` (manual) | planilha colada do boletim CFAOC (padrão `../data/CMR2026.xlsx`) | `data/calado_capitania.csv` (acumulado) + `public/data/calado-capitania.json` |
+
+- **Fonte:** Calado Máximo Recomendado da Capitania Fluvial da Amazônia Ocidental — https://www.marinha.mil.br/cfaoc/node/119. O site fica atrás do Cloudflare e **bloqueia coleta automática**: o Bruno cola a tabela na planilha.
+- **Formato da planilha:** `DATA | CMR Petróleo e Gás | CMR Demais cargas | FAQ Petróleo e Gás | FAQ Demais cargas`; blocos de meses diferentes podem ficar empilhados na mesma aba.
+- **Rodar:** `python scripts/gera-calado-capitania.py [xlsx] [--publicacao AAAA-MM-DD]` (publicação padrão = hoje). Datas depois da publicação ficam marcadas como **previsão da Capitania**; o boletim seguinte as substitui (merge por data, boletim mais novo vence). Rodar duas vezes é idempotente.
+- **Número oficial, sem modelo.** Não converter cota→calado aqui. As séries 2024/2025 do gráfico vêm de `data/cmr_itacoatiara.csv` (sem categoria de carga).
+- O card mostra aviso em ouro quando o boletim tem mais de 3 dias.
+- O mesmo JSON alimenta o **card de Hidrologia da home** (`lib/compute-hidrologia.ts`) e o painel calado-alvo do **topo do /monitor** (`components/IRCInterativo.tsx`). Desde 30/09/2026 esses dois não mostram mais data projetada por análogos; só o oficial e a previsão curta da Capitania.

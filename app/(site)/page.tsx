@@ -82,10 +82,11 @@ export default function HomePage() {
             tag={hidrologiaCard.tag}
             periodo={hidrologiaCard.periodo}
             limiarM={hidrologiaCard.limiarM}
-            diasParaLimiar={hidrologia.diasParaLimiar}
-            dataLimiar={hidrologia.dataLimiar}
-            janelaIC80={hidrologia.janelaIC80}
-            caladoAtualM={hidrologia.cmrAtual_m}
+            caladoOficialM={hidrologia.caladoOficial_m}
+            caladoPetroleoM={hidrologia.caladoPetroleo_m}
+            dataBoletim={hidrologia.dataBoletim}
+            variacao24hM={hidrologia.variacao24h_m}
+            previsaoCapitania={hidrologia.previsaoCapitania}
             irc={hidrologia.irc}
             ircFaixa={hidrologia.ircFaixa}
             gaugePct={hidrologia.irc}

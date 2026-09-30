@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 // Sections specific to /monitor — no external copy dependency.
 const SECTIONS = [
+  { id: "calado-oficial",          label: "Calado oficial" },
   { id: "reguas-atuais",           label: "Réguas atuais" },
   { id: "indice-dessincronizacao", label: "Dessincronização N–S" },
   { id: "manaus-itacoatiara",      label: "Manaus × Itacoatiara" },

@@ -265,11 +265,8 @@ export const navegacaoCard = {
 
 export const hidrologiaCard = {
   tag: "Monitor de Hidrologia",
-  periodo: "PREVISÃO · modelo de recessão",
+  periodo: "OFICIAL · Capitania dos Portos",
   limiarM: 11,
-  diasParaLimiar: 18,
-  janelaIC80: "08–11 jun 2026",
-  caladoAtualM: 14.3,
   irc: 64,
   ircFaixa: "elevada",
   gaugePct: 64,
