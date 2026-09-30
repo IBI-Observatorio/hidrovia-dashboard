@@ -27,6 +27,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { RX_FERT, FILTRO_FERT, dedupeFert, acumulaFert, type NavioFert, type SnapshotFert } from "./fertilizante";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const ARQ_SAIDA = join(RAIZ, "data", "lineup", "paranagua.json");
@@ -85,15 +86,58 @@ export function parseLineupAppa(html: string): Navio[] {
   return out;
 }
 
+/** Fertilizante IMPORTADO (série própria — ver ./fertilizante.ts). Toneladas =
+ *  coluna Previsto (Saldo, se atracado). Navio com várias mercadorias vem em
+ *  linhas de continuação mais curtas, alinhadas à direita do cabeçalho. */
+export function parseFertAppa(html: string): NavioFert[] | null {
+  const out: NavioFert[] = [];
+  let lidas = 0;
+  const tabelas = [...html.matchAll(/<table[\s\S]*?<\/table>/gi)].map((m) => m[0]);
+  for (const tabela of tabelas) {
+    const linhas = [...tabela.matchAll(/<tr[\s\S]*?<\/tr>/gi)].map((m) =>
+      [...m[0].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((c) => limpa(c[1])),
+    );
+    if (!linhas.length) continue;
+    const titulo = (linhas[0][0] ?? "").toUpperCase();
+    const status = Object.entries(SECOES).find(([k]) => titulo.startsWith(k))?.[1];
+    if (!status) continue;
+    const hi = linhas.findIndex((l) => l.some((c) => /Embarca/i.test(c)));
+    if (hi < 0) continue;
+    const hdr = linhas[hi];
+    const col = (n: string) => hdr.findIndex((h) => h.toLowerCase().startsWith(n));
+    const iN = col("embarca"), iS = col("sentido"), iM = col("mercadoria"), iE = col("eta");
+    const iP = col("previsto"), iSa = col("saldo");
+    if (iN < 0 || iS < 0 || iM < 0 || iP < 0) continue;
+    lidas++;
+    let navio = "";
+    for (const c of linhas.slice(hi + 1)) {
+      let row: string[];
+      if (c.length >= hdr.length - 2) { navio = c[iN]; row = c; }
+      else if (navio && c.length >= hdr.length - iS) row = [...Array(hdr.length - c.length).fill(""), ...c];
+      else continue;
+      if (!/^IMP/i.test(row[iS] ?? "") || !RX_FERT.test(row[iM] ?? "")) continue;
+      const t = numBR((status === "atracado" && iSa >= 0 ? row[iSa] : row[iP]) ?? "");
+      out.push({
+        navio, toneladas: Math.round(t), mercadoria: (row[iM] ?? "").slice(0, 30),
+        eta: iE >= 0 ? dataETA(row[iE] ?? "") : undefined, status,
+      });
+    }
+  }
+  return lidas > 0 ? dedupeFert(out) : null; // null = layout não reconhecido
+}
+
 async function main() {
   const hoje = new Date().toISOString().slice(0, 10);
-  let anterior: { snapshots?: { dataColeta: string; navios: Navio[] }[] } | null = null;
+  let anterior: { snapshots?: { dataColeta: string; navios: Navio[] }[]; snapshotsFertilizantes?: SnapshotFert[] } | null = null;
   try { anterior = JSON.parse(readFileSync(ARQ_SAIDA, "utf8")); } catch { /* sem cache */ }
+  let fert: NavioFert[] | null = null;
 
   try {
     const r = await fetch(URL_LINEUP, { headers: UA });
     if (!r.ok) throw new Error(`HTTP ${r.status} no relatório line-up APPA`);
-    const navios = parseLineupAppa(await r.text());
+    const html = await r.text();
+    fert = parseFertAppa(html);
+    const navios = parseLineupAppa(html);
 
     // HEALTHCHECK: relatório de Paranaguá sem nenhum graneleiro de grão é
     // implausível em qualquer época do ano — tratar como mudança de layout.
@@ -112,10 +156,13 @@ async function main() {
       status: "ok" as const,
       observacao: "snapshots acumulam histórico a cada coleta; a série de F nasce curta e fica rotulada 'calibração em construção' até cobrir 3 safras.",
       snapshots,
+      filtroFertilizantes: FILTRO_FERT,
+      statusFertilizantes: fert ? "ok" : "indisponivel",
+      snapshotsFertilizantes: acumulaFert(anterior?.snapshotsFertilizantes, hoje, fert),
     };
     mkdirSync(dirname(ARQ_SAIDA), { recursive: true });
     writeFileSync(ARQ_SAIDA, JSON.stringify(cache, null, 1).replace(/\n +(?=[\d"[\]{},.-])/g, "") + "\n");
-    console.log(`[lineup-paranagua] OK — ${navios.length} graneleiros · ${snapshots.length} snapshots no histórico`);
+    console.log(`[lineup-paranagua] OK — ${navios.length} graneleiros · ${snapshots.length} snapshots no histórico · fertilizante: ${fert ? fert.length + " navios" : "indisponível"}`);
   } catch (e) {
     const cache = {
       ...((anterior as object) ?? { snapshots: [] }),
@@ -123,6 +170,9 @@ async function main() {
       coletadoEm: hoje,
       status: "indisponivel" as const,
       erro: (e as Error).message,
+      // a série de fertilizante tem healthcheck próprio: grava se a página foi lida
+      statusFertilizantes: fert ? "ok" : "indisponivel",
+      snapshotsFertilizantes: acumulaFert(anterior?.snapshotsFertilizantes, hoje, fert),
     };
     mkdirSync(dirname(ARQ_SAIDA), { recursive: true });
     writeFileSync(ARQ_SAIDA, JSON.stringify(cache, null, 1) + "\n");

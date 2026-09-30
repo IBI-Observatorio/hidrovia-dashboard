@@ -327,6 +327,37 @@ npm run update-calendar          # → public/data/severity-calendar.json + lib/
 
 ---
 
+## 🚢 LINE-UPS (vertical Agro / pilar F do IEE) — automático diário
+
+`agro-dados.yml` roda `scripts/lineup/*.ts` todos os dias e commita
+`data/lineup/<porto>.json`. As fontes são APPA (Paranaguá), APS/DIOPE (Santos), EMAP (Itaqui) e
+CDP/SCAP (Vila do Conde). Santarém é uma lacuna documentada. `arco-norte-agregador.ts` junta
+Itaqui e Vila do Conde.
+
+- **`snapshots`**: graneleiros de **grão**, 1 por dia, até 730. É o que o pilar F lê
+  (`lib/agro-content.ts` → `calculaComponenteF`). Healthcheck de grão: 0 graneleiros ⇒
+  `status: "indisponivel"`, preservando o histórico.
+- **`snapshotsFertilizantes`** (desde 25/09/2026; Paranaguá, Santos, Itaqui): navios de
+  **importação de fertilizante**, com `toneladas` = previsto (saldo, se atracado). O filtro está em
+  `scripts/lineup/fertilizante.ts`.
+  - Tem **healthcheck próprio** (`statusFertilizantes`) e é gravada mesmo quando o grão falha.
+  - **Não alimenta o IEE.**
+  - Existe para refazer, depois de 12 a 18 meses, o backtest "line-up de fertilizante → importação"
+    (`docs/parceria-cna/backtest-ciot-pedagio.md`, adendo 2).
+  - Vila do Conde fica de fora enquanto o scraper do SCAP estiver quebrado.
+- **`data/lineup/santos-escalas-calado.json`** (desde 30/09/2026; gerado por `santos.ts`): uma linha
+  por **escala (DUV)** de todos os navios esperados em Santos, qualquer carga, com **IMO, calado,
+  comprimento**, seção, operações, mercadorias, peso e terminal.
+  - Guarda `calado_primeiro_m` (1º visto) e `calado_m` (último visto), além de `visto_primeiro`/`visto_ultimo`.
+  - Alimenta o estudo do calado perdido em Santos (IBI×NORA, `docs/parceria-nora/santos-calado/`).
+    **Não alimenta o IEE.**
+  - O significado da coluna "Cal/Draft" da APS não está documentado. Tratar como "calado informado na
+    programação".
+  - **TLS:** a APS não envia a CA intermediária (Sectigo OV R36). O scraper soma
+    `scripts/lineup/certs/sectigo-ov-r36.pem` às raízes padrão; sem isso, o Linux do Actions dá
+    `UNABLE_TO_VERIFY_LEAF_SIGNATURE`, e foi o que causou o "fetch failed" de 01/07 a 30/09/2026.
+    Se a APS trocar de certificado, atualizar esse PEM (a URL está no campo AIA do certificado).
+
 ## Resumo
 
 | Frequência | Automático (nuvem) | Manual (metodologia/backfill) |
