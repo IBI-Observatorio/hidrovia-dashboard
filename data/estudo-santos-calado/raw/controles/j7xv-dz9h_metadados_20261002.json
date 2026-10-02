@@ -1,0 +1,1103 @@
+{
+  "id" : "j7xv-dz9h",
+  "name" : "Transportation and Landed Costs of Brazilian Soybeans to China and Germany",
+  "assetType" : "dataset",
+  "attribution" : "USDA/AMS/TM/TSD",
+  "attributionLink" : "https://www.ams.usda.gov/services/transportation-analysis/brazil",
+  "averageRating" : 0,
+  "category" : "Transportation Costs",
+  "createdAt" : 1619465545,
+  "description" : "This dataset contains transportation and landed costs of Brazilian soybeans to Shanghai, China and Hamburg, Germany. Transportation costs are broken out by mode and vary by route. The data also contains Brazil farm values to compute total landed costs.",
+  "diciBackend" : false,
+  "displayType" : "table",
+  "domainCName" : "agtransport.usda.gov",
+  "downloadCount" : 1247,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "locked" : false,
+  "newBackend" : true,
+  "numberOfComments" : 0,
+  "oid" : 37371672,
+  "provenance" : "official",
+  "publicationAppendEnabled" : false,
+  "publicationDate" : 1624905527,
+  "publicationGroup" : 18259257,
+  "publicationStage" : "published",
+  "rowsUpdatedAt" : 1769707886,
+  "rowsUpdatedBy" : "aiqt-4thn",
+  "tableId" : 18369189,
+  "totalTimesRated" : 0,
+  "viewCount" : 2977,
+  "viewLastModified" : 1769707884,
+  "viewType" : "tabular",
+  "approvals" : [ {
+    "reviewedAt" : 1683662089,
+    "reviewedAutomatically" : false,
+    "state" : "approved",
+    "submissionId" : 5500008,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1683662078,
+    "targetAudience" : "public",
+    "workflowId" : 531,
+    "reviewer" : {
+      "id" : "aiqt-4thn",
+      "displayName" : "Jesse Gastelle"
+    },
+    "submissionDetails" : {
+      "permissionType" : "read"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1683662089,
+      "failureCount" : 0,
+      "startedAt" : 1683662089,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "aiqt-4thn",
+      "displayName" : "Jesse Gastelle"
+    }
+  }, {
+    "message" : "The `strict_permissions` flag must be on to enable internal approvals.",
+    "state" : "unsubmittable",
+    "targetAudience" : "internal",
+    "workflowId" : 4623
+  } ],
+  "clientContext" : {
+    "clientContextVariables" : [ ],
+    "inheritedVariables" : { }
+  },
+  "columns" : [ {
+    "id" : 543551223,
+    "name" : "Quarter Ending Date",
+    "dataTypeName" : "calendar_date",
+    "description" : "The date in which the shipment occurs",
+    "fieldName" : "quarter_ending_date",
+    "position" : 1,
+    "renderTypeName" : "calendar_date",
+    "tableColumnId" : 138016255,
+    "width" : 360,
+    "cachedContents" : {
+      "non_null" : "908",
+      "largest" : "2025-09-30T00:00:00.000",
+      "null" : "0",
+      "top" : [ {
+        "item" : "2023-09-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2020-12-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2024-03-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2020-03-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2020-09-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2025-09-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2021-03-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2019-09-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2024-06-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2024-12-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2025-06-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2025-03-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2019-03-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2021-12-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2022-03-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2019-12-31T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2022-09-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2024-09-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2021-09-30T00:00:00.000",
+        "count" : "16"
+      }, {
+        "item" : "2022-06-30T00:00:00.000",
+        "count" : "16"
+      } ],
+      "smallest" : "2006-12-31T00:00:00.000",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "view" : "date"
+    }
+  }, {
+    "id" : 543551224,
+    "name" : "Year",
+    "dataTypeName" : "text",
+    "description" : "The year in which the shipment occurs",
+    "fieldName" : "year",
+    "position" : 2,
+    "renderTypeName" : "text",
+    "tableColumnId" : 136672847,
+    "cachedContents" : {
+      "non_null" : "908",
+      "largest" : "2025",
+      "null" : "0",
+      "top" : [ {
+        "item" : "2021",
+        "count" : "64"
+      }, {
+        "item" : "2024",
+        "count" : "64"
+      }, {
+        "item" : "2019",
+        "count" : "64"
+      }, {
+        "item" : "2023",
+        "count" : "64"
+      }, {
+        "item" : "2022",
+        "count" : "64"
+      }, {
+        "item" : "2020",
+        "count" : "64"
+      }, {
+        "item" : "2015",
+        "count" : "56"
+      }, {
+        "item" : "2018",
+        "count" : "56"
+      }, {
+        "item" : "2017",
+        "count" : "56"
+      }, {
+        "item" : "2016",
+        "count" : "56"
+      }, {
+        "item" : "2025",
+        "count" : "48"
+      }, {
+        "item" : "2012",
+        "count" : "32"
+      }, {
+        "item" : "2009",
+        "count" : "32"
+      }, {
+        "item" : "2014",
+        "count" : "32"
+      }, {
+        "item" : "2008",
+        "count" : "32"
+      }, {
+        "item" : "2010",
+        "count" : "32"
+      }, {
+        "item" : "2011",
+        "count" : "32"
+      }, {
+        "item" : "2013",
+        "count" : "28"
+      }, {
+        "item" : "2007",
+        "count" : "24"
+      }, {
+        "item" : "2006",
+        "count" : "8"
+      } ],
+      "smallest" : "2006",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : { }
+  }, {
+    "id" : 543551225,
+    "name" : "Quarter",
+    "dataTypeName" : "number",
+    "description" : "The quarter in which the shipment occurs",
+    "fieldName" : "quarter",
+    "position" : 3,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672832,
+    "cachedContents" : {
+      "non_null" : "908",
+      "largest" : "4",
+      "null" : "0",
+      "top" : [ {
+        "item" : "2",
+        "count" : "232"
+      }, {
+        "item" : "3",
+        "count" : "228"
+      }, {
+        "item" : "1",
+        "count" : "224"
+      }, {
+        "item" : "4",
+        "count" : "224"
+      } ],
+      "smallest" : "1",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : { }
+  }, {
+    "id" : 543551226,
+    "name" : "Commodity",
+    "dataTypeName" : "text",
+    "description" : "The type of grain shipped",
+    "fieldName" : "commodity",
+    "position" : 4,
+    "renderTypeName" : "text",
+    "tableColumnId" : 136672833,
+    "cachedContents" : {
+      "non_null" : "908",
+      "largest" : "soybeans",
+      "null" : "0",
+      "top" : [ {
+        "item" : "soybeans",
+        "count" : "908"
+      } ],
+      "smallest" : "soybeans",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : { }
+  }, {
+    "id" : 543551230,
+    "name" : "Route",
+    "dataTypeName" : "text",
+    "description" : "The Brazilian origin and destination city and port",
+    "fieldName" : "port",
+    "position" : 5,
+    "renderTypeName" : "text",
+    "tableColumnId" : 136672837,
+    "cachedContents" : {
+      "non_null" : "908",
+      "largest" : "Southwest Pl - Sao Luis",
+      "null" : "0",
+      "top" : [ {
+        "item" : "Northwest RS - Rio Grande",
+        "count" : "147"
+      }, {
+        "item" : "North MT - Santos",
+        "count" : "93"
+      }, {
+        "item" : "South MA - Sao Luis",
+        "count" : "86"
+      }, {
+        "item" : "North MT - Santarem",
+        "count" : "85"
+      }, {
+        "item" : "South GO - Santos",
+        "count" : "82"
+      }, {
+        "item" : "North Central PR - Paranagua",
+        "count" : "79"
+      }, {
+        "item" : "Southwest PI - Sao Luis",
+        "count" : "75"
+      }, {
+        "item" : "North MT - Paranagua",
+        "count" : "67"
+      }, {
+        "item" : "North MT - Santos by rail",
+        "count" : "61"
+      }, {
+        "item" : "North MT - Santos by truck",
+        "count" : "57"
+      }, {
+        "item" : "North MT - Barcarena",
+        "count" : "54"
+      }, {
+        "item" : "Southwest Pl - Sao Luis",
+        "count" : "11"
+      }, {
+        "item" : "North MT - Santos by truck and rail",
+        "count" : "8"
+      }, {
+        "item" : "Southeast MT - Santos",
+        "count" : "1"
+      }, {
+        "item" : "Norhtwest RS - Rio Grande",
+        "count" : "1"
+      }, {
+        "item" : "North MT- Santarem",
+        "count" : "1"
+      } ],
+      "smallest" : "Norhtwest RS - Rio Grande",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : { }
+  }, {
+    "id" : 543551228,
+    "name" : "Destination",
+    "dataTypeName" : "text",
+    "description" : "The destination city",
+    "fieldName" : "destination",
+    "position" : 6,
+    "renderTypeName" : "text",
+    "tableColumnId" : 136672835,
+    "cachedContents" : {
+      "non_null" : "908",
+      "largest" : "Shanghai, China",
+      "null" : "0",
+      "top" : [ {
+        "item" : "Shanghai, China",
+        "count" : "456"
+      }, {
+        "item" : "Hamburg, Germany",
+        "count" : "452"
+      } ],
+      "smallest" : "Hamburg, Germany",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : { }
+  }, {
+    "id" : 543551231,
+    "name" : "Truck",
+    "dataTypeName" : "number",
+    "description" : "Trucks rates in dollars per metric ton",
+    "fieldName" : "truck",
+    "position" : 7,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672838,
+    "cachedContents" : {
+      "non_null" : "900",
+      "largest" : "140.26",
+      "null" : "8",
+      "top" : [ {
+        "item" : "37.04",
+        "count" : "6"
+      }, {
+        "item" : "35.89",
+        "count" : "4"
+      }, {
+        "item" : "41.03",
+        "count" : "4"
+      }, {
+        "item" : "48.27",
+        "count" : "4"
+      }, {
+        "item" : "21.31",
+        "count" : "4"
+      }, {
+        "item" : "59.53",
+        "count" : "4"
+      }, {
+        "item" : "38.44",
+        "count" : "4"
+      }, {
+        "item" : "24.07",
+        "count" : "4"
+      }, {
+        "item" : "29.89",
+        "count" : "4"
+      }, {
+        "item" : "16.16",
+        "count" : "4"
+      }, {
+        "item" : "25.22",
+        "count" : "4"
+      }, {
+        "item" : "37.6",
+        "count" : "4"
+      }, {
+        "item" : "21.82",
+        "count" : "4"
+      }, {
+        "item" : "73.96",
+        "count" : "4"
+      }, {
+        "item" : "38.89",
+        "count" : "4"
+      }, {
+        "item" : "28.28",
+        "count" : "3"
+      }, {
+        "item" : "59.02",
+        "count" : "3"
+      }, {
+        "item" : "25.21",
+        "count" : "3"
+      }, {
+        "item" : "102.78",
+        "count" : "3"
+      }, {
+        "item" : "25.3",
+        "count" : "3"
+      } ],
+      "smallest" : "16.06",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "precisionStyle" : "currency",
+      "currencyStyle" : "USD"
+    }
+  }, {
+    "id" : 543551232,
+    "name" : "Barge",
+    "dataTypeName" : "number",
+    "description" : "Barge rates in dollars per metric ton.",
+    "fieldName" : "barge",
+    "position" : 8,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672839,
+    "cachedContents" : {
+      "non_null" : "55",
+      "largest" : "43.01",
+      "null" : "853",
+      "top" : [ {
+        "item" : "10.97",
+        "count" : "2"
+      }, {
+        "item" : "12.11",
+        "count" : "2"
+      }, {
+        "item" : "12.24",
+        "count" : "2"
+      }, {
+        "item" : "12.85",
+        "count" : "2"
+      }, {
+        "item" : "13.32",
+        "count" : "2"
+      }, {
+        "item" : "14.36",
+        "count" : "2"
+      }, {
+        "item" : "14.45",
+        "count" : "2"
+      }, {
+        "item" : "15.84",
+        "count" : "2"
+      }, {
+        "item" : "16.28",
+        "count" : "2"
+      }, {
+        "item" : "16.42",
+        "count" : "2"
+      }, {
+        "item" : "16.79",
+        "count" : "2"
+      }, {
+        "item" : "17.42",
+        "count" : "2"
+      }, {
+        "item" : "17.62",
+        "count" : "2"
+      }, {
+        "item" : "18.3",
+        "count" : "2"
+      }, {
+        "item" : "19.43",
+        "count" : "2"
+      }, {
+        "item" : "19.66",
+        "count" : "2"
+      }, {
+        "item" : "19.93",
+        "count" : "2"
+      }, {
+        "item" : "20.42",
+        "count" : "2"
+      }, {
+        "item" : "20.63",
+        "count" : "2"
+      }, {
+        "item" : "21.24",
+        "count" : "2"
+      } ],
+      "smallest" : "10.97",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "precisionStyle" : "currency",
+      "currencyStyle" : "USD"
+    }
+  }, {
+    "id" : 543551233,
+    "name" : "Rail",
+    "dataTypeName" : "number",
+    "description" : "Tariff rail rates in dollars per metric ton",
+    "fieldName" : "rail",
+    "position" : 9,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672840,
+    "cachedContents" : {
+      "non_null" : "61",
+      "largest" : "58.44",
+      "null" : "847",
+      "top" : [ {
+        "item" : "58.44",
+        "count" : "2"
+      }, {
+        "item" : "29.2",
+        "count" : "2"
+      }, {
+        "item" : "30.09",
+        "count" : "2"
+      }, {
+        "item" : "30.44",
+        "count" : "2"
+      }, {
+        "item" : "30.58",
+        "count" : "2"
+      }, {
+        "item" : "30.95",
+        "count" : "2"
+      }, {
+        "item" : "31.02",
+        "count" : "2"
+      }, {
+        "item" : "31.39",
+        "count" : "2"
+      }, {
+        "item" : "37.69",
+        "count" : "2"
+      }, {
+        "item" : "37.73",
+        "count" : "2"
+      }, {
+        "item" : "39.28",
+        "count" : "2"
+      }, {
+        "item" : "40.42",
+        "count" : "2"
+      }, {
+        "item" : "41.21",
+        "count" : "2"
+      }, {
+        "item" : "42.77",
+        "count" : "2"
+      }, {
+        "item" : "27.27",
+        "count" : "2"
+      }, {
+        "item" : "43.29",
+        "count" : "2"
+      }, {
+        "item" : "43.89",
+        "count" : "2"
+      }, {
+        "item" : "45.54",
+        "count" : "2"
+      }, {
+        "item" : "46.56",
+        "count" : "2"
+      }, {
+        "item" : "46.59",
+        "count" : "2"
+      } ],
+      "smallest" : "27.27",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "precisionStyle" : "currency",
+      "currencyStyle" : "USD"
+    }
+  }, {
+    "id" : 543551234,
+    "name" : "Ocean",
+    "dataTypeName" : "number",
+    "description" : "Ocean freight rates in dollars per metric ton",
+    "fieldName" : "ocean",
+    "position" : 10,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672841,
+    "cachedContents" : {
+      "non_null" : "900",
+      "largest" : "111.2",
+      "null" : "8",
+      "top" : [ {
+        "item" : "31",
+        "count" : "20"
+      }, {
+        "item" : "25",
+        "count" : "16"
+      }, {
+        "item" : "32",
+        "count" : "14"
+      }, {
+        "item" : "30",
+        "count" : "13"
+      }, {
+        "item" : "21",
+        "count" : "10"
+      }, {
+        "item" : "36",
+        "count" : "10"
+      }, {
+        "item" : "37",
+        "count" : "10"
+      }, {
+        "item" : "35",
+        "count" : "10"
+      }, {
+        "item" : "29",
+        "count" : "9"
+      }, {
+        "item" : "34.5",
+        "count" : "9"
+      }, {
+        "item" : "27",
+        "count" : "9"
+      }, {
+        "item" : "22",
+        "count" : "8"
+      }, {
+        "item" : "26",
+        "count" : "7"
+      }, {
+        "item" : "24",
+        "count" : "7"
+      }, {
+        "item" : "20",
+        "count" : "7"
+      }, {
+        "item" : "36.5",
+        "count" : "7"
+      }, {
+        "item" : "17",
+        "count" : "6"
+      }, {
+        "item" : "17.5",
+        "count" : "6"
+      }, {
+        "item" : "39",
+        "count" : "6"
+      }, {
+        "item" : "66",
+        "count" : "6"
+      } ],
+      "smallest" : "8.25",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "precisionStyle" : "currency",
+      "currencyStyle" : "USD"
+    }
+  }, {
+    "id" : 543551235,
+    "name" : "Total Transportation Cost",
+    "dataTypeName" : "number",
+    "description" : "Total transportation costs in dollars per metric ton",
+    "fieldName" : "total_transportation_costs",
+    "position" : 11,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672842,
+    "cachedContents" : {
+      "non_null" : "900",
+      "largest" : "225.16",
+      "null" : "8",
+      "top" : [ {
+        "item" : "149.52",
+        "count" : "3"
+      }, {
+        "item" : "57",
+        "count" : "2"
+      }, {
+        "item" : "93.91",
+        "count" : "2"
+      }, {
+        "item" : "55.78",
+        "count" : "2"
+      }, {
+        "item" : "73.65",
+        "count" : "2"
+      }, {
+        "item" : "59.21",
+        "count" : "2"
+      }, {
+        "item" : "69.14",
+        "count" : "2"
+      }, {
+        "item" : "93.64",
+        "count" : "2"
+      }, {
+        "item" : "36.99",
+        "count" : "2"
+      }, {
+        "item" : "114.42",
+        "count" : "2"
+      }, {
+        "item" : "88.11",
+        "count" : "2"
+      }, {
+        "item" : "59.64",
+        "count" : "2"
+      }, {
+        "item" : "117.97",
+        "count" : "2"
+      }, {
+        "item" : "146.88",
+        "count" : "2"
+      }, {
+        "item" : "68.99",
+        "count" : "2"
+      }, {
+        "item" : "105.15",
+        "count" : "2"
+      }, {
+        "item" : "93.07",
+        "count" : "2"
+      }, {
+        "item" : "43.63",
+        "count" : "2"
+      }, {
+        "item" : "82.58",
+        "count" : "2"
+      }, {
+        "item" : "49.71",
+        "count" : "2"
+      } ],
+      "smallest" : "35.65",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "precisionStyle" : "currency",
+      "currencyStyle" : "USD"
+    }
+  }, {
+    "id" : 543551236,
+    "name" : "Farm Gate Price",
+    "dataTypeName" : "number",
+    "description" : "Farm gate prices of the grain in dollars per metric ton",
+    "fieldName" : "farm_value",
+    "position" : 12,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672843,
+    "cachedContents" : {
+      "non_null" : "900",
+      "largest" : "617.87",
+      "null" : "8",
+      "top" : [ {
+        "item" : "386.58",
+        "count" : "12"
+      }, {
+        "item" : "514.98",
+        "count" : "10"
+      }, {
+        "item" : "317.36",
+        "count" : "10"
+      }, {
+        "item" : "275.38",
+        "count" : "10"
+      }, {
+        "item" : "287.53",
+        "count" : "10"
+      }, {
+        "item" : "550.71",
+        "count" : "10"
+      }, {
+        "item" : "349.39",
+        "count" : "10"
+      }, {
+        "item" : "463.1",
+        "count" : "10"
+      }, {
+        "item" : "566.29",
+        "count" : "10"
+      }, {
+        "item" : "399.94",
+        "count" : "10"
+      }, {
+        "item" : "325.53",
+        "count" : "10"
+      }, {
+        "item" : "513.31",
+        "count" : "10"
+      }, {
+        "item" : "307.47",
+        "count" : "10"
+      }, {
+        "item" : "271.7",
+        "count" : "10"
+      }, {
+        "item" : "515.89",
+        "count" : "10"
+      }, {
+        "item" : "495.57",
+        "count" : "10"
+      }, {
+        "item" : "406.91",
+        "count" : "10"
+      }, {
+        "item" : "490.89",
+        "count" : "10"
+      }, {
+        "item" : "457.88",
+        "count" : "10"
+      }, {
+        "item" : "366.79",
+        "count" : "10"
+      } ],
+      "smallest" : "164.88",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "precisionStyle" : "currency",
+      "currencyStyle" : "USD"
+    }
+  }, {
+    "id" : 543551237,
+    "name" : "Landed Cost",
+    "dataTypeName" : "number",
+    "description" : "The total landed costs (total transportation cost plus farm value) of the grain in dollars per metric ton",
+    "fieldName" : "landed_cost",
+    "position" : 13,
+    "renderTypeName" : "number",
+    "tableColumnId" : 136672844,
+    "cachedContents" : {
+      "non_null" : "900",
+      "largest" : "735.55",
+      "null" : "8",
+      "top" : [ {
+        "item" : "380.18",
+        "count" : "3"
+      }, {
+        "item" : "393.94",
+        "count" : "2"
+      }, {
+        "item" : "380.43",
+        "count" : "2"
+      }, {
+        "item" : "479.09",
+        "count" : "2"
+      }, {
+        "item" : "519.17",
+        "count" : "2"
+      }, {
+        "item" : "489.38",
+        "count" : "2"
+      }, {
+        "item" : "402.2",
+        "count" : "2"
+      }, {
+        "item" : "368.03",
+        "count" : "2"
+      }, {
+        "item" : "410.11",
+        "count" : "2"
+      }, {
+        "item" : "512.92",
+        "count" : "2"
+      }, {
+        "item" : "412.1",
+        "count" : "2"
+      }, {
+        "item" : "527.22",
+        "count" : "2"
+      }, {
+        "item" : "527.76",
+        "count" : "2"
+      }, {
+        "item" : "508.49",
+        "count" : "2"
+      }, {
+        "item" : "360.61",
+        "count" : "2"
+      }, {
+        "item" : "468.74",
+        "count" : "2"
+      }, {
+        "item" : "504.79",
+        "count" : "2"
+      }, {
+        "item" : "476.56",
+        "count" : "2"
+      }, {
+        "item" : "426.48",
+        "count" : "2"
+      }, {
+        "item" : "504.1",
+        "count" : "2"
+      } ],
+      "smallest" : "38.37",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : {
+      "precisionStyle" : "currency",
+      "currencyStyle" : "USD"
+    }
+  }, {
+    "id" : 543551240,
+    "name" : "Year/Quarter",
+    "dataTypeName" : "text",
+    "description" : "The year and quarter an event has taken place.",
+    "fieldName" : "year_quarter",
+    "position" : 14,
+    "renderTypeName" : "text",
+    "tableColumnId" : 138648189,
+    "cachedContents" : {
+      "non_null" : "908",
+      "largest" : "2025Q3",
+      "null" : "0",
+      "top" : [ {
+        "item" : "2023Q4",
+        "count" : "16"
+      }, {
+        "item" : "2020Q1",
+        "count" : "16"
+      }, {
+        "item" : "2019Q2",
+        "count" : "16"
+      }, {
+        "item" : "2021Q4",
+        "count" : "16"
+      }, {
+        "item" : "2022Q4",
+        "count" : "16"
+      }, {
+        "item" : "2020Q3",
+        "count" : "16"
+      }, {
+        "item" : "2020Q2",
+        "count" : "16"
+      }, {
+        "item" : "2023Q2",
+        "count" : "16"
+      }, {
+        "item" : "2019Q1",
+        "count" : "16"
+      }, {
+        "item" : "2023Q1",
+        "count" : "16"
+      }, {
+        "item" : "2019Q3",
+        "count" : "16"
+      }, {
+        "item" : "2025Q3",
+        "count" : "16"
+      }, {
+        "item" : "2024Q4",
+        "count" : "16"
+      }, {
+        "item" : "2024Q3",
+        "count" : "16"
+      }, {
+        "item" : "2021Q3",
+        "count" : "16"
+      }, {
+        "item" : "2021Q1",
+        "count" : "16"
+      }, {
+        "item" : "2022Q1",
+        "count" : "16"
+      }, {
+        "item" : "2025Q1",
+        "count" : "16"
+      }, {
+        "item" : "2024Q1",
+        "count" : "16"
+      }, {
+        "item" : "2021Q2",
+        "count" : "16"
+      } ],
+      "smallest" : "2006Q4",
+      "count" : "908",
+      "cardinality" : "908"
+    },
+    "format" : { }
+  } ],
+  "grants" : [ {
+    "inherited" : false,
+    "type" : "viewer",
+    "flags" : [ "public" ]
+  } ],
+  "metadata" : {
+    "jsonQuery" : {
+      "order" : [ {
+        "columnFieldName" : "quarter_ending_date",
+        "ascending" : false
+      }, {
+        "columnFieldName" : "destination",
+        "ascending" : false
+      }, {
+        "columnFieldName" : "port",
+        "ascending" : false
+      } ]
+    },
+    "custom_fields" : {
+      "Publishing" : {
+        "Publishing Schedule" : "Quarterly"
+      },
+      "Scope" : {
+        "Temporal Unit" : "Quarter",
+        "Geographic Coverage" : "Brazil",
+        "Temporal Coverage" : "2006 to present",
+        "Geographic Unit" : "Country"
+      },
+      "Related Information" : {
+        "Links" : "https://www.ams.usda.gov/services/transportation-analysis/brazil",
+        "Research" : "Brazil Soybean Transportation"
+      }
+    },
+    "availableDisplayTypes" : [ "table", "fatrow", "page" ]
+  },
+  "owner" : {
+    "id" : "q82n-w99z",
+    "displayName" : "Bernadette Winston",
+    "screenName" : "Bernadette Winston",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula" ]
+  },
+  "query" : {
+    "orderBys" : [ {
+      "ascending" : false,
+      "expression" : {
+        "columnId" : 543551223,
+        "type" : "column"
+      }
+    }, {
+      "ascending" : false,
+      "expression" : {
+        "columnId" : 543551228,
+        "type" : "column"
+      }
+    }, {
+      "ascending" : false,
+      "expression" : {
+        "columnId" : 543551230,
+        "type" : "column"
+      }
+    } ]
+  },
+  "rights" : [ "read" ],
+  "tableAuthor" : {
+    "id" : "q82n-w99z",
+    "displayName" : "Bernadette Winston",
+    "screenName" : "Bernadette Winston",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula" ]
+  },
+  "tags" : [ "brazil", "landed costs", "china", "germany", "soybeans", "soybean" ],
+  "flags" : [ "default", "federated", "internalToPublicFederatedView", "ownerMayBeContacted", "restorable", "restorePossibleForType" ]
+}

@@ -1,0 +1,744 @@
+[{"quarter_ending_date":"2005-01-31T00:00:00.000","year":"2005","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"44.64","year_quarter":"2005Q1"}
+,{"quarter_ending_date":"2005-04-30T00:00:00.000","year":"2005","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"44.84","year_quarter":"2005Q2"}
+,{"quarter_ending_date":"2005-07-31T00:00:00.000","year":"2005","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"43.54","year_quarter":"2005Q3"}
+,{"quarter_ending_date":"2005-10-31T00:00:00.000","year":"2005","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"55.73","year_quarter":"2005Q4"}
+,{"quarter_ending_date":"2005-01-31T00:00:00.000","year":"2005","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"44.2","year_quarter":"2005Q1"}
+,{"quarter_ending_date":"2005-04-30T00:00:00.000","year":"2005","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"44.39","year_quarter":"2005Q2"}
+,{"quarter_ending_date":"2005-07-31T00:00:00.000","year":"2005","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"43.04","year_quarter":"2005Q3"}
+,{"quarter_ending_date":"2005-10-31T00:00:00.000","year":"2005","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"55.23","year_quarter":"2005Q4"}
+,{"quarter_ending_date":"2005-01-31T00:00:00.000","year":"2005","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"45.53","year_quarter":"2005Q1"}
+,{"quarter_ending_date":"2005-04-30T00:00:00.000","year":"2005","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"45.84","year_quarter":"2005Q2"}
+,{"quarter_ending_date":"2005-07-31T00:00:00.000","year":"2005","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"44.54","year_quarter":"2005Q3"}
+,{"quarter_ending_date":"2005-10-31T00:00:00.000","year":"2005","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"56.73","year_quarter":"2005Q4"}
+,{"quarter_ending_date":"2006-01-31T00:00:00.000","year":"2006","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"49.13","year_quarter":"2006Q1"}
+,{"quarter_ending_date":"2006-04-30T00:00:00.000","year":"2006","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"43.8","year_quarter":"2006Q2"}
+,{"quarter_ending_date":"2006-07-31T00:00:00.000","year":"2006","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"59.98","year_quarter":"2006Q3"}
+,{"quarter_ending_date":"2006-10-31T00:00:00.000","year":"2006","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"72.32","year_quarter":"2006Q4"}
+,{"quarter_ending_date":"2006-01-31T00:00:00.000","year":"2006","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"38.51","year_quarter":"2006Q1"}
+,{"quarter_ending_date":"2006-04-30T00:00:00.000","year":"2006","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"35.91","year_quarter":"2006Q2"}
+,{"quarter_ending_date":"2006-07-31T00:00:00.000","year":"2006","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"49.24","year_quarter":"2006Q3"}
+,{"quarter_ending_date":"2006-10-31T00:00:00.000","year":"2006","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"59.4","year_quarter":"2006Q4"}
+,{"quarter_ending_date":"2006-01-31T00:00:00.000","year":"2006","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"48.63","year_quarter":"2006Q1"}
+,{"quarter_ending_date":"2006-04-30T00:00:00.000","year":"2006","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"43.3","year_quarter":"2006Q2"}
+,{"quarter_ending_date":"2006-07-31T00:00:00.000","year":"2006","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"59.48","year_quarter":"2006Q3"}
+,{"quarter_ending_date":"2006-10-31T00:00:00.000","year":"2006","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"71.82","year_quarter":"2006Q4"}
+,{"quarter_ending_date":"2006-01-31T00:00:00.000","year":"2006","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"37.06","year_quarter":"2006Q1"}
+,{"quarter_ending_date":"2006-04-30T00:00:00.000","year":"2006","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"35.41","year_quarter":"2006Q2"}
+,{"quarter_ending_date":"2006-07-31T00:00:00.000","year":"2006","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"48.74","year_quarter":"2006Q3"}
+,{"quarter_ending_date":"2006-10-31T00:00:00.000","year":"2006","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"58.9","year_quarter":"2006Q4"}
+,{"quarter_ending_date":"2006-01-31T00:00:00.000","year":"2006","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"50.13","year_quarter":"2006Q1"}
+,{"quarter_ending_date":"2006-04-30T00:00:00.000","year":"2006","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"44.8","year_quarter":"2006Q2"}
+,{"quarter_ending_date":"2006-07-31T00:00:00.000","year":"2006","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"60.98","year_quarter":"2006Q3"}
+,{"quarter_ending_date":"2006-10-31T00:00:00.000","year":"2006","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"73.32","year_quarter":"2006Q4"}
+,{"quarter_ending_date":"2006-01-31T00:00:00.000","year":"2006","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"39.51","year_quarter":"2006Q1"}
+,{"quarter_ending_date":"2006-04-30T00:00:00.000","year":"2006","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"36.91","year_quarter":"2006Q2"}
+,{"quarter_ending_date":"2006-07-31T00:00:00.000","year":"2006","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"50.24","year_quarter":"2006Q3"}
+,{"quarter_ending_date":"2006-10-31T00:00:00.000","year":"2006","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"60.4","year_quarter":"2006Q4"}
+,{"quarter_ending_date":"2007-01-31T00:00:00.000","year":"2007","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"72.32","year_quarter":"2007Q1"}
+,{"quarter_ending_date":"2007-04-30T00:00:00.000","year":"2007","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"110.2","year_quarter":"2007Q2"}
+,{"quarter_ending_date":"2007-07-31T00:00:00.000","year":"2007","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"65.5","year_quarter":"2007Q3"}
+,{"quarter_ending_date":"2007-10-31T00:00:00.000","year":"2007","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"75.22","year_quarter":"2007Q4"}
+,{"quarter_ending_date":"2007-01-31T00:00:00.000","year":"2007","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"59.4","year_quarter":"2007Q1"}
+,{"quarter_ending_date":"2007-04-30T00:00:00.000","year":"2007","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"90.61","year_quarter":"2007Q2"}
+,{"quarter_ending_date":"2007-07-31T00:00:00.000","year":"2007","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"53.12","year_quarter":"2007Q3"}
+,{"quarter_ending_date":"2007-10-31T00:00:00.000","year":"2007","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"81.08","year_quarter":"2007Q4"}
+,{"quarter_ending_date":"2007-01-31T00:00:00.000","year":"2007","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"71.82","year_quarter":"2007Q1"}
+,{"quarter_ending_date":"2007-04-30T00:00:00.000","year":"2007","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"109.7","year_quarter":"2007Q2"}
+,{"quarter_ending_date":"2007-07-31T00:00:00.000","year":"2007","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"70.5","year_quarter":"2007Q3"}
+,{"quarter_ending_date":"2007-10-31T00:00:00.000","year":"2007","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"74.2","year_quarter":"2007Q4"}
+,{"quarter_ending_date":"2007-01-31T00:00:00.000","year":"2007","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"58.9","year_quarter":"2007Q1"}
+,{"quarter_ending_date":"2007-04-30T00:00:00.000","year":"2007","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"90.11","year_quarter":"2007Q2"}
+,{"quarter_ending_date":"2007-07-31T00:00:00.000","year":"2007","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"57.85","year_quarter":"2007Q3"}
+,{"quarter_ending_date":"2007-10-31T00:00:00.000","year":"2007","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"80.06","year_quarter":"2007Q4"}
+,{"quarter_ending_date":"2007-01-31T00:00:00.000","year":"2007","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"73.32","year_quarter":"2007Q1"}
+,{"quarter_ending_date":"2007-04-30T00:00:00.000","year":"2007","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"111.2","year_quarter":"2007Q2"}
+,{"quarter_ending_date":"2007-07-31T00:00:00.000","year":"2007","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"72","year_quarter":"2007Q3"}
+,{"quarter_ending_date":"2007-10-31T00:00:00.000","year":"2007","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"74.81","year_quarter":"2007Q4"}
+,{"quarter_ending_date":"2007-01-31T00:00:00.000","year":"2007","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"60.4","year_quarter":"2007Q1"}
+,{"quarter_ending_date":"2007-04-30T00:00:00.000","year":"2007","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"91.61","year_quarter":"2007Q2"}
+,{"quarter_ending_date":"2007-07-31T00:00:00.000","year":"2007","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"59.35","year_quarter":"2007Q3"}
+,{"quarter_ending_date":"2007-10-31T00:00:00.000","year":"2007","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"80.67","year_quarter":"2007Q4"}
+,{"quarter_ending_date":"2008-01-31T00:00:00.000","year":"2008","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"66.53","year_quarter":"2008Q1"}
+,{"quarter_ending_date":"2008-04-30T00:00:00.000","year":"2008","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"80.79","year_quarter":"2008Q2"}
+,{"quarter_ending_date":"2008-07-31T00:00:00.000","year":"2008","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"74.03","year_quarter":"2008Q3"}
+,{"quarter_ending_date":"2008-10-31T00:00:00.000","year":"2008","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"65.3","year_quarter":"2008Q4"}
+,{"quarter_ending_date":"2008-01-31T00:00:00.000","year":"2008","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"58.9","year_quarter":"2008Q1"}
+,{"quarter_ending_date":"2008-04-30T00:00:00.000","year":"2008","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"72.68","year_quarter":"2008Q2"}
+,{"quarter_ending_date":"2008-07-31T00:00:00.000","year":"2008","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"50.2","year_quarter":"2008Q3"}
+,{"quarter_ending_date":"2008-10-31T00:00:00.000","year":"2008","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"33.48","year_quarter":"2008Q4"}
+,{"quarter_ending_date":"2008-01-31T00:00:00.000","year":"2008","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"67.01","year_quarter":"2008Q1"}
+,{"quarter_ending_date":"2008-04-30T00:00:00.000","year":"2008","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"81.27","year_quarter":"2008Q2"}
+,{"quarter_ending_date":"2008-07-31T00:00:00.000","year":"2008","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"74.23","year_quarter":"2008Q3"}
+,{"quarter_ending_date":"2008-10-31T00:00:00.000","year":"2008","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"65.8","year_quarter":"2008Q4"}
+,{"quarter_ending_date":"2008-01-31T00:00:00.000","year":"2008","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"59.36","year_quarter":"2008Q1"}
+,{"quarter_ending_date":"2008-04-30T00:00:00.000","year":"2008","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"73.18","year_quarter":"2008Q2"}
+,{"quarter_ending_date":"2008-07-31T00:00:00.000","year":"2008","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"50.7","year_quarter":"2008Q3"}
+,{"quarter_ending_date":"2008-10-31T00:00:00.000","year":"2008","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"33.98","year_quarter":"2008Q4"}
+,{"quarter_ending_date":"2008-01-31T00:00:00.000","year":"2008","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"64.81","year_quarter":"2008Q1"}
+,{"quarter_ending_date":"2008-04-30T00:00:00.000","year":"2008","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"80.27","year_quarter":"2008Q2"}
+,{"quarter_ending_date":"2008-07-31T00:00:00.000","year":"2008","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"72.43","year_quarter":"2008Q3"}
+,{"quarter_ending_date":"2008-10-31T00:00:00.000","year":"2008","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"64","year_quarter":"2008Q4"}
+,{"quarter_ending_date":"2008-01-31T00:00:00.000","year":"2008","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"57.38","year_quarter":"2008Q1"}
+,{"quarter_ending_date":"2008-04-30T00:00:00.000","year":"2008","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"71.08","year_quarter":"2008Q2"}
+,{"quarter_ending_date":"2008-07-31T00:00:00.000","year":"2008","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"48.8","year_quarter":"2008Q3"}
+,{"quarter_ending_date":"2008-10-31T00:00:00.000","year":"2008","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"32.18","year_quarter":"2008Q4"}
+,{"quarter_ending_date":"2009-01-31T00:00:00.000","year":"2009","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"65.7","year_quarter":"2009Q1"}
+,{"quarter_ending_date":"2009-04-30T00:00:00.000","year":"2009","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"67.3","year_quarter":"2009Q2"}
+,{"quarter_ending_date":"2009-07-31T00:00:00.000","year":"2009","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"48.78","year_quarter":"2009Q3"}
+,{"quarter_ending_date":"2009-10-31T00:00:00.000","year":"2009","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"54.23","year_quarter":"2009Q4"}
+,{"quarter_ending_date":"2009-01-31T00:00:00.000","year":"2009","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"35.5","year_quarter":"2009Q1"}
+,{"quarter_ending_date":"2009-04-30T00:00:00.000","year":"2009","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"35.79","year_quarter":"2009Q2"}
+,{"quarter_ending_date":"2009-07-31T00:00:00.000","year":"2009","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"31.55","year_quarter":"2009Q3"}
+,{"quarter_ending_date":"2009-10-31T00:00:00.000","year":"2009","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"30.53","year_quarter":"2009Q4"}
+,{"quarter_ending_date":"2009-01-31T00:00:00.000","year":"2009","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"66.87","year_quarter":"2009Q1"}
+,{"quarter_ending_date":"2009-04-30T00:00:00.000","year":"2009","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"67.8","year_quarter":"2009Q2"}
+,{"quarter_ending_date":"2009-07-31T00:00:00.000","year":"2009","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"49.5","year_quarter":"2009Q3"}
+,{"quarter_ending_date":"2009-10-31T00:00:00.000","year":"2009","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"53.5","year_quarter":"2009Q4"}
+,{"quarter_ending_date":"2009-01-31T00:00:00.000","year":"2009","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"35.8","year_quarter":"2009Q1"}
+,{"quarter_ending_date":"2009-04-30T00:00:00.000","year":"2009","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"36.2","year_quarter":"2009Q2"}
+,{"quarter_ending_date":"2009-07-31T00:00:00.000","year":"2009","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2009Q3"}
+,{"quarter_ending_date":"2009-10-31T00:00:00.000","year":"2009","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"31.17","year_quarter":"2009Q4"}
+,{"quarter_ending_date":"2009-01-31T00:00:00.000","year":"2009","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"64.5","year_quarter":"2009Q1"}
+,{"quarter_ending_date":"2009-04-30T00:00:00.000","year":"2009","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"66","year_quarter":"2009Q2"}
+,{"quarter_ending_date":"2009-07-31T00:00:00.000","year":"2009","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"49","year_quarter":"2009Q3"}
+,{"quarter_ending_date":"2009-10-31T00:00:00.000","year":"2009","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"55.63","year_quarter":"2009Q4"}
+,{"quarter_ending_date":"2009-01-31T00:00:00.000","year":"2009","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"34.1","year_quarter":"2009Q1"}
+,{"quarter_ending_date":"2009-04-30T00:00:00.000","year":"2009","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"34.75","year_quarter":"2009Q2"}
+,{"quarter_ending_date":"2009-07-31T00:00:00.000","year":"2009","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2009Q3"}
+,{"quarter_ending_date":"2009-10-31T00:00:00.000","year":"2009","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"31.08","year_quarter":"2009Q4"}
+,{"quarter_ending_date":"2010-01-31T00:00:00.000","year":"2010","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"52.5","year_quarter":"2010Q1"}
+,{"quarter_ending_date":"2010-04-30T00:00:00.000","year":"2010","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"58.58","year_quarter":"2010Q2"}
+,{"quarter_ending_date":"2010-07-31T00:00:00.000","year":"2010","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"63.1","year_quarter":"2010Q3"}
+,{"quarter_ending_date":"2010-10-31T00:00:00.000","year":"2010","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"61.5","year_quarter":"2010Q4"}
+,{"quarter_ending_date":"2010-01-31T00:00:00.000","year":"2010","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"31.83","year_quarter":"2010Q1"}
+,{"quarter_ending_date":"2010-04-30T00:00:00.000","year":"2010","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"38.08","year_quarter":"2010Q2"}
+,{"quarter_ending_date":"2010-07-31T00:00:00.000","year":"2010","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"36.92","year_quarter":"2010Q3"}
+,{"quarter_ending_date":"2010-10-31T00:00:00.000","year":"2010","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"33.5","year_quarter":"2010Q4"}
+,{"quarter_ending_date":"2010-01-31T00:00:00.000","year":"2010","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"53","year_quarter":"2010Q1"}
+,{"quarter_ending_date":"2010-04-30T00:00:00.000","year":"2010","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"58.75","year_quarter":"2010Q2"}
+,{"quarter_ending_date":"2010-07-31T00:00:00.000","year":"2010","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"63.27","year_quarter":"2010Q3"}
+,{"quarter_ending_date":"2010-10-31T00:00:00.000","year":"2010","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"57.83","year_quarter":"2010Q4"}
+,{"quarter_ending_date":"2010-01-31T00:00:00.000","year":"2010","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"33.5","year_quarter":"2010Q1"}
+,{"quarter_ending_date":"2010-04-30T00:00:00.000","year":"2010","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"39","year_quarter":"2010Q2"}
+,{"quarter_ending_date":"2010-07-31T00:00:00.000","year":"2010","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"37.08","year_quarter":"2010Q3"}
+,{"quarter_ending_date":"2010-10-31T00:00:00.000","year":"2010","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"34.54","year_quarter":"2010Q4"}
+,{"quarter_ending_date":"2010-01-31T00:00:00.000","year":"2010","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"52.33","year_quarter":"2010Q1"}
+,{"quarter_ending_date":"2010-04-30T00:00:00.000","year":"2010","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"55.08","year_quarter":"2010Q2"}
+,{"quarter_ending_date":"2010-07-31T00:00:00.000","year":"2010","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"58.17","year_quarter":"2010Q3"}
+,{"quarter_ending_date":"2010-10-31T00:00:00.000","year":"2010","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"57.79","year_quarter":"2010Q4"}
+,{"quarter_ending_date":"2010-01-31T00:00:00.000","year":"2010","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"32.25","year_quarter":"2010Q1"}
+,{"quarter_ending_date":"2010-04-30T00:00:00.000","year":"2010","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"36.17","year_quarter":"2010Q2"}
+,{"quarter_ending_date":"2010-07-31T00:00:00.000","year":"2010","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"34.42","year_quarter":"2010Q3"}
+,{"quarter_ending_date":"2010-10-31T00:00:00.000","year":"2010","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"31.67","year_quarter":"2010Q4"}
+,{"quarter_ending_date":"2011-01-31T00:00:00.000","year":"2011","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"56.25","year_quarter":"2011Q1"}
+,{"quarter_ending_date":"2011-04-30T00:00:00.000","year":"2011","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"57.62","year_quarter":"2011Q2"}
+,{"quarter_ending_date":"2011-07-31T00:00:00.000","year":"2011","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"59.61","year_quarter":"2011Q3"}
+,{"quarter_ending_date":"2011-10-31T00:00:00.000","year":"2011","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"55.8","year_quarter":"2011Q4"}
+,{"quarter_ending_date":"2011-01-31T00:00:00.000","year":"2011","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"33.86","year_quarter":"2011Q1"}
+,{"quarter_ending_date":"2011-04-30T00:00:00.000","year":"2011","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"36","year_quarter":"2011Q2"}
+,{"quarter_ending_date":"2011-07-31T00:00:00.000","year":"2011","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"37.29","year_quarter":"2011Q3"}
+,{"quarter_ending_date":"2011-10-31T00:00:00.000","year":"2011","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"32.63","year_quarter":"2011Q4"}
+,{"quarter_ending_date":"2011-01-31T00:00:00.000","year":"2011","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"50.5","year_quarter":"2011Q1"}
+,{"quarter_ending_date":"2011-04-30T00:00:00.000","year":"2011","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"50.6","year_quarter":"2011Q2"}
+,{"quarter_ending_date":"2011-07-31T00:00:00.000","year":"2011","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"53.02","year_quarter":"2011Q3"}
+,{"quarter_ending_date":"2011-10-31T00:00:00.000","year":"2011","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"50.26","year_quarter":"2011Q4"}
+,{"quarter_ending_date":"2011-01-31T00:00:00.000","year":"2011","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"35.43","year_quarter":"2011Q1"}
+,{"quarter_ending_date":"2011-04-30T00:00:00.000","year":"2011","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"36","year_quarter":"2011Q2"}
+,{"quarter_ending_date":"2011-07-31T00:00:00.000","year":"2011","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"37.81","year_quarter":"2011Q3"}
+,{"quarter_ending_date":"2011-10-31T00:00:00.000","year":"2011","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"35.22","year_quarter":"2011Q4"}
+,{"quarter_ending_date":"2011-01-31T00:00:00.000","year":"2011","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"50","year_quarter":"2011Q1"}
+,{"quarter_ending_date":"2011-04-30T00:00:00.000","year":"2011","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"50.05","year_quarter":"2011Q2"}
+,{"quarter_ending_date":"2011-07-31T00:00:00.000","year":"2011","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"52.31","year_quarter":"2011Q3"}
+,{"quarter_ending_date":"2011-10-31T00:00:00.000","year":"2011","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"49.65","year_quarter":"2011Q4"}
+,{"quarter_ending_date":"2011-01-31T00:00:00.000","year":"2011","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"34.96","year_quarter":"2011Q1"}
+,{"quarter_ending_date":"2011-04-30T00:00:00.000","year":"2011","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"35","year_quarter":"2011Q2"}
+,{"quarter_ending_date":"2011-07-31T00:00:00.000","year":"2011","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"36.65","year_quarter":"2011Q3"}
+,{"quarter_ending_date":"2011-10-31T00:00:00.000","year":"2011","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2011Q4"}
+,{"quarter_ending_date":"2012-01-31T00:00:00.000","year":"2012","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"52.32","year_quarter":"2012Q1"}
+,{"quarter_ending_date":"2012-04-30T00:00:00.000","year":"2012","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"57.63","year_quarter":"2012Q2"}
+,{"quarter_ending_date":"2012-07-31T00:00:00.000","year":"2012","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"55.42","year_quarter":"2012Q3"}
+,{"quarter_ending_date":"2012-10-31T00:00:00.000","year":"2012","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"55.42","year_quarter":"2012Q4"}
+,{"quarter_ending_date":"2012-01-31T00:00:00.000","year":"2012","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"31.58","year_quarter":"2012Q1"}
+,{"quarter_ending_date":"2012-04-30T00:00:00.000","year":"2012","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"35","year_quarter":"2012Q2"}
+,{"quarter_ending_date":"2012-07-31T00:00:00.000","year":"2012","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"34.3","year_quarter":"2012Q3"}
+,{"quarter_ending_date":"2012-10-31T00:00:00.000","year":"2012","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"34.3","year_quarter":"2012Q4"}
+,{"quarter_ending_date":"2012-01-31T00:00:00.000","year":"2012","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"47.92","year_quarter":"2012Q1"}
+,{"quarter_ending_date":"2012-04-30T00:00:00.000","year":"2012","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"52.78","year_quarter":"2012Q2"}
+,{"quarter_ending_date":"2012-07-31T00:00:00.000","year":"2012","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"49.02","year_quarter":"2012Q3"}
+,{"quarter_ending_date":"2012-10-31T00:00:00.000","year":"2012","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"49.02","year_quarter":"2012Q4"}
+,{"quarter_ending_date":"2012-01-31T00:00:00.000","year":"2012","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"32.08","year_quarter":"2012Q1"}
+,{"quarter_ending_date":"2012-04-30T00:00:00.000","year":"2012","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"36.5","year_quarter":"2012Q2"}
+,{"quarter_ending_date":"2012-07-31T00:00:00.000","year":"2012","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2012Q3"}
+,{"quarter_ending_date":"2012-10-31T00:00:00.000","year":"2012","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2012Q4"}
+,{"quarter_ending_date":"2012-01-31T00:00:00.000","year":"2012","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"46.62","year_quarter":"2012Q1"}
+,{"quarter_ending_date":"2012-04-30T00:00:00.000","year":"2012","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"51.35","year_quarter":"2012Q2"}
+,{"quarter_ending_date":"2012-07-31T00:00:00.000","year":"2012","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"50.42","year_quarter":"2012Q3"}
+,{"quarter_ending_date":"2012-10-31T00:00:00.000","year":"2012","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"50.42","year_quarter":"2012Q4"}
+,{"quarter_ending_date":"2012-01-31T00:00:00.000","year":"2012","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2012Q1"}
+,{"quarter_ending_date":"2012-04-30T00:00:00.000","year":"2012","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"35","year_quarter":"2012Q2"}
+,{"quarter_ending_date":"2012-07-31T00:00:00.000","year":"2012","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2012Q3"}
+,{"quarter_ending_date":"2012-10-31T00:00:00.000","year":"2012","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"28","year_quarter":"2012Q4"}
+,{"quarter_ending_date":"2013-01-31T00:00:00.000","year":"2013","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"56.03","year_quarter":"2013Q1"}
+,{"quarter_ending_date":"2013-04-30T00:00:00.000","year":"2013","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"36.75","year_quarter":"2013Q2"}
+,{"quarter_ending_date":"2013-07-31T00:00:00.000","year":"2013","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"36.75","year_quarter":"2013Q3"}
+,{"quarter_ending_date":"2013-10-31T00:00:00.000","year":"2013","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"46","year_quarter":"2013Q4"}
+,{"quarter_ending_date":"2013-01-31T00:00:00.000","year":"2013","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2013Q1"}
+,{"quarter_ending_date":"2013-04-30T00:00:00.000","year":"2013","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"29","year_quarter":"2013Q2"}
+,{"quarter_ending_date":"2013-07-31T00:00:00.000","year":"2013","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"29","year_quarter":"2013Q3"}
+,{"quarter_ending_date":"2013-10-31T00:00:00.000","year":"2013","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2013Q4"}
+,{"quarter_ending_date":"2013-01-31T00:00:00.000","year":"2013","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"51.34","year_quarter":"2013Q1"}
+,{"quarter_ending_date":"2013-04-30T00:00:00.000","year":"2013","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"35.25","year_quarter":"2013Q2"}
+,{"quarter_ending_date":"2013-07-31T00:00:00.000","year":"2013","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"35.25","year_quarter":"2013Q3"}
+,{"quarter_ending_date":"2013-10-31T00:00:00.000","year":"2013","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"44.25","year_quarter":"2013Q4"}
+,{"quarter_ending_date":"2013-01-31T00:00:00.000","year":"2013","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2013Q1"}
+,{"quarter_ending_date":"2013-04-30T00:00:00.000","year":"2013","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"29","year_quarter":"2013Q2"}
+,{"quarter_ending_date":"2013-07-31T00:00:00.000","year":"2013","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"29","year_quarter":"2013Q3"}
+,{"quarter_ending_date":"2013-10-31T00:00:00.000","year":"2013","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2013Q4"}
+,{"quarter_ending_date":"2013-01-31T00:00:00.000","year":"2013","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"52.34","year_quarter":"2013Q1"}
+,{"quarter_ending_date":"2013-04-30T00:00:00.000","year":"2013","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"34.5","year_quarter":"2013Q2"}
+,{"quarter_ending_date":"2013-07-31T00:00:00.000","year":"2013","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"34.5","year_quarter":"2013Q3"}
+,{"quarter_ending_date":"2013-10-31T00:00:00.000","year":"2013","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"42.5","year_quarter":"2013Q4"}
+,{"quarter_ending_date":"2013-01-31T00:00:00.000","year":"2013","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2013Q1"}
+,{"quarter_ending_date":"2013-04-30T00:00:00.000","year":"2013","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"29","year_quarter":"2013Q2"}
+,{"quarter_ending_date":"2013-07-31T00:00:00.000","year":"2013","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"29","year_quarter":"2013Q3"}
+,{"quarter_ending_date":"2013-10-31T00:00:00.000","year":"2013","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2013Q4"}
+,{"quarter_ending_date":"2014-01-31T00:00:00.000","year":"2014","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"47.22","year_quarter":"2014Q1"}
+,{"quarter_ending_date":"2014-04-30T00:00:00.000","year":"2014","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"41.13","year_quarter":"2014Q2"}
+,{"quarter_ending_date":"2014-07-31T00:00:00.000","year":"2014","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"36","year_quarter":"2014Q3"}
+,{"quarter_ending_date":"2014-10-31T00:00:00.000","year":"2014","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"32.5","year_quarter":"2014Q4"}
+,{"quarter_ending_date":"2014-01-31T00:00:00.000","year":"2014","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2014Q1"}
+,{"quarter_ending_date":"2014-04-30T00:00:00.000","year":"2014","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2014Q2"}
+,{"quarter_ending_date":"2014-07-31T00:00:00.000","year":"2014","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"28","year_quarter":"2014Q3"}
+,{"quarter_ending_date":"2014-10-31T00:00:00.000","year":"2014","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2014Q4"}
+,{"quarter_ending_date":"2014-01-31T00:00:00.000","year":"2014","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"44.83","year_quarter":"2014Q1"}
+,{"quarter_ending_date":"2014-04-30T00:00:00.000","year":"2014","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"38.75","year_quarter":"2014Q2"}
+,{"quarter_ending_date":"2014-07-31T00:00:00.000","year":"2014","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"32.5","year_quarter":"2014Q3"}
+,{"quarter_ending_date":"2014-10-31T00:00:00.000","year":"2014","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"30.5","year_quarter":"2014Q4"}
+,{"quarter_ending_date":"2014-01-31T00:00:00.000","year":"2014","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2014Q1"}
+,{"quarter_ending_date":"2014-04-30T00:00:00.000","year":"2014","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2014Q2"}
+,{"quarter_ending_date":"2014-07-31T00:00:00.000","year":"2014","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"24.5","year_quarter":"2014Q3"}
+,{"quarter_ending_date":"2014-10-31T00:00:00.000","year":"2014","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"22.5","year_quarter":"2014Q4"}
+,{"quarter_ending_date":"2014-01-31T00:00:00.000","year":"2014","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"44.83","year_quarter":"2014Q1"}
+,{"quarter_ending_date":"2014-04-30T00:00:00.000","year":"2014","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"38.07","year_quarter":"2014Q2"}
+,{"quarter_ending_date":"2014-07-31T00:00:00.000","year":"2014","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"34","year_quarter":"2014Q3"}
+,{"quarter_ending_date":"2014-10-31T00:00:00.000","year":"2014","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"30.5","year_quarter":"2014Q4"}
+,{"quarter_ending_date":"2014-01-31T00:00:00.000","year":"2014","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2014Q1"}
+,{"quarter_ending_date":"2014-04-30T00:00:00.000","year":"2014","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2014Q2"}
+,{"quarter_ending_date":"2014-07-31T00:00:00.000","year":"2014","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2014Q3"}
+,{"quarter_ending_date":"2014-10-31T00:00:00.000","year":"2014","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"24","year_quarter":"2014Q4"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"22","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"22","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"22","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"20","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"20","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"20","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"29.5","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"31.5","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"29.5","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"32","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"32","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-01-31T00:00:00.000","year":"2015","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"32","year_quarter":"2015Q1"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"14.5","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"18.25","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"16","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"22.5","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"23.5","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"25","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"25","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"25","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-04-30T00:00:00.000","year":"2015","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"25","year_quarter":"2015Q2"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"19","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"19","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"19","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"13.5","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"16.38","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"15.2","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"23.25","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"24.18","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"25.75","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"25.75","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"25.75","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-07-31T00:00:00.000","year":"2015","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"25.75","year_quarter":"2015Q3"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"17","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"17","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"17","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"20","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"20.5","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"20","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"20.5","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"21","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"23.5","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"23.5","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2015-10-31T00:00:00.000","year":"2015","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"23.5","year_quarter":"2015Q4"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"16","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"16","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"16","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"11.03","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"8.25","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"9.6","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"17.5","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"18","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"18.5","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"22","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"20","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-01-31T00:00:00.000","year":"2016","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"22.5","year_quarter":"2016Q1"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"17","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"17","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"17","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"14.13","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"11","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"12.45","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"16.5","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"18.5","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"17","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"21","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"18.4","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-04-30T00:00:00.000","year":"2016","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"21.5","year_quarter":"2016Q2"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"16.5","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"16.5","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"16.5","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"15","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"11.8","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"13.2","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"12.5","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"14.5","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"13","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"19.4","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"17.5","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-07-31T00:00:00.000","year":"2016","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"20","year_quarter":"2016Q3"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"23","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"24","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"23","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"19.8","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"15.8","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"17.35","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"20","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"21.5","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"20.5","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"23.75","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"22","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2016-10-31T00:00:00.000","year":"2016","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"23.75","year_quarter":"2016Q4"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"22","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"22","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"17.6","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"18","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"18.5","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"20.5","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"18","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"24","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"23.5","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-01-31T00:00:00.000","year":"2017","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"24","year_quarter":"2017Q1"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"24","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"23.6","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"20","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"20.6","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"29","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"30.5","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"29.5","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"33.5","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"30.25","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-04-30T00:00:00.000","year":"2017","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"33.5","year_quarter":"2017Q2"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"27","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"7","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"21.2","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"21.8","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"30","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"31","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"31","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"31","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"31","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-07-31T00:00:00.000","year":"2017","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"31","year_quarter":"2017Q3"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"27","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"28","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"28","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"22","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"22.7","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"30","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"31.5","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"30.7","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"34.5","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"33.5","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2017-10-31T00:00:00.000","year":"2017","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"34.5","year_quarter":"2017Q4"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"27","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"28","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"28","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"23","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"32.5","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"32","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"33","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"38.5","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"37","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-01-31T00:00:00.000","year":"2018","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"37.5","year_quarter":"2018Q1"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"22.9","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"19.1","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"20.9","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"31","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"32","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"31.5","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"35.5","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"34.8","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-04-30T00:00:00.000","year":"2018","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"33.8","year_quarter":"2018Q2"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"24","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"22.5","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"18.5","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"20.2","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"27.75","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"28.75","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"28.25","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"31.25","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"30.75","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-07-31T00:00:00.000","year":"2018","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"32.25","year_quarter":"2018Q3"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"26","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"23","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"19","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"20","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"30","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"31","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"31.5","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"34","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"33","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2018-10-31T00:00:00.000","year":"2018","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"35","year_quarter":"2018Q4"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"23","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"23","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"23","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"21","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"18","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"19","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"32.25","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"33.75","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"31.58","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"32.25","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"31","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-01-31T00:00:00.000","year":"2019","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"32.25","year_quarter":"2019Q1"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"21.5","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"21.25","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"21.25","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"20.25","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"17.1","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"17.85","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"30.92","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"31.42","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"30.25","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"30.58","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"30.58","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-04-30T00:00:00.000","year":"2019","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"29.92","year_quarter":"2019Q2"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"27","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"27","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"27","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"25.92","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"22.77","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"23.52","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"33.25","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"34.75","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"34.25","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"38.25","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"38.25","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-07-31T00:00:00.000","year":"2019","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"38.25","year_quarter":"2019Q3"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"30.75","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"31.25","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"26.5","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"23.5","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"24.25","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"38.17","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"39.5","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"39.67","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"39.17","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"39.42","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2019-10-31T00:00:00.000","year":"2019","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"39.42","year_quarter":"2019Q4"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"29.25","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"29.5","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"22.25","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"24","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"35.5","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"37.25","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"37","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"36.5","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"36.75","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-01-31T00:00:00.000","year":"2020","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"38.5","year_quarter":"2020Q1"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"20.5","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"21.5","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"20.75","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"16","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"17.5","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"15","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"27.08","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"28.83","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"28.58","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"28.08","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"28.33","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-04-30T00:00:00.000","year":"2020","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"28.33","year_quarter":"2020Q2"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"24","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"24.5","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"20.75","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"25","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"20.5","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"31.33","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"33.08","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"32.83","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"34.83","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"35.33","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-07-31T00:00:00.000","year":"2020","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"36.33","year_quarter":"2020Q3"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"25.25","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"25.35","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"25.75","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"22","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"26.3","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"21.75","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"31.67","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"33.42","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"33.17","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"35.21","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"35.67","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2020-10-31T00:00:00.000","year":"2020","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"36.67","year_quarter":"2020Q4"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"37","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"38.75","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"37.25","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"40.54","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"41","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"42","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"31.25","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"28.65","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"33.25","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-01-31T00:00:00.000","year":"2021","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"28.1","year_quarter":"2021Q1"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"50.6","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"52.4","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"51","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"42.7","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"41.9","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"43.8","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"55.6","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"55.6","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"58.3","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"40","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"45.9","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-04-30T00:00:00.000","year":"2021","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"38.9","year_quarter":"2021Q2"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"64","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"66","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"64.75","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"54","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"53","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"55.5","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"67.5","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"68","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"70","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"50.6","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"58","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-07-31T00:00:00.000","year":"2021","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"49.2","year_quarter":"2021Q3"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"62","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"64","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"62.75","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"52.5","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"51.5","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"53.8","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"65.6","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"66","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"68","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"49.1","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"56.3","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2021-10-31T00:00:00.000","year":"2021","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"47.8","year_quarter":"2021Q4"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"62","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"64","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"62.75","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"52.7","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"51.5","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"54","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"66","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"66.2","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"68","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"49.1","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"56.5","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-01-31T00:00:00.000","year":"2022","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"48","year_quarter":"2022Q1"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"65.75","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"67.75","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"66.5","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"55.85","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"54.6","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"57.2","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"69.9","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"70","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"72","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"52","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"60","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-04-30T00:00:00.000","year":"2022","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"50.8","year_quarter":"2022Q2"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"48.7","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"49","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"50.3","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"42.6","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"41.6","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"43.6","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"56","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"56","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"55.4","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"46","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"40","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-07-31T00:00:00.000","year":"2022","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"39.7","year_quarter":"2022Q3"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"47.7","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"48.6","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"48.4","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"42.2","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"41.2","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"43.1","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"54.8","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"55","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"55.5","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"39.6","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"39.8","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2022-10-31T00:00:00.000","year":"2022","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"39.2","year_quarter":"2022Q4"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"33.5","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"35","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"34","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"31.65","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"32.5","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"37.5","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"38","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"38.25","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"30","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"34.5","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-01-31T00:00:00.000","year":"2023","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"29.4","year_quarter":"2023Q1"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"35.2","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"36.7","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"35.7","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"33.2","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"32.5","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"34.2","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"39.4","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"40","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"40.2","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"31.5","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"36.3","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-04-30T00:00:00.000","year":"2023","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2023Q2"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"37","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"37.5","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"38.5","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"35","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"34.2","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"36","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"41.4","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"42","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"42.2","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"33","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"38.2","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-07-31T00:00:00.000","year":"2023","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"32.5","year_quarter":"2023Q3"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"33","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"32.1","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"33.8","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"36","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"30.5","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"35","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"35.5","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"35.5","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"39","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"39.5","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2023-10-31T00:00:00.000","year":"2023","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"39.6","year_quarter":"2023Q4"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"34.7","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"36.2","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"35.2","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"32.6","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"32.2","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"33.4","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"38","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"38.3","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"38.5","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"30.4","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"35.2","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-01-31T00:00:00.000","year":"2024","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"29.9","year_quarter":"2024Q1"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"31.3","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"31","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"32","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"29.2","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"33.8","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"28.7","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"33.3","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"34.8","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"33.8","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"36.5","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"37.1","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-04-30T00:00:00.000","year":"2024","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"37.4","year_quarter":"2024Q2"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"33.8","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"33.5","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"34.6","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"31.2","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"36.1","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"30.6","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"36","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"37.5","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"36.5","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"39","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"39.5","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-07-31T00:00:00.000","year":"2024","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"39.75","year_quarter":"2024Q3"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Santos","destination":"Germany (Hamburg)","rate":"32.2","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Paranagua","destination":"Germany (Hamburg)","rate":"32.1","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"33","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Santarem","destination":"Germany (Hamburg)","rate":"29.7","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"34.5","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Barcarena","destination":"Germany (Hamburg)","rate":"29.1","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Santos","destination":"China (Shanghai)","rate":"34.4","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Paranagua","destination":"China (Shanghai)","rate":"35.8","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Rio Grande","destination":"China (Shanghai)","rate":"34.7","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Santarem","destination":"China (Shanghai)","rate":"37.3","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Sao Luis","destination":"China (Shanghai)","rate":"37.8","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2024-10-31T00:00:00.000","year":"2024","quarter":"4","port":"Barcarena","destination":"China (Shanghai)","rate":"38","year_quarter":"2024Q4"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Santos","destination":"Germany (Hamburg)","rate":"33.9","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Paranagua","destination":"Germany (Hamburg)","rate":"33.6","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"34.6","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Santarem","destination":"Germany (Hamburg)","rate":"31.3","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"36.2","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Barcarena","destination":"Germany (Hamburg)","rate":"30.4","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Santos","destination":"China (Shanghai)","rate":"36","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Paranagua","destination":"China (Shanghai)","rate":"37.5","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Rio Grande","destination":"China (Shanghai)","rate":"36.5","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Santarem","destination":"China (Shanghai)","rate":"39","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Sao Luis","destination":"China (Shanghai)","rate":"39.65","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-01-31T00:00:00.000","year":"2025","quarter":"1","port":"Barcarena","destination":"China (Shanghai)","rate":"39.75","year_quarter":"2025Q1"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Santos","destination":"Germany (Hamburg)","rate":"34.75","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Paranagua","destination":"Germany (Hamburg)","rate":"34.5","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"35.5","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Santarem","destination":"Germany (Hamburg)","rate":"32.1","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"37","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Barcarena","destination":"Germany (Hamburg)","rate":"31.2","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Santos","destination":"China (Shanghai)","rate":"37","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Paranagua","destination":"China (Shanghai)","rate":"38.5","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Rio Grande","destination":"China (Shanghai)","rate":"37.5","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Santarem","destination":"China (Shanghai)","rate":"40","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Sao Luis","destination":"China (Shanghai)","rate":"40.5","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-04-30T00:00:00.000","year":"2025","quarter":"2","port":"Barcarena","destination":"China (Shanghai)","rate":"40.75","year_quarter":"2025Q2"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Santos","destination":"Germany (Hamburg)","rate":"36.5","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Paranagua","destination":"Germany (Hamburg)","rate":"36.3","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Rio Grande","destination":"Germany (Hamburg)","rate":"37.3","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Santarem","destination":"Germany (Hamburg)","rate":"33.75","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Sao Luis","destination":"Germany (Hamburg)","rate":"38.9","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Barcarena","destination":"Germany (Hamburg)","rate":"32.8","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Santos","destination":"China (Shanghai)","rate":"39","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Paranagua","destination":"China (Shanghai)","rate":"40.5","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Rio Grande","destination":"China (Shanghai)","rate":"39.5","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Santarem","destination":"China (Shanghai)","rate":"41.95","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Sao Luis","destination":"China (Shanghai)","rate":"42.4","year_quarter":"2025Q3"}
+,{"quarter_ending_date":"2025-07-31T00:00:00.000","year":"2025","quarter":"3","port":"Barcarena","destination":"China (Shanghai)","rate":"42.75","year_quarter":"2025Q3"}]

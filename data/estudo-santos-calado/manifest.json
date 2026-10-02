@@ -2113,6 +2113,36 @@
    "nota": "copiado sem alteração de fase0/aps_esperados_carga_20260930.csv; coletado_em = mtime do arquivo original"
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/aps_lineup/git/2026-09-30_8f7c25f2.json",
+   "origem": "APS — Navios Esperados · Carga (coleta própria diária, scripts/lineup/santos.ts)",
+   "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+   "coletado_em": "2026-09-30T18:56:23-03:00",
+   "sha256": "1ad911f33b67092585d51e0fed1a7969db1a87a8422749e213e005aa0a58e6f6",
+   "bytes": 104179,
+   "externo_ao_repo": false,
+   "nota": "versão do commit 8f7c25f23502ce266a78f853370f76be24556835 (2026-09-30T18:56:23-03:00) de data/lineup/santos-escalas-calado.json na origin/main"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_lineup/git/2026-10-01_ece528a9.json",
+   "origem": "APS — Navios Esperados · Carga (coleta própria diária, scripts/lineup/santos.ts)",
+   "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+   "coletado_em": "2026-10-01T15:53:47Z",
+   "sha256": "2e0d11f78b6fdf7bf592fd3dd24ca8bc645334698251790628e13ec95e45fa7e",
+   "bytes": 107942,
+   "externo_ao_repo": false,
+   "nota": "versão do commit ece528a9f308f1da606f1061beca09aec27c25dc (2026-10-01T15:53:47Z) de data/lineup/santos-escalas-calado.json na origin/main"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_lineup/git/2026-10-02_ac8b735e.json",
+   "origem": "APS — Navios Esperados · Carga (coleta própria diária, scripts/lineup/santos.ts)",
+   "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+   "coletado_em": "2026-10-02T15:14:51Z",
+   "sha256": "487750651733c453168e9858cdb1ea99682f219592357c811bd304c79faa2c25",
+   "bytes": 114416,
+   "externo_ao_repo": false,
+   "nota": "versão do commit ac8b735eead2b80f5266f7445b0465cf8ca331d0 (2026-10-02T15:14:51Z) de data/lineup/santos-escalas-calado.json na origin/main"
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/aps_normas/nap_supop_opr_021_2026.pdf",
    "origem": "APS — NAP SUPOP.OPR.021.2026 (atracação; art. 36 = calado na nomeação)",
    "url": "URL de origem não anotada na Fase 0",
@@ -2123,6 +2153,993 @@
    "nota": "copiado sem alteração de fase0/aps_NAP_OPR021_2026_atracacao.pdf; coletado_em = mtime do arquivo original"
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20181002052248_santos_torre_grande_2018.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20181002052248id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/santos_torre_grande_2018.pdf",
+   "coletado_em": "2026-10-02T23:29:38Z",
+   "sha256": "55aa9ccb257eda9491dbd4a730259e4276228c7959dc88bbcf7f3a232b59b5bf",
+   "bytes": 206585,
+   "externo_ao_repo": false,
+   "nota": "captura 20181002052248 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/santos_torre_grande_2018.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20201024153316_santos_torre_grande_2020.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20201024153316id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/santos_torre_grande_2020.pdf",
+   "coletado_em": "2026-10-02T23:29:42Z",
+   "sha256": "7e833f7e95e2273e86c15204a2255c5391fb60b3a3e952bbdb83b38d0b3236e8",
+   "bytes": 208502,
+   "externo_ao_repo": false,
+   "nota": "captura 20201024153316 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/santos_torre_grande_2020.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20210123144346_santos.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20210123144346id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/santos.pdf",
+   "coletado_em": "2026-10-02T23:29:34Z",
+   "sha256": "b010c01e79245e3f80115593836d8e9c8a3db42a1ecd8f4b35dc3c07c0092a4c",
+   "bytes": 207806,
+   "externo_ao_repo": false,
+   "nota": "captura 20210123144346 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/santos.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20210412213038_historico_santos.txt",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20210412213038id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/historico_santos.txt",
+   "coletado_em": "2026-10-02T23:30:03Z",
+   "sha256": "fb1b9cbe63e6f18472945554270ebfbbede4db9c0c6aaa91111f07dc2adde46d",
+   "bytes": 1048576,
+   "externo_ao_repo": false,
+   "nota": "captura 20210412213038 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/historico_santos.txt"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20220518134203_historico_bmo_santos.txt",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20220518134203id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/historico_bmo_santos.txt",
+   "coletado_em": "2026-10-02T23:30:00Z",
+   "sha256": "608c70f0fe83909e06a0421fd9b843fe0f32ee20d3ff0475f1470f146c4e2a03",
+   "bytes": 404084,
+   "externo_ao_repo": false,
+   "nota": "captura 20220518134203 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/historico_bmo_santos.txt"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20220819054113_46-porto_de_santos.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20220819054113id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46-porto_de_santos.pdf",
+   "coletado_em": "2026-10-02T23:29:12Z",
+   "sha256": "991f60e9576bd67047a60effc11ffe9c853aa176a0e1759367fd39988e5d8dbe",
+   "bytes": 207638,
+   "externo_ao_repo": false,
+   "nota": "captura 20220819054113 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46-porto_de_santos.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20240703224543_46-porto_de_santos_tabua_2023_0.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20240703224543id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46-porto_de_santos_tabua_2023_0.pdf",
+   "coletado_em": "2026-10-02T23:29:15Z",
+   "sha256": "1d6ccebfe9664c2cb56e4cf16769f8e61ccb82ef83f8ca3bb9bb512878bb6ba2",
+   "bytes": 112609,
+   "externo_ao_repo": false,
+   "nota": "captura 20240703224543 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46-porto_de_santos_tabua_2023_0.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20240723183326_50227_-_praticagem_santos_f-41_padrao_v1-17.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20240723183326id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/50227_-_praticagem_santos_f-41_padrao_v1-17.pdf",
+   "coletado_em": "2026-10-02T23:29:30Z",
+   "sha256": "3e4cf21c1b8caef8f31648fb150bcee803f69ecf51364090a9c9a5346c73fdae",
+   "bytes": 415620,
+   "externo_ao_repo": false,
+   "nota": "captura 20240723183326 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/50227_-_praticagem_santos_f-41_padrao_v1-17.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20240923041622_50225_-_porto_de_santos_-_torre_grande_f-41_-_tabuas_padrao_v1-08.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20240923041622id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/50225_-_porto_de_santos_-_torre_grande_f-41_-_tabuas_padrao_v1-08.pdf",
+   "coletado_em": "2026-10-02T23:29:27Z",
+   "sha256": "663771efd1de5dfe32d38790eb26caf154508410473b16b217851f1e61687e2a",
+   "bytes": 259635,
+   "externo_ao_repo": false,
+   "nota": "captura 20240923041622 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/50225_-_porto_de_santos_-_torre_grande_f-41_-_tabuas_padrao_v1-08.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20241006004123_46_-_porto_de_santos_2024_ok.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20241006004123id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46_-_porto_de_santos_2024_ok.pdf",
+   "coletado_em": "2026-10-02T23:29:23Z",
+   "sha256": "9ad2277c55d34a9c1de4fe537e0d964f9a3d5803d318a2d3887554af636ad6cc",
+   "bytes": 1048576,
+   "externo_ao_repo": false,
+   "nota": "captura 20241006004123 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46_-_porto_de_santos_2024_ok.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/20250115100142_46_-_porto_de_santos_-_146-148.pdf",
+   "origem": "CHM/Marinha — tábua de marés / histórico (via Wayback Machine)",
+   "url": "https://web.archive.org/web/20250115100142id_/https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46_-_porto_de_santos_-_146-148.pdf",
+   "coletado_em": "2026-10-02T23:29:19Z",
+   "sha256": "eccfd1c8c6852968443e4e1113eb93ecb09e920551ef968abc4181b5c30d89ee",
+   "bytes": 1048576,
+   "externo_ao_repo": false,
+   "nota": "captura 20250115100142 de https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/46_-_porto_de_santos_-_146-148.pdf"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/cdx_dados_de_mare_20261002.json",
+   "origem": "Internet Archive — API CDX (arquivos da CHM)",
+   "url": "https://web.archive.org/cdx/search/cdx?url=marinha.mil.br%2Fchm%2Fsites%2Fwww.marinha.mil.br.chm%2Ffiles%2Fdados_de_mare%2F%2A&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-02T23:29:08Z",
+   "sha256": "26c3ffd8b1689bcbe732e1d7f734247d631559d33fa2370e4b15efd6780f4e5e",
+   "bytes": 298735,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/chm/cdx_historico_20261002.json",
+   "origem": "Internet Archive — API CDX (arquivos da CHM)",
+   "url": "https://web.archive.org/cdx/search/cdx?url=marinha.mil.br%2Fchm%2Fsites%2Fwww.marinha.mil.br.chm%2Ffiles%2Fhistorico%2A&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-02T23:29:55Z",
+   "sha256": "d8620f23e95245850ba99cd7fbf7edb1cad49a939e23f1e4b151979ee54ec477",
+   "bytes": 4209,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/dates_updated_20261002.json",
+   "origem": "Comex Stat — data de atualização",
+   "url": "https://api-comexstat.mdic.gov.br/general/dates/updated",
+   "coletado_em": "2026-10-02T23:21:04Z",
+   "sha256": "8aaa5341c63621e71b6f2527c2ce2c7cace7cef5a5c1777b005139e174846077",
+   "bytes": 133,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2010.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:22Z",
+   "sha256": "87ec1168d915925f3d299bdd561976d3929e1936fe9675a8742e09b745bf8e9b",
+   "bytes": 32887,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2010-01\", \"to\": \"2010-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2011.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:25Z",
+   "sha256": "8feb6873391dfe96b4dc95bfedcaf206a33b57d46c64dedcd4771b33b4d1a5f6",
+   "bytes": 31238,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2011-01\", \"to\": \"2011-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2012.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:29Z",
+   "sha256": "547dbf8b829f7a4f8a1d48e6e7fb75c6e6bdce47c569159a8fa3af64eaac6f05",
+   "bytes": 51130,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2012-01\", \"to\": \"2012-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2013.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:33Z",
+   "sha256": "5ab8e8cca9aec57cb76a031552e1fdc1f78a7877cea772fb0bbb4a0744831442",
+   "bytes": 63433,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2013-01\", \"to\": \"2013-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2014.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:36Z",
+   "sha256": "a3ca006d97c81f66276c823c46361693a5aeecbbbe411a2d1216a828a5ca42c8",
+   "bytes": 51305,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2014-01\", \"to\": \"2014-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2015.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:40Z",
+   "sha256": "df14cf38d4b76067e2d236d47ea710f34f476ba4c2c24f24e3d145a2f29bd9f7",
+   "bytes": 66683,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2015-01\", \"to\": \"2015-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2016.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:43Z",
+   "sha256": "59dce2997d0b73834079cf87e562e696f17f210d75f20a6a5db1c96717792f4a",
+   "bytes": 59554,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2016-01\", \"to\": \"2016-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2017.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:47Z",
+   "sha256": "1295da9ade4e51b894dfafc54b94ad2a4263acf9cdfb7bd5f92007030be7b991",
+   "bytes": 59656,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2017-01\", \"to\": \"2017-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2018.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:51Z",
+   "sha256": "14d3d1c679dd8077083d3cc171b7b270970515481ac078065fbb1457a271ef48",
+   "bytes": 65115,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2018-01\", \"to\": \"2018-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2019.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:05Z",
+   "sha256": "377de6644969cc7305b429cb89b3592390b23f25c27652a1b4ecda389c6c0edc",
+   "bytes": 107154,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2019-01\", \"to\": \"2019-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2020.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:08Z",
+   "sha256": "eeea734303fe718602b4e2ca83b1ef4d5c31cd8d770bc5de26a1357676c7495b",
+   "bytes": 94056,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2020-01\", \"to\": \"2020-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2021.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:12Z",
+   "sha256": "9ae7ec53b4da7a11973868b4985af08b37d11354c78de58b773d8f3c58277f53",
+   "bytes": 80094,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2021-01\", \"to\": \"2021-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2022.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:26Z",
+   "sha256": "4b32700bf454721d8cf769d66bc5ec7e69a1f9d86aef5ebefb31f6926cc4cb25",
+   "bytes": 101220,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2022-01\", \"to\": \"2022-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2023.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:29Z",
+   "sha256": "0bb25563ea08bbb0f7d8f9a38d0d016c369c13284b71b9ddfaaa30622a1cb3e4",
+   "bytes": 120977,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2023-01\", \"to\": \"2023-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2024.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:33Z",
+   "sha256": "d2e5e2338de3a6b1023aa8e513dc305f2616035a31faa84bc470e771298f3400",
+   "bytes": 103479,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2024-01\", \"to\": \"2024-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2025.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:37Z",
+   "sha256": "93c786fba0079725018ea09895400db1a6d1585d759aeebc5f049f1ab2587d77",
+   "bytes": 111324,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2025-01\", \"to\": \"2025-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1005_2026.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:40Z",
+   "sha256": "ebdd6b2533fc01a966e8367e1f44f9da482b4b31e3a520172dcbe2db826492d4",
+   "bytes": 64448,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2026-01\", \"to\": \"2026-08\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1005\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2010.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:21:07Z",
+   "sha256": "0a75fcf757c06c034c5947cc14ec464f475c19b92fe067c61fe3b0620b2446cd",
+   "bytes": 70223,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2010-01\", \"to\": \"2010-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2011.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:21:10Z",
+   "sha256": "606b46024b3f1ca4442bc91a178e2cd4d968d68b13709f2f1989a2dafafcd988",
+   "bytes": 78586,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2011-01\", \"to\": \"2011-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2012.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:21:14Z",
+   "sha256": "0d854faad42600bcaf5052b834288940612b92663ace29b26a83a6bebbd53446",
+   "bytes": 81011,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2012-01\", \"to\": \"2012-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2013.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:21:29Z",
+   "sha256": "0b559af6c9f4b65969af33086e3fa9ef03ff4e9d74b6bba71240b60305a8f098",
+   "bytes": 88974,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2013-01\", \"to\": \"2013-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2014.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:03Z",
+   "sha256": "264e842a5d0da81c6a5524b98ef3846dff75883cf306e9ddae4826e4492cbd9f",
+   "bytes": 94800,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2014-01\", \"to\": \"2014-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2015.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:07Z",
+   "sha256": "1a3cec1fdf6249439b42b966b6899126ec400cc9d4b5f79f578529aaef305a77",
+   "bytes": 110663,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2015-01\", \"to\": \"2015-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2016.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:11Z",
+   "sha256": "761fa275fcfd8cc2d1eed9b0be28084cf0c8b7bf9d1c85a2439f78058fa63594",
+   "bytes": 104157,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2016-01\", \"to\": \"2016-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2017.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:25Z",
+   "sha256": "4377300893e195e1e130afe83f525a01cc87d7bf27d7b19716e5733fba8bfe04",
+   "bytes": 130358,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2017-01\", \"to\": \"2017-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2018.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:28Z",
+   "sha256": "4d4c7f1a2e204b32576d379ac06e4e879181b9c2c24c3d98156f7525250dca7f",
+   "bytes": 151218,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2018-01\", \"to\": \"2018-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2019.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:32Z",
+   "sha256": "ed1a05820cdc077fbf93361861b196de15af8958ef49280d73dcf62140eb24ec",
+   "bytes": 169864,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2019-01\", \"to\": \"2019-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2020.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:46Z",
+   "sha256": "b553b912ad0cc1de332d721b3a54a6a9db3a69f158058044705e735852d41d72",
+   "bytes": 157530,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2020-01\", \"to\": \"2020-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2021.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:50Z",
+   "sha256": "15e676f434ff83620f13ac51efe8cbbf54e6d881d9d010c3006b7dbbde104c6f",
+   "bytes": 142931,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2021-01\", \"to\": \"2021-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2022.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:53Z",
+   "sha256": "33d2f51ee097b109d3edc60f9a166c55cf8e8e5aa89e488886d1c41938b710b9",
+   "bytes": 144259,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2022-01\", \"to\": \"2022-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2023.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:22:57Z",
+   "sha256": "538f89c8bb4802b14711bb7534b96038c6c6e41848aa75265ec48c059bf6a2f8",
+   "bytes": 159525,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2023-01\", \"to\": \"2023-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2024.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:01Z",
+   "sha256": "5851c11bd70d891e22e3729bc71f4be70aa55204dc6e6ce4a89313c1ce2b1c6f",
+   "bytes": 161976,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2024-01\", \"to\": \"2024-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2025.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:04Z",
+   "sha256": "51bc151259001062dcc7ce35755272e71dbdba4f9439e8e78cde6f9c2ff0c547",
+   "bytes": 155192,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2025-01\", \"to\": \"2025-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1201_2026.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:23:18Z",
+   "sha256": "c8581fccca2d9c0c514dfb39d816f924614edbd2678821603a60036570ec4bbc",
+   "bytes": 105460,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2026-01\", \"to\": \"2026-08\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1201\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2010.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:02Z",
+   "sha256": "894604ff060b4a8370d259156d81a8be2fdf2b67b327820b0bba43cda3c279c7",
+   "bytes": 72933,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2010-01\", \"to\": \"2010-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2011.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:06Z",
+   "sha256": "bb116f4a3cca575067039671f13c85e4f0107973cb6530dc856d0362e86e9057",
+   "bytes": 67617,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2011-01\", \"to\": \"2011-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2012.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:10Z",
+   "sha256": "773ff73d3fc7979c463424a4b18f29737610344d095b09f926b2e94de4dfe7d9",
+   "bytes": 74313,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2012-01\", \"to\": \"2012-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2013.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:13Z",
+   "sha256": "0dc854858d146e4ee984a57a5c9ab5beb465a89caa160d095d4e506497fa46fb",
+   "bytes": 68499,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2013-01\", \"to\": \"2013-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2014.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:17Z",
+   "sha256": "e579dd707d3ee383ea5df029c54b8bd85c31f5049acd7b59f52750e089dacfbd",
+   "bytes": 66034,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2014-01\", \"to\": \"2014-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2015.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:21Z",
+   "sha256": "6ad446f327cffdf3bbe6d5519adb0b3102c44e993f1ce136a39c2847e72939cd",
+   "bytes": 67594,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2015-01\", \"to\": \"2015-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2016.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:35Z",
+   "sha256": "e2dcacc04a57926ae9539d1738597a227d8e5a8543a5eda2233a48368ea5dc67",
+   "bytes": 67681,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2016-01\", \"to\": \"2016-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2017.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:39Z",
+   "sha256": "67ba8fdf6e478854d1e9f1bfc620f065f0da0a73e4b5c39d4e5de74fa94646a6",
+   "bytes": 69496,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2017-01\", \"to\": \"2017-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2018.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:42Z",
+   "sha256": "19d1ee2a12b856f67e23a3db925477f509b076bc78228aaaf61d2d58f56605d7",
+   "bytes": 72025,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2018-01\", \"to\": \"2018-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2019.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:46Z",
+   "sha256": "358b2571345dad3dddd2f827a3aac758107a4f8cf3a9f6d1bb0a7b31ccc4e36f",
+   "bytes": 116311,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2019-01\", \"to\": \"2019-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2020.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:50Z",
+   "sha256": "7baca0b1189a12cc3aac4b89dbddbacd4a6443587b2a1d4c9edf8ac9a2092d7b",
+   "bytes": 141794,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2020-01\", \"to\": \"2020-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2021.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:26:54Z",
+   "sha256": "9e12c62f228c0acec38127e4bc59d7981f0a53a57a169dec48122c9015db8ae3",
+   "bytes": 142400,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2021-01\", \"to\": \"2021-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2022.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:08Z",
+   "sha256": "cfa1b84aa3ac4869f509850a21ba72f79d3e5d580f428886f2a583c6472e63e2",
+   "bytes": 155405,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2022-01\", \"to\": \"2022-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2023.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:12Z",
+   "sha256": "ea0ae56936c767b8e301c10c3bfc4fb3729514f793b613994bddc21ff4103cf3",
+   "bytes": 171912,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2023-01\", \"to\": \"2023-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2024.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:16Z",
+   "sha256": "a1becf865b9ef5f5f81b9161eb8c62672088f102f0ecb7990f6d4e2044fc72c8",
+   "bytes": 194486,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2024-01\", \"to\": \"2024-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2025.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:19Z",
+   "sha256": "f7b3eda8231ef621755276681aeed8051ffc7077402ecccb639baedef9d4ef09",
+   "bytes": 201058,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2025-01\", \"to\": \"2025-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_1701_2026.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:23Z",
+   "sha256": "2d127ba9fccff76573a9fbe218a17384116e7705f7023b83f03b341e6ed4876a",
+   "bytes": 128847,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2026-01\", \"to\": \"2026-08\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"1701\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2010.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:44Z",
+   "sha256": "d0aff640c0004560cca4166df64576f7d9c0cc2dbc7d2485b8abcc7fdaa8202d",
+   "bytes": 66084,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2010-01\", \"to\": \"2010-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2011.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:48Z",
+   "sha256": "4a0ff4636958cf95354e5650812ec82e764729e25284d17f6ac8e40ff54e4640",
+   "bytes": 65228,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2011-01\", \"to\": \"2011-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2012.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:51Z",
+   "sha256": "cfb28d7df50b2be0d985fb0e80766ef2bc1d81298ccd8dd51550bd8664bf8b56",
+   "bytes": 60888,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2012-01\", \"to\": \"2012-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2013.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:55Z",
+   "sha256": "8893d5a326380e8efefb0528f000a2e1c9d34aae1818e06dad40219443025734",
+   "bytes": 59004,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2013-01\", \"to\": \"2013-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2014.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:24:58Z",
+   "sha256": "2173ef3122484003aa3dc487a900a5e1827129012fbe607afc2fca9c979d2869",
+   "bytes": 65924,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2014-01\", \"to\": \"2014-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2015.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:02Z",
+   "sha256": "5aa42845ebcdfe3dbf23603d651cbaa0fdf4efa663faedbf9c8fa5aeb6c53528",
+   "bytes": 66629,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2015-01\", \"to\": \"2015-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2016.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:05Z",
+   "sha256": "bf6d0a7a52eb952c3b2d351affb620b15a30826ac195725b8d5ef4dd34835001",
+   "bytes": 67817,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2016-01\", \"to\": \"2016-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2017.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:09Z",
+   "sha256": "b951b9aa2f211870088bda800403d26e5b597a38177fc576baeac73b2d657526",
+   "bytes": 56164,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2017-01\", \"to\": \"2017-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2018.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:12Z",
+   "sha256": "4d7185bf8a738a17790acf148adc1955166a36ee76e5321e86f64b83f48174e0",
+   "bytes": 71804,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2018-01\", \"to\": \"2018-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2019.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:26Z",
+   "sha256": "ebdb59200efa09b4b1f483eda1887996445a721417fe9d17fe366a00d2f1c367",
+   "bytes": 73012,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2019-01\", \"to\": \"2019-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2020.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:37Z",
+   "sha256": "bce60daed822c532d0a7aa1008649b71f3122055a64072b644dccdba8731a8f3",
+   "bytes": 66562,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2020-01\", \"to\": \"2020-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2021.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:41Z",
+   "sha256": "741f5961cfdbba0744949b90451228e86d57eca417a59ed1d3fd7c56d5365a01",
+   "bytes": 81909,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2021-01\", \"to\": \"2021-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2022.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:44Z",
+   "sha256": "2ccc85db1db385dc0b79c63aa586f3de565944e01a8c078e88d14f28fe3f0658",
+   "bytes": 86109,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2022-01\", \"to\": \"2022-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2023.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:48Z",
+   "sha256": "700ad9d107313bc484db6b8da13d257d28481e5fba74dfe84965606ced56c668",
+   "bytes": 88968,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2023-01\", \"to\": \"2023-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2024.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:51Z",
+   "sha256": "639f298f5cfec9352747d890e0c3f5d692301cd13f135a16933aa93eab0a1fa1",
+   "bytes": 86181,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2024-01\", \"to\": \"2024-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2025.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:55Z",
+   "sha256": "46e4829a0ededf1486f6a3154a2ec186467560c11e85a529ff2d8f2abf0c2529",
+   "bytes": 71020,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2025-01\", \"to\": \"2025-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_2304_2026.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:25:58Z",
+   "sha256": "1a53f0ee2f3bf350129f2cff48451e70dfcb760b38eda096fa50821454657a5b",
+   "bytes": 47971,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2026-01\", \"to\": \"2026-08\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}, {\"filter\": \"heading\", \"values\": [\"2304\"]}], \"details\": [\"state\", \"urf\", \"via\", \"heading\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2010.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:28Z",
+   "sha256": "7ee24d4b8032c5b5eea06c5ce81f88b877994a87f1a853bd47b1602aa35b360d",
+   "bytes": 522932,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2010-01\", \"to\": \"2010-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2011.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:32Z",
+   "sha256": "26ecef35863b759bb6b916cdf9619b39952f905bc947d5b6c87f66ed7b0de591",
+   "bytes": 505921,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2011-01\", \"to\": \"2011-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2012.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:36Z",
+   "sha256": "4df605912d5f596c585ce2c7208f92bfac1cee668b281aec2b6fd66898527668",
+   "bytes": 526605,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2012-01\", \"to\": \"2012-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2013.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:41Z",
+   "sha256": "1ab0b69019df4d915d36a4fbba9c723121c02472d18e9b6b6e10e4cc2dbe1bbf",
+   "bytes": 548729,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2013-01\", \"to\": \"2013-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2014.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:27:45Z",
+   "sha256": "e3fb75c94bcae4061d31035de8e8b99f9af80ea3df79a4acf2aa54cf052805f2",
+   "bytes": 550075,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2014-01\", \"to\": \"2014-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2015.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:00Z",
+   "sha256": "606b3c933d659005fe53c9913a327f31577d76c641e582eec5a9fae84b0ad6e1",
+   "bytes": 553064,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2015-01\", \"to\": \"2015-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2016.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:04Z",
+   "sha256": "1c1186041afbe7eeb0cf30b7c2c468ed97244033e8f83c0f2f6923aefdb034bf",
+   "bytes": 530154,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2016-01\", \"to\": \"2016-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2017.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:08Z",
+   "sha256": "8e4b5f44aecf256aa3dd12d6f184b347636ce7c0d084f19d7cc2b6bfcf17ef90",
+   "bytes": 518347,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2017-01\", \"to\": \"2017-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2018.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:12Z",
+   "sha256": "7d63003165e43dc5d44ce0cb26fae1f77dacf3b5095e2987563d1d224878bd60",
+   "bytes": 501957,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2018-01\", \"to\": \"2018-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2019.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:27Z",
+   "sha256": "0f79486e79aa18a705a6164319fa881c69b80cde56ad12d97d2db276979c73e5",
+   "bytes": 472597,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2019-01\", \"to\": \"2019-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2020.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:32Z",
+   "sha256": "0e301637f57df03d5a223c11557cfbfcee8f9c60fe836ef39d4079509d986be3",
+   "bytes": 475203,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2020-01\", \"to\": \"2020-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2021.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:37Z",
+   "sha256": "3ad7516d242c57aa26b14fc95b1b0e1ffafb2e213bd4e47553c880cdb5a8d22f",
+   "bytes": 503424,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2021-01\", \"to\": \"2021-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2022.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:42Z",
+   "sha256": "bfcfbc6acb3cc1fc91b8176ecf07be0e948d94c18e51f262d0694956d05ab737",
+   "bytes": 499922,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2022-01\", \"to\": \"2022-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2023.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:28:57Z",
+   "sha256": "7cafd060305ee580c976387ecb8286370a5319b60d8d737d877651633df7c359",
+   "bytes": 513030,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2023-01\", \"to\": \"2023-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2024.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:29:02Z",
+   "sha256": "15fb38514b1ab8a7a250fd9840b87e124e4492868dc06d355ac01999fcb6ca1b",
+   "bytes": 553504,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2024-01\", \"to\": \"2024-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2025.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:29:38Z",
+   "sha256": "0080c00a8ebf7e4ab3685e8e1d0731eb35342f1833b21b021b64feec8ba5a0d3",
+   "bytes": 567166,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2025-01\", \"to\": \"2025-12\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/export_TOTAL_2026.json",
+   "origem": "Comex Stat (MDIC) — API /general, exportação",
+   "url": "https://api-comexstat.mdic.gov.br/general",
+   "coletado_em": "2026-10-02T23:29:42Z",
+   "sha256": "2e0c8937e87147fa1895d573bc6e0c49b2e33a09ba8e9a70230914141fcded76",
+   "bytes": 385087,
+   "externo_ao_repo": false,
+   "nota": "POST {\"flow\": \"export\", \"monthDetail\": true, \"period\": {\"from\": \"2026-01\", \"to\": \"2026-08\"}, \"filters\": [{\"filter\": \"via\", \"values\": [\"01\", \"02\"]}], \"details\": [\"state\", \"urf\", \"via\"], \"metrics\": [\"metricFOB\", \"metricKG\"]}"
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/comex/fase0/comex_urf.json",
    "origem": "Comex Stat — tabela de URF (API)",
    "url": "URL de origem não anotada na Fase 0",
@@ -2131,6 +3148,15 @@
    "bytes": 14358,
    "externo_ao_repo": false,
    "nota": "copiado sem alteração de fase0/comex_urf.json; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/tabela_urf_20261002.json",
+   "origem": "Comex Stat — tabela de URF",
+   "url": "https://api-comexstat.mdic.gov.br/tables/urf",
+   "coletado_em": "2026-10-02T23:21:05Z",
+   "sha256": "8a403194c0820258c4dfd373f8842bb4156b517f2a136c37da7564ad9b63552a",
+   "bytes": 14358,
+   "externo_ao_repo": false
   },
   {
    "arquivo": "data/estudo-santos-calado/raw/concorrentes/fase0/20260930_paranagua_calado.html",
@@ -2183,6 +3209,388 @@
    "nota": "copiado sem alteração de fase0/vdc_rep.pdf; coletado_em = mtime do arquivo original"
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/files_arquivos_manual_porto_do_itaqui_pdf/atual_20261002",
+   "origem": "EMAP — página/documento de calado (atual)",
+   "url": "https://www.portodoitaqui.com.br/_files/arquivos/manual-porto-do-itaqui.pdf",
+   "coletado_em": "2026-10-02T23:32:45Z",
+   "sha256": "2698e20c4b387dc1774311787df7d026eea8903e48bea542f72b99df3b46c96c",
+   "bytes": 3997849,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/files_arquivos_manual_porto_do_itaqui_pdf/cdx_20261002.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodoitaqui.com.br%2F_files%2Farquivos%2Fmanual-porto-do-itaqui.pdf&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-02T23:33:18Z",
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "bytes": 3,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/porto_do_itaqui_infraestrutura/atual_20261002",
+   "origem": "EMAP — página/documento de calado (atual)",
+   "url": "https://www.portodoitaqui.com.br/porto-do-itaqui/infraestrutura",
+   "coletado_em": "2026-10-02T23:32:33Z",
+   "sha256": "cc4131b85a176204dda7cdc0cf30f76a1d6f84b5f075456ecab344d35d9cebd2",
+   "bytes": 48375,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/porto_do_itaqui_infraestrutura/cdx_20261002.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodoitaqui.com.br%2Fporto-do-itaqui%2Finfraestrutura&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-02T23:32:42Z",
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "bytes": 3,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/atual_20261002",
+   "origem": "APPA / Portos do Paraná — página/documento de calado (atual)",
+   "url": "https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:26:59Z",
+   "sha256": "ea20264178933c914d04d6600d4a473857beb831bddf7b0328defd231b58d45f",
+   "bytes": 78225,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/cdx_20261002.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portosdoparana.pr.gov.br%2FOperacional%2FPagina%2FCalados&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-02T23:30:22Z",
+   "sha256": "78b7919808291bd8276ebdc71a6a966306952dc8271d9d38f237be7c7a4be7c9",
+   "bytes": 2312,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20190923164949",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20190923164949id_/http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:25Z",
+   "sha256": "3319d730ee72f471a3b1deee9076ad0d0180afac7964f8cb2e532b9933963a92",
+   "bytes": 60851,
+   "externo_ao_repo": false,
+   "nota": "captura 20190923164949 de http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20191118074416",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20191118074416id_/http://www.portosdoparana.pr.gov.br:80/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:28Z",
+   "sha256": "4916d5ba0c846454fec037ad80bee96031e8200d94a20db394a48169bac086d0",
+   "bytes": 60851,
+   "externo_ao_repo": false,
+   "nota": "captura 20191118074416 de http://www.portosdoparana.pr.gov.br:80/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20200117154807",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20200117154807id_/http://www.portosdoparana.pr.gov.br:80/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:31Z",
+   "sha256": "b2f1e551f2c857b92771546830439e53e1499d7cb20f659dec9aeebcab9d2b9c",
+   "bytes": 66936,
+   "externo_ao_repo": false,
+   "nota": "captura 20200117154807 de http://www.portosdoparana.pr.gov.br:80/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20200416120700",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20200416120700id_/http://www.portosdoparana.pr.gov.br:80/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:34Z",
+   "sha256": "3147050fbc20b1b935f21c3a5583d90379602afbb266f64d22cf4656686a7c4b",
+   "bytes": 83065,
+   "externo_ao_repo": false,
+   "nota": "captura 20200416120700 de http://www.portosdoparana.pr.gov.br:80/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20220801041802",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20220801041802id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:38Z",
+   "sha256": "c391a2f1a3a2f2fdb505cf5bc594fb6fff7ada530bdaf3f756b03fcda2e0ad71",
+   "bytes": 62373,
+   "externo_ao_repo": false,
+   "nota": "captura 20220801041802 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20220927135918",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20220927135918id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:41Z",
+   "sha256": "8a4df81f03d1d7ccf8537cb4e734b1e0a2fc919407d78f42e57d01ea829847d3",
+   "bytes": 64386,
+   "externo_ao_repo": false,
+   "nota": "captura 20220927135918 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20230201184428",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20230201184428id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:44Z",
+   "sha256": "1fb21cc03466e73bf9f2717bafd86186fbe30b705dce31ce445cf9657eff008e",
+   "bytes": 65019,
+   "externo_ao_repo": false,
+   "nota": "captura 20230201184428 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20230522001724",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20230522001724id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:47Z",
+   "sha256": "2699b2e3dac5fe9e4c30d41de811bc37201fea6e2c6e49956cb6b9a020c6eb54",
+   "bytes": 66760,
+   "externo_ao_repo": false,
+   "nota": "captura 20230522001724 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20230608011805",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20230608011805id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:51Z",
+   "sha256": "7cb3ee3dc8ac3c80a8efa2c9b11cd9a1edfaaf39f777f523078943925c85ab1e",
+   "bytes": 66973,
+   "externo_ao_repo": false,
+   "nota": "captura 20230608011805 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20230805004002",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20230805004002id_/http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:30:56Z",
+   "sha256": "ad6d1f1238fb18cc1dab4710e9dafeb019a083d7f11434a846b8bd77e6e9bc20",
+   "bytes": 65689,
+   "externo_ao_repo": false,
+   "nota": "captura 20230805004002 de http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20231204092343",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20231204092343id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:31:01Z",
+   "sha256": "bb26e8667d300146f47a720a487148182f31c7d304ce41ec0b628604d6cb7810",
+   "bytes": 65872,
+   "externo_ao_repo": false,
+   "nota": "captura 20231204092343 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20240524191950",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20240524191950id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:31:04Z",
+   "sha256": "854ffd292d2447959783133c4b797581792a2eada5f52ee7afedb35a2e237921",
+   "bytes": 67699,
+   "externo_ao_repo": false,
+   "nota": "captura 20240524191950 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20241004204042",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20241004204042id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:31:07Z",
+   "sha256": "5cf09cc22c426bf9a816f9e51e5fe296f0c12a0974efc9a5385c6ac21cd0edb6",
+   "bytes": 62586,
+   "externo_ao_repo": false,
+   "nota": "captura 20241004204042 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20250323043510",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20250323043510id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:31:10Z",
+   "sha256": "e5cd64aa85fc1bb023b637660f247a74a006e9204aec27b961a3bd690bcfcf17",
+   "bytes": 62276,
+   "externo_ao_repo": false,
+   "nota": "captura 20250323043510 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20250621073909",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20250621073909id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:31:14Z",
+   "sha256": "26d46ff4d1402149e56574e94625fa8466de18efc9d6317ca583f668081dd3e8",
+   "bytes": 62773,
+   "externo_ao_repo": false,
+   "nota": "captura 20250621073909 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20260211182125",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20260211182125id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:31:17Z",
+   "sha256": "75e448f66812028406de8a9f339c7d17cedad4c2669fd3710fdff11d268979b2",
+   "bytes": 63863,
+   "externo_ao_repo": false,
+   "nota": "captura 20260211182125 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/wayback/20260510141312",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20260510141312id_/https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-02T23:31:20Z",
+   "sha256": "1b25b911fa4587ed4ab59e18798cd7fcc8069ff839a7f0f13941c6e751750de5",
+   "bytes": 76408,
+   "externo_ao_repo": false,
+   "nota": "captura 20260510141312 de https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/rio_grande/site_public_uploads_site_normativas_259_pdf/atual_20261002",
+   "origem": "Portos RS — página/documento de calado (atual)",
+   "url": "https://www.portosrs.com.br/site/public/uploads/site/normativas/259.pdf",
+   "coletado_em": "2026-10-02T23:31:22Z",
+   "sha256": "fdb8680b3b1bc4c04283555c5e57852cf0a6ceb357c8f8eb2c24d663bcaabf57",
+   "bytes": 669462,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/rio_grande/site_public_uploads_site_normativas_259_pdf/cdx_20261002.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portosrs.com.br%2Fsite%2Fpublic%2Fuploads%2Fsite%2Fnormativas%2F259.pdf&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-02T23:31:59Z",
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "bytes": 3,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/atual_20261002",
+   "origem": "SCPar / APSFS — página/documento de calado (atual)",
+   "url": "https://portosaofrancisco.com.br/caracteristicas/",
+   "coletado_em": "2026-10-02T23:32:03Z",
+   "sha256": "ce4fffe0ff20a143a685d6d00744c3d7f2ee7115f4222bc98f2fade0baaf820e",
+   "bytes": 64260,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/cdx_20261002.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=portosaofrancisco.com.br%2Fcaracteristicas%2F&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-02T23:32:22Z",
+   "sha256": "589dafec8eafac6ba9080722271a2915b256f8fa5f332eba6ea609da05224df8",
+   "bytes": 403,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/wayback/20230404005057",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20230404005057id_/https://portosaofrancisco.com.br/caracteristicas/",
+   "coletado_em": "2026-10-02T23:32:25Z",
+   "sha256": "924dcfdf5677b0829cdeb8b901683e8b2971b98d5f80adb15202814c85eabbb6",
+   "bytes": 7464,
+   "externo_ao_repo": false,
+   "nota": "captura 20230404005057 de https://portosaofrancisco.com.br/caracteristicas/; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/wayback/20240217092212",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20240217092212id_/http://portosaofrancisco.com.br/caracteristicas/",
+   "coletado_em": "2026-10-02T23:32:28Z",
+   "sha256": "6d6b5818b1f32a1a024988b7d7838b90c7061e55845c8b0eafa9e22220cd29a8",
+   "bytes": 36988,
+   "externo_ao_repo": false,
+   "nota": "captura 20240217092212 de http://portosaofrancisco.com.br/caracteristicas/; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/wayback/20240331200407",
+   "origem": "Internet Archive — Wayback Machine",
+   "url": "https://web.archive.org/web/20240331200407id_/https://portosaofrancisco.com.br/caracteristicas/",
+   "coletado_em": "2026-10-02T23:32:30Z",
+   "sha256": "a89c9ef8fb269d61a36ce2f6500c40010d28db0eb96f40441cbc915dd6749372",
+   "bytes": 36988,
+   "externo_ao_repo": false,
+   "nota": "captura 20240331200407 de https://portosaofrancisco.com.br/caracteristicas/; não é vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/conab_LevantamentoGraos_20261002.txt",
+   "origem": "CONAB — Portal de Informações, LevantamentoGraos.txt",
+   "url": "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/LevantamentoGraos.txt",
+   "coletado_em": "2026-10-02T23:22:47Z",
+   "sha256": "e5490e4933fb768ac7c8721febe8fbd3ae077441d795294ad05c645a64bb7234",
+   "bytes": 6663026,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/conab_SerieHistoricaGraos_20261002.txt",
+   "origem": "CONAB — Portal de Informações, SerieHistoricaGraos.txt",
+   "url": "https://portaldeinformacoes.conab.gov.br/downloads/arquivos/SerieHistoricaGraos.txt",
+   "coletado_em": "2026-10-02T23:23:20Z",
+   "sha256": "0957c08bf00a3a815cbdf16af180ac295f19ba5a273c4f1dd24264524393199f",
+   "bytes": 2722838,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/fred_PMAIZMTUSDM_20261002.csv",
+   "origem": "FRED (St. Louis Fed) — série PMAIZMTUSDM (IMF Primary Commodity Prices)",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=PMAIZMTUSDM",
+   "coletado_em": "2026-10-02T23:22:51Z",
+   "sha256": "2c6b35f3e6b0ac36df2059455f478fbf8b8da45c8e69a722350a6668ad623e51",
+   "bytes": 12403,
+   "externo_ao_repo": false,
+   "nota": "FMI: Maize (corn), U.S. No.2 Yellow, FOB Gulf of Mexico, U.S. price, US$/t — não é cotação CBOT"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/fred_PSOYBUSDM_20261002.csv",
+   "origem": "FRED (St. Louis Fed) — série PSOYBUSDM (IMF Primary Commodity Prices)",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=PSOYBUSDM",
+   "coletado_em": "2026-10-02T23:22:49Z",
+   "sha256": "0174f97bc1ab9d4dc67c14a7087335985f04e5a07bf23f8b0771a522eb5d7cd2",
+   "bytes": 12062,
+   "externo_ao_repo": false,
+   "nota": "FMI: Soybeans, U.S. soybeans, Chicago Soybean futures contract (first contract forward) No. 2 yellow and par, US$/t"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/j6ns-hzra_20261002.json",
+   "origem": "USDA AMS — Grain Transportation Report, Socrata j6ns-hzra",
+   "url": "https://agtransport.usda.gov/resource/j6ns-hzra.json?$limit=50000",
+   "coletado_em": "2026-10-02T23:22:38Z",
+   "sha256": "992adda897ac79cb0659c2d62b365b92f8583ef4095f6bba7c06b66f0820ee9b",
+   "bytes": 125386,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/j6ns-hzra_metadados_20261002.json",
+   "origem": "USDA AMS — metadados Socrata j6ns-hzra",
+   "url": "https://agtransport.usda.gov/api/views/j6ns-hzra.json",
+   "coletado_em": "2026-10-02T23:22:40Z",
+   "sha256": "4bc27ddc6e6742a5ab3b58e43a61be2daac9a47d79b8db12cd0f1a28a3e24957",
+   "bytes": 12934,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/j7xv-dz9h_20261002.json",
+   "origem": "USDA AMS — Grain Transportation Report, Socrata j7xv-dz9h",
+   "url": "https://agtransport.usda.gov/resource/j7xv-dz9h.json?$limit=50000",
+   "coletado_em": "2026-10-02T23:23:16Z",
+   "sha256": "63efe80b5f5a70d6865962abee77a3e82b81e84fee9ddff655fcf9c6d0805fe6",
+   "bytes": 276102,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/j7xv-dz9h_metadados_20261002.json",
+   "origem": "USDA AMS — metadados Socrata j7xv-dz9h",
+   "url": "https://agtransport.usda.gov/api/views/j7xv-dz9h.json",
+   "coletado_em": "2026-10-02T23:23:18Z",
+   "sha256": "f2177008dd0c4996d5d9c6b051430987bc765f0c4dbc883ccd28c4b027ccfc81",
+   "bytes": 25765,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/xtb3-iudz_20261002.json",
+   "origem": "USDA AMS — Grain Transportation Report, Socrata xtb3-iudz",
+   "url": "https://agtransport.usda.gov/resource/xtb3-iudz.json?$limit=50000",
+   "coletado_em": "2026-10-02T23:22:44Z",
+   "sha256": "e14abd57db5af0e3c00f87ac81ffc0c8e82de140cb11205a5aa832a6b1bd71c4",
+   "bytes": 3633,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/controles/xtb3-iudz_metadados_20261002.json",
+   "origem": "USDA AMS — metadados Socrata xtb3-iudz",
+   "url": "https://agtransport.usda.gov/api/views/xtb3-iudz.json",
+   "coletado_em": "2026-10-02T23:22:46Z",
+   "sha256": "272886cb011fc46563f25a99640b34e7ccc45684640d0aa99b903546c3412117",
+   "bytes": 12175,
+   "externo_ao_repo": false
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/npcp/npcp_sp_2016_rev1.pdf",
    "origem": "Capitania dos Portos de SP — NPCP-SP 1ª Revisão (2016)",
    "url": "URL de origem não anotada na Fase 0",
@@ -2203,6 +3611,15 @@
    "nota": "copiado sem alteração de fase0/cpsp_2026-04_merged.pdf; coletado_em = mtime do arquivo original"
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/referencias/NED_Manual_Deep_Draft_Appendix_H.pdf",
+   "origem": "USACE/IWR — NED Manual for Deep Draft Navigation, Appendix H: Vessel Operating Costs Guide (USACE Digital Library)",
+   "url": "https://usace.contentdm.oclc.org/digital/api/collection/p16021coll2/id/3839/download",
+   "coletado_em": "2026-10-02T23:19:14Z",
+   "sha256": "dadddf4aa050536957df0a2d4721d8dae93abf7ecec83b5937e1de67d321d7a4",
+   "bytes": 1141591,
+   "externo_ao_repo": false
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/usda_gtr/fase0/gtr_brazil_ocean_quarterly.csv",
    "origem": "USDA AMS — Grain Transportation Report (Socrata)",
    "url": "URL de origem não anotada na Fase 0",
@@ -2213,5 +3630,5 @@
    "nota": "copiado sem alteração de fase0/gtr_brazil_ocean_quarterly.csv; coletado_em = mtime do arquivo original"
   }
  ],
- "atualizado_em": "2026-10-02T21:00:26Z"
+ "atualizado_em": "2026-10-02T23:33:18Z"
 }

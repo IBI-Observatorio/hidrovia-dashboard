@@ -1,0 +1,75 @@
+{
+ "fonte": {
+  "documento": "USACE/IWR — NED Manual for Deep Draft Navigation, Appendix H: Vessel Operating Costs Guide",
+  "figura": "Figure H-8: Vessel Characteristic Equations (p. H-17/H-18 do PDF, págs. 17–18)",
+  "base": "especificações de navios 2010 (Maritime Strategies International), Figure H-7",
+  "arquivo": "data/estudo-santos-calado/raw/referencias/NED_Manual_Deep_Draft_Appendix_H.pdf",
+  "url": "https://usace.contentdm.oclc.org/digital/api/collection/p16021coll2/id/3839/download",
+  "conferido_em": "2026-10-02T23:20:04Z",
+  "unidades": "metros e t/cm; na figura, o fator *39.37 converte o calado para polegadas e *2.5 o TPC para tpi — não aplicados aqui"
+ },
+ "equacoes": {
+  "graneleiro": {
+   "tpc_t_por_cm": {
+    "a": 0.063512,
+    "b": 0.623346,
+    "forma": "TPC = a*DWT^b",
+    "r2": 0.91,
+    "erro_padrao": 0.12336
+   },
+   "calado_projeto_m": {
+    "a": 0.398082,
+    "b": 0.315559,
+    "forma": "calado = a*DWT^b",
+    "r2": 0.93,
+    "erro_padrao": 0.11011
+   },
+   "boca_m": {
+    "a": 1.291376,
+    "b": 0.291742,
+    "r2": 0.97,
+    "erro_padrao": 0.06508
+   },
+   "loa_m": {
+    "a": 7.945414,
+    "b": 0.300942,
+    "r2": 0.95,
+    "erro_padrao": 0.08869
+   }
+  },
+  "porta_conteiner": {
+   "tpc_t_por_cm": {
+    "a": 0.036395,
+    "b": 0.696855,
+    "forma": "TPC = a*DWT^b",
+    "r2": 0.98,
+    "erro_padrao": 0.18181
+   },
+   "calado_projeto_m": {
+    "a": 0.390122,
+    "b": 0.320449,
+    "forma": "calado = a*DWT^b",
+    "r2": 0.92,
+    "erro_padrao": 0.835
+   },
+   "boca_m": {
+    "a": 1.529934,
+    "b": 0.285778,
+    "r2": 0.92,
+    "erro_padrao": 0.07294
+   },
+   "loa_m": {
+    "a": 4.089324,
+    "b": 0.380157,
+    "r2": 0.95,
+    "erro_padrao": 0.08208
+   }
+  }
+ },
+ "observacoes": [
+  "Valores transcritos da Figure H-8 e conferidos contra o texto extraído do PDF baixado (SHA-256 no manifest).",
+  "O TR v5 cita TPC graneleiro/porta-contêiner e calado de graneleiro: conferem com a figura.",
+  "Erro-padrão como impresso na coluna 'Standard Error' (a figura não diz se está em log; aparenta ser em log natural nas equações de potência).",
+  "Erro-padrão do calado de porta-contêiner impresso como 0.83500 — destoa das demais (~0,1); mantido como impresso, conferir na fonte antes do P1."
+ ]
+}

@@ -1,0 +1,373 @@
+{
+  "id" : "xtb3-iudz",
+  "name" : "Transportation and Landed Costs of Brazilian Soybean Exports, North Mato Grosso through Santos to China",
+  "assetType" : "chart",
+  "attribution" : "USDA/AMS/TM/TSD",
+  "attributionLink" : "https://www.ams.usda.gov/services/transportation-analysis/brazil",
+  "averageRating" : 0,
+  "category" : "Transportation Costs",
+  "createdAt" : 1624906987,
+  "description" : "This chart compares transportation costs to farm gate prices and total landed costs for Brazilian soybean exports. By default, the chart shows transportation costs for the Northwest RS to Rio Grande route to Shanghai, China. Use the filters to change the route and destination.",
+  "diciBackend" : false,
+  "displayType" : "visualization_canvas_chart",
+  "domainCName" : "agtransport.usda.gov",
+  "downloadCount" : 9,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "locked" : false,
+  "modifyingViewUid" : "j7xv-dz9h",
+  "newBackend" : true,
+  "numberOfComments" : 0,
+  "oid" : 39576044,
+  "provenance" : "official",
+  "publicationAppendEnabled" : false,
+  "publicationDate" : 1683662404,
+  "publicationGroup" : 18259257,
+  "publicationStage" : "published",
+  "rowsUpdatedAt" : 1769707886,
+  "rowsUpdatedBy" : "aiqt-4thn",
+  "tableId" : 18369189,
+  "totalTimesRated" : 0,
+  "viewCount" : 808,
+  "viewLastModified" : 1743611262,
+  "viewType" : "tabular",
+  "approvals" : [ {
+    "reviewedAt" : 1683662945,
+    "reviewedAutomatically" : false,
+    "state" : "approved",
+    "submissionId" : 5500020,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1683662464,
+    "targetAudience" : "public",
+    "workflowId" : 531,
+    "reviewer" : {
+      "id" : "aiqt-4thn",
+      "displayName" : "Jesse Gastelle"
+    },
+    "submissionDetails" : {
+      "permissionType" : "read"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1683662945,
+      "failureCount" : 0,
+      "startedAt" : 1683662945,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "aiqt-4thn",
+      "displayName" : "Jesse Gastelle"
+    }
+  }, {
+    "message" : "The `strict_permissions` flag must be on to enable internal approvals.",
+    "state" : "unsubmittable",
+    "targetAudience" : "internal",
+    "workflowId" : 4623
+  } ],
+  "clientContext" : {
+    "clientContextVariables" : [ ],
+    "inheritedVariables" : { }
+  },
+  "columns" : [ ],
+  "displayFormat" : {
+    "visualizationCanvasMetadata" : {
+      "vifs" : [ {
+        "configuration" : {
+          "viewSourceDataLink" : true,
+          "showDimensionLabels" : true,
+          "dimensionLabelRotationAngle" : -90,
+          "xAxisScalingMode" : "pan",
+          "axisLabels" : {
+            "left" : "$/MT",
+            "bottom" : "Year"
+          },
+          "showDataTableControl" : true,
+          "showValueLabels" : false,
+          "showLegendOpened" : true,
+          "legendPosition" : "right",
+          "dimensionLabelAreaSize" : 75
+        },
+        "series" : [ {
+          "unit" : {
+            "other" : "",
+            "one" : ""
+          },
+          "color" : {
+            "secondary" : "#a6cee3",
+            "highlight" : "#cccccc",
+            "palette" : "categorical2",
+            "primary" : "#a6cee3"
+          },
+          "showLegend" : true,
+          "type" : "comboChart.column",
+          "dataSource" : {
+            "measure" : {
+              "aggregationFunction" : "avg",
+              "columnName" : "landed_cost"
+            },
+            "dateDisplayFormat" : "MMM YYYY",
+            "precision" : "none",
+            "orderBy" : {
+              "parameter" : "dimension",
+              "sort" : "asc"
+            },
+            "filters" : [ {
+              "function" : "relativeDateRange",
+              "orderBy" : {
+                "parameter" : "count",
+                "sort" : "desc"
+              },
+              "isDrilldown" : false,
+              "arguments" : {
+                "period" : "day",
+                "calendarDateFilterType" : "Relative",
+                "type" : "custom",
+                "value" : "3650"
+              },
+              "columnName" : "quarter_ending_date",
+              "isHidden" : false
+            }, {
+              "joinOn" : "OR",
+              "function" : "binaryOperator",
+              "arguments" : [ {
+                "operator" : "=",
+                "operand" : "North MT - Santos by truck"
+              } ],
+              "isDrilldown" : false,
+              "columnName" : "port",
+              "isHidden" : false
+            }, {
+              "joinOn" : "OR",
+              "function" : "binaryOperator",
+              "isDrilldown" : false,
+              "arguments" : [ {
+                "operator" : "=",
+                "operand" : "Shanghai, China"
+              } ],
+              "singleSelect" : true,
+              "columnName" : "destination",
+              "isHidden" : false
+            } ],
+            "type" : "socrata.soql",
+            "datasetUid" : "j7xv-dz9h",
+            "dimension" : {
+              "columnName" : "quarter_ending_date"
+            }
+          }
+        }, {
+          "color" : {
+            "secondary" : "#5b9ec9",
+            "highlight" : "#cccccc",
+            "palette" : "categorical2",
+            "primary" : "#5b9ec9"
+          },
+          "type" : "comboChart.line",
+          "dataSource" : {
+            "measure" : {
+              "aggregationFunction" : "avg",
+              "columnName" : "farm_value"
+            },
+            "dateDisplayFormat" : "MMM YYYY",
+            "precision" : "none",
+            "orderBy" : {
+              "parameter" : "dimension",
+              "sort" : "asc"
+            },
+            "filters" : [ {
+              "function" : "relativeDateRange",
+              "orderBy" : {
+                "parameter" : "count",
+                "sort" : "desc"
+              },
+              "isDrilldown" : false,
+              "arguments" : {
+                "period" : "day",
+                "calendarDateFilterType" : "Relative",
+                "type" : "custom",
+                "value" : "3650"
+              },
+              "columnName" : "quarter_ending_date",
+              "isHidden" : false
+            }, {
+              "joinOn" : "OR",
+              "function" : "binaryOperator",
+              "arguments" : [ {
+                "operator" : "=",
+                "operand" : "North MT - Santos by truck"
+              } ],
+              "isDrilldown" : false,
+              "columnName" : "port",
+              "isHidden" : false
+            }, {
+              "joinOn" : "OR",
+              "function" : "binaryOperator",
+              "isDrilldown" : false,
+              "arguments" : [ {
+                "operator" : "=",
+                "operand" : "Shanghai, China"
+              } ],
+              "singleSelect" : true,
+              "columnName" : "destination",
+              "isHidden" : false
+            } ],
+            "type" : "socrata.soql",
+            "datasetUid" : "j7xv-dz9h",
+            "dimension" : {
+              "columnName" : "quarter_ending_date"
+            }
+          }
+        }, {
+          "color" : {
+            "secondary" : "#2d82af",
+            "highlight" : "#cccccc",
+            "palette" : "categorical2",
+            "primary" : "#2d82af"
+          },
+          "showLegend" : true,
+          "type" : "comboChart.line",
+          "dataSource" : {
+            "measure" : {
+              "aggregationFunction" : "avg",
+              "columnName" : "total_transportation_costs"
+            },
+            "dateDisplayFormat" : "MMM YYYY",
+            "precision" : "none",
+            "orderBy" : {
+              "parameter" : "dimension",
+              "sort" : "asc"
+            },
+            "filters" : [ {
+              "function" : "relativeDateRange",
+              "orderBy" : {
+                "parameter" : "count",
+                "sort" : "desc"
+              },
+              "isDrilldown" : false,
+              "arguments" : {
+                "period" : "day",
+                "calendarDateFilterType" : "Relative",
+                "type" : "custom",
+                "value" : "3650"
+              },
+              "columnName" : "quarter_ending_date",
+              "isHidden" : false
+            }, {
+              "joinOn" : "OR",
+              "function" : "binaryOperator",
+              "arguments" : [ {
+                "operator" : "=",
+                "operand" : "North MT - Santos by truck"
+              } ],
+              "isDrilldown" : false,
+              "columnName" : "port",
+              "isHidden" : false
+            }, {
+              "joinOn" : "OR",
+              "function" : "binaryOperator",
+              "isDrilldown" : false,
+              "arguments" : [ {
+                "operator" : "=",
+                "operand" : "Shanghai, China"
+              } ],
+              "singleSelect" : true,
+              "columnName" : "destination",
+              "isHidden" : false
+            } ],
+            "type" : "socrata.soql",
+            "datasetUid" : "j7xv-dz9h",
+            "dimension" : {
+              "columnName" : "quarter_ending_date"
+            }
+          }
+        } ],
+        "format" : {
+          "type" : "visualization_interchange_format",
+          "version" : 4
+        },
+        "description" : "This chart compares transportation costs to farm gate prices and total landed costs for Brazilian soybean exports. By default, the chart shows transportation costs for the North Mato Grosso through Santos route to Shanghai, China. Use the filters to change the route and destination.",
+        "id" : "b9d16e1a-c010-4c9e-b542-b56ce1a2a534",
+        "title" : "Transportation and Landed Costs of Brazilian Soybean Exports, North Mato Grosso through Santos to China"
+      } ],
+      "filters" : [ {
+        "function" : "relativeDateRange",
+        "orderBy" : {
+          "parameter" : "count",
+          "sort" : "desc"
+        },
+        "isDrilldown" : false,
+        "arguments" : {
+          "period" : "day",
+          "calendarDateFilterType" : "Relative",
+          "type" : "custom",
+          "value" : "3650"
+        },
+        "columnName" : "quarter_ending_date",
+        "isHidden" : false
+      }, {
+        "joinOn" : "OR",
+        "function" : "binaryOperator",
+        "arguments" : [ {
+          "operator" : "=",
+          "operand" : "North MT - Santos by truck"
+        } ],
+        "isDrilldown" : false,
+        "columnName" : "port",
+        "isHidden" : false
+      }, {
+        "joinOn" : "OR",
+        "function" : "binaryOperator",
+        "isDrilldown" : false,
+        "arguments" : [ {
+          "operator" : "=",
+          "operand" : "Shanghai, China"
+        } ],
+        "singleSelect" : true,
+        "columnName" : "destination",
+        "isHidden" : false
+      } ],
+      "version" : 1
+    }
+  },
+  "grants" : [ {
+    "inherited" : true,
+    "type" : "viewer",
+    "flags" : [ "public" ]
+  } ],
+  "metadata" : {
+    "rdfSubject" : "0",
+    "custom_fields" : {
+      "Publishing" : {
+        "Publishing Schedule" : "Quarterly"
+      },
+      "Scope" : {
+        "Temporal Unit" : "Quarter",
+        "Geographic Coverage" : "Brazil",
+        "Temporal Coverage" : "2006 to present",
+        "Geographic Unit" : "Country"
+      },
+      "Related Information" : {
+        "Links" : "https://www.ams.usda.gov/services/transportation-analysis/brazil",
+        "Research" : "Brazil Soybean Transportation"
+      }
+    },
+    "availableDisplayTypes" : [ "visualization" ]
+  },
+  "owner" : {
+    "id" : "q82n-w99z",
+    "displayName" : "Bernadette Winston",
+    "screenName" : "Bernadette Winston",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula" ]
+  },
+  "query" : { },
+  "rights" : [ "read" ],
+  "tableAuthor" : {
+    "id" : "q82n-w99z",
+    "displayName" : "Bernadette Winston",
+    "screenName" : "Bernadette Winston",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula" ]
+  },
+  "tags" : [ "costs", "brazil", "truck", "ocean", "rail" ],
+  "flags" : [ "federated", "internalToPublicFederatedView", "ownerMayBeContacted", "restorable", "restorePossibleForType" ]
+}

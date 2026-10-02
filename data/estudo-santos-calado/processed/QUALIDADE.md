@@ -1,6 +1,6 @@
 # Relatório de qualidade — base do estudo Custo do calado perdido em Santos
 
-Gerado em 2026-10-02T21:02:33Z por `90_documenta.py`. Só contagens; nenhuma estimativa.
+Gerado em 2026-10-02T23:36:14Z por `90_documenta.py`. Só contagens; nenhuma estimativa.
 
 ## T1 — Escalas ANTAQ do complexo de Santos
 
@@ -153,10 +153,66 @@ Notas: 2026 cobre só jan–fev. 'Sentido Não Informado' (~5 Mt/ano) são linha
 - Antes de 2014 a página trata 'Torre Grande até Alamoa' como um trecho só (III+IV).
 - O trecho além da Alamoa/BTP muda de descrição ao longo do tempo ('BTP até Alamoa', 'Alamoa 02 até final trecho IV', 'Terminal Alamoa até o final trecho IV' = IV-b): tratado como IV-B, mas a equivalência física não foi conferida.
 - Datas de captura do Wayback nunca entram como vigência. Sem data impressa, a mudança fica numa janela entre capturas.
-- Tabela de berços só existe nas capturas de 2021 em diante; antes disso, o calado por berço não tem histórico público (lacuna).
+- Tabela de berços só existe a partir da Rev. 221 (16/07/2019, captura de out/2019); antes disso, o calado por berço não tem histórico público (lacuna).
+
+## T3 — Calado × IMO da lista de esperados (coleta própria)
+
+- Coleta diária rodando no GitHub Actions (workflow agro-dados): snapshots 2026-09-30, 2026-10-01, 2026-10-02.
+- 321 escalas (DUV), 321 com IMO, 321 com calado; 0 com calado alterado entre snapshots.
+- Casamento com a T1 por IMO + data (±3 dias): **0** — zero por construção: a ANTAQ vai até 2026-02-28 e a coleta começa em 30/09/2026. IMO já visto em Santos na T1: 81.6%.
+
+## T4 — Cadastro de navios
+
+- 12,798 IMOs únicos; perfil de carga (ANTAQ): granel_solido 7,370, granel_liquido 2,091, conteiner 1,627, carga_geral 1,556, sem_carga 154.
+- A ANTAQ não traz tipo, DWT nem calado de projeto: **lacuna** até a consulta manual (Equasis) ou a base licenciada.
+- Amostra de validação: 150 IMOs em 12 estratos (perfil × tercil de t/escala, PPS por nº de escalas, semente fixa).
+- `parametros_ned.json`: conferido contra o PDF do Apêndice H baixado da USACE Digital Library (não estava em `referencias/`).
+
+## T5 — Comex Stat
+
+| produto | inicio | fim | linhas | mt |
+|---|---|---|---|---|
+| acucar | 2010 | 2026 | 6745 | 453.90 |
+| farelo_soja | 2010 | 2026 | 4308 | 286.60 |
+| milho | 2010 | 2026 | 6601 | 481.10 |
+| soja | 2010 | 2026 | 10013 | 1162.50 |
+| total_todas_mercadorias | 2010 | 2026 | 57309 | 11112.70 |
+
+- Peso casado a um porto do mapa: 94.5% (resto: URFs de petróleo/fronteira fora do recorte).
+- Conferência: soja por Santos (URF 0817800) em 2024 = 27.96 Mt (Fase 0: 27,96 Mt).
+- **Lacuna**: 'total de carga em contêiner' — o Comex Stat não tem indicador de contêiner; usar ANTAQ (T1) para contêiner.
+- ALF Belém despacha também Barcarena/Vila do Conde: não separável por URF.
+
+## T6 — Calado dos concorrentes
+
+| porto | autoridade | url | capturas_cdx | baixadas | atual_ok |
+|---|---|---|---|---|---|
+| Paranaguá | APPA / Portos do Paraná | www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados | 17 | 18 | True |
+| Rio Grande | Portos RS | www.portosrs.com.br/site/public/uploads/site/normativas/259.pdf | 0 | 1 | True |
+| São Francisco do Sul | SCPar / APSFS | portosaofrancisco.com.br/caracteristicas/ | 3 | 4 | True |
+| Itaqui | EMAP | www.portodoitaqui.com.br/porto-do-itaqui/infraestrutura | 0 | 1 | True |
+| Itaqui | EMAP | www.portodoitaqui.com.br/_files/arquivos/manual-porto-do-itaqui.pdf | 0 | 1 | True |
+
+- Paranaguá: extrator específico do canal (`regra_extracao = canal_paranagua`): 12,50 m (Canal da Galheta, 2019–jun/2023) → 12,80 (ago/2023) → 13,10 (mar/2025) → 13,30 (fev/2026), datas = capturas, não vigência.
+- Demais portos: só documento atual/Fase 0 (Rio Grande normativa 259, S. Francisco do Sul, Itaqui) com extração genérica (número após 'calado'), não revisada. Sem histórico no Wayback para Rio Grande e Itaqui; Vila do Conde só PDF da Fase 0. Histórico com data de vigência: lacuna.
+
+## T7 — Controles
+
+- USDA GTR: j6ns-hzra (frete marítimo) e j7xv-dz9h (custos; `xtb3-iudz` é só uma visualização sobre essa tabela).
+- CONAB: levantamentos 2017→2025/26 e série histórica 1976→2025/26 por UF; **não há produção mensal** (só estimativas por levantamento).
+- Preço: soja = FMI/FRED PSOYBUSDM (futuro de Chicago); milho = PMAIZMTUSDM (FOB Golfo) — sem série CBOT de milho de fonte pública baixável (lacuna).
+- ANTT: sem série histórica de pisos em dados abertos (lacuna); piso vigente e modelo IBI já documentados no repo.
+
+## T8 — NPCP-SP e marés
+
+- **Nenhuma das edições da NPCP-SP (2016 e 3ª Rev. 2026) fixa valor numérico de folga sob a quilha para Santos**: o calado máximo de operação é delegado à APS; o 'fator de segurança' é descrito só qualitativamente. Portarias específicas (canal de Piaçaguera, navios de 340–370 m, TRSP) não foram coletadas (lacuna).
+- CHM: site atrás de desafio anti-robô (não contornado). Tábuas de Santos (previsão) só via Wayback, ver `chm_mares_fontes.csv`; duas cópias vieram truncadas (1 MiB). Sem série observada de maré (lacuna).
 
 ## Lacunas registradas (não preenchidas)
 
 - Calado de entrada/saída por escala (nomeação APS): não público — rascunho de pedido em `RASCUNHO_pedido_APS.md` (T9).
-- Histórico de calado por berço antes de 2021 e vigência das revisões sem frase de vigência: pedir à APS.
+- Histórico de calado por berço antes da Rev. 221 (jul/2019) e vigência das revisões sem frase de vigência: pedir à APS.
 - Obra de cais simultânea a cada revisão: não consta da tabela da APS.
+- DWT, calado de projeto, TEU nominal por IMO: base licenciada (S&P/Clarksons) ou Equasis manual.
+- Serviços de contêiner e navios por rota (estudo 5.2): Alphaliner (licenciado).
+- Calado medido nas manobras: Praticagem de São Paulo (via NORA).

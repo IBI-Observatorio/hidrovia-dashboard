@@ -1,0 +1,15 @@
+{
+ "gerado_em": "2026-10-02T23:23:21Z",
+ "frete_referencia_antt": {
+  "situacao": "sem série histórica em dados abertos (dados.antt.gov.br: só autos de infração, consultado em 02/10/2026)",
+  "vigente_documentado_no_repo": "docs/calibracao-T-frete.md §3 — piso mínimo ANTT (Res. 6.076/2026, Portaria SUROC 4/2026), fórmula CCD×km + CC por nº de eixos",
+  "calculadora_oficial": "https://calculadorafrete.antt.gov.br",
+  "lacuna": "série histórica dos pisos 2018–2026 (resoluções ANTT) não coletada nesta etapa"
+ },
+ "modelo_custo_rodoviario_ibi": {
+  "codigo": "lib/iee-params.ts (PARAMETROS_CUSTEIO_V0, PERFIS_VEICULO, ROTAS_T)",
+  "documentacao": "docs/calibracao-T-frete.md",
+  "nota": "custo MODELADO (não frete de mercado); mudar parâmetros exige novo pré-registro do IEE (hash) e backtest"
+ },
+ "arquivos_conferidos_no_repo": true
+}

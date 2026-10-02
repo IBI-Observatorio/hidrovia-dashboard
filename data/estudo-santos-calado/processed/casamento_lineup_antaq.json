@@ -1,0 +1,19 @@
+{
+ "gerado_em": "2026-10-02T23:18:24Z",
+ "snapshots": 3,
+ "datas_snapshot": [
+  "2026-09-30",
+  "2026-10-01",
+  "2026-10-02"
+ ],
+ "escalas_duv": 321,
+ "com_imo": 321,
+ "com_calado": 321,
+ "duv_com_calado_alterado_entre_snapshots": 0,
+ "fim_da_T1_antaq": "2026-02-28 08:55:00",
+ "casadas_imo_e_data_T1": 0,
+ "taxa_casamento_imo_e_data": 0.0,
+ "imo_ja_visto_em_santos_na_T1": 262,
+ "taxa_imo_ja_visto_na_T1": 0.8161993769470405,
+ "nota": "A T1 (ANTAQ) termina em fev/2026 e a coleta começa em 30/09/2026: não há sobreposição de datas, então o casamento escala a escala é zero por construção até a ANTAQ publicar mar/2026 em diante. O casamento por IMO (navio já visto em Santos) é informativo."
+}

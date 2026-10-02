@@ -1,0 +1,523 @@
+{
+  "id" : "j6ns-hzra",
+  "name" : "Quarterly Ocean Freight Rates for Shipping Soybeans from Selected Brazilian Ports to Germany and China",
+  "assetType" : "dataset",
+  "attribution" : "USDA/AMS/TM/TSD",
+  "attributionLink" : "https://www.ams.usda.gov/services/transportation-analysis/brazil",
+  "averageRating" : 0,
+  "category" : "Transportation Costs",
+  "createdAt" : 1621365551,
+  "description" : "Quarterly ocean freight rates for shipping soybeans from select Brazilian ports to Shanghai, China and Hamburg, Germany.",
+  "diciBackend" : false,
+  "displayType" : "table",
+  "domainCName" : "agtransport.usda.gov",
+  "downloadCount" : 903,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "locked" : false,
+  "newBackend" : true,
+  "numberOfComments" : 0,
+  "oid" : 37371270,
+  "provenance" : "official",
+  "publicationAppendEnabled" : false,
+  "publicationDate" : 1624894449,
+  "publicationGroup" : 18308065,
+  "publicationStage" : "published",
+  "rowsUpdatedAt" : 1769707896,
+  "rowsUpdatedBy" : "aiqt-4thn",
+  "tableId" : 18369068,
+  "totalTimesRated" : 0,
+  "viewCount" : 9879,
+  "viewLastModified" : 1769707895,
+  "viewType" : "tabular",
+  "approvals" : [ {
+    "reviewedAt" : 1626187608,
+    "reviewedAutomatically" : false,
+    "state" : "approved",
+    "submissionId" : 3813916,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1626187589,
+    "targetAudience" : "public",
+    "workflowId" : 531,
+    "reviewer" : {
+      "id" : "aiqt-4thn",
+      "displayName" : "Jesse Gastelle"
+    },
+    "submissionDetails" : {
+      "permissionType" : "read"
+    },
+    "submissionOutcomeApplication" : {
+      "endedAt" : 1626187608,
+      "failureCount" : 0,
+      "startedAt" : 1626187608,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "aiqt-4thn",
+      "displayName" : "Jesse Gastelle"
+    }
+  }, {
+    "message" : "The `strict_permissions` flag must be on to enable internal approvals.",
+    "state" : "unsubmittable",
+    "targetAudience" : "internal",
+    "workflowId" : 4623
+  } ],
+  "clientContext" : {
+    "clientContextVariables" : [ ],
+    "inheritedVariables" : { }
+  },
+  "columns" : [ {
+    "id" : 543542341,
+    "name" : "Quarter Ending Date",
+    "dataTypeName" : "calendar_date",
+    "description" : "The date in which the shipment occurs",
+    "fieldName" : "quarter_ending_date",
+    "position" : 1,
+    "renderTypeName" : "calendar_date",
+    "tableColumnId" : 138009549,
+    "cachedContents" : {
+      "non_null" : "744",
+      "largest" : "2025-07-31T00:00:00.000",
+      "null" : "0",
+      "top" : [ {
+        "item" : "2015-04-30T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2018-04-30T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2024-07-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2022-04-30T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2015-01-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2017-04-30T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2016-04-30T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2024-10-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2024-01-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2022-01-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2020-10-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2018-01-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2020-01-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2019-04-30T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2023-01-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2022-10-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2022-07-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2017-07-31T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2021-04-30T00:00:00.000",
+        "count" : "12"
+      }, {
+        "item" : "2023-04-30T00:00:00.000",
+        "count" : "12"
+      } ],
+      "smallest" : "2005-01-31T00:00:00.000",
+      "count" : "744",
+      "cardinality" : "744"
+    },
+    "format" : {
+      "view" : "date"
+    }
+  }, {
+    "id" : 543542342,
+    "name" : "Year",
+    "dataTypeName" : "text",
+    "description" : "The year in which the shipment occurs",
+    "fieldName" : "year",
+    "position" : 2,
+    "renderTypeName" : "text",
+    "tableColumnId" : 138009544,
+    "cachedContents" : {
+      "non_null" : "744",
+      "largest" : "2025",
+      "null" : "0",
+      "top" : [ {
+        "item" : "2019",
+        "count" : "48"
+      }, {
+        "item" : "2023",
+        "count" : "48"
+      }, {
+        "item" : "2022",
+        "count" : "48"
+      }, {
+        "item" : "2024",
+        "count" : "48"
+      }, {
+        "item" : "2017",
+        "count" : "48"
+      }, {
+        "item" : "2018",
+        "count" : "48"
+      }, {
+        "item" : "2016",
+        "count" : "48"
+      }, {
+        "item" : "2020",
+        "count" : "48"
+      }, {
+        "item" : "2021",
+        "count" : "48"
+      }, {
+        "item" : "2015",
+        "count" : "48"
+      }, {
+        "item" : "2025",
+        "count" : "36"
+      }, {
+        "item" : "2013",
+        "count" : "24"
+      }, {
+        "item" : "2014",
+        "count" : "24"
+      }, {
+        "item" : "2011",
+        "count" : "24"
+      }, {
+        "item" : "2007",
+        "count" : "24"
+      }, {
+        "item" : "2008",
+        "count" : "24"
+      }, {
+        "item" : "2010",
+        "count" : "24"
+      }, {
+        "item" : "2012",
+        "count" : "24"
+      }, {
+        "item" : "2006",
+        "count" : "24"
+      }, {
+        "item" : "2009",
+        "count" : "24"
+      } ],
+      "smallest" : "2005",
+      "count" : "744",
+      "cardinality" : "744"
+    },
+    "format" : { }
+  }, {
+    "id" : 543542343,
+    "name" : "Quarter",
+    "dataTypeName" : "number",
+    "description" : "The quarter in which the shipment occurs",
+    "fieldName" : "quarter",
+    "position" : 3,
+    "renderTypeName" : "number",
+    "tableColumnId" : 138009548,
+    "cachedContents" : {
+      "non_null" : "744",
+      "largest" : "4",
+      "null" : "0",
+      "top" : [ {
+        "item" : "1",
+        "count" : "189"
+      }, {
+        "item" : "2",
+        "count" : "189"
+      }, {
+        "item" : "3",
+        "count" : "189"
+      }, {
+        "item" : "4",
+        "count" : "177"
+      } ],
+      "smallest" : "1",
+      "count" : "744",
+      "cardinality" : "744"
+    },
+    "format" : { }
+  }, {
+    "id" : 543542344,
+    "name" : "Port",
+    "dataTypeName" : "text",
+    "description" : "The port the shipment will go to",
+    "fieldName" : "port",
+    "position" : 4,
+    "renderTypeName" : "text",
+    "tableColumnId" : 138009547,
+    "cachedContents" : {
+      "non_null" : "744",
+      "largest" : "Sao Luis",
+      "null" : "0",
+      "top" : [ {
+        "item" : "Paranagua",
+        "count" : "162"
+      }, {
+        "item" : "Santos",
+        "count" : "162"
+      }, {
+        "item" : "Rio Grande",
+        "count" : "162"
+      }, {
+        "item" : "Santarem",
+        "count" : "86"
+      }, {
+        "item" : "Barcarena",
+        "count" : "86"
+      }, {
+        "item" : "Sao Luis",
+        "count" : "86"
+      } ],
+      "smallest" : "Barcarena",
+      "count" : "744",
+      "cardinality" : "744"
+    },
+    "format" : { }
+  }, {
+    "id" : 543542345,
+    "name" : "Destination",
+    "dataTypeName" : "text",
+    "description" : "The port the shipment will go to",
+    "fieldName" : "destination",
+    "position" : 5,
+    "renderTypeName" : "text",
+    "tableColumnId" : 138009546,
+    "cachedContents" : {
+      "non_null" : "744",
+      "largest" : "Germany (Hamburg)",
+      "null" : "0",
+      "top" : [ {
+        "item" : "Germany (Hamburg)",
+        "count" : "378"
+      }, {
+        "item" : "China (Shanghai)",
+        "count" : "366"
+      } ],
+      "smallest" : "China (Shanghai)",
+      "count" : "744",
+      "cardinality" : "744"
+    },
+    "format" : { }
+  }, {
+    "id" : 543542346,
+    "name" : "Rate",
+    "dataTypeName" : "number",
+    "description" : "Trucks freight rates in dollars per metric ton",
+    "fieldName" : "rate",
+    "position" : 6,
+    "renderTypeName" : "number",
+    "tableColumnId" : 138009545,
+    "cachedContents" : {
+      "non_null" : "744",
+      "largest" : "111.2",
+      "null" : "0",
+      "top" : [ {
+        "item" : "31",
+        "count" : "17"
+      }, {
+        "item" : "25",
+        "count" : "15"
+      }, {
+        "item" : "30",
+        "count" : "15"
+      }, {
+        "item" : "32",
+        "count" : "13"
+      }, {
+        "item" : "20",
+        "count" : "10"
+      }, {
+        "item" : "21",
+        "count" : "10"
+      }, {
+        "item" : "22",
+        "count" : "9"
+      }, {
+        "item" : "24",
+        "count" : "8"
+      }, {
+        "item" : "26",
+        "count" : "8"
+      }, {
+        "item" : "33.5",
+        "count" : "7"
+      }, {
+        "item" : "29",
+        "count" : "7"
+      }, {
+        "item" : "36",
+        "count" : "7"
+      }, {
+        "item" : "35",
+        "count" : "7"
+      }, {
+        "item" : "34.5",
+        "count" : "7"
+      }, {
+        "item" : "17",
+        "count" : "7"
+      }, {
+        "item" : "23",
+        "count" : "7"
+      }, {
+        "item" : "37",
+        "count" : "6"
+      }, {
+        "item" : "28",
+        "count" : "6"
+      }, {
+        "item" : "35.5",
+        "count" : "6"
+      }, {
+        "item" : "20.5",
+        "count" : "6"
+      } ],
+      "smallest" : "7",
+      "count" : "744",
+      "cardinality" : "744"
+    },
+    "format" : { }
+  }, {
+    "id" : 543542347,
+    "name" : "Year/Quarter",
+    "dataTypeName" : "text",
+    "description" : "The year and quarter an event has taken place.",
+    "fieldName" : "year_quarter",
+    "position" : 7,
+    "renderTypeName" : "text",
+    "tableColumnId" : 138648232,
+    "cachedContents" : {
+      "non_null" : "744",
+      "largest" : "2025Q3",
+      "null" : "0",
+      "top" : [ {
+        "item" : "2017Q4",
+        "count" : "12"
+      }, {
+        "item" : "2015Q2",
+        "count" : "12"
+      }, {
+        "item" : "2025Q1",
+        "count" : "12"
+      }, {
+        "item" : "2018Q3",
+        "count" : "12"
+      }, {
+        "item" : "2025Q3",
+        "count" : "12"
+      }, {
+        "item" : "2015Q3",
+        "count" : "12"
+      }, {
+        "item" : "2021Q3",
+        "count" : "12"
+      }, {
+        "item" : "2022Q1",
+        "count" : "12"
+      }, {
+        "item" : "2024Q1",
+        "count" : "12"
+      }, {
+        "item" : "2016Q1",
+        "count" : "12"
+      }, {
+        "item" : "2018Q2",
+        "count" : "12"
+      }, {
+        "item" : "2019Q3",
+        "count" : "12"
+      }, {
+        "item" : "2017Q2",
+        "count" : "12"
+      }, {
+        "item" : "2017Q3",
+        "count" : "12"
+      }, {
+        "item" : "2024Q4",
+        "count" : "12"
+      }, {
+        "item" : "2024Q3",
+        "count" : "12"
+      }, {
+        "item" : "2016Q4",
+        "count" : "12"
+      }, {
+        "item" : "2021Q1",
+        "count" : "12"
+      }, {
+        "item" : "2017Q1",
+        "count" : "12"
+      }, {
+        "item" : "2020Q2",
+        "count" : "12"
+      } ],
+      "smallest" : "2005Q1",
+      "count" : "744",
+      "cardinality" : "744"
+    },
+    "format" : { }
+  } ],
+  "grants" : [ {
+    "inherited" : false,
+    "type" : "viewer",
+    "flags" : [ "public" ]
+  } ],
+  "metadata" : {
+    "custom_fields" : {
+      "Publishing" : {
+        "Publishing Schedule" : "Quarterly"
+      },
+      "Scope" : {
+        "Temporal Unit" : "Quarter",
+        "Geographic Coverage" : "Brazil",
+        "Temporal Coverage" : "2005 to present",
+        "Geographic Unit" : "Country"
+      },
+      "Related Information" : {
+        "Links" : "https://www.ams.usda.gov/services/transportation-analysis/brazil",
+        "Research" : "Brazil Soybean Transportation"
+      }
+    },
+    "availableDisplayTypes" : [ "table", "fatrow", "page" ]
+  },
+  "owner" : {
+    "id" : "q82n-w99z",
+    "displayName" : "Bernadette Winston",
+    "screenName" : "Bernadette Winston",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula" ]
+  },
+  "query" : { },
+  "rights" : [ "read" ],
+  "tableAuthor" : {
+    "id" : "q82n-w99z",
+    "displayName" : "Bernadette Winston",
+    "screenName" : "Bernadette Winston",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula" ]
+  },
+  "tags" : [ "transportation costs", "transportation", "brazil", "brazilian", "ocean", "freight rate", "freight rates", "china", "germany", "quarterly", "soybeans", "soybean" ],
+  "flags" : [ "default", "federated", "internalToPublicFederatedView", "ownerMayBeContacted", "restorable", "restorePossibleForType" ]
+}

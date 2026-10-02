@@ -76,6 +76,41 @@ D = {
         "ultima_captura_periodo_anterior, primeira_captura_periodo_seguinte": ("str", "-", "janela em que a mudança ocorreu"),
         "n_capturas, formato, arquivos": ("-", "-", "proveniência"),
     }),
+    "comex_export_uf_urf_sh4": ("Comex Stat (MDIC), API /general", "exportação mensal por UF de origem × URF × via × SH4, 2010 → ago/2026.", {
+        "produto, sh4": ("str", "-", "soja 1201, milho 1005, farelo_soja 2304, acucar 1701, total_todas_mercadorias (sem filtro de SH4; sh4 nulo)"),
+        "ano, mes": ("int", "-", "período Comex Stat"),
+        "uf_origem": ("str", "-", "UF do produto declarada (distorções conhecidas; conferir contra produção — TR §5.3)"),
+        "urf, urf_codigo": ("str", "-", "URF de embarque"),
+        "via": ("str", "-", "MARITIMA ou FLUVIAL (filtro vias 01 e 02)"),
+        "fob_usd, kg": ("float", "US$, kg", "metricFOB, metricKG"),
+        "porto, grupo": ("str", "-", "via mapa_urf_porto.csv; nulo = URF não portuária ou fora do recorte"),
+    }),
+    "gtr_frete_maritimo_soja_brasil": ("USDA AMS GTR, Socrata j6ns-hzra", "frete marítimo de soja por porto brasileiro → Alemanha/China, trimestral.", {
+        "quarter_ending_date, year, quarter, year_quarter": ("str", "-", "trimestre"),
+        "port, destination": ("str", "-", "porto de origem e destino"), "rate": ("str→num", "US$/t", "frete"),
+    }),
+    "gtr_custo_transporte_soja_brasil_china": ("USDA AMS GTR, Socrata j7xv-dz9h (tabela de origem da visualização xtb3-iudz)", "custo de transporte e landed cost por rota, trimestral.", {
+        "port": ("str", "-", "rota origem–porto (ex.: North MT - Santos)"), "destination": ("str", "-", "destino"),
+        "truck, rail, barge, ocean, total_transportation_costs, farm_value, landed_cost": ("str→num", "US$/t", "componentes do custo"),
+    }),
+    "conab_levantamentos_graos": ("CONAB, LevantamentoGraos.txt", "estimativas de cada levantamento mensal por UF × produto × safra (2017 → 2025/26). Não é produção mensal.", {
+        "ano_agricola, safra, uf, produto, id_levantamento, dsc_levantamento": ("str", "-", "campos da CONAB"),
+        "area_plantada_mil_ha, producao_mil_t, produtividade_mil_ha_mil_t": ("float", "mil ha, mil t", "como publicado"),
+    }),
+    "conab_serie_historica_graos": ("CONAB, SerieHistoricaGraos.txt", "série histórica (1976 → 2025/26), último levantamento de cada safra, UF × produto.", {
+        "ano_agricola, dsc_safra_previsao, uf, produto": ("str", "-", "campos da CONAB"),
+        "area_plantada_mil_ha, producao_mil_t, produtividade_mil_ha_mil_t": ("str", "mil ha, mil t", "como publicado (texto)"),
+    }),
+    "precos_internacionais_mensal": ("FRED / FMI Primary Commodity Prices", "preço mensal US$/t.", {
+        "serie": ("str", "-", "PSOYBUSDM (soja: futuro de Chicago, 1º vencimento) | PMAIZMTUSDM (milho: FOB Golfo, NÃO é CBOT)"),
+        "data, usd_t": ("date, float", "US$/t", "como publicado"),
+    }),
+    "calado_concorrentes_painel": ("páginas/documentos de calado das autoridades portuárias + Wayback", "valor de calado impresso e contexto, por porto × captura (extração automática, revisado = False).", {
+        "porto, autoridade, url, captura_ts, tipo_captura, arquivo": ("str", "-", "proveniência; captura_ts não é vigência"),
+        "calado_m": ("float", "m", "número 'NN,NN m' até 160 caracteres após 'calado'"),
+        "contexto": ("str", "-", "texto em volta do valor, para identificar trecho/berço"),
+        "datas_vigencia_impressas": ("str", "-", "datas após 'vigência/em vigor/a partir de' na mesma captura"),
+    }),
 }
 
 
@@ -106,6 +141,16 @@ def dicionario():
             "| `eventos_revisao_calado.csv` | mudanças de calado por trecho: de/para (BM/PM), delta, sentido, vigência impressa, janela entre capturas; `obra_cais_simultanea` vazio (não consta da fonte) |",
             "| `caminho_berco.csv` | berço da APS → trecho em que está situado (coluna 'Calado máximo por trecho' da APS, rowspan) → trechos percorridos desde a barra |",
             "| `berco_antaq_aps.csv` | casamento IDBerco ANTAQ → berço(s) da APS; método `nome_normalizado` ou `manual`; berço composto (ex.: 'CS 02 + CS 01') aponta para todos |",
+            "| `casamento_lineup_antaq.json` | T3: taxa de casamento da lista de esperados da APS com a T1 |",
+            "| `imos_santos.csv` | T4: IMOs únicos de Santos, nº de escalas, perfil de carga ANTAQ (não é tipo de navio), primeiro/último ano |",
+            "| `amostra_validacao_equasis.csv` | T4: 150 IMOs para consulta MANUAL no Equasis (colunas `*_equasis` vazias para preencher) |",
+            "| `parametros_ned.json` | T4: regressões da Figure H-8 do NED Manual (a, b, R², erro-padrão) |",
+            "| `mapa_urf_porto.csv` | T5: URF → porto/grupo (regex sobre o nome; aeroportos excluídos) |",
+            "| `custo_terrestre_referencias.json` | T7: onde estão o piso ANTT vigente e o modelo de custo rodoviário do IBI; lacuna da série histórica |",
+            "| `calado_concorrentes_fontes.csv` | T6: URLs consultadas, capturas no CDX e baixadas |",
+            "| `npcp_regras.csv` | T8: passagens da NPCP-SP (2016 e 2026) por tema, com página |",
+            "| `chm_mares_fontes.csv` | T8: tábuas de maré de Santos obtidas via Wayback, com completude |",
+            "| `RASCUNHO_pedido_APS.md` | T9: pedido à APS — NÃO enviado |",
             "| `checagens_t1.json` | reprodução das checagens pedidas (81.241 atracações; 13,41 t/TEU; IMO 99%) |", ""]
     (PROC / "DICIONARIO.md").write_text("\n".join(out), encoding="utf-8")
 
@@ -176,11 +221,61 @@ def qualidade():
                 "- O trecho além da Alamoa/BTP muda de descrição ao longo do tempo ('BTP até Alamoa', 'Alamoa 02 até final trecho IV', "
                 "'Terminal Alamoa até o final trecho IV' = IV-b): tratado como IV-B, mas a equivalência física não foi conferida.",
                 "- Datas de captura do Wayback nunca entram como vigência. Sem data impressa, a mudança fica numa janela entre capturas.",
-                "- Tabela de berços só existe nas capturas de 2021 em diante; antes disso, o calado por berço não tem histórico público (lacuna).", ""]
+                "- Tabela de berços só existe a partir da Rev. 221 (16/07/2019, captura de out/2019); antes disso, o calado por berço não tem histórico público (lacuna).", ""]
+    # T3–T8
+    def lj(n):
+        p = PROC / n
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+    cl = lj("casamento_lineup_antaq.json")
+    if cl:
+        out += ["## T3 — Calado × IMO da lista de esperados (coleta própria)", "",
+                f"- Coleta diária rodando no GitHub Actions (workflow agro-dados): snapshots {', '.join(cl['datas_snapshot'])}.",
+                f"- {cl['escalas_duv']} escalas (DUV), {cl['com_imo']} com IMO, {cl['com_calado']} com calado; "
+                f"{cl['duv_com_calado_alterado_entre_snapshots']} com calado alterado entre snapshots.",
+                f"- Casamento com a T1 por IMO + data (±3 dias): **{cl['casadas_imo_e_data_T1']}** — zero por construção: a ANTAQ vai até "
+                f"{cl['fim_da_T1_antaq'][:10]} e a coleta começa em 30/09/2026. IMO já visto em Santos na T1: {100*cl['taxa_imo_ja_visto_na_T1']:.1f}%.", ""]
+    im = PROC / "imos_santos.csv"
+    if im.exists():
+        I_ = pd.read_csv(im)
+        A_ = pd.read_csv(PROC / "amostra_validacao_equasis.csv")
+        out += ["## T4 — Cadastro de navios", "",
+                f"- {len(I_):,} IMOs únicos; perfil de carga (ANTAQ): " + ", ".join(f"{k} {v:,}" for k, v in I_.perfil_carga_antaq.value_counts().items()) + ".",
+                "- A ANTAQ não traz tipo, DWT nem calado de projeto: **lacuna** até a consulta manual (Equasis) ou a base licenciada.",
+                f"- Amostra de validação: {len(A_)} IMOs em {A_.estrato.nunique()} estratos (perfil × tercil de t/escala, PPS por nº de escalas, semente fixa).",
+                "- `parametros_ned.json`: conferido contra o PDF do Apêndice H baixado da USACE Digital Library (não estava em `referencias/`).", ""]
+    cx = PROC / "comex_export_uf_urf_sh4.parquet"
+    if cx.exists():
+        C_ = pd.read_parquet(cx)
+        cobx = C_.groupby("produto").agg(inicio=("ano", "min"), fim=("ano", "max"), linhas=("kg", "size"),
+                                         mt=("kg", lambda x: round(x.sum() / 1e9, 1))).reset_index()
+        sj = C_[(C_.produto == "soja") & (C_.ano == 2024) & (C_.urf_codigo == "0817800")].kg.sum() / 1e9
+        out += ["## T5 — Comex Stat", "", md_tabela(cobx), "",
+                f"- Peso casado a um porto do mapa: {100 * C_[C_.porto.notna()].kg.sum() / C_.kg.sum():.1f}% (resto: URFs de petróleo/fronteira fora do recorte).",
+                f"- Conferência: soja por Santos (URF 0817800) em 2024 = {sj:.2f} Mt (Fase 0: 27,96 Mt).",
+                "- **Lacuna**: 'total de carga em contêiner' — o Comex Stat não tem indicador de contêiner; usar ANTAQ (T1) para contêiner.",
+                "- ALF Belém despacha também Barcarena/Vila do Conde: não separável por URF.", ""]
+    cc = PROC / "calado_concorrentes_fontes.csv"
+    if cc.exists():
+        out += ["## T6 — Calado dos concorrentes", "", md_tabela(pd.read_csv(cc)), "",
+                "- Paranaguá: extrator específico do canal (`regra_extracao = canal_paranagua`): 12,50 m (Canal da Galheta, 2019–jun/2023) → 12,80 (ago/2023) → 13,10 (mar/2025) → 13,30 (fev/2026), datas = capturas, não vigência.", "- Demais portos: só documento atual/Fase 0 (Rio Grande normativa 259, S. Francisco do Sul, Itaqui) com extração genérica (número após 'calado'), não revisada. Sem histórico no Wayback para Rio Grande e Itaqui; Vila do Conde só PDF da Fase 0. Histórico com data de vigência: lacuna.", ""]
+    out += ["## T7 — Controles", "",
+            "- USDA GTR: j6ns-hzra (frete marítimo) e j7xv-dz9h (custos; `xtb3-iudz` é só uma visualização sobre essa tabela).",
+            "- CONAB: levantamentos 2017→2025/26 e série histórica 1976→2025/26 por UF; **não há produção mensal** (só estimativas por levantamento).",
+            "- Preço: soja = FMI/FRED PSOYBUSDM (futuro de Chicago); milho = PMAIZMTUSDM (FOB Golfo) — sem série CBOT de milho de fonte pública baixável (lacuna).",
+            "- ANTT: sem série histórica de pisos em dados abertos (lacuna); piso vigente e modelo IBI já documentados no repo.", "",
+            "## T8 — NPCP-SP e marés", "",
+            "- **Nenhuma das edições da NPCP-SP (2016 e 3ª Rev. 2026) fixa valor numérico de folga sob a quilha para Santos**: "
+            "o calado máximo de operação é delegado à APS; o 'fator de segurança' é descrito só qualitativamente. Portarias específicas "
+            "(canal de Piaçaguera, navios de 340–370 m, TRSP) não foram coletadas (lacuna).",
+            "- CHM: site atrás de desafio anti-robô (não contornado). Tábuas de Santos (previsão) só via Wayback, ver `chm_mares_fontes.csv`; "
+            "duas cópias vieram truncadas (1 MiB). Sem série observada de maré (lacuna).", ""]
     out += ["## Lacunas registradas (não preenchidas)", "",
             "- Calado de entrada/saída por escala (nomeação APS): não público — rascunho de pedido em `RASCUNHO_pedido_APS.md` (T9).",
-            "- Histórico de calado por berço antes de 2021 e vigência das revisões sem frase de vigência: pedir à APS.",
-            "- Obra de cais simultânea a cada revisão: não consta da tabela da APS.", ""]
+            "- Histórico de calado por berço antes da Rev. 221 (jul/2019) e vigência das revisões sem frase de vigência: pedir à APS.",
+            "- Obra de cais simultânea a cada revisão: não consta da tabela da APS.",
+            "- DWT, calado de projeto, TEU nominal por IMO: base licenciada (S&P/Clarksons) ou Equasis manual.",
+            "- Serviços de contêiner e navios por rota (estudo 5.2): Alphaliner (licenciado).",
+            "- Calado medido nas manobras: Praticagem de São Paulo (via NORA).", ""]
     (PROC / "QUALIDADE.md").write_text("\n".join(out), encoding="utf-8")
 
 

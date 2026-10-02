@@ -512,3 +512,14 @@ de ano-análogo (top-3) · |Δprob| ≥ 0,25 · troca de fase ENSO. Cache de aud
 - **Número oficial, sem modelo.** Não converter cota→calado aqui. As séries 2024/2025 do gráfico vêm de `data/cmr_itacoatiara.csv` (sem categoria de carga).
 - O card mostra aviso em ouro quando o boletim tem mais de 3 dias.
 - O mesmo JSON alimenta o **card de Hidrologia da home** (`lib/compute-hidrologia.ts`) e o painel calado-alvo do **topo do /monitor** (`components/IRCInterativo.tsx`). Desde 30/09/2026 esses dois não mostram mais data projetada por análogos; só o oficial e a previsão curta da Capitania.
+
+## Estudo "Custo do calado perdido em Santos" (IBI × NORA) — base de dados
+
+Não alimenta página do dashboard. Scripts Python em `scripts/estudo-santos-calado/`, numerados na ordem
+de execução e reexecutáveis; saídas em `data/estudo-santos-calado/{raw,interim,processed}`. Todo bruto
+tem origem, data e SHA-256 em `data/estudo-santos-calado/manifest.json` (o bruto nunca é editado).
+Cadência: manual, sob demanda do estudo. Ordem: `00` (importa Fase 0) → `01` ANTAQ (parquet local
+`ANTAQ_PARQUET_DIR`) → `02`/`03`/`04` calados APS + Wayback → `05` lineup APS (lê o histórico git de
+`data/lineup/santos-escalas-calado.json`) → `06` navios/NED → `07` Comex Stat → `08` controles
+(USDA GTR, CONAB, FRED) → `09` concorrentes → `10` NPCP/CHM → `90` DICIONARIO.md + QUALIDADE.md.
+Nenhum script estima nada (estimativas só após o pré-registro P1).

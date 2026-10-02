@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html  lang="pt-br" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+  <head>
+    <meta charset="utf-8" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-47124612-1"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag("js", new Date());gtag("config", "UA-47124612-1", {"groups":"default","anonymize_ip":true,"link_attribution":true});</script>
+<meta name="title" content="Calados|Administração dos Portos de Paranaguá e Antonina" />
+<meta property="og:site_name" content="Administração dos Portos de Paranaguá e Antonina" />
+<link rel="canonical" href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados" />
+<meta property="og:type" content="Página" />
+<meta property="og:url" content="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados" />
+<meta property="og:title" content="Calados" />
+<meta property="og:image" content="http://www.portosdoparana.pr.gov.br" />
+<meta property="og:image:width" content="457" />
+<meta property="og:image:height" content="343" />
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" media="screen" title="default" href="http://www.portosdoparana.pr.gov.br/themes/custom/celepar_base/css/styles.css" />
+<link rel="shortcut icon" href="/sites/portos/themes/custom/portos/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="revision" href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados" />
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};</script>
+<style>@media (min-width:  769px) {
+  .a2a_kit .a2a_button_whatsapp{
+    display: none;
+  }
+}</style>
+
+    <title>Calados|Administração dos Portos de Paranaguá e Antonina</title>
+    <link rel="stylesheet" media="all" href="/sites/portos/arquivos_restritos/files/css/css_iQIRAH9xmDtHe-rm3Mhnb0vOs8Hywwdva5ctMofSeuo.css?pxxubx" />
+<link rel="stylesheet" media="all" href="/sites/portos/arquivos_restritos/files/css/css_ELeczAE95XAqqW5vaXIJx9Cw0N27T4JPleVrdZghAoY.css?pxxubx" />
+<link rel="stylesheet" media="print" href="/sites/portos/arquivos_restritos/files/css/css_xh8sJcpA9_Dghnu6Uac8a5Nv6f_UWZrGCep8ABzHZNE.css?pxxubx" />
+<link rel="stylesheet" media="all" href="/sites/portos/arquivos_restritos/files/css/css_QngT_dTh-VD24VMVMoAYytqdkzjd1drnlG0AsPZpBZ4.css?pxxubx" />
+
+    
+<!--[if lte IE 8]>
+<script src="/sites/portos/arquivos_restritos/files/js/js_VtafjXmRvoUgAzqzYTA3Wrjkx9wcWhjP0G4ZnnqRamA.js"></script>
+<![endif]-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  </head>
+  <body class="Estrutura-Portuaria path-node page-node-type-pagina has-glyphicons drupal sub-home"  class="Estrutura-Portuaria path-node page-node-type-pagina has-glyphicons drupal sub-home">
+    <div id="wrapper">
+      
+        <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+
+<link rel="stylesheet" type="text/css" href="https://web.celepar.pr.gov.br/drupal/instbar/css/inst-bar.min.css">
+<div id="inst-bar">
+	<div class="container">
+		<ul id="accessibility" class="pull-left">
+			<li class="opt-content"><a href="#main-content" accesskey="1" title="Ir direto ao assunto principal - atalho nº1">Ir para o conteúdo</a></li>
+			<li class="opt-navigation"><a href="#main-navigation" accesskey="2" title="Ir ao menu principal - atalho nº2">Ir para a navegação</a></li>
+			<li class="opt-search"><a href="#inst-bar-pesquisar" accesskey="3" title="Ir para a busca - atalho nº3">Ir para a busca</a></li>
+			<li class="opt-accessibility"><a href="https://www.pia.pr.gov.br/acessibilidade" accesskey="4" title="Sobre a acessibilidade - atalho nº4">Acessibilidade</a></li>
+			<li class="opt-site-map"><a href="/sitemap" accesskey="5" title="Ir ao mapa do site - atalho nº5">Mapa do site</a></li>
+
+			<li class="opt-icon opt-contrast">
+				<a href="#" accesskey="6" title="Mudar o contraste - atalho nº6">
+					<i class="fa fa-adjust"></i>
+					<span>Contraste</span>
+				</a>
+			</li>
+			<li class="opt-icon opt-increase-text">
+				<a href="#" accesskey="7" title="Aumentar o tamanho do texto - atalho nº7">
+					<i class="fa fa-font" aria-hidden="true"></i><i class="fa fa-plus" aria-hidden="true"></i>
+					<span>Aumentar o texto</span>
+				</a>
+			</li>
+			<li class="opt-icon opt-normal-text">
+				<a href="#" accesskey="8" title="Retornar ao tamanho padrão do texto - atalho nº8">
+					<i class="fa fa-font" aria-hidden="true"></i>
+					<span>Aumentar o texto</span>
+				</a>
+			</li>
+			<li class="opt-icon opt-libras">
+				<a href="http://www.vlibras.gov.br" target="_blank" accesskey="9" title="Ir para o site vlibras - atalho nº9">
+					<i class="icon icon-vlibras"></i>
+					<span>Acessível em libras</span>
+				</a>
+			</li>
+
+		</ul>
+		<nav class="pull-right">
+			<a class="btn-acesso-info" href="http://www.transparencia.pr.gov.br/" target="_blank">Portal da Transparência</a>
+			<a class="btn-desaparecidos" href="http://www.desaparecidos.pr.gov.br/desaparecidos/index.do?action=index" target="_blank"><i class="fa fa-male" aria-hidden="true"></i> Pessoas Desaparecidas</a>
+			<div class="btn-group">
+				<button type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					GOVERNO DO PARANÁ <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="https://www.pia.pr.gov.br/pagina-50.html">Estrutura</a></li>
+					<li><a class="dropdown-item" href="https://www.pia.pr.gov.br/">PIÁ</a></li>
+                    <li><a class="dropdown-item" href="http://www.aen.pr.gov.br/">Agência de Notícias</a></li>
+					<li><a class="dropdown-item" href="https://www.pia.pr.gov.br/servicos/Direitos/Ouvidoria/Registrar-solicitacao-na-Ouvidoria-do-Estado-do-Parana-eVoGZarb">Ouvidoria</a></li>
+				</ul>
+			</div>
+			
+		</nav>
+	</div>
+</div>
+
+<header id='main-header'>
+  <div class="container">
+                      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="region region-header">
+    <section id="block-celeparheader" class="block block-celepar-blocks-custom-header block-celepar-header clearfix">
+  
+    
+
+      <div class="row">
+  <div class="col-xs-12 col-sm-4 col-md-6 col-lg-5">
+    <a href="#" id="btn-mobile-menu">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </a>
+
+          <h1 class="logo">
+        <a href="/Operacional" title="Ir para a página inicial">
+                    <div class="logo-image">
+                      <span class="sr-only">
+              OPERAÇÕES PORTUÁRIAS
+            </span>
+          </div>
+        </a>
+        
+                  <span class="nome-instituicao">
+            <a href="/Operacional" title="Ir para a página inicial" rel="home">
+                              Operações Portuárias
+                          </a>
+          </span>
+                      </h1>
+    
+  </div>
+  <div class="col-xs-7 col-sm-8 col-md-6 col-lg-7">
+    <div class="row">
+            <div class="col-xs-7">
+                              <section id="block-celeparbusca" class="block block-celepar-busca block-celepar-busca-block clearfix">
+  
+    
+
+      <form class="header-search" action="/busca" method="get" accept-charset="UTF-8">
+  <input title="Busca" class="form-search form-control" type="text" id="inst-bar-pesquisar" name="termo" value="" size="15" maxlength="128" placeholder="Do que você precisa hoje?" data-toggle="tooltip">
+  <button class="button js-form-submit form-submit btn-info btn" type="submit" value="Aplicar" name="" onclick="busca();">
+    <i class="fas fa-search"></i>
+    <span class="sr-only">Pesquisar</span>
+  </button>
+</form>
+  </section>
+
+
+              </div>
+            <div class="col-xs-5">
+              <nav class="header-social">
+                    <a href="https://www.facebook.com/portosdoparana/" class="fab fa-facebook-f" target="_blank"></a>
+                    <a href="https://www.instagram.com/portosdoparana" class="fab fa-instagram" target="_blank"></a>
+                    <a href="https://www.linkedin.com/company/portosdoparana/" class="fab fa-linkedin" target="_blank"></a>
+                    <a href="https://twitter.com/portosPR" class="fab fa-twitter" target="_blank"></a>
+                    <a href="https://www.youtube.com/channel/UCpzOGWlZ-f7kMFcAm6M1VmQ" class="fab fa-youtube" target="_blank"></a>
+                  </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </section>
+
+
+<div class="status-message">
+  <div data-drupal-messages-fallback class="hidden"></div>
+</div>
+
+  </div>
+
+          </div>
+        </div>
+            </div>
+</header>
+
+      <div id="top-navigation">
+      <div class="container">
+                            <div class="region region-instbar">
+    <section id="block-celeparbusca" class="block block-celepar-busca block-celepar-busca-block clearfix">
+  
+    
+
+      <form class="header-search" action="/busca" method="get" accept-charset="UTF-8">
+  <input title="Busca" class="form-search form-control" type="text" id="inst-bar-pesquisar" name="termo" value="" size="15" maxlength="128" placeholder="Do que você precisa hoje?" data-toggle="tooltip">
+  <button class="button js-form-submit form-submit btn-info btn" type="submit" value="Aplicar" name="" onclick="busca();">
+    <i class="fas fa-search"></i>
+    <span class="sr-only">Pesquisar</span>
+  </button>
+</form>
+  </section>
+
+
+  </div>
+
+                  <div class="region region-top-navigation">
+    
+
+<nav role="navigation" aria-labelledby="block-navegacaoprincipaloperacional-menu" id="block-navegacaoprincipaloperacional" class="colunas_ajustaveis">
+            
+  <h2 class="visually-hidden" id="block-navegacaoprincipaloperacional-menu">Navegação Principal Operacional</h2>
+  
+
+              <nav id="block-main-menu">
+        
+
+
+  
+                  <ul class="menu mn-navegacao" id="main-navigation">
+    
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Inicial</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/"><span>Portos do Paraná</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional"><span>Operações Portuárias</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Meio-Ambiente"><span>Meio Ambiente &amp; Saúde e Segurança</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Estrutura</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Mapa-da-Poligonal"><span>Mapa da Poligonal</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/APPAWEB-Mapa-Grafico"><span>APPAWEB - Mapa Gráfico</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Calados"><span>Calado</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Dados-Gerais"><span>Dados Gerais</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Acessos"><span>Acessos</span></a>
+                  </li>
+                                  <li class="expanded">
+        <a href="/Operacional/Pagina/Arrendamentos-futuros" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Arrendamentos</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Arrendamentos-futuros"><span>Arrendamentos futuros</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Terminais-Arrendados"><span>Arrendatários</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Contratos-de-Transicao"><span>Contratos de Transição</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Gestão Operacional</span></a>
+                    
+            <ul>
+    
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Planejamento Operacional</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/presenca-carga"><span>Consulta - Presença de Carga</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relLineUpRetroativo"><span>Line-Up Geral</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="https://www.tepagua.appa.pr.gov.br/Citrix/XenApp/auth/login.aspx"><span>Tepaguá</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Navios-Finalizados"><span>Navios Finalizados</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Ata-de-Reuniao-de-Programacao-de-Navios"><span>Atas de Reuniões</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Corredor de Exportação</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relEmitirLineUpCorex&amp;Criterio=PageSize%3D20&amp;sqlFLG_STATUS=0"><span>Line-Up do COREX</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Atas-do-Corredor-de-Exportacao"><span>Atas de Reuniões</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Resumo-da-Programacao"><span>Resumo da Programação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.infoger.appa.pr.gov.br/appa-ade02/relatorioMovimentacaoDiariaCorexSCOA.do?action=gerarRelatorio"><span>Informações Operacionais</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Estoque-do-Complexo-do-Corredor-de-Exportacao"><span>Estoque do Complexo</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.infoger.appa.pr.gov.br/appa-ade02/consultarDescargaSCOATerminalPrivado.do?action=iniciar"><span>Consulta Ticket</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.sistemas.appa.pr.gov.br/scc/seguranca/seglogin.asp"><span>SCC - Silo Público </span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Normas e Regulamentos</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Normas-gerais"><span>Normas gerais</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Normas-do-Corredor-de-Exportacao"><span>Normas do Corredor de Exportação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Pagina/Cadastro-de-Empresas-Acesso-faixa-portuaria"><span>Cadastro de Empresas - Acesso à faixa portuária</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Norma-de-pre-qualificacao-dos-operadores-portuarios"><span>Norma de pré-qualificação dos operadores portuários</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  
+        <li>
+        <a href="/Operacional/listagem-de-estatisticas"><span>Estatísticas</span></a>
+                  </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Comunidade Portuária</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Tabela-de-Tarifas-Portuarias"><span>Tarifas</span></a>
+                  </li>
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Operadores, Terminais, Agentes e Empresas</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Operadores-Portuarios"><span>Operadores Portuários</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Terminais-Portuarios-Privados"><span>Terminais Privados</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Agentes-Maritimos"><span>Agentes Marítimos</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-Credenciadas-para-o-servicos-de-amarracao"><span>Empresas de Amarração</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-de-Navegacao"><span>Empresas de Navegação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/OGMOPR-e-Sindicatos"><span>OGMO e sindicatos</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Prestadores de serviços portuários</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresa-de-Locacao-de-Equipamentos"><span>Locações de equipamentos</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-na-atividade-de-Fumigacao"><span>Empresas de Fumigação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-de-controle-de-pragas"><span>Controle de Pragas</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-de-abastecimento"><span>Empresas de Abastecimento</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Fornecedores-de-Navios"><span>Fornecedores de Navios</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Lanchas-e-Rebocadores"><span>Lanchas e Rebocadores</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Classificadoras"><span>Classificadoras</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Fornecimento-de-GLP"><span>Fornecimento de GLP</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Fornecimento-de-Quimicos-Envasados"><span>Fornecimento de Químicos Envasados</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Prontidao-Ambiental"><span>Prontidão ambiental</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Sistemas</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.appaweb.appa.pr.gov.br/appaweb/"><span>APPAWEB - Sistema de Operações Portuárias</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.sistemas.appa.pr.gov.br/appa"><span>Carga On-line</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.infoger.appa.pr.gov.br/"><span>INFOGER - Portal de Informações</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+
+
+    </nav>
+  </nav>
+
+  </div>
+
+      </div>
+    </div>
+  
+
+      <div class="top-highlighted">  <div class="region region-top-highlighted">
+    <section id="block-governodigitalmenuservicoscategoria" class="block block-menu-governo-digital block-governo-digital-menu-servicos-categoria clearfix">
+  
+    
+
+      <div id="bloco-governo-digital" class="por-categoria">
+  <div class="container">
+        <div class="header-bloco-governo-digital">
+      <h2>Serviços para você!</h2>
+              <a href="#" class="btn btn-default" id="opt-tema-documentos">
+          Documentos
+          <i class="fas fa-caret-down"></i>
+        </a>
+              <a href="#" class="btn btn-default" id="opt-tema-operao">
+          Operação
+          <i class="fas fa-caret-down"></i>
+        </a>
+              <a href="#" class="btn btn-default" id="opt-tema-ouvidoria">
+          Ouvidoria
+          <i class="fas fa-caret-down"></i>
+        </a>
+              <a href="#" class="btn btn-default" id="opt-tema-transparncia">
+          Transparência
+          <i class="fas fa-caret-down"></i>
+        </a>
+            
+    </div>
+
+              <div id="servicos-tema-documentos" class="box-servicos">
+        <ul class="lista-categorias">
+          <ul>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',610,'',0)" href='/servicos/Transporte-e-Transito/Portos/Emitir-Certidao-Negativa-de-Debitos-dos-Portos-do-Parana-kZrXwO3l' class="link-servico">
+                Emitir Certidão Negativa de Débitos dos Portos do Paraná
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',590,'',0)" href='/servicos/Transporte-e-Transito/Portos/Encaminhar-documentos-aos-Portos-do-Parana-dloeO23L' class="link-servico">
+                Encaminhar documentos aos Portos do Paraná
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',593,'',0)" href='/servicos/Transporte-e-Transito/Portos/Registrar-fiancas-seguros-ou-garantia-para-operacoes-e-servicos-portuarios-J0o2ADrQ' class="link-servico">
+                Registrar fianças, seguros ou garantia para operações e serviços portuários
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',594,'',0)" href='/servicos/Transporte-e-Transito/Portos/Solicitar-cadastro-para-servicos-portuarios-GPoyd2rQ' class="link-servico">
+                Solicitar cadastro para serviços portuários
+                </a>
+              </li>
+                      </ul>
+        </ul>
+      </div>
+          <div id="servicos-tema-operao" class="box-servicos">
+        <ul class="lista-categorias">
+          <ul>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',598,'',0)" href='/servicos/Transporte-e-Transito/Portos/Agendar-visita-no-Porto-de-Paranagua-kZrXw93l' class="link-servico">
+                Agendar visita no Porto de Paranaguá
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',88,'',0)" href='/servicos/Transporte-e-Transito/Portos/Consultar-descarga-nos-terminais-do-Porto-de-Paranagua-ybrz8qN4' class="link-servico">
+                Consultar descarga nos terminais do Porto de Paranaguá
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',597,'',0)" href='/servicos/Transporte-e-Transito/Portos/Consultar-empresas-que-operam-e-prestam-servico-nos-Portos-de-Paranagua-e-Antonina-4EoVyWrn' class="link-servico">
+                Consultar empresas que operam e prestam serviço nos Portos de Paranaguá e Antonina
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',595,'',0)" href='/servicos/Transporte-e-Transito/Portos/Consultar-navios-em-operacao-nos-Portos-do-Parana-4n3nm5NZ' class="link-servico">
+                Consultar navios em operação nos Portos do Paraná
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',596,'',0)" href='/servicos/Transporte-e-Transito/Portos/Consultar-tarifas-portuarias-WaowQA3D' class="link-servico">
+                Consultar tarifas portuárias
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',593,'',0)" href='/servicos/Transporte-e-Transito/Portos/Registrar-fiancas-seguros-ou-garantia-para-operacoes-e-servicos-portuarios-J0o2ADrQ' class="link-servico">
+                Registrar fianças, seguros ou garantia para operações e serviços portuários
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',594,'',0)" href='/servicos/Transporte-e-Transito/Portos/Solicitar-cadastro-para-servicos-portuarios-GPoyd2rQ' class="link-servico">
+                Solicitar cadastro para serviços portuários
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',592,'',0)" href='/servicos/Transporte-e-Transito/Portos/Solicitar-devolucao-de-valores-relativos-a-operacoes-portuarias-K03YVgr4' class="link-servico">
+                Solicitar devolução de valores relativos a operações portuárias
+                </a>
+              </li>
+                      </ul>
+        </ul>
+      </div>
+          <div id="servicos-tema-ouvidoria" class="box-servicos">
+        <ul class="lista-categorias">
+          <ul>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',527,'',0)" href='/servicos/Servicos/Ouvidoria/Consultar-solicitacao-na-ouvidoria-do-Estado-do-Parana-gzNEvV3O' class="link-servico">
+                Consultar solicitação na ouvidoria do Estado do Paraná
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',136,'',0)" href='/servicos/Servicos/Ouvidoria/Registrar-solicitacao-na-ouvidoria-do-Estado-do-Parana-eVoGZarb' class="link-servico">
+                Registrar solicitação na ouvidoria do Estado do Paraná
+                </a>
+              </li>
+                      </ul>
+        </ul>
+      </div>
+          <div id="servicos-tema-transparncia" class="box-servicos">
+        <ul class="lista-categorias">
+          <ul>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',581,'',0)" href='/servicos/Servicos/Transparencia/Conhecer-o-Programa-de-Integridade-e-Compliance-lerQLy3j' class="link-servico">
+                Conhecer o Programa de Integridade e Compliance
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',477,'',0)" href='/servicos/Servicos/Transparencia/Consultar-agenda-de-autoridades-QJoROGNw' class="link-servico">
+                Consultar agenda de autoridades
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',97,'',0)" href='/servicos/Servicos/Transparencia/Consultar-a-Legislacao-do-Parana-4EoVbeon' class="link-servico">
+                Consultar a Legislação do Paraná
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',171,'',0)" href='/servicos/Administracao/Servidor-Publico/Consultar-cadastro-de-autoridades-gzNERQ3O' class="link-servico">
+                Consultar cadastro de autoridades
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',155,'',0)" href='/servicos/Servicos/Transparencia/Consultar-o-Portal-da-Transparencia-do-Governo-do-Parana-aPo4VL3m' class="link-servico">
+                Consultar o Portal da Transparência do Governo do Paraná
+                </a>
+              </li>
+                          <li>
+                <a onclick="log('clique-url','menu-servico',529,'',0)" href='/servicos/Servicos/Transparencia/Denunciar-corrupcao-gwoBnZoz' class="link-servico">
+                Denunciar corrupção
+                </a>
+              </li>
+                      </ul>
+        </ul>
+      </div>
+        <a href="#" class="fechar-categorias"><i class="fas fa-times"></i></a>
+    <div id="exibeCategoria"></div>
+  </div>
+</div>
+
+  </section>
+
+
+  </div>
+</div>
+  
+  <section id="main" role="main" class="main-container container js-quickedit-main-content">
+        <div class="row">
+
+            
+            
+            
+      <section id="main-content"  class="col-xs-12 container-wrapper">
+        <div class="row">
+
+                    
+                    
+                                <div class="col-xs-12">
+              <div class="container">
+                  <div class="region region-content">
+        <ol class="breadcrumb">
+          <li >
+                  <a href="/Categoria-Area-vinculada/Operacional">Operacional</a>
+              </li>
+          <li >
+                  <a href="/Categoria-de-Pagina/Estrutura-Portuaria">Estrutura Portuária</a>
+              </li>
+          <li  class="active">
+                  Calados
+              </li>
+      </ol>
+
+
+
+
+  
+                
+                
+      
+                
+      
+                
+                
+                
+                
+                
+                
+                
+  
+  <div class="layout layout--onecol" id='content'>
+    <div >
+              <h1>
+          <span id="story_topic_title"></span>
+          <span id="story_title">Calados</span>
+          <span id="story_date"></span>
+        </h1>
+            
+            <div class="field field--name-field-texto field--type-text-long field--label-hidden field--item"><div class="row three-col">
+<div class="col-1 col-md-4">
+<p> </p>
+</div>
+
+<div class="col-2 col-md-4">
+<p><strong>Calado</strong></p>
+</div>
+
+<div class="col-3 col-md-4">
+<p><strong>Observações</strong></p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B201<br />
+Cabeços 5 ao 13</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>11,30</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B202<br />
+Cabeços 14 ao 20</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>10,70</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B203 / B204<br />
+Cabeços 21 ao 25</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>11,30</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B205<br />
+Cabeços 26 ao 32</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>10,10</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B206/B207<br />
+Cabeços 33 ao 42</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>10,10</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B208<br />
+Cabeços 42 ao 48</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>8,80</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B209 / B210<br />
+Cabeços 49 ao 58</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>10,70</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B211<br />
+Cabeços 59 ao 64</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>10,80</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B212<br />
+Cabeços 65 ao 75</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>12,50</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 137/16</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B213<br />
+Cabeços 76 ao 85</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>12,50</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 137/16</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B214<br />
+Cabeços 86 ao 93</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>12,50</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 137/16</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B215<br />
+Cabeços 94 ao 102</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>11,50</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 077/17</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B216<br />
+Cabeços 103 ao 118</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>11,50</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 077/17</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B217<br />
+Cabeços 119 ao 134</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>11,50</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 077/17</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>B218 - DOLFINS</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>12,50</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 136/19</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Inflamáveis interno</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>10,10</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Inflamáveis externo</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>11,60</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Cattalini interno</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>10,00</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 093/17</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Cattalini externo</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>12,00</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Fospar interno</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>9,20</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Fospar externo</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>12,00</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>TP Ponta do Félix</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>9,00 - diurno<br />
+7,00 - noturno</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>O.S. 153/15</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Barão de Teffé</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>5,80</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><div class="row three-col">
+<div class="col-1 col-md-4">
+<p>Terminal Matarazzo</p>
+</div>
+
+<div class="col-2 col-md-4">
+<p>5,80</p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><p> </p>
+
+<div class="row three-col">
+<div class="col-1 col-md-4">
+<p><strong>Canal da Galheta</strong></p>
+</div>
+
+<div class="col-2 col-md-4">
+<p><strong>12,50</strong></p>
+</div>
+
+<div class="col-3 col-md-4">
+<p>Norma de Tráfego</p>
+</div>
+</div>
+
+<hr /><p> </p>
+
+<p> </p></div>
+      
+      <div id="medias">
+        
+        
+        
+        
+        
+        
+              </div>
+                    <div class="content-functions">
+          <ul class="pull-left">
+          <div class="share-label">Compartilhe:</div>
+          <span class="a2a_kit a2a_kit_size_24 addtoany_list" data-a2a-url="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados" data-a2a-title="Calados"><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_whatsapp"></a></span>
+          </ul>
+          <ul class="opt-extra pull-right">
+            <li><a href="javascript:history.back();" title="Voltar"><i class="fas fa-arrow-left" aria-hidden="true"></i><span>Voltar</span></a></li>
+            <li class="opt-inicio"><a href="/" title="Início"><i class="fas fa-home" aria-hidden="true"></i><span>Início</span></a></li>
+            <li class="opt-print"><a href="javascript:window.print();" title="Imprimir"><i class="fas fa-print" aria-hidden="true"></i><span>Imprimir</span></a></li>
+                          <li class="opt-pdf"><a href=/print/pdf/node/89 target="_blank" title="Salvar em PDF"><i class="fas fa-download" aria-hidden="true"></i><span>Baixar</span></a></li>
+                      </ul>
+        </div>
+        
+          </div>
+  </div>
+
+
+  </div>
+
+              </div>
+            </div>
+          
+                                              <div class="row row-1">
+                <div class="container">
+                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main-row">
+                                                                    
+                                          </div>
+                                                      </div>
+              </div>
+                                                <div class="row row-2">
+                <div class="container">
+                                      <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 main-row">
+                                                                    
+                                          </div>
+                                                          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 main-row">
+                                                                    
+                                          </div>
+                                                      </div>
+              </div>
+                                                <div class="row row-3">
+                <div class="container">
+                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main-row">
+                                                                    
+                                          </div>
+                                                      </div>
+              </div>
+                                                <div class="row row-4">
+                <div class="container">
+                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main-row">
+                                                                    
+                                          </div>
+                                                      </div>
+              </div>
+                                                <div class="row row-5">
+                <div class="container">
+                                      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 main-row">
+                                                                    
+                                          </div>
+                                                          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 main-row">
+                                                                    
+                                          </div>
+                                                      </div>
+              </div>
+                                                <div class="row row-6">
+                <div class="container">
+                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 main-row">
+                                                                    
+                                          </div>
+                                                      </div>
+              </div>
+                                                  </div>
+      </section>
+    </div>
+  </section>
+
+
+
+      <div id="bottom-navigation">
+      <div class="container">
+          <div class="region region-bottom-navigation">
+    <section id="block-footerbar" class="block block-celepar-blocks-custom-footerbar block-footer-bar clearfix">
+  
+    
+
+      <div id="functions-footer-bar"><ul><li class="mapa_do_site"><a href="#" id="opt-site-map"><i class="fas fa-sitemap"></i><span> Mapa do site</span> <i class="fa fa-caret-down" aria-hidden="true"></i></a></li><li class="denuncie_corrupcao"><a href="http://www.transparencia.pr.gov.br/pte/denuncie" id="opt-denuncie-corrupcao"><i class="fas fa-comment-dots"></i><span> Denuncie Corrupção</span></a></li><li class="ouvidoria"><a href="/Pagina/Ouvidoria" id="opt-ouvidoria"><i class="fas fa-bullhorn"></i><span> Ouvidoria</span></a></li><li class="transparencia"><a href="http://www.transparencia.pr.gov.br/pte/orgao=APPA" id="opt-transparencia"><i class="fas fa-info-circle"></i><span> Transparência Institucional<span></a></li></ul></div>
+  </section>
+
+
+
+<nav role="navigation" aria-labelledby="block-navegacaoprincipaloperacional-2-menu" id="block-navegacaoprincipaloperacional-2" class="colunas_ajustaveis">
+            
+  <h2 class="visually-hidden" id="block-navegacaoprincipaloperacional-2-menu">Navegação Principal Operacional</h2>
+  
+
+              <nav id="block-footer-menu">
+        
+
+
+  
+                  <ul class="menu mn-navegacao" id="main-navigation">
+    
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Inicial</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/"><span>Portos do Paraná</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional"><span>Operações Portuárias</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Meio-Ambiente"><span>Meio Ambiente &amp; Saúde e Segurança</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Estrutura</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Mapa-da-Poligonal"><span>Mapa da Poligonal</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/APPAWEB-Mapa-Grafico"><span>APPAWEB - Mapa Gráfico</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Calados"><span>Calado</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Dados-Gerais"><span>Dados Gerais</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Acessos"><span>Acessos</span></a>
+                  </li>
+                                  <li class="expanded">
+        <a href="/Operacional/Pagina/Arrendamentos-futuros" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Arrendamentos</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Arrendamentos-futuros"><span>Arrendamentos futuros</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Terminais-Arrendados"><span>Arrendatários</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Contratos-de-Transicao"><span>Contratos de Transição</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Gestão Operacional</span></a>
+                    
+            <ul>
+    
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Planejamento Operacional</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/presenca-carga"><span>Consulta - Presença de Carga</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relLineUpRetroativo"><span>Line-Up Geral</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="https://www.tepagua.appa.pr.gov.br/Citrix/XenApp/auth/login.aspx"><span>Tepaguá</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Navios-Finalizados"><span>Navios Finalizados</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Ata-de-Reuniao-de-Programacao-de-Navios"><span>Atas de Reuniões</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Corredor de Exportação</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.appaweb.appa.pr.gov.br/appaweb/pesquisa.aspx?WCI=relEmitirLineUpCorex&amp;Criterio=PageSize%3D20&amp;sqlFLG_STATUS=0"><span>Line-Up do COREX</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Atas-do-Corredor-de-Exportacao"><span>Atas de Reuniões</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Resumo-da-Programacao"><span>Resumo da Programação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.infoger.appa.pr.gov.br/appa-ade02/relatorioMovimentacaoDiariaCorexSCOA.do?action=gerarRelatorio"><span>Informações Operacionais</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Estoque-do-Complexo-do-Corredor-de-Exportacao"><span>Estoque do Complexo</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.infoger.appa.pr.gov.br/appa-ade02/consultarDescargaSCOATerminalPrivado.do?action=iniciar"><span>Consulta Ticket</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.sistemas.appa.pr.gov.br/scc/seguranca/seglogin.asp"><span>SCC - Silo Público </span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Normas e Regulamentos</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Normas-gerais"><span>Normas gerais</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.portosdoparana.pr.gov.br/Operacional/Pagina/Normas-do-Corredor-de-Exportacao"><span>Normas do Corredor de Exportação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Pagina/Cadastro-de-Empresas-Acesso-faixa-portuaria"><span>Cadastro de Empresas - Acesso à faixa portuária</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Norma-de-pre-qualificacao-dos-operadores-portuarios"><span>Norma de pré-qualificação dos operadores portuários</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  
+        <li>
+        <a href="/Operacional/listagem-de-estatisticas"><span>Estatísticas</span></a>
+                  </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Comunidade Portuária</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Tabela-de-Tarifas-Portuarias"><span>Tarifas</span></a>
+                  </li>
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Operadores, Terminais, Agentes e Empresas</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Operadores-Portuarios"><span>Operadores Portuários</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Terminais-Portuarios-Privados"><span>Terminais Privados</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Agentes-Maritimos"><span>Agentes Marítimos</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-Credenciadas-para-o-servicos-de-amarracao"><span>Empresas de Amarração</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-de-Navegacao"><span>Empresas de Navegação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/OGMOPR-e-Sindicatos"><span>OGMO e sindicatos</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Prestadores de serviços portuários</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresa-de-Locacao-de-Equipamentos"><span>Locações de equipamentos</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-na-atividade-de-Fumigacao"><span>Empresas de Fumigação</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-de-controle-de-pragas"><span>Controle de Pragas</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Empresas-de-abastecimento"><span>Empresas de Abastecimento</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Fornecedores-de-Navios"><span>Fornecedores de Navios</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Lanchas-e-Rebocadores"><span>Lanchas e Rebocadores</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Classificadoras"><span>Classificadoras</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Fornecimento-de-GLP"><span>Fornecimento de GLP</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Fornecimento-de-Quimicos-Envasados"><span>Fornecimento de Químicos Envasados</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="/Operacional/Pagina/Prontidao-Ambiental"><span>Prontidão ambiental</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+            </li>
+                                  <li class="expanded dropdown">
+        <a href="" class="dropdown-toggle item-pai" data-toggle="dropdown"><span>Sistemas</span></a>
+                    
+            <ul>
+    
+                                  
+        <li>
+        <a href="http://www.appaweb.appa.pr.gov.br/appaweb/"><span>APPAWEB - Sistema de Operações Portuárias</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.sistemas.appa.pr.gov.br/appa"><span>Carga On-line</span></a>
+                  </li>
+                                  
+        <li>
+        <a href="http://www.infoger.appa.pr.gov.br/"><span>INFOGER - Portal de Informações</span></a>
+                  </li>
+          </ul>
+  
+            </li>
+          </ul>
+  
+
+
+    </nav>
+  </nav>
+
+  </div>
+
+      </div>
+    </div>
+  
+<footer id="main-footer" class="footer" role="contentinfo">
+  <div class="container">
+                      <div class="region region-footer">
+    <section id="block-celeparfooter" class="padding-40-00 block block-celepar-blocks-custom-footer block-celepar-footer clearfix">
+  
+    
+
+      
+
+<div class="row">
+  <div class="col-xs-12 col-sm-3 col-md-2 text-center">
+    <a href="http://www.pr.gov.br/" target="_blank" title="Governo do Paraná" class="footer-logo-parana">
+        <img src="http://web.celepar.pr.gov.br/drupal/images/logo_parana_113x99_texto_branco.png" alt="Governo do Paraná">
+    </a>
+    <a target="_blank" class="titulo-secretaria" href="http://www.infraestrutura.pr.gov.br">Secretaria de Infraestrutura e Logística</a>
+    
+  </div>
+  <div class="col-xs-12 col-sm-7 col-md-7 footer-content">
+    <div itemscope="" itemtype="http://schema.org/GovernmentOrganization">
+<p><span class="fn org titulo-orgao" itemprop="name">Administração dos Portos de Paranaguá e Antonina</span></p>
+
+<address class="adr" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+<p><span class="street-address" itemprop="streetAddress">Avenida Ayrton Senna da Silva, 161- D. Pedro II</span> - <span class="postal-code" itemprop="postalCode">83203-800</span> - <span class="locality" itemprop="addressLocality">Paranaguá</span> - <abbr class="region" itemprop="addressRegion" title="Paraná">PR</abbr> - <span class="tel">41 3420-1143</span> <a class="map" href="https://goo.gl/maps/fT4XH5S6im72" itemprop="hasMap" target="_blank" title="Localize no mapa"> MAPA</a></p>
+</address>
+
+<address class="adr" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+<p><span class="street-address" itemprop="streetAddress">Avenida Conde Matarazzo, 2500</span> - <span class="postal-code" itemprop="postalCode">83370-000</span> - <span class="locality" itemprop="addressLocality">Antonina</span> - <abbr class="region" itemprop="addressRegion" title="Paraná">PR</abbr> - <span class="tel">41 3978-1303</span> <a class="map" href="https://goo.gl/maps/XZD1Ke2RJ662" itemprop="hasMap" target="_blank" title="Localize no mapa"> MAPA</a></p>
+</address>
+</div>
+
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-3">
+    <nav class="footer-social">
+            <a href="https://www.facebook.com/portosdoparana/" class="fab fa-facebook-f" target="_blank"></a>
+            <a href="https://www.instagram.com/portosdoparana" class="fab fa-instagram" target="_blank"></a>
+            <a href="https://www.linkedin.com/company/portosdoparana/" class="fab fa-linkedin" target="_blank"></a>
+            <a href="https://twitter.com/portosPR" class="fab fa-twitter" target="_blank"></a>
+            <a href="https://www.youtube.com/channel/UCpzOGWlZ-f7kMFcAm6M1VmQ" class="fab fa-youtube" target="_blank"></a>
+          </nav>
+    <a href="http://www.celepar.pr.gov.br/" target="_blank" title="Celepar" class="footer-logo-celepar">
+        <img src="http://web.celepar.pr.gov.br/drupal/images/logo_celepar_88x28_branco.png" alt="Desenvolvido pela Celepar">
+    </a>    
+  </div>
+</div>
+
+  </section>
+
+
+  </div>
+
+            </div>
+</footer>
+
+<div class="mobile-menu-overlay"></div>
+
+  </div>
+
+      
+    </div>
+
+        <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/89","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"pt-br"},"pluralDelimiter":"\u0003","google_analytics":{"account":"UA-47124612-1","trackOutbound":true,"trackMailto":true,"trackDownload":true,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip|rtf|od[fgpst]|fod[gpst]|ai|eps|cdr|rar","trackColorbox":true},"data":{"extlink":{"extTarget":true,"extClass":"0","extLabel":"","extImgClass":false,"extSubdomains":true,"extExclude":"","extInclude":"(.*\\.pdf)","extCssExclude":"","extCssExplicit":"","extAlert":false,"extAlertText":"","mailtoClass":"0","mailtoLabel":""}},"bootstrap":{"forms_has_error_value_toggle":1,"modal_animation":1,"modal_backdrop":"true","modal_focus_input":1,"modal_keyboard":1,"modal_select_text":1,"modal_show":1,"modal_size":"","popover_enabled":1,"popover_animation":1,"popover_auto_close":1,"popover_container":"body","popover_content":"","popover_delay":"0","popover_html":0,"popover_placement":"right","popover_selector":"","popover_title":"","popover_trigger":"click","popover_trigger_autoclose":1,"tooltip_enabled":1,"tooltip_animation":1,"tooltip_container":"body","tooltip_delay":"0","tooltip_html":0,"tooltip_placement":"auto left","tooltip_selector":"","tooltip_trigger":"hover"},"user":{"uid":0,"permissionsHash":"71bd8689e8c8dc64aef2fd71e5b11116bb6558b4cfc6e7e53ff56e270168bfff"}}</script>
+<script src="/sites/portos/arquivos_restritos/files/js/js_197rM8bD5lg7GoNs4Z-PmBFDRcZXs86-Wh6JdntQq6A.js"></script>
+<script src="https://static.addtoany.com/menu/page.js" async></script>
+<script src="/sites/portos/arquivos_restritos/files/js/js_76ty-D5SglbbDhXTY1hoIbk3ilrdlvamM4WZisvLmAU.js"></script>
+<script src="http://web.celepar.pr.gov.br/drupal/instbar/js/inst-bar.js" async></script>
+<script src="/sites/portos/arquivos_restritos/files/js/js_oKmc3ge-zv9PyeyVr7uU9QT13T5g7PoKByx10IUCc64.js"></script>
+
+  </body>
+</html>

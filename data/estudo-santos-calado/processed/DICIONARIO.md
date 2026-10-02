@@ -1,6 +1,6 @@
 # Dicionário de dados — estudo Custo do calado perdido em Santos (IBI × NORA)
 
-Gerado por `scripts/estudo-santos-calado/90_documenta.py` em 2026-10-02T21:02:33Z. Proveniência dos brutos em `../manifest.json`.
+Gerado por `scripts/estudo-santos-calado/90_documenta.py` em 2026-10-02T23:36:14Z. Proveniência dos brutos em `../manifest.json`.
 
 ## `escalas_santos.parquet` (96,908 linhas)
 
@@ -89,6 +89,78 @@ Fonte: APS — tabela de calados (página atual + Wayback). item (trecho do cana
 | `ultima_captura_periodo_anterior, primeira_captura_periodo_seguinte` | str | - | janela em que a mudança ocorreu |
 | `n_capturas, formato, arquivos` | - | - | proveniência |
 
+## `comex_export_uf_urf_sh4.parquet` (84,976 linhas)
+
+Fonte: Comex Stat (MDIC), API /general. exportação mensal por UF de origem × URF × via × SH4, 2010 → ago/2026.
+
+| coluna | tipo | unidade | regra de construção |
+|---|---|---|---|
+| `produto, sh4` | str | - | soja 1201, milho 1005, farelo_soja 2304, acucar 1701, total_todas_mercadorias (sem filtro de SH4; sh4 nulo) |
+| `ano, mes` | int | - | período Comex Stat |
+| `uf_origem` | str | - | UF do produto declarada (distorções conhecidas; conferir contra produção — TR §5.3) |
+| `urf, urf_codigo` | str | - | URF de embarque |
+| `via` | str | - | MARITIMA ou FLUVIAL (filtro vias 01 e 02) |
+| `fob_usd, kg` | float | US$, kg | metricFOB, metricKG |
+| `porto, grupo` | str | - | via mapa_urf_porto.csv; nulo = URF não portuária ou fora do recorte |
+
+## `gtr_frete_maritimo_soja_brasil.parquet` (744 linhas)
+
+Fonte: USDA AMS GTR, Socrata j6ns-hzra. frete marítimo de soja por porto brasileiro → Alemanha/China, trimestral.
+
+| coluna | tipo | unidade | regra de construção |
+|---|---|---|---|
+| `quarter_ending_date, year, quarter, year_quarter` | str | - | trimestre |
+| `port, destination` | str | - | porto de origem e destino |
+| `rate` | str→num | US$/t | frete |
+
+## `gtr_custo_transporte_soja_brasil_china.parquet` (908 linhas)
+
+Fonte: USDA AMS GTR, Socrata j7xv-dz9h (tabela de origem da visualização xtb3-iudz). custo de transporte e landed cost por rota, trimestral.
+
+| coluna | tipo | unidade | regra de construção |
+|---|---|---|---|
+| `port` | str | - | rota origem–porto (ex.: North MT - Santos) |
+| `destination` | str | - | destino |
+| `truck, rail, barge, ocean, total_transportation_costs, farm_value, landed_cost` | str→num | US$/t | componentes do custo |
+
+## `conab_levantamentos_graos.parquet` (54,812 linhas)
+
+Fonte: CONAB, LevantamentoGraos.txt. estimativas de cada levantamento mensal por UF × produto × safra (2017 → 2025/26). Não é produção mensal.
+
+| coluna | tipo | unidade | regra de construção |
+|---|---|---|---|
+| `ano_agricola, safra, uf, produto, id_levantamento, dsc_levantamento` | str | - | campos da CONAB |
+| `area_plantada_mil_ha, producao_mil_t, produtividade_mil_ha_mil_t` | float | mil ha, mil t | como publicado |
+
+## `conab_serie_historica_graos.parquet` (28,447 linhas)
+
+Fonte: CONAB, SerieHistoricaGraos.txt. série histórica (1976 → 2025/26), último levantamento de cada safra, UF × produto.
+
+| coluna | tipo | unidade | regra de construção |
+|---|---|---|---|
+| `ano_agricola, dsc_safra_previsao, uf, produto` | str | - | campos da CONAB |
+| `area_plantada_mil_ha, producao_mil_t, produtividade_mil_ha_mil_t` | str | mil ha, mil t | como publicado (texto) |
+
+## `precos_internacionais_mensal.parquet` (830 linhas)
+
+Fonte: FRED / FMI Primary Commodity Prices. preço mensal US$/t.
+
+| coluna | tipo | unidade | regra de construção |
+|---|---|---|---|
+| `serie` | str | - | PSOYBUSDM (soja: futuro de Chicago, 1º vencimento) | PMAIZMTUSDM (milho: FOB Golfo, NÃO é CBOT) |
+| `data, usd_t` | date, float | US$/t | como publicado |
+
+## `calado_concorrentes_painel.parquet` (192 linhas)
+
+Fonte: páginas/documentos de calado das autoridades portuárias + Wayback. valor de calado impresso e contexto, por porto × captura (extração automática, revisado = False).
+
+| coluna | tipo | unidade | regra de construção |
+|---|---|---|---|
+| `porto, autoridade, url, captura_ts, tipo_captura, arquivo` | str | - | proveniência; captura_ts não é vigência |
+| `calado_m` | float | m | número 'NN,NN m' até 160 caracteres após 'calado' |
+| `contexto` | str | - | texto em volta do valor, para identificar trecho/berço |
+| `datas_vigencia_impressas` | str | - | datas após 'vigência/em vigor/a partir de' na mesma captura |
+
 ## Tabelas CSV auxiliares
 
 | arquivo | conteúdo |
@@ -97,4 +169,14 @@ Fonte: APS — tabela de calados (página atual + Wayback). item (trecho do cana
 | `eventos_revisao_calado.csv` | mudanças de calado por trecho: de/para (BM/PM), delta, sentido, vigência impressa, janela entre capturas; `obra_cais_simultanea` vazio (não consta da fonte) |
 | `caminho_berco.csv` | berço da APS → trecho em que está situado (coluna 'Calado máximo por trecho' da APS, rowspan) → trechos percorridos desde a barra |
 | `berco_antaq_aps.csv` | casamento IDBerco ANTAQ → berço(s) da APS; método `nome_normalizado` ou `manual`; berço composto (ex.: 'CS 02 + CS 01') aponta para todos |
+| `casamento_lineup_antaq.json` | T3: taxa de casamento da lista de esperados da APS com a T1 |
+| `imos_santos.csv` | T4: IMOs únicos de Santos, nº de escalas, perfil de carga ANTAQ (não é tipo de navio), primeiro/último ano |
+| `amostra_validacao_equasis.csv` | T4: 150 IMOs para consulta MANUAL no Equasis (colunas `*_equasis` vazias para preencher) |
+| `parametros_ned.json` | T4: regressões da Figure H-8 do NED Manual (a, b, R², erro-padrão) |
+| `mapa_urf_porto.csv` | T5: URF → porto/grupo (regex sobre o nome; aeroportos excluídos) |
+| `custo_terrestre_referencias.json` | T7: onde estão o piso ANTT vigente e o modelo de custo rodoviário do IBI; lacuna da série histórica |
+| `calado_concorrentes_fontes.csv` | T6: URLs consultadas, capturas no CDX e baixadas |
+| `npcp_regras.csv` | T8: passagens da NPCP-SP (2016 e 2026) por tema, com página |
+| `chm_mares_fontes.csv` | T8: tábuas de maré de Santos obtidas via Wayback, com completude |
+| `RASCUNHO_pedido_APS.md` | T9: pedido à APS — NÃO enviado |
 | `checagens_t1.json` | reprodução das checagens pedidas (81.241 atracações; 13,41 t/TEU; IMO 99%) |

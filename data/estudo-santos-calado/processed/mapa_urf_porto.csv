@@ -1,0 +1,279 @@
+urf_codigo,urf_nome,porto,grupo,regra,aparece_na_extracao
+0000000,0000000 - NAO INFORMADO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0000910,0000910 - SEFAZ-SC - CONVENIO CONSULTA SISTEMA CARGA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0110100,0110100 - BRASILIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0117600,0117600 - AEROPORTO INTERNACIONAL DE BRASILIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0120100,0120100 - GOIANIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0120102,0120102 - CATALAO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0120200,0120200 - ANAPOLIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0130100,0130100 - CUIABA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0130101,0130101 - ALTO ARAGUAIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0130151,0130151 - CACERES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0140100,0140100 - CAMPO GRANDE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0140151,0140151 - BELA VISTA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0140152,0140152 - PORTO MURTINHO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0140251,0140251 - BELA VISTA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0140252,0140252 - PORTO MURTINHO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0145100,0145100 - MUNDO NOVO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0145200,0145200 - CORUMBA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0145300,0145300 - PONTA PORA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0145351,0145351 - BELA VISTA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0145352,0145352 - PORTO MURTINHO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0147600,0147600 - ALF - CORUMBÁ,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0147700,0147700 - ALF - MUNDO NOVO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0147800,0147800 - ALF - PONTA PORÃ,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0147851,0147851 - ARF - BELA VISTA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0147852,0147852 - ARF - PORTO MURTINHO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0210100,0210100 - BELEM,Belém (ALF Belém despacha também Barcarena/Vila do Conde),Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0210106,0210106 - BREVES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0210151,0210151 - BARCARENA,Barcarena/Vila do Conde,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0210200,0210200 - SANTAREM,Santarém,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0210251,0210251 - OBIDOS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0210252,0210252 - ALMEIRIM,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0210300,0210300 - MARABA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0210400,0210400 - MONTE DOURADO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0215200,0215200 - MONTE DOURADO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0217600,0217600 - PORTO DE BELEM,Belém (ALF Belém despacha também Barcarena/Vila do Conde),Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0217601,0217601 - AEROPORTO INTERNAC. DE BELEM (PA),,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0217602,0217602 - BARCARENA,Barcarena/Vila do Conde,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0217700,0217700 - AEROPORTO INTERNACIONAL DE BELEM,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0217800,0217800 - ALF - BELÉM,Belém (ALF Belém despacha também Barcarena/Vila do Conde),Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0217801,0217801 - IRF - AEROPORTO INTERNACIONAL DE BELÉM,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0217802,0217802 - IRF - BARCARENA,Barcarena/Vila do Conde,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0220100,0220100 - DRF MANAUS,Manaus,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0220101,0220101 - ITACOATIARA,Itacoatiara,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0220152,0220152 - TABATINGA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0227600,0227600 - PORTO DE MANAUS,Manaus,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0227603,0227603 - TABATINGA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0227700,0227700 - AEROPORTO EDUARDO GOMES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0230100,0230100 - RIO BRANCO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0230151,0230151 - BRASILEIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0230152,0230152 - CRUZEIRO DO SUL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0230154,0230154 - Assis Brasil,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0230155,0230155 - IRF - EPITACIOLâNDIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0240100,0240100 - MACAPA,Santana/Macapá,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0240151,0240151 - OIAPOQUE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0240152,0240152 - SANTANA,Santana/Macapá,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0250100,0250100 - PORTO VELHO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0250151,0250151 - GUAJARA-MIRIM,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0250152,0250152 - VILHENA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0260100,0260100 - BOA VISTA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0260151,0260151 - PACARAIMA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0260152,0260152 - BONFIM,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0310100,0310100 - FORTALEZA,Pecém/Fortaleza,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0317600,0317600 - PORTO DE FORTALEZA,Pecém/Fortaleza,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0317601,0317601 - AEROP. INTERN. PINTO MARTINS (CE),,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0317602,0317602 - PECEM,Pecém/Fortaleza,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0317700,0317700 - AEROPORTO INTERNACIONAL PINTO MARTINS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0317800,0317800 - PORTO DE PECEM,Pecém/Fortaleza,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0317900,0317900 - ALF - FORTALEZA,Pecém/Fortaleza,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0317901,0317901 - IRF - AEROPORTO INTERNACIONAL PINTO MARTINS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0317902,0317902 - IRF - PORTO DE PECÉM,Pecém/Fortaleza,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0317903,0317903 - IRF SAO LUIS,São Luís/Itaqui,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0320100,0320100 - SAO LUIS,São Luís/Itaqui,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0320151,0320151 - IRF - PORTO DE SÃO LUÍS,São Luís/Itaqui,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0325100,0325100 - PORTO DE SAO LUIS,São Luís/Itaqui,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0327600,0327600 - PORTO DE SAO LUIS,São Luís/Itaqui,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0330100,0330100 - TERESINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0410100,0410100 - RECIFE,Suape/Recife,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0410102,0410102 - GOIANA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0410251,0410251 - PETROLINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0410300,0410300 - PETROLINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0415100,0415100 - IRF/RECIFE,Suape/Recife,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0417600,0417600 - PORTO DO RECIFE,Suape/Recife,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0417700,0417700 - AEROPORTO GUARARAPES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0417800,0417800 - PORTO DE SUAPE,Suape/Recife,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0417900,0417900 - ALF - RECIFE,Suape/Recife,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0417901,0417901 - IRF - AEROPORTO INTERNACIONAL DOS GUARARAPES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0417902,0417902 - IRF - PORTO DE SUAPE,Suape/Recife,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0420100,0420100 - NATAL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0420151,0420151 - AREIA BRANCA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0420152,0420152 - PARNAMIRIM,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0420153,0420153 - AREIA BRANCA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0420154,0420154 - IRF NATAL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0420200,0420200 - MOSSORO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0420252,0420252 - AREIA BRANCA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0430100,0430100 - JOAO PESSOA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0430151,0430151 - CABEDELO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0440100,0440100 - MACEIO,Maceió,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0440151,0440151 - MACEIO,Maceió,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0510100,0510100 - SALVADOR,Salvador/Aratu,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0510102,0510102 - CAMACARI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0510300,0510300 - VITORIA DA CONQUISTA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0510352,0510352 - IRF PORTO SEGURO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0510353,0510353 - IRF ILHEUS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0510500,0510500 - ITABUNA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0510551,0510551 - PORTO SEGURO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0510552,0510552 - ILHEUS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0510600,0510600 - ILHEUS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0515100,0515100 - ILHEUS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0517600,0517600 - PORTO DE SALVADOR,Salvador/Aratu,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0517601,0517601 - AEROP. INTERN. DOIS DE JULHO (BA),,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0517602,0517602 - PORTO DE ARATU,Salvador/Aratu,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0517700,0517700 - AEROPORTO INTERNACIONAL DE SALVADOR DEP. LUIS EDUARDO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0517800,0517800 - ALF - SALVADOR,Salvador/Aratu,Nordeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0517801,0517801 - IRF - AEROPORTO INTERNACIONAL DE SALVADOR,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0520100,0520100 - ARACAJU,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0520105,0520105 - PROPRIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0610100,0610100 - BELO HORIZONTE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0610300,0610300 - GOVERNADOR VALADARES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0610301,0610301 - TEOFILO OTONI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0610400,0610400 - JUIZ DE FORA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0610500,0610500 - UBERABA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0610600,0610600 - VARGINHA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0610900,0610900 - UBERLANDIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0611000,0611000 - CONTAGEM,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0615100,0615100 - IRF/BELO HORIZONTE - MG,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0617600,0617600 - AEROPORTO TANCREDO NEVES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0617700,0617700 - ALF - BELO HORIZONTE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0617701,0617701 - IRF - AEROPORTO INTERNACIONAL DE CONFINS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710100,0710100 - RIO DE JANEIRO/CENTRO-SUL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710200,0710200 - NITEROI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0710203,0710203 - CABO FRIO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710251,0710251 - IRF CAMPOS DOS GOYTACAZES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0710252,0710252 - IRF MACAE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710300,0710300 - NOVA IGUACU,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0710301,0710301 - DUQUE DE CAXIAS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710304,0710304 - ITAGUAI,Itaguaí,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710400,0710400 - CAMPOS DOS GOITACAZES,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0710451,0710451 - MACAE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710500,0710500 - VOLTA REDONDA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710504,0710504 - ANGRA DOS REIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0710600,0710600 - RIO DE JANEIRO/CENTRO-NORTE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0711000,0711000 - MACAE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0715300,0715300 - ANGRA DOS REIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0715400,0715400 - RIO DE JANEIRO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0715500,0715500 - MACAE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0717600,0717600 - PORTO DO RIO DE JANEIRO,Rio de Janeiro,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0717700,0717700 - AEROPORTO INTERNACIONAL DO RIO DE JANEIRO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0717800,0717800 - PORTO DE ITAGUAI,Itaguaí,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0720100,0720100 - VITORIA,Vitória,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0727600,0727600 - PORTO DE VITORIA,Vitória,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0810100,0810100 - SAO PAULO/CENTRO NORTE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810300,0810300 - BAURU,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0810303,0810303 - JAU,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810400,0810400 - CAMPINAS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810500,0810500 - PRESIDENTE PRUDENTE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810600,0810600 - SANTOS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0810603,0810603 - CUBATAO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810700,0810700 - SAO JOSE DO RIO PRETO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0810800,0810800 - TAUBATE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810803,0810803 - GUARATINGUETA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810900,0810900 - RIBEIRAO PRETO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0810904,0810904 - BEBEDOURO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0811000,0811000 - SOROCABA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0811100,0811100 - GUARULHOS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0811200,0811200 - LIMEIRA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0811201,0811201 - AMERICANA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0811300,0811300 - OSASCO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0811400,0811400 - SANTO ANDRE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0811401,0811401 - DIADEMA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0811404,0811404 - SAO BERNARDO DO CAMPO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0812000,0812000 - SAO JOSE DOS CAMPOS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0812051,0812051 - SAO SEBASTIAO,São Sebastião,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0812200,0812200 - ARARAQUARA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0812300,0812300 - FRANCA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0812400,0812400 - JUNDIAI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0812500,0812500 - PIRACICABA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0812700,0812700 - SAO SEBASTIAO,São Sebastião,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0815300,0815300 - SAO SEBASTIAO,São Sebastião,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0815400,0815400 - NAO INFORMADO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0815500,0815500 - SAO PAULO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0817600,0817600 - AEROPORTO INTERNACIONAL DE SAO PAULO/GUARULHOS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0817700,0817700 - AEROPORTO INTERNACIONAL DE VIRACOPOS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0817800,0817800 - PORTO DE SANTOS,Santos,Santos,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0817900,0817900 - SAO PAULO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0910100,0910100 - CURITIBA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910151,0910151 - SAO JOSE DOS PINHAIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910152,0910152 - ANTONINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910200,0910200 - LONDRINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910300,0910300 - CASCAVEL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910351,0910351 - SANTO ANTONIO DO SUDOESTE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910400,0910400 - PONTA GROSSA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910500,0910500 - MARINGA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910506,0910506 - UMUARAMA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910600,0910600 - FOZ DO IGUACU,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0910601,0910601 - MEDIANEIRA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910602,0910602 - MARECHAL CANDIDO RONDON,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910651,0910651 - GUAIRA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910652,0910652 - SANTA HELENA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910700,0910700 - PARANAGUA,Paranaguá,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0910751,0910751 - ANTONINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0915100,0915100 - ANTONINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0915200,0915200 - CURITIBA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0917500,0917500 - ALF - FOZ DO IGUAÇU,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0917501,0917501 - IRF - GUAÍRA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0917502,0917502 - IRF - SANTA HELENA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0917600,0917600 - PORTO DE PARANAGUA,Paranaguá,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0917601,0917601 - ANTONINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0917700,0917700 - AEROPORTO INTERN. AFONSO PENA (PR),,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0917800,0917800 - PORTO DE PARANAGUA,Paranaguá,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0917801,0917801 - ANTONINA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0917900,0917900 - ALF - CURITIBA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0917901,0917901 - IRF - AEROPORTO INTERNACIONAL AFONSO PENA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920100,0920100 - FLORIANOPOLIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920102,0920102 - CRICIUMA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920151,0920151 - IMBITUBA,Imbituba,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920153,0920153 - AEROP. INTERNAC. HERCILIO LUZ (SC),,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920200,0920200 - JOINVILLE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920203,0920203 - JARAGUA DO SUL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920205,0920205 - RIO DO SUL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920251,0920251 - SAO FRANCISCO DO SUL,São Francisco do Sul,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920351,0920351 - DIONISIO CERQUEIRA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0920600,0920600 - ITAJAI,Itajaí/Navegantes,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0925100,0925100 - ITAJAI,Itajaí/Navegantes,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0925200,0925200 - FLORIANOPOLIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0925251,0925251 - IMBITUBA,Imbituba,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0927500,0927500 - ALF - FLORIANÓPOLIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0927501,0927501 - IRF - AEROPORTO INTERNACIONAL DE FLORIANÓPOLIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0927502,0927502 - IRF - IMBITUBA,Imbituba,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0927600,0927600 - AEROPORTO DE FLORIANOPOLIS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0927601,0927601 - IMBITUBA,Imbituba,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+0927700,0927700 - PORTO DE SAO FRANCISCO DO SUL,São Francisco do Sul,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0927800,0927800 - ITAJAI,Itajaí/Navegantes,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+0927900,0927900 - ALF - DIONÍSIO CERQUEIRA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010103,1010103 - GUAIBA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010104,1010104 - SANTA CRUZ DO SUL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010109,1010109 - NAO INFORMADO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010151,1010151 - TRAMANDAI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010200,1010200 - PELOTAS,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010252,1010252 - JAGUARAO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010253,1010253 - BAGE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010300,1010300 - SANTA MARIA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010351,1010351 - IRF SANTANA DO LIVRAMENTO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010500,1010500 - RIO GRANDE,Rio Grande,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010600,1010600 - CAXIAS DO SUL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010700,1010700 - NOVO HAMBURGO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+1010703,1010703 - MONTENEGRO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010851,1010851 - PORTO MAUA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010852,1010852 - PORTO XAVIER,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010900,1010900 - URUGUAIANA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010951,1010951 - ITAQUI,São Luís/Itaqui,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010953,1010953 - SAO BORJA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+1010954,1010954 - BARRA DO QUARAI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1010955,1010955 - QUARAI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1011000,1011000 - SANTANA DO LIVRAMENTO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1011001,1011001 - DOM PEDRITO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1011051,1011051 - BAGE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1011052,1011052 - QUARAI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1011100,1011100 - SANTA CRUZ DO SUL,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+1011200,1011200 - CHUI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1015300,1015300 - CHUI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1015400,1015400 - PORTO ALEGRE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+1015500,1015500 - CHUI,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1015600,1015600 - SANTANA DO LIVRAMENTO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017500,1017500 - ALF - URUGUAIANA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017501,1017501 - IRF - ITAQUI,São Luís/Itaqui,Arco Norte,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017502,1017502 - IRF - QUARAÍ,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017503,1017503 - IRF - SÃO BORJA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017504,1017504 - IRF PORTO MAUA,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017505,1017505 - IRF PORTO XAVIER,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017551,1017551 - ARF - BARRA DO QUARAÍ,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017600,1017600 - AEROPORTO SALGADO FILHO - PORTO ALEGRE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017700,1017700 - PORTO DE RIO GRANDE,Rio Grande,Sul-Sudeste,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+1017701,1017701 - IRF - CHUÍ,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017800,1017800 - ALF - PORTO ALEGRE,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,True
+1017801,1017801 - IRF - AEROPORTO INTERNACIONAL SALGADO FILHO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+1017900,1017900 - ALF - SANTANA DO LIVRAMENTO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+8110000,8110000 - NAO INFORMADO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
+9999999,9999999 - NAO INFORMADO,,,regex sobre o nome da URF (ver PORTOS em 07_comex_stat.py); aeroportos excluídos,False
