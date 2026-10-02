@@ -1,0 +1,13 @@
+{
+ "gerado_em": "2026-10-02T20:52:35Z",
+ "atracacoes_porto_organizado_2010_fev2026": 81241,
+ "atracacoes_complexo_2010_fev2026": 96908,
+ "id_atracacao_duplicado": 0,
+ "tempos_duplicados_por_atracacao": 0,
+ "t_por_teu_cheio_2025_complexo": 13.411900583009528,
+ "t_por_teu_cheio_2025_porto_organizado": 13.555164735744176,
+ "imo_preenchido_2025_porto_organizado": 0.9919259551004332,
+ "imo_com_digito_verificador_valido_complexo": 0.9988480936468732,
+ "imo_preenchido_2025_complexo": 0.9923195084485407,
+ "nota": "ano_antaq = ano de referência da ANTAQ (ano da desatracação). Peso bruto ANTAQ inclui tara do contêiner."
+}

@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="keywords" content="porto, santos, porto de santos, codesp, companhia docas do estado de são paulo, docas, port, santos port, port of santos, puerto, puero de santos" />
+  <meta http-equiv="description" content="Porto de Santos" />
+  <link href="css/pages.css" rel="stylesheet" type="text/css" />
+  <link href="css/barra.css" rel="stylesheet" type="text/css" />
+  <script language="javascript" type="text/javascript" src="jscripts/jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="jscripts/horde.js"></script>
+  <script language="javascript" type="text/javascript" src="jscripts/hoje.js"></script>
+  <title>Porto de Santos - Port of Santos - Puerto de Santos</title>
+
+  <link href="css/autoridade.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<script type="text/javascript" src="jscripts/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	exibeWebMail();
+}
+)
+function exibeWebMail(){
+	$('#topoWebmailWrapper').toggle();
+}
+</script>
+<link rel="shortcut icon" href="images/FAVICON.ico" type="image/x-icon"/>
+	
+	<div id="barra-brasil">
+		<a href="http://brasil.gov.br" style="background:#7F7F7F; height: 20px; padding:4px 0 4px 10px; display: block; font-family:sans,sans-serif; text-decoration:none; color:white; ">Portal do Governo Brasileiro</a>
+	</div>
+  <div id="topoWebmailOuter">
+	<div id="topoWebmailInner">
+	<div id="topoWebmailLink" onclick="javascript:exibeWebMail();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	  
+	  <div id="topoWebmailWrapper">
+		<div id="topoWebmailContent">
+		<form name="formWebmail" id="formWebmail" onSubmit="return chkwebmail(this);" action="http://webmail.ibcmg.com.br/horde/imp/redirect.php" method="post" target="_blank">
+            <input type="hidden" name="actionID" value="105" />
+            <input type="hidden" name="server" value="imap.ibcmg.com.br" />
+   		    <input type="hidden" name="protocol" value="imap/notls" />
+            <input type="hidden" name="new_lang" value="pt-BR" />
+
+  		  <ul style="margin-left: -6px">
+    		    <li>Login/E-mail</li>
+    		    <li><input name="usremail" type="text" class="formWebmailInput" id="usremail"/>
+                    <input type="hidden" name="imapuser" id="imapuser" value=" " />
+  		    </li>
+    		    <li>Senha</li>
+                  		    <li><input id="pass"  name="pass" type="password" onfocus="javascript:changeMail($('#usremail').val(),'imapuser');" class="formWebmailSenha" />
+  		      <input type="image" name="imageField2" src="images/btn_acessar.jpg" class="formWebmailAcessar" />
+  		    </li>
+  		  </ul>
+		</form>
+		</div>
+		</div>
+	  </div>
+  </div>
+  <!-- INICIO TOPO DO SITE -->
+  <div id="topo"><a href="./"><img src="images/topo.jpg" width="960" height="182" border="0" /></a></div>
+  <!-- FIM TOPO DO SITE -->  
+<div id="geral">
+
+    <!-- INICIO BARRA LATERAL ESQUERDA -->
+    <div id="barraLateralEsq" class="barraLateral">
+
+	  <!-- INICIO ACESSO A INFORMACAO-->
+	  <div id="barraLateralAcessoInformacao">
+	    <div id="barraLateralAcessoInformacaoHeader" class="barraLateralHeader">ACESSO À INFORMAÇÃO</div>
+		<div id="barraLateralAcessoInformacaoContent" class="barraLateralContent">
+		  <ul>
+		  	<li><a href="acessoinfo.php?pagina=institucional">Institucional</a></li>
+		  	<!--<li><a href="acessoinfo.php?pagina=acoes">Ações e programas</a></li>-->
+		  	<li><a href="acessoinfo.php?pagina=contas&ext=1">Auditorias</a></li>
+		  	<li><a href="javascript:;" onclick="openWindow('transparencia/transp_convenios.php','blank',800,600);" >Convênios</a></li>
+		  	<li><a href="acessoinfo.php?pagina=despesas">Despesas</a></li>
+		  	<!--<li><a href="acessoinfo.php?pagina=outras">Outras Informações</a></li>-->
+		  	<li><a href="acessoinfo.php?pagina=licitacoes">Licitações e contratos</a></li>
+		  	<li><a href="acessoinfo.php?pagina=servidores">Servidores</a></li>
+		  	<li><a href="acessoinfo_faq.php">Perguntas frequentes</a></li>
+		  	<li><a href="acessoinfo.php?pagina=sobre">Sobre a Lei de Acesso à Informação</a></li>
+		  	<li><a href="acessoinfo.php?pagina=sic">Serviço de Informação ao Cidadão - SIC</a></li>
+		  	<li><a href="acessoainformacao/sigilo">Informações classificadas</a></li>
+		  </ul>
+		</div>
+	  </div>
+	  <!-- FIM ACESSO A INFORMACAO -->
+	  	  
+	  <!-- INICIO PORTO HOJE -->
+	  <div id="barraLateralPortoHoje">
+	    <div id="barraLateralPortoHojeHeader" class="barraLateralHeader">O PORTO HOJE</div>
+		<div id="barraLateralPortoHojeContent" class="barraLateralContent">
+		  <ul>
+  		    <li><a href="javascript:;" onclick="abreHoje('atracados');">Atracados - Porto/Terminais</a></li>
+			<li><a href="javascript:;" onclick="abreHoje('programados');">Atracações programadas</a></li>
+			<li><a href="javascript:;" onclick="abreEsperados()">Navios esperados - Carga</a></li>
+			<li><a href="javascript:;" onclick="abreEsperadosPass()">Navios esperados - Passageiros</a></li>
+			<li><a href="javascript:;" onclick="abreFundeados()">Navios fundeados</a></li>
+			<li><a href="meteorologia.php">Meteorologia e marés</a></li>
+		  <!--
+		    <li><a href="javascript:;" onclick="abreHoje('atracados');">Atracados - Porto Público</a></li>
+		    <li><a href="javascript:;" onclick="abreHoje('terminais');">Atracados - Terminais</a></li>
+			<li><a href="javascript:;" onclick="abreHoje('programados');">Atracações programadas</a></li>
+			<li><a href="javascript:;" onclick="abreEsperados()">Navios esperados</a></li>
+			<li><a href="javascript:;" onclick="abreFundeados()">Navios fundeados</a></li>
+			<li><a href="meteorologia.php">Meteorologia e marés</a></li>
+          -->
+		  </ul>
+		</div>
+	  </div>
+	  <!-- FIM PORTO HOJE -->
+
+	  <!-- INICIO PORTO DE NEGÓCIOS -->
+	  <div id="barraLateralPortoNegocios">
+	    <div id="barraLateralPortoNegociosHeader" class="barraLateralHeader">PORTO DE NEGÓCIOS</div>
+		<div id="barraLateralPortoNegociosContent" class="barraLateralContent">
+		  <ul>
+		    <li><a href="mercado.php">Mercado/Oportunidades</a></li>
+			<li><a href="facilidades.php">Instalações</a></li>
+		  </ul>
+		</div>
+	  </div>
+	  <!-- FIM PORTO DE NEGÓCIOS -->
+
+	  <!-- INICIO SERVIÇOS -->
+	  <div id="barraLateralServicos">
+	    <div id="barraLateralServicosHeader" class="barraLateralHeader">SERVIÇOS</div>
+		<div id="barraLateralServicosContent" class="barraLateralContent">
+		  <ul>
+		    <li><a href="apresentacoes.php">Apresentações</a></li>
+		    <!--<li><a href="imprensa.php">Imprensa</a></li>-->
+		    <li><a href="isps-code.php">ISPS Code</a></li>
+            <!--
+			<li><a href="http://www.superviadedados.com.br" target="_blank">Supervia Eletrônica</a></li>
+            -->
+		    <li><a href="http://201.33.127.50/" target="_blank">Nova Supervia Eletrônica</a></li>
+			<li><a href="links.php">Links e conexões</a></li>
+			<li><a href="documentacao.php">Documentação</a></li>
+		  </ul>
+		</div>
+	  </div>
+	  <!-- FIM SERVIÇOS -->
+	  <!-- INICIO AUTORIDADE PORTUÁRIA -->
+	  <div id="barraLateralAutoridade">
+	    <div id="barraLateralAutoridadeHeader" class="barraLateralHeader">AUTORIDADE PORTUÁRIA</div>
+		<div id="barraLateralAutoridadeContent" class="barraLateralContent">
+  		  <ul>
+  		    <!--<li><a href="#" onclick="abreExtra()">Organograma</a></li>-->
+  			<!--<li><a href="atosAdministrativos.php">Atos administrativos</a></li>-->
+		    <li><a href="imprensa.php">Imprensa</a></li>
+  			<li><a href="tarifasDoPorto.php">Tarifa portu&aacute;ria</a></li>
+  			<!--<li><a href="licitacoes.php">Licitações</a></li>-->
+  			<li><a href="leiloes.php">Leilões</a></li>
+  			<li><a href="operadores.php">Operadores portuários</a></li>
+  			<!--<li><a href="infraEstrutura.php">Infra-estrutura</a></li>-->
+  			<!--<li><a href="arrendamentos.php">Arrendamento de áreas</a></li>-->
+  			<li><a href="acessoinfo.php?pagina=licitacoes">Arrendamento de áreas</a></li>
+  			<li><a href="meioAmbiente.php">Meio ambiente</a></li>
+  			<li><a href="calado.php">Calado máximo operacional</a></li>
+  			<li><a href="fundeio.php">Áreas de fundeio</a></li>
+  			<li><a href="patrocinio.php">Patrocínio</a></li>
+  			<li><a href="pdf/Regulamento_de_Credenciamento_SPL.pdf">Credenciamento de Pátios</a></li>
+  			<!--<li><a href="concursos.php">Concursos</a></li>-->
+  		  </ul>
+		</div>
+	  </div>
+	  <!-- FIM AUTORIDADE PORTUÁRIA -->
+      <!-- INICIO RELATORIOS DESEMPENHO -->
+	  <div id="barraLateralAutoridade">
+	    <div id="barraLateralAutoridadeHeader" class="barraLateralHeader"><span style="font-size:11px">RELATÓRIOS DE DESEMPENHO</span></div>
+  		  <div id="barraLateralAutoridadeContent" class="barraLateralContent">
+            <ul>
+                  <li><a href="estatisticas.php">Estatísticas</a></li>
+                  <li><a href="relatorio.php">Relatório Anual e Demonstrações Contábeis</a></li>
+            </ul>
+          </div>
+      </div>
+      <!-- FIM RELATORIOS DESEMPENHO -->
+
+
+
+	  <!-- INICIO PORTO VIVO -->
+	  <div id="barraLateralPortoVivo">
+	    <div id="barraLateralPortoVivoHeader" class="barraLateralHeader">PORTO VIVO</div>
+		<div id="barraLateralPortoVivoContent" class="barraLateralContent">
+		  <ul>
+		    <li><a href="historia.php">Resumo histórico</a></li>
+		    <li><a href="http://documentoculturalsantos.ning.com/">Documento Cultural</a></li>
+		  </ul>
+		</div>
+	  </div>
+	  <!-- FIM PORTO VIVO -->
+
+	</div>
+	<!-- FIM BARRA LATERAL ESQUERDA -->
+	
+	<!-- INICIO CENTRO -->
+	<div id="centro">
+	  <!-- INICIO DATA -->
+	  <div id="centroData" class="barraCentroHeader">Sexta-feira, 05 de setembro de 2014 - Fuso horário: GMT -3</div>
+  	  <!-- FIM DATA -->
+
+	  <!-- INDICADOR DE LOCALIZAÇÃO -->
+	  <div id="centroLocal">Autoridade Portuária &gt; Calado Máximo Operacional</div>
+	  <!-- FIM INDICADOR DE LOCALIZAÇÃO -->
+	  
+	  <div id="centroConteudo">
+	    <!-- DESCRIÇÃO DETALHADA DA ÁREA -->
+		<div id="conteudoLocal"><span class="centroConteudoTitulo">CALADO MÁXIMO OPERACIONAL</span></div>
+		<!-- FIM DESCRIÇÃO DETALHADA DA ÁREA-->
+		
+		<!-- LISTA DE OPERADORES PORTUÁRIOS -->
+		<div id="operadores">
+		  Em conformidade com a Lei 12.815/13, Art 18, Inciso I, Item D, a CODESP faz saber que os calados máximos de operação, no canal de navegação permitidos no Porto de Santos são:
+<br /><br />
+<table id="tabelaCalados" cellspacing=0 cellpadding=0 align="center">
+    <tr>
+        <td colspan="3"><b>CALADOS MÁXIMOS DE OPERAÇÃO NO CANAL DE NAVEGAÇÃO<br>(Zero DHN)</b></td>
+    </tr>
+    <tr>
+        <td>Barra até Entreposto de Pesca<br>(Trecho I)</td>
+        <td>13,20m</td>
+        <td>MAIO<br>2014</td>
+    </tr>
+    <tr>
+        <td>Entreposto de Pesca à Torre Grande<br>(Trecho II)</td>
+        <td>13,00m</td>
+        <td>MAIO<br>2014</td>
+    </tr>
+    <tr>
+        <td>Torre Grande até Armazém 06<br>(Trecho III)</td>
+        <td>12,70m</td>
+        <td>JUNHO<br>2014</td>
+    </tr>
+    <tr>
+        <td>Armazém 06 até final da BTP<br>(Trecho IV)</td>
+        <td>12,60m</td>
+        <td>MAIO<br>2014</td>
+    </tr>
+    <tr>
+        <td>BTP até Alamoa<br>(Trecho IV)</td>
+        <td>11,20m</td>
+        <td>JUNHO<br>2014</td>
+    </tr>
+</table>
+
+<p>1- Calados Máximos de Operação no Zero DHN, podendo ter acréscimo de até 1,0 metro na preamar com altura de maré &ge; 1,0 metro.</p>                          
+<p>2- Os Calados Máximos Operacionais nos Trechos I, II e III entraram em vigor no dia 03 de Julho de 2014, de acordo com a carta da Autoridade Portuária DP-GD/299.2014 de 03/07/2014.</p>		</div>
+		<!-- FIM LISTA DE OPERADORES PORTUÁRIOS -->
+		
+	  </div>
+	  
+	</div>
+	<!-- FIM CENTRO -->
+	
+
+    <!-- INICIO BARRA LATERAL DIREITA -->
+	<div id="barraLateralDir">
+
+	  <!-- INICIO BUSCA -->
+	  <div id="barraLateralBusca">
+  	    <div class="barraLateralContentBusca" id="barraLateralBuscaContent">
+			<form name="busca" id="formBusca" action="busca.php" method="get">
+	        <input name="q" type="text" class="barraLateralBuscaInput" id="q" value="busca no site" />
+	        <!--<div id="barraBuscaButton" class="barraLateralBuscaButton"><input name="imageField" type="image" src="images/btn_ok.jpg" width="25" height="18" class="barraLateralBuscaButton" /></div>-->
+	      </form>
+ 	    </div>
+	  </div>
+	  <!-- FIM BUSCA -->
+		<div style="padding-bottom:10px">
+		    		</div>
+	  <!-- INICIO VEJA TAMBÉM -->
+	  <div id="barraLateralVeja">
+		<div id="barraLateralVejaContent" class="barraLateralDirContent">
+			<div class="barraLateralVejaIcones"><a href="acessoinfo.php?pagina=sobre"><img src="images/botao-acesso-a-informacao.png" border="0" /></a></div>
+		  	<div class="barraLateralVejaIcones"><a href="psp.php"><img src="images/botao-porto-sem-papel.png" border="0" /></a></div>
+		    <div class="barraLateralVejaIcones"><a href="/ouvidoria"><img src="images/botao-ouvidoria.png" border="0" /></a></div>
+		    <div class="barraLateralVejaIcones"><a href="http://www.portosdobrasil.gov.br" target="_blank"><img src="images/botao-SEP.png" border="0" /></a></div>
+		    <div class="barraLateralVejaIcones"><a href="http://www.antaq.gov.br" target="_blank"><img src="images/botao-antaq.png" border="0" /></a></div>
+		    <div class="barraLateralVejaIcones"><a href="/cap" target="_blank"><img src="images/botao-cap.png" border="0" /></a></div>
+		    <div class="barraLateralVejaIcones"><a href="isps_code.php"><img src="images/botao-isps-code.png" border="0" /></a></div>
+			<div class="barraLateralVejaIcones"><a href="links.php"><img src="images/botao-links-de-interesse.png" border="0" /></a></div>
+		</div>
+	  </div>
+	  <!-- FIM VEJA TAMBÉM -->
+
+	  <!-- BANCO IMAGENS -->
+	  <div id="barraLateralLinks2" class="barraLateralDir2">
+	    <div id="barraLateralLinks2Header" class="barraLateralDirHeader2">Banco de Imagens</div>
+		<div id="barraLateralLinks2Content" class="barraLateralDirContent2">
+		<div class="bancoImagensContent"><img class="bancoImagensThumb" src="imagebank_loadThumb.php?id=307" /></div><div class="bancoImagensContent"><img class="bancoImagensThumb" src="imagebank_loadThumb.php?id=304" /></div><div class="bancoImagensContent"><img class="bancoImagensThumb" src="imagebank_loadThumb.php?id=303" /></div><div class="bancoImagensContent"><img class="bancoImagensThumb" src="imagebank_loadThumb.php?id=302" /></div>		</div>
+		<div id="bancoImagensMais"><a href="imagebank.php"><img src="images/mais_imagens.png" border="0"></a></div>
+	  </div>
+	  <!-- FIM BANCO IMAGENS -->
+	  
+	  <!-- PORTO KIDS -->
+	  <div id="barraLateralLinks3" class="barraLateralDir2">
+	    <div id="barraLateralLinks3Header" class="barraLateralDirHeader2">Porto KIDS</div>
+		<div id="barraLateralLinks3Content" class="barraLateralDirContent2">
+		  <div id="barraLateralPortoKids">
+		    <a href="/kids"><img src="images/barraEsqPrj_kids.jpg" width="135" height="51" border="0" /></a>
+		  </div>
+		</div>
+	  </div>
+	  <!-- FIM PORTO KIDS -->
+
+
+	</div>
+	<!-- FIM BARRA LATERAL DIREITA -->	
+</div>
+
+  <!-- INICIO RODAPÉ -->
+  <div id="rodape">
+    <div id="rodapeContent">
+Companhia Docas
+	    do Estado de S&atilde;o Paulo - CODESP - Avenida Rodrigues Alves, s/n&ordm; - Macuco - Santos, <br/>S&atilde;o Paulo, Brasil - CEP 11015-900<br />Fone: (13) 3202-6565 - Fax <a href="javascript:;" onclick="window.open('num_fax.php','listaFax','width=600,height=500,scrollbars=yes');">[clique aqui]</a>
+    </div>
+  </div>
+  <script src="http://barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+    <!-- FIM RODAPÉ -->
+</body>
+
+</html>

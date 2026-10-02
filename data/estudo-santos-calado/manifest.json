@@ -1,0 +1,2217 @@
+{
+ "estudo": "Custo do calado perdido no Porto de Santos (IBI x NORA)",
+ "regra": "Bruto nunca editado. Cada entrada: arquivo, origem/url, coletado_em (UTC), sha256, bytes.",
+ "arquivos": [
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2010.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "56fe0833cef908eda5a67df9dfd05542e7b021bb81a17400f8f5280b0e090356",
+   "bytes": 3586155,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2011.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "fe0a27c97200e7c631d648eb930a7058a19844ed2af84d0ad91074708f042434",
+   "bytes": 3657921,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2012.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "14061924aa406409c647a692f7790ec1624c9c5f598f73b041a6dcee24b89aed",
+   "bytes": 3646509,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2013.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "3ff64f09f7d8580743d7966e917853c441c9037ac238c32e3cdaabe6eaae7f1a",
+   "bytes": 3727214,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2014.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "c61fe8ab8da9f6a9c5b68529e5044f06c127d0c0de5c7b45746e5208a83f68ba",
+   "bytes": 3677934,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2015.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "0b456d20e1b058c076339ff70115956f8ad7b4c9b0c9ee90bf3cd7fa3b34ea33",
+   "bytes": 3538301,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2016.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "2e1a644e8a803a8c55f6a85a9c6da09f460fd32c21af58488eb4f8ea73a6c408",
+   "bytes": 3472627,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2017.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "d65f221f94ff7f5f9fb7ee3701df66f18edef912287709aed39bd7d5bda74af9",
+   "bytes": 3742664,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2018.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "f5a6b20e0196a832dc68bb2599e8b8b256ae407c71cc18df2629333b963252c5",
+   "bytes": 3864732,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2019.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "e3c5f34988fe2353c5f110d44424fb91623c2714a29272b6648fbcb3d8413fb2",
+   "bytes": 3936037,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2020.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "d66bfac1623b75add38567f9f6298ed4e651eb40587716ea961996edd16cffa8",
+   "bytes": 3979447,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2021.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "44ba71870fa2afd9ed08ae078be1f2049f812d5de70e113b3bb407db119b4c14",
+   "bytes": 4025564,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2022.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "2dd5b0f00a77bffc1d4b94dab48cdc7cff9d02e656e1b4b0b4c6e2821c9c6fb5",
+   "bytes": 4301332,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2023.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "5f5311cd22157b46fc7bc86e7f7cf0cd8595e559b87307f5f1c27c5582a27162",
+   "bytes": 4725927,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2024.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "3518beb6be3840d80e881a0875aa95451b72421614aca640f76501d628500e56",
+   "bytes": 5248847,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2025.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "1a77b6ad8f9e69c70862eb2fa8c0b96d54e26863d8d0cf202388e1cccacad393",
+   "bytes": 5668124,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Atracacao\\2026.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "bee0f47727691d4f46d9c5c482489f132318c6204b237bdfc9ebaa5c00ded59e",
+   "bytes": 908960,
+   "externo_ao_repo": true,
+   "nota": "tabela Atracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2010.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "8e8934c4cea5d799a6607e19906ff8efcb482aef2a15ca5d24e24158e46744f4",
+   "bytes": 8069809,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2011.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "02c159b370494a643705dfb46c5b753a1a4d24380a7fc164430b19733c991cc9",
+   "bytes": 9553668,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2012.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "20997e8a157c76fd3eb28d5f53d42ec5d143f689c5e913bad02414266fc7f72b",
+   "bytes": 10780663,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2013.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "f0552d8b358e21e5fc5a1236a102761aaa8395b44b23b228cddf2f9221d68aae",
+   "bytes": 20806582,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2014.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "ce95251862f4870994d645d4949253df559e3c7c1077c659064590c386763a97",
+   "bytes": 23565094,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2015.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "56db002489b47a239c14a6382f42e37adb613909026c844dcb078d7f15bb28c5",
+   "bytes": 22322363,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2016.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "b6bbc4ea923ef71496f7c869123732c8cddb651e841f44fe1568d76f67f0c663",
+   "bytes": 23099217,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2017.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "8cf98b5499b1c566cba6a4b8d13444d7f2d1884f5a27f22d05bcdc0162067c57",
+   "bytes": 24889131,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2018.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "2c13c2c6527018cda19ad6e54bdedb6c9fd2373c8c574cd92f90a363eb58b866",
+   "bytes": 29127753,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2019.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "0301b442c02ae30f7b84d90eee11f8ee6f3fa4eae0561220eb9c120f5c118c7e",
+   "bytes": 32300312,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2020.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "dc10deb958200db8876c37a741c8b563b938f57e431294d6a4e9ca9b4e520706",
+   "bytes": 31436701,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2021.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "89c8250a7e0c9e2ff423b6b30b7eaeba51e5f654d57dccab1352f24e3a365d87",
+   "bytes": 39008414,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2022.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "e196f76416f65a1d743b5f6864d9939bc2ab227e77d2aef5fffbbe03389624a2",
+   "bytes": 38795285,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2023.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "6e45aac1bf341e787df07f66b6f73008e1f8a5b7fd934846c693b58dd6993226",
+   "bytes": 38016135,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2024.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "b7ec5dccc65ac876832c1a62e9487ae3ff922b8b44e6e95c56c85bb43de6e6bb",
+   "bytes": 41958165,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2025.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "00ca61cdb43e77a5be2122bee41373ed1cbfbd11a642d7c9de23722599cfdedf",
+   "bytes": 39452530,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\CargaConteinerizada\\2026.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "74d912be315972aba3da300da455eab327927faac7305d74dac3f31a187ef15a",
+   "bytes": 6272432,
+   "externo_ao_repo": true,
+   "nota": "tabela CargaConteinerizada; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2010.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "a550eb467c3ca7d2800713f6e089a48f8b7f229e5646f0486143ed3bf1487030",
+   "bytes": 13199168,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2011.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "ca015e64f1e45ac90a6e6bdcf3c64bfa9afee530fc4a81828f977d4bd2bf2010",
+   "bytes": 15321503,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2012.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "2531f6537b6d6597d7a9e1f4777717d08492f173db8d65d07ac3c9f2080e9c0e",
+   "bytes": 15839012,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2013.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "86fbdf3d35fe119acb5ded82ab1fd4244b45b955026868375d0b4c230c27abc2",
+   "bytes": 15591728,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2014.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "ca294b4ce73e24435f0d8fd1d8da836a04a29f59e31526465301e9661624568d",
+   "bytes": 15824531,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2015.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "c56f59ce1d9c26738050e3470de65e11e5db0cdddcea5d7fcdb2017d610940cf",
+   "bytes": 15660119,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2016.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "c4ae4c5dcbe4d28974e1193dd4ceb2b0a3dee84d397131b68248d52f0c263c15",
+   "bytes": 17452254,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2017.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "672508b69284e907f97e47c2b606664d586ce53d1857f67abafe7eeae786003e",
+   "bytes": 17829879,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2018.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "d787f51012e0f21921cbc414c88a708c5857a3a6210019f5e56bfc947f4f2ee1",
+   "bytes": 18007736,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2019.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "ea8ee3e242af1ee316906928112d41a0dbe649f6cf153a5b982e9244399715cb",
+   "bytes": 17684060,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2020.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "7fb64d30facd5fa7c4719223eb6aa8d3f456c7860a09133cac4b13b47897dc03",
+   "bytes": 18794697,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2021.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "0c26f612fe7fef91453831f9765104399c70a30e19ae90e63d30cb71f9802d08",
+   "bytes": 20586653,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2022.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "a10021e790a2f20c0ba63f3e53415ac6a78c26657dd08619302cf74cfebc5e0b",
+   "bytes": 19762426,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2023.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "5b2487f2e30378bd2f9d990782405e30d3cf6f5fa0d7b9d0055bcc020763d377",
+   "bytes": 18965772,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2024.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "b167227e3cef9675fa0087aee13d7447592c21eb7d92095154296f206d2fe4de",
+   "bytes": 21520411,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2025.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "abcd088c68d34b192647d1ebb859fe11c04d8f1f7f4c75fd805bc41385838677",
+   "bytes": 21779274,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\Carga\\2026.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "af842d493090352764d5f9c03d7896959b21c240ad2798d8ef07767dbe3adafc",
+   "bytes": 3525996,
+   "externo_ao_repo": true,
+   "nota": "tabela Carga; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2010.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "c36ddee921464578d8e6a306a60abf0cc2ce601e291198c63a82a89604c3e849",
+   "bytes": 1336104,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2011.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "b278978fafaca8831221c2548884bc7057885948975447cc1ac7da41f12657e0",
+   "bytes": 1383158,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2012.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "d7dec22a3efb302afd39d6ee6c3fd051b570de699dcf962db6aaf6aeea50e9d5",
+   "bytes": 1438924,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2013.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "dd8263a2235c0d47bcef54e456d855d70050570e595c0483230f324c8fdc38a8",
+   "bytes": 1474586,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2014.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "6a7ecb2d6035ea6b7e4f5b6a8af5852e0307351e6adef2adf8842a8986689a8c",
+   "bytes": 1452383,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2015.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "1a753da55ce44c97450670f36f2145d4856e93a0ff708f183115e194f0612861",
+   "bytes": 1391078,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2016.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "7834c2cd32110c47c7103a04c1b405133b3c7499e94326ce6cae4e160f557990",
+   "bytes": 1356019,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2017.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "d82eb571f6c80824ec875f8fbd4c7a8aa215e0a3b16a718c6e1b87070469c6b3",
+   "bytes": 1462239,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2018.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "0f172534b512e6f26a33ac9695d83392115e62ff436374aee35e99da38cf3cdc",
+   "bytes": 1532445,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2019.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "1b7bc8333a95118fc1a64d882dbc6cbf4ec6dcf814ff70128b02a74f42e34052",
+   "bytes": 1555925,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2020.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "e16701bdfa1c7f6ee665ce962892511dd263fc017805fe9febf8725e7e70ba90",
+   "bytes": 1569931,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2021.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "43379dec548c38fcf6f6f998f2745b719e63a0d611746661f76d37003b851a20",
+   "bytes": 1607478,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2022.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "a74e9faf9d7460d5a8618d93e1ab0684740eb497f61b238bf521c0b64c92148d",
+   "bytes": 1717976,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2023.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "395308acc8abe0535a770e166873fd156649eb7739fbd6338bd52ee7596d7de6",
+   "bytes": 1901726,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2024.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "866893a422b2448fe9395fe04f2b86db02a2da3ccd3ba86e84490df268472854",
+   "bytes": 2098300,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2025.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "d9bf619c55983ff4c9bf340e618856e778037a4aa508e5829b35c1b74d983e8d",
+   "bytes": 2261152,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\TemposAtracacao\\2026.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário (cópia local em parquet)",
+   "url": "https://web3.antaq.gov.br/ea/sense/download.html (download público fora do ar em 30/09/2026)",
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "7ba546e6ec6fb8265190445da3f09e39ab0a4978d82ad22405c8f1c58025eea3",
+   "bytes": 450411,
+   "externo_ao_repo": true,
+   "nota": "tabela TemposAtracacao; cópia local consolidada pelo repo ANTAQ (consolidar_antaq.py); data da coleta = mtime do arquivo"
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\cadastro\\InstalacaoDestino.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário, tabelas de cadastro",
+   "url": null,
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "7f3901f92c342f414ac182140feb1b4cc43ca6ed7023f389244317662c4deb3f",
+   "bytes": 3598,
+   "externo_ao_repo": true
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\cadastro\\InstalacaoOrigem.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário, tabelas de cadastro",
+   "url": null,
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "8d76b32794a845a9a69607d5767a697080b3ef11de0152b4a6186bb1956eb61b",
+   "bytes": 3553,
+   "externo_ao_repo": true
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\cadastro\\Mercadoria.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário, tabelas de cadastro",
+   "url": null,
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "fd0e9e517df807cfc0e93b7f4a1a8b838a474b9ab84464b36e40c35f4a060314",
+   "bytes": 3804,
+   "externo_ao_repo": true
+  },
+  {
+   "arquivo": "C:\\Dev\\Github\\ANTAQ\\parquet\\cadastro\\MercadoriaConteinerizada.parquet",
+   "origem": "ANTAQ — Estatístico Aquaviário, tabelas de cadastro",
+   "url": null,
+   "coletado_em": "2026-10-02T20:52:18Z",
+   "sha256": "bd18bfa8df617862afc02922a94bbc8eb14f61001dcbb1b788509ab38137ae6d",
+   "bytes": 95211,
+   "externo_ao_repo": true
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/atual/20261002_calados_operacionais.html",
+   "origem": "APS — Calados Operacionais dos Berços de Atracação (página atual)",
+   "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:50:52Z",
+   "sha256": "3f293641636a2ff09bfac82d5afa223671480f006612392884792cb89704e8d9",
+   "bytes": 104593,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/cdx/authority_infra_2000_20261002.json",
+   "origem": "Internet Archive — API CDX (lista de capturas)",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodesantos.com.br%2Fauthority%2Finfra%2Fcalado.html&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype",
+   "coletado_em": "2026-10-02T20:51:45Z",
+   "sha256": "1424902f23d2923a919f917e495811110cb63f54b58620c28841986c52590208",
+   "bytes": 5286,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/cdx/calado_html_1998_20261002.json",
+   "origem": "Internet Archive — API CDX (lista de capturas)",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodesantos.com.br%2Fcalado.html&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype",
+   "coletado_em": "2026-10-02T20:51:03Z",
+   "sha256": "510c20489b3a05b1e94fd83abf97ec409a1829d2a0ef3aade8aaff75a240c726",
+   "bytes": 585,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/cdx/calado_maximo_operacional_2018_20261002.json",
+   "origem": "Internet Archive — API CDX (lista de capturas)",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodesantos.com.br%2Foutros-links%2Fcalado-maximo-operacional%2F&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype",
+   "coletado_em": "2026-10-02T20:56:14Z",
+   "sha256": "3dbe206dc193c37171e1d9f9d39120bd0a1b39ae8633ad29bbcfbc4a4317d0db",
+   "bytes": 6630,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/cdx/calado_php_2009_20261002.json",
+   "origem": "Internet Archive — API CDX (lista de capturas)",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodesantos.com.br%2Fcalado.php&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype",
+   "coletado_em": "2026-10-02T20:52:17Z",
+   "sha256": "f7bba1f3a0563cf1946d4a478f9c6a5f40942199626fc58f82f4e6ffb87a2c76",
+   "bytes": 8800,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/cdx/calados_operacionais_2021_20261002.json",
+   "origem": "Internet Archive — API CDX (lista de capturas)",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodesantos.com.br%2Finformacoes-operacionais%2Foperacoes-portuarias%2Fcalados-operacionais-dos-bercos-de-atracacao%2F&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest%2Clength%2Cmimetype",
+   "coletado_em": "2026-10-02T20:58:13Z",
+   "sha256": "6a63f034e6283fc07bc9cd9b7461fd981fdd23a672912733fafa3d506df1a80b",
+   "bytes": 5262,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/fase0/20260930_calados_operacionais.html",
+   "origem": "APS — Calados Operacionais dos Berços (Rev. 271), captura da Fase 0",
+   "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-09-30T21:30:55Z",
+   "sha256": "0f82d10ace712d96f57997a186eac0e57bd3330b0e8e610f63638e27b2b3c2ef",
+   "bytes": 104593,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/aps_calados_bercos.html; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/fase0/20260930_wp_pages_calado.json",
+   "origem": "APS — API WordPress (wp-json/wp/v2/pages, busca 'calado')",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:30:44Z",
+   "sha256": "397a8ade0de2375ef2e02d37850587b029803d812508deb1fe3bf1f5ba23885e",
+   "bytes": 1945,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/aps_wp_pages_calado.json; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/fase0/20260930_wp_revisions.json",
+   "origem": "APS — API WordPress (consulta de revisões da página)",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:30:56Z",
+   "sha256": "8149ca64af9b20daaa40d557ee02d546b73870f065ef8b212591252f3a540b2c",
+   "bytes": 168,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/aps_calados_revisions.json; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/authority_infra_2000/20000301005726.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20000301005726id_/http://www.portodesantos.com.br:80/authority/infra/calado.html",
+   "coletado_em": "2026-10-02T20:51:48Z",
+   "sha256": "2db35aa180e78569a25b2a48f2485164c8b95d3c259a74bf1eac43c18bba9164",
+   "bytes": 27772,
+   "externo_ao_repo": false,
+   "nota": "captura 20000301005726 de http://www.portodesantos.com.br:80/authority/infra/calado.html; digest APHHJLMUY7GRT2R3DIFYZAI3ELO6GBWQ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/authority_infra_2000/20010418092644.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20010418092644id_/http://www.portodesantos.com.br:80/authority/infra/calado.html",
+   "coletado_em": "2026-10-02T20:51:51Z",
+   "sha256": "28596077103d08b07f24556f51e6fd33a0ab74f2179a0f8758306f6758f1fce4",
+   "bytes": 5141,
+   "externo_ao_repo": false,
+   "nota": "captura 20010418092644 de http://www.portodesantos.com.br:80/authority/infra/calado.html; digest EO64QWSDLSM7LT3HBTNPWBIUMLPMOT3E; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/authority_infra_2000/20020616111427.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20020616111427id_/http://www.portodesantos.com.br:80/authority/infra/calado.html",
+   "coletado_em": "2026-10-02T20:51:53Z",
+   "sha256": "d081a57e151943f33c654338e02689a29fec727aa7e339741f753580b5a3e8cc",
+   "bytes": 5381,
+   "externo_ao_repo": false,
+   "nota": "captura 20020616111427 de http://www.portodesantos.com.br:80/authority/infra/calado.html; digest SD46FEORNZZ4MHFT4WWSQAO4OGGUHRGW; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/authority_infra_2000/20030421000307.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20030421000307id_/http://www.portodesantos.com.br:80/authority/infra/calado.html",
+   "coletado_em": "2026-10-02T20:51:56Z",
+   "sha256": "04c4d5c863de61bbc55cb41bf3c4cd7730077190d93466631f3ff8145972cfbd",
+   "bytes": 5365,
+   "externo_ao_repo": false,
+   "nota": "captura 20030421000307 de http://www.portodesantos.com.br:80/authority/infra/calado.html; digest YOPUPOZJ5UKVBTRK6P2BRNOJF4RTUYWI; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/authority_infra_2000/20070214043531.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20070214043531id_/http://www.portodesantos.com.br:80/authority/infra/calado.html",
+   "coletado_em": "2026-10-02T20:51:59Z",
+   "sha256": "ad365bf4e27c6ca509c30329a20baaa88b77c87282d327568a213bc8d6278427",
+   "bytes": 6857,
+   "externo_ao_repo": false,
+   "nota": "captura 20070214043531 de http://www.portodesantos.com.br:80/authority/infra/calado.html; digest YM6WINNMB5UELA5BKV76GF54YSNLDT4T; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/authority_infra_2000/20070602101756.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20070602101756id_/http://www.portodesantos.com.br:80/authority/infra/calado.html",
+   "coletado_em": "2026-10-02T20:52:01Z",
+   "sha256": "0a64873384be6e983687ecc8a0905a4e59cb19ffc80755bd9fd24bc99699f8fd",
+   "bytes": 6856,
+   "externo_ao_repo": false,
+   "nota": "captura 20070602101756 de http://www.portodesantos.com.br:80/authority/infra/calado.html; digest RX3Y4YGSNKK5GIH6UJ6A54XEVGRBADEF; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/authority_infra_2000/20080928214953.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20080928214953id_/http://www.portodesantos.com.br:80/authority/infra/calado.html",
+   "coletado_em": "2026-10-02T20:52:04Z",
+   "sha256": "f84c961db6dd800174107ebafc3518426800db79996408a91b2535902ef00831",
+   "bytes": 6848,
+   "externo_ao_repo": false,
+   "nota": "captura 20080928214953 de http://www.portodesantos.com.br:80/authority/infra/calado.html; digest MZVRIR2Y7VCZAUXZB3JAGIDI3NNZ7BML; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_html_1998/19980114133506.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/19980114133506id_/http://www.portodesantos.com.br:80/calado.html",
+   "coletado_em": "2026-10-02T20:51:06Z",
+   "sha256": "186ec24af630ee9f60ad2981e2d8471aabcfa4ed0033de255e79b4cf9b9ea954",
+   "bytes": 16242,
+   "externo_ao_repo": false,
+   "nota": "captura 19980114133506 de http://www.portodesantos.com.br:80/calado.html; digest V3ZK4EYIIRMRMZ5PBDUXGDAL5RV24NPD; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_html_1998/19981202203710.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/19981202203710id_/http://www.portodesantos.com.br:80/calado.html",
+   "coletado_em": "2026-10-02T20:51:09Z",
+   "sha256": "2443b4753fccd39ed2c21d567ca03dd7a83038eae9c8e550574aa160eea5cc3f",
+   "bytes": 18020,
+   "externo_ao_repo": false,
+   "nota": "captura 19981202203710 de http://www.portodesantos.com.br:80/calado.html; digest ZJ4MGR7KOYKB26DVL7OPJFVUYI3LAS2S; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_html_1998/19990222065849.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/19990222065849id_/http://www.portodesantos.com.br:80/calado.html",
+   "coletado_em": "2026-10-02T20:51:11Z",
+   "sha256": "2443b4753fccd39ed2c21d567ca03dd7a83038eae9c8e550574aa160eea5cc3f",
+   "bytes": 18020,
+   "externo_ao_repo": false,
+   "nota": "captura 19990222065849 de http://www.portodesantos.com.br:80/calado.html; digest 7KOPI44ZBESDLOG6AUUH5IPA2BV4XGJE; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180712092121.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180712092121id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:18Z",
+   "sha256": "cb3ceab1fdb756f46c8315eff399ac5b8170ed41599b685d8fed05cd410d075d",
+   "bytes": 73545,
+   "externo_ao_repo": false,
+   "nota": "captura 20180712092121 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest U6R37PCFZ5NH74VG3FZFXS732BBXNVHP; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180715010646.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180715010646id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:21Z",
+   "sha256": "6021c3110051a1981de56815f6db72fabeee898d092205e6a1b333ac537fc567",
+   "bytes": 73329,
+   "externo_ao_repo": false,
+   "nota": "captura 20180715010646 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest AZUNF5335NORYTRGBRCKTMPUTMK2MAZ3; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180721052245.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180721052245id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:24Z",
+   "sha256": "8323be6b1e34563e18c5789e6c52c37f7d4f533b6227cd3b02773339ab2c8d53",
+   "bytes": 73301,
+   "externo_ao_repo": false,
+   "nota": "captura 20180721052245 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest PYSILW2UEML2AHIAD7CI3EB22XT4ZIG6; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180722091959.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180722091959id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:27Z",
+   "sha256": "0525c8d9345da0b3ad1e0efc9e6029e24199a31a6b7d6b98f4c881aef191033b",
+   "bytes": 73301,
+   "externo_ao_repo": false,
+   "nota": "captura 20180722091959 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest YH2XEN66EXHMC6HJR63NN7GQFPRI2OFS; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180815101010.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180815101010id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:30Z",
+   "sha256": "b583b4068781eeb8958702715f284200ec51d1fa00c5fef387479b5c2a76c5a7",
+   "bytes": 73244,
+   "externo_ao_repo": false,
+   "nota": "captura 20180815101010 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest U4A3JN6N2N54CN572IC2MI2DW5KNHBGP; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180816151617.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180816151617id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:33Z",
+   "sha256": "b88c324b052a12427c5087c6895c1cd0554b80f86195578c655b8dc9fe8cb3d7",
+   "bytes": 73347,
+   "externo_ao_repo": false,
+   "nota": "captura 20180816151617 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest TNVA6YVFBHEUNAYWYI546667P457NOA3; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180819090359.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180819090359id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:37Z",
+   "sha256": "25c59104bb9fc5c6c668130b036a2f98448e47356ed7a9022a0140f39ffa4874",
+   "bytes": 73347,
+   "externo_ao_repo": false,
+   "nota": "captura 20180819090359 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest UUF5IOTHDDJP2J6EPH2PB4SEFL3N4ZUD; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180821073250.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180821073250id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:40Z",
+   "sha256": "b1b08926f01ecaa1762b7fd0dcff081fda6df9d2cb98673be1c5a2039ae94ed8",
+   "bytes": 73347,
+   "externo_ao_repo": false,
+   "nota": "captura 20180821073250 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest 5GQZRXSVSKGTQXAT4FNQNU6A3GD374QP; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180904054801.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180904054801id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:43Z",
+   "sha256": "de502ff18fc06f991394e5257caff7ec39c157b2aaf376a607fb22a328942b93",
+   "bytes": 74005,
+   "externo_ao_repo": false,
+   "nota": "captura 20180904054801 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest LBCMMB7B4F5SVTPCFI3OP6PSO7HSB34Z; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180916182532.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180916182532id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:47Z",
+   "sha256": "846bc660bc2805281fc6acae4d301c9f6c63de74d1c93a95e0eb08557932d7c5",
+   "bytes": 73979,
+   "externo_ao_repo": false,
+   "nota": "captura 20180916182532 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest FD3R4VNU2OYTIUSGNP4W5HI6LSQZMGGO; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20180919031034.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180919031034id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional",
+   "coletado_em": "2026-10-02T20:56:49Z",
+   "sha256": "a152c578e3366f27a99fd986b5e09ba7c3fc53905ca7aa29d4bcc33d32a0aaec",
+   "bytes": 288,
+   "externo_ao_repo": false,
+   "nota": "captura 20180919031034 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional; digest PHA34W7YXA2N45CJ6JMXXFBAC4VTDIFD; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20181015013521.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20181015013521id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:53Z",
+   "sha256": "91b4bdd336e686a79927c95da5656d48db89585764620dc1644e76f04836842e",
+   "bytes": 73978,
+   "externo_ao_repo": false,
+   "nota": "captura 20181015013521 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest 5RNVR6MCDDAOB4PEPTIMDW7LUNWEJAM7; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20181020184626.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20181020184626id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:56:56Z",
+   "sha256": "caa9e8f124a81cc72acc7b5600725441e4a603671a83e4fdeaaa4a6775596bb0",
+   "bytes": 73978,
+   "externo_ao_repo": false,
+   "nota": "captura 20181020184626 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest BBLXRO5B4CXE4ZUYEIMVF73SDGYFLNYT; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20181120210345.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20181120210345id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional",
+   "coletado_em": "2026-10-02T20:56:58Z",
+   "sha256": "867bfb506623e0e69560c831efe527f098f778eb99c061ddbf3359a8300677a3",
+   "bytes": 288,
+   "externo_ao_repo": false,
+   "nota": "captura 20181120210345 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional; digest KFH7GBSTVJE7724OXWUI2SGDONE3UGRX; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20181221091847.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20181221091847id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:04Z",
+   "sha256": "1022fb513db6c6e20defbc95dc0c203af27d62b240a5849cd5ce02e5925904a3",
+   "bytes": 72418,
+   "externo_ao_repo": false,
+   "nota": "captura 20181221091847 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest 6G5KQ2NSF5733P4E5RA5JGRXVR46QQ4S; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190127070845.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190127070845id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:08Z",
+   "sha256": "e57b9e4c39b76eba27c23b5f04dacbd6c3813b6af7a1b794c6cf5834afcec418",
+   "bytes": 72417,
+   "externo_ao_repo": false,
+   "nota": "captura 20190127070845 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest ZZPVQWZJB6HJ6X6F6JLOLKZX2ZL22DZN; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190220043611.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190220043611id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:11Z",
+   "sha256": "a9d9530a0c74a770b7d19d6512c26b8ff076a9059122fd8918e4b450209dc596",
+   "bytes": 72419,
+   "externo_ao_repo": false,
+   "nota": "captura 20190220043611 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest GPJOPVTTRQSITNCUDGZOOGCAGHVB22QY; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190224191153.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190224191153id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional",
+   "coletado_em": "2026-10-02T20:57:13Z",
+   "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+   "bytes": 1,
+   "externo_ao_repo": false,
+   "nota": "captura 20190224191153 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional; digest VXEDWGPHSNERWHDOUD6YWRWNT4ZOLEX4; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190319223140.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190319223140id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:16Z",
+   "sha256": "7acd7ccd5205ec18076f9e0f74563042cf6e8621de10248e4a225878f99774c1",
+   "bytes": 72416,
+   "externo_ao_repo": false,
+   "nota": "captura 20190319223140 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest BYKYEXRSVFNMF2YA5YLMCY6CMTJEMRXE; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190422022331.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190422022331id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:20Z",
+   "sha256": "0c3b5093eadd368441abc3ed4f816d58fbdcbe8f715dfdb0dd2ac4443f916e6a",
+   "bytes": 72415,
+   "externo_ao_repo": false,
+   "nota": "captura 20190422022331 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest WVA4HGJQUQFYVKJJMFMVWM2OYNCHDLI3; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190509061600.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190509061600id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:23Z",
+   "sha256": "f4906bb890472baa2c7b10ff1bb29ff80431ac2d9ac489c0f3a260adcc155b5b",
+   "bytes": 72412,
+   "externo_ao_repo": false,
+   "nota": "captura 20190509061600 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest Z52N45DADTX42YSE4LSUP6LEIZPO73DC; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190621210710.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190621210710id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:26Z",
+   "sha256": "90a2436763248faaf3ad336b0605d0f3a98439d0e9460b8f3e47d0e91190add4",
+   "bytes": 73275,
+   "externo_ao_repo": false,
+   "nota": "captura 20190621210710 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest P65EJM3ZVRBZDJ6YCHSDZTA2BDH7LLWO; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190820162428.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190820162428id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:29Z",
+   "sha256": "4ccfe92dd272b9b5fb960b24fcc05d8c0f8b640b66310c17a50ae8765f3ce237",
+   "bytes": 75102,
+   "externo_ao_repo": false,
+   "nota": "captura 20190820162428 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest OYLY7ARAEG42PAHAYIV6KSXYTST5MKYJ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20190822000545.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20190822000545id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:32Z",
+   "sha256": "469d50e0bf4204dfabe25c63d89f311c0af468fa7749448fb1c67f6ba9236f07",
+   "bytes": 75102,
+   "externo_ao_repo": false,
+   "nota": "captura 20190822000545 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest ICOGZBW4DWMCCBJLPHK4O5BL3WANWBQF; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20191004100011.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20191004100011id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:35Z",
+   "sha256": "effb736bb045689bd0e6b4c403fce7c661312e1959cf4557fe97a9967614ef39",
+   "bytes": 102550,
+   "externo_ao_repo": false,
+   "nota": "captura 20191004100011 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest 7HWNCP4CL3U7WD26JFY3PWUVAMRB5BJE; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20200614202932.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20200614202932id_/https://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:39Z",
+   "sha256": "3a6f2e1b4fcbc5cf231f5bcc74a27351ef471a214defca5f764e2c3fc7aa830b",
+   "bytes": 108195,
+   "externo_ao_repo": false,
+   "nota": "captura 20200614202932 de https://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest 2DEUCWRLYCAUTYA2LLPX5OAZM2D7XFXA; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20200708204409.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20200708204409id_/http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:44Z",
+   "sha256": "5eeb8a2ffa34370efbc2564f54fd99c6dcbd3783b1f5fe4979900f34cb2f60bf",
+   "bytes": 105001,
+   "externo_ao_repo": false,
+   "nota": "captura 20200708204409 de http://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest CRRSN7NM4IFTJGQOLN3NH6FTKPGD2MWT; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20200709003858.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20200709003858id_/http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:47Z",
+   "sha256": "a4f5b82aa3d7b3459d0ee923dca421c7aff9fad82270e6ae80f75aeeef116a8c",
+   "bytes": 105001,
+   "externo_ao_repo": false,
+   "nota": "captura 20200709003858 de http://www.portodesantos.com.br:80/outros-links/calado-maximo-operacional/; digest WSU3QP66WYPF5UV67H2QGCWPYE62IWGG; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20200814132526.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20200814132526id_/https://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:51Z",
+   "sha256": "dac689377434bbced1ec89196b07fcc0a509d4ce6b686395082f5ee78f2d0dce",
+   "bytes": 105595,
+   "externo_ao_repo": false,
+   "nota": "captura 20200814132526 de https://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest DHFBZWDLGWTR4V5WLQX6VFQNUFSIEZUO; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_maximo_operacional_2018/20201024141308.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20201024141308id_/https://www.portodesantos.com.br/outros-links/calado-maximo-operacional/",
+   "coletado_em": "2026-10-02T20:57:55Z",
+   "sha256": "c5c91e00c6bd3f2087f48b8820757b0b0b7365d12e0efe0cd8808a92d576e943",
+   "bytes": 107259,
+   "externo_ao_repo": false,
+   "nota": "captura 20201024141308 de https://www.portodesantos.com.br/outros-links/calado-maximo-operacional/; digest 3NB46SX7MWEWW5G2P5H642Q37QOBLHXS; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20091223112559.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20091223112559id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:52:20Z",
+   "sha256": "586ce06b5805863d51b2107b28d325b3129f9b3b64611fd43549f77d012bdf24",
+   "bytes": 15318,
+   "externo_ao_repo": false,
+   "nota": "captura 20091223112559 de http://www.portodesantos.com.br/calado.php; digest IY53YOTW5DSIPN577VWUVE3MP5OVJP3L; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20091230072102.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20091230072102id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:52:24Z",
+   "sha256": "10320add8a0c7548a1a096472a396976c611259b22e2ae978f88f850ee3e8958",
+   "bytes": 15318,
+   "externo_ao_repo": false,
+   "nota": "captura 20091230072102 de http://www.portodesantos.com.br:80/calado.php; digest MVWYDWLRKYBTLKPP336DPMXJI7FGF2KL; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20100218012533.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20100218012533id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:52:27Z",
+   "sha256": "18dffbfae13bf24aad3e3496ab3748b173ef9d55b7c4fb00991501c841177a3d",
+   "bytes": 15295,
+   "externo_ao_repo": false,
+   "nota": "captura 20100218012533 de http://www.portodesantos.com.br:80/calado.php; digest 5EZSVK3IJUTJZMRROBAGV75KSRGDOURC; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20100530013949.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20100530013949id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:52:29Z",
+   "sha256": "56f5453e0a00e228d1adf5fc7eac2a7b5cda3212d27223762954a92e1ff21cc0",
+   "bytes": 15363,
+   "externo_ao_repo": false,
+   "nota": "captura 20100530013949 de http://www.portodesantos.com.br/calado.php; digest OH4ZU7UUKAPPBU3B2UPURHWCOYBXQT5Y; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20100805002047.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20100805002047id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:52:32Z",
+   "sha256": "38f985ca93a331e1c4bf7dae0f21017f010d26cf865c696fade4162bd3835116",
+   "bytes": 15027,
+   "externo_ao_repo": false,
+   "nota": "captura 20100805002047 de http://www.portodesantos.com.br/calado.php; digest LQJT46ILQQV7XKPPJLD3AK726K5MMKPM; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20110122111847.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20110122111847id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:52:35Z",
+   "sha256": "a742d498399b85cf91d05ba5d04c6860ec781014b2d7cf0e1c5ac27c5ccbb532",
+   "bytes": 16265,
+   "externo_ao_repo": false,
+   "nota": "captura 20110122111847 de http://www.portodesantos.com.br/calado.php; digest YHRX7KXTJ6DLWMJKAUVQZHG6TP6EYYNX; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20110522124838.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20110522124838id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:52:38Z",
+   "sha256": "85dbc5a814f2ba766a8298d21bc659b9a5604c4e6409459475fecca7fd80a36e",
+   "bytes": 16504,
+   "externo_ao_repo": false,
+   "nota": "captura 20110522124838 de http://www.portodesantos.com.br/calado.php; digest U6GQEVWZKULFIE3GD3XUMC7C555VJFAQ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20110529103448.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20110529103448id_/http://www.portodesantos.com.br//calado.php",
+   "coletado_em": "2026-10-02T20:52:41Z",
+   "sha256": "46149d851f350204e43c4bccc6f0a65aa88521c4ab49b93b2eae0ce38a4562a0",
+   "bytes": 16504,
+   "externo_ao_repo": false,
+   "nota": "captura 20110529103448 de http://www.portodesantos.com.br//calado.php; digest YLFETZ7OYQWR5ODNPU3ZYZH3VG2JUMXQ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20110709141700.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20110709141700id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:52:46Z",
+   "sha256": "aafda417699e88e570988ac96830c8255b211eafc3a141b5e24de0b5208e4853",
+   "bytes": 16356,
+   "externo_ao_repo": false,
+   "nota": "captura 20110709141700 de http://www.portodesantos.com.br/calado.php; digest 64FVV4AJKWD3X24VIOOP257A2W252IFS; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20110710043830.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20110710043830id_/http://www.portodesantos.com.br//calado.php",
+   "coletado_em": "2026-10-02T20:52:49Z",
+   "sha256": "b1dcc02c000b695adbd788eedd78ec6ccb9ba0147a24ef2ec9ffe7e4222709a2",
+   "bytes": 16357,
+   "externo_ao_repo": false,
+   "nota": "captura 20110710043830 de http://www.portodesantos.com.br//calado.php; digest 7TMW2UGJRJNHCB27LYH6E5ZD7NKVIPFQ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20111001005758.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20111001005758id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:52:52Z",
+   "sha256": "6fb135fb6a6044c315abe29f96255e63df26f665999f189a81ae3e46b4ebeba5",
+   "bytes": 17696,
+   "externo_ao_repo": false,
+   "nota": "captura 20111001005758 de http://www.portodesantos.com.br:80/calado.php; digest F3SEMN4VGZFM7KR2AZNCDUK5W5BEDHGX; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20111130141024.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20111130141024id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:52:56Z",
+   "sha256": "139aec74e400b65b7c85eba165a1283ad2a8217779a18f0f9885d6a9501967f7",
+   "bytes": 17697,
+   "externo_ao_repo": false,
+   "nota": "captura 20111130141024 de http://www.portodesantos.com.br:80/calado.php; digest HWRTCSDTAP4OAWFUAJK6GAODKJ4JUWGC; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20120123082412.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20120123082412id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:52:59Z",
+   "sha256": "98fecde61626afe83a1e2970123d9e61805c9897930d5ea35f8376354023190a",
+   "bytes": 17697,
+   "externo_ao_repo": false,
+   "nota": "captura 20120123082412 de http://www.portodesantos.com.br/calado.php; digest YEIGOIOCBPDIZCRZY7ZHKXEG5PZHD4CD; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20120419194747.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20120419194747id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:53:01Z",
+   "sha256": "53c192220658a20049587c1e126edf971f5c7f4a78035f365cda81ab49fe3d36",
+   "bytes": 17784,
+   "externo_ao_repo": false,
+   "nota": "captura 20120419194747 de http://www.portodesantos.com.br:80/calado.php; digest MTZ2QJSM62KGQEFFQLSRVY72TL5IR35A; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20120521135319.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20120521135319id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:53:04Z",
+   "sha256": "9266431ec19e35367849b7979eaf60d4139ad414c2331034cc4f2c3e682c2d74",
+   "bytes": 16707,
+   "externo_ao_repo": false,
+   "nota": "captura 20120521135319 de http://www.portodesantos.com.br:80/calado.php; digest 722BND3EIHUXVIVOCLD7LUW6CUA56FON; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20120621172711.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20120621172711id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:53:07Z",
+   "sha256": "01b916273cff1911abcc3a39d9472a8df07066a1851ff4cdfdd07da1921aaf95",
+   "bytes": 16814,
+   "externo_ao_repo": false,
+   "nota": "captura 20120621172711 de http://www.portodesantos.com.br:80/calado.php; digest MNXAO4IMQHM4Y2CVKO5UWFYPCZQOQLZI; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20131106005406.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20131106005406id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:10Z",
+   "sha256": "dc88be339d95f2bd75ce271ff7227edc3a0352a0a8017b01b3a5e89c1879c784",
+   "bytes": 17041,
+   "externo_ao_repo": false,
+   "nota": "captura 20131106005406 de http://www.portodesantos.com.br/calado.php; digest 77YJKSU34LAH5GO7FDNRDZHG5GIQ5C4J; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20140201103531.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20140201103531id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:13Z",
+   "sha256": "feeca41039b4888ff362819ec0b1623237fd26cdd9cf66f5407a3e3e51502b6d",
+   "bytes": 17141,
+   "externo_ao_repo": false,
+   "nota": "captura 20140201103531 de http://www.portodesantos.com.br/calado.php; digest QL2VMW6LHGQS3A36OTNV3F2NZM7GJWVR; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20140313164458.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20140313164458id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:18Z",
+   "sha256": "ea5948a9a443f7955d27b5ba12172ed0b7e3940256f2dfa21164bf5d8ab0f90a",
+   "bytes": 17143,
+   "externo_ao_repo": false,
+   "nota": "captura 20140313164458 de http://www.portodesantos.com.br/calado.php; digest KEHPRKM5MDAEXML2A6R4N2PFOHSDQERJ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20140905223439.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20140905223439id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:21Z",
+   "sha256": "28ca809fc53efc9f70bd1ac82abf89044d138bc2c4bcf1e4b938903fdd27ba0a",
+   "bytes": 15988,
+   "externo_ao_repo": false,
+   "nota": "captura 20140905223439 de http://www.portodesantos.com.br/calado.php; digest ISFYHYMK2CEZZJH3YBNJY5YQUL52ADS4; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20140924134650.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20140924134650id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:24Z",
+   "sha256": "9ee9fdeee609be619c3f5ed62d42b1f119af3a9d96d252f34f6b0af173ec631a",
+   "bytes": 15989,
+   "externo_ao_repo": false,
+   "nota": "captura 20140924134650 de http://www.portodesantos.com.br/calado.php; digest QNZSL4I6SQ2BAARK5VAMTJYHKUE4TRLQ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20150221204505.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20150221204505id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:27Z",
+   "sha256": "1b096edac896930d829caae2546360bde4bf93e2cf131a75aa79e0cc9b8ef0fb",
+   "bytes": 16572,
+   "externo_ao_repo": false,
+   "nota": "captura 20150221204505 de http://www.portodesantos.com.br/calado.php; digest S73DSDJ2TIT2CGK7AMLAHVADG7Q33CQB; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20150409025309.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20150409025309id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:30Z",
+   "sha256": "fd45fcd83a7f92b9d2da10f4b365094c5dbb0d6ca332bca7a00ae590a4e5c894",
+   "bytes": 16472,
+   "externo_ao_repo": false,
+   "nota": "captura 20150409025309 de http://www.portodesantos.com.br/calado.php; digest BENH57F7SLWCWPYCDLHS6KEPWSMUUWZY; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20150411075504.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20150411075504id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:53:32Z",
+   "sha256": "185f38effe52539655a5aa9655de604cfca21fe82d40f759ad11c89a6031a29d",
+   "bytes": 16466,
+   "externo_ao_repo": false,
+   "nota": "captura 20150411075504 de http://www.portodesantos.com.br:80/calado.php; digest BSBOTL35PQVT6TXCQKLFSL4RUUN32R3N; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20150710045928.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20150710045928id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:53:36Z",
+   "sha256": "5ea1f00ff9d931a91818601ce8962521c0c3d3a252e05f6ecfcdab06cd77e8dd",
+   "bytes": 16732,
+   "externo_ao_repo": false,
+   "nota": "captura 20150710045928 de http://www.portodesantos.com.br:80/calado.php; digest X745RKJD2OHROCVNMAZ625LCYDKMUG5R; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20150801055638.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20150801055638id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:39Z",
+   "sha256": "b4e941adb0dfcf1470077b71a467def6b76cabe2dcd88711bce19638cff40828",
+   "bytes": 16890,
+   "externo_ao_repo": false,
+   "nota": "captura 20150801055638 de http://www.portodesantos.com.br/calado.php; digest WR44R75TJTJQABRG2HL52GO5AILILHWH; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20150813184132.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20150813184132id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:44Z",
+   "sha256": "2a273e163ccf4adccff199131ca3fff25a8e558dd2b8ee473c51ab843f54dea8",
+   "bytes": 17480,
+   "externo_ao_repo": false,
+   "nota": "captura 20150813184132 de http://www.portodesantos.com.br/calado.php; digest JAGPBLGOG5BTI37R2RULSS7CRW3GTLUS; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20151016232057.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20151016232057id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:48Z",
+   "sha256": "9caefae06daf4aea3cb52e176dde79e8d684ec5c764c4f2344bb994f28d6cccf",
+   "bytes": 16936,
+   "externo_ao_repo": false,
+   "nota": "captura 20151016232057 de http://www.portodesantos.com.br/calado.php; digest JWQTM23VITN7VNHGJ4FA3XQQKYCHXO6Q; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20151113002752.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20151113002752id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:53Z",
+   "sha256": "1ce711025a018a2c7c24979ddb16d7efa1c3e1075240d934416e35a719e728ea",
+   "bytes": 16938,
+   "externo_ao_repo": false,
+   "nota": "captura 20151113002752 de http://www.portodesantos.com.br/calado.php; digest NR43TYKA7Z5XMH4L3XG4NBWXX6UMFXBB; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20151113033415.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20151113033415id_/http://www.portodesantos.com.br//calado.php",
+   "coletado_em": "2026-10-02T20:53:55Z",
+   "sha256": "7017406ea506fa150cbfb088b717096bd0c4c425374c5d07e417a683687f5c2d",
+   "bytes": 16937,
+   "externo_ao_repo": false,
+   "nota": "captura 20151113033415 de http://www.portodesantos.com.br//calado.php; digest LUHRHDGC2RULYA3UN453ZRCF2DQKJELA; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160204182050.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160204182050id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:53:58Z",
+   "sha256": "27ec747959e99b900b2be5616fbdac3bf964e106f24076f5d3057f2ad5ea61cd",
+   "bytes": 16608,
+   "externo_ao_repo": false,
+   "nota": "captura 20160204182050 de http://www.portodesantos.com.br/calado.php; digest JKQZWEDLF3JHIQDGGJ2HVITBRLEOHQR4; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160305171342.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160305171342id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:01Z",
+   "sha256": "d4ab184e48fa0816bf396f01642af4104482c5eded1dc1029c1c04c614e99f08",
+   "bytes": 16617,
+   "externo_ao_repo": false,
+   "nota": "captura 20160305171342 de http://www.portodesantos.com.br/calado.php; digest C6YA2EGTT5CAUN3JU5DRRDQ7FRHEC3RV; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160504214832.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160504214832id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:08Z",
+   "sha256": "9b16411d6157a2ca6c28aa127b21c19fe850932bf66be41f201ede7bf372d331",
+   "bytes": 16978,
+   "externo_ao_repo": false,
+   "nota": "captura 20160504214832 de http://www.portodesantos.com.br:80/calado.php; digest 4ER5CFEVUQN5WDDF7QNSXFHPH64CB2MJ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160620151505.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160620151505id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:11Z",
+   "sha256": "e0a49e8fce9c0368e629382ab4f7fa46ebad9abad12eb92c7b0c534205b79104",
+   "bytes": 16880,
+   "externo_ao_repo": false,
+   "nota": "captura 20160620151505 de http://www.portodesantos.com.br/calado.php; digest CEH4CY6S7NL2OIDVYYVNFZ7VBKKCZQTU; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160714220357.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160714220357id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:13Z",
+   "sha256": "0e7e86511acd4afdba6a5298f1a6cf7974650e4d5d994ae7a4b8be8500214bb8",
+   "bytes": 19661,
+   "externo_ao_repo": false,
+   "nota": "captura 20160714220357 de http://www.portodesantos.com.br/calado.php; digest 6ZWWS7YVT4AE3CVXG73EP5RFGW7ACTB2; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160827090557.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160827090557id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:16Z",
+   "sha256": "65fd3573c96690bb4be4f110a8903c17aab97863b747f26b0cba055fe7fd7cf7",
+   "bytes": 19836,
+   "externo_ao_repo": false,
+   "nota": "captura 20160827090557 de http://www.portodesantos.com.br:80/calado.php; digest TT7XP5GJACKHGCBAWBFBIO5MBIQ57NNC; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160829032457.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160829032457id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:19Z",
+   "sha256": "0001d2cc93cdb0b3de20ee68189f532a5871fe0298e7d0260ce472ae99ae25c6",
+   "bytes": 19843,
+   "externo_ao_repo": false,
+   "nota": "captura 20160829032457 de http://www.portodesantos.com.br:80/calado.php; digest HINIS5XEWR3INPOQ73NAERIBP4QCC6KL; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20160929161801.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20160929161801id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:22Z",
+   "sha256": "a7e20006bac44009ccc574874256c7b53c72ffdea383a39e326f45b8d4d3f2f0",
+   "bytes": 19844,
+   "externo_ao_repo": false,
+   "nota": "captura 20160929161801 de http://www.portodesantos.com.br:80/calado.php; digest 3VUQK5ZZT24FG5L6WYAYG2BE7C2SVUYO; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20161030234635.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20161030234635id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:25Z",
+   "sha256": "3a2f88b49a6c08ee0cbc13ba1d29a87699a4a93ea40cda5236a9a1229854f14f",
+   "bytes": 19728,
+   "externo_ao_repo": false,
+   "nota": "captura 20161030234635 de http://www.portodesantos.com.br:80/calado.php; digest JXH73OF44GX5YZDHSJMOE5R7WKFWNQMP; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20161031144235.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20161031144235id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:30Z",
+   "sha256": "bafdf74f4b450bceb3e54e053455e1f8c20ca9c9fabfcd6c9e9270189a9aabd1",
+   "bytes": 19734,
+   "externo_ao_repo": false,
+   "nota": "captura 20161031144235 de http://www.portodesantos.com.br/calado.php; digest EOEP35KX7MYSEOTT4NJDHRGKJYEEXOGJ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20161101104842.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20161101104842id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:34Z",
+   "sha256": "13c87b73c9c860bb62164c1aa84e5892f252c651050a8ef6ec83375eed460dc3",
+   "bytes": 19733,
+   "externo_ao_repo": false,
+   "nota": "captura 20161101104842 de http://www.portodesantos.com.br:80/calado.php; digest C5C7ANJ7KA365JSPBZX5XEC55HIC77QA; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20161111231826.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20161111231826id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:37Z",
+   "sha256": "6b0fa22b6132c00e64874e937b19cb52a9c63cbc8ccf4ef17cf81d2b344fa1ce",
+   "bytes": 19758,
+   "externo_ao_repo": false,
+   "nota": "captura 20161111231826 de http://www.portodesantos.com.br/calado.php; digest GI62LLBJRPAXH6VCZDLNLZ33IXURHDDF; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170209174908.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170209174908id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:42Z",
+   "sha256": "c1b0e35d3d1f80157c22ebd4cf06644616b842edea8fcb0e7c896a28e6464dd8",
+   "bytes": 19853,
+   "externo_ao_repo": false,
+   "nota": "captura 20170209174908 de http://www.portodesantos.com.br/calado.php; digest 7OJ77QDVTFYHQTLAK3BRN7ONRPMEAMEQ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170409063048.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170409063048id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:45Z",
+   "sha256": "9c678035e136a3147811e03cc38a8395f7bad4b12ec15c970ca7b3231f16abe8",
+   "bytes": 20023,
+   "externo_ao_repo": false,
+   "nota": "captura 20170409063048 de http://www.portodesantos.com.br/calado.php; digest WETC4XLR3VD77DMSWF2YJIR4RSUNNWXC; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170419024617.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170419024617id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:48Z",
+   "sha256": "e47f01bd13c317a50dca025f0aa3ab4269325d22a238d814f492985d43709648",
+   "bytes": 20027,
+   "externo_ao_repo": false,
+   "nota": "captura 20170419024617 de http://www.portodesantos.com.br:80/calado.php; digest PMB7UW7J5TW7XPBCA3BHPBYR2AAOOYRC; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170420021037.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170420021037id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:50Z",
+   "sha256": "faf0cbba76f179c8b98240cc85890f9cfc75fad92dfc8e0afdc8af31ec41c5a6",
+   "bytes": 20028,
+   "externo_ao_repo": false,
+   "nota": "captura 20170420021037 de http://www.portodesantos.com.br:80/calado.php; digest JEZRPOOO4EABNKJWVY4CPKC2SPSLNKCM; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170521093334.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170521093334id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:53Z",
+   "sha256": "97e9d86045f5887f7d76e965d8b2f74230d5960e6adad7573a94b4bcccde3fa5",
+   "bytes": 20024,
+   "externo_ao_repo": false,
+   "nota": "captura 20170521093334 de http://www.portodesantos.com.br:80/calado.php; digest OD3XBHVEVHGNDO3URS4WR7VVPGDNCK4J; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170608150956.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170608150956id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:54:56Z",
+   "sha256": "5594ac29e5f47cde9af78f91200ba187cb5f0320f1391e6c9c9c380474106b62",
+   "bytes": 20030,
+   "externo_ao_repo": false,
+   "nota": "captura 20170608150956 de http://www.portodesantos.com.br/calado.php; digest 3G7DXRIGNK6UTYOYVQALSKDT5TG2U4RL; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170621212229.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170621212229id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:54:59Z",
+   "sha256": "6f105efcd0ebfc1cc37376257d5fcc56669fe8aed253a9f4df205a347fbfc773",
+   "bytes": 20030,
+   "externo_ao_repo": false,
+   "nota": "captura 20170621212229 de http://www.portodesantos.com.br:80/calado.php; digest SGUIEKLBBRV4JO7JGSDHOGA5N7Y47QSI; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170723112612.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170723112612id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:02Z",
+   "sha256": "f1937623c0bb7ad0995fc35b748c97b91010f8176633ee1940172ddd89379f89",
+   "bytes": 20173,
+   "externo_ao_repo": false,
+   "nota": "captura 20170723112612 de http://www.portodesantos.com.br:80/calado.php; digest PEX53YUH2XLBPQ67BMEPMWWXX2M764CX; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170731165057.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170731165057id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:55:05Z",
+   "sha256": "416f514bbc96b72566a11b569853e1a1ac9fbab2e84306119129cf3f2f7bc5e3",
+   "bytes": 20179,
+   "externo_ao_repo": false,
+   "nota": "captura 20170731165057 de http://www.portodesantos.com.br/calado.php; digest GNDVLPV527U7QIHJYQZ4HIXYWD75GZCS; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170823183723.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170823183723id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:08Z",
+   "sha256": "c0306ae03aba9b7eb7fff1bf0eb302b1cb154446c07d1005a5cf188942242418",
+   "bytes": 20186,
+   "externo_ao_repo": false,
+   "nota": "captura 20170823183723 de http://www.portodesantos.com.br:80/calado.php; digest GZ44NJJCIFZKEWMBY52FTSA2JQKTPGNL; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170824204918.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170824204918id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:10Z",
+   "sha256": "68b99be770b6d1199357d0a51468194445a2b90e164111ac6edeeb2cc67f32e1",
+   "bytes": 20186,
+   "externo_ao_repo": false,
+   "nota": "captura 20170824204918 de http://www.portodesantos.com.br:80/calado.php; digest EIBKP4TGSIMH224LG2GLQBZRB4R7PO72; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20170924215552.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20170924215552id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:13Z",
+   "sha256": "55d0e8573405177b34d7697f20c3080fcd4cbbb167e95e34ad16c21b1c314810",
+   "bytes": 20274,
+   "externo_ao_repo": false,
+   "nota": "captura 20170924215552 de http://www.portodesantos.com.br:80/calado.php; digest ZZT2V7MGSMGMX3UEVAEGIFBMERRJKMF2; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20171026151943.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20171026151943id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:16Z",
+   "sha256": "4d66588d4674a28e24da149e0f549dec0badd5b8fc7e10dab395982301f88912",
+   "bytes": 20123,
+   "externo_ao_repo": false,
+   "nota": "captura 20171026151943 de http://www.portodesantos.com.br:80/calado.php; digest DU3SICOISFXJF6I7CMEQCR7PIT4BLJHL; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20171130230133.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20171130230133id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:20Z",
+   "sha256": "035f7cc67ca8aa4627cd12bba6edf86b8c6847329d6823eadfe61793b97ca000",
+   "bytes": 20124,
+   "externo_ao_repo": false,
+   "nota": "captura 20171130230133 de http://www.portodesantos.com.br:80/calado.php; digest N4PBNDQ4UILTL6EWU3LBH5VP6RLIC6MT; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20171202011305.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20171202011305id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:22Z",
+   "sha256": "2412176b853470c771539600cfc18b2f273de1e2e39e5fbedad54144568439b8",
+   "bytes": 20123,
+   "externo_ao_repo": false,
+   "nota": "captura 20171202011305 de http://www.portodesantos.com.br:80/calado.php; digest EJOXXREFSDYWBHVFZ25NRS2AC2WEDNO4; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20171207155137.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20171207155137id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:55:25Z",
+   "sha256": "ddac95fc5ff5ef0ea235df0ca15d28bcfb0104f60af832960e714d44dacbe358",
+   "bytes": 20124,
+   "externo_ao_repo": false,
+   "nota": "captura 20171207155137 de http://www.portodesantos.com.br/calado.php; digest OGJFOVOLXMML4WFO6FFI6NUZHJ3IULOM; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180102034016.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180102034016id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:28Z",
+   "sha256": "7522fb947ff872a3b381b35b818c6c7dbcb516154a287c8965fee9ef56d6d796",
+   "bytes": 20122,
+   "externo_ao_repo": false,
+   "nota": "captura 20180102034016 de http://www.portodesantos.com.br:80/calado.php; digest M5TOSIFBACQF4O74D6DW5WEMOL6SWERV; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180202164732.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180202164732id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:31Z",
+   "sha256": "36b6dea9de989a480af77c1591c19a66adbf422f8026ff50e5df381d693dc4fc",
+   "bytes": 20123,
+   "externo_ao_repo": false,
+   "nota": "captura 20180202164732 de http://www.portodesantos.com.br:80/calado.php; digest SR2VCMASAEDV5NIFZDTQI7CJ2VNHJVVC; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180307151520.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180307151520id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:36Z",
+   "sha256": "7ea86e9459711447c61a5b775de2dedbf7a86531cbb1e5dc74a26386c3a4a633",
+   "bytes": 20328,
+   "externo_ao_repo": false,
+   "nota": "captura 20180307151520 de http://www.portodesantos.com.br:80/calado.php; digest QPCUG7IJZ2Y4WEIRHXYF7MEYT5U5O6GM; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180308234125.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180308234125id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:39Z",
+   "sha256": "458d3367790dd7f908b6fef56c0ddbeaf8e7f301356aad501105179b18322d22",
+   "bytes": 20328,
+   "externo_ao_repo": false,
+   "nota": "captura 20180308234125 de http://www.portodesantos.com.br:80/calado.php; digest 3KHEYQJOWNQTPDG723NJYYRO5UFR36JW; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180406152431.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180406152431id_/http://www.portodesantos.com.br/calado.php",
+   "coletado_em": "2026-10-02T20:55:44Z",
+   "sha256": "83daa68969ce9fed378c581f2a47e1c41677ab6856bceed85f51fc13884ab485",
+   "bytes": 20423,
+   "externo_ao_repo": false,
+   "nota": "captura 20180406152431 de http://www.portodesantos.com.br/calado.php; digest 3AAGBVQZC3ZDEPTSHLDL3CUU4NJVMBSI; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180410234145.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180410234145id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:47Z",
+   "sha256": "916f455abc8e3aee25ea45c8af827a902a7b3240a32897ed21fcaca25503c8d3",
+   "bytes": 20423,
+   "externo_ao_repo": false,
+   "nota": "captura 20180410234145 de http://www.portodesantos.com.br:80/calado.php; digest FCPH63I533GFSULQYW7VRFZWPRDT47GM; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180512211028.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180512211028id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:50Z",
+   "sha256": "09902a0ebfad11282c28e56593310330a11525fe736907328d8317ac0a908fae",
+   "bytes": 20600,
+   "externo_ao_repo": false,
+   "nota": "captura 20180512211028 de http://www.portodesantos.com.br:80/calado.php; digest BD7N4NXRKAT5SX7QU7IUKTPXLYNSX4SX; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calado_php_2009/20180613110559.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20180613110559id_/http://www.portodesantos.com.br:80/calado.php",
+   "coletado_em": "2026-10-02T20:55:53Z",
+   "sha256": "30b4047fbeacacc6e4cdd66c8d96f44c19d2c2184f079d93156f6553fa9d88ba",
+   "bytes": 20607,
+   "externo_ao_repo": false,
+   "nota": "captura 20180613110559 de http://www.portodesantos.com.br:80/calado.php; digest 3TTD4FALXLHEV4753D6M4GIXFSKTDRTA; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210116144927.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210116144927id_/http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:17Z",
+   "sha256": "2e63bdb2aa3b5c96cc213ba486ee7e5ca47c8f1b60ec6b03189bcc506d1be0ba",
+   "bytes": 51020,
+   "externo_ao_repo": false,
+   "nota": "captura 20210116144927 de http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest 5N4V32THGX3CALLI7QESCL3LTXG6RXHT; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210302013408.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210302013408id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:20Z",
+   "sha256": "51719e100ed4d7541ed8ba07affe3b312ab6de29a2897d93e2cc46ba492e8b33",
+   "bytes": 57968,
+   "externo_ao_repo": false,
+   "nota": "captura 20210302013408 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest OWFQP5D23FPDYTF6ZIMOE5XIOIFX2LN3; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210419060037.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210419060037id_/http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:23Z",
+   "sha256": "f4896db6871b2396a20d43981ff961347d4f247a04223262d9ad268002e6f7f5",
+   "bytes": 58122,
+   "externo_ao_repo": false,
+   "nota": "captura 20210419060037 de http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest HZ2QTQANXHUGPV2H62O5EPBUWY6ROIV3; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210510223144.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210510223144id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:25Z",
+   "sha256": "62d359c3e9b9724ae5c5af188c56a50d049b0edba716cd700e88992b6c948549",
+   "bytes": 58230,
+   "externo_ao_repo": false,
+   "nota": "captura 20210510223144 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest X2Q4OTOGMC5A5W6CPOK35GXGSFMIZFR4; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210511012409.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210511012409id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:28Z",
+   "sha256": "72c177963af53ea04bf56ba1e34319fab120db120afb48bc321427e277615c37",
+   "bytes": 58230,
+   "externo_ao_repo": false,
+   "nota": "captura 20210511012409 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest 4FET5NWBJ6BPWEYQTNPUZC7EDMESQEW7; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210726231527.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210726231527id_/http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:32Z",
+   "sha256": "5137563a2c698e43d15a940b9df7861fb01ebca81b99372ea5fb0961232f727e",
+   "bytes": 57012,
+   "externo_ao_repo": false,
+   "nota": "captura 20210726231527 de http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest ZBIYZ6YSEUDYW3YNYGKCWCZESNC2DVC3; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210730012955.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210730012955id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:35Z",
+   "sha256": "d2adb2115d94eaca47e1e8d15963679dd2f27d0efb6c9578a7f236cb6b345d25",
+   "bytes": 70164,
+   "externo_ao_repo": false,
+   "nota": "captura 20210730012955 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest MPG7N763Z7LSNDDF3OWAOC5AZ7YMKS7Y; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20210917162725.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20210917162725id_/http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:38Z",
+   "sha256": "b855ec0b5f40ec4ed8ded74669f1e3a10299466e978fd1adb39e203f8b3ea161",
+   "bytes": 70061,
+   "externo_ao_repo": false,
+   "nota": "captura 20210917162725 de http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest 252BKLLE3K4NVQWREHOWV3PRC2HTSJQJ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20211018234425.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20211018234425id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:41Z",
+   "sha256": "04c65b7fb9f2ba609f2fc5a24c4d1382b44b533cdd27409cf3d376948bc2f7a4",
+   "bytes": 70370,
+   "externo_ao_repo": false,
+   "nota": "captura 20211018234425 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest 3KS3QHGQ2EOU2DOKIL6BSZXKDVNJGXPN; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20220123062521.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20220123062521id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:45Z",
+   "sha256": "3c908b09211f74ed0d9596be855da857cbb697e4a0603bba2c6543b5c67760f9",
+   "bytes": 68856,
+   "externo_ao_repo": false,
+   "nota": "captura 20220123062521 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest A2TEFSSJA75V467MQFYT3KVFD7IOQ25Y; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20220126142321.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20220126142321id_/http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:48Z",
+   "sha256": "14871273a2257fc0ed89cc505d1a3524c346e6f5199845de22f20269486f3c52",
+   "bytes": 68753,
+   "externo_ao_repo": false,
+   "nota": "captura 20220126142321 de http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest 6AVAII3Q7BO7B7YHV6L53JQ4FMF3VWGR; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20220303061338.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20220303061338id_/http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:51Z",
+   "sha256": "54a2fb7339740f876adbf16c36105d859026e9ce0e6a75d9d5b8025e6b3c69d2",
+   "bytes": 68756,
+   "externo_ao_repo": false,
+   "nota": "captura 20220303061338 de http://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest 7HRMTH3HSP42R3DFVWS4PM2IMY2RD4ZU; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20220701080245.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20220701080245id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:53Z",
+   "sha256": "ff5ea1e6ce7ff51ca73d6d6ba5727aa26ca0482b2c1914981dbfb86cf00a9777",
+   "bytes": 69313,
+   "externo_ao_repo": false,
+   "nota": "captura 20220701080245 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest XUM6VWGJFELURV4AEEMA756PF4FDEGY3; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20220815190641.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20220815190641id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:58:56Z",
+   "sha256": "0c195228defad1b173269978c90873128a8fe5e1943ec044e2fc08af2505d41c",
+   "bytes": 69289,
+   "externo_ao_repo": false,
+   "nota": "captura 20220815190641 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest LV3TNEFTTC3PXY5NOOEQRSHORDETQYZG; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20230330203418.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20230330203418id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:00Z",
+   "sha256": "6820cf7235c3c8e99425d10de98839b8534ad49e372660b450caa1bdbd4ede3c",
+   "bytes": 81994,
+   "externo_ao_repo": false,
+   "nota": "captura 20230330203418 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest MORLAARFFXWBV4IXT6TWYRBXOKUWUFYO; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20231204100812.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20231204100812id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:03Z",
+   "sha256": "f779f2de2c81e3b0eaa5b0827ab93dcb3f73a02e4903194078df139704bcdf50",
+   "bytes": 82856,
+   "externo_ao_repo": false,
+   "nota": "captura 20231204100812 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest K6ULHVPQDM7XXGQMVDCFSS4TEFSYKMWI; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20240415123629.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20240415123629id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:06Z",
+   "sha256": "3d67959d595e233439ebc489a7541faed871d51a36649c41d1268329d346991c",
+   "bytes": 84864,
+   "externo_ao_repo": false,
+   "nota": "captura 20240415123629 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest QVVEIS5OR33SFXDJ5SRCMDGH333YA4FH; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20240917021223.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20240917021223id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:10Z",
+   "sha256": "7aef84f21df487bcc443a83ce418619b5e8e41529ff3aa755c9e1f21d089abce",
+   "bytes": 84328,
+   "externo_ao_repo": false,
+   "nota": "captura 20240917021223 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest JUJQLT3YTRDRMNYMHMZ7QSIUI3GNSW72; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20250125025207.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20250125025207id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:13Z",
+   "sha256": "990d84d68eb7e792eec555832a21c52a247239d97388bc599e78cfdcfc42477b",
+   "bytes": 84611,
+   "externo_ao_repo": false,
+   "nota": "captura 20250125025207 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest WL2W42THL2O7XCCKLEBH4KUEI6COYZ6Y; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20250516013825.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20250516013825id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:16Z",
+   "sha256": "5232623e4cdfdeccdb4fd99db562a9cffc8e99a591e909c0edf6c8c6602f2ace",
+   "bytes": 84437,
+   "externo_ao_repo": false,
+   "nota": "captura 20250516013825 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest NZDXGX3ZB2JE5FDWIM5ZFE244VKK5SNJ; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20250622213429.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20250622213429id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:19Z",
+   "sha256": "53df99b778833559a8a2d2e5f2047f017db6f92e176de15abc5e92a77aef9628",
+   "bytes": 99288,
+   "externo_ao_repo": false,
+   "nota": "captura 20250622213429 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest NNAQJPJNGYPO6NCJVXRBDRH2R6Y65OMS; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20251205213245.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20251205213245id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:22Z",
+   "sha256": "221b08b1844ab62c5d99b1262d2b343c8e44b49063febdb12eab4e44b3e22393",
+   "bytes": 100663,
+   "externo_ao_repo": false,
+   "nota": "captura 20251205213245 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest M5E6RH757MFFMTEV4RS6P5S7VKWOG3RM; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20260314084447.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20260314084447id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:25Z",
+   "sha256": "686ee6559cb919eedda9d2513ea4c10c81f4832a12f8f00a6ac8ebcae8c9614f",
+   "bytes": 101249,
+   "externo_ao_repo": false,
+   "nota": "captura 20260314084447 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest KD6BTOYPETZZPQWPXBBYRRARW3NVAWZK; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_calados/wayback/calados_operacionais_2021/20260617163833.html",
+   "origem": "Internet Archive — Wayback Machine (captura da página da APS)",
+   "url": "https://web.archive.org/web/20260617163833id_/https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/",
+   "coletado_em": "2026-10-02T20:59:28Z",
+   "sha256": "69d394206eaa68b2688fa0f1c747002fe5285931cee94d03da45c223bca19ea1",
+   "bytes": 101254,
+   "externo_ao_repo": false,
+   "nota": "captura 20260617163833 de https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/calados-operacionais-dos-bercos-de-atracacao/; digest EFXZ4GII2U7XCBOKXYGH26GQ5BMLV5WM; data da captura não é data de vigência"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_lineup/fase0/20260930_navios_esperados_carga.csv",
+   "origem": "APS — Navios Esperados · Carga (extração da Fase 0)",
+   "url": "https://www.portodesantos.com.br/informacoes-operacionais/operacoes-portuarias/navegacao-e-movimento-de-navios/navios-esperados-carga/",
+   "coletado_em": "2026-09-30T21:32:52Z",
+   "sha256": "245640544c36a02f232c1ece3ffe3b63c51d367030a513f3140589e2d6927cd5",
+   "bytes": 51043,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/aps_esperados_carga_20260930.csv; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/aps_normas/nap_supop_opr_021_2026.pdf",
+   "origem": "APS — NAP SUPOP.OPR.021.2026 (atracação; art. 36 = calado na nomeação)",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:25:25Z",
+   "sha256": "068c293b3e4e53a1e5da5832b334032c234918f1c15388f435aa81f78622e3d9",
+   "bytes": 876544,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/aps_NAP_OPR021_2026_atracacao.pdf; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/comex/fase0/comex_urf.json",
+   "origem": "Comex Stat — tabela de URF (API)",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:08:07Z",
+   "sha256": "8a403194c0820258c4dfd373f8842bb4156b517f2a136c37da7564ad9b63552a",
+   "bytes": 14358,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/comex_urf.json; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/fase0/20260930_paranagua_calado.html",
+   "origem": "APPA — página de calado de Paranaguá",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:08:40Z",
+   "sha256": "48d201f6592adbdcb180cb837323f3e9473d2a6d405f53f417077db1515fe8f8",
+   "bytes": 78403,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/pgua_calado.html; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/fase0/20260930_riogrande_calado.html",
+   "origem": "Portos RS — página de calado de Rio Grande",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:08:49Z",
+   "sha256": "397755d946611605bc16edd5e2417575aad30d5c0855c2d97452dda8860d223e",
+   "bytes": 1190,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/rg_calado.html; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/fase0/itaqui_manual.pdf",
+   "origem": "EMAP — manual do Porto do Itaqui",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:17:06Z",
+   "sha256": "2698e20c4b387dc1774311787df7d026eea8903e48bea542f72b99df3b46c96c",
+   "bytes": 3997849,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/itaqui_manual.pdf; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/fase0/riogrande_normativa_259.pdf",
+   "origem": "Portos RS — normativa 259 (calado)",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:17:14Z",
+   "sha256": "fdb8680b3b1bc4c04283555c5e57852cf0a6ceb357c8f8eb2c24d663bcaabf57",
+   "bytes": 669462,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/riogrande_259.pdf; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/fase0/vila_do_conde_rep.pdf",
+   "origem": "CDP — documento de Vila do Conde",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:18:15Z",
+   "sha256": "f15e377fe84acfb1ed1f566d1256c86d25736280e39a79e8046d709677fa558b",
+   "bytes": 1031808,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/vdc_rep.pdf; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/npcp/npcp_sp_2016_rev1.pdf",
+   "origem": "Capitania dos Portos de SP — NPCP-SP 1ª Revisão (2016)",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:29:44Z",
+   "sha256": "65bdc997065352bcff0c5f7c0796b641c10f21c04239c39cfebf8e87e8589c5f",
+   "bytes": 6233576,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/cpsp_NPCP_CPSP.pdf; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/npcp/portaria_cpsp_113_2026_npcp_sp_rev3_mod1.pdf",
+   "origem": "Capitania dos Portos de SP — Portaria CPSP/ComOpNav/MB nº 113/2026 + NPCP-SP 3ª Revisão Mod. 1",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:29:59Z",
+   "sha256": "e369bcd406add62fac82910464c8fcaeb4272f0f1abcadb6543c8aa7ee009648",
+   "bytes": 5021069,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/cpsp_2026-04_merged.pdf; coletado_em = mtime do arquivo original"
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/usda_gtr/fase0/gtr_brazil_ocean_quarterly.csv",
+   "origem": "USDA AMS — Grain Transportation Report (Socrata)",
+   "url": "URL de origem não anotada na Fase 0",
+   "coletado_em": "2026-09-30T21:09:47Z",
+   "sha256": "ec04efff6a51946a0ddcbdfa8c70a781775d4d4042a62b2292d96f473f646c8e",
+   "bytes": 42125,
+   "externo_ao_repo": false,
+   "nota": "copiado sem alteração de fase0/gtr_brazil_ocean_quarterly.csv; coletado_em = mtime do arquivo original"
+  }
+ ],
+ "atualizado_em": "2026-10-02T21:00:26Z"
+}

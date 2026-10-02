@@ -1,0 +1,25 @@
+item,descricao,de_bm,de_pm,para_bm,para_pm,delta_m,sentido,data_vigencia_impressa,vigencia_lida_na_captura,carta_vigencia,documento_homologacao,janela_inicio_captura,janela_fim_captura,revisoes,causa_impressa,obra_cais_simultanea,vigencia_impressa_disponivel
+I,Barra até Entreposto de Pesca,,12.8,,13.1,0.29999999999999893,aumento,,,,,20070602101756,20080928214953,,,,False
+I,Barra até Entreposto de Pesca,,13.1,,13.3,0.20000000000000107,aumento,,,,,20080928214953,20091223112559,,,,False
+I,Barra até Entreposto de Pesca (Trecho I),,13.3,13.2,,,"mudança de referencial (preamar -> Zero DHN), não comparável",2014-07-03,20140905223439,DP-GD/299.2014,,20140313164458,20140905223439,,,,True
+I,Barra até Entreposto de Pesca (Trecho I),13.2,,12.6,,-0.5999999999999996,redução,2017-07-07,20170723112612,DP-GD/356.2017,,20170621212229,20170723112612,,,,True
+I,Barra até Entreposto de Pesca (Trecho I),12.6,,13.0,,0.40000000000000036,aumento,2017-08-04,20170823183723,DP-GD/409.2017,,20170731165057,20170823183723,,,,True
+I,Barra até Entreposto de Pesca (Trecho I),13.0,,13.2,,0.1999999999999993,aumento,2017-10-20,20171026151943,DP-GD/524.2017,,20170924215552,20171026151943,,,,True
+I,Barra até Entreposto de Pesca (Trecho I),13.2,,13.5,,0.3000000000000007,aumento,2018-07-12,20180715010646,DIPRE-GD/301.2018,,20180712092121,20180715010646,,,,True
+II,Entreposto de Pesca até Torre Grande,,12.8,,13.1,0.29999999999999893,aumento,,,,,20070602101756,20080928214953,,,,False
+II,Entreposto de Pesca até Torre Grande,,13.1,,13.3,0.20000000000000107,aumento,,,,,20080928214953,20091223112559,,,,False
+II,Entreposto de Pesca à Torre Grande (Trecho II),,13.3,13.0,,,"mudança de referencial (preamar -> Zero DHN), não comparável",2014-07-03,20140905223439,DP-GD/299.2014,,20140313164458,20140905223439,,,,True
+II,Entreposto de Pesca à Torre Grande (Trecho II),13.0,,13.2,,0.1999999999999993,aumento,2014-12-09,20150710045928,DP-GD/560.2014,,20150411075504,20150710045928,,,,True
+II,Entreposto de Pesca à Torre Grande (Trecho II),13.2,,13.5,,0.3000000000000007,aumento,2018-07-12,20180715010646,DIPRE-GD/301.2018,,20180712092121,20180715010646,,,,True
+III,Torre Grande até Armazém 06 (Trecho III),12.7,,13.2,,0.5,aumento,2014-12-09,20150710045928,DP-GD/560.2014,,20150411075504,20150710045928,,,,True
+III,Torre Grande até Armazém 06 (Trecho III),13.2,,12.7,,-0.5,redução,2016-06-06,20160620151505,DP-GD/452.2016,,20160504214832,20160620151505,,,,True
+III,Torre Grande até Armazém 06 (Trecho III),12.7,,13.2,,0.5,aumento,2017-03-16,20170409063048,DP-GD/165.2017,,20170209174908,20170409063048,,,,True
+III,Torre Grande até Armazém 06 (Trecho III),13.2,,13.5,,0.3000000000000007,aumento,2018-07-12,20180715010646,DIPRE-GD/301.2018,,20180712092121,20180715010646,,,,True
+III+IV,Torre Grande até Alamoa,,12.0,,12.2,0.1999999999999993,aumento,,,,,20070214043531,20070602101756,,,,False
+IV,Armazém 06 até final da Alamoa 02 (Trecho IV),12.6,,13.2,,0.5999999999999996,aumento,2015-01-16,20150710045928,DP-GD/20.2015,,20150411075504,20150710045928,,,,True
+IV,Armazém 06 até o final do terminal BTP (Trecho IV),13.2,,12.7,,-0.5,redução,2016-06-06,20160620151505,DP-GD/452.2016,,20160504214832,20160620151505,,,,True
+IV,Armazém 06 até o Terminal Alamoa (Trecho IV),12.7,,13.2,,0.5,aumento,2017-03-16,20170409063048,DP-GD/165.2017,,20170209174908,20170409063048,,,,True
+IV,Armazém 06 até o Terminal Alamoa (Trecho IV),13.2,,13.5,,0.3000000000000007,aumento,2018-07-12,20180715010646,DIPRE-GD/301.2018,,20180712092121,20180715010646,,,,True
+IV-B,Terminal Alamoa até o final do Trecho IV (Trecho IV),11.2,,12.2,,1.0,aumento,,,,,20170209174908,20170409063048,,,,False
+IV-B,Terminal Alamoa até o final do Trecho IV (Trecho IV),12.2,,12.7,,0.5,aumento,2017-09-28,20180715010646,,,20170924215552,20171026151943,,,,True
+IV-B,Trecho IV-b – Terminal Alamoa até o final trecho IV,12.7,13.7,13.2,14.2,0.5,aumento,,,,DIPRE-GD/148.2025 de 29/04/2025,20250516013825,20250622213429,"260,266,268,271",,,False
