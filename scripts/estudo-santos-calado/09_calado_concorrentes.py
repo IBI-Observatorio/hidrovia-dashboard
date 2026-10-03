@@ -55,11 +55,12 @@ def texto_de(p):
 
 
 def extrai(txt):
+    txt = re.sub(r"\s+", " ", txt)
     out = []
     for m in re.finditer(r"calado", txt, flags=re.I):
         janela = txt[m.start(): m.start() + 160]
-        for n in re.finditer(r"(\d{1,2})[,\.](\d{1,2})\s?m\b", janela):
-            v = float(f"{n.group(1)}.{n.group(2)}")
+        for n in re.finditer(r"(?<![\d,\.])(\d{1,2})(?:[,\.](\d{1,2}))?\s?m(?:etros)?\b", janela):
+            v = float(f"{n.group(1)}.{n.group(2) or 0}")
             if 5 <= v <= 25:
                 out.append({"calado_m": v, "contexto": txt[max(0, m.start() - 120): m.start() + 160].strip()})
     vig = re.findall(r"(?:vig[eê]ncia|em vigor|a partir de)[^.]{0,60}?(\d{1,2}/\d{1,2}/\d{4})", txt, flags=re.I)
@@ -76,6 +77,31 @@ def extrai_canal_paranagua(txt):
             out.append({"calado_m": float(m.group(1).replace(",", ".")), "local": local,
                         "contexto": txt[max(0, m.start() - 60): m.end() + 40].strip()})
     return out
+
+
+REVISAO = PROC.parent / "revisao_calado_concorrentes.csv"
+
+
+def aplica_revisao(P):
+    """Revisão manual (arquivo versionado revisao_calado_concorrentes.csv): para cada porto, valor e trecho
+    do contexto que identifica a linha, a classe do valor e o local a que se refere. Linhas sem regra de
+    revisão ficam revisado = False."""
+    P = P.copy()
+    P["revisado"], P["classe"] = P.regra_extracao.eq("canal_paranagua"), None
+    P.loc[P.revisado, "classe"] = "canal_acesso"
+    if not REVISAO.exists():
+        return P
+    R = pd.read_csv(REVISAO, dtype=str)
+    for _, r in R.iterrows():
+        alvo = re.sub(r"\s+", " ", r.trecho_contexto)
+        m = (P.porto == r.porto) & P.contexto.str.contains(alvo, regex=False)
+        if isinstance(r.calado_m, str) and r.calado_m.strip():
+            m &= P.calado_m == float(r.calado_m)
+        P.loc[m, "revisado"] = True
+        P.loc[m, "classe"] = r.classe
+        P.loc[m & P.local.isna(), "local"] = r.local
+        P.loc[m, "nota_revisao"] = r.nota
+    return P
 
 
 def main():
@@ -126,7 +152,11 @@ def main():
     for nome, porto in F0.items():
         p = DIR / "fase0" / nome
         if p.exists():
-            vals, vig = extrai(texto_de(p))
+            tx = texto_de(p)
+            vals, vig = extrai(tx)
+            vals = [{**v, "local": None, "regra_extracao": "generica"} for v in vals]
+            if porto == "Paranaguá":
+                vals += [{**v, "regra_extracao": "canal_paranagua"} for v in extrai_canal_paranagua(tx)]
             for v in vals:
                 linhas.append({"porto": porto, "autoridade": None, "url": None, "captura_ts": "20260930000000",
                                "tipo_captura": "fase0", "arquivo": p.relative_to(DIR).as_posix(), **v,
@@ -136,7 +166,7 @@ def main():
     P = pd.DataFrame(linhas)
     if len(P):
         P = P.drop_duplicates(["porto", "url", "captura_ts", "calado_m", "contexto"])
-        P["revisado"] = False
+        P = aplica_revisao(P)
     salva(P, "calado_concorrentes_painel")
 
 

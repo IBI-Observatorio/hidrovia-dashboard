@@ -17,7 +17,7 @@ import urllib.parse
 
 import pandas as pd
 
-from _comum import RAW, INTERIM, PROC, baixa
+from _comum import RAW, INTERIM, PROC, baixa, salva
 
 PALAVRAS = {
     "calado_maximo": r"calado m[áa]ximo|calados m[áa]ximos|calado operacional",
@@ -48,8 +48,7 @@ def npcp():
                                    "trecho": tt[max(0, m.start() - 250): m.end() + 350]})
     pd.DataFrame(pags).to_parquet(INTERIM / "npcp_texto_por_pagina.parquet", index=False)
     R = pd.DataFrame(regras).drop_duplicates(["edicao", "pagina_pdf", "tema"])
-    R.to_csv(PROC / "npcp_regras.csv", index=False, encoding="utf-8")
-    print(f"  npcp_regras.csv: {len(R)} passagens")
+    salva(R, "npcp_regras")
 
 
 def chm():

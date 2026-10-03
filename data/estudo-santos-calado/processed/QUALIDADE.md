@@ -1,6 +1,6 @@
 # Relatório de qualidade — base do estudo Custo do calado perdido em Santos
 
-Gerado em 2026-10-02T23:36:14Z por `90_documenta.py`. Só contagens; nenhuma estimativa.
+Gerado em 2026-10-03T00:12:30Z por `90_documenta.py`. Só contagens; nenhuma estimativa.
 
 ## T1 — Escalas ANTAQ do complexo de Santos
 
@@ -43,10 +43,11 @@ Notas: 2026 cobre só jan–fev. 'Sentido Não Informado' (~5 Mt/ano) são linha
 
 ## T2 — Calado permitido (APS)
 
-- Capturas usadas: 132 (Wayback + captura própria em 2026-10-02); 10 sem tabela de calado (páginas de 1998–2000 só com profundidades, e stubs de redirecionamento de 288 bytes).
-- Períodos de trecho do canal: 57; de berço: 214.
+- Capturas usadas: 132 (Wayback + captura própria em 2026-10-03); 10 sem tabela de calado (páginas de 1998–2000 só com profundidades, e stubs de redirecionamento de 288 bytes).
+- Períodos de trecho do canal: 57; de berço: 191.
 - Eventos de revisão por trecho: 24, dos quais 17 com data de vigência impressa.
-- Berços ANTAQ do Porto Organizado casados com a tabela da APS: 56/79 (95.6% das atracações do PO). Os 7 terminais autorizados (DP World, TIPLAM, TMPC, Dow, Cutrale, Base de Dutos) não constam da tabela de berços da APS: para eles só o calado dos trechos do canal, e o trecho de cada um não foi atribuído (lacuna).
+- Berços ANTAQ do Porto Organizado casados com a tabela da APS ou com o caminho de um terminal autorizado: 67/79 (98.4% das atracações do PO; 98.7% do complexo). Não casados: CONCAIS (797), SUGADOR 26 (217), ARMAZÉM 27 (77), MORTONA (74), ARMAZÉM 7 (42), ARMAZEM 10 (38), ARMAZEM 11 (30), TECON 4 (11), ARMAZÉM 17/19 (4), SUGADOR 9 (4), SABOO (2), CAIS MACUCO (1).
+- Terminais autorizados: trecho **inferido pelo endereço** da NPCP-SP (Anexo 1-B), a conferir — DP World Santos: IV; Sucocítrico Cutrale: II; Terminal Marítimo Dow: II; Base Logística de Dutos: II; Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM: IV-B + Canal de Piaçaguera; Terminal Marítimo Privativo de Cubatão - TMPC: IV-B + Canal de Piaçaguera. O calado do Canal de Piaçaguera (Portaria CPSP) não foi coletado.
 
 ### Capturas por ano e formato
 
@@ -194,7 +195,7 @@ Notas: 2026 cobre só jan–fev. 'Sentido Não Informado' (~5 Mt/ano) são linha
 | Itaqui | EMAP | www.portodoitaqui.com.br/_files/arquivos/manual-porto-do-itaqui.pdf | 0 | 1 | True |
 
 - Paranaguá: extrator específico do canal (`regra_extracao = canal_paranagua`): 12,50 m (Canal da Galheta, 2019–jun/2023) → 12,80 (ago/2023) → 13,10 (mar/2025) → 13,30 (fev/2026), datas = capturas, não vigência.
-- Demais portos: só documento atual/Fase 0 (Rio Grande normativa 259, S. Francisco do Sul, Itaqui) com extração genérica (número após 'calado'), não revisada. Sem histórico no Wayback para Rio Grande e Itaqui; Vila do Conde só PDF da Fase 0. Histórico com data de vigência: lacuna.
+- Demais portos: só documento atual/Fase 0, extração genérica (número após 'calado') **revisada manualmente** (regras em `revisao_calado_concorrentes.csv`). Calado de canal identificado: Rio Grande canal externo 14,20 m, canal interno I 14,20, canal interno II 13,00, Porto Novo 9,45, S. José do Norte 7,20 (normativa 259, água doce); Itaqui canal de acesso 22,3 m; S. Francisco do Sul 12,8 m 'calado máximo operacional' do porto (sem separar canal e berço). Os demais valores são fundeio, manobra ou berço. Vila do Conde: o PDF da Fase 0 não trouxe valor com a regra. Sem histórico no Wayback para Rio Grande e Itaqui; histórico com data de vigência: lacuna.
 
 ## T7 — Controles
 

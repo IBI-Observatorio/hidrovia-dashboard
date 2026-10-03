@@ -3218,10 +3218,28 @@
    "externo_ao_repo": false
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/files_arquivos_manual_porto_do_itaqui_pdf/atual_20261003",
+   "origem": "EMAP — página/documento de calado (atual)",
+   "url": "https://www.portodoitaqui.com.br/_files/arquivos/manual-porto-do-itaqui.pdf",
+   "coletado_em": "2026-10-03T00:09:14Z",
+   "sha256": "2698e20c4b387dc1774311787df7d026eea8903e48bea542f72b99df3b46c96c",
+   "bytes": 3997849,
+   "externo_ao_repo": false
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/files_arquivos_manual_porto_do_itaqui_pdf/cdx_20261002.json",
    "origem": "Internet Archive — API CDX",
    "url": "https://web.archive.org/cdx/search/cdx?url=www.portodoitaqui.com.br%2F_files%2Farquivos%2Fmanual-porto-do-itaqui.pdf&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
    "coletado_em": "2026-10-02T23:33:18Z",
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "bytes": 3,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/files_arquivos_manual_porto_do_itaqui_pdf/cdx_20261003.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodoitaqui.com.br%2F_files%2Farquivos%2Fmanual-porto-do-itaqui.pdf&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-03T00:09:36Z",
    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
    "bytes": 3,
    "externo_ao_repo": false
@@ -3236,10 +3254,28 @@
    "externo_ao_repo": false
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/porto_do_itaqui_infraestrutura/atual_20261003",
+   "origem": "EMAP — página/documento de calado (atual)",
+   "url": "https://www.portodoitaqui.com.br/porto-do-itaqui/infraestrutura",
+   "coletado_em": "2026-10-03T00:08:57Z",
+   "sha256": "147f291d25ec0b7c00e180898d7a5461bbdca51e9789236341c7e3ccaa24b35b",
+   "bytes": 48375,
+   "externo_ao_repo": false
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/porto_do_itaqui_infraestrutura/cdx_20261002.json",
    "origem": "Internet Archive — API CDX",
    "url": "https://web.archive.org/cdx/search/cdx?url=www.portodoitaqui.com.br%2Fporto-do-itaqui%2Finfraestrutura&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
    "coletado_em": "2026-10-02T23:32:42Z",
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "bytes": 3,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/itaqui/porto_do_itaqui_infraestrutura/cdx_20261003.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portodoitaqui.com.br%2Fporto-do-itaqui%2Finfraestrutura&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-03T00:09:11Z",
    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
    "bytes": 3,
    "externo_ao_repo": false
@@ -3254,10 +3290,28 @@
    "externo_ao_repo": false
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/atual_20261003",
+   "origem": "APPA / Portos do Paraná — página/documento de calado (atual)",
+   "url": "https://www.portosdoparana.pr.gov.br/Operacional/Pagina/Calados",
+   "coletado_em": "2026-10-03T00:06:41Z",
+   "sha256": "ea20264178933c914d04d6600d4a473857beb831bddf7b0328defd231b58d45f",
+   "bytes": 78225,
+   "externo_ao_repo": false
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/cdx_20261002.json",
    "origem": "Internet Archive — API CDX",
    "url": "https://web.archive.org/cdx/search/cdx?url=www.portosdoparana.pr.gov.br%2FOperacional%2FPagina%2FCalados&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
    "coletado_em": "2026-10-02T23:30:22Z",
+   "sha256": "78b7919808291bd8276ebdc71a6a966306952dc8271d9d38f237be7c7a4be7c9",
+   "bytes": 2312,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/paranagu/operacional_pagina_calados/cdx_20261003.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portosdoparana.pr.gov.br%2FOperacional%2FPagina%2FCalados&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-03T00:06:59Z",
    "sha256": "78b7919808291bd8276ebdc71a6a966306952dc8271d9d38f237be7c7a4be7c9",
    "bytes": 2312,
    "externo_ao_repo": false
@@ -3442,10 +3496,28 @@
    "externo_ao_repo": false
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/rio_grande/site_public_uploads_site_normativas_259_pdf/atual_20261003",
+   "origem": "Portos RS — página/documento de calado (atual)",
+   "url": "https://www.portosrs.com.br/site/public/uploads/site/normativas/259.pdf",
+   "coletado_em": "2026-10-03T00:07:02Z",
+   "sha256": "fdb8680b3b1bc4c04283555c5e57852cf0a6ceb357c8f8eb2c24d663bcaabf57",
+   "bytes": 669462,
+   "externo_ao_repo": false
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/concorrentes/rio_grande/site_public_uploads_site_normativas_259_pdf/cdx_20261002.json",
    "origem": "Internet Archive — API CDX",
    "url": "https://web.archive.org/cdx/search/cdx?url=www.portosrs.com.br%2Fsite%2Fpublic%2Fuploads%2Fsite%2Fnormativas%2F259.pdf&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
    "coletado_em": "2026-10-02T23:31:59Z",
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "bytes": 3,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/rio_grande/site_public_uploads_site_normativas_259_pdf/cdx_20261003.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=www.portosrs.com.br%2Fsite%2Fpublic%2Fuploads%2Fsite%2Fnormativas%2F259.pdf&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-03T00:08:34Z",
    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
    "bytes": 3,
    "externo_ao_repo": false
@@ -3460,10 +3532,28 @@
    "externo_ao_repo": false
   },
   {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/atual_20261003",
+   "origem": "SCPar / APSFS — página/documento de calado (atual)",
+   "url": "https://portosaofrancisco.com.br/caracteristicas/",
+   "coletado_em": "2026-10-03T00:08:37Z",
+   "sha256": "ce4fffe0ff20a143a685d6d00744c3d7f2ee7115f4222bc98f2fade0baaf820e",
+   "bytes": 64260,
+   "externo_ao_repo": false
+  },
+  {
    "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/cdx_20261002.json",
    "origem": "Internet Archive — API CDX",
    "url": "https://web.archive.org/cdx/search/cdx?url=portosaofrancisco.com.br%2Fcaracteristicas%2F&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
    "coletado_em": "2026-10-02T23:32:22Z",
+   "sha256": "589dafec8eafac6ba9080722271a2915b256f8fa5f332eba6ea609da05224df8",
+   "bytes": 403,
+   "externo_ao_repo": false
+  },
+  {
+   "arquivo": "data/estudo-santos-calado/raw/concorrentes/s_o_francisco_do_sul/caracteristicas/cdx_20261003.json",
+   "origem": "Internet Archive — API CDX",
+   "url": "https://web.archive.org/cdx/search/cdx?url=portosaofrancisco.com.br%2Fcaracteristicas%2F&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cdigest%2Cmimetype",
+   "coletado_em": "2026-10-03T00:08:55Z",
    "sha256": "589dafec8eafac6ba9080722271a2915b256f8fa5f332eba6ea609da05224df8",
    "bytes": 403,
    "externo_ao_repo": false
@@ -3630,5 +3720,5 @@
    "nota": "copiado sem alteração de fase0/gtr_brazil_ocean_quarterly.csv; coletado_em = mtime do arquivo original"
   }
  ],
- "atualizado_em": "2026-10-02T23:33:18Z"
+ "atualizado_em": "2026-10-03T00:09:36Z"
 }

@@ -1,0 +1,98 @@
+instalacao,id_berco,berco,n_atracacoes,ano_min,ano_max,terminal,berco_aps,instalacao_caminho,metodo,observacao
+Base Logística de Dutos,BRSP0090001,Cais 1,417,2013,2026,Base Logística de Dutos,,Base Logística de Dutos,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Base Logística de Dutos,BRSP0090002,Cais 2,475,2014,2026,Base Logística de Dutos,,Base Logística de Dutos,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Base Logística de Dutos,BRSP0090003,SAIPEM 3,68,2015,2026,Base Logística de Dutos,,Base Logística de Dutos,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+DP World Santos,BRSP0080001,Berço 1,4017,2013,2026,DP World Santos,,DP World Santos,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+DP World Santos,BRSP0080002,Berço 2,2016,2014,2026,DP World Santos,,DP World Santos,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+DP World Santos,BRSP0085003,Berço 3,678,2019,2026,DP World Santos,,DP World Santos,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+DP World Santos,BRSP0085004,Berço 4,450,2020,2026,DP World Santos,,DP World Santos,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0101,AL 01,2549,2010,2026,Píer da Alamoa - Público,AL 01,,nome_normalizado,
+Santos,SSZ0102,AL 02,2135,2010,2026,Píer da Alamoa - Público,AL 02,,nome_normalizado,
+Santos,SSZ0103,AL 03,2024,2010,2026,Píer da Alamoa - Público,AL 03,,nome_normalizado,
+Santos,SSZ0104,AL 04,2016,2010,2026,Píer da Alamoa - Público,AL 04,,nome_normalizado,
+Santos,SSZ0107,BTP 01,2825,2013,2026,Cais da BTP (SSZ 41) - Privativo,BTP 01,,nome_normalizado,
+Santos,SSZ0108,BTP 02,3075,2013,2026,Cais da BTP (SSZ 41) - Privativo,BTP 02,,nome_normalizado,
+Santos,SSZ0109,BTP 03,2852,2013,2026,Cais da BTP (SSZ 41) - Privativo,BTP 03,,nome_normalizado,
+Santos,SSZ0111,IB SP,2017,2010,2026,Cais da Ilha Barnabé - Público,IB SP,,nome_normalizado,
+Santos,SSZ0112,IB BC,2154,2010,2026,Cais da Ilha Barnabé - Público,IB BC,,nome_normalizado,
+Santos,SSZ0210,SABOO,2,2011,2012,Cais do Saboó - Público,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0211,CS 02 + CS 01,1496,2010,2026,Cais do Saboó - Público,CS 01;CS 02,,manual,
+Santos,SSZ0212,CS.2,1251,2010,2026,Cais do Saboó - Público,CS 02,,manual,
+Santos,SSZ0213,CS 03,933,2010,2026,Cais do Saboó - Público,CS 03,,nome_normalizado,
+Santos,SSZ0214,CS 04,1370,2010,2026,Cais da Ecoporto (SSZ 35) - Privativo,CS 04,,nome_normalizado,
+Santos,SSZ0240,CORTE,492,2010,2026,Cais da Ecoporto (SSZ 35) - Privativo,CORTE,,nome_normalizado,
+Santos,SSZ0310,VALONGO,1456,2010,2026,Cais da Ecoporto (SSZ 35) - Privativo,VALONGO,,nome_normalizado,
+Santos,SSZ0317,ARMAZÉM 7,42,2012,2023,Cais Público - Valongo,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0319,SUGADOR 9,4,2014,2018,Cais Público - Valongo (cadastro antigo),,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0320,ARMAZEM 10,38,2010,2018,Cais Público - Valongo (cadastro antigo),,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0321,ARMAZEM 11,30,2010,2025,Cais Público - Valongo,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0322,ARMAZEM 12,140,2010,2026,Cais Público - Valongo,ARM 12,,manual,
+Santos,SSZ0412,ARM 12A,1153,2010,2026,Cais do Paquetá - Público,ARM 12-A,,manual,
+Santos,SSZ0413,ARM 13/14,711,2010,2026,Cais do Paquetá - Público,ARM 13/14,,nome_normalizado,
+Santos,SSZ0415,ARM 15,1245,2010,2025,Cais do Paquetá - Público,ARM 15,,nome_normalizado,
+Santos,SSZ0416,ARM 16/17,2229,2010,2026,Cais do Outeirinhos - Público,ARM 16/17,,nome_normalizado,
+Santos,SSZ0417,ARMAZÉM 17/19,4,2010,2022,Teaçu 2 (cadastro antigo),,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0419,ARM 19,2034,2010,2026,Cais do Outeirinhos - Público,ARM 19,,nome_normalizado,
+Santos,SSZ0420,ARM 20/21,2265,2010,2026,Cais do Outeirinhos - Público,ARM 20/21,,nome_normalizado,
+Santos,SSZ0422,ARM 22 + ARM 23,235,2010,2024,Cais do Outeirinhos - Público,ARM 22/23,,manual,
+Santos,SSZ0423,ARMAZEM 23,936,2010,2026,Cais do Outeirinhos - Público,ARM 22/23,,manual,
+Santos,SSZ0443,CURVA 23,2,2010,2011,Cais do Outeirinhos - Público,CURVA 23,,nome_normalizado,
+Santos,SSZ0524,CONCAIS,797,2010,2022,Cais do Outeirinhos - Público,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0525,ARM FRIG/25,659,2010,2026,Cais do Outeirinhos - Público,ARM 25,,manual,
+Santos,SSZ0526,SUGADOR 26,217,2010,2014,Cais do Outeirinhos - Público,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0527,ARMAZÉM 27,77,2010,2013,Cais do Outeirinhos - Público,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0539,MORTONA,74,2010,2014,Cais do Outeirinhos - Público,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0542,CAIS MACUCO,1,2012,2012,Cais do Outeirinhos - Público,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0626,OUTEIRINHOS 3,583,2014,2026,Cais do Outeirinhos - Público,OUTEIRINHOS 03,,manual,
+Santos,SSZ0627,OUTEIRINHOS 2 + OUTEIRINHOS 1,322,2014,2026,Cais do Outeirinhos - Público,OUTEIRINHOS 01(MB);OUTEIRINHOS 02(MB),,manual,
+Santos,SSZ0628,OUTEIRINHOS 1,435,2014,2026,Cais do Outeirinhos - Público,OUTEIRINHOS 01(MB),,manual,
+Santos,SSZ0629,ARM 29,719,2010,2026,Cais do Macuco - Público,ARM 29,,nome_normalizado,
+Santos,SSZ0630,ARM 29/30 + ARM 30,624,2010,2023,Cais do Macuco - Público,ARM 29;ARM 30,,manual,
+Santos,SSZ0640,ARMAZÉM 30,273,2010,2026,Cais do Macuco - Público,ARM 30,,manual,
+Santos,SSZ0641,ARM 31,1339,2010,2026,Cais do Macuco - Público,ARM 31,,nome_normalizado,
+Santos,SSZ0651,ARMAZÉM 31/32,300,2010,2025,Cais do Macuco - Público,ARM 31;ARM 32,,manual,
+Santos,SSZ0652,ARM 31/32 + ARM 32,1082,2010,2026,Cais do Macuco - Público,ARM 31;ARM 32,,manual,
+Santos,SSZ0653,ARM 33,466,2010,2026,Cais do Macuco - Público,ARM 33,,nome_normalizado,
+Santos,SSZ0663,ARM 33/34,86,2010,2022,Cais do Macuco - Público,ARM 33;ARM 34,,manual,
+Santos,SSZ0664,ARM 34,272,2010,2026,Libra Terminais S/A (cadastro antigo),ARM 34,,nome_normalizado,
+Santos,SSZ0665,ARM 35.0,1560,2010,2023,Libra Terminais S/A (cadastro antigo),ARM 35P2 (35.1+35.2),,manual,
+Santos,SSZ0675,ARM 35P1,184,2011,2026,Cais do Macuco - Público,ARM 35.1,,manual,
+Santos,SSZ0676,ARM 35P2,1987,2010,2026,Cais do Macuco - Público,ARM 35.2,,manual,
+Santos,SSZ0736,ARM 37,1,2015,2015,Cais da Ponta da Praia - Público,37 Pto 1 e 2,,manual,
+Santos,SSZ0737,ARMAZÉM 37.1,1504,2010,2026,T-37 (cadastro antigo),37 Pto 1 e 2,,manual,
+Santos,SSZ0738,ARMAZÉM 37.2,57,2011,2022,T-37 (cadastro antigo),37 Pto 1 e 2,,manual,
+Santos,SSZ0748,ARM 38,1481,2010,2026,Cais da Ponta da Praia - Público,ARM 38,,nome_normalizado,
+Santos,SSZ0749,ARMAZÉM 38/39,2,2013,2015,Cais da Ponta da Praia - Público,ARM 38;ARM 39,,manual,
+Santos,SSZ0759,ARM 39,1623,2010,2026,Cais da Ponta da Praia - Público,ARM 39,,nome_normalizado,
+Santos,SSZ0803,TGG,2201,2010,2026,Píer da TGG (SSZ 14) - Privativo,TGG,,nome_normalizado,
+Santos,SSZ0804,TERMAG,1241,2010,2026,Píer da TERMAG (SSZ 12) - Privativo,TERMAG,,nome_normalizado,
+Santos,SSZ0811,TECON 1.2,4372,2010,2026,Cais da Santos Brasil (SSZ 16) - Privativo,TECON 1.2,,nome_normalizado,
+Santos,SSZ0812,TECON 3,4888,2010,2026,Cais da Santos Brasil (SSZ 16) - Privativo,TECON 3,,nome_normalizado,
+Santos,SSZ0813,TECON 2,4584,2010,2026,Cais da Santos Brasil (SSZ 16) - Privativo,TECON 2,,nome_normalizado,
+Santos,SSZ0814,TECON 1.1,2913,2010,2026,Cais da Santos Brasil (SSZ 16) - Privativo,TECON 1.1,,nome_normalizado,
+Santos,SSZ0815,TEV,481,2010,2026,Cais do TEV (SSZ 18) - Privativo,TEV,,nome_normalizado,
+Santos,SSZ0816,TECON 4,11,2010,2019,Cais da Santos Brasil (SSZ 16) - Privativo,,,,sem correspondente na tabela da APS (não casado)
+Santos,SSZ0901,ULTRAFERTIL,128,2010,2011,TUPs Santos (cadastro antigo),,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0902,ULTRAFERTIL,24,2010,2010,TUPs Santos (cadastro antigo),,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0910,AGEO 01,928,2015,2026,Píer da Ageo (SSZ 32) - Privativo,AGEO 01,,nome_normalizado,
+Santos,SSZ0911,COSIPA,22,2010,2011,TUPs Santos (cadastro antigo),,Terminal Marítimo Privativo de Cubatão - TMPC,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0912,COSIPA,36,2010,2011,TUPs Santos (cadastro antigo),,Terminal Marítimo Privativo de Cubatão - TMPC,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0913,COSIPA,51,2010,2011,TUPs Santos (cadastro antigo),,Terminal Marítimo Privativo de Cubatão - TMPC,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0914,COSIPA,55,2010,2011,TUPs Santos (cadastro antigo),,Terminal Marítimo Privativo de Cubatão - TMPC,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0915,COSIPA,131,2010,2011,TUPs Santos (cadastro antigo),,Terminal Marítimo Privativo de Cubatão - TMPC,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0921,TERM.DOW,113,2010,2011,TUPs Santos (cadastro antigo),,Terminal Marítimo Dow,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0931,CUTRALE,77,2010,2011,TUPs Santos (cadastro antigo),,Sucocítrico Cutrale,tup_cadastro_antigo,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Santos,SSZ0941,TEAG,1082,2010,2026,Píer da TEAG (SSZ 10) - Privativo,TEAG,,nome_normalizado,
+Santos,SSZ0942,TEG,1283,2010,2026,Píer da TEG (SSZ 08) - Privativo,TEG,,nome_normalizado,
+Santos,SSZ5090,AGEO SP,180,2023,2026,Píer da Ageo (SSZ 32) - Privativo,AGEO SP,,nome_normalizado,
+Sucocítrico Cutrale,BRSP0048932,Cutrale,1199,2010,2026,Sucocítrico Cutrale,,Sucocítrico Cutrale,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,BRSP0010001,TUF1,1459,2010,2026,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,BRSP0010002,TIP 2,719,2017,2026,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,BRSP0010003,TIP 3,873,2017,2026,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,BRSP0010004,TIP 4,396,2018,2026,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,,Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Marítimo Dow,BRSP0050077,DOW,1403,2010,2026,Terminal Marítimo Dow,,Terminal Marítimo Dow,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Marítimo Privativo de Cubatão - TMPC,BRSP0020001,Pier #1,71,2010,2019,Terminal Marítimo Privativo de Cubatão - TMPC,,Terminal Marítimo Privativo de Cubatão - TMPC,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Marítimo Privativo de Cubatão - TMPC,BRSP0020002,Pier #2,161,2010,2023,Terminal Marítimo Privativo de Cubatão - TMPC,,Terminal Marítimo Privativo de Cubatão - TMPC,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Marítimo Privativo de Cubatão - TMPC,BRSP0020003,Cais I #3,427,2010,2026,Terminal Marítimo Privativo de Cubatão - TMPC,,Terminal Marítimo Privativo de Cubatão - TMPC,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Marítimo Privativo de Cubatão - TMPC,BRSP0020004,Cais I #4,397,2010,2026,Terminal Marítimo Privativo de Cubatão - TMPC,,Terminal Marítimo Privativo de Cubatão - TMPC,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)
+Terminal Marítimo Privativo de Cubatão - TMPC,BRSP0020005,Cais II #5,441,2010,2026,Terminal Marítimo Privativo de Cubatão - TMPC,,Terminal Marítimo Privativo de Cubatão - TMPC,terminal_autorizado,terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)

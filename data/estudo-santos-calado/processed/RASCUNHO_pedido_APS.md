@@ -37,7 +37,7 @@ calados máximos de operação do canal de navegação**, de 2010 até a Revisã
 
 Em especial: as tabelas de calado por berço anteriores à Revisão nº 221 (16/07/2019), que não constam
 das versões públicas da página; e as datas de vigência das alterações cuja página não trouxe a frase
-"entrou em vigor" (alterações no Trecho IV-b em 2017 e em 2025, entre outras).
+"entrou em vigor" (alterações no Trecho IV-b em 2017 e em 2025, e as de 2007 a 2009).
 
 **4. Desde quando** o campo de calado de entrada e de saída existe na nomeação (sistema e norma de origem),
 e se houve mudança de definição do campo ao longo do tempo (calado previsto pelo agente × calado medido).
@@ -54,6 +54,7 @@ solicito o fornecimento do restante, nos termos do art. 7º, § 2º, da LAI.
 ### Notas para o Bruno (não fazem parte do pedido)
 
 - Itens 3 e 5 vêm de lacunas concretas da base: a tabela de berços só tem histórico público desde
-  jul/2019; 8 dos 24 eventos de revisão do canal não têm data de vigência impressa.
+  jul/2019; 7 dos 24 eventos de revisão do canal não têm data de vigência impressa (5 de 2007–2009 e
+  os 2 do Trecho IV-b, em 2017 e 2025).
 - O item 1.7 (maré) serve para separar o efeito do calado permitido do efeito da janela de maré (TR §5.1).
 - Duas vias, como no inventário: LAI (Fala.BR, 20 + 10 dias) e ofício IBI + NORA à Diretoria de Operações.

@@ -17,7 +17,7 @@ import subprocess
 
 import pandas as pd
 
-from _comum import RAIZ, RAW, INTERIM, PROC, registra, agora
+from _comum import RAIZ, RAW, INTERIM, PROC, registra, agora, salva
 
 ARQ = "data/lineup/santos-escalas-calado.json"
 REF = "origin/main"
@@ -51,6 +51,7 @@ def main():
     ult["imo"] = ult.imo.str.lstrip("0").str.zfill(7)
     ult["chegada"] = pd.to_datetime(ult.chegada, errors="coerce")
     ult.to_parquet(INTERIM / "escalas_calado_aps.parquet", index=False)
+    salva(ult, "escalas_calado_aps")
 
     esc = pd.read_parquet(PROC / "escalas_santos.parquet", columns=["imo", "data_chegada", "data_atracacao"])
     max_antaq = esc.data_atracacao.max()

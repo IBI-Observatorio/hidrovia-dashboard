@@ -140,30 +140,66 @@ def main():
     E = pd.DataFrame(ev)
     E = E[~E.sentido.str.startswith("sem mudança")].copy()
     E["vigencia_impressa_disponivel"] = E.data_vigencia_impressa.notna()
-    E.to_csv(PROC / "eventos_revisao_calado.csv", index=False, encoding="utf-8")
-    print(f"  eventos_revisao_calado.csv: {len(E)} eventos")
+    salva(E, "eventos_revisao_calado")
+
+    # limites por DWT (calado mínimo a vante, trim, imersão do propulsor), por captura
+    W = pd.read_parquet(INTERIM / "aps_limites_dwt.parquet")
+    if len(W):
+        salva(W, "aps_limites_dwt")
 
     # caminho berço -> trechos, a partir da captura mais recente de cada berço
+    C = pd.DataFrame()
     if len(Bc):
         ult = Bc.sort_values("captura_ts").groupby("item").tail(1)
         cam = []
         for _, r in ult.iterrows():
-            tr = r.trecho_berco
+            tr = r["trecho_berco"]
             # o rótulo "Trecho IV" na tabela de berços pode trazer os valores do IV-b: resolve pelos valores
-            canal = T[(T.arquivo == r.arquivo)]
-            alvo = canal[(canal.calado_bm == r.calado_trecho_bm)]
+            canal = T[(T.arquivo == r["arquivo"])]
+            alvo = canal[(canal.calado_bm == r["calado_trecho_bm"])]
             if tr and tr.startswith("IV") and len(alvo):
-                tr = alvo.item.iloc[0] if alvo.item.iloc[0].startswith("IV") else tr
+                tr = alvo["item"].iloc[0] if alvo["item"].iloc[0].startswith("IV") else tr
             caminho = ORDEM[:ORDEM.index(tr) + 1] if tr in ORDEM else None
-            cam.append({"berco_aps": r.item, "trecho_impresso": r.trecho_impresso, "trecho_situado": tr,
+            cam.append({"berco_aps": r["item"], "instalacao": "Santos (Porto Organizado)",
+                        "trecho_impresso": r["trecho_impresso"], "trecho_situado": tr,
                         "trechos_percorridos": ",".join(caminho) if caminho else None,
-                        "captura_ts": r.captura_ts, "arquivo": r.arquivo,
+                        "trecho_adicional_fora_tabela_aps": None,
+                        "captura_ts": r["captura_ts"], "arquivo": r["arquivo"], "metodo": "impresso_tabela_aps",
                         "regra": "APS: 'os calados nos berços ficam limitados ao calado máximo do trecho do canal no qual "
                                  "estão situados'; ordem dos trechos pela descrição impressa (Barra->Entreposto->Torre "
                                  "Grande->Armazém 06->Alamoa->final do trecho IV)"})
         C = pd.DataFrame(cam)
-        C.to_csv(PROC / "caminho_berco.csv", index=False, encoding="utf-8")
-        print(f"  caminho_berco.csv: {len(C)} berços")
+        # Terminais autorizados (fora da tabela de berços da APS): trecho inferido pelo endereço impresso na
+        # NPCP-SP (Anexo 1-B) = mesmo bairro de berços da APS com trecho conhecido. A CONFERIR com APS/praticagem.
+        def trecho_de(bercos):
+            s = C[C.berco_aps.isin(bercos)].trecho_situado.dropna().unique()
+            return s[0] if len(s) == 1 else None
+        TUP = [
+            ("DP World Santos", ["IB SP", "IB BC", "AGEO 01"], None,
+             "NPCP-SP Anexo 1-B: DP World na Ilha Barnabé, mesmo endereço de AGEO (berços AGEO e IB da APS)"),
+            ("Sucocítrico Cutrale", ["TEV", "TERMAG"], None,
+             "NPCP-SP Anexo 1-B: Av. Santos Dumont, Conceiçãozinha (Guarujá), mesmo bairro de TEV e TERMAG"),
+            ("Terminal Marítimo Dow", ["TEV", "TERMAG"], None,
+             "NPCP-SP Anexo 1-B: Av. Santos Dumont, Conceiçãozinha (Guarujá), mesmo bairro de TEV e TERMAG"),
+            ("Base Logística de Dutos", ["TEV", "TERMAG"], None,
+             "berço ANTAQ 'SAIPEM 3' => Saipem; NPCP-SP Anexo 1-B: Av. Santos Dumont, Conceiçãozinha (Guarujá)"),
+            ("Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM", None, "Canal de Piaçaguera",
+             "NPCP-SP 5.1.b.II e 5.14: acesso pelo Canal de Piaçaguera, calado por Portaria específica da CPSP (não coletada)"),
+            ("Terminal Marítimo Privativo de Cubatão - TMPC", None, "Canal de Piaçaguera",
+             "NPCP-SP 5.1.b.II e 5.14: acesso pelo Canal de Piaçaguera, calado por Portaria específica da CPSP (não coletada)"),
+        ]
+        tups = []
+        for inst, ref, extra, fonte in TUP:
+            tr = trecho_de(ref) if ref else "IV-B"
+            caminho = ORDEM[:ORDEM.index(tr) + 1] if tr in ORDEM else None
+            tups.append({"berco_aps": None, "instalacao": inst, "trecho_impresso": None, "trecho_situado": tr,
+                         "trechos_percorridos": ",".join(caminho) if caminho else None,
+                         "trecho_adicional_fora_tabela_aps": extra, "captura_ts": None, "arquivo": None,
+                         "metodo": "inferido_por_endereco_npcp" if ref else "npcp_canal_piacaguera",
+                         "regra": fonte + (f"; berços de referência: {', '.join(ref)}" if ref else
+                                           "; percorre todo o canal da APS (I a IV-B) antes de Piaçaguera — a conferir")})
+        C = pd.concat([C, pd.DataFrame(tups)], ignore_index=True)
+        salva(C, "caminho_berco")
 
     # casamento ANTAQ -> APS
     esc = pd.read_parquet(PROC / "escalas_santos.parquet", columns=["instalacao", "id_berco", "berco", "terminal", "ano_antaq"])
@@ -183,22 +219,38 @@ def main():
               "ARM 29/30 + ARM 30": ["ARM 29", "ARM 30"], "ARM 31/32 + ARM 32": ["ARM 31", "ARM 32"],
               "ARM 33/34": ["ARM 33", "ARM 34"], "ARMAZÉM 30": ["ARM 30"], "ARMAZÉM 31/32": ["ARM 31", "ARM 32"],
               "ARMAZÉM 37.1": ["37 Pto 1 e 2"], "ARM 37": ["37 Pto 1 e 2"], "ARMAZÉM 38/39": ["ARM 38", "ARM 39"],
-              "ARMAZEM 12": ["ARM 12"]}
+              "ARMAZEM 12": ["ARM 12"],
+              # a própria APS rotula 'ARM 35P2 (35.1+35.2)': o ARM 35 inteiro do cadastro antigo da ANTAQ
+              "ARM 35.0": ["ARM 35P2 (35.1+35.2)"], "ARMAZÉM 37.2": ["37 Pto 1 e 2"]}
+    # TUPs registrados no Porto Organizado no cadastro antigo da ANTAQ (2010–2011) -> terminal autorizado atual
+    TUP_ANTIGO = {"COSIPA": "Terminal Marítimo Privativo de Cubatão - TMPC",
+                  "ULTRAFERTIL": "Terminal Integrador Portuário Luiz Antonio Mesquita - TIPLAM",
+                  "TERM.DOW": "Terminal Marítimo Dow", "CUTRALE": "Sucocítrico Cutrale"}
     linhas = []
     for _, r in bant.iterrows():
-        alvo, met = None, None
+        alvo, met, tup = None, None, None
         if r.instalacao == "Santos":
             if r.berco in MANUAL:
                 alvo, met = [a for a in MANUAL[r.berco] if a in aps] or None, "manual"
             elif norm(r.berco) in na:
                 alvo, met = [na[norm(r.berco)]], "nome_normalizado"
-        linhas.append({**r.to_dict(), "berco_aps": ";".join(alvo) if alvo else None, "metodo": met,
-                       "observacao": None if alvo else ("terminal autorizado fora da tabela de berços da APS" if r.instalacao != "Santos"
-                                                        else "sem correspondente na tabela da APS (não casado)")})
+            elif r.berco in TUP_ANTIGO:
+                tup, met = TUP_ANTIGO[r.berco], "tup_cadastro_antigo"
+        else:
+            tup, met = r.instalacao, "terminal_autorizado"
+        obs = None
+        if not alvo and not tup:
+            obs = "sem correspondente na tabela da APS (não casado)"
+        elif tup:
+            obs = "terminal autorizado fora da tabela de berços da APS: caminho em caminho_berco (instalacao)"
+        linhas.append({**r.to_dict(), "berco_aps": ";".join(alvo) if alvo else None, "instalacao_caminho": tup,
+                       "metodo": met, "observacao": obs})
     BA = pd.DataFrame(linhas)
-    BA.to_csv(PROC / "berco_antaq_aps.csv", index=False, encoding="utf-8")
-    cas = BA[BA.berco_aps.notna()].n_atracacoes.sum() / BA[BA.instalacao == "Santos"].n_atracacoes.sum()
-    print(f"  berco_antaq_aps.csv: {BA.berco_aps.notna().sum()}/{len(BA)} berços; {cas:.1%} das atracações do PO casadas")
+    salva(BA, "berco_antaq_aps")
+    po = BA[BA.instalacao == "Santos"]
+    cas = po[po.berco_aps.notna() | po.instalacao_caminho.notna()].n_atracacoes.sum() / po.n_atracacoes.sum()
+    tot = BA[BA.berco_aps.notna() | BA.instalacao_caminho.notna()].n_atracacoes.sum() / BA.n_atracacoes.sum()
+    print(f"  casamento: {cas:.1%} das atracações do PO e {tot:.1%} do complexo com caminho atribuído")
 
 
 if __name__ == "__main__":

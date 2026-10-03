@@ -75,6 +75,14 @@ def trecho_id(descr: str) -> str | None:
     return None
 
 
+def nome_berco(s: str) -> str:
+    """Tira marcas de nota de rodapé do rótulo do berço: '(5)', '*', '³', e o '5'/'6' após 'ARM 12-A'."""
+    s = re.sub(r"\s*\(\d\)\s*$", "", s).strip()
+    s = re.sub(r"\s*[\*¹²³⁴⁵⁶]+$", "", s).strip()
+    s = re.sub(r"^(ARM 12-A)\s+\d$", r"\1", s)
+    return s
+
+
 def grade(tabela) -> list[list[str]]:
     """Expande rowspan/colspan de uma <table> numa grade de textos."""
     linhas, pend = [], {}
@@ -202,7 +210,7 @@ def parse(arq: Path, pagina: str, captura_ts: str):
                 proj, bm, pm = (vals + [None] * 3)[:3] if tem_projeto else (None, *(vals + [None, None])[:2])
                 resto = [c for c in r[3:] if c not in vals and c is not trc]
                 notas = re.findall(r"\((\d)\)", " ".join([r[0]] + [c for c in r if re.fullmatch(r"\(\d\)", c)]))
-                item(tipo="berco", item=re.sub(r"\s*\(\d\)\s*$", "", r[0]).strip(), descricao=r[0],
+                item(tipo="berco", item=nome_berco(r[0]), descricao=r[0],
                      cabecos=r[1], comprimento_m=num(r[2] + ",0") if re.fullmatch(r"\d+", r[2] or "") else None,
                      profundidade_projeto=num(proj) if proj else None,
                      calado_bm=num(bm) if bm and "," in bm else None, calado_pm=num(pm) if pm and "," in pm else None,

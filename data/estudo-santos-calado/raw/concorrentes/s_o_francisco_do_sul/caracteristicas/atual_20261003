@@ -1,0 +1,909 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Porto de São Francisco do Sul é uma autarquia do Governo do Estado de Santa Catarina. Com uma administração autônoma, o porto funciona com a agilidade e a eficiência de um terminal privado.">
+    <meta name="keywords" content="apsfs,porto,navio,navegacao,atracacao,fundeio,berco" />
+    <meta name="author" content="apsfs">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <title>Porto de São Francisco do Sul</title>
+    <!-- Stylesheets -->
+    <!-- bootstrap v3.3.6 css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/bootstrap.css?version=1.1" rel="stylesheet">
+    <!-- CSS | Custom Margin Padding Collection -->
+    <link href="https://portosaofrancisco.com.br/public/css/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
+    <!-- jqueryUI css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/jquery-ui.css" rel="stylesheet">
+    <!-- font-awesome css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/font-awesome.css" rel="stylesheet">
+    <!-- flaticon css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/flaticon.css" rel="stylesheet">
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/flaticon2.css" rel="stylesheet">
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/flaticon3.css?version=1.2" rel="stylesheet">
+    <!-- factoryplus-icons css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/factoryplus-icons.css" rel="stylesheet">
+    <!-- animate css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/animate.css" rel="stylesheet">
+    <!-- owl.carousel css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/owl.css" rel="stylesheet">
+    <!-- fancybox css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/jquery.fancybox.css" rel="stylesheet">
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/hover.css" rel="stylesheet">
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/frontend.css" rel="stylesheet">
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/style.css?version=8.3" rel="stylesheet">
+    <!-- switcher css -->
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/switcher.css" rel="stylesheet">
+    <link rel='stylesheet' id='factoryhub-color-switcher-css' href='https://portosaofrancisco.com.br/public/css/cargohub/switcher/default.css' />
+    <!-- revolution slider css -->
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/cargohub/revolution/settings.css">
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/cargohub/revolution/layers.css">
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/cargohub/revolution/navigation.css">
+    <!-- jquery atip -->
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/js/jquery-qtip-custom/jquery.qtip.min.css">
+    <!--Favicon-->
+    <link rel="shortcut icon" href="https://portosaofrancisco.com.br/public/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://portosaofrancisco.com.br/public/images/favicon.ico" type="image/x-icon">
+    <!-- Responsive -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://portosaofrancisco.com.br/public/css/cargohub/responsive.css" rel="stylesheet">
+    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+
+    <!-- css -->
+    <link href="https://portosaofrancisco.com.br/public/css/general.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/tabua-mare.css">
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/home-page.css?1.1">
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/_contacts.css">
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/_layout_helper.css">
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/calc-armaz.css">
+    <link rel="stylesheet" type="text/css" href="https://portosaofrancisco.com.br/public/css/acessibilidade.css">
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script type="text/javascript" language="javascript">
+        var baseUrl = "https://portosaofrancisco.com.br/";
+    </script>
+</head>
+
+<body class="home header-transparent header-sticky header-v1 hide-topbar-mobile">
+
+
+    <div class="accessibility-wrapper" id="accessibilityBar">
+    <!-- Botão -->
+    <button class="accessibility-btn" id="toggleAccessibility">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor">
+            <path d="M64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320zM225.5 233.9C213.3 228.7 199.2 234.3 194 246.5C188.8 258.7 194.4 272.8 206.6 278L218.5 283.1C235.8 290.5 253.7 296 272.1 299.4L272.1 349.5C272.1 353.8 271.4 358.1 270 362.1L241.3 448.2C237.1 460.8 243.9 474.4 256.5 478.6C269.1 482.8 282.7 476 286.9 463.4L311.3 390.2C312.6 386.4 316.1 383.8 320.1 383.8C324.1 383.8 327.7 386.4 328.9 390.2L353.3 463.4C357.5 476 371.1 482.8 383.7 478.6C396.3 474.4 403 461 398.8 448.4L370.1 362.3C368.7 358.2 368 354 368 349.7L368 299.6C386.4 296.1 404.3 290.7 421.6 283.3L433.5 278.2C445.7 273 451.3 258.9 446.1 246.7C440.9 234.5 426.8 228.9 414.6 234.1L402.7 239C376.6 250.2 348.5 256 320 256C291.5 256 263.5 250.2 237.3 239L225.4 233.9zM320 224C342.1 224 360 206.1 360 184C360 161.9 342.1 144 320 144C297.9 144 280 161.9 280 184C280 206.1 297.9 224 320 224z" />
+        </svg>
+    </button>
+
+    <!-- Painel -->
+    <div class="accessibility-panel">
+        <ul>
+            <li>
+                <button id="increase-font">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor">
+                        <path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z" />
+                    </svg>
+                    Aumentar fonte
+                </button>
+            </li>
+
+            <li>
+                <button id="decrease-font">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor">
+                        <path d="M96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320z" />
+                    </svg>
+                    Diminuir fonte
+                </button>
+            </li>
+
+            <li>
+                <button id="contrast-mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor">
+                        <path d="M512 320C512 214 426 128 320 128L320 512C426 512 512 426 512 320zM64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320z" />
+                    </svg>
+                    Preto e branco
+                </button>
+            </li>
+
+            <li>
+                <button id="invert-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor">
+                        <path d="M576 320C576 320.9 576 321.8 576 322.7C575.6 359.2 542.4 384 505.9 384L408 384C381.5 384 360 405.5 360 432C360 435.4 360.4 438.7 361 441.9C363.1 452.1 367.5 461.9 371.8 471.8C377.9 485.6 383.9 499.3 383.9 513.8C383.9 545.6 362.3 574.5 330.5 575.8C327 575.9 323.5 576 319.9 576C178.5 576 63.9 461.4 63.9 320C63.9 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320zM192 352C192 334.3 177.7 320 160 320C142.3 320 128 334.3 128 352C128 369.7 142.3 384 160 384C177.7 384 192 369.7 192 352zM192 256C209.7 256 224 241.7 224 224C224 206.3 209.7 192 192 192C174.3 192 160 206.3 160 224C160 241.7 174.3 256 192 256zM352 160C352 142.3 337.7 128 320 128C302.3 128 288 142.3 288 160C288 177.7 302.3 192 320 192C337.7 192 352 177.7 352 160zM448 256C465.7 256 480 241.7 480 224C480 206.3 465.7 192 448 192C430.3 192 416 206.3 416 224C416 241.7 430.3 256 448 256z" />
+                    </svg>
+                    Inverter cores
+                </button>
+            </li>
+
+            <li>
+                <button id="highlight-links">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor">
+                        <path d="M451.5 160C434.9 160 418.8 164.5 404.7 172.7C388.9 156.7 370.5 143.3 350.2 133.2C378.4 109.2 414.3 96 451.5 96C537.9 96 608 166 608 252.5C608 294 591.5 333.8 562.2 363.1L491.1 434.2C461.8 463.5 422 480 380.5 480C294.1 480 224 410 224 323.5C224 322 224 320.5 224.1 319C224.6 301.3 239.3 287.4 257 287.9C274.7 288.4 288.6 303.1 288.1 320.8C288.1 321.7 288.1 322.6 288.1 323.4C288.1 374.5 329.5 415.9 380.6 415.9C405.1 415.9 428.6 406.2 446 388.8L517.1 317.7C534.4 300.4 544.2 276.8 544.2 252.3C544.2 201.2 502.8 159.8 451.7 159.8zM307.2 237.3C305.3 236.5 303.4 235.4 301.7 234.2C289.1 227.7 274.7 224 259.6 224C235.1 224 211.6 233.7 194.2 251.1L123.1 322.2C105.8 339.5 96 363.1 96 387.6C96 438.7 137.4 480.1 188.5 480.1C205 480.1 221.1 475.7 235.2 467.5C251 483.5 269.4 496.9 289.8 507C261.6 530.9 225.8 544.2 188.5 544.2C102.1 544.2 32 474.2 32 387.7C32 346.2 48.5 306.4 77.8 277.1L148.9 206C178.2 176.7 218 160.2 259.5 160.2C346.1 160.2 416 230.8 416 317.1C416 318.4 416 319.7 416 321C415.6 338.7 400.9 352.6 383.2 352.2C365.5 351.8 351.6 337.1 352 319.4C352 318.6 352 317.9 352 317.1C352 283.4 334 253.8 307.2 237.5z" />
+                    </svg>
+                    Destacar links
+                </button>
+            </li>
+
+            <li>
+                <button id="reset-accessibility">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" fill="currentColor">
+                        <path d="M88 256L232 256C241.7 256 250.5 250.2 254.2 241.2C257.9 232.2 255.9 221.9 249 215L202.3 168.3C277.6 109.7 386.6 115 455.8 184.2C530.8 259.2 530.8 380.7 455.8 455.7C380.8 530.7 259.3 530.7 184.3 455.7C174.1 445.5 165.3 434.4 157.9 422.7C148.4 407.8 128.6 403.4 113.7 412.9C98.8 422.4 94.4 442.2 103.9 457.1C113.7 472.7 125.4 487.5 139 501C239 601 401 601 501 501C601 401 601 239 501 139C406.8 44.7 257.3 39.3 156.7 122.8L105 71C98.1 64.2 87.8 62.1 78.8 65.8C69.8 69.5 64 78.3 64 88L64 232C64 245.3 74.7 256 88 256z" />
+                    </svg>
+                    Redefinir
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+    <div id="page">
+        <!-- topbar -->
+        <div id="fh-header-minimized" class="fh-header-minimized fh-header-v1"></div>
+        <div id="topbar" class="topbar">
+
+            <!-- <div id="barra-brasil">
+                <ul class="menu-barra-temp" style="list-style:none;">
+                    <li class="no_dec">
+                        <a class="pgb" href="http://brasil.gov.br">Portal do Governo Brasileiro</a>
+                    </li>
+                    <li>
+                        <a class="barra-governo" style="" href="http://epwg.governoeletronico.gov.br/barra/atualize.html"></a>
+                    </li>
+                </ul>
+            </div> -->
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                        <a href="https://portosaofrancisco.com.br/">
+                            <img class="logo-top" style="width: 200px; height: 120px;" src="https://portosaofrancisco.com.br/public/images/logo-porto-topo.jpg" alt="Porto de SFS">
+                        </a>
+                    </div>
+                    <div class="col-md-5 col-sm-5 col-xs-5">
+                        <input type="text" class="buscar-topo" id="busca-topo" name="busca-topo" value="" placeholder="Pesquisar Notícias...">
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-3">
+                        <ul class="social-media">
+                            <li><a href="https://portosaofrancisco.com.br/fale-conosco/" title="Fale Conosco"><img class="ico-social-media" src="https://portosaofrancisco.com.br/public/images/icon/ico-mail-white.png" alt="Email"></a></li>
+                            <li><a target="_blank" href="https://www.youtube.com/channel/UCG9LZn4E1KZuYI9wR8ZuDsA" title="Youtube"><img class="ico-social-media" src="https://portosaofrancisco.com.br/public/images/icon/ico-youtube-white.png" alt="Youtube"></a></li>
+                            <li><a target="_blank" href="https://www.instagram.com/portodesaofranciscodosul/" title="Instagram"><img class="ico-social-media" src="https://portosaofrancisco.com.br/public/images/icon/ico-instagram-white.png" alt="Instagram"></a></li>
+                            <li><a target="_blank" href="https://www.facebook.com/Portodesaofranciscodosul/" title="Facebook"><img class="ico-social-media" src="https://portosaofrancisco.com.br/public/images/icon/ico-facebook-white.png" alt="Facebook"></a></li>
+                        <!--   <li><a target="_blank" href="https://twitter.com/portosfs" title="Twitter"><img class="ico-social-media" src="https://portosaofrancisco.com.br/public/images/icon/ico-twitter-white.png" alt="Twitter"></a></li> -->
+                            <li><a target="_blank" href="https://www.tiktok.com/@portodesaofrancisco.sc?_r=1&_t=ZS-93Hd8XndfoG" title="TikTok"><img class="ico-social-media" src="https://portosaofrancisco.com.br/public/images/icon/ico-tiktok-white.png" alt="Tiktok"></a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- topbar end -->
+
+        <!-- masthead -->
+        <header id="masthead" class="site-header clearfix">
+
+            <div class="header-main clearfix">
+                <div class="container mobile_relative">
+                    <div class="row">
+
+                        <div class="site-logo col-md-2 col-sm-2 col-xs-2">
+                            <a href="https://portosaofrancisco.com.br/" class="logo">
+                                <img src="https://portosaofrancisco.com.br/public/images/logo_mini-2.png" alt="Porto de SFS" class="logo-dark hide-logo">
+                            </a>
+                        </div>
+
+                        <div class="site-menu col-md-10 col-sm-10 col-xs-10" style="text-align: center; width: 100%;">
+                            <nav id="site-navigation" class="main-nav primary-nav nav" style="display: table; float: right;">
+                                <ul class="menu">
+
+                                                                            <li class="has-children active">
+                                            <a href="#" class="dropdown-toggle">
+                                                INSTITUCIONAL                                            </a>
+
+                                                                                            <ul class="sub-menu">
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/cap/" >
+                                                                CAP                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/caracteristicas/" >
+                                                                CARACTERÍSTICAS FÍSICAS                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/dados-gerais/" >
+                                                                DADOS GERAIS                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/diretoria/" >
+                                                                DIRETORIA & CONSELHOS                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/s-fotos/" >
+                                                                FOTOS                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/planejamento-portuario/" >
+                                                                PLANEJAMENTO PORTUÁRIO                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/missao-visao-valores-principios-politica/" >
+                                                                MISSÃO, VISÃO, VALORES E POLÍTICA                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/visitas/" >
+                                                                VISITAS                                                            </a>
+                                                        </li>
+                                                                                                    </ul>
+                                            
+                                            
+                                        </li>
+                                                                            <li class="has-children">
+                                            <a href="#" class="dropdown-toggle">
+                                                INFORMAÇÕES                                            </a>
+
+                                                                                            <ul class="sub-menu">
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/cargas-perigosas/" >
+                                                                CARGAS PERIGOSAS                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/s-estatistica/" >
+                                                                ESTATÍSTICA                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/isps-code/" >
+                                                                SEGURANÇA PORTUÁRIA                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/s-legislacao/" >
+                                                                LEGISLAÇÃO                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/terminal-graneleiro/" >
+                                                                TERMINAL GRANELEIRO                                                            </a>
+                                                        </li>
+                                                                                                            <li data-id-submenu="sub-menu-operacoes" id="lista-operacoes">
+                                                            <a href="#" >
+                                                                OPERAÇÕES                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://www.ouvidoria.sc.gov.br/cidadao/" >
+                                                                OUVIDORIA                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/portal-transparencia/" target="_blank">
+                                                                TRANSPARÊNCIA                                                            </a>
+                                                        </li>
+                                                                                                    </ul>
+                                            
+                                                                                            <ul class="sub-menu" style="margin-left:270px" hidden id="sub-menu-operacoes">
+                                                                                                            <li>
+                                                            <a href="https://portosaofrancisco.com.br/operacoes_operadores_portuarios/" >
+                                                                OPERADORES PORTUÁRIOS                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="https://portosaofrancisco.com.br/operacoes_rebocadores/" >
+                                                                REBOCADORES                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="https://portosaofrancisco.com.br/operacoes_porte_bruto/" >
+                                                                PORTE BRUTO DAS EMBARCAÇÕES                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="https://portosaofrancisco.com.br/operacoes_agencias_maritimas/" >
+                                                                AGÊNCIAS MARÍTIMAS                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="https://portosaofrancisco.com.br/operacoes_restricoes_navegacao/" >
+                                                                NAVEGABILIDADE                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="https://portosaofrancisco.com.br/operacoes_servicos_navegacao/" >
+                                                                LINHAS E SERVIÇOS DE NAVEGAÇÃO                                                            </a>
+                                                        </li>
+                                                                                                    </ul>
+                                            
+                                        </li>
+                                                                            <li class="has-children">
+                                            <a href="#" class="dropdown-toggle">
+                                                PORTONET                                            </a>
+
+                                                                                            <ul class="sub-menu">
+                                                                                                            <li >
+                                                            <a href="http://portonet.portosaofrancisco.com.br/sfs/zf/login" target="_blank">
+                                                                ACESSO                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/treinamento/" >
+                                                                INSTRUÇÕES PORTONET                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/calculadora-armaz/" >
+                                                                SIMULAÇÃO DE ARMAZENAGEM                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/auth/login/" >
+                                                                INTEGRAÇÃO PORTUÁRIA                                                            </a>
+                                                        </li>
+                                                                                                    </ul>
+                                            
+                                                                                            <ul class="sub-menu" style="margin-left:270px" hidden id="sub-menu-cadastros">
+                                                                                                            <li>
+                                                            <a href="http://apsfs.marca.com.br:8080/sfs_desenv/guilherme/_cadastro_empresas.php" target="_blank">
+                                                                EMPRESAS                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="http://apsfs.marca.com.br:8080/sfs_desenv/guilherme/_cadastro_pessoas.php" target="_blank">
+                                                                PESSOAS                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="http://apsfs.marca.com.br:8080/sfs_desenv/guilherme/_cadastro_veiculos.php" target="_blank">
+                                                                VEÍCULOS                                                            </a>
+                                                        </li>
+                                                                                                            <li>
+                                                            <a href="http://apsfs.marca.com.br:8080/sfs_desenv/guilherme/zf/login" target="_blank">
+                                                                LOGINS/USUÁRIOS PORTONET                                                            </a>
+                                                        </li>
+                                                                                                    </ul>
+                                            
+                                        </li>
+                                                                            <li class="has-children">
+                                            <a href="#" class="dropdown-toggle">
+                                                LICITAÇÕES                                            </a>
+
+                                                                                            <ul class="sub-menu">
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/painel-de-editais-licitacoes/" >
+                                                                PAINEL DE EDITAIS E LICITAÇÕES                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/public/uploads/pdfs/guia-naveg-edital.pdf" target="_blank">
+                                                                GUIA DE NAVEGAÇÃO DO EDITAL                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://fornecedor.bb.com.br/#!/institucional/apresentacao" target="_blank">
+                                                                CADASTRO DE FORNECEDORES                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/certidoes/" >
+                                                                EMITIR CERTIDÕES                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/programa-cais/" >
+                                                                PROGRAMA CAIS                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/sancoes-administrativas/" >
+                                                                SANÇÕES ADMINISTRATIVAS                                                            </a>
+                                                        </li>
+                                                                                                    </ul>
+                                            
+                                            
+                                        </li>
+                                                                            <li class="">
+                                            <a href="https://portosaofrancisco.com.br/programas-ambientais/" class="">
+                                                MEIO AMBIENTE                                            </a>
+
+                                            
+                                            
+                                        </li>
+                                                                            <li class="has-children">
+                                            <a href="#" class="dropdown-toggle">
+                                                CONTATOS                                            </a>
+
+                                                                                            <ul class="sub-menu">
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/fale-conosco/" >
+                                                                FALE CONOSCO                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="https://portosaofrancisco.com.br/ouvidoria/" >
+                                                                OUVIDORIA                                                            </a>
+                                                        </li>
+                                                                                                            <li >
+                                                            <a href="#" >
+                                                                SIC                                                            </a>
+                                                        </li>
+                                                                                                    </ul>
+                                            
+                                            
+                                        </li>
+                                                                            <li class="">
+                                            <a href="https://portosaofrancisco.com.br/termo-privacidade/" class="">
+                                                TERMO DE PRIVACIDADE                                            </a>
+
+                                            
+                                            
+                                        </li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <a href="#" class="navbar-toggle">
+                        <span class="navbar-icon">
+                            <span class="navbars-line"></span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- @todo: mover para página de acordo com o a url -->
+        <script defer src="https://portosaofrancisco.com.br/public/js/header.js"></script>
+        <script defer src="https://portosaofrancisco.com.br/public/js/acessibilidade.js"></script><!-- css -->
+<link href="https://portosaofrancisco.com.br/public/css/general.css" rel="stylesheet">
+<div class="container">
+
+    <div class="title-internal text-right">
+        <h1><span style="opacity: 0.6;">Página Inicial > Institucional > </span>Características Físicas</h1>        <p>Saiba mais sobre o complexo portuário de São Francisco do Sul</p>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+        <div class="col-sm-12">
+
+            <h3>Características Físicas</h3>
+            <p>O Porto de São Francisco do Sul está localizado na Baía da Babitonga, uma área naturalmente
+protegida, o que garante mais segurança para a navegação e para a atracação dos navios.
+O canal de acesso ao Complexo Portuário da Babitonga tem cerca de 17 km de extensão, com largura mínima de 120
+metros. Atualmente, sua profundidade é de até 16 metros. No final de 2025, teve início a obra de dragagem de
+aprofundamento do canal externo, que permitiu o aumento da profundidade do canal de 14 metros para 16 metros e
+melhorou ainda mais as condições de acesso das embarcações.
+O Porto conta com um cais de aproximadamente 1,5 km de extensão, com sete berços de atracação - sendo quatro públicos
+e três privados - e calado máximo operacional de 12,8 metros. Além disso, possui dois acessos (gates) equipados com cinco
+balanças para controle de cargas.</p>
+           
+
+        </div>
+        <div style="text-align: center;">
+            <img width="500" height="223" src="https://portosaofrancisco.com.br//public/images/corredor.jpg" class="vc_box_rounded vc_box_border_grey attachment-full" alt="corredor" style="border-radius: 15px; margin: 30px;" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+
+            <h3>Vias de Acesso</h3>
+            <p align="justify">O Porto dispõe de acesso facilitado aos principais mercados do Brasil, por meio das rodovias federais BR-280 e BR-101, que garantem
+integração eficiente com importantes polos econômicos nacionais e internacionais.</p>
+            <p align="justify">O acesso ferroviário é realizado por meio da Estrada de Ferro 485, que liga São Francisco do Sul ao município de Mafra, conectando o Porto à malha
+ferroviária nacional. Essa integração possibilita o recebimento de grãos do Centro-Oeste do país, um dos mais relevantes corredores de grãos do país, e
+também da Região Sul, como Paraná e Santa Catarina.</p>
+            <p align="justify">Além disso, o Porto conta com a proximidade de três aeroportos estratégicos: o Aeroporto de Joinville (60 km); o Aeroporto de Navegantes (100 km) e o
+Aeroporto Internacional de Curitiba (165 km), que oferecem conexões com os principais centros nacionais e internacionais.</p>
+           
+        </div> 
+
+        <div class="col-sm-6">
+
+            <h3>Corredor de Exportação</h3>
+            <p>O Porto de São Francisco do Sul é reconhecido pelo dinamismo e pela agilidade nas operações de embarque de navios. Esse desempenho é resultado, em grande parte, da eficiência do Corredor de Exportação, que conta com duas vias de
+embarque simultâneas, operadas por dois carregadores de navios (shiploaders), com capacidade total de até 3.000 toneladas por hora.</p>
+            <p>A elevada performance operacional também se deve à integração logística dos três terminais do complexo graneleiro, que realizam de forma conjunta a armazenagem e o envio das cargas por meio de correias transportadoras interligadas ao Corredor de Exportação,
+garantindo maior fluidez e confiabilidade às operações.</p>
+            <p>O Terminal Graneleiro do Porto Público possui capacidade de recepção de 500 toneladas por hora, contando com duas balanças ferroviárias e duas balanças rodoviárias. O terminal é conectado ao Corredor de Exportação por duas correias transportadoras e dispõe de
+duas balanças de fluxo, com capacidade de expedição de até 3.000 toneladas por hora. Sua capacidade total de armazenagem é de 90.000 toneladas.</p>
+            <p>O Terminal Terlogs apresenta capacidade de recepção de 2.500 toneladas por hora, operando com quatro balanças ferroviárias e quatro balanças rodoviárias. Está interligado ao Corredor de Exportação por duas correias transportadoras e possui quatro balanças de
+fluxo, com capacidade de expedição de 2.800 toneladas por hora. A capacidade total de armazenagem do terminal é de 180.000 toneladas.</p>
+            <p>O complexo da Bunge, com área de 125 mil m2, dispõe de uma balança de fluxo e uma correia transportadora conectadas ao Corredor de Exportação. Sua capacidade de expedição é de 1.500 toneladas por hora de granéis sólidos e 1.000 toneladas por hora de óleo de
+soja. O complexo conta com capacidade de armazenagem de 200.000 toneladas de granéis sólidos e 45.000 toneladas de óleo de soja.</p>
+
+        </div> 
+    </div> 
+</div> 
+<!--footer sec-->
+<!--footer sec-->
+<div id='footer_contacts' class="footer-widgets widgets-area">
+    <div class="contact-widget">
+        <div class="container">
+            <div class="row">
+                <div class='contact'>
+                    <a href="https://portosaofrancisco.com.br/home/index" class="footer-logo">
+                        <img src="https://portosaofrancisco.com.br/public/images/logo-novo-light-2.png" alt="Footer Logo">
+                    </a>
+                </div>
+
+                <div class='contact'>
+                    <span class='contact-icon'>
+                        <i class="flaticon-phone-call "></i>
+                    </span>
+                    <span class='contact-text'>
+                        <p>Telefone:</p>
+                        <h4>+55 47 3481-4800</h4>
+                    </span>
+                </div>
+
+                <div class='contact'>
+                    <span class='contact-icon'>
+                        <i class="flaticon-web"></i>
+                    </span>
+                    <span class='contact-text'>
+                        <p>Email:</p>
+                        <h4>
+                            <a href="mailto:porto@portosaofrancisco.com.br" style="color: white;">
+                                porto@portosaofrancisco.com.br
+                            </a>
+                        </h4>
+                    </span>
+                </div>
+
+                <div class='contact'>
+                    <span class='contact-icon'>
+                        <i class="flaticon-signs"></i>
+                    </span>
+                    <span class='contact-text'>
+                        <p>Endereço:</p>
+                        <h4>Av. Eng.º Leite Ribeiro, 782, Caixa Postal 71 / São Francisco do Sul / SC</h4>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer sec end-->
+<!--footer sec end-->
+
+<!--copyright sec-->
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-text col-md-6 col-sm-12 col-sx-12">
+                <a href="#" onclick="window.open('https://www.sitelock.com/verify.php?site=portosaofrancisco.com.br','SiteLock','width=600,height=600,left=160,top=170');">
+                    <img class="img-responsive" alt="SiteLock" title="SiteLock" src="//shield.sitelock.com/shield/portosaofrancisco.com.br" />
+                </a>
+                <!--
+                <a target="_blank" href="https://portosaofrancisco.com.br/login/index">Login Gerenciador</a> - 02/10/2026                -->
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 text-right footer-copyright">
+                <div class="site-info">Copyright @ 2025 <a href="#">PSFS</a>, All Right Reserved</div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--copyright sec end-->
+</div>
+<!--End pagewrapper-->
+
+<!--primary-mobile-nav-->
+<div class="primary-mobile-nav header-v1" id="primary-mobile-nav" role="navigation">
+    <a href="#" class="close-canvas-mobile-panel">×</a>
+    <ul class="menu">
+
+        <!-- Item fixo fora do array -->
+        <li>
+            <a href="https://www.scpar.sc.gov.br/?p=4031" target="_blank">
+                CONSULTA PÚBLICA
+            </a>
+        </li>
+
+        
+            <li class="menu-item-has-children">
+                <a href="#" class="dropdown-toggle">
+                    INSTITUCIONAL                </a>
+
+                                    <ul class="sub-menu">
+
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/cap/"
+                                    class="dropdown-toggle"
+                                    >
+                                    CAP                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/caracteristicas/"
+                                    class="dropdown-toggle"
+                                    >
+                                    CARACTERÍSTICAS FÍSICAS                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/dados-gerais/"
+                                    class="dropdown-toggle"
+                                    >
+                                    DADOS GERAIS                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/diretoria/"
+                                    class="dropdown-toggle"
+                                    >
+                                    DIRETORIA & CONSELHOS                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/s-fotos/"
+                                    class="dropdown-toggle"
+                                    >
+                                    FOTOS                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/planejamento-portuario/"
+                                    class="dropdown-toggle"
+                                    >
+                                    PLANEJAMENTO PORTUÁRIO                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/missao-visao-valores-principios-politica/"
+                                    class="dropdown-toggle"
+                                    >
+                                    MISSÃO, VISÃO, VALORES E POLÍTICA                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/visitas/"
+                                    class="dropdown-toggle"
+                                    >
+                                    VISITAS                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+
+        
+            <li class="menu-item-has-children">
+                <a href="#" class="dropdown-toggle">
+                    INFORMAÇÕES                </a>
+
+                                    <ul class="sub-menu">
+
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/cargas-perigosas/"
+                                    class="dropdown-toggle"
+                                    >
+                                    CARGAS PERIGOSAS                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/s-estatistica/"
+                                    class="dropdown-toggle"
+                                    >
+                                    ESTATÍSTICA                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/isps-code/"
+                                    class="dropdown-toggle"
+                                    >
+                                    SEGURANÇA PORTUÁRIA                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/s-legislacao/"
+                                    class="dropdown-toggle"
+                                    >
+                                    LEGISLAÇÃO                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/terminal-graneleiro/"
+                                    class="dropdown-toggle"
+                                    >
+                                    TERMINAL GRANELEIRO                                </a>
+                            </li>
+                                                    <li data-id-submenu="sub-menu-operacoes" id="lista-operacoes">
+                                <a href="#"
+                                    class="dropdown-toggle"
+                                    >
+                                    OPERAÇÕES                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://www.ouvidoria.sc.gov.br/cidadao/"
+                                    class="dropdown-toggle"
+                                    >
+                                    OUVIDORIA                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/portal-transparencia/"
+                                    class="dropdown-toggle"
+                                    target="_blank">
+                                    TRANSPARÊNCIA                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+
+        
+            <li class="menu-item-has-children">
+                <a href="#" class="dropdown-toggle">
+                    PORTONET                </a>
+
+                                    <ul class="sub-menu">
+
+                                                    <li >
+                                <a href="http://portonet.portosaofrancisco.com.br/sfs/zf/login"
+                                    class="dropdown-toggle"
+                                    target="_blank">
+                                    ACESSO                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/treinamento/"
+                                    class="dropdown-toggle"
+                                    >
+                                    INSTRUÇÕES PORTONET                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/calculadora-armaz/"
+                                    class="dropdown-toggle"
+                                    >
+                                    SIMULAÇÃO DE ARMAZENAGEM                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/auth/login/"
+                                    class="dropdown-toggle"
+                                    >
+                                    INTEGRAÇÃO PORTUÁRIA                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+
+        
+            <li class="menu-item-has-children">
+                <a href="#" class="dropdown-toggle">
+                    LICITAÇÕES                </a>
+
+                                    <ul class="sub-menu">
+
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/painel-de-editais-licitacoes/"
+                                    class="dropdown-toggle"
+                                    >
+                                    PAINEL DE EDITAIS E LICITAÇÕES                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/public/uploads/pdfs/guia-naveg-edital.pdf"
+                                    class="dropdown-toggle"
+                                    target="_blank">
+                                    GUIA DE NAVEGAÇÃO DO EDITAL                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://fornecedor.bb.com.br/#!/institucional/apresentacao"
+                                    class="dropdown-toggle"
+                                    target="_blank">
+                                    CADASTRO DE FORNECEDORES                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/certidoes/"
+                                    class="dropdown-toggle"
+                                    >
+                                    EMITIR CERTIDÕES                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/programa-cais/"
+                                    class="dropdown-toggle"
+                                    >
+                                    PROGRAMA CAIS                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/sancoes-administrativas/"
+                                    class="dropdown-toggle"
+                                    >
+                                    SANÇÕES ADMINISTRATIVAS                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+
+        
+            <li class="">
+                <a href="https://portosaofrancisco.com.br/programas-ambientais/" class="">
+                    MEIO AMBIENTE                </a>
+
+                
+            </li>
+
+        
+            <li class="menu-item-has-children">
+                <a href="#" class="dropdown-toggle">
+                    CONTATOS                </a>
+
+                                    <ul class="sub-menu">
+
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/fale-conosco/"
+                                    class="dropdown-toggle"
+                                    >
+                                    FALE CONOSCO                                </a>
+                            </li>
+                                                    <li >
+                                <a href="https://portosaofrancisco.com.br/ouvidoria/"
+                                    class="dropdown-toggle"
+                                    >
+                                    OUVIDORIA                                </a>
+                            </li>
+                                                    <li >
+                                <a href="#"
+                                    class="dropdown-toggle"
+                                    >
+                                    SIC                                </a>
+                            </li>
+                        
+                    </ul>
+                
+            </li>
+
+        
+            <li class="">
+                <a href="https://portosaofrancisco.com.br/termo-privacidade/" class="">
+                    TERMO DE PRIVACIDADE                </a>
+
+                
+            </li>
+
+        
+    </ul>
+</div>
+<div id="off-canvas-layer" class="off-canvas-layer"></div>
+<!--primary-mobile-nav end-->
+
+<!--Scroll to top-->
+<a id="scroll-top" class="backtotop" href="#page-top"><i class="fa fa-angle-up"></i></a>
+
+<!-- jquery library -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery-1.12.4.min.js"></script>
+<!-- jqueryUI library -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery-ui.min.js"></script>
+<!-- bootstrap v3.3.6 js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/bootstrap.min.js"></script>
+<!-- fancybox js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery.fancybox.pack.js"></script>
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery.fancybox-media.js"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<!-- owl.carousel js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/owl.js"></script>
+<!-- counter js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery.appear.js"></script>
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery.countTo.js"></script>
+<!-- validate js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/validate.js"></script>
+<!-- switcher js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/switcher.js"></script>
+<!-- Mask js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery.mask.min.js"></script>
+<!-- Price Format js -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/jquery.price_format.js"></script>
+<!-- JS | Base64 encode/decode -->
+<script src="https://portosaofrancisco.com.br/public/js/base64.js"></script>
+
+<!-- google map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHzPSV2jshbjI8fqnC_C4L08ffnj5EN3A"></script>
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/gmap.js"></script>
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/map-helper.js"></script>
+
+<!-- REVOLUTION JS FILES -->
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/jquery.themepunch.revolution.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.actions.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.carousel.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.kenburn.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.migration.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.navigation.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.parallax.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/cargohub/revolution/extensions/revolution.extension.video.min.js"></script>
+
+<!-- script JS  -->
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/scripts.min.js"></script>
+<script src="https://portosaofrancisco.com.br/public/js/cargohub/script.js"></script>
+
+<!-- jquery qtip library -->
+<script src="https://portosaofrancisco.com.br/public/js/jquery-qtip-custom/jquery.qtip.min.js"></script>
+
+<!-- JS | html5lightbox para rodar videos -->
+<script src="https://portosaofrancisco.com.br/public/js/html5lightbox/html5lightbox.js"></script>
+
+<!-- js -->
+<script type="text/javascript" src="https://portosaofrancisco.com.br/public/js/jquery.mask.min.js"></script>
+<script src="https://portosaofrancisco.com.br/public/js/general.js"></script>
+<script src="https://portosaofrancisco.com.br/public/js/tabua-mare.js"></script>
+
+<!-- Script Barra Brasil -->
+<!-- <script defer="defer" src="//barra.brasil.gov.br/barra_2.0.js" type="text/javascript"></script> -->
+<script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+
+</body>
+
+</html>

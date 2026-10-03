@@ -110,6 +110,48 @@ D = {
         "calado_m": ("float", "m", "número 'NN,NN m' até 160 caracteres após 'calado'"),
         "contexto": ("str", "-", "texto em volta do valor, para identificar trecho/berço"),
         "datas_vigencia_impressas": ("str", "-", "datas após 'vigência/em vigor/a partir de' na mesma captura"),
+        "regra_extracao": ("str", "-", "generica | canal_paranagua"),
+        "revisado, classe, local, nota_revisao": ("bool, str", "-", "revisão manual via data/estudo-santos-calado/revisao_calado_concorrentes.csv; classe = canal_acesso | canal_interno | canal_secundario | porto_operacional | fundeio | manobra | berco_terminal | outro"),
+    }),
+    "eventos_revisao_calado": (APS, "mudanças de calado por trecho do canal entre períodos consecutivos.", {
+        "item, descricao": ("str", "-", "trecho canônico e descrição impressa"),
+        "de_bm, de_pm, para_bm, para_pm": ("float", "m", "valores impressos antes/depois"),
+        "delta_m": ("float", "m", "para − de no mesmo referencial; nulo na troca preamar→Zero DHN"),
+        "sentido": ("str", "-", "aumento | redução | só PM | mudança de referencial (não comparável)"),
+        "data_vigencia_impressa, vigencia_lida_na_captura, carta_vigencia": ("date, str", "-", "vigência só quando impressa; pode ter sido lida em captura posterior com os mesmos valores"),
+        "documento_homologacao": ("str", "-", "coluna Homologação (formato recente)"),
+        "janela_inicio_captura, janela_fim_captura": ("str", "-", "última captura com o valor antigo e primeira com o novo"),
+        "obra_cais_simultanea, causa_impressa": ("-", "-", "vazios: não constam da fonte"),
+    }),
+    "caminho_berco": (APS + " + NPCP-SP Anexo 1-B", "berço da APS ou terminal autorizado → trecho em que está situado → trechos percorridos desde a barra.", {
+        "berco_aps / instalacao": ("str", "-", "berço como impresso pela APS; para terminais autorizados, a instalação da ANTAQ"),
+        "trecho_impresso, trecho_situado": ("str", "-", "rótulo da coluna 'Calado máximo por trecho' (rowspan) e trecho canônico resolvido pelos valores"),
+        "trechos_percorridos": ("str", "-", "trechos de I até o trecho situado (ordem das descrições impressas)"),
+        "trecho_adicional_fora_tabela_aps": ("str", "-", "'Canal de Piaçaguera' para TIPLAM/TMPC (calado por Portaria CPSP não coletada)"),
+        "metodo": ("str", "-", "impresso_tabela_aps | inferido_por_endereco_npcp (A CONFERIR) | npcp_canal_piacaguera"),
+        "regra": ("str", "-", "fonte e regra de atribuição"),
+    }),
+    "berco_antaq_aps": (ANTAQ + " × " + APS, "casamento de cada IDBerco da ANTAQ com o(s) berço(s) da APS ou com o caminho do terminal autorizado.", {
+        "instalacao, id_berco, berco, terminal, n_atracacoes, ano_min, ano_max": ("-", "-", "da ANTAQ"),
+        "berco_aps": ("str", "-", "berço(s) da APS separados por ';' (berço composto aponta para todos)"),
+        "instalacao_caminho": ("str", "-", "terminal autorizado cujo caminho está em caminho_berco (inclui TUPs do cadastro antigo da ANTAQ)"),
+        "metodo": ("str", "-", "nome_normalizado | manual | tup_cadastro_antigo | terminal_autorizado"),
+        "observacao": ("str", "-", "motivo quando não casado"),
+    }),
+    "aps_limites_dwt": (APS, "tabela de calado mínimo a vante, trim máximo a ré e imersão mínima do propulsor por faixa de DWT, por captura.", {
+        "porte, calado_min_vante, trim_max_re, imersao_min_propulsor": ("str", "-", "como impresso"),
+        "arquivo, captura_ts": ("str", "-", "proveniência"),
+    }),
+    "escalas_calado_aps": ("APS — Navios Esperados · Carga (coleta própria diária)", "1 linha por DUV, versão mais recente do arquivo acumulado.", {
+        "duv, imo, navio, bandeira, secao, terminal": ("str", "-", "como na lista da APS (IMO normalizado a 7 dígitos)"),
+        "comprimento_m, calado_m, calado_primeiro_m": ("float", "m", "coluna 'Cal/Draft' (significado não documentado pela APS); último e primeiro valor vistos"),
+        "chegada, visto_primeiro, visto_ultimo, snapshot_data": ("date", "-", "datas da lista e da coleta"),
+        "operacoes, mercadorias, peso_t": ("str, float", "-, t", "como na lista"),
+    }),
+    "npcp_regras": ("Capitania dos Portos de SP — NPCP-SP", "passagens das edições 2016 e 3ª Rev. 2026 por tema.", {
+        "edicao, pagina_pdf": ("str, int", "-", "edição e página do PDF"),
+        "tema": ("str", "-", "calado_maximo | folga_quilha | mare | cruzamento_ultrapassagem | dimensoes | portaria_especifica | piacaguera"),
+        "trecho": ("str", "-", "texto em volta da palavra-chave"),
     }),
 }
 
@@ -135,12 +177,9 @@ def dicionario():
                 "| coluna | tipo | unidade | regra de construção |", "|---|---|---|---|"]
         out += [f"| `{c}` | {t} | {u} | {r} |" for c, (t, u, r) in cols.items()]
         out.append("")
-    out += ["## Tabelas CSV auxiliares", "",
+    out += ["## Arquivos auxiliares (CSV/JSON/MD)", "",
             "| arquivo | conteúdo |", "|---|---|",
             "| `universo_terminais.csv` | instalações do complexo incluídas, nº de atracações e critério |",
-            "| `eventos_revisao_calado.csv` | mudanças de calado por trecho: de/para (BM/PM), delta, sentido, vigência impressa, janela entre capturas; `obra_cais_simultanea` vazio (não consta da fonte) |",
-            "| `caminho_berco.csv` | berço da APS → trecho em que está situado (coluna 'Calado máximo por trecho' da APS, rowspan) → trechos percorridos desde a barra |",
-            "| `berco_antaq_aps.csv` | casamento IDBerco ANTAQ → berço(s) da APS; método `nome_normalizado` ou `manual`; berço composto (ex.: 'CS 02 + CS 01') aponta para todos |",
             "| `casamento_lineup_antaq.json` | T3: taxa de casamento da lista de esperados da APS com a T1 |",
             "| `imos_santos.csv` | T4: IMOs únicos de Santos, nº de escalas, perfil de carga ANTAQ (não é tipo de navio), primeiro/último ano |",
             "| `amostra_validacao_equasis.csv` | T4: 150 IMOs para consulta MANUAL no Equasis (colunas `*_equasis` vazias para preencher) |",
@@ -148,7 +187,7 @@ def dicionario():
             "| `mapa_urf_porto.csv` | T5: URF → porto/grupo (regex sobre o nome; aeroportos excluídos) |",
             "| `custo_terrestre_referencias.json` | T7: onde estão o piso ANTT vigente e o modelo de custo rodoviário do IBI; lacuna da série histórica |",
             "| `calado_concorrentes_fontes.csv` | T6: URLs consultadas, capturas no CDX e baixadas |",
-            "| `npcp_regras.csv` | T8: passagens da NPCP-SP (2016 e 2026) por tema, com página |",
+            "| `../revisao_calado_concorrentes.csv` | T6: regras da revisão manual (porto, valor, trecho do contexto, classe, local, nota) |",
             "| `chm_mares_fontes.csv` | T8: tábuas de maré de Santos obtidas via Wayback, com completude |",
             "| `RASCUNHO_pedido_APS.md` | T9: pedido à APS — NÃO enviado |",
             "| `checagens_t1.json` | reprodução das checagens pedidas (81.241 atracações; 13,41 t/TEU; IMO 99%) |", ""]
@@ -194,24 +233,30 @@ def qualidade():
     pain = PROC / "calado_permitido_painel.parquet"
     if pain.exists():
         P = pd.read_parquet(pain)
-        E = pd.read_csv(PROC / "eventos_revisao_calado.csv")
+        E = pd.read_parquet(PROC / "eventos_revisao_calado.parquet")
         from _comum import INTERIM
         M = pd.read_parquet(INTERIM / "aps_calados_capturas_meta.parquet")
         M["ano"] = M.captura_ts.str[:4]
         cap = M.groupby(["ano", "pagina", "formato"]).size().reset_index(name="capturas")
         tr = P[P.tipo == "trecho"][["item", "calado_bm", "calado_pm", "calado_pm_regra", "calado_unico_impresso",
                                     "data_vigencia_impressa", "primeira_captura", "ultima_captura", "n_capturas"]]
-        BA = pd.read_csv(PROC / "berco_antaq_aps.csv")
+        BA = pd.read_parquet(PROC / "berco_antaq_aps.parquet")
+        CB = pd.read_parquet(PROC / "caminho_berco.parquet")
         po = BA[BA.instalacao == "Santos"]
         out += ["## T2 — Calado permitido (APS)", "",
                 f"- Capturas usadas: {len(M)} (Wayback + captura própria em {agora()[:10]}); {int((M.n_itens == 0).sum())} sem tabela de calado "
                 "(páginas de 1998–2000 só com profundidades, e stubs de redirecionamento de 288 bytes).",
                 f"- Períodos de trecho do canal: {int((P.tipo == 'trecho').sum())}; de berço: {int((P.tipo == 'berco').sum())}.",
                 f"- Eventos de revisão por trecho: {len(E)}, dos quais {int(E.vigencia_impressa_disponivel.sum())} com data de vigência impressa.",
-                f"- Berços ANTAQ do Porto Organizado casados com a tabela da APS: {po.berco_aps.notna().sum()}/{len(po)} "
-                f"({po[po.berco_aps.notna()].n_atracacoes.sum() / po.n_atracacoes.sum():.1%} das atracações do PO). "
-                "Os 7 terminais autorizados (DP World, TIPLAM, TMPC, Dow, Cutrale, Base de Dutos) não constam da tabela de berços da APS: "
-                "para eles só o calado dos trechos do canal, e o trecho de cada um não foi atribuído (lacuna).", "",
+                f"- Berços ANTAQ do Porto Organizado casados com a tabela da APS ou com o caminho de um terminal autorizado: "
+                f"{(po.berco_aps.notna() | po.instalacao_caminho.notna()).sum()}/{len(po)} "
+                f"({po[po.berco_aps.notna() | po.instalacao_caminho.notna()].n_atracacoes.sum() / po.n_atracacoes.sum():.1%} das atracações do PO; "
+                f"{BA[BA.berco_aps.notna() | BA.instalacao_caminho.notna()].n_atracacoes.sum() / BA.n_atracacoes.sum():.1%} do complexo). "
+                "Não casados: " + ", ".join(f"{b} ({n})" for b, n in po[po.berco_aps.isna() & po.instalacao_caminho.isna()]
+                                                .sort_values("n_atracacoes", ascending=False)[["berco", "n_atracacoes"]].values) + ".",
+                f"- Terminais autorizados: trecho **inferido pelo endereço** da NPCP-SP (Anexo 1-B), a conferir — "
+                + "; ".join(f"{r.instalacao}: {r.trecho_situado}" + (f" + {r.trecho_adicional_fora_tabela_aps}" if isinstance(r.trecho_adicional_fora_tabela_aps, str) else "")
+                            for r in CB[CB.berco_aps.isna()].itertuples()) + ". O calado do Canal de Piaçaguera (Portaria CPSP) não foi coletado.", "",
                 "### Capturas por ano e formato", "", md_tabela(cap), "",
                 "### Períodos por trecho do canal", "", md_tabela(tr), "",
                 "### Ressalvas", "",
@@ -257,7 +302,12 @@ def qualidade():
     cc = PROC / "calado_concorrentes_fontes.csv"
     if cc.exists():
         out += ["## T6 — Calado dos concorrentes", "", md_tabela(pd.read_csv(cc)), "",
-                "- Paranaguá: extrator específico do canal (`regra_extracao = canal_paranagua`): 12,50 m (Canal da Galheta, 2019–jun/2023) → 12,80 (ago/2023) → 13,10 (mar/2025) → 13,30 (fev/2026), datas = capturas, não vigência.", "- Demais portos: só documento atual/Fase 0 (Rio Grande normativa 259, S. Francisco do Sul, Itaqui) com extração genérica (número após 'calado'), não revisada. Sem histórico no Wayback para Rio Grande e Itaqui; Vila do Conde só PDF da Fase 0. Histórico com data de vigência: lacuna.", ""]
+                "- Paranaguá: extrator específico do canal (`regra_extracao = canal_paranagua`): 12,50 m (Canal da Galheta, 2019–jun/2023) → 12,80 (ago/2023) → 13,10 (mar/2025) → 13,30 (fev/2026), datas = capturas, não vigência.", "- Demais portos: só documento atual/Fase 0, extração genérica (número após 'calado') **revisada manualmente** "
+                "(regras em `revisao_calado_concorrentes.csv`). Calado de canal identificado: Rio Grande canal externo 14,20 m, "
+                "canal interno I 14,20, canal interno II 13,00, Porto Novo 9,45, S. José do Norte 7,20 (normativa 259, água doce); "
+                "Itaqui canal de acesso 22,3 m; S. Francisco do Sul 12,8 m 'calado máximo operacional' do porto (sem separar canal e berço). "
+                "Os demais valores são fundeio, manobra ou berço. Vila do Conde: o PDF da Fase 0 não trouxe valor com a regra. "
+                "Sem histórico no Wayback para Rio Grande e Itaqui; histórico com data de vigência: lacuna.", ""]
     out += ["## T7 — Controles", "",
             "- USDA GTR: j6ns-hzra (frete marítimo) e j7xv-dz9h (custos; `xtb3-iudz` é só uma visualização sobre essa tabela).",
             "- CONAB: levantamentos 2017→2025/26 e série histórica 1976→2025/26 por UF; **não há produção mensal** (só estimativas por levantamento).",
