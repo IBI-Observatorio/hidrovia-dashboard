@@ -1,0 +1,173 @@
+{
+ "fert_total": {
+  "corr_yoy_ciot_vs_anda(k)": {
+   "-1": [
+    0.23,
+    64
+   ],
+   "0": [
+    0.08,
+    64
+   ],
+   "1": [
+    -0.11,
+    63
+   ],
+   "2": [
+    -0.18,
+    62
+   ]
+  },
+  "corr_yoy_comex_vs_anda(0)": 0.41,
+  "h0": {
+   "n": 40,
+   "rmse_ingenuo": 0.123,
+   "rmse_AR": 0.097,
+   "rmse_AR+comex": 0.1,
+   "rmse_AR+comex+ciot": 0.096,
+   "rmse_AR+ciot": 0.104,
+   "razao ciot|comex": 0.96,
+   "DM ciot|comex (z,p)": [
+    -0.81,
+    0.208
+   ],
+   "razao ciot|AR": 1.071,
+   "DM ciot|AR (z,p)": [
+    0.79,
+    0.785
+   ]
+  },
+  "h1": {
+   "n": 39,
+   "rmse_ingenuo": 0.137,
+   "rmse_AR": 0.105,
+   "rmse_AR+comex": 0.107,
+   "rmse_AR+comex+ciot": 0.104,
+   "rmse_AR+ciot": 0.107,
+   "razao ciot|comex": 0.979,
+   "DM ciot|comex (z,p)": [
+    -0.6,
+    0.273
+   ],
+   "razao ciot|AR": 1.018,
+   "DM ciot|AR (z,p)": [
+    0.34,
+    0.634
+   ]
+  }
+ },
+ "fert_portos": {
+  "corr_yoy_ciot_vs_anda(k)": {
+   "-1": [
+    0.16,
+    64
+   ],
+   "0": [
+    0.04,
+    64
+   ],
+   "1": [
+    -0.1,
+    63
+   ],
+   "2": [
+    -0.17,
+    62
+   ]
+  },
+  "corr_yoy_comex_vs_anda(0)": 0.41,
+  "h0": {
+   "n": 40,
+   "rmse_ingenuo": 0.123,
+   "rmse_AR": 0.097,
+   "rmse_AR+comex": 0.1,
+   "rmse_AR+comex+ciot": 0.094,
+   "rmse_AR+ciot": 0.103,
+   "razao ciot|comex": 0.937,
+   "DM ciot|comex (z,p)": [
+    -1.31,
+    0.094
+   ],
+   "razao ciot|AR": 1.06,
+   "DM ciot|AR (z,p)": [
+    0.68,
+    0.753
+   ]
+  },
+  "h1": {
+   "n": 39,
+   "rmse_ingenuo": 0.137,
+   "rmse_AR": 0.105,
+   "rmse_AR+comex": 0.107,
+   "rmse_AR+comex+ciot": 0.106,
+   "rmse_AR+ciot": 0.109,
+   "razao ciot|comex": 0.991,
+   "DM ciot|comex (z,p)": [
+    -0.21,
+    0.417
+   ],
+   "razao ciot|AR": 1.03,
+   "DM ciot|AR (z,p)": [
+    0.45,
+    0.674
+   ]
+  }
+ },
+ "fert_mt": {
+  "corr_yoy_ciot_vs_anda(k)": {
+   "-1": [
+    0.1,
+    64
+   ],
+   "0": [
+    -0.07,
+    64
+   ],
+   "1": [
+    -0.21,
+    63
+   ],
+   "2": [
+    -0.32,
+    62
+   ]
+  },
+  "corr_yoy_comex_vs_anda(0)": 0.41,
+  "h0": {
+   "n": 40,
+   "rmse_ingenuo": 0.123,
+   "rmse_AR": 0.097,
+   "rmse_AR+comex": 0.1,
+   "rmse_AR+comex+ciot": 0.095,
+   "rmse_AR+ciot": 0.095,
+   "razao ciot|comex": 0.945,
+   "DM ciot|comex (z,p)": [
+    -0.75,
+    0.227
+   ],
+   "razao ciot|AR": 0.978,
+   "DM ciot|AR (z,p)": [
+    -0.4,
+    0.343
+   ]
+  },
+  "h1": {
+   "n": 39,
+   "rmse_ingenuo": 0.137,
+   "rmse_AR": 0.105,
+   "rmse_AR+comex": 0.107,
+   "rmse_AR+comex+ciot": 0.102,
+   "rmse_AR+ciot": 0.103,
+   "razao ciot|comex": 0.96,
+   "DM ciot|comex (z,p)": [
+    -0.64,
+    0.26
+   ],
+   "razao ciot|AR": 0.981,
+   "DM ciot|AR (z,p)": [
+    -0.45,
+    0.326
+   ]
+  }
+ }
+}

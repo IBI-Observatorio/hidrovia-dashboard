@@ -1,0 +1,247 @@
+[
+ {
+  "par": "ciot_mir -> norte",
+  "janela": "2020-01..2026-04",
+  "r_nivel_k0": 0.77,
+  "r_yoy_k0": [
+   0.72,
+   64
+  ],
+  "r_nivel_k1": 0.88,
+  "r_yoy_k1": [
+   0.87,
+   63
+  ],
+  "r_nivel_k2": 0.64,
+  "r_yoy_k2": [
+   0.59,
+   62
+  ],
+  "oos_h1": {
+   "n": 39,
+   "rmse_base": 0.343,
+   "rmse_com_x": 0.246,
+   "razao_com_x/base": 0.717,
+   "razao_com_x/ingenuo": 0.638,
+   "acerto_sinal": 0.77
+  },
+  "oos_h2": {
+   "n": 38,
+   "rmse_base": 0.336,
+   "rmse_com_x": 0.313,
+   "razao_com_x/base": 0.933,
+   "razao_com_x/ingenuo": 0.83,
+   "acerto_sinal": 0.76
+  }
+ },
+ {
+  "par": "ciot_pvh -> ama",
+  "janela": "2020-01..2026-04",
+  "r_nivel_k0": 0.63,
+  "r_yoy_k0": [
+   0.48,
+   64
+  ],
+  "r_nivel_k1": 0.77,
+  "r_yoy_k1": [
+   0.64,
+   63
+  ],
+  "r_nivel_k2": 0.69,
+  "r_yoy_k2": [
+   0.56,
+   62
+  ],
+  "oos_h1": {
+   "n": 39,
+   "rmse_base": 0.288,
+   "rmse_com_x": 0.303,
+   "razao_com_x/base": 1.052,
+   "razao_com_x/ingenuo": 1.007,
+   "acerto_sinal": 0.77
+  },
+  "oos_h2": {
+   "n": 38,
+   "rmse_base": 0.349,
+   "rmse_com_x": 0.326,
+   "razao_com_x/base": 0.934,
+   "razao_com_x/ingenuo": 0.871,
+   "acerto_sinal": 0.76
+  }
+ },
+ {
+  "par": "ciot_an -> an",
+  "janela": "2020-01..2026-04",
+  "r_nivel_k0": 0.85,
+  "r_yoy_k0": [
+   0.82,
+   64
+  ],
+  "r_nivel_k1": 0.93,
+  "r_yoy_k1": [
+   0.84,
+   63
+  ],
+  "r_nivel_k2": 0.68,
+  "r_yoy_k2": [
+   0.58,
+   62
+  ],
+  "oos_h1": {
+   "n": 39,
+   "rmse_base": 0.228,
+   "rmse_com_x": 0.164,
+   "razao_com_x/base": 0.719,
+   "razao_com_x/ingenuo": 0.647,
+   "acerto_sinal": 0.67
+  },
+  "oos_h2": {
+   "n": 38,
+   "rmse_base": 0.24,
+   "rmse_com_x": 0.225,
+   "razao_com_x/base": 0.938,
+   "razao_com_x/ingenuo": 0.817,
+   "acerto_sinal": 0.74
+  }
+ },
+ {
+  "par": "ped_cro -> mt",
+  "janela": "2015-09..2026-07",
+  "r_nivel_k0": 0.56,
+  "r_yoy_k0": [
+   0.37,
+   119
+  ],
+  "r_nivel_k1": 0.51,
+  "r_yoy_k1": [
+   0.29,
+   118
+  ],
+  "r_nivel_k2": 0.32,
+  "r_yoy_k2": [
+   0.03,
+   117
+  ],
+  "oos_h1": {
+   "n": 90,
+   "rmse_base": 0.233,
+   "rmse_com_x": 0.251,
+   "razao_com_x/base": 1.075,
+   "razao_com_x/ingenuo": 1.001,
+   "acerto_sinal": 0.74
+  },
+  "oos_h2": {
+   "n": 89,
+   "rmse_base": 0.281,
+   "rmse_com_x": 0.316,
+   "razao_com_x/base": 1.124,
+   "razao_com_x/ingenuo": 0.971,
+   "acerto_sinal": 0.67
+  }
+ },
+ {
+  "par": "ped_cro -> an",
+  "janela": "2015-09..2026-07",
+  "r_nivel_k0": 0.64,
+  "r_yoy_k0": [
+   0.31,
+   119
+  ],
+  "r_nivel_k1": 0.52,
+  "r_yoy_k1": [
+   0.15,
+   118
+  ],
+  "r_nivel_k2": 0.39,
+  "r_yoy_k2": [
+   -0.01,
+   117
+  ],
+  "oos_h1": {
+   "n": 90,
+   "rmse_base": 0.291,
+   "rmse_com_x": 0.292,
+   "razao_com_x/base": 1.006,
+   "razao_com_x/ingenuo": 0.898,
+   "acerto_sinal": 0.76
+  },
+  "oos_h2": {
+   "n": 89,
+   "rmse_base": 0.335,
+   "rmse_com_x": 0.371,
+   "razao_com_x/base": 1.106,
+   "razao_com_x/ingenuo": 0.947,
+   "acerto_sinal": 0.63
+  }
+ },
+ {
+  "par": "ped_vb -> norte",
+  "janela": "2023-02..2026-07",
+  "r_nivel_k0": 0.39,
+  "r_yoy_k0": [
+   0.35,
+   30
+  ],
+  "r_nivel_k1": 0.35,
+  "r_yoy_k1": [
+   0.21,
+   29
+  ],
+  "r_nivel_k2": 0.12,
+  "r_yoy_k2": [
+   -0.12,
+   28
+  ],
+  "oos_h1": {
+   "n": 17,
+   "rmse_base": 0.384,
+   "rmse_com_x": 0.447,
+   "razao_com_x/base": 1.164,
+   "razao_com_x/ingenuo": 1.342,
+   "acerto_sinal": 0.76
+  },
+  "oos_h2": {
+   "n": 15,
+   "rmse_base": 0.413,
+   "rmse_com_x": 0.367,
+   "razao_com_x/base": 0.889,
+   "razao_com_x/ingenuo": 1.053,
+   "acerto_sinal": 0.8
+  }
+ },
+ {
+  "par": "ped_trairao -> norte",
+  "janela": "2023-02..2026-07",
+  "r_nivel_k0": 0.46,
+  "r_yoy_k0": [
+   0.45,
+   27
+  ],
+  "r_nivel_k1": 0.48,
+  "r_yoy_k1": [
+   0.4,
+   26
+  ],
+  "r_nivel_k2": 0.26,
+  "r_yoy_k2": [
+   -0.02,
+   25
+  ],
+  "oos_h1": {
+   "n": 14,
+   "rmse_base": 0.421,
+   "rmse_com_x": 0.428,
+   "razao_com_x/base": 1.016,
+   "razao_com_x/ingenuo": 1.2,
+   "acerto_sinal": 0.71
+  },
+  "oos_h2": {
+   "n": 12,
+   "rmse_base": 0.471,
+   "rmse_com_x": 0.431,
+   "razao_com_x/base": 0.914,
+   "razao_com_x/ingenuo": 1.114,
+   "acerto_sinal": 0.5
+  }
+ }
+]
