@@ -14,9 +14,6 @@ describe("deploy.yml", () => {
     expect(deploy).toContain("secrets.VPS_SSH_KEY");
     expect(deploy).not.toMatch(/BEGIN OPENSSH PRIVATE KEY/);
   });
-  it("só envia o sha para a VPS", () => {
-    expect(deploy).toContain('hidrovia-deploy@2.24.121.118 "${{ github.sha }}"');
-  });
 });
 
 describe("CODEOWNERS", () => {
@@ -43,5 +40,25 @@ describe("crons", () => {
       "insights-semanal.yml", "noticias-semanal.yml", "reguas-diario.yml",
       "sgb-semanal.yml", "supervisor-boletim-semanal.yml", "watchdog.yml",
     ]);
+  });
+});
+
+describe("deploy.yml — revisão", () => {
+  it("envia sha@digest (imagem imutável), não só o sha", () => {
+    expect(deploy).toContain('hidrovia-deploy@2.24.121.118 "${{ github.sha }}@${{ needs.build.outputs.digest }}"');
+    expect(deploy).toMatch(/digest: \$\{\{ steps\.push\.outputs\.digest \}\}/);
+  });
+  it("trava de concorrência só no job da VPS (não segura o job do Railway)", () => {
+    const antesDosJobs = deploy.split(/^jobs:/m)[0];
+    expect(antesDosJobs).not.toContain("concurrency:");
+    expect(deploy).toMatch(/deploy-vps:[\s\S]*concurrency:/);
+  });
+});
+
+describe("docker-compose da VPS", () => {
+  it("sobe a imagem pelo digest (imutável), nunca por tag", () => {
+    const c = readFileSync("deploy/vps/docker-compose.yml", "utf8");
+    expect(c).toContain("image: ghcr.io/ibi-observatorio/hidrovia-dashboard@${DIGEST:?");
+    expect(c).not.toContain("hidrovia-dashboard:${TAG");
   });
 });

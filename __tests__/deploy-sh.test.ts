@@ -11,11 +11,16 @@ const WIN = process.platform === "win32";
 const BASH = WIN ? "C:/Program Files/Git/usr/bin/bash.exe" : "bash";
 const posix = (p: string) => p.replace(/\\/g, "/").replace(/^([A-Za-z]):/, (_, l) => `/${l.toLowerCase()}`);
 const SCRIPT = posix(resolve(__dirname, "../deploy/vps/deploy.sh"));
-const SHA_A = "a".repeat(40);
-const SHA_B = "b".repeat(40);
 const BASE_ENV = Object.fromEntries(
   Object.entries(process.env).filter(([k]) => k.toUpperCase() !== "PATH"),
 ) as NodeJS.ProcessEnv;
+
+// O deploy recebe "<sha do commit>@sha256:<digest da imagem>": o digest fixa a
+// imagem exata que o build publicou (uma tag :sha pode ser sobrescrita no GHCR).
+const DIG_A = "sha256:" + "1".repeat(64);
+const DIG_B = "sha256:" + "2".repeat(64);
+const REF_A = `${"a".repeat(40)}@${DIG_A}`;
+const REF_B = `${"b".repeat(40)}@${DIG_B}`;
 
 let dir: string;
 let calls: string;
@@ -47,13 +52,22 @@ beforeEach(() => {
   dir = mkdtempSync(join(tmpdir(), "deploy-sh-"));
   mkdirSync(join(dir, "bin"));
   calls = join(dir, "calls.txt");
-  stub("docker", 'echo "docker TAG=$TAG $*" >> "$CALLS"');
+  stub("docker", 'echo "docker DIGEST=$DIGEST $*" >> "$CALLS"');
   stub("curl", 'echo "curl $*" >> "$CALLS"; exit "$CURL_EXIT"');
   stub("sleep", "true");
 });
 
 describe("deploy.sh", () => {
-  for (const ruim of ["", "abc", SHA_A.toUpperCase(), `${SHA_A}; rm -rf /`, `${SHA_A}0`]) {
+  const ruins = [
+    "",
+    "abc",
+    "a".repeat(40), // só o sha, sem digest: recusado (tag mutável)
+    REF_A.toUpperCase(),
+    `${REF_A}; rm -rf /`,
+    `${"a".repeat(40)}@sha256:${"1".repeat(63)}`,
+    `${"a".repeat(40)}@md5:${"1".repeat(64)}`,
+  ];
+  for (const ruim of ruins) {
     it(`recusa argumento inválido: ${JSON.stringify(ruim)}`, () => {
       const r = run(ruim);
       expect(r.status).toBe(2);
@@ -62,28 +76,33 @@ describe("deploy.sh", () => {
     });
   }
 
-  it("health 200 = sucesso: grava tag e log", () => {
-    const r = run(SHA_A, 0);
+  it("health 200 = sucesso: sobe pelo digest, grava tag e log", () => {
+    const r = run(REF_A, 0);
     expect(r.status).toBe(0);
-    expect(readFileSync(join(dir, "tag"), "utf8").trim()).toBe(SHA_A);
-    expect(readFileSync(calls, "utf8")).toContain(`docker TAG=${SHA_A} compose pull web`);
-    expect(readFileSync(join(dir, "deploys.log"), "utf8")).toMatch(new RegExp(`OK ${SHA_A}`));
+    expect(readFileSync(join(dir, "tag"), "utf8").trim()).toBe(REF_A);
+    expect(readFileSync(calls, "utf8")).toContain(`docker DIGEST=${DIG_A} compose pull web`);
+    expect(readFileSync(join(dir, "deploys.log"), "utf8")).toContain(`OK ${REF_A}`);
   });
 
-  it("health falha com tag anterior: reverte e sai 1", () => {
-    writeFileSync(join(dir, "tag"), `${SHA_A}\n`);
-    const r = run(SHA_B, 7);
+  it("health check tem timeout por tentativa (curl não pode pendurar)", () => {
+    run(REF_A, 0);
+    expect(readFileSync(calls, "utf8")).toMatch(/curl .*--max-time \d+/);
+  });
+
+  it("health falha com tag anterior: reverte para o digest anterior e sai 1", () => {
+    writeFileSync(join(dir, "tag"), `${REF_A}\n`);
+    const r = run(REF_B, 7);
     expect(r.status).toBe(1);
-    expect(readFileSync(join(dir, "tag"), "utf8").trim()).toBe(SHA_A);
+    expect(readFileSync(join(dir, "tag"), "utf8").trim()).toBe(REF_A);
     const c = readFileSync(calls, "utf8");
-    expect(c).toContain(`docker TAG=${SHA_B} compose up -d web`);
-    expect(c).toContain(`docker TAG=${SHA_A} compose up -d web`);
+    expect(c).toContain(`docker DIGEST=${DIG_B} compose up -d web`);
+    expect(c).toContain(`docker DIGEST=${DIG_A} compose up -d web`);
     expect(readFileSync(join(dir, "deploys.log"), "utf8")).toMatch(/FALHA/);
   });
 
   it("health falha no primeiro deploy (sem anterior): sai 1 sem reverter", () => {
-    const r = run(SHA_A, 7);
+    const r = run(REF_A, 7);
     expect(r.status).toBe(1);
-    expect(readFileSync(calls, "utf8")).not.toMatch(/TAG= compose/);
+    expect(readFileSync(calls, "utf8")).not.toMatch(/DIGEST= compose/);
   });
 });

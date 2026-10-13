@@ -14,8 +14,8 @@ Também na VPS (não versionados): `/srv/hidrovia/.env` (segredos, 0600), `tag` 
 
 ## Fluxo
 Merge na `main` → workflow `Deploy` monta a imagem `ghcr.io/ibi-observatorio/hidrovia-dashboard:<sha>` →
-job `deploy-vps` (ambiente `production`, exige aprovação) → `ssh hidrovia-deploy@2.24.121.118 <sha>` → `deploy.sh`.
+job `deploy-vps` (ambiente `production`, exige aprovação) → `ssh hidrovia-deploy@2.24.121.118 <sha>@<digest>` (imagem pinada pelo digest) → `deploy.sh`.
 
 ## Rollback
 - Re-run do workflow `Deploy` num commit antigo; ou
-- como root na VPS: `/srv/hidrovia/deploy.sh <sha antigo>` (lista em `/srv/hidrovia/deploys.log`).
+- como root na VPS: `/srv/hidrovia/deploy.sh <sha>@sha256:<digest>` de uma linha OK antiga de `/srv/hidrovia/deploys.log`.

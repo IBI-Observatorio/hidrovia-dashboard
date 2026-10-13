@@ -8,10 +8,6 @@ on:
   # mas workflow_dispatch e excecao a essa regra anti-recursao do GitHub.
   workflow_dispatch:
 
-concurrency:
-  group: deploy
-  cancel-in-progress: false
-
 jobs:
   # Railway segue em producao ate a virada (Fase C remove este job).
   railway:
@@ -28,6 +24,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      digest: ${{ steps.push.outputs.digest }}
     permissions:
       contents: read
       packages: write
@@ -39,7 +37,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v6
+      - id: push
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
@@ -53,8 +52,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: production
+    # Trava só este job: um deploy esperando aprovação não segura o job do Railway.
+    concurrency:
+      group: deploy-vps
+      cancel-in-progress: false
     steps:
-      - name: Deploy na VPS (só envia o sha; a chave só roda deploy.sh)
+      - name: Deploy na VPS (envia sha@digest; a chave só roda deploy.sh)
         env:
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
           VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
@@ -63,4 +66,4 @@ jobs:
           printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -o BatchMode=yes hidrovia-deploy@2.24.121.118 "${{ github.sha }}"
+          ssh -o BatchMode=yes hidrovia-deploy@2.24.121.118 "${{ github.sha }}@${{ needs.build.outputs.digest }}"

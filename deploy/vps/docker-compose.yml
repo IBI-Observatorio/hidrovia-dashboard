@@ -1,6 +1,7 @@
 services:
   web:
-    image: ghcr.io/ibi-observatorio/hidrovia-dashboard:${TAG:?TAG ausente - use deploy.sh}
+    # Pinada pelo digest (imutável). Comandos manuais: DIGEST=$(cut -d@ -f2 tag) docker compose ps
+    image: ghcr.io/ibi-observatorio/hidrovia-dashboard@${DIGEST:?DIGEST ausente - use deploy.sh}
     env_file: .env
     environment:
       DATA_DIR: /data
