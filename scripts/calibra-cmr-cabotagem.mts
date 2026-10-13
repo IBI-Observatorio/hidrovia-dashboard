@@ -72,7 +72,7 @@ const COTA_ITA_HOJE = md.vivo_2026?.ITA ?? 13.71;  // cota viva de Itacoatiara (
 let eta:any = { fonte:"multi-driver", p50:md.cruzamento_cmr11.central, p10:md.cruzamento_cmr11.cedo, p90:md.cruzamento_cmr11.tarde, prob:1, ano_analogo:md.analogos_top?.[0]?.ano,
   cmr_atual:+cmrDeItacoatiara(COTA_ITA_HOJE).toFixed(2), cota_ita_atual:COTA_ITA_HOJE, irc_tabocal:32.3, irc_tabocal_faixa:"amarelo" };
 try {
-  const j:any = await (await fetch("https://hidrovia-dashboard-production.up.railway.app/api/irc", { signal: AbortSignal.timeout(30000) })).json();
+  const j:any = await (await fetch("https://dados.ibi-observatorio.org/api/irc", { signal: AbortSignal.timeout(30000) })).json();
   eta.cmr_atual = j.cmr_metros; eta.cota_ita_atual = j.eta_analogos?.cota_atual_m; eta.cota_alvo = j.eta_analogos?.cota_alvo_m;
   eta.irc_tabocal = j.irc_tabocal; eta.irc_tabocal_faixa = j.irc_tabocal_faixa;
   eta.prob = j.eta_analogos?.prob_cruzamento ?? 1; eta.analogos_dashboard_p50 = j.eta_analogos?.data_p50;

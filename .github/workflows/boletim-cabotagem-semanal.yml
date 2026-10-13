@@ -48,7 +48,7 @@ jobs:
       - name: Gera o boletim (modelo -> calibracao -> HTML -> snapshot -> PDF)
         env:
           CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
-          DASH_API: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+          DASH_API: ${{ vars.SITE_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
         run: node scripts/gera-boletim-cabotagem.mjs
 
       - name: Confere que o PDF saiu

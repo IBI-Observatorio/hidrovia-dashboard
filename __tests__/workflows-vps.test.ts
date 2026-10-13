@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 
 const deploy = readFileSync(".github/workflows/deploy.yml", "utf8");
 
@@ -25,5 +25,23 @@ describe("CODEOWNERS", () => {
     expect(co).toMatch(/^\/\.github\/\s+@brunopinheiro-creator$/m);
     expect(co).toMatch(/^\/Dockerfile\s+@brunopinheiro-creator$/m);
     expect(co).toMatch(/^\/deploy\/\s+@brunopinheiro-creator$/m);
+  });
+});
+
+describe("crons", () => {
+  const dir = ".github/workflows";
+  const arquivos = readdirSync(dir).filter((f) => f.endsWith(".yml"));
+  it("nenhum workflow usa mais vars.RAILWAY_PUBLIC_URL", () => {
+    for (const f of arquivos) {
+      expect(readFileSync(`${dir}/${f}`, "utf8"), f).not.toContain("RAILWAY_PUBLIC_URL");
+    }
+  });
+  it("os 9 workflows que chamam o dashboard leem vars.SITE_URL", () => {
+    const usam = arquivos.filter((f) => readFileSync(`${dir}/${f}`, "utf8").includes("vars.SITE_URL"));
+    expect(usam.sort()).toEqual([
+      "boletim-cabotagem-semanal.yml", "briefing-semanal.yml", "enso-mensal.yml",
+      "insights-semanal.yml", "noticias-semanal.yml", "reguas-diario.yml",
+      "sgb-semanal.yml", "supervisor-boletim-semanal.yml", "watchdog.yml",
+    ]);
   });
 });

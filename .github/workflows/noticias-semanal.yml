@@ -33,8 +33,8 @@ jobs:
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
           # Domínio público do dashboard no Railway. Pode ser sobrescrito por uma
-          # repo variable RAILWAY_PUBLIC_URL se o domínio mudar.
-          BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+          # repo variable SITE_URL se o domínio mudar.
+          BASE_URL: ${{ vars.SITE_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
         run: |
           set -euo pipefail
           if [ -z "${CRON_SECRET}" ]; then

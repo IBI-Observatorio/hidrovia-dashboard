@@ -27,7 +27,7 @@ const idnVal = (() => {
 })();
 const man = await (async () => {
   try {
-    const j = await (await fetch("https://hidrovia-dashboard-production.up.railway.app/api/ana?estacao=Manaus&dias=7", { signal: AbortSignal.timeout(20000) })).json();
+    const j = await (await fetch("https://dados.ibi-observatorio.org/api/ana?estacao=Manaus&dias=7", { signal: AbortSignal.timeout(20000) })).json();
     if (j?.resumo?.cota_m != null) return { cota: j.resumo.cota_m, v24: j.resumo.variacao_24h ?? 0, data: j.resumo.ultima_data };
   } catch { /* fallback */ }
   return { cota: 28.22, v24: 4, data: "2026-06-08" };

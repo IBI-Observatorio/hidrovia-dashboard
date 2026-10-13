@@ -22,7 +22,7 @@ const DATA_DIR = process.env.DATA_DIR ?? join(process.cwd(), "data");
 const CACHE_PATH = join(DATA_DIR, "boletins_sgb_cache.json");
 const BASE = "https://www.sgb.gov.br/sace";
 const LISTA_AMAZONAS = `${BASE}/amazonas_boletins.php`;
-const UA = "Mozilla/5.0 (compatible; IBI-Observatorio/1.0; +https://hidrovias.up.railway.app)";
+const UA = "Mozilla/5.0 (compatible; IBI-Observatorio/1.0; +https://dados.ibi-observatorio.org)";
 
 interface CacheSGB {
   boletins: BoletimSGB[];
