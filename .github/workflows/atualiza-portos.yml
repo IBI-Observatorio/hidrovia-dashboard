@@ -27,6 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Deploy key: a regra da main só libera deploy keys; o push dispara o deploy.yml.
+          ssh-key: ${{ secrets.BOT_DEPLOY_KEY }}
 
       - name: Checa saúde da API ANTAQ
         run: |

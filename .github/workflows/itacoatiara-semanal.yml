@@ -19,7 +19,6 @@ on:
 
 permissions:
   contents: write
-  actions: write   # para disparar o deploy.yml apos commitar
 
 concurrency:
   group: itacoatiara-semanal
@@ -30,6 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Deploy key: a regra da main só libera deploy keys; o push dispara o deploy.yml.
+          ssh-key: ${{ secrets.BOT_DEPLOY_KEY }}
 
       - name: Setup Node
         uses: actions/setup-node@v5
@@ -60,6 +62,3 @@ jobs:
             -m "Regenerado pela API ANA via GitHub Actions." \
             -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
           git push
-          # Push via GITHUB_TOKEN nao aciona o gatilho push do deploy.yml;
-          # disparamos explicitamente (workflow_dispatch e excecao a regra).
-          gh workflow run deploy.yml --ref main && echo "deploy disparado" || echo "::warning::falha ao disparar deploy"

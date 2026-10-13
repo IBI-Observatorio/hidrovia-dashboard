@@ -62,3 +62,24 @@ describe("docker-compose da VPS", () => {
     expect(c).not.toContain("hidrovia-dashboard:${TAG");
   });
 });
+
+describe("robôs de dados (push na main protegida)", () => {
+  const dir = ".github/workflows";
+  const robos = readdirSync(dir).filter((f) => f.endsWith(".yml") && /git push/.test(readFileSync(`${dir}/${f}`, "utf8")));
+  it("são os 5 conhecidos", () => {
+    expect(robos.sort()).toEqual([
+      "agro-dados.yml", "atualiza-portos.yml", "boletim-cabotagem-semanal.yml",
+      "idn-semanal.yml", "itacoatiara-semanal.yml",
+    ]);
+  });
+  it("fazem checkout com a deploy key (a única liberada na regra da main)", () => {
+    for (const f of robos) {
+      expect(readFileSync(`${dir}/${f}`, "utf8"), f).toMatch(/actions\/checkout@v5\s*\n\s*with:\s*\n(?:\s*#[^\n]*\n)?\s*ssh-key: \$\{\{ secrets\.BOT_DEPLOY_KEY \}\}/);
+    }
+  });
+  it("não disparam deploy.yml à mão (o push com deploy key já dispara)", () => {
+    for (const f of robos) {
+      expect(readFileSync(`${dir}/${f}`, "utf8"), f).not.toContain("gh workflow run deploy.yml");
+    }
+  });
+});
