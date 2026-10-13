@@ -27,9 +27,13 @@ Requisitos do Bruno:
 - Volume `sema-cache` montado em `/data`, `DATA_DIR=/data` (caches ANA, SEMA, SGB, ENSO, insights).
 - Deploy: `.github/workflows/deploy.yml` roda `railway up` a cada push na `main` e via `workflow_dispatch`.
 - URL pública: `https://hidrovia-dashboard-production.up.railway.app`. Existe também um ambiente `hml`.
-- 9 workflows usam `BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}`:
-  atualiza-portos, boletim-cabotagem-semanal, briefing-semanal, enso-mensal, insights-semanal,
-  reguas-diario, sgb-semanal, supervisor-boletim-semanal, watchdog.
+- 9 workflows chamam o dashboard via `vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app'`
+  (`BASE_URL`, ou `DASH_API` no boletim): boletim-cabotagem-semanal, briefing-semanal, enso-mensal,
+  insights-semanal, noticias-semanal, reguas-diario, sgb-semanal, supervisor-boletim-semanal, watchdog.
+- `idn-semanal`, `itacoatiara-semanal` e `boletim-cabotagem-semanal` disparam `gh workflow run deploy.yml`
+  (o nome do arquivo de deploy não pode mudar).
+- URLs `antaq-api-production.up.railway.app` são de outro serviço (desligado) e ficam fora do escopo.
+- Configurações do repositório exigem a conta dona `IBI-Observatorio`; revisor/CODEOWNER: `@brunopinheiro-creator`.
 - O app lê em runtime arquivos de `data/`, `content/` e `public/` via `process.cwd()`.
 - Variáveis usadas no código: `DATA_DIR`, `CRON_SECRET`, `ADMIN_PASSWORD`, `DEEPSEEK_API_KEY`
   (`lib/llm.ts`), `ANTHROPIC_API_KEY`, `HIDRO_IDENTIFICADOR`, `HIDRO_SENHA`, `SHEETS_WEBHOOK_URL`,
@@ -125,10 +129,11 @@ pelo chat. Única alteração: `DATA_DIR=/data`.
   esperaria aprovação). Mesmo valor no `.env` da VPS.
 
 **URLs fixas no código:**
-- `app/(site)/vitrine-cnt/page.tsx`: iframe de exemplo → `https://dados.ibi-observatorio.org/embed/pavimento`.
+- `app/(site)/vitrine-cnt/page.tsx` ainda não está na `main` (branch local); o iframe dele passa a valer pelo 301 da Fase C
+  e deve ser trocado para `https://dados.ibi-observatorio.org/embed/pavimento` quando essa página for mesclada.
 - `app/api/cron/refresh-enso/route.ts` e `refresh-sgb/route.ts`: User-Agent → domínio novo.
-- Scripts em `scripts/` e docs (`RUNBOOK-DADOS.md`, `HANDOFF-TI.md`, `RAILWAY-CRON.md`)
-  com a URL do Railway → domínio novo; `RUNBOOK-DADOS.md` ganha a seção "onde roda".
+- Scripts em `scripts/` que consultam o dashboard e docs (`RUNBOOK-DADOS.md`, `RAILWAY-CRON.md`)
+  com a URL do Railway → domínio novo (`HANDOFF-TI.md` não existe na `main`); `RUNBOOK-DADOS.md` ganha a seção "onde roda".
 
 ### 3.4 Virada e desligamento
 
