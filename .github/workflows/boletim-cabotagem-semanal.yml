@@ -20,7 +20,6 @@ on:
 
 permissions:
   contents: write
-  actions: write   # para disparar o deploy.yml apos commitar a serie
 
 concurrency:
   group: boletim-cabotagem-semanal
@@ -31,6 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          # Deploy key: a regra da main só libera deploy keys; o push dispara o deploy.yml.
+          ssh-key: ${{ secrets.BOT_DEPLOY_KEY }}
 
       - name: Setup Node
         uses: actions/setup-node@v5
@@ -48,7 +50,7 @@ jobs:
       - name: Gera o boletim (modelo -> calibracao -> HTML -> snapshot -> PDF)
         env:
           CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
-          DASH_API: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+          DASH_API: ${{ vars.SITE_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
         run: node scripts/gera-boletim-cabotagem.mjs
 
       - name: Confere que o PDF saiu
@@ -76,9 +78,6 @@ jobs:
             -m "Gerado pelo pipeline do boletim via GitHub Actions." \
             -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"
           git push
-          # Push via GITHUB_TOKEN nao aciona o gatilho push do deploy.yml;
-          # disparamos explicitamente para o supervisor ler a serie fresca.
-          gh workflow run deploy.yml --ref main && echo "deploy disparado" || echo "::warning::falha ao disparar deploy"
 
       - name: Envia o boletim por e-mail (Resend)
         env:

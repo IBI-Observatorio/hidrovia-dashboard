@@ -33,7 +33,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
-      BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+      BASE_URL: ${{ vars.SITE_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
       CRON_SECRET: ${{ secrets.CRON_SECRET }}
     steps:
       - uses: actions/checkout@v5

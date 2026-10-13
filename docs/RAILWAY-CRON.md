@@ -1,3 +1,5 @@
+> **Obsoleto (out/2026):** o dashboard saiu do Railway; ver `docs/RUNBOOK-DADOS.md` § Onde roda.
+
 # Cron do Briefing Semanal — Railway
 
 ## Quando

@@ -1,5 +1,11 @@
 # Runbook de Dados — Observatório IBI
 
+## Onde roda (desde a migração de out/2026)
+- Produção: `https://dados.ibi-observatorio.org` — VPS Hostinger, `/srv/hidrovia` (Docker).
+- `DATA_DIR` = `/srv/hidrovia/data` na VPS (montado em `/data`); backup diário em `/srv/backups/hidrovia/`.
+- Deploy: `.github/workflows/deploy.yml` (merge na `main` + aprovação no ambiente `production`).
+- Crons do GitHub chamam `vars.SITE_URL`. Detalhes: `deploy/vps/README.md`.
+
 **A maior parte dos dados agora se atualiza sozinha na nuvem** (GitHub Actions →
 Railway). O pipeline local da máquina do Bruno foi **aposentado** (a tarefa do
 Windows `SACEPipelineSemanal` foi removida). Os scripts continuam no repo, mas só

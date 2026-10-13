@@ -21,7 +21,7 @@ export const revalidate = 0;
 const DATA_DIR = process.env.DATA_DIR ?? join(process.cwd(), "data");
 const CACHE_PATH = join(DATA_DIR, "enso_cpc_cache.json");
 const URL_CPC = "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml";
-const UA = "Mozilla/5.0 (compatible; IBI-Observatorio/1.0; +https://hidrovias.up.railway.app)";
+const UA = "Mozilla/5.0 (compatible; IBI-Observatorio/1.0; +https://dados.ibi-observatorio.org)";
 
 const MESES_EN_NUM: Record<string, number> = {
   January: 1, February: 2, March: 3, April: 4, May: 5, June: 6,

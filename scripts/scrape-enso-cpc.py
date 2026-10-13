@@ -31,7 +31,7 @@ import requests
 ROOT       = Path(__file__).resolve().parent.parent
 CACHE_PATH = ROOT / "data" / "enso_cpc_cache.json"
 URL        = "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml"
-UA         = "Mozilla/5.0 (compatible; IBI-Observatorio/1.0; +https://hidrovias.up.railway.app)"
+UA         = "Mozilla/5.0 (compatible; IBI-Observatorio/1.0; +https://dados.ibi-observatorio.org)"
 
 # ---------------------------------------------------------------------------
 # Parsing

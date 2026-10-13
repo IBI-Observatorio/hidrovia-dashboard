@@ -30,7 +30,7 @@ const lerJSON = (p) => JSON.parse(readFileSync(r(p), "utf8"));
 const lerJSONsafe = (p) => { try { return lerJSON(p); } catch { return null; } };
 
 // --- 1. Dados reais do projeto --------------------------------------------
-const API_PROD = "https://hidrovia-dashboard-production.up.railway.app";
+const API_PROD = "https://dados.ibi-observatorio.org";
 // ana-diario-cache.json e enso_cpc_cache.json são caches de runtime
 // (gitignored): só existem na máquina/volume que os gera. No CI o relatório
 // busca esses dados AO VIVO na API de produção; o load local abaixo é apenas
