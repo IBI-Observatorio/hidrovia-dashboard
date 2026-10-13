@@ -13,7 +13,9 @@ const posix = (p: string) => p.replace(/\\/g, "/").replace(/^([A-Za-z]):/, (_, l
 const SCRIPT = posix(resolve(__dirname, "../deploy/vps/deploy.sh"));
 const SHA_A = "a".repeat(40);
 const SHA_B = "b".repeat(40);
-const BASE_ENV = Object.fromEntries(Object.entries(process.env).filter(([k]) => k.toUpperCase() !== "PATH"));
+const BASE_ENV = Object.fromEntries(
+  Object.entries(process.env).filter(([k]) => k.toUpperCase() !== "PATH"),
+) as NodeJS.ProcessEnv;
 
 let dir: string;
 let calls: string;
