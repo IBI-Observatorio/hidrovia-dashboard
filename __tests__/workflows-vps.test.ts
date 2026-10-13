@@ -83,3 +83,10 @@ describe("robôs de dados (push na main protegida)", () => {
     }
   });
 });
+
+describe("deploy.yml — Railway desligado", () => {
+  it("não reconstrói mais no Railway (o construtor novo do Railway gera imagem sem node_modules)", () => {
+    expect(deploy).not.toContain("railway up");
+    expect(deploy).not.toContain("RAILWAY_TOKEN");
+  });
+});

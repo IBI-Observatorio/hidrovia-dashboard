@@ -9,18 +9,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Railway segue em producao ate a virada (Fase C remove este job).
-  railway:
-    runs-on: ubuntu-latest
-    container: ghcr.io/railwayapp/cli:latest
-    env:
-      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-      RAILWAY_PROJECT_ID: afec5058-fcde-4c0d-8b8b-67943fa80fc4
-      RAILWAY_SERVICE_ID: 85b66087-3d29-4ff6-80ef-2ecd0f217b84
-    steps:
-      - uses: actions/checkout@v5
-      - name: Deploy to Railway
-        run: railway up --service hidrovia-dashboard --detach
+  # Job do Railway removido em 13/10/2026: o construtor novo do Railway passou a gerar
+  # imagem sem node_modules (next: not found) e derrubou a producao. O Railway fica
+  # congelado na ultima versao boa ate a virada do DNS para a VPS.
 
   build:
     runs-on: ubuntu-latest
