@@ -315,9 +315,18 @@ export function montarContextoExplicador(input: {
       label: "Motor DCF do Radar (parâmetros ANTT/Frischtak; ver aba Estresse RCF)",
     };
     linhas.push(
-      `TIR oficial: ${pct(analise.oficial.tir, 2)} | TIR realista: ${pct(analise.realista.tir, 2)} | ` +
+      `TIR oficial (motor): ${pct(analise.oficial.tir, 2)} | TIR realista: ${pct(analise.realista.tir, 2)} | ` +
       `WACC: ${pct(analise.wacc, 2)} | P(spread<0) Monte Carlo: ${pct(analise.monteCarlo.pSpreadNeg, 1)}${ref(fonteMotor)}`,
     );
+    // Segunda leitura do oficial: TIR DECLARADA pelo governo (dado do seed, com fonte).
+    const decl = full.oficialAnchor?.tir;
+    if (decl)
+      linhas.push(
+        `TIR oficial declarada pelo governo: ${pct(numVal(decl), 2)} (o motor não a reproduz com as premissas públicas)${ref(decl.source)}`,
+      );
+    const aporte = full.oficialAnchor?.aporte;
+    if (aporte)
+      linhas.push(`Aporte público na modelagem vigente: ${num(numVal(aporte), 2)} ${aporte.unit}${ref(aporte.source)}`);
     linhas.push(`(Para QUALQUER outro número que exija cálculo novo, isso é "modo cenário" — não responda aqui.)`);
   }
 
