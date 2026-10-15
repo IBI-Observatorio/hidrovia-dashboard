@@ -1,15 +1,12 @@
 // Módulo 4 — Tabuleiro Estratégico (Build Brief §3, §10).
 //
-// O CLIENTE é configurável (guardrail §10): nada hardcoded que vaze posição de
-// terceiros. O conteúdo por ativo é FATO PÚBLICO (notícia/órgão), keyed pelo
-// cliente configurado. Se o cliente não tiver papel mapeado num ativo, devolve
-// um fallback neutro — nunca inventa posição.
+// O CLIENTE vem do assinante autenticado (lib/radar/acesso), nunca de um default:
+// o tabuleiro é exclusivo e não aparece na vitrine pública. O conteúdo por ativo
+// é FATO PÚBLICO (notícia/órgão), keyed pelo cliente. Se o cliente não tiver
+// papel mapeado num ativo, devolve um fallback neutro — nunca inventa posição.
 
 import type { SourceTag } from "@/lib/dcf/types";
 import type { RadarAssetEntry } from "@/lib/radar/assets";
-
-/** Cliente configurado do tabuleiro (default). Trocável sem hardcode no componente. */
-export const CLIENTE_PADRAO = "VLI";
 
 export type Exposicao = "alta" | "media" | "baixa" | "nenhuma";
 
@@ -46,7 +43,7 @@ const FALLBACK: TabuleiroEntry = {
  */
 export function getTabuleiro(
   entry: RadarAssetEntry,
-  cliente: string = CLIENTE_PADRAO,
+  cliente: string,
 ): { cliente: string; entry: TabuleiroEntry; mapeado: boolean } {
   const bloco = entry.tabuleiro?.[cliente];
   return { cliente, entry: bloco ?? FALLBACK, mapeado: !!bloco };

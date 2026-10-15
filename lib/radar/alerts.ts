@@ -22,11 +22,46 @@ export const ALERT_KIND_INFO: Record<AlertKind, { label: string; txt: string; bg
 /** Eventos institucionais reais (curadoria manual, fonte pública em cada um). */
 export const ALERTAS: Alert[] = [
   {
+    date: "2026-09-18",
+    asset: "ef-118",
+    kind: "estagio",
+    text: "ANTT empurra o leilão da EF-118 para o 1º trimestre de 2027; edital previsto até dezembro de 2026. Sem edital publicado, o ativo volta de \"Edital\" para \"TCU\" na esteira.",
+    fonte: { label: "CNN Brasil", url: "https://www.cnnbrasil.com.br/infra/apos-atrasos-governo-quer-leiloar-ferrovia-no-sudeste-em-2027/", date: "2026-09-18" },
+  },
+  {
+    date: "2026-09-10",
+    asset: "ef-170",
+    kind: "estagio",
+    text: "ANTT aprova nova modelagem da Ferrogrão e reenvia os estudos ao TCU: concessão pura, sem o aporte público de R$ 3,5 bi; leilão projetado para 2027.",
+    fonte: { label: "Agência iNFRA", url: "https://agenciainfra.com/blog/ferrograo-volta-ao-tcu-sem-aporte-e-com-ajuste-em-material-rodante/", date: "2026-09-11" },
+  },
+  {
+    date: "2026-09-03",
+    asset: "ef-118",
+    kind: "gate",
+    text: "TCU: três ministros pedem vista no julgamento sobre as contas vinculadas do investimento cruzado; votação prevista para 11/11/2026. Sem essa definição, o edital da EF-118 não sai.",
+    fonte: { label: "Agência iNFRA", url: "https://agenciainfra.com/blog/tcu-adia-votacao-sobre-contas-vinculadas-e-afasta-leilao-ferroviario-em-2026/", date: "2026-09-03" },
+  },
+  {
+    date: "2026-08-27",
+    asset: "fico-fiol",
+    kind: "estagio",
+    text: "Ministro Santoro: leilão do Corredor Leste-Oeste só em 2027, com edital ainda em 2026. O projeto ainda não tinha chegado ao TCU.",
+    fonte: { label: "Poder360", url: "https://www.poder360.com.br/poder-governo/governo-avanca-para-integrar-leste-oeste-e-quer-8-chamamentos-de-ferrovias/", date: "2026-08-27" },
+  },
+  {
     date: "2026-05-21",
     asset: "ef-170",
     kind: "gate",
-    text: "STF manteve a redução do Parque Nacional do Jamanxim (6 votos pela constitucionalidade da Lei 13.452/2017).",
-    fonte: { label: "STF / Combate Racismo Ambiental", date: "2026-05" },
+    text: "STF conclui a ADI 6553 e mantém, por maioria, a redução do Parque Nacional do Jamanxim (Lei 13.452/2017 constitucional). Obra segue condicionada a licenciamento.",
+    fonte: { label: "Jornal de Brasília", url: "https://jornaldebrasilia.com.br/noticias/politica-e-poder/stf-valida-lei-da-ferrograo-e-mantem-obra-condicionada/", date: "2026-05-22" },
+  },
+  {
+    date: "2026-04-13",
+    asset: "ef-170",
+    kind: "gate",
+    text: "Relator no TCU dá efeito suspensivo aos recursos do governo e encerra o sobrestamento; a análise de mérito da concessão é retomada. O mérito dos recursos segue pendente.",
+    fonte: { label: "Agência iNFRA", url: "https://agenciainfra.com/blog/ferrograo-ministro-autoriza-retomada-da-analise-do-processo-de-concessao/", date: "2026-04-14" },
   },
   {
     date: "2026-03-30",
