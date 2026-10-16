@@ -1,41 +1,47 @@
 {
- "gerado_em": "2026-09-30T10:38:20",
+ "gerado_em": "2026-10-16T19:37:49",
  "fonte": "Capitania Fluvial da Amazônia Ocidental (CFAOC) — Calado Máximo Recomendado",
  "fonte_url": "https://www.marinha.mil.br/cfaoc/node/119",
- "publicado_em": "2026-09-30",
+ "publicado_em": "2026-10-16",
  "ultimo": {
-  "data": "2026-09-30",
-  "demais": 11.11,
-  "petroleo": 10.88,
+  "data": "2026-10-16",
+  "demais": 10.84,
+  "petroleo": 10.61,
   "previsao": false,
-  "faq_demais": 1.72,
-  "faq_petroleo": 1.95,
-  "variacao_24h_m": -0.18,
-  "ritmo_7d_m_dia": -0.16
+  "faq_demais": 1.7,
+  "faq_petroleo": 1.92,
+  "variacao_24h_m": -0.05,
+  "ritmo_7d_m_dia": -0.04
  },
  "previsao_capitania": [
   {
-   "data": "2026-10-01",
-   "demais": 10.99,
-   "petroleo": 10.76,
+   "data": "2026-10-17",
+   "demais": 10.71,
+   "petroleo": 10.48,
    "previsao": true
   },
   {
-   "data": "2026-10-02",
-   "demais": 10.87,
-   "petroleo": 10.65,
+   "data": "2026-10-18",
+   "demais": 10.7,
+   "petroleo": 10.48,
    "previsao": true
   },
   {
-   "data": "2026-10-03",
-   "demais": 10.76,
-   "petroleo": 10.53,
+   "data": "2026-10-19",
+   "demais": 10.64,
+   "petroleo": 10.41,
    "previsao": true
   },
   {
-   "data": "2026-10-04",
-   "demais": 10.67,
-   "petroleo": 10.45,
+   "data": "2026-10-20",
+   "demais": 10.58,
+   "petroleo": 10.36,
+   "previsao": true
+  },
+  {
+   "data": "2026-10-21",
+   "demais": 10.53,
+   "petroleo": 10.31,
    "previsao": true
   }
  ],
@@ -120,32 +126,134 @@
   },
   {
    "data": "2026-09-30",
-   "demais": 11.11,
-   "petroleo": 10.88,
+   "demais": 11.16,
+   "petroleo": 10.94,
    "previsao": false
   },
   {
    "data": "2026-10-01",
-   "demais": 10.99,
-   "petroleo": 10.76,
-   "previsao": true
+   "demais": 11.04,
+   "petroleo": 10.81,
+   "previsao": false
   },
   {
    "data": "2026-10-02",
-   "demais": 10.87,
-   "petroleo": 10.65,
-   "previsao": true
+   "demais": 10.93,
+   "petroleo": 10.7,
+   "previsao": false
   },
   {
    "data": "2026-10-03",
-   "demais": 10.76,
-   "petroleo": 10.53,
-   "previsao": true
+   "demais": 10.81,
+   "petroleo": 10.59,
+   "previsao": false
   },
   {
    "data": "2026-10-04",
-   "demais": 10.67,
-   "petroleo": 10.45,
+   "demais": 10.73,
+   "petroleo": 10.5,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-05",
+   "demais": 10.65,
+   "petroleo": 10.43,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-06",
+   "demais": 10.96,
+   "petroleo": 10.74,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-07",
+   "demais": 10.81,
+   "petroleo": 10.58,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-08",
+   "demais": 10.69,
+   "petroleo": 10.46,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-09",
+   "demais": 11.09,
+   "petroleo": 10.86,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-10",
+   "demais": 10.96,
+   "petroleo": 10.73,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-11",
+   "demais": 10.93,
+   "petroleo": 10.71,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-12",
+   "demais": 11.07,
+   "petroleo": 10.85,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-13",
+   "demais": 11.01,
+   "petroleo": 10.78,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-14",
+   "demais": 10.95,
+   "petroleo": 10.72,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-15",
+   "demais": 10.89,
+   "petroleo": 10.66,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-16",
+   "demais": 10.84,
+   "petroleo": 10.61,
+   "previsao": false
+  },
+  {
+   "data": "2026-10-17",
+   "demais": 10.71,
+   "petroleo": 10.48,
+   "previsao": true
+  },
+  {
+   "data": "2026-10-18",
+   "demais": 10.7,
+   "petroleo": 10.48,
+   "previsao": true
+  },
+  {
+   "data": "2026-10-19",
+   "demais": 10.64,
+   "petroleo": 10.41,
+   "previsao": true
+  },
+  {
+   "data": "2026-10-20",
+   "demais": 10.58,
+   "petroleo": 10.36,
+   "previsao": true
+  },
+  {
+   "data": "2026-10-21",
+   "demais": 10.53,
+   "petroleo": 10.31,
    "previsao": true
   }
  ],
