@@ -10,15 +10,15 @@
       "source": { "label": "PPI — Corredor Leste-Oeste: ~1,7 mil km em 4 segmentos (Fiol 2/3 + Fico 1), exclui Fiol 1 (Bamin)", "url": "https://ppi.gov.br/projetos/corredor-ferroviario-leste-oeste/", "date": "2026" } }
   },
   "maturacao": {
-    "estagioAtual": 2,
-    "leilaoAnunciado": 2026,
+    "estagioAtual": 1,
+    "leilaoAnunciado": 2027,
     "gateRisk": "medio",
     "drivers": [
-      "Modelagem de concessão concluída pelo Min. dos Transportes (sem o trecho Fiol 1).",
-      "Edital previsto p/ 2026; leilão reagendado p/ dez/2026 (após ANTT/TCU).",
-      "Obras de Fico/Fiol avançam em paralelo (execução pública)."
+      "Ministro Santoro: leilão só em 2027, com edital ainda em 2026 (Poder360, 27/08/2026).",
+      "Projeto ainda não havia chegado ao TCU em 27/08/2026; a ANTT deveria aprovar o modelo e enviá-lo à Corte a partir de setembro (Poder360).",
+      "Modelagem concluída pelo Min. dos Transportes sem a Fiol 1, que está em troca de concessionária (Bamin → Mota-Engil)."
     ],
-    "fonte": { "label": "PPI / Agência iNFRA / Tribuna dos Municípios", "url": "https://ppi.gov.br/projetos/corredor-ferroviario-leste-oeste/", "date": "2026" }
+    "fonte": { "label": "Poder360 (27/08/2026) / Agência iNFRA", "url": "https://www.poder360.com.br/poder-governo/governo-avanca-para-integrar-leste-oeste-e-quer-8-chamamentos-de-ferrovias/", "date": "2026-08-27" }
   },
   "scenariosMeta": {
     "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }

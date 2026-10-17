@@ -14,7 +14,7 @@ export interface Funding {
 
 export default function FundingBar({
   funding,
-  cliente = "VLI",
+  cliente,
 }: {
   funding: Funding;
   cliente?: string;
@@ -44,8 +44,12 @@ export default function FundingBar({
         </div>
         <p className="text-[11px] text-gray-500">
           Aporte necessário <strong className="text-gray-300">{num(nec, 2)} R$ bi</strong> ·
-          cobertura {funding.coberturaCruzada.map((c) => c.fonte).join(" + ")}. Exposição da{" "}
-          <strong className="text-ouro">{cliente}</strong> ao gap acima.
+          cobertura {funding.coberturaCruzada.map((c) => c.fonte).join(" + ")}.
+          {cliente && (
+            <>
+              {" "}Exposição da <strong className="text-ouro">{cliente}</strong> ao gap acima.
+            </>
+          )}
         </p>
       </div>
     </section>
