@@ -117,7 +117,7 @@ jobs:
           {
             echo "🚨 **Sistema imunologico detectou problemas** — $(date -u +%FT%TZ)"
             echo ""
-            printf '-  %s\n' "${PROBLEMS[@]}"
+            printf -- '- %s\n' "${PROBLEMS[@]}"
             echo ""
             echo "Detalhe da saude dos dados:"
             echo '```json'
