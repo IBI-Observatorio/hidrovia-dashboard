@@ -10,7 +10,7 @@
 //     -> out/relatorio-cabotagem.pdf
 //
 // Variáveis de ambiente opcionais:
-//   DASH_API       base da API de produção (default Railway)
+//   DASH_API       base da API de produção (default dados.ibi-observatorio.org)
 //   CHROME_BIN     caminho do Chrome/Edge (se o autodetect falhar)
 //   BOLETIM_OUT    caminho de saída do PDF (default out/relatorio-cabotagem.pdf)
 // ---------------------------------------------------------------------------
@@ -35,6 +35,25 @@ function achaChrome() {
 }
 
 console.log("\n=== Boletim Cabotagem — pipeline ===\n");
+
+// /api/ana repassa direto ao SOAP da ANA, que oscila por minutos (falhas de
+// 02/09 e 07/10/2026: todas as estações deram timeout e o relatório abortou).
+// Antes de rodar a cadeia, espera a API responder com cota de Manaus — com
+// backoff (~15 min no total). Se não voltar, falha com mensagem clara.
+const API = process.env.DASH_API ?? "https://dados.ibi-observatorio.org";
+async function aguardaAPI() {
+  const esperas = [0, 30, 60, 120, 240, 420];   // segundos antes de cada tentativa
+  for (const [i, s] of esperas.entries()) {
+    if (s) { console.log(`  aguardando ${s}s antes da tentativa ${i + 1}/${esperas.length}...`); await new Promise((ok) => setTimeout(ok, s * 1000)); }
+    try {
+      const j = await (await fetch(`${API}/api/ana?estacao=Manaus&dias=2`, { signal: AbortSignal.timeout(45000) })).json();
+      if (j?.resumo?.cota_m != null) { console.log(`API ANA ok (Manaus ${j.resumo.cota_m} m em ${j.resumo.ultima_data}).`); return; }
+      console.warn(`  [API ANA] resposta sem cota: ${JSON.stringify(j).slice(0, 200)}`);
+    } catch (e) { console.warn(`  [API ANA] tentativa ${i + 1} falhou: ${e.message}`); }
+  }
+  throw new Error(`API ANA (${API}/api/ana) indisponível após ${esperas.length} tentativas — boletim não gerado.`);
+}
+await aguardaAPI();
 run("npx --yes tsx scripts/modelo-multidriver-itacoatiara.mts");
 run("npx --yes tsx scripts/calibra-cmr-cabotagem.mts");
 run("node scripts/gera-relatorio-cabotagem.mjs");

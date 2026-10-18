@@ -30,7 +30,7 @@ const lerJSON = (p) => JSON.parse(readFileSync(r(p), "utf8"));
 const lerJSONsafe = (p) => { try { return lerJSON(p); } catch { return null; } };
 
 // --- 1. Dados reais do projeto --------------------------------------------
-const API_PROD = "https://dados.ibi-observatorio.org";
+const API_PROD = process.env.DASH_API ?? "https://dados.ibi-observatorio.org";
 // ana-diario-cache.json e enso_cpc_cache.json são caches de runtime
 // (gitignored): só existem na máquina/volume que os gera. No CI o relatório
 // busca esses dados AO VIVO na API de produção; o load local abaixo é apenas
@@ -40,13 +40,18 @@ const ana = lerJSONsafe("data/ana-diario-cache.json");
 // Cota de Manaus AO VIVO (telemetria adotada ANA via API de produção). Mantém o
 // relatório fresco mesmo com o cache local defasado. Fallback: cache diário.
 async function cotaManausAoVivo() {
-  try {
-    const res = await fetch(`${API_PROD}/api/ana?estacao=Manaus&dias=7`, { signal: AbortSignal.timeout(30000) });
-    const j = await res.json();
-    if (j?.resumo?.cota_m != null) {
-      return { cota_m: j.resumo.cota_m, variacao_24h: j.resumo.variacao_24h ?? 0, data: j.resumo.ultima_data, fonte: "ANA/HidroWeb (telemetria adotada, ao vivo)" };
-    }
-  } catch (e) { console.warn("[cota ao vivo] falhou, usando cache local:", e.message); }
+  // 3 tentativas: o proxy /api/ana depende do SOAP da ANA, que oscila.
+  for (let t = 1; t <= 3; t++) {
+    try {
+      const res = await fetch(`${API_PROD}/api/ana?estacao=Manaus&dias=7`, { signal: AbortSignal.timeout(30000) });
+      const j = await res.json();
+      if (j?.resumo?.cota_m != null) {
+        return { cota_m: j.resumo.cota_m, variacao_24h: j.resumo.variacao_24h ?? 0, data: j.resumo.ultima_data, fonte: "ANA/HidroWeb (telemetria adotada, ao vivo)" };
+      }
+    } catch (e) { console.warn(`[cota ao vivo] tentativa ${t}/3 falhou:`, e.message); }
+    if (t < 3) await new Promise((ok) => setTimeout(ok, 20000 * t));
+  }
+  console.warn("[cota ao vivo] sem resposta, tentando cache local.");
   const m = ana?.dados?.Manaus;
   if (m) return { cota_m: m.cota_m, variacao_24h: m.variacao_24h, data: ana.data, fonte: "ANA/HidroWeb (cache diário)" };
   throw new Error("cota de Manaus indisponível: a API ao vivo falhou e não há cache local (data/ana-diario-cache.json).");
