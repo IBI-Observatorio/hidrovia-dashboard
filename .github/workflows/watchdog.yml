@@ -117,7 +117,8 @@ jobs:
           {
             echo "🚨 **Sistema imunologico detectou problemas** — $(date -u +%FT%TZ)"
             echo ""
-            printf '-  %s\n' "${PROBLEMS[@]}"
+            # "--": formato começando com "-" seria lido como opção do printf.
+            printf -- '-  %s\n' "${PROBLEMS[@]}"
             echo ""
             echo "Detalhe da saude dos dados:"
             echo '```json'

@@ -20,6 +20,10 @@ COPY --from=build --chown=node:node /app/.next/static ./.next/static
 COPY --from=build --chown=node:node /app/public ./public
 COPY --from=build --chown=node:node /app/data ./data
 COPY --from=build --chown=node:node /app/content ./content
+# pdf-parse (pdfjs) carrega @napi-rs/canvas via require dinâmico p/ ter DOMMatrix;
+# o trace do standalone não pega o binário nativo da plataforma -> sem isso o
+# parser de PDF (SGB/SEMA) quebra com "DOMMatrix is not defined".
+COPY --from=build --chown=node:node /app/node_modules/@napi-rs ./node_modules/@napi-rs
 USER node
 EXPOSE 3000
 CMD ["node", "server.js"]
