@@ -104,16 +104,18 @@ async function handler(request: NextRequest) {
     return NextResponse.json({ ok: false, erro: `Falha ao parsear PDF: ${e instanceof Error ? e.message : String(e)}`, pdf: escolhido }, { status: 502 });
   }
 
-  // Parser falhou por dentro (devolve boletim vazio com `erro`) ou não achou nada:
-  // não grava — senão vira o "último boletim" no cache e o run sai verde.
-  if (boletim.erro || (boletim.numero == null && boletim.estacoes.length === 0)) {
+  // Parser falhou por dentro (devolve boletim sem número e sem estações) — não
+  // grava, senão vira o "último boletim" no cache e o run sai verde.
+  // `erro` sozinho NÃO basta: fora da temporada vem "Nenhuma previsão extraída".
+  const vazio = (b: BoletimSGB) => b.numero == null && b.estacoes.length === 0;
+  if (vazio(boletim)) {
     return NextResponse.json({ ok: false, erro: `Boletim vazio/ilegível: ${boletim.erro ?? "sem número e sem estações"}`, pdf: escolhido }, { status: 502 });
   }
 
   // 4. Cache: dedup por numero+data (mantem 30) — mesma logica do /api/sgb.
   const cache = lerCache();
   // Remove entradas vazias gravadas antes desta checagem (ex.: 18/10/2026).
-  cache.boletins = cache.boletins.filter((b) => !(b.erro || (b.numero == null && b.estacoes.length === 0)));
+  cache.boletins = cache.boletins.filter((b) => !vazio(b));
   const dup = cache.boletins.findIndex((b) => b.numero === boletim.numero && b.data === boletim.data);
   const jaExistia = dup >= 0;
   if (dup >= 0) cache.boletins[dup] = boletim;
