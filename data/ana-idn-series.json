@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-13T17:23:09.715Z",
+  "gerado_em": "2026-10-20T14:40:37.343Z",
   "serie": [
     {
       "data": "2016-01-07",
@@ -4179,6 +4179,76 @@
     {
       "data": "2026-10-06",
       "idn": 0.899,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-07",
+      "idn": 0.796,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-08",
+      "idn": 0.726,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-09",
+      "idn": 0.658,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-10",
+      "idn": 0.606,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-11",
+      "idn": 0.548,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-12",
+      "idn": 0.496,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-13",
+      "idn": 0.449,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-14",
+      "idn": 0.405,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-15",
+      "idn": 0.355,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-16",
+      "idn": 0.314,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-17",
+      "idn": 0.277,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-18",
+      "idn": 0.246,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-19",
+      "idn": 0.228,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-20",
+      "idn": 0.229,
       "fonte": "ana_api"
     }
   ]
