@@ -8,12 +8,12 @@
 | Produto | O que entrega | Cadência | Para quem |
 |---|---|---|---|
 | **1. Radar do Escoamento** | Para onde a safra está indo e quanto deve sair pelo Arco Norte **cerca de 1 mês antes da estatística oficial**, a partir dos registros de frete da ANTT. Na semana: diesel, fila de navios, rios e colheita. | boletim semanal curto + edição mensal | CNA, imprensa, produtor |
-| **2. Ficha Logística do Município** | Uma página por município: silo contra safra, rotas de saída da produção e dependência de cada corredor. Os **500 maiores produtores cobrem 80% da safra**. | anual, atualizada no ano | federações, sindicatos, prefeitos, deputados |
+| **2. Ficha Logística do Município** | Uma página por município: silo contra safra, rotas de saída da produção e dependência de cada corredor. Os **500 maiores produtores cobrem 80% da soja e do milho** (IBGE, PAM 2024). | anual, atualizada no ano | federações, sindicatos, prefeitos, deputados |
 | **3. Carteira de Prioridades** | Ranking de obras, de armazenagem e de medidas regulatórias, com **critérios públicos fixados antes do resultado**. | anual, no calendário do orçamento | Congresso, Executivo, CNA |
 
 **O que já foi testado com dado público** (resultados internos e preliminares):
-- **Antecipação:** o radar previu a exportação do Arco Norte com erro 28% menor que o modelo de referência (teste fora da amostra, 2023–2026).
-- **Armazenagem:** o déficit de silo que o produtor sente é de **88 Mt**, e não os 52 Mt do saldo nacional. Sobra silo no Sul e falta no Centro-Norte. Há **12 microrregiões críticas**, com 28,7 Mt de déficit.
+- **Antecipação:** a partir dos fretes com destino a Miritituba, o radar previu a exportação de soja e milho por Santarém e Belém no mês seguinte com erro 28% menor que o modelo de referência (teste fora da amostra, fev/2023 a set/2026).
+- **Armazenagem:** o déficit de silo que o produtor sente é de **88 Mt**, e não os 52 Mt do saldo nacional. Sobra silo no RS, em SC e em SP e falta no Centro-Norte. Há **12 microrregiões críticas**, com 28,7 Mt de déficit.
 - **Arco Norte:** está limitado por **capacidade, não por frete**. Parou em cerca de 45% da safra de MT desde 2020, mesmo com o frete ficando mais vantajoso.
 - **Medida de baixo custo:** a ANTT já registra o valor do frete de praticamente todo o transporte rodoviário e **não o publica**. Publicar exige só um ato da agência, e a ANAC faz o mesmo com as tarifas aéreas desde 2002.
 
