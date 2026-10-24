@@ -28,11 +28,8 @@ const badgeCls: Record<Estudo["status"], { txt: string; cls: string }> = {
 export default function StudyCard({ estudo }: { estudo: Estudo }) {
   const Icon = estudo.icon;
   const badge = badgeCls[estudo.status];
-  return (
-    <Link
-      href={estudo.href}
-      className={`group flex min-h-[200px] flex-col gap-3.5 rounded-2xl border border-white/10 bg-azul-medio p-6 transition-all hover:-translate-y-1 ${hoverBorder[estudo.iconCor]}`}
-    >
+  const conteudo = (
+    <>
       <div
         className={`flex h-[46px] w-[46px] items-center justify-center rounded-xl ${iconBoxCls[estudo.iconCor]}`}
       >
@@ -49,8 +46,18 @@ export default function StudyCard({ estudo }: { estudo: Estudo }) {
       <p className="text-[0.86rem] leading-[1.5] text-gray-400">{estudo.descricao}</p>
       <div className="mt-auto flex items-center justify-between text-[0.8rem] font-bold">
         <span className={destaqueCls[estudo.iconCor]}>{estudo.destaque}</span>
-        <span className="text-gray-300 transition-transform group-hover:translate-x-1">abrir →</span>
+        {estudo.href && (
+          <span className="text-gray-300 transition-transform group-hover:translate-x-1">abrir →</span>
+        )}
       </div>
+    </>
+  );
+  const cls = "group flex min-h-[200px] flex-col gap-3.5 rounded-2xl border border-white/10 bg-azul-medio p-6";
+  // estudo sem página publicada: card informativo, sem link quebrado
+  if (!estudo.href) return <div className={cls}>{conteudo}</div>;
+  return (
+    <Link href={estudo.href} className={`${cls} transition-all hover:-translate-y-1 ${hoverBorder[estudo.iconCor]}`}>
+      {conteudo}
     </Link>
   );
 }
