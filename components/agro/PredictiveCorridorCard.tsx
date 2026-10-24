@@ -163,7 +163,7 @@ export default function PredictiveCorridorCard({ data }: { data: CorredorAgroDat
             {card.labelInsight}
           </p>
           <p className="mt-1 text-[0.8rem] leading-relaxed text-gray-300">
-            {insights[data.corredor]}
+            {data.insight ?? insights[data.corredor]}
           </p>
         </div>
 

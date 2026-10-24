@@ -77,7 +77,7 @@ export const achados: Achado[] = [
     label: "do granel sólido migrou para o Arco Norte em 13 anos",
     texto:
       "A migração silenciosa Sul-Sudeste → Norte já redesenhou o escoamento agrícola. Itaqui multiplicou seu volume por 6× desde 2010.",
-    href: "/portos/agronegocio/arco-norte",
+    href: "/agro",
   },
 ];
 
@@ -353,6 +353,6 @@ export const estudos: Estudo[] = [
     descricao:
       "A migração silenciosa do granel sólido para o Norte: de 35% para 44% do escoamento em 13 anos.",
     destaque: "35% → 44% · Itaqui 6×",
-    href: "/portos/agronegocio/arco-norte",
+    href: "/agro",
   },
 ];

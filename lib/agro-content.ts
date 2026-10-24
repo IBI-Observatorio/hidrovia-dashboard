@@ -80,6 +80,7 @@ import lineupSantos from "../data/lineup/santos.json";
 import hArcoNorte from "../data/agro/h-arco-norte.json";
 import capacidadeAntaq from "../data/antaq/capacidade-semanal.json";
 import esperaAntaq from "../data/antaq/espera-semanal.json";
+import caladoCapitania from "../public/data/calado-capitania.json";
 
 // ---------------------------------------------------------------------------
 // Calendário
@@ -169,6 +170,8 @@ export interface CorredorAgroData {
   rotuloPilares: string;
   /** true se TODOS os pilares são ilustrativos */
   ilustrativo: boolean;
+  /** frase do card calculada do dado; ausente → texto fixo de agro-copy */
+  insight?: string;
 }
 
 export interface ColisaoData {
@@ -800,7 +803,37 @@ function montaCorredor(corredor: Corredor): CorredorAgroData {
     naviosEmEspera: naviosReais ?? NAVIOS_EM_ESPERA[corredor],
     rotuloPilares: comps.map((c) => `${c.componente} ${ROTULO_STATUS[c.status]}`).join(" · "),
     ilustrativo: comps.every((c) => c.status === "ilustrativo"),
+    insight: corredor === "arco-norte" ? insightArcoNorte() : undefined,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Insight do Arco Norte — lido do calado OFICIAL da Capitania (CFAOC),
+// public/data/calado-capitania.json: o mesmo número do card do /monitor e da
+// home (lib/compute-hidrologia.ts). Antes era frase fixa escrita na cheia.
+// ---------------------------------------------------------------------------
+
+const CALADO_REFERENCIA_M = 11.0;
+
+function insightArcoNorte(): string | undefined {
+  const u = caladoCapitania.ultimo;
+  if (!u || typeof u.demais !== "number") return undefined;
+  const m = (v: number) => v.toFixed(2).replace(".", ",");
+  const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+  const [, mes, dia] = u.data.split("-");
+  const quando = `${parseInt(dia, 10)}/${MESES[parseInt(mes, 10) - 1]}`;
+  const v24 = u.variacao_24h_m;
+  const caindo = v24 != null && v24 < 0;
+  const ritmo = v24 == null ? "" : caindo ? ` e caindo ${m(-v24)} m em 24h` : v24 > 0 ? ` e subindo ${m(v24)} m em 24h` : " e estável em 24h";
+  const abre = `Calado oficial do Tabocal em ${m(u.demais)} m (Capitania, ${quando})`;
+
+  if (u.demais < CALADO_REFERENCIA_M) {
+    return `${abre}, abaixo dos ${CALADO_REFERENCIA_M} m${ritmo}: navios maiores já operam com restrição de carga e o calado comanda o corredor, à frente da fila de soja.`;
+  }
+  if (caindo) {
+    return `${abre}, ainda acima dos ${CALADO_REFERENCIA_M} m${ritmo}: a contagem regressiva do calado já comanda o corredor, à frente da fila de soja.`;
+  }
+  return `${abre}, acima dos ${CALADO_REFERENCIA_M} m${ritmo}: com folga de calado, a fila de soja domina a leitura do corredor.`;
 }
 
 // ---------------------------------------------------------------------------

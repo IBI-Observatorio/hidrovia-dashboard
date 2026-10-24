@@ -750,7 +750,7 @@ function PainelInterior() {
           eyebrow="Arco Norte"
           title="Hidrovia Amazônica em alta"
           body="O Arco Norte (Madeira, Tapajós, Tocantins) saltou de 35% para 44% do escoamento de granel sólido em 13 anos. A Hidrovia Amazônica é a espinha dorsal desse corredor."
-          cta={{ href: '/portos/agronegocio/arco-norte', label: 'Ver Arco Norte →' }}
+          cta={{ href: '/agro', label: 'Ver Arco Norte →' }}
         />
         <InsightCard
           color={VERM}
