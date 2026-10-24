@@ -34,26 +34,28 @@
       { "ano": 2050, "mt": 40.6 }
     ],
     "tarifaTKU": { "value": 0.11005, "unit": "R$/TKU",
-      "source": { "label": "Tarifa Ferrogrão = R$ 110,05/mil TKU (ANTT / Frischtak-AMZ2030)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } },
+      "source": { "label": "Tarifa Ferrogrão = R$ 110,05/mil TKU (ANTT / Frischtak-AMZ2030) — modelagem anterior; a tarifa-teto da versão de set/2026 não foi publicada", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } },
     "opexPctReceita": { "value": 0.65, "unit": "operating ratio", "modeled": true,
-      "source": { "label": "Operating ratio (O&M/receita) = 65% — central da faixa heavy-haul (~60–75%); com tributos (34%) + depreciação + aporte reais, reproduz a TIR oficial = WACC 11,04% sem botão de fechamento" } },
+      "source": { "label": "Operating ratio (O&M/receita) = 65% — central da faixa heavy-haul (~60–75%); NÃO é botão de fechamento. Até set/2026 (com aporte de R$ 3,66 bi e WACC 11,04%) reproduzia a TIR oficial antiga; sem aporte, o motor não reproduz a TIR declarada de 11,28% com nenhum valor crível de OR (exigiria ~35%)" } },
     "aliquotaImposto": { "value": 0.34, "unit": "fração",
       "source": { "label": "IRPJ (15% + adicional 10%) + CSLL 9% = 34% sobre o lucro tributável", "date": "2024" } },
     "depreciacaoAnos": { "value": 25, "unit": "anos", "modeled": true,
       "source": { "label": "Premissa — depreciação linear do CAPEX de implantação (escudo fiscal)" } },
-    "aportePublico": [
-      { "ano": 2028, "valor": 0.33 },
-      { "ano": 2029, "valor": 1.40 },
-      { "ano": 2030, "valor": 1.93 }
-    ],
-    "wacc": { "value": 0.1104, "unit": "fração",
-      "source": { "label": "ANTT — taxa de desconto (metodologia WACC) = 11,04%; por construção a TIR oficial = WACC", "url": "https://ppi.gov.br/projetos/ferrovia-ef-170-mt-pa-ferrograo/", "date": "2024" } }
+    "aportePublico": [],
+    "wacc": { "value": 0.1408, "unit": "fração",
+      "source": { "label": "Imprensa (Agência iNFRA, 11/09/2026) — WACC da nova modelagem aprovada pela ANTT em 10/09/2026 (de 13,74% para 14,08%). Não conferido em documento oficial: nota técnica e planilha não publicadas", "url": "https://agenciainfra.com/blog/ferrograo-volta-ao-tcu-sem-aporte-e-com-ajuste-em-material-rodante/", "date": "2026-09-11" } }
   },
   "outorgaMinima": { "value": 66.48, "unit": "R$ mi",
     "source": { "label": "ANTT — outorga (valor mínimo)", "url": "https://www.gov.br/antt/pt-br/assuntos/ferrovias/novos-projetos-ferroviarios/ferrograo-ef-170", "date": "2025" } },
+  "oficialAnchor": {
+    "tir": { "value": 0.1128, "unit": "fração",
+      "source": { "label": "Imprensa (Agência iNFRA, 11/09/2026) — TIR declarada da nova modelagem = 11,28%, abaixo do WACC por escolha do governo. Não conferida em documento oficial", "url": "https://agenciainfra.com/blog/ferrograo-volta-ao-tcu-sem-aporte-e-com-ajuste-em-material-rodante/", "date": "2026-09-11" } },
+    "aporte": { "value": 0, "unit": "R$ bi",
+      "source": { "label": "Aporte público de R$ 3,5 bi excluído — Deliberação ANTT nº 275/2026 (DOU 11/09/2026) aprovou a nova modelagem; a exclusão foi informada pelo diretor-relator (Agência iNFRA / CNN, 10–11/09/2026)", "url": "https://www.in.gov.br/web/dou/-/deliberacao-antt-n-275-de-10-de-setembro-de-2026-731340414", "date": "2026-09-11" } }
+  },
   "realistaAnchor": {
     "tir": { "value": 0.016, "unit": "fração",
-      "source": { "label": "Frischtak / Amazônia 2030 — TIR realista 1,6% (vs 11,04% otimista = 7× menor)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024-11-06" } },
+      "source": { "label": "Frischtak / Amazônia 2030 — TIR realista 1,6% (vs 11,04% da modelagem oficial de então)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024-11-06" } },
     "capexRealista": { "value": 36.86, "unit": "R$ bi",
       "source": { "label": "Frischtak/AMZ2030 — CAPEX realista (parâmetros da FICO 1)", "url": "https://amazonia2030.org.br/ferrograo-ef-170-licoes-para-o-planejamento-de-infraestrutura-na-amazonia/", "date": "2024" } },
     "aporteRealista": { "value": 32.5, "unit": "R$ bi",
@@ -76,19 +78,9 @@
     }
   },
   "predictions": [],
-  "funding": {
-    "aporteNecessario": { "value": 3.66, "unit": "R$ bi",
-      "source": { "label": "TCU — demandas financeiras vinculadas ao modelo de aporte cruzado", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" } },
-    "coberturaCruzada": [
-      { "fonte": "Rumo Malha Paulista + MRS + Vale/EFVM (outorgas)", "valor": { "value": 2.25, "unit": "R$ bi",
-        "source": { "label": "ANTT/Min. Transportes — investimento cruzado projetado (apontado pelo TCU)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" } } }
-    ],
-    "deficit": { "value": 1.41, "unit": "R$ bi",
-      "source": { "label": "Déficit de funding = demanda 3,66 − projetado 2,25 (risco apontado pelo TCU)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" } }
-  },
   "scenariosMeta": {
-    "oficial": { "label": "Oficial (ANTT)", "nota": "TIR = WACC = 11,04% por construção; tarifa-teto R$ 110,05/mil TKU." },
-    "realista": { "label": "Realista (Frischtak)", "nota": "Amazônia 2030 (06/nov/2024): TIR 1,6% — retorno ~7× menor que o oficial." }
+    "oficial": { "label": "Oficial (duas leituras)", "nota": "Governo declara TIR 11,28% contra WACC 14,08%, sem aporte (imprensa, Agência iNFRA 11/09/2026). O motor do Observatório, com as premissas públicas da modelagem anterior e sem aporte, não reproduz os 11,28%: a planilha nova não foi publicada." },
+    "realista": { "label": "Realista (Frischtak)", "nota": "Amazônia 2030 (06/nov/2024): TIR 1,6% — ~7× abaixo da TIR declarada pelo governo (11,28%)." }
   },
   "maturacao": {
     "estagioAtual": 2,
@@ -103,10 +95,10 @@
   },
   "tabuleiro": {
     "VLI": {
-      "papel": "A VLI opera a Ferrovia Centro-Atlântica (FCA), principal corredor alternativo para o escoamento de soja de Mato Grosso pelo Sudeste. A Ferrogrão cria um corredor Norte concorrente à FCA para o mesmo fluxo originado no Médio-Norte mato-grossense. A VLI NÃO integra o aporte cruzado da EF-170 — este é composto por Rumo Malha Paulista, MRS e Vale/EFVM (outorgas, conforme TCU).",
-      "moveNaMalha": "A concorrência entre o Arco Norte (EF-170/Miritituba) e os corredores FCA/Sudeste pelo escoamento de soja de MT é o principal vetor de impacto para a VLI neste ativo. O furo de funding (~R$ 1,4 bi) e a suspensão da análise pelo TCU postergam esse risco.",
+      "papel": "A VLI opera a Ferrovia Centro-Atlântica (FCA), principal corredor alternativo para o escoamento de soja de Mato Grosso pelo Sudeste. A Ferrogrão cria um corredor Norte concorrente à FCA para o mesmo fluxo originado no Médio-Norte mato-grossense. A VLI NÃO integrava o aporte cruzado da EF-170 (Rumo Malha Paulista, MRS e Vale/EFVM, conforme TCU), que foi excluído na modelagem de set/2026.",
+      "moveNaMalha": "A concorrência entre o Arco Norte (EF-170/Miritituba) e os corredores FCA/Sudeste pelo escoamento de soja de MT é o principal vetor de impacto para a VLI neste ativo. Sem aporte público, a TIR declarada (11,28%) fica abaixo do WACC (14,08%) — a atratividade do leilão e a análise do TCU ditam o ritmo desse risco.",
       "exposicao": "media",
-      "fonte": { "label": "VLI/ANTT (FCA — público) · TCU/MPF (aporte cruzado)", "url": "https://www.cnnbrasil.com.br/infra/tcu-atende-pedido-do-mpf-e-mantem-suspensao-de-analise-da-ferrograo/", "date": "2026" }
+      "fonte": { "label": "VLI/ANTT (FCA — público) · TCU (aporte cruzado) · Agência iNFRA (nova modelagem, 11/09/2026)", "url": "https://agenciainfra.com/blog/ferrograo-volta-ao-tcu-sem-aporte-e-com-ajuste-em-material-rodante/", "date": "2026-09-11" }
     }
   }
 }

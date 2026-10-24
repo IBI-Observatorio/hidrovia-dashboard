@@ -138,6 +138,15 @@ export interface Asset {
   route: string;
   arcoNorte?: boolean;
   params: Record<string, Num | number | DemandaPonto[] | AportePonto[]>;
+  /**
+   * Âncoras DECLARADAS do cenário oficial (governo), quando o motor não as
+   * reproduz com as premissas públicas. Exibidas lado a lado com a TIR do motor
+   * ("duas leituras"); NÃO calibram nada.
+   */
+  oficialAnchor?: {
+    tir?: Num;    // TIR declarada pelo governo
+    aporte?: Num; // aporte público na modelagem vigente (0 = excluído)
+  };
   /** Âncoras do cenário realista (Frischtak), sourçadas no seed. */
   realistaAnchor?: {
     tir?: Num;
