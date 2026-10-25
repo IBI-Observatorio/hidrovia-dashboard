@@ -1,5 +1,5 @@
 # Radar Logístico do Agro
-**Proposta de parceria · Observatório de Infraestrutura do IBI × CNA** · rascunho de 27/09/2026
+**Proposta de parceria · Observatório de Infraestrutura de Transportes do IBI × CNA** · rascunho de 27/09/2026
 
 **O problema.** O Brasil discute a logística do agro com números nacionais e anuais, que chegam depois da crise. O produtor, a federação e o parlamentar não sabem, com antecedência e na escala do seu município, onde o escoamento vai travar, quanto isso custa e qual obra ou medida resolve primeiro.
 
@@ -28,10 +28,9 @@
 
 **Salvaguardas.** Neutralidade técnica: a Carteira não defende modelo de contratação nem obra fora da regra. Lacuna de dado é tratada como oportunidade, nunca como crítica a órgão público. Frete marítimo e armadores ficam fora.
 
-**Primeiros 90 dias (piloto)**
-1. Fichas municipais de **um estado-piloto**, com uma federação parceira.
-2. Primeira edição mensal do Radar, depois de reajustar o modelo à nova regra do CIOT (obrigatório para todo frete desde 24/05/2026).
-3. Carteira v1 com o custo de inação das obras preenchido. Hoje só 2 de 12 obras têm dado suficiente para o ranking, e o piloto fecha essa lacuna.
-4. Ofício conjunto IBI–CNA à ANTT sobre a publicação agregada do valor do frete.
+**Como contratar**
+1. **Ficha Logística por estado (entrada).** Fichas de todos os municípios produtores do estado, entregues em cerca de 30 dias. Contratação pela federação, com a CNA como canal e co-assinatura. Estados sugeridos para começar: MT, PR, GO, MS e RS.
+2. **Assinatura do Radar do Escoamento (12 meses).** Edição mensal, boletim semanal e painel embutido no portal da CNA.
+3. **Carteira de Prioridades (na sequência).** Contratada quando o método estiver validado.
 
-**Formato sugerido:** acordo de cooperação técnica. Modelo de financiamento e governança a definir entre as partes.
+**Valores e formato de contratação:** a definir entre as partes.

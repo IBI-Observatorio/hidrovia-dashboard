@@ -1,6 +1,6 @@
 # Roteiro de vídeo — Radar Logístico do Agro (Observatório IBI × CNA)
 
-**Duração-alvo:** 4 min (cerca de 520 palavras de narração).
+**Duração-alvo:** 4 min 25 s (cerca de 570 palavras de narração).
 **Formato:** narração do Bruno (em pessoa ou voz) sobre telas do Observatório, mapas e gráficos animados. Identidade visual do Observatório (fundo escuro, verde e azul IBI, fonte Geist).
 **Tom:** banco central. Sereno, factual, sem alarmismo. Cada número aparece na tela com a fonte em letra pequena.
 **Regras:**
@@ -31,27 +31,29 @@
 
 ---
 
-## Cena 3 — Quem somos (0:50–1:05)
+## Cena 3 — Quem somos e o caso Itacoatiara (0:50–1:25)
 
-**Tela:** logo do Observatório. Corte rápido para o Monitor Hidrológico e o IEE na tela do dashboard.
+**Tela:** logo do Observatório. Corte rápido para o Monitor Hidrológico e o IEE na tela do dashboard. Depois, gráfico real da cota de Itacoatiara de maio a outubro: linha de 6,29 m, data em que a previsão foi registrada (22/05) e data prevista (26/09). A curva cruza a linha no dia previsto.
 
 **Narração:**
-> O Observatório de Infraestrutura do IBI já acompanha portos, rios e corredores toda semana. Nosso foco é antecipar: dizer o que vem antes do dado oficial.
+> O Observatório de Infraestrutura de Transportes do IBI já acompanha portos, rios e corredores toda semana. Nosso foco é antecipar: dizer o que vem antes do dado oficial. Em maio, o Monitor Hidrológico marcou 26 de setembro como o dia em que o Amazonas, em Itacoatiara, desceria abaixo de 6,29 metros. A média diária da régua da ANA ficou abaixo dessa marca exatamente em 26 de setembro.
+
+**Lettering:** "Previsto: 26/09 · observado: 26/09 — Previsão: Observatório, registro versionado em 22/05/2026 (análogos; faixa de 80%: 18/09 a 13/10). Observado: ANA, estação 16030000, média diária."
 
 ---
 
-## Cena 4 — Produto 1: Radar do Escoamento (1:05–1:50)
+## Cena 4 — Produto 1: Radar do Escoamento (1:25–2:10)
 
 **Tela:** mapa com fluxos de caminhões até Miritituba. Gráfico de linha da previsão contra o realizado da exportação do Arco Norte. Depois, um painel semanal com diesel, fila de navios, nível dos rios e colheita.
 
 **Narração:**
-> O primeiro produto é o Radar do Escoamento. Todo mês, a partir dos registros de frete que a ANTT publica, mostramos para onde a safra está indo e quanto deve sair pelo Arco Norte cerca de um mês antes da estatística oficial. No nosso teste, os fretes de soja e milho com destino a Miritituba previram a exportação por Santarém e Belém do mês seguinte com erro 28% menor que o modelo de referência. Toda semana, um boletim curto acompanha diesel, fila de navios, nível dos rios e ritmo da colheita.
+> O primeiro produto é o Radar do Escoamento. Todo dia 10, a ANTT publica os registros de frete do mês anterior, com origem, destino e carga. Com eles, mostramos para onde os caminhões levaram a safra e projetamos quanto vai ser exportado pelo Arco Norte no mês seguinte, quase um mês antes da estatística oficial de exportação. Em setembro, os caminhões que chegaram a Miritituba em agosto indicavam queda de 10% na exportação de soja e milho pelo Arco Norte. O dado oficial, publicado quase um mês depois, mostrou queda de 13%. Toda semana, um boletim curto acompanha diesel, fila de navios, nível dos rios e ritmo da colheita.
 
-**Lettering:** "Erro 28% menor — teste fora da amostra, fev/2023 a set/2026; CIOT/ANTT → exportação Santarém + Belém (Comex Stat), 1 mês à frente"
+**Lettering:** "set/2026: previsto −10% · realizado −13% (sem os caminhões, o modelo previa −3%) — Previsão com o CIOT/ANTT de ago/2026 (publicado em 10/09); realizado: Comex Stat (publicado em 06/10). Teste fora da amostra, fev/2023 a set/2026: erro 28% menor que o modelo sem os caminhões."
 
 ---
 
-## Cena 5 — Produto 2: Ficha Logística do Município (1:50–2:30)
+## Cena 5 — Produto 2: Ficha Logística do Município (2:10–2:50)
 
 **Tela:** zoom num município. A ficha de uma página aparece: silo contra safra, rotas de saída, dependência de cada corredor. Mapa de calor das microrregiões com déficit.
 
@@ -64,7 +66,7 @@
 
 ---
 
-## Cena 6 — Produto 3: Carteira de Prioridades (2:30–3:15)
+## Cena 6 — Produto 3: Carteira de Prioridades (2:50–3:35)
 
 **Tela:** ranking animado de obras e medidas com três faixas de prioridade. Ao lado, os critérios publicados "antes do resultado". Imagem de arquivo da BR-163 asfaltada.
 
@@ -77,7 +79,7 @@
 
 ---
 
-## Cena 7 — Como trabalhamos juntos (3:15–3:40)
+## Cena 7 — Como trabalhamos juntos (3:35–4:00)
 
 **Tela:** diagrama de duas colunas. Observatório: dados, modelos, método. CNA: federações, Senar, Campo Futuro, FPA. Ao centro, setas para "Executivo" e "Congresso".
 
@@ -86,14 +88,14 @@
 
 ---
 
-## Cena 8 — Próximos passos e fecho (3:40–4:00)
+## Cena 8 — Como começar e fecho (4:00–4:25)
 
-**Tela:** linha do tempo dos primeiros 90 dias: estado-piloto, primeira edição do Radar, Carteira v1. Fecho com o logo IBI e o da CNA lado a lado (usar o da CNA só com autorização).
+**Tela:** linha com os três passos de contratação: Ficha por estado (cerca de 30 dias, com a federação), assinatura do Radar (12 meses, com a CNA) e Carteira de Prioridades (na sequência). Fecho com o logo IBI e o da CNA lado a lado (usar o da CNA só com autorização).
 
 **Narração:**
-> Propomos começar com um piloto de 90 dias: um estado, uma federação parceira, a primeira edição do Radar e a primeira versão da Carteira. A safra vai crescer. A pergunta é se vamos decidir as obras antes ou depois do gargalo.
+> Propomos começar pela Ficha Logística de um estado, com a federação, entregue em cerca de 30 dias; em seguida, a assinatura do Radar pela CNA; e a Carteira de Prioridades na sequência. A safra vai crescer. A pergunta é se vamos decidir as obras antes ou depois do gargalo.
 
-**Lettering final:** "Radar Logístico do Agro — Observatório de Infraestrutura do IBI"
+**Lettering final:** "Radar Logístico do Agro — Observatório de Infraestrutura de Transportes do IBI"
 
 ---
 
