@@ -57,7 +57,9 @@ function mesclaAPI(series: SeriesAPI): Record<string, unknown>[] {
 
 function useSerieHistorica(estacao: string | null) {
   const [dados, setDados] = useState<SeriesAPI | null>(null);
-  const [loading, setLoading] = useState(false);
+  // começa "carregando": sem isso o primeiro quadro (e o HTML do servidor)
+  // mostrava o estado "sem dados" antes do fetch
+  const [loading, setLoading] = useState(Boolean(estacao));
 
   useEffect(() => {
     if (!estacao) return;
@@ -135,7 +137,7 @@ function ChartHistorico({ estacao, domain, gatilho_lws, p10, p90, mediana, fallb
   if (!temDados) {
     return fallback ? <>{fallback}</> : (
       <div className="h-72 flex items-center justify-center text-gray-400 text-sm">
-        Execute <code className="bg-azul-marinho px-1 rounded">npx tsx scripts/fetch-historico.ts</code> para carregar dados históricos.
+        Série histórica indisponível no momento.
       </div>
     );
   }
