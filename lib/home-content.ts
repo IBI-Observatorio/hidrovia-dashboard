@@ -28,7 +28,8 @@ export interface Achado {
   cor: AchadoCor;
   label: string;
   texto: string;
-  href: string;
+  /** ausente = estudo ainda não publicado */
+  href?: string;
 }
 
 export type PainelStatus = "novo" | "live" | "breve";
@@ -69,15 +70,17 @@ export const achados: Achado[] = [
     label: "por ano em navio parado nos portos brasileiros",
     texto:
       "53% do tempo de estadia portuária é espera, não operação. Monetizando essas horas, o país queima cerca de R$ 14 bilhões/ano em ineficiência logística.",
-    href: "/portos/eficiencia-operacional/custo-espera",
+    // estudo ainda não publicado (não está no manifest ANTAQ): sem link
   },
   {
-    valor: "35→44%",
+    // Conferido em 24/10/2026 em portos-series.json (ANTAQ EA, maiores portos):
+    // o antigo "35→44% · Itaqui 6×" não tinha fonte e não bate com a ANTAQ.
+    valor: "30→35%",
     cor: "green",
-    label: "do granel sólido migrou para o Arco Norte em 13 anos",
+    label: "do granel sólido nacional passa pelos portos do Arco Norte (2012→2025)",
     texto:
-      "A migração silenciosa Sul-Sudeste → Norte já redesenhou o escoamento agrícola. Itaqui multiplicou seu volume por 6× desde 2010.",
-    href: "/portos/agronegocio/arco-norte",
+      "Sem o minério de Ponta da Madeira, a fatia do Arco Norte foi de 13,4% para 18,5% do granel sólido do país em 13 anos (ANTAQ, maiores portos).",
+    href: "/agro",
   },
 ];
 
@@ -291,7 +294,8 @@ export interface Estudo {
   status: PainelStatus;
   descricao: string;
   destaque: string;
-  href: string;
+  /** ausente = estudo ainda não publicado; o card não vira link */
+  href?: string;
 }
 
 export const estudos: Estudo[] = [
@@ -339,11 +343,11 @@ export const estudos: Estudo[] = [
     icon: Building2,
     iconCor: "green",
     titulo: "Custo de Espera",
-    status: "live",
+    // estudo ainda não publicado (não está no manifest ANTAQ): sem link
+    status: "breve",
     descricao:
       "53% da estadia portuária é espera, não operação — o equivalente a R$ 14 bi/ano em navio parado.",
     destaque: "R$ 14 bi/ano",
-    href: "/portos/eficiencia-operacional/custo-espera",
   },
   {
     icon: Globe,
@@ -351,8 +355,8 @@ export const estudos: Estudo[] = [
     titulo: "Arco Norte",
     status: "live",
     descricao:
-      "A migração silenciosa do granel sólido para o Norte: de 35% para 44% do escoamento em 13 anos.",
-    destaque: "35% → 44% · Itaqui 6×",
-    href: "/portos/agronegocio/arco-norte",
+      "Os portos do Arco Norte foram de 29,8% para 35,2% do granel sólido do país entre 2012 e 2025; sem o minério de Ponta da Madeira, de 13,4% para 18,5% (ANTAQ).",
+    destaque: "30% → 35% · ANTAQ",
+    href: "/agro",
   },
 ];

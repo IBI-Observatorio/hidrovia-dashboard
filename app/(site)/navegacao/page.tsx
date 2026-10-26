@@ -749,8 +749,8 @@ function PainelInterior() {
           color={OURO}
           eyebrow="Arco Norte"
           title="Hidrovia Amazônica em alta"
-          body="O Arco Norte (Madeira, Tapajós, Tocantins) saltou de 35% para 44% do escoamento de granel sólido em 13 anos. A Hidrovia Amazônica é a espinha dorsal desse corredor."
-          cta={{ href: '/portos/agronegocio/arco-norte', label: 'Ver Arco Norte →' }}
+          body="Os portos do Arco Norte foram de 29,8% para 35,2% do granel sólido movimentado no país entre 2012 e 2025; sem o minério de Ponta da Madeira, de 13,4% para 18,5% (ANTAQ, maiores portos). A Hidrovia Amazônica é a espinha dorsal desse corredor."
+          cta={{ href: '/agro', label: 'Ver Arco Norte →' }}
         />
         <InsightCard
           color={VERM}
