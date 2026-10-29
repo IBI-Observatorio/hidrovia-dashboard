@@ -53,9 +53,22 @@ jobs:
           fi
 
           # ---------- 2. Workflows rodaram no prazo? ----------
+          # Workflow desativado de proposito (gh workflow disable) nao conta como
+          # problema: so registra no log. Ex.: sgb-semanal pausado em 28/10/2026
+          # porque o SGB tirou do ar o SACE antigo (boletins em PDF).
+          pausado () {
+            local file="$1" nome="$2" state
+            state=$(gh api "repos/${REPO}/actions/workflows/${file}" -q '.state' 2>/dev/null || echo "")
+            if [ -n "$state" ] && [ "$state" != "active" ]; then
+              echo "::notice::$nome pausado ($state) - ignorado pelo watchdog"
+              return 0
+            fi
+            return 1
+          }
           # Cadencia frequente: flag se nunca rodou, ultima != success, ou idade > limite_h
           check_freshness () {
             local file="$1" nome="$2" limite_h="$3" json created concl age_h
+            pausado "$file" "$nome" && return
             json=$(gh api "repos/${REPO}/actions/workflows/${file}/runs?per_page=1" 2>/dev/null || echo '{}')
             created=$(echo "$json" | jq -r '.workflow_runs[0].created_at // empty')
             concl=$(echo "$json" | jq -r '.workflow_runs[0].conclusion // "em_andamento"')
@@ -71,6 +84,7 @@ jobs:
           # mas NAO alarma "nunca rodou" (ex.: cron mensal que ainda nao chegou na 1a data).
           check_sparse () {
             local file="$1" nome="$2" limite_h="$3" json created concl age_h
+            pausado "$file" "$nome" && return
             json=$(gh api "repos/${REPO}/actions/workflows/${file}/runs?per_page=1" 2>/dev/null || echo '{}')
             created=$(echo "$json" | jq -r '.workflow_runs[0].created_at // empty')
             concl=$(echo "$json" | jq -r '.workflow_runs[0].conclusion // "em_andamento"')
