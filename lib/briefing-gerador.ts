@@ -27,6 +27,7 @@ import { dessincronizacaoExcedeP85, type ResultadoDessincronizacao } from "./des
 import { projetaDataCruzamento17_7 } from "./recessao-modelo";
 import { calculaIDNSimples } from "./calcula-idn";
 import { geraInsights, type InsightData } from "./gera-insights";
+import { fmtDeltaCm } from "./fmt-delta";
 
 export interface ManscheteBriefing {
   eyebrow: string;       // pequeno rótulo acima do título (ex: "ALERTA DA SEMANA")
@@ -78,7 +79,8 @@ function semanaDoAno(iso: string): number {
   return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
 }
 
-function formataDataPtBR(iso: string): string {
+function formataDataPtBR(iso: string | null | undefined): string {
+  if (!iso) return "—";
   const meses = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   const [a, m, d] = iso.split("-");
   return `${d}/${meses[parseInt(m, 10) - 1] ?? "?"}/${a}`;
@@ -125,7 +127,13 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
   const diasParaCruzamentoCentral = cruz.central
     ? diferencaDias(s.data_ref, cruz.central)
     : null;
+  // Depois do pico (o modelo usa 15/jun), a cota MEDIDA manda: se Manaus já
+  // está abaixo de 17,7 m, o cruzamento aconteceu e a projeção não vale mais.
+  // (25/10/2026: o briefing dizia "cruza em 8 dias" com Manaus em 16,66 m.)
+  const emVazante = s.data_ref.slice(5) > "06-15";
+  const manausJaCruzou = emVazante && mao != null && mao.cota_m < 17.7;
   const cruzPertoNoHorizonte =
+    !manausJaCruzou &&
     diasParaCruzamentoCentral != null &&
     diasParaCruzamentoCentral >= 0 &&
     diasParaCruzamentoCentral <= 60;
@@ -172,7 +180,10 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
     manchete = {
       eyebrow: "Status semanal · sistema dentro da banda",
       titulo:  `Manaus em ${cotaManaus.toFixed(2)} m, sem dispersões extremas no IDN`,
-      lead:    `Nenhum gatilho disparou na semana ${numero_semana}/${ano}. Manaus em ${cotaManaus.toFixed(2)} m (${tendencia >= 0 ? "+" : ""}${tendencia} cm/24h). Pico previsto pelo SGB: ${s.previsao.manaus_pico_cheia.media.toFixed(2)} m.`,
+      lead:    `Nenhum gatilho disparou na semana ${numero_semana}/${ano}. Manaus em ${cotaManaus.toFixed(2)} m (${tendencia >= 0 ? "+" : ""}${tendencia} cm/24h).` +
+               (manausJaCruzou
+                 ? ` Abaixo de 17,7 m: o calendário LWS da vazante já está em vigor.`
+                 : emVazante ? "" : ` Pico previsto pelo SGB: ${s.previsao.manaus_pico_cheia.media.toFixed(2)} m.`),
     };
   }
 
@@ -187,10 +198,12 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
       rotulo: "Negro alto",
       titulo: sgc.cota_m < 7.96
         ? `SGC em ${sgc.cota_m.toFixed(2)} m — abaixo do P10 histórico`
-        : `SGC em ${sgc.cota_m.toFixed(2)} m (${delta >= 0 ? "+" : ""}${delta} cm vs 2025)`,
+        : `SGC em ${sgc.cota_m.toFixed(2)} m (${fmtDeltaCm(delta)} vs 2025)`,
       texto: sgc.cota_m < 7.96
         ? `São Gabriel da Cachoeira sob a marca de 796 cm (P10 da série completa). Em 17/mar/2026 atingiu 620 cm — 927 cm abaixo de 2024 na mesma data. Padrão sem precedente.`
-        : `São Gabriel da Cachoeira segue o ciclo de enchente do Negro alto. Comparação com 2025 mostra ${Math.abs(delta)} cm ${delta >= 0 ? "acima" : "abaixo"} — o sinal de driver Norte ${delta < -50 ? "se mantém" : "perde intensidade"}.`,
+        : delta === null
+          ? `São Gabriel da Cachoeira segue o ciclo do Negro alto (sem leitura do mesmo dia de 2025 para comparar).`
+          : `São Gabriel da Cachoeira segue o ciclo de enchente do Negro alto. Comparação com 2025 mostra ${Math.abs(delta)} cm ${delta >= 0 ? "acima" : "abaixo"} — o sinal de driver Norte ${delta < -50 ? "se mantém" : "perde intensidade"}.`,
     });
   }
 
@@ -201,9 +214,9 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
     sublinhas.push({
       rotulo: "Madeira",
       titulo: `Humaitá em ${hum.cota_m.toFixed(2)} m${pvo ? `; Porto Velho ${pvo.cota_m.toFixed(2)} m` : ""}`,
-      texto: `Humaitá ${delta >= 0 ? "+" : ""}${delta} cm vs 2025. ${
-        pvo
-          ? `Porto Velho ${pvo.delta_2025 >= 0 ? "+" : ""}${pvo.delta_2025} cm — Madeira ${
+      texto: `Humaitá ${fmtDeltaCm(delta)} vs 2025. ${
+        pvo && pvo.delta_2025 !== null
+          ? `Porto Velho ${fmtDeltaCm(pvo.delta_2025)} — Madeira ${
               pvo.delta_2025 > 0 ? "acima" : "abaixo"
             } da referência do ano anterior.`
           : ""
@@ -214,13 +227,22 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
   // Sub-headline 3: Itacoatiara / Tabocal (sempre relevante para frete)
   if (ita) {
     const delta = ita.delta_2025;
-    sublinhas.push({
-      rotulo: "Tabocal / Itacoatiara",
-      titulo: `Itacoatiara em ${ita.cota_m.toFixed(2)} m (pico previsto ${s.previsao.itacoatiara_pico.toFixed(2)} m)`,
-      texto: `Atual ${delta >= 0 ? "+" : ""}${delta} cm vs 2025. Pico SGB ${s.previsao.itacoatiara_pico.toFixed(2)} m sugere janela de calado ${
-        s.previsao.itacoatiara_pico >= 13.0 ? "favorável" : "apertada"
-      } no Tabocal. Em 2024 a mínima veio 22 dias após a de Manaus — relação a monitorar quando a descida começar.`,
-    });
+    sublinhas.push(
+      emVazante
+        ? {
+            // na vazante, falar do pico previsto (boletim de junho) contradiz o rio
+            rotulo: "Tabocal / Itacoatiara",
+            titulo: `Itacoatiara em ${ita.cota_m.toFixed(2)} m (${ita.variacao_24h >= 0 ? "+" : ""}${ita.variacao_24h} cm/24h)`,
+            texto: `Atual ${fmtDeltaCm(delta)} vs 2025. Rio em vazante no Tabocal. Em 2024, a mínima de Itacoatiara veio 22 dias depois da de Manaus.`,
+          }
+        : {
+            rotulo: "Tabocal / Itacoatiara",
+            titulo: `Itacoatiara em ${ita.cota_m.toFixed(2)} m (pico previsto ${s.previsao.itacoatiara_pico.toFixed(2)} m)`,
+            texto: `Atual ${fmtDeltaCm(delta)} vs 2025. Pico SGB ${s.previsao.itacoatiara_pico.toFixed(2)} m sugere janela de calado ${
+              s.previsao.itacoatiara_pico >= 13.0 ? "favorável" : "apertada"
+            } no Tabocal. Em 2024 a mínima veio 22 dias após a de Manaus — relação a monitorar quando a descida começar.`,
+          },
+    );
   }
 
   // ─── ALERTA DESTAQUE ───
@@ -256,10 +278,13 @@ export function geraBriefing(s: SnapshotBriefing): Briefing {
     `Semana ${numero_semana}/${ano}. Sistema fluvial em ${idnDirecao} (IDN = ${idnParaContexto >= 0 ? "+" : ""}${idnParaContexto.toFixed(2)}). ` +
     `Manaus ${mao?.cota_m.toFixed(2) ?? "?"} m, Itacoatiara ${ita?.cota_m.toFixed(2) ?? "?"} m, ` +
     `Humaitá ${hum?.cota_m.toFixed(2) ?? "?"} m. ` +
-    `Previsão de pico para Manaus: ${s.previsao.manaus_pico_cheia.media.toFixed(2)} m ` +
-    `(IC80 ${s.previsao.manaus_pico_cheia.ic80_min.toFixed(2)}–${s.previsao.manaus_pico_cheia.ic80_max.toFixed(2)} m). ` +
-    `Cruzamento estimado de 17,7 m na descida: ${cruz.central ? formataDataPtBR(cruz.central) : "—"} ` +
-    `(modelo IBI, IC80 ${cruz.max ? formataDataPtBR(cruz.max) : "—"} a ${cruz.min ? formataDataPtBR(cruz.min) : "—"}).`;
+    (manausJaCruzou
+      ? `Manaus já está abaixo do gatilho de 17,7 m.`
+      : (emVazante ? "" :
+          `Previsão de pico para Manaus: ${s.previsao.manaus_pico_cheia.media.toFixed(2)} m ` +
+          `(IC80 ${s.previsao.manaus_pico_cheia.ic80_min.toFixed(2)}–${s.previsao.manaus_pico_cheia.ic80_max.toFixed(2)} m). `) +
+        `Cruzamento estimado de 17,7 m na descida: ${formataDataPtBR(cruz.central)} ` +
+        `(modelo IBI, IC80 ${formataDataPtBR(cruz.max)} a ${formataDataPtBR(cruz.min)}).`);
 
   return {
     numero_semana,

@@ -19,8 +19,14 @@ Subtítulo:
 | IRC | live | atual 64 ↑ · faixa elevada | `/monitor` |
 | IDN | novo | driver Norte (padrão 2026) | `/monitor` |
 | Calendário LWS 2026 | live | cruzamento estimado · jun/26 | `/calendario-lws-2026` |
-| Custo de Espera | live | R$ 14 bi/ano | `/portos/eficiencia-operacional/custo-espera` |
-| Arco Norte | live | 35% → 44% · Itaqui 6× | `/portos/agronegocio/arco-norte` |
+| Custo de Espera | breve | R$ 14 bi/ano | — (estudo não publicado; sem link) |
+| Arco Norte | live | 30% → 35% · ANTAQ | `/agro` |
+
+> **24/10/2026:** os links `/portos/eficiencia-operacional/custo-espera` e
+> `/portos/agronegocio/arco-norte` nunca tiveram página (não estão no manifest
+> ANTAQ). O antigo "35% → 44% · Itaqui 6×" não tinha fonte e não bate com a
+> ANTAQ (`portos-series.json`): Arco Norte = 29,8% → 35,2% do granel sólido
+> nacional (2012→2025); sem Ponta da Madeira, 13,4% → 18,5%; Itaqui 7,0 → 9,1 Mt.
 
 ## Como restaurar
 

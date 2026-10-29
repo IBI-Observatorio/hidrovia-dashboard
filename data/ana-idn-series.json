@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-06-30T12:08:00.760Z",
+  "gerado_em": "2026-10-20T14:40:37.343Z",
   "serie": [
     {
       "data": "2016-01-07",
@@ -3689,6 +3689,566 @@
     {
       "data": "2026-06-30",
       "idn": 0.463,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-01",
+      "idn": 0.256,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-02",
+      "idn": 0.27,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-03",
+      "idn": 0.275,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-04",
+      "idn": 0.273,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-05",
+      "idn": 0.256,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-06",
+      "idn": 0.233,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-07",
+      "idn": 0.205,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-08",
+      "idn": 0.192,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-09",
+      "idn": 0.12,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-10",
+      "idn": 0.08,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-11",
+      "idn": 0.048,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-12",
+      "idn": -0.08,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-13",
+      "idn": -0.104,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-14",
+      "idn": 0.064,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-15",
+      "idn": -0.11,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-16",
+      "idn": -0.088,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-17",
+      "idn": -0.052,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-18",
+      "idn": -0.007,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-19",
+      "idn": 0.033,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-20",
+      "idn": 0.166,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-21",
+      "idn": 0.33,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-22",
+      "idn": 0.291,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-23",
+      "idn": 0.352,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-24",
+      "idn": 0.409,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-25",
+      "idn": 0.441,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-26",
+      "idn": 0.528,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-27",
+      "idn": 0.629,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-28",
+      "idn": 0.885,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-29",
+      "idn": 0.793,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-30",
+      "idn": 0.873,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-07-31",
+      "idn": 0.946,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-01",
+      "idn": 1.016,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-02",
+      "idn": 1.063,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-03",
+      "idn": 1.094,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-04",
+      "idn": 1.387,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-05",
+      "idn": 1.212,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-06",
+      "idn": 1.216,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-07",
+      "idn": 1.233,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-08",
+      "idn": 1.26,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-09",
+      "idn": 1.269,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-10",
+      "idn": 1.276,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-11",
+      "idn": 1.467,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-12",
+      "idn": 1.221,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-13",
+      "idn": 1.247,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-14",
+      "idn": 1.26,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-15",
+      "idn": 1.27,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-16",
+      "idn": 1.256,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-17",
+      "idn": 1.242,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-18",
+      "idn": 1.479,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-19",
+      "idn": 1.211,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-20",
+      "idn": 1.248,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-21",
+      "idn": 1.234,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-22",
+      "idn": 1.23,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-23",
+      "idn": 1.21,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-24",
+      "idn": 1.203,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-25",
+      "idn": 1.206,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-26",
+      "idn": 1.229,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-27",
+      "idn": 1.276,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-28",
+      "idn": 1.306,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-29",
+      "idn": 1.323,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-30",
+      "idn": 1.314,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-08-31",
+      "idn": 1.314,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-01",
+      "idn": 1.276,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-02",
+      "idn": 1.225,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-03",
+      "idn": 1.171,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-04",
+      "idn": 1.134,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-05",
+      "idn": 1.089,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-06",
+      "idn": 1.052,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-07",
+      "idn": 1.021,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-08",
+      "idn": 1.004,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-09",
+      "idn": 0.998,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-10",
+      "idn": 0.972,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-11",
+      "idn": 0.969,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-12",
+      "idn": 0.976,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-13",
+      "idn": 0.981,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-14",
+      "idn": 0.991,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-15",
+      "idn": 1.012,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-16",
+      "idn": 1.047,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-17",
+      "idn": 1.075,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-18",
+      "idn": 1.092,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-19",
+      "idn": 1.117,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-20",
+      "idn": 1.122,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-21",
+      "idn": 1.142,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-22",
+      "idn": 1.177,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-23",
+      "idn": 1.151,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-24",
+      "idn": 1.144,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-25",
+      "idn": 1.139,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-26",
+      "idn": 1.136,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-27",
+      "idn": 1.171,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-28",
+      "idn": 1.175,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-29",
+      "idn": 1.319,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-09-30",
+      "idn": 1.131,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-01",
+      "idn": 1.109,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-02",
+      "idn": 1.141,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-03",
+      "idn": 1.115,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-04",
+      "idn": 1.049,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-05",
+      "idn": 0.981,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-06",
+      "idn": 0.899,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-07",
+      "idn": 0.796,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-08",
+      "idn": 0.726,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-09",
+      "idn": 0.658,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-10",
+      "idn": 0.606,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-11",
+      "idn": 0.548,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-12",
+      "idn": 0.496,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-13",
+      "idn": 0.449,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-14",
+      "idn": 0.405,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-15",
+      "idn": 0.355,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-16",
+      "idn": 0.314,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-17",
+      "idn": 0.277,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-18",
+      "idn": 0.246,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-19",
+      "idn": 0.228,
+      "fonte": "ana_api"
+    },
+    {
+      "data": "2026-10-20",
+      "idn": 0.229,
       "fonte": "ana_api"
     }
   ]

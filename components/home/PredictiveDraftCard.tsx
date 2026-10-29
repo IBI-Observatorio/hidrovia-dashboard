@@ -8,10 +8,11 @@ interface PredictiveDraftCardProps {
   tag: string;
   periodo: string;
   limiarM: number;
-  diasParaLimiar: number;
-  dataLimiar?: string | null;
-  janelaIC80: string;
-  caladoAtualM: number;
+  caladoOficialM: number;
+  caladoPetroleoM: number;
+  dataBoletim: string;
+  variacao24hM: number | null;
+  previsaoCapitania: { data: string; demais: number } | null;
   irc: number;
   ircFaixa: string;
   gaugePct: number;
@@ -30,10 +31,11 @@ export default function PredictiveDraftCard({
   tag,
   periodo,
   limiarM,
-  diasParaLimiar,
-  dataLimiar,
-  janelaIC80,
-  caladoAtualM,
+  caladoOficialM,
+  caladoPetroleoM,
+  dataBoletim,
+  variacao24hM,
+  previsaoCapitania,
   irc,
   ircFaixa,
   gaugePct,
@@ -41,7 +43,9 @@ export default function PredictiveDraftCard({
   href,
   ilustrativo = true,
 }: PredictiveDraftCardProps) {
-  const diasFmt = useCountUp(diasParaLimiar, 0);
+  const caladoFmt = useCountUp(caladoOficialM, 2);
+  const m = (v: number) => v.toFixed(2).replace(".", ",");
+  const abaixo = caladoOficialM < limiarM;
 
   return (
     <motion.div
@@ -69,23 +73,29 @@ export default function PredictiveDraftCard({
       </div>
 
       <div className="text-[0.78rem] text-gray-400">
-        Calado operacional projetado a cair a {limiarM} m (início das restrições) em
+        Calado oficial da Capitania em Itacoatiara/Tabocal · {formatarDataExtenso(dataBoletim)}
       </div>
       <div className="mt-2 flex items-baseline gap-2.5 flex-wrap">
-        <span className="text-[clamp(2.4rem,5vw,3.3rem)] font-extrabold leading-[0.9] tracking-tighter text-ouro">
-          {diasFmt}
+        <span className={`text-[clamp(2.4rem,5vw,3.3rem)] font-extrabold leading-[0.9] tracking-tighter ${abaixo ? "text-vermelho" : "text-ouro"}`}>
+          {caladoFmt}
         </span>
-        <span className="text-sm text-gray-400">dias</span>
-        {dataLimiar && (
+        <span className="text-sm text-gray-400">m · demais cargas</span>
+        {variacao24hM != null && (
           <span className="text-[0.95rem] font-semibold text-white leading-none">
-            · {formatarDataExtenso(dataLimiar)}
+            · {variacao24hM > 0 ? "+" : ""}{m(variacao24hM)} m em 24h
           </span>
         )}
       </div>
 
       <div className="mt-2.5 text-[0.78rem] text-gray-400">
-        janela IC80: <b className="text-white">{janelaIC80}</b> · calado disponível hoje{" "}
-        <b className="text-white">{caladoAtualM.toString().replace(".", ",")} m</b> ↓
+        petróleo e gás: <b className="text-white">{m(caladoPetroleoM)} m</b>
+        {previsaoCapitania && (
+          <>
+            {" "}· previsão da Capitania para {formatarDataExtenso(previsaoCapitania.data)}:{" "}
+            <b className="text-white">{m(previsaoCapitania.demais)} m</b>
+          </>
+        )}
+        {" "}· referência de restrição: {limiarM} m
       </div>
 
       <div className="mt-3 h-1.5 overflow-hidden rounded bg-white/[0.07]">

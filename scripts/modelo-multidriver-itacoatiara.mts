@@ -8,7 +8,7 @@
 import { cmrDeItacoatiara } from "../lib/cmr-itacoatiara";
 import { readFileSync, writeFileSync } from "node:fs";
 
-const API = process.env.DASH_API ?? "https://hidrovia-dashboard-production.up.railway.app";
+const API = process.env.DASH_API ?? "https://dados.ibi-observatorio.org";
 const GAUGES = ["MAO", "BOR", "MNC", "ITA"] as const;  // Negro, Madeira, Solimões, confluência
 const PESO = { MAO: 0.20, BOR: 0.30, MNC: 0.30, ITA: 0.20 };  // Madeira+Solimões lideram
 const ALVO = 11.0;

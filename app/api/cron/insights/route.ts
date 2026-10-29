@@ -1,5 +1,5 @@
 // Endpoint chamado pelo cron do Railway (mesmo service da terça) para regenerar
-// os Insights Automáticos via Claude e gravar o cache no volume persistente.
+// os Insights Automáticos via IA (DeepSeek, lib/llm.ts) e gravar o cache no volume persistente.
 // Substitui o passo `gera-insights-ai.mjs` do run-pipeline-sace.bat — que rodava
 // só na máquina do Bruno e nunca chegava à produção (ver docs/RUNBOOK-DADOS.md).
 //
@@ -10,7 +10,7 @@
 // Proteção: header Authorization: Bearer ${CRON_SECRET} (mesma chave do briefing).
 //
 // Configuração no Railway:
-//   - Variáveis ANTHROPIC_API_KEY e CRON_SECRET no service web
+//   - Variáveis DEEPSEEK_API_KEY e CRON_SECRET no service web
 //   - Cron service com schedule "0 11 * * 2" (terça 08:00 Manaus = 11:00 UTC)
 //   - Comando: curl -fsS -X POST -H "Authorization: Bearer $CRON_SECRET" \
 //              "https://$RAILWAY_PUBLIC_DOMAIN/api/cron/insights"
@@ -18,7 +18,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import Anthropic from "@anthropic-ai/sdk";
+import { chatLLM, llmDisponivel, LLM_MODELOS } from "@/lib/llm";
 import { fetchPrevisao2026 } from "@/lib/fetch-dados";
 import { obterDadosDiariosANA } from "@/lib/cache-ana-diario";
 import { IDN_RECENTE_DIARIO } from "@/lib/idn-historico-calculado";
@@ -26,7 +26,9 @@ import type { InsightData } from "@/lib/gera-insights";
 
 const DATA_DIR  = process.env.DATA_DIR ?? join(process.cwd(), "data");
 const CACHE_OUT = join(DATA_DIR, "insights_ai_cache.json");
-const MODELO    = "claude-haiku-4-5-20251001";
+// deepseek-reasoner: no teste A/B de 29/09/2026 (PR #93) errou menos a
+// interpretação que o deepseek-chat (anos de referência, sentido do IDN).
+const MODELO    = "deepseek-reasoner";
 
 const TIPOS_VALIDOS: InsightData["tipo"][] = ["critico", "alerta", "info", "positivo"];
 
@@ -42,10 +44,18 @@ Sua missão é produzir insights analíticos semanais sobre a situação das hid
 Diretrizes editoriais:
 - Linguagem direta, técnica e calibrada. Sem alarmismo, sem eufemismo.
 - Cite sempre os números concretos. Compare com 2024 e 2025 quando relevante.
-- O IDN (Índice de Dessincronização Norte-Sul) mede a divergência entre sub-bacias Norte (Negro/Branco) e Sul (Madeira/Purus). IDN > +0,56 = Driver Norte; IDN < −0,15 = Driver Sul; entre = Sincronizado.
+- O IDN (Índice de Dessincronização Norte-Sul) mede a divergência entre sub-bacias Norte (Negro/Branco) e Sul (Madeira/Purus). SENTIDO: IDN > 0 significa que a sub-bacia NORTE está MAIS SECA (mais depletada, em termos relativos à sua própria faixa histórica) que a Sul; IDN < 0, que a SUL está mais seca. IDN > +0,56 = Driver Norte (padrão de 2026); IDN < −0,15 = Driver Sul (padrão da seca de 2024); entre = Sincronizado.
+- Estações por rio: Curicuriari = Negro alto; Manaus = Negro (foz, integra a bacia); Manacapuru = Solimões; Itacoatiara = Amazonas (calha principal, após a confluência); Porto Velho, Humaitá e Manicoré = Madeira; Lábrea = Purus. Não atribua uma estação a uma sub-bacia diferente.
+- 2024 foi a seca extrema de referência; 2025 foi um ano de níveis mais altos. Ao citar "ano passado", isso é 2025.
 - Fronteiras GMM calibradas (2016–2023): Sul ≤ −0,15; Norte ≥ +0,56.
 - Nível 17,7 m em Manaus é a referência regulatória de Baixas Águas (ANTAQ/LWS).
-- Priorize o que é acionável para o setor de transporte fluvial.`;
+- Priorize o que é acionável para o setor de transporte fluvial.
+
+Integridade dos dados (regra dura):
+- Use SOMENTE os números e fatos fornecidos no prompt. Não invente valores, datas, projeções ou comparações.
+- "n/d" significa que NÃO há dado de comparação daquela estação com aquele ano: não afirme nada sobre essa comparação (nem "acima", nem "abaixo", nem "também").
+- Toda afirmação sobre uma estação deve se apoiar na linha dela no prompt.
+- Ao generalizar ("todas", "o mesmo sinal", "as demais"), confira o sinal de CADA estação citada; se houver exceção, diga qual.`;
 
 function montaPromptUsuario(opts: {
   dataRef: string;
@@ -82,11 +92,19 @@ async function handler(request: NextRequest) {
   if (!autorizado(request)) {
     return NextResponse.json({ erro: "Não autorizado" }, { status: 401 });
   }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json({ ok: false, erro: "ANTHROPIC_API_KEY ausente" }, { status: 500 });
+  if (!llmDisponivel()) {
+    return NextResponse.json({ ok: false, erro: "DEEPSEEK_API_KEY ausente" }, { status: 500 });
   }
 
   const dataRef = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Manaus" });
+
+  // Modo de teste (A/B de modelo): ?modelo=deepseek-reasoner&dry=1 gera e
+  // DEVOLVE os insights sem gravar o cache — o painel não muda.
+  const qs = new URL(request.url).searchParams;
+  const modeloQs = qs.get("modelo") ?? "";
+  const modelo = (LLM_MODELOS as readonly string[]).includes(modeloQs) ? modeloQs : MODELO;
+  const dry = qs.get("dry") === "1";
+  const reasoner = modelo === "deepseek-reasoner";
 
   try {
     const [dadosDiarios, previsao] = await Promise.all([obterDadosDiariosANA(), fetchPrevisao2026()]);
@@ -94,6 +112,8 @@ async function handler(request: NextRequest) {
 
     // ── Linhas por estação — usa o mesmo cache dos cards do /monitor ───────────
     const sinal = (v: number) => (v >= 0 ? `+${v}` : `${v}`);
+    // Delta anual null = sem dado do mesmo dia → "n/d" (a IA não deve inventar)
+    const sinalCm = (v: number | null) => (v === null ? "n/d" : `${sinal(v)} cm`);
     const linhasEstacoes = [
       "Manaus", "Itacoatiara", "Manacapuru",
       "PortoVelho", "Humaita", "Manicore",
@@ -102,7 +122,7 @@ async function handler(request: NextRequest) {
       .map((nome) => {
         const d = dados[nome];
         if (!d) return null;
-        return `${nome}: ${d.cota_m.toFixed(2)} m (Δ24h ${sinal(d.variacao_24h)} cm | vs 2025: ${sinal(d.delta_2025)} cm | vs 2024: ${sinal(d.delta_2024)} cm)`;
+        return `${nome}: ${d.cota_m.toFixed(2)} m (Δ24h ${sinal(d.variacao_24h)} cm | vs 2025: ${sinalCm(d.delta_2025)} | vs 2024: ${sinalCm(d.delta_2024)})`;
       })
       .filter(Boolean)
       .join("\n");
@@ -119,8 +139,16 @@ async function handler(request: NextRequest) {
     const idnMax   = Math.max(...idnsArr).toFixed(3);
 
     // ── Contexto SGB + ENSO (via fetchPrevisao2026, DATA_DIR-aware) ────────────
-    const boletimStr = previsao.numero_boletim
-      ? `Último boletim SGB: nº ${previsao.numero_boletim}${previsao.data_boletim ? ` de ${previsao.data_boletim}` : ""}.`
+    // Distingue o último boletim PUBLICADO do último que trouxe previsão de cheia
+    // (fora da temporada, jul–fev, os boletins saem sem previsão de pico).
+    const ub = previsao.ultimo_boletim;
+    const prevStr = previsao.numero_boletim
+      ? `Última previsão de pico de cheia do SGB: boletim nº ${previsao.numero_boletim}${previsao.data_boletim ? ` de ${previsao.data_boletim}` : ""} (Manaus ${previsao.manaus_pico_cheia.media} m).`
+      : "";
+    const boletimStr = ub?.numero
+      ? `Último boletim SGB publicado: nº ${ub.numero}${ub.data ? ` de ${ub.data}` : ""}${ub.numero !== previsao.numero_boletim ? " (sem previsão de pico — fora da temporada de cheia)" : ""}. ${prevStr}`.trim()
+      : previsao.numero_boletim
+      ? prevStr
       : "";
     const ensoStr = previsao.enso
       ? `ENSO — ${previsao.enso_status ?? ""} (CPC/NOAA${previsao.enso_data_emissao ? `, ${previsao.enso_data_emissao}` : ""}): ${previsao.enso}`.replace(/\s+\(/, " (")
@@ -129,15 +157,16 @@ async function handler(request: NextRequest) {
     const USUARIO = montaPromptUsuario({ dataRef, linhasEstacoes, idnAtual, tendIDN, idnMin, idnMax, boletimStr, ensoStr });
 
     // ── Chamada à API ──────────────────────────────────────────────────────────
-    const client = new Anthropic();
-    const msg = await client.messages.create({
-      model: MODELO,
-      max_tokens: 2048,
+    const t0 = Date.now();
+    const raw = await chatLLM({
       system: SISTEMA,
-      messages: [{ role: "user", content: USUARIO }],
+      user: USUARIO,
+      modelo,
+      // reasoner: o max_tokens conta o raciocínio; precisa de folga e de mais tempo
+      maxTokens: reasoner ? 16_000 : 2048,
+      timeoutMs: reasoner ? 280_000 : 120_000,
     });
-
-    const raw = msg.content[0]?.type === "text" ? msg.content[0].text : "";
+    const tempoMs = Date.now() - t0;
     const jsonMatch = raw.match(/```json\s*([\s\S]*?)\s*```/) ?? raw.match(/(\[[\s\S]*\])/);
     const jsonStr = jsonMatch ? jsonMatch[1] : raw.trim();
 
@@ -162,11 +191,15 @@ async function handler(request: NextRequest) {
       return NextResponse.json({ ok: false, erro: "Nenhum insight válido retornado pela IA" }, { status: 502 });
     }
 
+    if (dry) {
+      return NextResponse.json({ ok: true, dry: true, modelo, tempo_ms: tempoMs, data_ref: dataRef, prompt_usuario: USUARIO, insights });
+    }
+
     // ── Persiste no volume (mesmo formato que lerInsightsAI espera) ─────────────
     if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
     const cache = {
       gerado_em: new Date().toISOString(),
-      modelo: MODELO,
+      modelo,
       data_ref: dataRef,
       insights,
     };
@@ -174,8 +207,9 @@ async function handler(request: NextRequest) {
 
     return NextResponse.json({
       ok: true,
-      mensagem: `${insights.length} insights regenerados (${MODELO}) para ${dataRef}`,
-      modelo: MODELO,
+      mensagem: `${insights.length} insights regenerados (${modelo}) para ${dataRef}`,
+      modelo,
+      tempo_ms: tempoMs,
       data_ref: dataRef,
       total: insights.length,
     });

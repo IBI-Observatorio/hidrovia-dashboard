@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Build Docker (VPS) liga o standalone via NEXT_OUTPUT=standalone.
+  // Sem a variável (build do Railway) nada muda: `next start` segue funcionando.
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
+
   // pdf-parse usa módulos Node.js nativos — não bundlizar no edge
   serverExternalPackages: ["pdf-parse"],
 

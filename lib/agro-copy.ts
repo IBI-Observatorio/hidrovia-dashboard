@@ -80,7 +80,9 @@ export const agroCopy = {
   insights: {
     santos: "A fila de grão da APS abre o histórico do indicador com 64 graneleiros esperados (~2,5 semanas da capacidade ANTAQ); com a colheita encerrada, o excedente de campo escoa — pressão alta, em dissipação gradual.",
     paranagua: "A fila de graneleiros da APPA inaugura o histórico do indicador nesta semana; com a colheita encerrada no Paraná, a pressão de safra se dissipa — leitura inicial, em calibração.",
-    "arco-norte": "Com a calha cheia, o risco hidrológico do Tabocal está no piso e a fila de soja domina a leitura; a contagem regressiva do calado volta a comandar o corredor na descida do rio.",
+    // Arco Norte: só fallback — o card usa a frase calculada do calado oficial
+    // da Capitania (insightArcoNorte em lib/agro-content.ts, mesma fonte do /monitor).
+    "arco-norte": "A leitura do corredor depende do calado oficial do Tabocal, publicado pela Capitania; quando o rio desce, a contagem regressiva do calado passa à frente da fila de soja.",
   } satisfies Record<Corredor, string>,
 
   // ===================================================================

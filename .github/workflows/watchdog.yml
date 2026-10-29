@@ -31,7 +31,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
-      BASE_URL: ${{ vars.RAILWAY_PUBLIC_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
+      BASE_URL: ${{ vars.SITE_URL || 'https://hidrovia-dashboard-production.up.railway.app' }}
     steps:
       - name: Garante a label healthcheck
         run: gh label create healthcheck --repo "$REPO" --color B60205 --description "Alertas do sistema imunologico" --force || true
@@ -131,7 +131,8 @@ jobs:
           {
             echo "🚨 **Sistema imunologico detectou problemas** — $(date -u +%FT%TZ)"
             echo ""
-            printf '-  %s\n' "${PROBLEMS[@]}"
+            # "--": formato começando com "-" seria lido como opção do printf.
+            printf -- '-  %s\n' "${PROBLEMS[@]}"
             echo ""
             echo "Detalhe da saude dos dados:"
             echo '```json'

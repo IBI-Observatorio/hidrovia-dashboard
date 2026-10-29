@@ -70,7 +70,7 @@ export default function InsightsPanel({
           </h2>
           <p className="text-gray-400 text-sm">
             {usandoAI
-              ? <>Análise Claude · atualizado {labelGeradoEm() ?? "semanalmente"}</>
+              ? <>Análise IA · atualizado {labelGeradoEm() ?? "semanalmente"}</>
               : <>Gerados dos dados mais recentes — regras calibradas</>
             }
           </p>

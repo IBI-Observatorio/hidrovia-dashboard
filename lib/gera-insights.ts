@@ -2,6 +2,7 @@
 import type { DadosEstacao } from "./dados-historicos";
 import { calculaIDNSimples } from "./calcula-idn";
 import { CALIBRACAO_IDN } from "./limiares-idn";
+import { fmtDeltaCm } from "./fmt-delta";
 
 // Limiares calibrados empiricamente (GMM-3 sobre 2916 dias 2016-2023).
 // Usa as mesmas fronteiras do classificaIDN para consistência interna.
@@ -33,7 +34,9 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
     },
     sgc.ultima_atualizacao
   );
-  const divergencia = Math.abs(mao.delta_2025 - ita.delta_2025);
+  // null = sem delta do mesmo dia (lib/deltas-anuais.ts) → insight de divergência não dispara
+  const divergencia =
+    mao.delta_2025 === null || ita.delta_2025 === null ? null : Math.abs(mao.delta_2025 - ita.delta_2025);
   const insights: InsightData[] = [];
 
   // Colapso histórico do Negro alto — só dispara com dado fresco (< 14 dias)
@@ -60,7 +63,7 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
   }
 
   // Divergência crescente Manaus–Itacoatiara
-  if (divergencia > 40) {
+  if (divergencia !== null && divergencia > 40) {
     insights.push({
       tipo:    "alerta",
       titulo:  `Divergência Manaus–Itacoatiara: ${divergencia} cm`,
@@ -75,7 +78,7 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
     insights.push({
       tipo:    "alerta",
       titulo:  `Dessincronização Norte-Sul ${intensidade}: IDN = +${idn.toFixed(2)} (Driver Norte)`,
-      texto:   `IDN supera fronteira calibrada de +${FRONTEIRA_NORTE.toFixed(2)} (GMM/2016-2023). Negro+Branco dramaticamente mais depleted que o Madeira+Purus. SGC ${sgc.delta_2025} cm abaixo de 2025; Humaitá ${hum.delta_2025 >= 0 ? "+" : ""}${hum.delta_2025} cm vs 2025.`,
+      texto:   `IDN supera fronteira calibrada de +${FRONTEIRA_NORTE.toFixed(2)} (GMM/2016-2023). Negro+Branco dramaticamente mais depleted que o Madeira+Purus. SGC ${fmtDeltaCm(sgc.delta_2025)} vs 2025; Humaitá ${fmtDeltaCm(hum.delta_2025)} vs 2025.`,
     });
   } else if (idn < FRONTEIRA_SUL) {
     insights.push({
@@ -97,7 +100,7 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
   }
 
   // Madeira acima da média (positivo)
-  if (hum.delta_2025 > 0 && hum.cota_m > 11.68) {
+  if (hum.delta_2025 !== null && hum.delta_2025 > 0 && hum.cota_m > 11.68) {
     insights.push({
       tipo:    "positivo",
       titulo:  "Madeira acima da referência 2025",
@@ -107,7 +110,7 @@ export function geraInsights(dados: Record<string, DadosEstacao>): InsightData[]
   }
 
   // Porto Velho em destaque
-  if (pvo && pvo.delta_2025 > 50) {
+  if (pvo && pvo.delta_2025 !== null && pvo.delta_2025 > 50) {
     insights.push({
       tipo:    "info",
       titulo:  `Porto Velho ${pvo.delta_2025} cm acima de 2025`,

@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { RX_FERT, FILTRO_FERT, dedupeFert, acumulaFert, type NavioFert, type SnapshotFert } from "./fertilizante";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const ARQ_SAIDA = join(RAIZ, "data", "lineup", "itaqui.json");
@@ -55,14 +56,50 @@ export function parseItaqui(html: string): Navio[] {
   return out;
 }
 
+/** Fertilizante com Operação IMPORTAÇÃO (série própria — ver ./fertilizante.ts).
+ *  Toneladas = coluna Qtd.Carga (mesma heurística numBR do DWT). */
+export function parseFertItaqui(html: string): NavioFert[] | null {
+  const out: NavioFert[] = [];
+  let lidas = 0;
+  const tabelas = [...html.matchAll(/<table[\s\S]*?<\/table>/gi)].map((m) => m[0]);
+  tabelas.slice(0, 3).forEach((tabela, ti) => {
+    const linhas = [...tabela.matchAll(/<tr[\s\S]*?<\/tr>/gi)].map((m) =>
+      [...m[0].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map((c) => limpa(c[1])),
+    );
+    if (linhas.length < 1) return;
+    const hdr = linhas[0].map((h) => h.toUpperCase());
+    const iN = hdr.findIndex((h) => h === "NAVIO");
+    const iC = hdr.findIndex((h) => h === "CARGA");
+    const iQ = hdr.findIndex((h) => h.startsWith("QTD"));
+    const iO = hdr.findIndex((h) => h.startsWith("OPERA"));
+    const iE = hdr.findIndex((h) => h.startsWith("PREV CHEG"));
+    if (iN < 0 || iC < 0 || iQ < 0) return;
+    lidas++;
+    for (const c of linhas.slice(1)) {
+      if (!RX_FERT.test(c[iC] ?? "")) continue;
+      if (iO >= 0 && !/IMPORT/i.test(c[iO] ?? "")) continue;
+      const m = (c[iE] ?? "").match(/(\d{2})\/(\d{2})\/(\d{2,4})/);
+      const ano = m ? (m[3].length === 2 ? "20" + m[3] : m[3]) : "";
+      out.push({
+        navio: c[iN], toneladas: numBR(c[iQ] ?? "0"), mercadoria: (c[iC] ?? "").slice(0, 30),
+        eta: m ? `${ano}-${m[2]}-${m[1]}` : undefined, status: SECOES[ti],
+      });
+    }
+  });
+  return lidas > 0 ? dedupeFert(out) : null;
+}
+
 async function main() {
   const hoje = new Date().toISOString().slice(0, 10);
-  let anterior: { snapshots?: { dataColeta: string; navios: Navio[] }[] } | null = null;
+  let anterior: { snapshots?: { dataColeta: string; navios: Navio[] }[]; snapshotsFertilizantes?: SnapshotFert[] } | null = null;
   try { anterior = JSON.parse(readFileSync(ARQ_SAIDA, "utf8")); } catch { /* sem cache */ }
+  let fert: NavioFert[] | null = null;
   try {
     const r = await fetch(URL_PAGINA, { headers: UA });
     if (!r.ok) throw new Error(`HTTP ${r.status} no Porto Agora EMAP`);
-    const navios = parseItaqui(await r.text());
+    const html = await r.text();
+    fert = parseFertItaqui(html);
+    const navios = parseItaqui(html);
     if (navios.length === 0) throw new Error("0 graneleiros parseados — layout do Porto Agora mudou?");
     const snapshots = (anterior?.snapshots ?? []).filter((s) => s.dataColeta !== hoje);
     snapshots.push({ dataColeta: hoje, navios });
@@ -74,13 +111,18 @@ async function main() {
       coletadoEm: hoje, status: "ok" as const,
       observacao: "Página Porto Agora renderiza Atracados/Fundeados/Esperados em HTML; DWT na coluna própria; snapshots acumulam histórico.",
       snapshots,
+      filtroFertilizantes: FILTRO_FERT,
+      statusFertilizantes: fert ? "ok" : "indisponivel",
+      snapshotsFertilizantes: acumulaFert(anterior?.snapshotsFertilizantes, hoje, fert),
     }, null, 1).replace(/\n +(?=[\d"[\]{},.-])/g, "") + "\n");
-    console.log(`[lineup-itaqui] OK — ${navios.length} graneleiros · ${snapshots.length} snapshots`);
+    console.log(`[lineup-itaqui] OK — ${navios.length} graneleiros · ${snapshots.length} snapshots · fertilizante: ${fert ? fert.length + " navios" : "indisponível"}`);
   } catch (e) {
     mkdirSync(dirname(ARQ_SAIDA), { recursive: true });
     writeFileSync(ARQ_SAIDA, JSON.stringify({
       ...((anterior as object) ?? { snapshots: [] }),
       url: URL_PAGINA, coletadoEm: hoje, status: "indisponivel" as const, erro: (e as Error).message,
+      statusFertilizantes: fert ? "ok" : "indisponivel",
+      snapshotsFertilizantes: acumulaFert(anterior?.snapshotsFertilizantes, hoje, fert),
     }, null, 1) + "\n");
     console.error(`[lineup-itaqui] INDISPONÍVEL — ${(e as Error).message}`);
     process.exitCode = 1;

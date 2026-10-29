@@ -98,8 +98,11 @@ export interface DadosEstacao {
   rio:           string;
   cota_m:        number;
   variacao_24h:  number; // cm
-  delta_2025:    number; // cm
-  delta_2024:    number; // cm
+  // cm; cota de hoje − mesmo dia do ano (lib/deltas-anuais.ts). null = sem dado
+  // do mesmo dia (±2 d) → UI mostra "—". Os valores abaixo em DADOS_ATUAIS são
+  // o snapshot de 07/05/2026, só usados se a ANA falhar por completo.
+  delta_2025:    number | null;
+  delta_2024:    number | null;
   ultima_atualizacao: string;
   hora_medicao?:      string; // HH:MM da leitura de referência (≈09:00)
   hora_medicao_d1?:   string; // HH:MM da leitura de referência do dia anterior

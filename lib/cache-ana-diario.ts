@@ -32,6 +32,7 @@ import type { EstacaoComDOY } from "./sub-bacias";
 import type { EstacaoVazao } from "./sub-bacias-vazao";
 import { calculaIDN } from "./calcula-idn";
 import { anexaCotasSerie } from "./ana-cotas-series";
+import { aplicaDeltasAnuais } from "./deltas-anuais";
 
 export interface DadosDiariosANA {
   dados:          Record<string, DadosEstacao>;
@@ -82,7 +83,9 @@ async function gravaCache(c: CacheArquivo): Promise<void> {
 
 function snapshotDe(cache: CacheArquivo): DadosDiariosANA {
   return {
-    dados:          cache.dados,
+    // Recalcula os deltas também ao servir do cache (snapshots gravados antes
+    // de 29/09/2026 trazem os deltas congelados de DADOS_ATUAIS).
+    dados:          aplicaDeltasAnuais(cache.dados),
     cotasIDN:       cache.cotasIDN,
     vazoesIDN:      cache.vazoesIDN,
     serieCaracarai: cache.serieCaracarai,
