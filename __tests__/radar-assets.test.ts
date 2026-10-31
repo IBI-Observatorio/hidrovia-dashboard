@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { RADAR_ASSETS, getRadarAsset, fullAsset, normalizaMaturacao } from "@/lib/radar/assets";
-import { ESTAGIOS } from "@/lib/radar/maturation";
+import { ESTAGIOS, classificaRegime } from "@/lib/radar/maturation";
 
 describe("registro único de ativos", () => {
   it("tem os 4 ativos, só o EF-170 completo", () => {
@@ -24,6 +24,18 @@ describe("registro único de ativos", () => {
         expect(a.maturacao.estagioAtual).toBeGreaterThanOrEqual(0);
         expect(a.maturacao.estagioAtual).toBeLessThan(ESTAGIOS.length);
       }
+    }
+  });
+
+  // Curadoria de 14/10/2026: nenhum dos 4 ativos tem edital publicado. "Iminente"
+  // exige estágio ≥ Edital; se um seed voltar a marcar Edital sem edital no ar,
+  // este teste avisa. Quando um edital sair de fato, atualize a lista abaixo.
+  it("nenhum ativo aparece 'Iminente' sem edital publicado", () => {
+    const comEditalPublicado: string[] = [];
+    for (const a of RADAR_ASSETS) {
+      if (!a.maturacao || comEditalPublicado.includes(a.id)) continue;
+      expect(a.maturacao.estagioAtual, a.id).toBeLessThan(ESTAGIOS.indexOf("Edital"));
+      expect(classificaRegime(a.maturacao), a.id).not.toBe("iminente");
     }
   });
 });
