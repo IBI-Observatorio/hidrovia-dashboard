@@ -4,8 +4,26 @@
 // a rota /embed/[modulo] e o EmbedModulo resolvem o resto automaticamente.
 // Por enquanto só 'teste' (placeholders) para validar a rota.
 
-import type { CustoInput, Premissa, Proveniencia } from "./custo-evitavel";
+import { taxaPorSegundo, type CustoInput, type Premissa, type Proveniencia } from "./custo-evitavel";
 import { PAVIMENTO, PAVIMENTO_COPY } from "./modulos/pavimento";
+
+/**
+ * Declaração de um módulo para o RELÓGIO DA INFRAESTRUTURA (lib/relogio.ts) —
+ * o agregador nacional. Módulo que declara `relogio` entra na soma nacional
+ * automaticamente; módulo sem a declaração fica FORA da soma, sem exceção.
+ * Vale para placeholders ('teste') e para módulos de antecipação (aquaviário),
+ * que medem risco à frente, não custo corrente.
+ */
+export type ModuloCusto = {
+  /** Nome curto do componente no card de decomposição do Relógio. */
+  nome: string;
+  /** Página de profundidade do módulo (ex.: "/pavimento"). */
+  rota: string;
+  /** Taxa própria em R$/segundo — sempre derivada do dado do módulo, nunca hardcoded. */
+  taxaPorSegundo: () => number;
+  fonte: string;
+  metodologia: string;
+};
 
 export type ModuloEmbedConfig = {
   titulo: string;
@@ -16,6 +34,8 @@ export type ModuloEmbedConfig = {
   proveniencia: Proveniencia;
   /** Altura sugerida do iframe (px) para o EmbedButton. */
   alturaEmbed?: number;
+  /** Adesão ao Relógio da Infraestrutura — ver ModuloCusto. */
+  relogio?: ModuloCusto;
 };
 
 // Input base do módulo Pavimento — valor anual de diesel distribuído desde 0h de hoje.
@@ -47,7 +67,17 @@ export const EMBED_REGISTRY: Record<string, ModuloEmbedConfig> = {
     },
     proveniencia: { tipo: "estimativa-ibi", fonte: PAVIMENTO_COPY.fonte },
     alturaEmbed: 560,
+    // Adesão ao Relógio da Infraestrutura: a taxa nasce do MESMO input base do
+    // módulo (7,2 bi/ano ÷ segundos do ano) — nada recalculado, nada duplicado.
+    relogio: {
+      nome: PAVIMENTO_COPY.nomeRelogio,
+      rota: "/pavimento",
+      taxaPorSegundo: () => taxaPorSegundo(pavimentoInputBase),
+      fonte: PAVIMENTO_COPY.fonte,
+      metodologia: PAVIMENTO_COPY.metodologia,
+    },
   },
+  // Sem `relogio`: módulo de validação nunca entra na soma nacional.
   teste: {
     titulo: "Módulo de teste",
     rotulo: "Contador de validação do Bloco A — números placeholder, sem significado de domínio.",
