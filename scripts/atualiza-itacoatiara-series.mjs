@@ -44,13 +44,39 @@ function loadEnv() {
   }
 }
 
+// ─── Retry para instabilidade da ANA ─────────────────────────────────────────
+// O hidrowebservice cai por minutos (503, 504, ECONNREFUSED — rodadas de
+// 21/07, 04/08, 01/09 e 22/09/2026). Como o job é semanal, uma tentativa só
+// deixava a série uma semana a mais parada. Repete em erro de rede, 5xx e 429;
+// 4xx (credencial, parâmetro) falha na hora, porque repetir não resolve.
+const ESPERAS_S = (process.env.ANA_RETRY_ESPERAS_S ?? "30,60,120,240")
+  .split(",").map(Number).filter((n) => n >= 0);
+
+async function fetchComRetry(rotulo, url, opcoes) {
+  for (let tentativa = 1; ; tentativa++) {
+    let motivo;
+    try {
+      const resp = await fetch(url, opcoes);
+      if (resp.ok || (resp.status < 500 && resp.status !== 429)) return resp;
+      motivo = `${resp.status} ${resp.statusText}`;
+    } catch (err) {
+      motivo = err?.cause?.code ?? err.message;
+    }
+    const espera = ESPERAS_S[tentativa - 1];
+    if (espera === undefined) throw new Error(`${rotulo}: ${motivo} (após ${tentativa} tentativas)`);
+    log(`${rotulo}: ${motivo} — tentativa ${tentativa} falhou, nova em ${espera}s`);
+    await new Promise((r) => setTimeout(r, espera * 1000));
+  }
+}
+
 // ─── Autenticação ANA (mesma rota do atualiza-idn-series.mjs) ────────────────
 async function autenticaANA() {
   const id    = process.env.HIDRO_IDENTIFICADOR;
   const senha = process.env.HIDRO_SENHA;
   if (!id || !senha) throw new Error("HIDRO_IDENTIFICADOR e/ou HIDRO_SENHA não definidos");
 
-  const resp = await fetch(
+  const resp = await fetchComRetry(
+    "Auth ANA",
     "https://www.ana.gov.br/hidrowebservice/EstacoesTelemetricas/OAUth/v1",
     { headers: { Identificador: id, Senha: senha } }
   );
@@ -69,7 +95,9 @@ async function buscaSerie(token, codigo) {
   url.searchParams.set("Tipo Filtro Data",          "DATA_LEITURA");
   url.searchParams.set("Range Intervalo de busca",  "DIAS_30");
 
-  const resp = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
+  const resp = await fetchComRetry("ANA série", url.toString(), {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   if (!resp.ok) throw new Error(`ANA série: ${resp.status} ${resp.statusText}`);
   return await resp.json();
 }
