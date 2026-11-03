@@ -1,5 +1,5 @@
-// AUTO-GERADO por scripts/gera-itacoatiara-historico-diario.mjs em 2026-10-27T15:54:41.937Z
-// GIT: 68078b9 (dirty)
+// AUTO-GERADO por scripts/gera-itacoatiara-historico-diario.mjs em 2026-11-03T17:54:31.695Z
+// GIT: e370421 (dirty)
 //
 // Série diária Itacoatiara (16030000) 2016-2026.
 // Fonte: HidroWeb/ANA — data/itacoatiara_hidroweb.csv
@@ -3979,16 +3979,23 @@ export const ITACOATIARA_HISTORICO_DIARIO: Record<number, Record<string, number>
     "2026-10-24": 3.57,
     "2026-10-25": 3.52,
     "2026-10-26": 3.48,
-    "2026-10-27": 3.46
+    "2026-10-27": 3.46,
+    "2026-10-28": 3.44,
+    "2026-10-29": 3.44,
+    "2026-10-30": 3.43,
+    "2026-10-31": 3.44,
+    "2026-11-01": 3.43,
+    "2026-11-02": 3.42,
+    "2026-11-03": 3.42
   }
 };
 
 export const ITACOATIARA_HISTORICO_DIARIO_META = {
   anos:        [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
   n_anos:      11,
-  n_obs_total: 3953,
+  n_obs_total: 3960,
   fonte:       "HidroWeb/ANA — estação 16030000",
-  gerado_em:   "2026-10-27T15:54:41.939Z",
-  git_sha:     "68078b90979bf2a7b8422f8c068eed74ed3d788d",
+  gerado_em:   "2026-11-03T17:54:31.697Z",
+  git_sha:     "e370421b14c65c53c5692b99a80e7c2a66db0876",
   git_dirty:   true,
 } as const;
