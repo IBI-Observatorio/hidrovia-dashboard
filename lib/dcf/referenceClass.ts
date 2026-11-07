@@ -7,7 +7,10 @@
 //   • Slip de cronograma — atraso no início (IBAMA reabriu o EIA de 2020).
 //
 // E as ÂNCORAS DE CALIBRAÇÃO obrigatórias:
-//   • Oficial:  inputs sourçados → TIR ≈ WACC (emerge, sem botão de fechamento).
+//   • Oficial:  inputs sourçados → TIR emerge, sem botão de fechamento. Desde a
+//     modelagem de set/2026 (sem aporte; WACC 14,08% e TIR declarada 11,28%, na
+//     imprensa) o governo admite TIR < WACC, e o motor não reproduz a TIR
+//     declarada com as premissas públicas — ela é exibida ao lado ("duas leituras").
 //   • Realista: TIR-alvo de Frischtak (1,6%) alcançada pela COMBINAÇÃO das três
 //     alavancas — CAPEX = mediana da classe de ref. (sourced) + slip = execução
 //     realista − obra (sourced) + haircut de demanda RESIDUAL (resolvido) — em vez
@@ -29,7 +32,8 @@ import railRefClass from "../../data/referenceClass/rail.json";
 /**
  * Alvo do caso realista: TIR = 1,6% (Frischtak/Amazônia 2030, 06/nov/2024).
  * É o PISO PESSIMISTA sourçado — único valor de TIR realista citável na fonte
- * primária (junto do 11,04% oficial). Não há, na fonte, uma faixa ponderada.
+ * primária (que a compara ao 11,04% oficial de então). Não há, na fonte, uma
+ * faixa ponderada.
  */
 export const TIR_REALISTA_ALVO = 0.016;
 
@@ -60,10 +64,12 @@ export interface CalibracaoOficial {
 
 /**
  * Cenário oficial = avaliação DIRETA do modelo com inputs sourçados, SEM botão de
- * fechamento. Com a tarifa-teto (R$ 110,05), o operating ratio de 65% (faixa
- * heavy-haul), os tributos (IRPJ+CSLL 34%) com depreciação e o aporte reais, a TIR
- * cai NATURALMENTE no WACC (11,04%) — a antiga limitação (O&M inflado p/ ~71% que
- * contaminava o Monte Carlo) foi removida.
+ * fechamento: tarifa-teto (R$ 110,05), operating ratio de 65% (faixa heavy-haul),
+ * tributos (IRPJ+CSLL 34%) com depreciação e o aporte do seed. Até set/2026 (aporte
+ * de R$ 3,66 bi) a TIR caía naturalmente nos 11,04% oficiais de então. Sem aporte,
+ * ela cai a ~7%; a TIR declarada pelo governo (11,28%) exigiria um OR de ~35% ou
+ * tarifa ×1,84 — implausíveis —, por isso NÃO se fecha o motor nela: ela vai à UI
+ * como segunda leitura (`Asset.oficialAnchor`).
  */
 export function calibrarOficial(params: ModelingParams): CalibracaoOficial {
   const levers: Levers = { ...LEVERS_NEUTROS };
@@ -158,12 +164,13 @@ export interface DistribParams {
  * referência usada no realista (`upliftMedianoDaClasse`), garantindo que o sorteio
  * e o caso realista partam da mesma premissa de custo.
  *
- * `upliftSigma` é MODELADO (sem fonte): foi calibrado em 0,33 para que a faixa
- * P5–P95 da TIR PASSE A COBRIR as duas âncoras — o oficial (11,04%, que exige um
- * draw de custo ABAIXO da mediana da classe, logo na cauda superior) e o realista
- * (~1,6%, cauda inferior) — sem degenerar o P5 para −100% (o que ocorre com sigmas
- * largos demais, que geram muitos draws sem TIR). Valor mínimo que cobre as duas
- * âncoras de forma não-degenerada. Ver `distribPadrao` como ponto de sensibilidade.
+ * `upliftSigma` é MODELADO (sem fonte): foi calibrado em 0,33 (jun/2026) para que
+ * a faixa P5–P95 da TIR cobrisse as duas âncoras de então — o oficial (11,04%, com
+ * aporte) e o realista (~1,6%) — sem degenerar o P5 para −100% (o que ocorre com
+ * sigmas largos demais, que geram muitos draws sem TIR). NÃO foi re-calibrado na
+ * modelagem sem aporte (set/2026): o P5 segue cobrindo o realista e a TIR
+ * declarada (11,28%) fica acima do P95 — é o achado, não um defeito a ajustar.
+ * Ver `distribPadrao` como ponto de sensibilidade.
  */
 export function distribPadrao(): DistribParams {
   return {

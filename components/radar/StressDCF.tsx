@@ -2,11 +2,12 @@
 
 // Módulo 2 do Radar — Estresse RCF sobre o motor DCF real (Build Brief §4).
 // Substitui a interpolação do mock por um fluxo de caixa completo:
-//   • Cenário Oficial (tarifa calibrada → TIR ≈ WACC)
-//   • Cenário Realista (uplift implícito de CAPEX → TIR ≈ 11,04%)
+//   • Cenário Oficial em duas leituras: TIR do motor (premissas públicas) × TIR
+//     declarada pelo governo (seed `oficialAnchor`), quando o motor não a reproduz
+//   • Cenário Realista (combinação de alavancas → TIR de Frischtak, 1,6%)
 //   • Cenário Custom (premissas editáveis, recalculado ao vivo)
 //   • Monte Carlo da classe de referência → distribuição de TIR + P(spread<0)
-//   • Furo de funding (TCU) e sensibilidade às alavancas
+//   • Furo de funding (TCU, quando o seed tiver aporte) e sensibilidade às alavancas
 //
 // Todo número carrega `source` (citável) ou é rotulado "saída de modelo ·
 // ilustrativo". Probabilidades NÃO são recomendação de investimento.
@@ -14,7 +15,7 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle, Info, TrendingDown } from "lucide-react";
 import type { Asset, Levers, Num } from "@/lib/dcf/types";
-import { LEVERS_NEUTROS } from "@/lib/dcf/types";
+import { LEVERS_NEUTROS, numVal } from "@/lib/dcf/types";
 import { paramsFromAsset, tirCenario, buildCashflow } from "@/lib/dcf/cashflow";
 import { calibrarOficial, calibrarRealista, slipRealista, distribPadrao } from "@/lib/dcf/referenceClass";
 import { runMonteCarlo } from "@/lib/dcf/montecarlo";
@@ -49,6 +50,7 @@ function CenarioCard({
   spread,
   vpl,
   destaque,
+  declarada,
 }: {
   titulo: string;
   nota?: string;
@@ -56,6 +58,8 @@ function CenarioCard({
   spread: number;
   vpl: number;
   destaque: "oficial" | "realista" | "custom";
+  /** Segunda leitura: TIR declarada pelo governo (não reproduzida pelo motor). */
+  declarada?: { tir: number; spread: number; fonte?: string };
 }) {
   const cor =
     destaque === "oficial"
@@ -91,7 +95,17 @@ function CenarioCard({
         </span>
       </div>
       <p className={`mt-3 text-4xl font-bold tabular-nums ${corTir}`}>{pct(tir)}</p>
-      <p className="mt-1 text-xs text-gray-400">TIR · VPL ao WACC {num(vpl, 1)} R$ bi</p>
+      <p className="mt-1 text-xs text-gray-400">
+        TIR {declarada ? "do motor " : ""}· VPL ao WACC {num(vpl, 1)} R$ bi
+      </p>
+      {declarada && (
+        <p className="mt-2 text-xs text-gray-300">
+          Declarada pelo governo:{" "}
+          <strong className="tabular-nums text-white">{pct(declarada.tir)}</strong>{" "}
+          <span className="text-vermelho">(spread {sign(declarada.spread)})</span>
+          {declarada.fonte && <span className="block text-[10px] text-gray-500">{declarada.fonte}</span>}
+        </p>
+      )}
       {nota && <p className="mt-3 text-[11px] leading-snug text-gray-500">{nota}</p>}
     </div>
   );
@@ -152,11 +166,13 @@ function HistogramaTIR({
   wacc,
   realista,
   oficial,
+  declarada,
 }: {
   hist: { bin: number; count: number }[];
   wacc: number;
   realista: number;
   oficial: number;
+  declarada?: number;
 }) {
   const W = 520;
   const H = 150;
@@ -194,7 +210,9 @@ function HistogramaTIR({
       })}
       {linha(wacc, "#0099d8", `WACC ${pct(wacc, 1)}`)}
       {linha(realista, "#D4922A", "realista")}
-      {linha(oficial, "#9ca3af", "oficial")}
+      {linha(oficial, "#9ca3af", declarada !== undefined ? "motor" : "oficial")}
+      {declarada !== undefined && declarada >= minX && declarada <= maxX &&
+        linha(declarada, "#e5e7eb", "declarada")}
       {/* eixo X */}
       <line x1={pad} x2={W - pad} y1={H - pad} y2={H - pad} stroke="#374151" strokeWidth={1} />
       <text x={pad} y={H - 8} fill="#6b7280" fontSize={9}>{pct(minX, 0)}</text>
@@ -207,6 +225,10 @@ function HistogramaTIR({
 export default function StressDCF({ asset }: { asset: Asset }) {
   const params = useMemo(() => paramsFromAsset(asset), [asset]);
   const tarifaTetoMilTKU = params.tarifaTKU * 1000; // R$/mil TKU oficial
+  // Segunda leitura do oficial: TIR declarada pelo governo (seed), se houver.
+  const tirDeclaradaNum = asset.oficialAnchor?.tir;
+  const tirDeclarada = tirDeclaradaNum ? numVal(tirDeclaradaNum) : undefined;
+  const semAporte = params.aportePublico.length === 0;
 
   // Calibração das âncoras + Monte Carlo (reprodutível; não recalcula no slider).
   const base = useMemo(() => {
@@ -273,9 +295,18 @@ export default function StressDCF({ asset }: { asset: Asset }) {
           <h3 className="text-xl font-bold text-white">Estresse RCF — Motor DCF</h3>
           <p className="mt-1 max-w-2xl text-sm text-gray-400">
             Fluxo de caixa real sobre os {num(params.prazoAnos, 0)} anos da concessão — com
-            tributos (IRPJ+CSLL 34%), depreciação e aporte reais. Cenário oficial da ANTT
-            (TIR = WACC = {pct(params.wacc, 2)}) e realista de Frischtak/Amazônia 2030
-            (TIR {pct(base.cre.tir, 1)} — retorno ~7× menor).
+            tributos (IRPJ+CSLL 34%) e depreciação
+            {semAporte ? ", sem aporte público (excluído na modelagem de set/2026)" : " e aporte reais"}.
+            {tirDeclarada !== undefined ? (
+              <>
+                {" "}O oficial tem duas leituras: o governo declara TIR {pct(tirDeclarada, 2)} contra
+                WACC {pct(params.wacc, 2)}; o motor, com as premissas públicas, chega a{" "}
+                {pct(base.cof.tir, 2)}.
+              </>
+            ) : (
+              <> Cenário oficial (TIR {pct(base.cof.tir, 2)}, WACC {pct(params.wacc, 2)}).</>
+            )}{" "}
+            Realista de Frischtak/Amazônia 2030: TIR {pct(base.cre.tir, 1)}.
           </p>
         </div>
         <IlustrativoTag />
@@ -289,7 +320,16 @@ export default function StressDCF({ asset }: { asset: Asset }) {
           tir={base.cof.tir}
           spread={base.cof.tir - params.wacc}
           vpl={base.oficialVpl}
-          nota={`ANTT: tarifa-teto R$ ${num(tarifaTetoMilTKU, 2)}/mil TKU; operating ratio ${pct(operatingRatio, 0)} + tributos reais → TIR = WACC = ${pct(params.wacc, 2)} sem botão de fechamento.`}
+          declarada={
+            tirDeclarada !== undefined
+              ? { tir: tirDeclarada, spread: tirDeclarada - params.wacc, fonte: tirDeclaradaNum?.source?.label }
+              : undefined
+          }
+          nota={
+            tirDeclarada !== undefined
+              ? `Motor: tarifa R$ ${num(tarifaTetoMilTKU, 2)}/mil TKU (modelagem anterior), operating ratio ${pct(operatingRatio, 0)}, tributos reais${semAporte ? ", sem aporte" : ""}, sem botão de fechamento. A diferença para a TIR declarada vem de premissas da planilha nova, não publicada (CAPEX, demanda, frota).`
+              : `Tarifa-teto R$ ${num(tarifaTetoMilTKU, 2)}/mil TKU; operating ratio ${pct(operatingRatio, 0)} + tributos reais, sem botão de fechamento.`
+          }
         />
         <CenarioCard
           titulo="Realista"
@@ -380,7 +420,8 @@ export default function StressDCF({ asset }: { asset: Asset }) {
         </div>
 
         <div className="mt-4 grid gap-5 lg:grid-cols-[1fr_220px]">
-          <HistogramaTIR hist={mc.histograma} wacc={params.wacc} realista={base.cre.tir} oficial={base.cof.tir} />
+          <HistogramaTIR hist={mc.histograma} wacc={params.wacc} realista={base.cre.tir} oficial={base.cof.tir}
+            declarada={tirDeclarada} />
           <div className="space-y-3">
             <div className="rounded-xl border border-vermelho/30 bg-vermelho/10 p-3">
               <p className="text-[11px] text-gray-400">P(spread &lt; 0)</p>
@@ -417,12 +458,20 @@ export default function StressDCF({ asset }: { asset: Asset }) {
       <footer className="flex items-start gap-2 border-t border-white/10 pt-4 text-[11px] leading-relaxed text-gray-500">
         <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-600" />
         <span>
-          Os pontos âncora (oficial 11,04% e realista 1,6%), o uplift de CAPEX (classe de ref.) e o
-          slip de cronograma (execução realista) são <strong>números de fonte citável</strong>; o
-          haircut de demanda residual e a distribuição do Monte Carlo são <strong>saída de modelo</strong>,
-          ilustrativos. Não constituem recomendação de investimento. Fontes: ANTT (params oficiais,
-          WACC, demanda), Frischtak/Amazônia 2030 (06/nov/2024 — TIR realista 1,6%), TCU (furo de
-          funding) e classe de referência ferroviária (Flyvbjerg 2002).
+          A TIR realista (1,6%), o uplift de CAPEX (classe de ref.) e o slip de cronograma (execução
+          realista) são <strong>números de fonte citável</strong>
+          {tirDeclarada !== undefined && (
+            <>
+              ; a TIR declarada ({pct(tirDeclarada, 2)}) e o WACC ({pct(params.wacc, 2)}) da modelagem
+              de set/2026 vêm da <strong>imprensa</strong> (Agência iNFRA, 11/09/2026), sem nota técnica ou
+              planilha pública da ANTT
+            </>
+          )}
+          ; a TIR do motor, o haircut de demanda residual e a distribuição do Monte Carlo são{" "}
+          <strong>saída de modelo</strong>, ilustrativos. Não constituem recomendação de investimento.
+          Fontes: ANTT (CAPEX, OPEX, demanda e tarifa da modelagem anterior), Deliberação ANTT
+          nº 275/2026 (nova modelagem), Frischtak/Amazônia 2030 (06/nov/2024 — TIR realista 1,6%) e
+          classe de referência ferroviária (Flyvbjerg 2002).
         </span>
       </footer>
     </div>
