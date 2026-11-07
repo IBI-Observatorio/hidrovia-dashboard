@@ -63,6 +63,34 @@ export const PREVISOES: Previsao[] = [
     realizadoDate: "2026-04", veredito: "erro",
     fonte: { label: "Diário do Comércio", date: "2026" },
   },
+  {
+    date: "2026-06-05", asset: "ef-170", metric: "pleilao", autor: "Oficial",
+    texto: "Leilão da Ferrogrão em dezembro de 2026.",
+    realizado: "Estudos reenviados ao TCU em set/2026, com leilão projetado para 2027.",
+    realizadoDate: "2026-09-11", veredito: "erro",
+    fonte: { label: "Agência iNFRA", url: "https://agenciainfra.com/blog/ferrograo-volta-ao-tcu-sem-aporte-e-com-ajuste-em-material-rodante/", date: "2026-09-11" },
+  },
+  {
+    date: "2026-06-05", asset: "fico-fiol", metric: "pleilao", autor: "Oficial",
+    texto: "Leilão do Corredor Leste-Oeste em dezembro de 2026.",
+    realizado: "Ministro Santoro: leilão só em 2027.",
+    realizadoDate: "2026-08-27", veredito: "erro",
+    fonte: { label: "Poder360", url: "https://www.poder360.com.br/poder-governo/governo-avanca-para-integrar-leste-oeste-e-quer-8-chamamentos-de-ferrovias/", date: "2026-08-27" },
+  },
+  {
+    date: "2026-06-05", asset: "ef-118", metric: "pleilao", autor: "Oficial",
+    texto: "Leilão da EF-118 em setembro de 2026.",
+    realizado: "ANTT passou a projetar a 1ª quinzena de dezembro de 2026.",
+    realizadoDate: "2026-08-05", veredito: "erro",
+    fonte: { label: "SouBrasília", url: "https://soubrasilia.com/leilao-ferrovias-ef-118-centro-atlantica-dezembro-2026-antt/", date: "2026-08-05" },
+  },
+  {
+    date: "2026-08-05", asset: "ef-118", metric: "pleilao", autor: "Oficial",
+    texto: "Leilão da EF-118 na 1ª quinzena de dezembro de 2026.",
+    realizado: "Empurrado para o 1º trimestre de 2027 (edital até dez/2026).",
+    realizadoDate: "2026-09-18", veredito: "erro",
+    fonte: { label: "CNN Brasil", url: "https://www.cnnbrasil.com.br/infra/apos-atrasos-governo-quer-leiloar-ferrovia-no-sudeste-em-2027/", date: "2026-09-18" },
+  },
   // ── Calls do OBSERVATÓRIO (registrados agora, em aberto) ──
   {
     date: "2026-06-06", asset: "ef-170", metric: "tir", autor: "Observatório",

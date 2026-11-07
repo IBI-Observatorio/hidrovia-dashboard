@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { RiskVector } from "@/lib/dcf/types";
 import { GATES, posturaRisco, GATE_PESO, normalizaGate } from "@/lib/radar/risk";
-import { getRadarAsset } from "@/lib/radar/assets";
+import { getRadarAsset, fullAsset, temTabuleiro, assetPublico } from "@/lib/radar/assets";
 import { getTabuleiro, normalizaExposicao } from "@/lib/radar/board";
 
 const ef170Risk = getRadarAsset("ef-170")!.raw.risk as RiskVector;
@@ -91,5 +91,19 @@ describe("normalização defensiva (boundary, estilo F2)", () => {
     const e = getRadarAsset("ef-170")!;
     expect(e.risk?.ambiental).toBe("risco");
     expect(e.tabuleiro?.VLI.exposicao).toBe("media");
+  });
+});
+
+describe("tabuleiro fora da vitrine pública", () => {
+  it("temTabuleiro: VLI tem papel mapeado; Ibi e anônimo não", () => {
+    expect(temTabuleiro("VLI")).toBe(true);
+    expect(temTabuleiro("Ibi")).toBe(false);
+    expect(temTabuleiro(null)).toBe(false);
+  });
+
+  it("assetPublico tira o bloco de tabuleiro do que vai ao client (aba Estresse)", () => {
+    const pub = assetPublico(fullAsset(getRadarAsset("ef-170")!)!);
+    expect(JSON.stringify(pub)).not.toMatch(/VLI/);
+    expect(pub.params).toBeDefined();
   });
 });

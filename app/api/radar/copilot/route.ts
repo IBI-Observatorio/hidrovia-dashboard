@@ -14,6 +14,7 @@ import { getRadarAsset, fullAsset, type RadarAssetEntry } from "@/lib/radar/asse
 import { alertasDoAtivo } from "@/lib/radar/alerts";
 import { lerNotas, notasDoAtivo } from "@/lib/radar/notes";
 import { processosDoAtivo } from "@/lib/radar/processos";
+import { clienteRadarAtual, copilotoLiberado } from "@/lib/radar/acesso";
 import {
   validarLevers,
   rotuloCenario,
@@ -44,6 +45,12 @@ async function chamarIA(system: string, user: string): Promise<string> {
 }
 
 export async function POST(request: NextRequest) {
+  // Copiloto fora da vitrine pública: só cliente autenticado e liberado em
+  // CLIENTES_COPILOTO (hoje vazio = fechado para todos).
+  if (!copilotoLiberado(await clienteRadarAtual())) {
+    return NextResponse.json({ erro: "Não autorizado" }, { status: 401 });
+  }
+
   if (!llmDisponivel()) {
     return NextResponse.json({ partes: [{ tipo: "erro", texto: "Copiloto indisponível (sem credencial de IA configurada)." }] });
   }

@@ -12,15 +12,15 @@
       "source": { "label": "Investimento federal previsto na EF-118", "url": "https://tribunaonline.com.br/economia/governo-oficializa-leilao-da-ferrovia-vitoria-rio-273808", "date": "2025" } }
   },
   "maturacao": {
-    "estagioAtual": 3,
-    "leilaoAnunciado": 2026,
+    "estagioAtual": 2,
+    "leilaoAnunciado": 2027,
     "gateRisk": "medio",
     "drivers": [
-      "Leilão oficializado; 1ª fase prevista p/ jun/2026 (mais maduro do pipeline).",
-      "Vale saiu da obra do trecho ES→RJ; trecho Santa Leopoldina–Anchieta (80 km) incorporado ao leilão.",
-      "Licenciamento ambiental ainda é gargalo apontado pela imprensa local."
+      "Projeto em análise no TCU; edital ainda não publicado. ANTT empurrou o leilão p/ o 1º tri/2027, com edital até dez/2026 (diretor-geral Guilherme Sampaio, CNN Brasil, 18/09/2026).",
+      "Modelagem depende da decisão do TCU sobre as contas vinculadas do investimento cruzado (Rumo/MRS): 3 ministros pediram vista em 03/09/2026 e a votação ficou prevista p/ 11/11/2026 (Agência iNFRA).",
+      "Cronograma já escorregou jun → set → dez/2026 → 1º tri/2027; Vale saiu da obra do trecho ES→RJ (nov/2025)."
     ],
-    "fonte": { "label": "PPI / Tribuna Online / A Gazeta", "url": "https://tribunaonline.com.br/economia/governo-oficializa-leilao-da-ferrovia-vitoria-rio-273808", "date": "2025" }
+    "fonte": { "label": "CNN Brasil (18/09/2026) / Agência iNFRA (03/09/2026)", "url": "https://www.cnnbrasil.com.br/infra/apos-atrasos-governo-quer-leiloar-ferrovia-no-sudeste-em-2027/", "date": "2026-09-18" }
   },
   "scenariosMeta": {
     "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
