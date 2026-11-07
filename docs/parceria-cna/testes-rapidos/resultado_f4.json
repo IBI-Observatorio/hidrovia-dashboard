@@ -1,0 +1,50 @@
+{
+ "frete h=0": {
+  "n": 167,
+  "coef_H4_por_Mt": 0.0027,
+  "t_HAC": 4.53,
+  "LOYO_rmse_sem": 0.0782,
+  "LOYO_rmse_com": 0.0769,
+  "razao": 0.984
+ },
+ "frete h=2": {
+  "n": 155,
+  "coef_H4_por_Mt": 0.0007,
+  "t_HAC": 1.07,
+  "LOYO_rmse_sem": 0.0722,
+  "LOYO_rmse_com": 0.0721,
+  "razao": 0.998
+ },
+ "frete h=4": {
+  "n": 152,
+  "coef_H4_por_Mt": -0.0004,
+  "t_HAC": -0.6,
+  "LOYO_rmse_sem": 0.0689,
+  "LOYO_rmse_com": 0.0694,
+  "razao": 1.007
+ },
+ "basis h=0": {
+  "n": 170,
+  "coef_H4_por_Mt": 0.0449,
+  "t_HAC": 1.29,
+  "LOYO_rmse_sem": 4.2852,
+  "LOYO_rmse_com": 4.2828,
+  "razao": 0.999
+ },
+ "basis h=2": {
+  "n": 160,
+  "coef_H4_por_Mt": -0.0354,
+  "t_HAC": -0.88,
+  "LOYO_rmse_sem": 4.102,
+  "LOYO_rmse_com": 4.0963,
+  "razao": 0.999
+ },
+ "basis h=4": {
+  "n": 158,
+  "coef_H4_por_Mt": -0.0102,
+  "t_HAC": -0.24,
+  "LOYO_rmse_sem": 4.2824,
+  "LOYO_rmse_com": 4.2886,
+  "razao": 1.001
+ }
+}
