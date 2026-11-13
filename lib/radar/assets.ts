@@ -115,3 +115,18 @@ export function getRadarAsset(id: string): RadarAssetEntry | undefined {
 export function fullAsset(e: RadarAssetEntry): Asset | null {
   return e.completo ? (e.raw as unknown as Asset) : null;
 }
+
+/**
+ * Cópia do Asset sem o bloco `tabuleiro` (papel por cliente, exclusivo do
+ * assinante). Use em tudo que vai a componente client na vitrine pública: o
+ * objeto inteiro é serializado no HTML.
+ */
+export function assetPublico(a: Asset): Asset {
+  const { tabuleiro: _privado, ...resto } = a as Asset & { tabuleiro?: unknown };
+  return resto as Asset;
+}
+
+/** O cliente tem papel mapeado no tabuleiro de algum ativo? */
+export function temTabuleiro(cliente: string | null): boolean {
+  return !!cliente && RADAR_ASSETS.some((a) => !!a.tabuleiro?.[cliente]);
+}
