@@ -13,6 +13,8 @@ export const PAVIMENTO = {
 
 export const PAVIMENTO_COPY = {
   titulo: "O custo do pavimento ruim, em tempo real",
+  // Nome curto do componente no card de decomposição do Relógio da Infraestrutura.
+  nomeRelogio: "Pavimento rodoviário",
   intro:
     "A cada segundo, o transporte de carga brasileiro queima diesel a mais por rodar sobre um pavimento que não foi recuperado. A Pesquisa CNT de Rodovias mede esse sobrecusto uma vez por ano; aqui ele aparece em tempo real. A conta é paga por quem move a safra — não pela estrada em si, mas pela manutenção que não veio.",
   rotulo: "em diesel desperdiçado por rodar sobre pavimento ruim — acumulado hoje",
