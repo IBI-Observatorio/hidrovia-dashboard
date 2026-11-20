@@ -1,18 +1,19 @@
-// Módulo 4 — Tabuleiro Estratégico. Papel do cliente CONFIGURADO (default VLI)
-// por ativo, a partir de fatos públicos, + o furo de funding.
-// Guardrail §10: cliente configurável; nada que vaze posição de terceiros.
+// Módulo 4 — Tabuleiro Estratégico. Papel do cliente AUTENTICADO por ativo, a
+// partir de fatos públicos, + o furo de funding. Exclusivo do assinante: a página
+// só renderiza este componente com cliente vindo de clienteRadarAtual().
+// Guardrail §10: nada que vaze posição de terceiros.
 
 import { Info, Users } from "lucide-react";
 import type { RadarAssetEntry } from "@/lib/radar/assets";
-import { getTabuleiro, EXPOSICAO_INFO, CLIENTE_PADRAO } from "@/lib/radar/board";
+import { getTabuleiro, EXPOSICAO_INFO } from "@/lib/radar/board";
 import FundingBar, { type Funding } from "@/components/radar/FundingBar";
 
 export default function Board({
   entry,
-  cliente = CLIENTE_PADRAO,
+  cliente,
 }: {
   entry: RadarAssetEntry;
-  cliente?: string;
+  cliente: string;
 }) {
   const { entry: tab, mapeado } = getTabuleiro(entry, cliente);
   const ei = EXPOSICAO_INFO[tab.exposicao] ?? EXPOSICAO_INFO.nenhuma;

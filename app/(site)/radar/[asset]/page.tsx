@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { analisarAtivo } from "@/lib/dcf";
-import { getRadarAsset, fullAsset } from "@/lib/radar/assets";
+import { getRadarAsset, fullAsset, assetPublico, temTabuleiro } from "@/lib/radar/assets";
+import { clienteRadarAtual, copilotoLiberado } from "@/lib/radar/acesso";
 import { lerNotas, notasDoAtivo } from "@/lib/radar/notes";
 import { alertasDoAtivo } from "@/lib/radar/alerts";
 import { previsoesDoAtivo } from "@/lib/radar/backtest";
@@ -19,7 +20,10 @@ import Processos from "@/components/radar/Processos";
 import RadarCopilot from "@/components/radar/RadarCopilot";
 import EmptyState from "@/components/radar/EmptyState";
 
-export const revalidate = 21600;
+// A página lê o cookie do assinante (tabuleiro exclusivo). Precisa renderizar a
+// cada request: se fosse pré-renderizada/ISR, o HTML de um assinante poderia ser
+// servido a visitantes anônimos.
+export const dynamic = "force-dynamic";
 
 type TabId = "maturacao" | "estresse" | "risco" | "tabuleiro" | "notas" | "copiloto";
 const TABS: { id: TabId; label: string; disponivel: boolean }[] = [
@@ -56,7 +60,15 @@ export default async function AssetDeepDive({
   const entry = getRadarAsset(asset);
   if (!entry) notFound();
 
-  const tabAtiva = (TABS.find((t) => t.id === tab)?.id ?? "maturacao") as TabId;
+  // Vitrine pública: maturação, estresse, risco, notas. Tabuleiro só p/ assinante
+  // com papel mapeado; Copiloto fechado (ver lib/radar/acesso).
+  const cliente = await clienteRadarAtual();
+  const tabs = TABS.filter((t) =>
+    t.id === "tabuleiro" ? temTabuleiro(cliente)
+    : t.id === "copiloto" ? copilotoLiberado(cliente)
+    : true,
+  );
+  const tabAtiva = (tabs.find((t) => t.id === tab)?.id ?? "maturacao") as TabId;
   const { name, sub, maturacao } = entry;
 
   // P(estrutura fechar) = 1 − P(spread<0) do Monte Carlo (só p/ ativo com DCF).
@@ -90,7 +102,7 @@ export default async function AssetDeepDive({
 
       {/* abas */}
       <nav className="mt-6 flex flex-wrap gap-1 border-b border-white/10">
-        {TABS.map((t) => {
+        {tabs.map((t) => {
           const ativa = t.id === tabAtiva;
           return (
             <Link
@@ -116,13 +128,13 @@ export default async function AssetDeepDive({
         {tabAtiva === "maturacao" && maturacao ? (
           <MaturationRail maturacao={maturacao} pEstruturaFecha={pEstruturaFecha} />
         ) : tabAtiva === "estresse" && full ? (
-          <StressDCF asset={full} />
+          <StressDCF asset={assetPublico(full)} />
         ) : tabAtiva === "estresse" && !entry.completo ? (
           <EmBreve texto="Estrutura econômico-financeira deste ativo ainda não modelada (dados parciais). A aba Maturação já está disponível." />
         ) : tabAtiva === "risco" ? (
           <RiskMatrix risk={entry.risk} maturacao={maturacao} />
-        ) : tabAtiva === "tabuleiro" ? (
-          <Board entry={entry} />
+        ) : tabAtiva === "tabuleiro" && cliente ? (
+          <Board entry={entry} cliente={cliente} />
         ) : tabAtiva === "notas" ? (
           <div className="space-y-10">
             <NotesFeed notas={notasDoAtivo(lerNotas(), asset)} />
@@ -130,7 +142,7 @@ export default async function AssetDeepDive({
             <Processos dados={processosDoAtivo(asset)} />
             <Backtest previsoes={previsoesDoAtivo(asset)} />
           </div>
-        ) : tabAtiva === "copiloto" ? (
+        ) : tabAtiva === "copiloto" && copilotoLiberado(cliente) ? (
           <RadarCopilot assetId={entry.id} assetName={name} />
         ) : (
           <EmBreve texto={`Módulo "${TABS.find((t) => t.id === tabAtiva)?.label}" entra nas próximas fases do Radar.`} />
