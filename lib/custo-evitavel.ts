@@ -10,19 +10,25 @@
 //   taxaPorSegundo  = valorAnual / SEGUNDOS_ANO
 //   acumulado(ts)   = max(0, (ts − ancora) / 1000) × taxaPorSegundo
 //
-// Sem React, sem efeito colateral, sem timezone externa: usa Date local (a âncora
-// "meia-noite"/"inicio-ano" é calculada no fuso da máquina que renderiza).
+// Sem React e sem efeito colateral. As âncoras "meia-noite"/"inicio-ano" usam o
+// fuso da máquina que renderiza; "meia-noite-brasilia" fixa a âncora em Brasília
+// (America/Sao_Paulo) para todo visitante.
 
 /** Segundos em um ano civil de 365 dias (365 × 24 × 3600). */
 export const SEGUNDOS_ANO = 31_536_000;
 
 /**
  * Âncora de onde o acumulado começa a contar.
- *  - 'meia-noite': 00:00 de hoje (local)
- *  - 'inicio-ano': 01/jan 00:00 do ano corrente (local)
- *  - 'data':       instante explícito (exige `data`)
+ *  - 'meia-noite':          00:00 de hoje (local)
+ *  - 'meia-noite-brasilia': 00:00 de hoje em Brasília — mesma âncora para todo
+ *                           visitante, independente do fuso de quem renderiza
+ *  - 'inicio-ano':          01/jan 00:00 do ano corrente (local)
+ *  - 'data':                instante explícito (exige `data`)
  */
-export type Janela = { tipo: "meia-noite" | "inicio-ano" | "data"; data?: Date };
+export type Janela = {
+  tipo: "meia-noite" | "meia-noite-brasilia" | "inicio-ano" | "data";
+  data?: Date;
+};
 
 /** Custo: ou o valor anual direto, ou volume anual × diferencial unitário. */
 export type CustoInput =
@@ -58,6 +64,15 @@ export function ancoraDe(janela: Janela): number {
   switch (janela.tipo) {
     case "meia-noite":
       return new Date(agora.getFullYear(), agora.getMonth(), agora.getDate()).getTime();
+    case "meia-noite-brasilia": {
+      // 00:00 de hoje em America/Sao_Paulo. UTC−3 fixo: o Brasil não tem
+      // horário de verão desde 2019, então meia-noite em Brasília = 03:00 UTC.
+      const [y, m, d] = agora
+        .toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" })
+        .split("-")
+        .map(Number);
+      return Date.UTC(y, m - 1, d, 3);
+    }
     case "inicio-ano":
       return new Date(agora.getFullYear(), 0, 1).getTime();
     case "data":
