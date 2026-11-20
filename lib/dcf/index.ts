@@ -11,6 +11,7 @@ import {
   type Levers,
   type ScenarioResult,
   LEVERS_NEUTROS,
+  numVal,
 } from "./types";
 import { paramsFromAsset, buildCashflow, tirCenario } from "./cashflow";
 import { npv } from "./irr";
@@ -43,12 +44,15 @@ export interface AnaliseAtivo {
   realistaHaircutPct: number;     // 1 − demandaHaircut (perda de demanda implícita)
   upliftClasse: number;           // mediana da classe de referência
   wacc: number;
+  /** TIR DECLARADA pelo governo (seed `oficialAnchor.tir`), ou null. Não calibra o motor. */
+  tirDeclarada: number | null;
 }
 
 /**
- * Pipeline de análise do ativo: ancora o Oficial nas fontes ANTT (tarifa-teto +
- * TIR=WACC=11,04%), calibra o Realista para a TIR de Frischtak (1,6%), roda o
- * Monte Carlo e devolve tudo pronto para a UI. Reprodutível pela `seed`.
+ * Pipeline de análise do ativo: avalia o Oficial com as premissas do seed (sem
+ * botão de fechamento) e devolve, ao lado, a TIR DECLARADA pelo governo quando
+ * houver (`oficialAnchor`); calibra o Realista para a TIR de Frischtak (1,6%), roda
+ * o Monte Carlo e devolve tudo pronto para a UI. Reprodutível pela `seed`.
  */
 export function analisarAtivo(
   asset: Asset,
@@ -81,6 +85,7 @@ export function analisarAtivo(
     realistaHaircutPct: cre.haircutImplicito,
     upliftClasse: cre.upliftClasse,
     wacc: params.wacc,
+    tirDeclarada: asset.oficialAnchor?.tir ? numVal(asset.oficialAnchor.tir) : null,
   };
 }
 

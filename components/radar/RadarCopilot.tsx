@@ -25,7 +25,7 @@ interface Turno { pergunta: string; partes: Parte[] }
 
 const EXEMPLOS = [
   "Por que a concessão travou?",
-  "Qual é o déficit de funding?",
+  "O que mudou na modelagem sem o aporte público?",
   "E se o CAPEX estourar 60% e o leilão atrasar 3 anos?",
   "E se a demanda vier 20% abaixo?",
 ];
