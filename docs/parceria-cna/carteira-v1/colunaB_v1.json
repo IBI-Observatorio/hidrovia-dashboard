@@ -1,0 +1,86 @@
+[
+ {
+  "microrregiao": "Sudoeste de Goiás/GO",
+  "prod_mt": 13.33,
+  "silo_mt": 7.9,
+  "deficit_mt": 5.43,
+  "cobertura": 0.59
+ },
+ {
+  "microrregiao": "Norte Araguaia/MT",
+  "prod_mt": 8.06,
+  "silo_mt": 2.95,
+  "deficit_mt": 5.1,
+  "cobertura": 0.37
+ },
+ {
+  "microrregiao": "Arinos/MT",
+  "prod_mt": 6.97,
+  "silo_mt": 2.72,
+  "deficit_mt": 4.25,
+  "cobertura": 0.39
+ },
+ {
+  "microrregiao": "Entorno de Brasília/GO",
+  "prod_mt": 4.27,
+  "silo_mt": 1.54,
+  "deficit_mt": 2.74,
+  "cobertura": 0.36
+ },
+ {
+  "microrregiao": "Aripuanã/MT",
+  "prod_mt": 2.72,
+  "silo_mt": 1.05,
+  "deficit_mt": 1.67,
+  "cobertura": 0.38
+ },
+ {
+  "microrregiao": "Paragominas/PA",
+  "prod_mt": 2.35,
+  "silo_mt": 0.7,
+  "deficit_mt": 1.64,
+  "cobertura": 0.3
+ },
+ {
+  "microrregiao": "Paranatinga/MT",
+  "prod_mt": 3.31,
+  "silo_mt": 1.74,
+  "deficit_mt": 1.57,
+  "cobertura": 0.52
+ },
+ {
+  "microrregiao": "Colíder/MT",
+  "prod_mt": 3.09,
+  "silo_mt": 1.54,
+  "deficit_mt": 1.55,
+  "cobertura": 0.5
+ },
+ {
+  "microrregiao": "Alto Parnaíba Piauiense/PI",
+  "prod_mt": 3.46,
+  "silo_mt": 1.92,
+  "deficit_mt": 1.54,
+  "cobertura": 0.56
+ },
+ {
+  "microrregiao": "Tesouro/MT",
+  "prod_mt": 1.94,
+  "silo_mt": 0.76,
+  "deficit_mt": 1.18,
+  "cobertura": 0.39
+ },
+ {
+  "microrregiao": "Jalapão/TO",
+  "prod_mt": 1.25,
+  "silo_mt": 0.19,
+  "deficit_mt": 1.05,
+  "cobertura": 0.15
+ },
+ {
+  "microrregiao": "Goioerê/PR",
+  "prod_mt": 2.42,
+  "silo_mt": 1.41,
+  "deficit_mt": 1.01,
+  "cobertura": 0.58
+ }
+]

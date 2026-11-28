@@ -1,0 +1,62 @@
+{
+ "M": {
+  "1 Publicar valor do frete do CIOT (ANTT)": {
+   "R1": 304.7,
+   "R2": 3,
+   "R3": 2,
+   "R4": 3,
+   "R5": "não iniciada"
+  },
+  "2 DT-e (documento eletrônico de transporte)": {
+   "R1": 304.7,
+   "R2": 2,
+   "R3": 0,
+   "R4": 1,
+   "R5": "aprovada sem implementação"
+  },
+  "3 Peso por eixo e tolerâncias": {
+   "R1": 304.7,
+   "R2": 3,
+   "R3": 0,
+   "R4": 2,
+   "R5": "em tramitação (Veto 43/2026; PL 2217/2025)"
+  },
+  "4 Ferrovias por autorização": {
+   "R1": 68.3,
+   "R2": 3,
+   "R3": 0,
+   "R4": 1,
+   "R5": "aprovada, implementada parcialmente"
+  },
+  "5 Licenciamento de dragagem/derrocamento": {
+   "R1": 26.7,
+   "R2": 3,
+   "R3": 0,
+   "R4": 3,
+   "R5": "aprovada, implementada parcialmente (dragagem dispensada por lei; derrocamento não)"
+  },
+  "6 Pedágio free flow": {
+   "R1": null,
+   "R2": 3,
+   "R3": 2,
+   "R4": 2,
+   "R5": "aprovada, implementada parcialmente"
+  }
+ },
+ "rank_base": [
+  "1 Publicar valor do frete do CIOT (ANTT)",
+  "6 Pedágio free flow",
+  "3 Peso por eixo e tolerâncias",
+  "2 DT-e (documento eletrônico de transporte)",
+  "5 Licenciamento de dragagem/derrocamento",
+  "4 Ferrovias por autorização"
+ ],
+ "rank_iguais": [
+  "1 Publicar valor do frete do CIOT (ANTT)",
+  "6 Pedágio free flow",
+  "5 Licenciamento de dragagem/derrocamento",
+  "3 Peso por eixo e tolerâncias",
+  "4 Ferrovias por autorização",
+  "2 DT-e (documento eletrônico de transporte)"
+ ]
+}
