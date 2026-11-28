@@ -102,7 +102,7 @@ describe("copiloto · integridade de fontes e ausência de base", () => {
     expect(SISTEMA_EXPLICADOR).toMatch(/literalmente nos DADOS/i);
   });
 
-  it("contexto do EF-170 traz números SÓ dos dados (déficit 1,41) e fontes reais numeradas", () => {
+  it("contexto do EF-170 traz números SÓ dos dados (TIR declarada 11,28%, WACC 14,08%) e fontes reais numeradas", () => {
     const entry = getRadarAsset("ef-170")!;
     const full = fullAsset(entry);
     const analise = full ? analisarAtivo(full, { mcN: 1000, seed: 42 }) : null;
@@ -113,7 +113,9 @@ describe("copiloto · integridade de fontes e ausência de base", () => {
       alertas: alertasDoAtivo("ef-170"),
       notas: notasDoAtivo(lerNotas(), "ef-170"),
     });
-    expect(contexto).toContain("1,41");                 // déficit do seed (TCU)
+    expect(contexto).toContain("11,28%");               // TIR declarada (seed, imprensa)
+    expect(contexto).toContain("14,08%");               // WACC da nova modelagem
+    expect(contexto).not.toContain("Déficit de funding"); // aporte excluído ⇒ sem funding
     expect(contexto).toContain("VALORES-BASE DO MOTOR"); // origem (b) determinística
     expect(fontes.length).toBeGreaterThan(0);
     // toda fonte numerada tem um label não-vazio (nada anônimo/inventado)
@@ -180,8 +182,10 @@ describe("copiloto · blindagem do explicador (numerosSemLastro)", () => {
       alertas: alertasDoAtivo("ef-170"),
       notas: notasDoAtivo(lerNotas(), "ef-170"),
     });
-    expect(numerosSemLastro("O déficit é de R$ 1,41 bi.", contexto)).toEqual([]);
+    expect(numerosSemLastro("O governo declara TIR de 11,28% contra WACC de 14,08%.", contexto)).toEqual([]);
     expect(numerosSemLastro("A TIR cairia para 9,99%.", contexto)).toContain("9,99%");
+    // o déficit de R$ 1,41 bi saiu dos dados com a exclusão do aporte ⇒ agora é retido
+    expect(numerosSemLastro("O déficit é de R$ 1,41 bi.", contexto)).toContain("1,41");
   });
 });
 
