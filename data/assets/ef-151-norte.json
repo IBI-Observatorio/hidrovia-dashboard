@@ -15,10 +15,11 @@
     "gateRisk": "medio",
     "drivers": [
       "Estudos técnicos e ambientais do trecho Açailândia–Barcarena concluídos.",
-      "Leilão adiado de mar/2027 p/ out/2027 (pipeline de concessões empurrado).",
+      "Leilão adiado de mar/2027 p/ out/2027 (Jornal de Brasília, 05/06/2026).",
+      "Ministro Santoro incluiu o projeto entre os 4 editais a enviar ao TCU no 2º semestre de 2026 (Jornal de Brasília, 21/06/2026); sem edital publicado.",
       "Trecho central da FNS já concedido à Rumo (2019) — este é a extensão norte."
     ],
-    "fonte": { "label": "PPI / Diário do Comércio / Senado", "url": "https://ppi.gov.br/projetos/ef-151-ferrovia-norte-sul-trecho-de-acailandia-ma-a-barcarena-pa/", "date": "2026" }
+    "fonte": { "label": "PPI / Jornal de Brasília (05 e 21/06/2026)", "url": "https://jornaldebrasilia.com.br/noticias/politica-e-poder/governo-planeja-entregar-4-editais-de-leilao-de-ferrovias-ao-tcu-ate-fim-de-2026-diz-ministro/", "date": "2026-06-21" }
   },
   "scenariosMeta": {
     "oficial": { "label": "Sem DCF (parcial)", "nota": "Estresse econômico-financeiro não modelado nesta fase." }
